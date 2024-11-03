@@ -1,0 +1,13 @@
+/* src/assets/styles/rtl.css */
+
+.rtl {
+    direction: rtl;
+    text-align: right !important;
+}
+
+.rtl .text-right {
+    text-align: left;
+}
+
+
+/* Add any additional RTL styles */

@@ -1,0 +1,98 @@
+@import 'primeicons/primeicons.css';
+@import 'solid.min.css';
+@import 'duotone.min.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+* {
+    /* direction: rtl; */
+}
+
+.rtl {
+    direction: rtl;
+    text-align: right !important;
+}
+
+.rtl .p-datatable-tbody>tr>td {
+    text-align: right !important;
+}
+
+.ltr {
+    direction: ltr;
+    text-align: left !important;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+
+/* Track */
+
+::-webkit-scrollbar-track {
+    background: #888;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+    --tw-bg-opacity: 1;
+    background-color: var(--p-surface-300);
+    border-radius: 5px;
+}
+
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+    --tw-bg-opacity: 1;
+    /* background-color: rgb(31 41 55 / var(--tw-bg-opacity)); */
+    background-color: var(--p-surface-600);
+    border-radius: 5px;
+}
+
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+:root {
+    --p-tooltip-background: #a855f7;
+}
+
+
+/**
+@font-face {
+    font-family: "Font Awesome 6 Pro";
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url(./fonts/fa-solid-900.woff2) format("woff2"), url(./fonts/fa-solid-900.woff) format("woff"), url(./fonts/fa-solid-900.ttf) format("truetype")
+}
+
+@font-face {
+    font-family: "Font Awesome 6 Duotone";
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url(./fonts/fa-duotone-900.woff2) format("woff2"), url(./fonts/fa-duotone-900.woff) format("woff"), url(./fonts/fa-duotone-900.ttf) format("truetype")
+}
+
+.fa-duotone,
+.fad {
+    position: relative;
+    font-family: "Font Awesome 6 Duotone";
+    font-weight: 900
+}
+
+.fa-solid,
+.fas {
+    font-family: "Font Awesome 6 Pro";
+    font-weight: 900
+}
+
+
+/* * {
+    font-family: cairo;
+} */
