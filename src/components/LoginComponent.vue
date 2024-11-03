@@ -119,7 +119,7 @@ const login = async () => {
   });
   const config = {
     method: "post",
-    url: "https://vet-api.ids-tech.net/api/login",
+    url: import.meta.env.VITE_API_URL + "/login",
     headers: {
       "Content-Type": "application/json",
     },
