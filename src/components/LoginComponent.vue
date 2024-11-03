@@ -93,12 +93,9 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
-// import { FwbInput } from "flowbite-vue";
 import InputText from "primevue/inputtext";
 import InputGroupAddon from "primevue/inputgroupaddon";
 import InputGroup from "primevue/inputgroup";
-import Password from "primevue/password";
-import Fluid from "primevue/fluid";
 import { useAuthStore } from "@/stores/authStore";
 import axios from "axios";
 import Logo from "@/assets/logo.png";
