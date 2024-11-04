@@ -447,7 +447,7 @@ const authStore = useAuthStore();
             <Badge v-if="item.badge" class="ml-auto" :value="item.badge" />
             <span
               v-if="item.shortcut"
-              class="ml-auto border border-surface rounded bg-emphasis text-muted-color !text-xs p-1"
+              class="ml-auto !text-[10px] p-1 text-gray-100 dark:text-gray-800"
               >{{ item.shortcut }}</span
             >
           </RouterLink>

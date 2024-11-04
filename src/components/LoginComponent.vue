@@ -30,7 +30,7 @@
                 placeholder="Username"
                 :feedback="false"
                 fluid
-                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 focus:!ring-0 focus:!ring-offset-0"
+                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 focus:!ring-0 focus:!ring-offset-0 !border-x-0 focus:!outline-0"
               />
             </InputGroup>
           </div>
@@ -52,40 +52,37 @@
                 placeholder="Password"
                 :feedback="false"
                 fluid
-                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 focus:!ring-0 focus:!ring-offset-0"
+                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 !ring-0 focus:!ring-0 !ring-offset-0 focus:!ring-offset-0 !border-x-0"
               />
               <InputGroupAddon
                 class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 px-4 flex flex-col item-center justify-center"
                 ><i class="pi pi-eye password-shield" @click="togglePassInput()"></i
               ></InputGroupAddon>
             </InputGroup>
-            <small id="password-help"
-              >Enter your username and password to access your account.</small
+            <small
+              id=""
+              v-if="message"
+              :class="{ 'text-green-500': !isError, 'text-red-500': isError }"
+              >{{ message }}</small
             >
           </div>
         </div>
-        <div class="flex items-center justify-between">
+        <div class="flex items-end justify-end">
           <button
             type="submit"
-            class="text-blue-500 dark:bg-blue-700 hover:bg-blue-200 dark:hover:bg-blue-200 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            class="p-button p-button-content !text-[var(--p-primary-color)] py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
-            Log In
+            <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
+            <span v-else>Log In</span>
           </button>
-          <a
+          <!-- <a
             href="#"
             class="inline-block align-baseline font-bold text-sm text-blue-500 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-400"
           >
             Forgot Password?
-          </a>
+          </a> -->
         </div>
       </form>
-      <p
-        v-if="message"
-        :class="{ 'text-green-500': !isError, 'text-red-500': isError }"
-        class="mt-3 text-center"
-      >
-        {{ message }}
-      </p>
     </div>
   </div>
 </template>
@@ -93,6 +90,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
+// import { FwbInput } from "flowbite-vue";
 import InputText from "primevue/inputtext";
 import InputGroupAddon from "primevue/inputgroupaddon";
 import InputGroup from "primevue/inputgroup";
@@ -106,10 +104,11 @@ const password = ref("");
 const message = ref("");
 const isError = ref(false);
 const isPassword = ref(true);
-
+const loading = ref(false);
 const router = useRouter();
 const authStore = useAuthStore(); // Define authStore using useAuthStore
 const login = async () => {
+  loading.value = true;
   const data = JSON.stringify({
     email: email.value,
     password: password.value,
@@ -134,6 +133,7 @@ const login = async () => {
     isError.value = false;
 
     setTimeout(() => {
+      loading.value = false;
       router.push("/").catch((err) => {
         console.error("Router push error:", err);
       });
@@ -147,10 +147,12 @@ const login = async () => {
         console.error("Data:", error.response.data);
         console.error("Status:", error.response.status);
         console.error("Headers:", error.response.headers);
-
+        loading.value = false;
         message.value =
-          error.response.data && error.response.data.error
-            ? error.response.data.error
+          error.response.data &&
+          error.response.data.error &&
+          error.response.data.error === "invalid_credentials"
+            ? "Invalid Credentials, please try again"
             : "An error occurred, please try again.";
       } else if (error.request) {
         console.error("No response received:", error.request);
