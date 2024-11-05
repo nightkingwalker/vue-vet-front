@@ -24,11 +24,19 @@
         >
           <FloatLabel class="w-full md:w-56">
             <InputText
-              :id="'result-' + index"
-              v-model="test.results[index]"
-              placeholder="Enter test result"
+              :id="'label-' + index"
+              v-model="test.results[index].label"
+              placeholder="Enter result label"
             />
-            <label :for="'result-' + index">Result {{ index + 1 }}</label>
+            <label :for="'label-' + index">Label {{ index + 1 }}</label>
+          </FloatLabel>
+          <FloatLabel class="w-full md:w-56 mt-2">
+            <InputText
+              :id="'value-' + index"
+              v-model="test.results[index].value"
+              placeholder="Enter result value"
+            />
+            <label :for="'value-' + index">Value {{ index + 1 }}</label>
           </FloatLabel>
           <Button
             icon="pi pi-times"
@@ -69,13 +77,12 @@ const props = defineProps({
 const test = ref({
   medical_record_id: props.medical_record_id,
   test_type: "",
-  results: [""],
+  results: [{ label: "", value: "" }],
 });
-console.log(test);
 
 // Function to add a new input field for a result
 const addResult = () => {
-  test.value.results.push("");
+  test.value.results.push({ label: "", value: "" });
 };
 
 // Function to remove a result from the results array
@@ -85,18 +92,15 @@ const removeResult = (index) => {
 
 // Form submission
 const submitForm = async () => {
-  const formattedResults =
-    `[` +
-    test.value.results
-      .filter((result) => result)
-      .map((result) => `'${result}'`)
-      .join(", ")
-      .toString() +
-    `]`;
+  const formattedResults = test.value.results
+    .filter((result) => result.label && result.value)
+    .map((result) => `"${result.label}: ${result.value}"`)
+    .join(", ");
+  const resultString = `[${formattedResults}]`;
   const submissionData = {
     medical_record_id: test.value.medical_record_id,
     test_type: test.value.test_type,
-    result: formattedResults.length > 0 ? formattedResults : "No results provided",
+    result: resultString,
   };
   console.log(submissionData);
   try {

@@ -20,12 +20,12 @@
           <Button
             icon="pi pi-plus"
             @click="showAddTestResultModal"
-            v-tooltip.bottom="`Add New Treatment`"
+            v-tooltip.bottom="`Add New Test Result`"
             class="p-button p-component p-button-icon-only !text-xs !w-8 !h-8 ml-2"
           />
         </div>
         <h2 class="text-sm !mb-0 pb-0 flex">
-          <i class="fa-solid fa-paw mr-2"></i> Treatments
+          <i class="fa-solid fa-paw mr-2"></i> Test Results
         </h2>
       </div>
     </template>
@@ -116,6 +116,10 @@ const fetchTestResults = async () => {
 };
 const showAddTestResultModal = () => {
   emit("showAddTestResultModal");
+};
+const refreshData = () => {
+  loading.value = true; // Set loading state to true to show skeletons
+  fetchTestResults(); // Fetch the pets data again
 };
 onMounted(() => {
   fetchTestResults();

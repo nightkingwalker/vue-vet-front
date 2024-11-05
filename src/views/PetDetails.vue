@@ -307,7 +307,7 @@
     </template>
     <AddNewTestResult
       :medical_record_id="medical_record_id"
-      @TreatmentAdded="handleNewTreatment"
+      @TestResultAdded="handleNewTestResult"
     />
     <template #footer> </template>
   </Dialog>
