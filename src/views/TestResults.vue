@@ -6,6 +6,30 @@
     scrollable
     scrollHeight="400px"
   >
+    <template #header>
+      <div class="flex justify-between items-center !m-b-1">
+        <div class="flex">
+          <Button
+            type="button"
+            icon="pi pi-refresh !text-xs"
+            label=""
+            v-tooltip.bottom="`Refresh Data`"
+            class="!text-xs ml-2 !w-8 !h-8"
+            @click="refreshData"
+          />
+          <Button
+            icon="pi pi-plus"
+            @click="showAddTestResultModal"
+            v-tooltip.bottom="`Add New Treatment`"
+            class="p-button p-component p-button-icon-only !text-xs !w-8 !h-8 ml-2"
+          />
+        </div>
+        <h2 class="text-sm !mb-0 pb-0 flex">
+          <i class="fa-solid fa-paw mr-2"></i> Treatments
+        </h2>
+      </div>
+    </template>
+
     <Column field="test_type" header="Test" class="w-1/5">
       <template v-if="loading" #body>
         <Skeleton width="100%" height="1rem" />
@@ -39,9 +63,13 @@ import { ref, onMounted } from "vue";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Skeleton from "primevue/skeleton";
+import Button from "primevue/button";
+import eventBus from "@/eventBus";
 import axiosInstance from "@/axios"; // Assuming axiosInstance is set up correctly
 const medicalRecords = ref();
 const loading = ref(false);
+const emit = defineEmits(); // Define the event to be emitted
+
 const props = defineProps({
   medical_record_id: {
     type: Number,
@@ -86,7 +114,14 @@ const fetchTestResults = async () => {
   } finally {
   }
 };
+const showAddTestResultModal = () => {
+  emit("showAddTestResultModal");
+};
 onMounted(() => {
   fetchTestResults();
+  eventBus.on("newTestResultAdded", () => {
+    console.log("newTestResultAdded");
+    fetchTestResults();
+  });
 });
 </script>

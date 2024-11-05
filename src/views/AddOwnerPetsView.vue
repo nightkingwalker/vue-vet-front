@@ -98,7 +98,6 @@
 
 <script setup>
 import { ref } from "vue";
-import AutoComplete from "primevue/autocomplete";
 import InputText from "primevue/inputtext";
 import DatePicker from "primevue/datepicker";
 import Fieldset from "primevue/fieldset";
@@ -176,8 +175,6 @@ const submitForm = async () => {
       : null,
   };
 
-  //   // console.log(submissionData); // Verify the structure
-  //   // console.log(pet.value.owner_id.id);
   try {
     const response = await axiosInstance.post("/pets", submissionData);
     // // console.log(response);

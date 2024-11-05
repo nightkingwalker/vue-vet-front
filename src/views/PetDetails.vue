@@ -248,7 +248,10 @@
         <span class="font-bold whitespace-nowrap">Treatments</span>
       </div>
     </template>
-    <PetTreatments :medical_record_id="medical_record_id" />
+    <PetTreatments
+      :medical_record_id="medical_record_id"
+      @showAddTreatmentModal="showAddTreatmentModal"
+    />
     <template #footer> </template>
   </Dialog>
   <Dialog
@@ -264,7 +267,48 @@
         <span class="font-bold whitespace-nowrap">Test Results</span>
       </div>
     </template>
-    <TestResults :medical_record_id="medical_record_id" />
+    <TestResults
+      :medical_record_id="medical_record_id"
+      @showAddTestResultModal="showAddTestResultModal"
+    />
+    <template #footer> </template>
+  </Dialog>
+  <Dialog
+    header="New Treatment"
+    v-model:visible="isNewTreatmentVisible"
+    @hide="isNewTreatmentVisible = false"
+    modal
+    :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2">
+        <span class="font-bold whitespace-nowrap">New Treatment</span>
+      </div>
+    </template>
+    <AddNewTreatment
+      :medical_record_id="medical_record_id"
+      @TreatmentAdded="handleNewTreatment"
+    />
+    <template #footer> </template>
+  </Dialog>
+  <Dialog
+    header="New Test Result"
+    v-model:visible="isNewTestResultVisible"
+    @hide="isNewTestResultVisible = false"
+    modal
+    :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2">
+        <span class="font-bold whitespace-nowrap">New Test Result</span>
+      </div>
+    </template>
+    <AddNewTestResult
+      :medical_record_id="medical_record_id"
+      @TreatmentAdded="handleNewTreatment"
+    />
     <template #footer> </template>
   </Dialog>
 </template>
@@ -284,8 +328,12 @@ import Skeleton from "primevue/skeleton"; // optional
 import Dialog from "primevue/dialog";
 import PetTreatments from "@/views/TreatmentsList.vue"; // Adjust the path as needed
 import TestResults from "@/views/TestResults.vue"; // Adjust the path as needed
+import AddNewTreatment from "@/views/AddNewTreatment.vue"; // Adjust the path as needed
+import AddNewTestResult from "@/views/AddNewTestResult.vue"; // Adjust the path as needed
 const isTreatmentsListVisible = ref(false);
 const isTestResultsVisible = ref(false);
+const isNewTreatmentVisible = ref(false);
+const isNewTestResultVisible = ref(false);
 const route = useRoute();
 const petmicrochip = ref(route.params.petmicrochip);
 const pet = ref({
@@ -301,6 +349,20 @@ const pet = ref({
     name: "",
   },
 });
+const showAddTreatmentModal = () => {
+  isNewTreatmentVisible.value = true;
+};
+const handleNewTreatment = () => {
+  isNewTreatmentVisible.value = false;
+  eventBus.emit("newTreatmentAdded");
+};
+const showAddTestResultModal = () => {
+  isNewTestResultVisible.value = true;
+};
+const handleNewTestResult = () => {
+  isNewTestResultVisible.value = false;
+  eventBus.emit("newTestResultAdded");
+};
 // console.log(pet.value);
 const owner = ref(""); // Initialize owner as an empty string
 const loading = ref(true);
