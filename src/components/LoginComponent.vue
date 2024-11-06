@@ -30,6 +30,10 @@
                 placeholder="Username"
                 :feedback="false"
                 fluid
+                style="
+                  border-top: 1px solid var(--p-inputgroup-addon-border-color);
+                  border-bottom: 1px solid var(--p-inputgroup-addon-border-color);
+                "
                 class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 focus:!ring-0 focus:!ring-offset-0 !border-x-0 focus:!outline-0"
               />
             </InputGroup>
@@ -52,6 +56,10 @@
                 placeholder="Password"
                 :feedback="false"
                 fluid
+                style="
+                  border-top: 1px solid var(--p-inputgroup-addon-border-color);
+                  border-bottom: 1px solid var(--p-inputgroup-addon-border-color);
+                "
                 class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 !ring-0 focus:!ring-0 !ring-offset-0 focus:!ring-offset-0 !border-x-0"
               />
               <InputGroupAddon
@@ -71,6 +79,7 @@
           <button
             type="submit"
             class="p-button p-button-content !text-[var(--p-primary-color)] py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            :disabled="loading ? true : false"
           >
             <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
             <span v-else>Log In</span>
