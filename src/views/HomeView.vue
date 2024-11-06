@@ -6,12 +6,26 @@
       <ScheduleXCalendar
         :calendar-app="calendarApp"
         class="!h-[calc(100vh-100px)] !w-full mt-6 mx-auto"
-        :headerContentLeftAppend="`<h1>Hello</h1>`"
+        :headerContentRightPrepend="``"
+        @contextmenu="onRightClick"
       >
-        <template #headerContentLeftAppend>
-          <div class="event">hello</div>
-        </template></ScheduleXCalendar
-      >
+        <template #headerContentRightPrepend>
+          <Button
+            type=""
+            icon="pi pi-plus !text-sm"
+            label=""
+            v-tooltip.bottom="`Add Appointment`"
+            class="!text-xs !text-[var(--p-primary-color)] hover:!text-[var(--p-primary-contrast-color)] sx__today-button sx__ripple"
+            style="
+              padding: var(--sx-spacing-padding3) var(--sx-spacing-padding4);
+              border-radius: var(--sx-rounding-extra-small);
+              font-size: var(--sx-calendar-header-input-font-size);
+              color: var(--sx-internal-color-text);
+            "
+          />
+        </template>
+      </ScheduleXCalendar>
+      <ContextMenu ref="menu" :model="menuItems" />
     </div>
     <div
       class="w-1/5 !h-[calc(100vh-100px)] mt-6 !bg-gray-200 dark:!bg-zinc-600 border rounded-lg p-4 flex flex-col justify-between"
@@ -102,7 +116,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, isProxy } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 // import { Qalendar } from "qalendar";
 import { ScheduleXCalendar } from "@schedule-x/vue";
 import {
@@ -112,6 +126,7 @@ import {
   viewMonthGrid,
   viewWeek,
 } from "@schedule-x/calendar";
+
 import { createCalendarControlsPlugin } from "@schedule-x/calendar-controls";
 import { createEventsServicePlugin } from "@schedule-x/events-service";
 import { createEventModalPlugin } from "@schedule-x/event-modal";
@@ -120,6 +135,7 @@ import { createScrollControllerPlugin } from "@schedule-x/scroll-controller";
 import eventBus from "@/eventBus";
 import "@schedule-x/theme-default/dist/calendar.css";
 import Tag from "primevue/tag";
+import ContextMenu from "primevue/contextmenu";
 import Button from "primevue/button";
 import { RouterLink } from "vue-router";
 // import RouterLink from "primevue/routerlink";
@@ -132,6 +148,7 @@ const searchQuery = ref("");
 const itemsPerPage = ref(100);
 const loading = ref(false);
 const visible = ref(false);
+const activeDate = ref("");
 const scrollController = createScrollControllerPlugin({
   initialScroll: "12:00",
 });
@@ -408,10 +425,12 @@ const calendarApp = createCalendar({
     /**
      * Is called when clicking a date in the month grid
      * */
-    onClickDate(date) {
-      console.log("onClickDate", date); // e.g. 2024-01-01
-      // Programmatically set the date
-      changeView(date);
+    onClickDate(date, event) {
+      // console.log(date);
+      // console.log(event);
+      activeDate.value = date;
+      console.log("Active Date: " + activeDate.value);
+      onRightClick();
     },
 
     /**
@@ -488,7 +507,23 @@ const calendarApp = createCalendar({
     scrollController,
   ],
 });
-
+const menuItems = ref([
+  {
+    label: "Go To Day View",
+    icon: "pi pi-calendar",
+    command: () => {
+      // Implement navigation to day view
+      changeView(activeDate.value);
+    },
+  },
+  {
+    label: "Add New Appointment",
+    icon: "pi pi-calendar-plus",
+    command: () => {
+      // Implement functionality to add a new appointment
+    },
+  },
+]);
 const onEventUpdate = async (updatedEvent) => {
   // console.log("onEventUpdate", updatedEvent);
   const data = JSON.stringify({
@@ -538,6 +573,32 @@ const initializeCalendarTheme = () => {
 };
 const setCalendarTheme = (theme) => {
   calendarApp.setTheme(theme);
+};
+const contextMenu = ref(null);
+const clickedDate = ref(null);
+const lastClickPosition = ref({ x: 0, y: 0 });
+const handleDateClick = async (event, date) => {
+  clickedDate.value = date;
+
+  // Capture the mouse click coordinates
+  lastClickPosition.value = { x: event.clientX, y: event.clientY };
+
+  await nextTick(); // Ensure the context menu is rendered and available
+
+  if (contextMenu.value) {
+    // Set position of the context menu manually
+    const contextMenuElement = contextMenu.value.$el;
+    contextMenuElement.style.left = `${lastClickPosition.value.x}px`;
+    contextMenuElement.style.top = `${lastClickPosition.value.y}px`;
+    contextMenuElement.style.position = "fixed";
+
+    // Show the context menu at the specified position
+    contextMenu.value.show(event);
+  }
+};
+const menu = ref();
+const onRightClick = () => {
+  menu.value.show(event);
 };
 onMounted(() => {
   eventBus.on("themeChange", setCalendarTheme);
