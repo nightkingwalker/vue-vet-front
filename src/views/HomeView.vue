@@ -7,25 +7,47 @@
         :calendar-app="calendarApp"
         class="!h-[calc(100vh-100px)] !w-full mt-6 mx-auto"
         :headerContentRightPrepend="``"
-        @contextmenu="onRightClick"
       >
         <template #headerContentRightPrepend>
-          <Button
-            type=""
-            icon="pi pi-plus !text-sm"
-            label=""
-            v-tooltip.bottom="`Add Appointment`"
-            class="!text-xs !text-[var(--p-primary-color)] hover:!text-[var(--p-primary-contrast-color)] sx__today-button sx__ripple"
-            style="
-              padding: var(--sx-spacing-padding3) var(--sx-spacing-padding4);
-              border-radius: var(--sx-rounding-extra-small);
-              font-size: var(--sx-calendar-header-input-font-size);
-              color: var(--sx-internal-color-text);
-            "
-          />
+          <div class="sx__calendar-header-content">
+            <Button
+              type=""
+              icon="pi pi-refresh !text-sm"
+              label=""
+              v-tooltip.bottom="`Refresh Data`"
+              class="!text-xs !text-[var(--p-primary-color)] hover:!text-[var(--p-primary-contrast-color)] sx__today-button sx__ripple"
+              @click="refreshData"
+              style="
+                padding: var(--sx-spacing-padding3) var(--sx-spacing-padding4);
+                border-radius: var(--sx-rounding-extra-small);
+                font-size: var(--sx-calendar-header-input-font-size);
+                color: var(--sx-internal-color-text);
+              "
+            />
+            <Button
+              type=""
+              icon="pi pi-plus !text-sm"
+              label=""
+              v-tooltip.bottom="`Add Appointment`"
+              class="!text-xs !text-[var(--p-primary-color)] hover:!text-[var(--p-primary-contrast-color)] sx__today-button sx__ripple"
+              style="
+                padding: var(--sx-spacing-padding3) var(--sx-spacing-padding4);
+                border-radius: var(--sx-rounding-extra-small);
+                font-size: var(--sx-calendar-header-input-font-size);
+                color: var(--sx-internal-color-text);
+              "
+            />
+          </div>
         </template>
       </ScheduleXCalendar>
-      <ContextMenu ref="menu" :model="menuItems" />
+      <ContextMenu ref="menu" :model="menuItems" class="!text-xs"
+        >.
+        <template #item="{ item, props }">
+          <h5 class="!text-xs" v-bind="props.action">
+            <i :class="item.icon"></i> {{ item.label }}
+          </h5>
+        </template>
+      </ContextMenu>
     </div>
     <div
       class="w-1/5 !h-[calc(100vh-100px)] mt-6 !bg-gray-200 dark:!bg-zinc-600 border rounded-lg p-4 flex flex-col justify-between"
@@ -113,6 +135,22 @@
       </div>
     </div>
   </div>
+  <Dialog
+    header="New Test Result"
+    v-model:visible="isNewApointmentVisible"
+    @hide="isNewApointmentVisible = false"
+    modal
+    :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2">
+        <span class="font-bold whitespace-nowrap">New Test Result</span>
+      </div>
+    </template>
+    <addNewAppointment :activeDate="activeDate" @submitted="handleSubmit" />
+    <template #footer> </template>
+  </Dialog>
 </template>
 
 <script setup>
@@ -136,6 +174,8 @@ import eventBus from "@/eventBus";
 import "@schedule-x/theme-default/dist/calendar.css";
 import Tag from "primevue/tag";
 import ContextMenu from "primevue/contextmenu";
+import Dialog from "primevue/dialog";
+import addNewAppointment from "@/views/addNewAppointment.vue"; // Adjust the path as needed
 import Button from "primevue/button";
 import { RouterLink } from "vue-router";
 // import RouterLink from "primevue/routerlink";
@@ -149,6 +189,7 @@ const itemsPerPage = ref(100);
 const loading = ref(false);
 const visible = ref(false);
 const activeDate = ref("");
+const isNewApointmentVisible = ref(false);
 const scrollController = createScrollControllerPlugin({
   initialScroll: "12:00",
 });
@@ -212,7 +253,16 @@ const currentPet = ref({
     },
   },
 });
+const handleSubmit = (data) => {
+  console.log(data);
+  isNewApointmentVisible.value = false;
+  // currentPage.value = 1; // Reset to the first page when searching
 
+  fetchAppointments();
+};
+const refreshData = () => {
+  fetchAppointments();
+};
 const fetchAppointments = async (page = 1) => {
   loading.value = true;
   try {
@@ -416,7 +466,7 @@ const calendarApp = createCalendar({
      * Is called when an event is clicked
      * */
     onEventClick(calendarEvent) {
-      console.log("onEventClick", calendarEvent);
+      console.log("onEventClick", currentPet.value);
       visible.value = true;
       currentPet.value = calendarEvent;
       console.log("onEventClick", currentPet.value.description);
@@ -509,7 +559,7 @@ const calendarApp = createCalendar({
 });
 const menuItems = ref([
   {
-    label: "Go To Day View",
+    label: "Go To Day Calendar",
     icon: "pi pi-calendar",
     command: () => {
       // Implement navigation to day view
@@ -520,6 +570,7 @@ const menuItems = ref([
     label: "Add New Appointment",
     icon: "pi pi-calendar-plus",
     command: () => {
+      addAppointment();
       // Implement functionality to add a new appointment
     },
   },
@@ -557,6 +608,9 @@ const onEventUpdate = async (updatedEvent) => {
       life: 5000,
     });
   }
+};
+const addAppointment = () => {
+  isNewApointmentVisible.value = true;
 };
 eventModal.close(); // close the modal
 const changeView = (date) => {

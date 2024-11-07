@@ -415,6 +415,7 @@ const fetchPets = async (page = 1) => {
       `/pets?page=${page}&per_page=${itemsPerPage.value}&search=${searchQuery.value}`
     );
     pets.value = response.data.data;
+    // console.log(pets.value);
     totalRecords.value = response.data.total;
     currentPage.value = response.data.current_page;
     loading.value = false;

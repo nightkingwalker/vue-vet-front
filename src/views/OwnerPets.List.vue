@@ -220,21 +220,11 @@
           class="col-span-12 sm:col-span-6 md:col-span-2.5 lg:col-span-2 xl:col-span-3 p-2"
         >
           <div
-            class="p-6 border-2 dark:border-surface-700 bg-zinc-100 dark:bg-[var(--p-surface-700)] rounded-lg flex flex-col shadow"
+            class="p-6 border border-surface-200 dark:border-surface-700 bg-zinc-100 dark:bg-[var(--p-surface-500)] rounded-lg flex flex-col shadow"
             :class="pet.gender === `Male` ? `!border-blue-600` : '!border-pink-600'"
           >
             <div class="">
-              <!-- <div class="w-full">
-                <div
-                  :class="
-                    (pet.gender === `Male` ? `bg-blue-600` : 'bg-pink-600') +
-                    ` mx-auto w-fit rounded-xl border p-4 dark:bg-surface-500 text-surface-200 text-white`
-                  "
-                >
-                  <i :class="getIconClass(pet.species) + ` text-3xl text-center`"></i>
-                </div>
-              </div> -->
-              <div class="text-lg font-medium border-b flex">
+              <div class="text-lg font-medium border-b flex pb-2">
                 <a
                   v-if="pet.gender === 'Male'"
                   class="bg-blue-600 text-white w-8 text-sm rounded-lg text-center flex flex-col justify-center mr-2"
