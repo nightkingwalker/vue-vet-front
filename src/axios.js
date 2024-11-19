@@ -6,12 +6,12 @@ import eventBus from "./eventBus"; // Import the event bus created with mitt
 // Create an Axios instance
 const apiClient = axios.create({
     baseURL: import.meta.env.VITE_API_URL || "",
-    timeout: 5000, // Set a timeout for requests
+    timeout: 10000, // Set a timeout for requests
 });
 
 // Add a request interceptor to handle token expiry
 apiClient.interceptors.request.use(
-    async (config) => {
+    async(config) => {
         const authStore = useAuthStore();
 
         // Check if the token is expired

@@ -76,6 +76,13 @@ const router = createRouter({
                 import ('../views/AboutView.vue'),
             meta: { allowSessionTimeout: true }
         },
+        {
+            path: '/profile',
+            name: 'Profile',
+            component: () =>
+                import ('../views/UserProfile.vue'),
+            meta: { allowSessionTimeout: true }
+        },
     ]
 });
 

@@ -421,7 +421,7 @@ const authStore = useAuthStore();
       <Menu
         v-if="authStore.isLoggedIn && route.path != `/login`"
         :model="menuItems"
-        class="w-full md:w-60 !py-8 px-4 sm:text-sm 2xl:text-lg lg:text-sm !rounded-none h-[100vh] 2xl:w-1/6 lg:w-1/5 top-0 left-0"
+        class="w-full md:w-60 !py-8 px-4 sm:text-sm 2xl:text-md lg:text-sm !rounded-none h-[100vh] 2xl:w-1/6 lg:w-1/5 top-0 left-0"
       >
         <template #start>
           <div class="flex justify-center w-full">
@@ -490,7 +490,7 @@ const authStore = useAuthStore();
 }
 @media (min-width: 1536px) {
   .container {
-    max-width: 1280px;
+    max-width: 80%;
   }
 }
 </style>

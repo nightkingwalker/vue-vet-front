@@ -189,7 +189,7 @@
                 >
                   <i class="fas fa-paw 2xl:!text-lg lg:!text-xs"></i>
                 </router-link>
-                <Button
+                <!-- <Button
                   type="button"
                   icon="fas fa-plus !text-sm"
                   label=""
@@ -206,7 +206,7 @@
                     },
                   }"
                   class="p-component text-xs !bg-[var(--p-primary-color)] !text-[var(--p-primary-contrast-color)]"
-                />
+                /> -->
                 <Button
                   class="p-button p-component 2xl:!text-lg lg:!text-xs"
                   :icon="
@@ -362,7 +362,7 @@
                   >
                     <i class="fas fa-paw 2xl:!text-lg lg:!text-xs"></i>
                   </router-link>
-                  <Button
+                  <!-- <Button
                     type="button"
                     icon="fas fa-plus !text-sm"
                     label=""
@@ -379,7 +379,7 @@
                       },
                     }"
                     class="p-component text-xs !bg-[var(--p-primary-color)] !text-[var(--p-primary-contrast-color)]"
-                  />
+                  /> -->
                   <Button
                     class="p-button p-component 2xl:!text-lg lg:!text-xs"
                     :icon="
@@ -416,6 +416,7 @@
                           '!bg-[var(--p-primary-color)] !font-thin 2xl:!text-lg lg:!text-xs shadow-md',
                       },
                     }"
+                    @click="deactivateAccount(owner)"
                   />
                 </div>
               </div>
@@ -523,7 +524,9 @@ const showWahaModal = (phone) => {
 const toggleDetails = (owner) => {
   owner.showDetails = !owner.showDetails;
 };
-
+const deactivateAccount = (owner) => {
+  console.log(owner);
+};
 const fetchOwners = async (page = 1) => {
   loading.value = true;
   try {
@@ -555,6 +558,43 @@ const fetchOwners = async (page = 1) => {
   }
   //   // console.log(loading.value);
 };
+const deactivateClient = async (data) => {
+  try {
+    // console.log(owner.value);
+    // Make the POST request to the API to create a new client
+    const response = await axiosInstance.post("/owners", owner.value);
+
+    // Emit the submitted data back to the parent component
+    emit("ownerAdded", response.data.data); // You may modify this based on your response structure
+    eventBus.emit("ownerAdded", response.data.data);
+    // Clear the form fields after successful submission
+    owner.value = {
+      name: "",
+      email: "",
+      phone: "",
+      address: "",
+    };
+
+    // Optionally, show a success message or perform any other action
+    eventBus.emit("show-toast", {
+      severity: "success",
+      summary: "Client Added",
+      detail: "New client has been added successfully.",
+      life: 5000,
+    });
+    await router.push("/owners");
+  } catch (error) {
+    // Handle the error
+    console.error("Error adding new client:", error);
+    eventBus.emit("show-toast", {
+      severity: "error",
+      summary: "Error",
+      detail: "Failed to add new client.",
+      life: 5000,
+    });
+  }
+};
+
 const onSearchChange = () => {
   if (searchQuery.value.length < 3 && searchQuery.value.length !== 0) {
     return; // Do not proceed with search

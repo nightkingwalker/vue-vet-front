@@ -45,7 +45,7 @@
               },
             }"
             icon="pi pi-plus"
-            @click="goToAddOwnerPage"
+            @click="showNewPatientModal"
             class="p-button p-button-icon-only !text-sm !font-thin h-8"
           />
         </div>
@@ -92,6 +92,8 @@
           <InputText
             v-model="searchQuery"
             @input="onSearchChange"
+            @focus="inputFocused = true"
+            @blur="inputFocused = false"
             type="text"
             class="!text-sm !text-gray-800 focus:!ring-0 focus:!ring-offset-0 focus:!border-gray-400 border-transparent"
             placeholder="Search Owners"
@@ -298,6 +300,23 @@
       ></Paginator>
     </template>
   </DataView>
+  <Dialog
+    header="Add New Patient"
+    v-model:visible="isModalVisible"
+    @hide="isModalVisible = false"
+    modal
+    :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2">
+        <Avatar icon="fas fa-users" shape="circle" />
+        <span class="font-bold whitespace-nowrap">New Patient</span>
+      </div>
+    </template>
+    <NewPatient @submitted="handleSubmit" @showOwnerModal="showOwnerModal" />
+    <template #footer> </template>
+  </Dialog>
 </template>
 
 <script setup>
@@ -315,6 +334,8 @@ import Skeleton from "primevue/skeleton";
 import router from "@/router";
 import { useRoute } from "vue-router";
 import Breadcrumb from "primevue/breadcrumb";
+import Dialog from "primevue/dialog";
+import NewPatient from "@/views/AddOwnerPetsView.vue"; // Adjust the path as needed
 import eventBus from "@/eventBus";
 const route = useRoute();
 const home = ref({
@@ -339,7 +360,7 @@ const pets = ref([
     },
   },
 ]);
-
+const isModalVisible = ref(false);
 const currentPage = ref(1); // Track the current page
 const totalRecords = ref(0); // Total number of records
 const itemsPerPage = ref(25); // Number of items per page (matching your API response)const layout = ref("grid");
@@ -356,6 +377,7 @@ const items = ref([
     route: "/" + route.params.ownerid + "/pets",
   },
 ]);
+
 const onPageChange = (event) => {
   itemsPerPage.value = event.rows;
   currentPage.value = event.page + 1; // PrimeVue Paginator uses zero-based index
@@ -403,6 +425,7 @@ const fetchPets = async (page = 1) => {
   } finally {
   }
 };
+const inputFocused = ref(false);
 const clearFilters = () => {
   // // console.log("clearing filters");
   loading.value = true; // Set loading state to true to show skeletons
@@ -414,8 +437,14 @@ const refreshData = () => {
   loading.value = true; // Set loading state to true to show skeletons
   fetchPets(); // Fetch the pets data again
 };
-const goToAddOwnerPage = async () => {
-  await router.push("/add-owner");
+const showNewPatientModal = async () => {
+  // await router.push("/add-owner");
+  isModalVisible.value = true;
+};
+const handleSubmit = () => {
+  isModalVisible.value = false;
+  currentPage.value = 1;
+  fetchPets(currentPage.value);
 };
 const species = ref([
   { label: "Avian", value: "Birds", icon: "fa-solid fa-dove" },
@@ -443,24 +472,25 @@ let typingTimer = null;
 const typingDelay = 500; // Adjust based on the speed of your scanner
 const handleKeydown = (event) => {
   // if (!inputFocused.value) {
-  // Check if the input is NOT focused
-  if (event.key.length === 1) {
-    // Capture only printable characters
-    clearTimeout(typingTimer); // Clear the previous timer
-    typingTimer = setTimeout(() => {
-      // Only trigger search if buffer length is greater than 3
-      if (searchQuery.value.length > 3) {
-        onSearchChange(); // Call search when user stops typing
-      }
-    }, typingDelay);
+  if (!inputFocused.value && isModalVisible.value === false && !event.ctrlKey) {
+    // Check if the input is NOT focused
+    if (event.key.length === 1) {
+      // Capture only printable characters
+      clearTimeout(typingTimer); // Clear the previous timer
+      typingTimer = setTimeout(() => {
+        // Only trigger search if buffer length is greater than 3
+        if (searchQuery.value.length > 3) {
+          onSearchChange(); // Call search when user stops typing
+        }
+      }, typingDelay);
 
-    // Append to searchQuery immediately
-    searchQuery.value += event.key; // Update the search query immediately
+      // Append to searchQuery immediately
+      searchQuery.value += event.key; // Update the search query immediately
+    }
+  } else {
+    // If focused, allow normal input behavior
+    // No need for additional logic here; on input, v-model will update searchQuery
   }
-  // } else {
-  //   // If focused, allow normal input behavior
-  //   // No need for additional logic here; on input, v-model will update searchQuery
-  // }
 };
 
 onMounted(() => {

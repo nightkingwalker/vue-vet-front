@@ -1,10 +1,7 @@
 <template>
   <div class="w-full">
     <!-- <h2>Add New Pet</h2> -->
-    <form
-      @submit.prevent="submitForm"
-      class="mt-8 mx-auto 3xl:w-2/3 2xl:w-2/3 xl:w-2/3 md:w-2/3"
-    >
+    <form @submit.prevent="submitForm" class="mt-8 mx-auto w-4/5">
       <fieldset
         class="p-fieldset p-component w-full flex flex-wrap items-center border rounded-lg p-4"
       >
@@ -109,6 +106,7 @@ import eventBus from "@/eventBus";
 import router from "@/router";
 import { useRoute } from "vue-router";
 const route = useRoute();
+const emit = defineEmits(["submitted"]); // Define the event to be emitted
 
 const pet = ref({
   owner_id: null,
@@ -178,6 +176,7 @@ const submitForm = async () => {
   try {
     const response = await axiosInstance.post("/pets", submissionData);
     // // console.log(response);
+    emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
       summary: "Data Loaded",

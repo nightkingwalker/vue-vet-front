@@ -17,7 +17,7 @@
       @rowSelect="onSelectionChange"
       :exportFunction="beforeExportFunction"
       responsiveLayout="scroll"
-      class="rounded-xl overflow-hidden drop-shadow-md mt-4"
+      class="rounded-xl 2xl:overflow-y-scroll drop-shadow-md mt-4 h-[95vh]"
       :size="`small`"
     >
       <template #header>
@@ -80,19 +80,36 @@
           </span>
         </div>
       </template>
-      <Column
+      <!-- <Column
         selectionMode="multiple"
         class="p-datatable"
         headerStyle="width: 3rem"
-      ></Column>
+      ></Column> -->
       <Column class="text-md !font-thin" field="owner" header="Owner">
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
           </template>
           <template v-else>
+            <router-link
+              :to="slotProps.data.owner.id + `/pets`"
+              v-tooltip.top="{
+                value: 'View Patients',
+                pt: {
+                  arrow: {
+                    style: {
+                      borderTopColor: 'var(--p-primary-color)',
+                    },
+                  },
+                  text:
+                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin 2xl:!text-lg lg:!text-xs',
+                },
+              }"
+            >
+              {{ slotProps.data.owner.name }}
+              <i class="pi pi-external-link !text-[0.6rem] text-gray-500"></i>
+            </router-link>
             <!-- Display the owner's name followed by the pet's name -->
-            {{ slotProps.data.owner.name }}
           </template>
         </template>
       </Column>
@@ -408,9 +425,13 @@ const exportCSV = (event) => {
   });
 };
 // Function to fetch pets data from the API
-const fetchPets = async (page = 1) => {
+const fetchPets = async (page = 1, hideDeceased = false) => {
   try {
     loading.value = true;
+    let url = `/pets?page=${page}&per_page=${itemsPerPage.value}&search=${searchQuery.value}`;
+    if (hideDeceased) {
+      url += `hideDeceased=true`;
+    }
     const response = await axiosInstance.get(
       `/pets?page=${page}&per_page=${itemsPerPage.value}&search=${searchQuery.value}`
     );
@@ -427,9 +448,11 @@ const fetchPets = async (page = 1) => {
 const toggleDeceasedVisibility = () => {
   showDeceased.value = !showDeceased.value;
   if (showDeceased.value) {
-    filters.value.deceased.value = null; // Show all
+    console.log("showing deseaced");
+    currentPage.value = 1;
+    fetchPets(currentPage.value, true);
   } else {
-    filters.value.deceased.value = "N"; // Hide deceased
+    // filters.value.deceased.value = "N"; // Hide deceased
   }
 };
 onMounted(() => {
