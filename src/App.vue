@@ -13,6 +13,7 @@ import { useAuthStore } from "@/stores/authStore";
 import { RouterLink, RouterView, useRoute } from "vue-router";
 import { useConfirm } from "primevue/useconfirm";
 import router from "@/router";
+import Cookies from "js-cookie";
 import ToggleSwitch from "primevue/toggleswitch";
 // import { useNotificationStore } from "@/stores/notificationStore"; // assuming the store is in src/stores/
 // const notificationStore = useNotificationStore();
@@ -28,42 +29,29 @@ let timerId = null;
 let logoutTimerId = null;
 const menuItems = [
   {
-    label: "Home",
-    icon: "pi pi-home !text-md",
+    label: "Calendar",
+    icon: "pi pi-calendar !text-md",
     class: "",
     route: "/",
     command: () => {
       // Callback to run
     },
   },
-  {
-    label: "Account",
-    icon: "pi pi-info-circle !text-md",
-    class: "",
-    route: "/account",
-    command: () => {
-      // Callback to run
-    },
-  },
+  // {
+  //   label: "Account",
+  //   icon: "pi pi-info-circle !text-md",
+  //   class: "",
+  //   route: "/profile",
+  //   command: () => {
+  //     // Callback to run
+  //   },
+  // },
   {
     label: "Patients",
     // icon: "pi pi-sign-out !text-md",
     class: "",
     icon: "fa-solid fa-paw !text-md !text-center",
     items: [
-      {
-        label: "Pets",
-        // icon: "pi pi-sign-out !text-md",
-        class: "mx-4",
-        route: "/pets",
-        icon: "fa-solid fa-paw !text-md !text-center",
-        shortcut: "CTRL+P",
-        // content:
-        // '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M309.6 158.5L332.7 19.8C334.6 8.4 344.5 0 356.1 0c7.5 0 14.5 3.5 19 9.5L392 32l52.1 0c12.7 0 24.9 5.1 33.9 14.1L496 64l56 0c13.3 0 24 10.7 24 24l0 24c0 44.2-35.8 80-80 80l-32 0-16 0-21.3 0-5.1 30.5-112-64zM416 256.1L416 480c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32l0-115.2c-24 12.3-51.2 19.2-80 19.2s-56-6.9-80-19.2L160 480c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32l0-230.2c-28.8-10.9-51.4-35.3-59.2-66.5L1 167.8c-4.3-17.1 6.1-34.5 23.3-38.8s34.5 6.1 38.8 23.3l3.9 15.5C70.5 182 83.3 192 98 192l30 0 16 0 159.8 0L416 256.1zM464 80a16 16 0 1 0 -32 0 16 16 0 1 0 32 0z"/></svg>',
-        command: () => {
-          // Callback to run
-        },
-      },
       {
         label: "Owners",
         // icon: "pi pi-sign-out !text-md",
@@ -73,6 +61,19 @@ const menuItems = [
         shortcut: "CTRL+O",
         // content:
         // '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" ><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M144 0a80 80 0 1 1 0 160A80 80 0 1 1 144 0zM512 0a80 80 0 1 1 0 160A80 80 0 1 1 512 0zM0 298.7C0 239.8 47.8 192 106.7 192l42.7 0c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3c0 38.2 16.8 72.5 43.3 96c-.2 0-.4 0-.7 0L21.3 320C9.6 320 0 310.4 0 298.7zM405.3 320c-.2 0-.4 0-.7 0c26.6-23.5 43.3-57.8 43.3-96c0-7.6-.7-15-1.9-22.3c13.6-6.3 28.7-9.7 44.6-9.7l42.7 0C592.2 192 640 239.8 640 298.7c0 11.8-9.6 21.3-21.3 21.3l-213.3 0zM224 224a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zM128 485.3C128 411.7 187.7 352 261.3 352l117.3 0C452.3 352 512 411.7 512 485.3c0 14.7-11.9 26.7-26.7 26.7l-330.7 0c-14.7 0-26.7-11.9-26.7-26.7z"/></svg>',
+        command: () => {
+          // Callback to run
+        },
+      },
+      {
+        label: "Pets",
+        // icon: "pi pi-sign-out !text-md",
+        class: "mx-4",
+        route: "/pets",
+        icon: "fa-solid fa-paw !text-md !text-center",
+        shortcut: "CTRL+P",
+        // content:
+        // '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M309.6 158.5L332.7 19.8C334.6 8.4 344.5 0 356.1 0c7.5 0 14.5 3.5 19 9.5L392 32l52.1 0c12.7 0 24.9 5.1 33.9 14.1L496 64l56 0c13.3 0 24 10.7 24 24l0 24c0 44.2-35.8 80-80 80l-32 0-16 0-21.3 0-5.1 30.5-112-64zM416 256.1L416 480c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32l0-115.2c-24 12.3-51.2 19.2-80 19.2s-56-6.9-80-19.2L160 480c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32l0-230.2c-28.8-10.9-51.4-35.3-59.2-66.5L1 167.8c-4.3-17.1 6.1-34.5 23.3-38.8s34.5 6.1 38.8 23.3l3.9 15.5C70.5 182 83.3 192 98 192l30 0 16 0 159.8 0L416 256.1zM464 80a16 16 0 1 0 -32 0 16 16 0 1 0 32 0z"/></svg>',
         command: () => {
           // Callback to run
         },
@@ -97,11 +98,11 @@ const menuItems = [
     },
     items: [
       {
-        label: "Stores",
+        label: "Pet Food",
         // icon: "pi pi-sign-out !text-md",
         class: "mx-4",
-        route: "/pets",
-        icon: "fa-solid fa-paw !text-md !text-center",
+        to: "#",
+        icon: "fa-solid fa-bone !text-md !text-center",
         // content:
         // '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M309.6 158.5L332.7 19.8C334.6 8.4 344.5 0 356.1 0c7.5 0 14.5 3.5 19 9.5L392 32l52.1 0c12.7 0 24.9 5.1 33.9 14.1L496 64l56 0c13.3 0 24 10.7 24 24l0 24c0 44.2-35.8 80-80 80l-32 0-16 0-21.3 0-5.1 30.5-112-64zM416 256.1L416 480c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32l0-115.2c-24 12.3-51.2 19.2-80 19.2s-56-6.9-80-19.2L160 480c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32l0-230.2c-28.8-10.9-51.4-35.3-59.2-66.5L1 167.8c-4.3-17.1 6.1-34.5 23.3-38.8s34.5 6.1 38.8 23.3l3.9 15.5C70.5 182 83.3 192 98 192l30 0 16 0 159.8 0L416 256.1zM464 80a16 16 0 1 0 -32 0 16 16 0 1 0 32 0z"/></svg>',
         command: () => {
@@ -109,11 +110,11 @@ const menuItems = [
         },
       },
       {
-        label: "Stores",
+        label: "Toys & Tools",
         // icon: "pi pi-sign-out !text-md",
         class: "mx-4",
-        route: "/owners",
-        icon: "fa-solid fa-users !text-md !text-center",
+        to: "#",
+        icon: "fa-solid fa-volleyball !text-md !text-center",
         // content:
         // '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" ><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M144 0a80 80 0 1 1 0 160A80 80 0 1 1 144 0zM512 0a80 80 0 1 1 0 160A80 80 0 1 1 512 0zM0 298.7C0 239.8 47.8 192 106.7 192l42.7 0c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3c0 38.2 16.8 72.5 43.3 96c-.2 0-.4 0-.7 0L21.3 320C9.6 320 0 310.4 0 298.7zM405.3 320c-.2 0-.4 0-.7 0c26.6-23.5 43.3-57.8 43.3-96c0-7.6-.7-15-1.9-22.3c13.6-6.3 28.7-9.7 44.6-9.7l42.7 0C592.2 192 640 239.8 640 298.7c0 11.8-9.6 21.3-21.3 21.3l-213.3 0zM224 224a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zM128 485.3C128 411.7 187.7 352 261.3 352l117.3 0C452.3 352 512 411.7 512 485.3c0 14.7-11.9 26.7-26.7 26.7l-330.7 0c-14.7 0-26.7-11.9-26.7-26.7z"/></svg>',
         command: () => {
@@ -123,6 +124,16 @@ const menuItems = [
     ],
   },
 
+  {
+    label: "Settings",
+    icon: "pi pi-cog !text-md",
+    class: "",
+    shortcut: "CTRL+Q",
+    to: "#",
+    // command: () => {
+    //   signOut();
+    // },
+  },
   {
     label: "Log out",
     icon: "pi pi-sign-out !text-md",
@@ -403,7 +414,7 @@ onUnmounted(() => {
 
   clearTimeout(activityTimeout);
 });
-
+const username = Cookies.get("name");
 const authStore = useAuthStore();
 </script>
 
@@ -431,6 +442,17 @@ const authStore = useAuthStore();
               class="flex justify-center rounded-[4rem] dark:bg-white w-[5rem] p-1"
             />
           </div>
+          <router-link
+            to="/profile"
+            v-ripple
+            class="relative overflow-hidden w-full border-0 bg-transparent flex items-center p-2 pl-4 hover:bg-surface-100 dark:hover:bg-surface-800 rounded-none cursor-pointer transition-colors duration-200"
+          >
+            <Avatar icon="pi pi-user" class="mr-2" shape="circle" />
+            <span class="inline-flex flex-col items-start">
+              <span class="font-bold">{{ username }}</span>
+              <!-- <span class="text-sm">Admin</span> -->
+            </span>
+          </router-link>
         </template>
         <template #submenulabel="{ item }">
           <span class="text-primary font-bold">{{ item.label }}</span>
@@ -440,7 +462,7 @@ const authStore = useAuthStore();
             v-ripple
             class="flex items-center"
             v-bind="props.action"
-            :to="item.route"
+            :to="item.route ? item.route : item.to"
           >
             <span :class="item.icon" />
             <span>{{ item.label }}</span>
@@ -452,18 +474,7 @@ const authStore = useAuthStore();
             >
           </RouterLink>
         </template>
-        <template #end>
-          <button
-            v-ripple
-            class="relative overflow-hidden w-full border-0 bg-transparent flex items-start p-2 pl-4 hover:bg-surface-100 dark:hover:bg-surface-800 rounded-none cursor-pointer transition-colors duration-200"
-          >
-            <Avatar icon="pi pi-user" class="mr-2" shape="circle" />
-            <span class="inline-flex flex-col items-start">
-              <span class="font-bold">Tarek Sawah</span>
-              <span class="text-sm">Admin</span>
-            </span>
-          </button>
-        </template>
+        <template #end> </template>
       </Menu>
       <div class="container mx-auto mt-6 2xl:px-0 xl:px-6 lg:px-6 md:px-8">
         <router-view />

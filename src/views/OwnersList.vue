@@ -189,7 +189,7 @@
                 >
                   <i class="fas fa-paw 2xl:!text-lg lg:!text-xs"></i>
                 </router-link>
-                <!-- <Button
+                <Button
                   type="button"
                   icon="fas fa-plus !text-sm"
                   label=""
@@ -206,7 +206,7 @@
                     },
                   }"
                   class="p-component text-xs !bg-[var(--p-primary-color)] !text-[var(--p-primary-contrast-color)]"
-                /> -->
+                />
                 <Button
                   class="p-button p-component 2xl:!text-lg lg:!text-xs"
                   :icon="
@@ -362,12 +362,13 @@
                   >
                     <i class="fas fa-paw 2xl:!text-lg lg:!text-xs"></i>
                   </router-link>
-                  <!-- <Button
+                  <Button
                     type="button"
-                    icon="fas fa-plus !text-sm"
+                    icon="pi pi-whatsapp !text-sm"
                     label=""
+                    @click="showWahaModal(owner.phone)"
                     v-tooltip.top="{
-                      value: 'New Pet',
+                      value: 'Send WhatsApp Message',
                       pt: {
                         arrow: {
                           style: {
@@ -379,7 +380,7 @@
                       },
                     }"
                     class="p-component text-xs !bg-[var(--p-primary-color)] !text-[var(--p-primary-contrast-color)]"
-                  /> -->
+                  />
                   <Button
                     class="p-button p-component 2xl:!text-lg lg:!text-xs"
                     :icon="

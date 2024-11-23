@@ -1,6 +1,6 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+import HomeView from '../views/CalendarView.vue';
 import LoginView from '../components/LoginComponent.vue';
 import OwnerPets from '../views/OwnerPets.List.vue';
 import OwnersList from '../views/OwnersList.vue';

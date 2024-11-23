@@ -1,15 +1,15 @@
 <template>
-  <div class="w-full">
+  <div class="w-full bg-[var(--p-content-background)] p-8 rounded-lg mt-4">
     <!-- User Profile Container -->
     <div
-      class="dark:bg-gray-800 bg-gray-200 lg:w-[70%] md:w-[80%] sm:w-full xl:w-[85%] 2xl:w-[75%] h-fit mx-auto rounded-lg p-4 mb-4 flex flex-row"
+      class="lg:w-[70%] md:w-[80%] sm:w-full xl:w-[85%] 2xl:w-[75%] h-fit mx-auto rounded-lg mb-4 flex flex-row"
     >
       <!-- Profile Section -->
       <fieldset
-        class="m-8 border dark:border-gray-100 border-gray-400 rounded-xl px-8 py-4 flex flex-col grow-1"
+        class="border dark:border-gray-100 border-gray-400 rounded-xl px-8 py-4 flex flex-col grow-1 bg-zinc-100 dark:bg-[var(--p-surface-500)]"
       >
         <legend
-          class="m-8 mb-2 border dark:border-gray-100 border-gray-400 rounded-xl px-4 dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm"
+          class="m-8 mb-2 border dark:border-gray-100 border-gray-400 rounded-xl px-4 dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-xs"
         >
           <i class="fa-solid fa-address-card"></i> Profile Information
         </legend>
@@ -51,9 +51,9 @@
                   >Name</label
                 >
                 <div class="textcontainer">
-                  <input
+                  <InputText
+                    size="small"
                     v-model="user.name"
-                    class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-transparent dark:focus:border-transparent focus:ring-0 dark:focus:ring-0 rounded-md shadow-sm block py-2 px-4 w-full"
                     id="name"
                     type="text"
                     required
@@ -69,12 +69,13 @@
                   >Email</label
                 >
                 <div class="textcontainer">
-                  <input
+                  <InputText
+                    size="small"
                     v-model="user.email"
-                    class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-transparent dark:focus:border-transparent focus:ring-0 dark:focus:ring-0 rounded-md shadow-sm block py-2 px-4 w-full"
                     id="email"
                     type="email"
-                    required
+                    readonly
+                    disabled
                   />
                   <div class="borderx"></div>
                 </div>
@@ -99,7 +100,7 @@
         class="m-8 border dark:border-gray-100 border-gray-400 rounded-xl px-8 py-4 flex flex-col hidden"
       >
         <legend
-          class="m-8 mb-2 border dark:border-gray-100 border-gray-400 rounded-xl px-4 dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm"
+          class="m-8 mb-2 border dark:border-gray-100 border-gray-400 rounded-xl px-4 dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-xs"
         >
           <i class="fa-solid fa-camera"></i> Avatar
         </legend>
@@ -149,7 +150,7 @@
                 </p>
                 <p class="text-xs text-gray-500 dark:text-gray-400">JPG/PNG only</p>
               </div>
-              <input id="file" name="file" type="file" class="hidden" />
+              <InputText size="small" id="file" name="file" type="file" class="hidden" />
             </label>
           </div>
         </div>
@@ -158,39 +159,32 @@
 
     <!-- Update Password Section -->
     <div
-      class="dark:bg-gray-800 bg-gray-200 lg:w-[70%] md:w-[80%] sm:w-full xl:w-[85%] 2xl:w-[75%] h-fit mx-auto rounded-lg p-4 mb-4 flex flex-row"
+      class="lg:w-[70%] md:w-[80%] sm:w-full xl:w-[85%] 2xl:w-[75%] h-fit mx-auto rounded-lg mb-4 flex flex-row gap-1 justify-center items-start"
     >
       <fieldset
-        class="m-8 border dark:border-gray-100 border-gray-400 rounded-xl px-8 py-4 flex flex-col w-1/2"
+        class="border dark:border-gray-100 border-gray-400 rounded-xl px-8 py-4 flex flex-col w-1/2 bg-zinc-100 dark:bg-[var(--p-surface-500)]"
       >
         <legend
-          class="m-8 mb-2 border dark:border-gray-100 border-gray-400 rounded-xl px-4 dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm"
+          class="border dark:border-gray-100 border-gray-400 rounded-xl px-4 dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-xs"
         >
           <i class="fa-solid fa-lock"></i> Update Password
         </legend>
         <div class="max-w-xl">
           <section>
             <header>
-              <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+              <!-- <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
                 Update Password
-              </h2>
-              <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+              </h2> -->
+              <p class="mt-1 text-xs text-gray-600 dark:text-gray-400">
                 Ensure your account is using a long, random password to stay secure.
               </p>
             </header>
 
             <form
-              method="post"
-              action="http://laravel.ids-tech.net:8001/password"
-              class="mt-6 space-y-6"
+              @submit.prevent="updatePassword"
+              class="mt-6 space-y-2"
               data-bitwarden-watching="1"
             >
-              <input
-                type="hidden"
-                name="_token"
-                value="1LPkRPsw6tVRniaKRXelAR9kvpdUgzqGtvklfsKv"
-              />
-              <input type="hidden" name="_method" value="put" />
               <div>
                 <label
                   class="block font-medium text-sm text-gray-700 dark:text-gray-300"
@@ -198,12 +192,12 @@
                   >Current Password</label
                 >
                 <div class="textcontainer">
-                  <input
-                    class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-transparent dark:focus:border-transparent focus:ring-0 dark:focus:ring-0 rounded-md shadow-sm block py-2 px-4 w-full"
+                  <InputText
+                    size="small"
                     id="current_password"
                     name="current_password"
+                    v-model="current_password"
                     type="password"
-                    autocomplete="current-password"
                   />
                   <div class="borderx"></div>
                 </div>
@@ -216,11 +210,10 @@
                   >New Password</label
                 >
                 <div class="textcontainer">
-                  <input
-                    class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-transparent dark:focus:border-transparent focus:ring-0 dark:focus:ring-0 rounded-md shadow-sm block py-2 px-4 w-full"
-                    id="password_"
-                    name="password"
+                  <InputText
+                    size="small"
                     type="password"
+                    v-model="newpassword"
                     autocomplete="new-password"
                   />
                   <div class="borderx"></div>
@@ -234,14 +227,23 @@
                   >Confirm Password</label
                 >
                 <div class="textcontainer">
-                  <input
-                    class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-transparent dark:focus:border-transparent focus:ring-0 dark:focus:ring-0 rounded-md shadow-sm block py-2 px-4 w-full"
+                  <InputText
+                    size="small"
                     id="password_confirmation"
                     name="password_confirmation"
+                    v-model="password_confirmation"
                     type="password"
+                    :invalid="passwordMatchError"
                     autocomplete="new-password"
                   />
-                  <div class="borderx"></div>
+                  <Message
+                    size="small"
+                    severity="danger"
+                    variant="simple"
+                    class="text-[11px] text-red-500"
+                    v-if="passwordMatchError"
+                    >Passwords do not match.</Message
+                  >
                 </div>
               </div>
 
@@ -259,73 +261,65 @@
       </fieldset>
 
       <fieldset
-        class="m-8 border dark:border-gray-100 border-gray-400 rounded-xl px-8 py-4 flex flex-col w-1/2"
+        class="border dark:border-gray-100 border-gray-400 rounded-xl px-8 py-4 flex flex-col w-1/2 bg-zinc-100 dark:bg-[var(--p-surface-500)]"
       >
         <legend
-          class="m-8 mb-2 border dark:border-gray-100 border-gray-400 rounded-xl px-4 dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm"
+          class="m-8 mb-2 border dark:border-gray-100 border-gray-400 rounded-xl px-4 dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-xs"
         >
           <i class="fa-solid fa-user-shield"></i> Two Factor Authentication
         </legend>
         <div class="max-w-xl">
           <section class="space-y-6">
             <header>
-              <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+              <!-- <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
                 Activate Two Factor Authentication
-              </h2>
-              <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                To add another layer of security to your account, please activate
-                two-factor authentication.
+              </h2> -->
+              <p class="mt-1 text-xs text-gray-600 dark:text-gray-400">
+                Activate two-factor authentication.
               </p>
             </header>
             <label class="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" value="" class="sr-only peer" id="enable_tfa" />
-              <div
-                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 peer-focus:ring-0 dark:peer-focus:ring-0 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
-              ></div>
-              <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+              <ToggleSwitch v-model="checked" />
+              <span class="ml-3 text-sm font-medium"
                 ><span id="tfa_status">Enable</span> Two Factor Authentication</span
               >
             </label>
 
             <div class="flex items-end">
-              <div class="pr-4">
-                <div class="visible-print text-center">
-                  <h6 class="dark:text-gray-200 text-gray-800 text-left mb-4">
-                    2FA CODE: JUOGHEZQQS46O3FB
-                  </h6>
-                  <img class="w-32" :src="TFA" />
-                </div>
-                <form action="/user/2fa" method="post">
-                  <input
-                    type="hidden"
-                    name="_token"
-                    value="1LPkRPsw6tVRniaKRXelAR9kvpdUgzqGtvklfsKv"
-                  />
-                  <input type="hidden" name="code_generated" value="JUOGHEZQQS46O3FB" />
-                  <label
-                    class="block font-medium text-sm text-gray-700 dark:text-gray-300 mt-4"
-                    for="2fa_code"
-                    >Two Factor Authentication Code</label
-                  >
-                  <div class="textcontainer">
-                    <input
-                      class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-transparent dark:focus:border-transparent focus:ring-0 dark:focus:ring-0 rounded-md shadow-sm block py-2 px-4 w-[350px]"
-                      id="2fa_code"
-                      type="text"
-                      name="2fa_code"
-                      placeholder="2FA Code"
-                      required
-                    />
-                    <div class="borderx"></div>
+              <transition name="fade">
+                <div class="pr-4" v-if="checked">
+                  <div class="visible-print text-center">
+                    <p class="text-left text-[10pt] text-green-500">
+                      Scan The QR CODE In Authenticator App
+                    </p>
+                    <h6 class="text-left mb-4">2FA CODE: {{ user.two_factor_secret }}</h6>
+                    <img v-if="checked" class="w-32" :src="qrCodeUrl" alt="2FA QR Code" />
                   </div>
-                  <button
-                    type="submit"
-                    class="bg-gray-900 px-4 py-2 text-white mt-4 rounded hover:bg-gray-700 shadow-md text-xs"
-                  >
-                    Activate 2FA
-                  </button>
-                </form>
-              </div>
+                  <form @submit.prevent="tfaEnabled">
+                    <label
+                      class="block text-xs text-gray-700 dark:text-gray-300 mt-4"
+                      for="2fa_code"
+                      >Confirm OTP From Your Authenticator App</label
+                    >
+                    <div class="textcontainer">
+                      <InputText
+                        size="small"
+                        type="text"
+                        placeholder="2FA Code"
+                        :required="checked.value"
+                        v-model="tfa_code"
+                      />
+                      <div class="borderx"></div>
+                    </div>
+                    <button
+                      type="submit"
+                      class="bg-gray-900 px-4 py-2 text-white mt-4 rounded hover:bg-gray-700 shadow-md text-xs"
+                    >
+                      Activate 2FA
+                    </button>
+                  </form>
+                </div>
+              </transition>
             </div>
           </section>
         </div>
@@ -335,24 +329,178 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
+import QRCode from "qrcode"; // Import the QRCode library
 import PlaceHolder from "@/assets/placeholder-1.png";
-import TFA from "@/assets/otpauth_totp_ve_.png";
+import axiosInstance from "@/axios"; // Assuming axiosInstance is set up correctly
+import ToggleSwitch from "primevue/toggleswitch";
+import eventBus from "@/eventBus";
+import InputText from "primevue/inputtext";
+const qr_details = ref([]);
 const loading = ref(true);
 const user = ref({
   id: 1,
-  name: "tarek",
-  email: "t.sawah@gmail.com",
-  two_factor_secret: "JUOGHEZQQS46O3FB",
+  name: "",
+  email: "",
+  two_factor_secret: "",
   avatarUrl: PlaceHolder,
 });
+const confirmation_true = ref(false);
+const checked = ref(false);
+const qrCodeUrl = ref(""); // Holds the QR code image URL
+const appName = ref("");
+const username = ref("");
+const secret = ref(""); // Replace this with your generated secret
+const tfa_code = ref("");
+const newpassword = ref("");
+const password_confirmation = ref("");
+const current_password = ref("");
+const message = ref("");
+// Computed value for the QR code
+const qrCodeValue = computed(() => {
+  return `otpauth://totp/${appName.value}:${username.value}?secret=${secret.value}&issuer=${appName.value}`;
+});
 
-// Methods to handle form submission (update user profile)
-const submitForm = async () => {
+// Generate the QR code URL
+const generateQRCode = async () => {
   try {
-    console.log("Profile updated with:", user.value);
+    qrCodeUrl.value = await QRCode.toDataURL(qrCodeValue.value);
   } catch (error) {
-    console.error("Error updating profile:", error);
+    console.error("Error generating QR code:", error);
+  }
+};
+const tfaEnabled = async () => {
+  // console.log("CHECKED " + checked.value);
+  loading.value = true;
+  const submissionData = {
+    two_factor_code: tfa_code.value,
+  };
+
+  try {
+    const response = await axiosInstance.post(
+      !checked.value ? `/2fa/disable` : `/2fa/enable`,
+      submissionData
+    );
+    // // console.log(response);
+    // emit("submitted", response.data);
+    eventBus.emit("show-toast", {
+      severity: "success",
+      summary: "Data Loaded",
+      detail:
+        "" + !checked.value
+          ? "Two Factor Authentication Disabled Successfully"
+          : "Two Factor Authentication Enabled Successfully",
+      life: 5000,
+    });
+  } catch (error) {
+    eventBus.emit("show-toast", {
+      severity: "warn",
+      summary: "Error",
+      detail: error,
+      life: 5000,
+    });
+  } finally {
+  }
+};
+const updatePassword = async () => {
+  // console.log("CHECKED " + checked.value);
+  loading.value = true;
+  const submissionData = {
+    current_password: current_password.value,
+    new_password: newpassword.value,
+    new_password_confirmation: password_confirmation.value,
+  };
+
+  try {
+    const response = await axiosInstance.put(`/user/password`, submissionData);
+    // // console.log(response);
+    // emit("submitted", response.data);
+    eventBus.emit("show-toast", {
+      severity: "success",
+      summary: "Data Loaded",
+      detail: "Password Updated Successfully",
+      life: 5000,
+    });
+  } catch (error) {
+    if (error.response) {
+      // console.error("Response:", error.response);
+      // console.error("Data:", error.response.data);
+      // console.error("Status:", error.response.status);
+      // console.error("Headers:", error.response.headers);
+      loading.value = false;
+      message.value = error.response.data.message;
+    } else if (error.request) {
+      console.error("No response received:", error.request);
+      message.value = "No response from server, please check your network.";
+    } else {
+      console.error("Error Message:", error.message);
+      message.value = "Error sending request: " + error.message;
+    }
+  } finally {
+  }
+};
+
+// Fetch user details and update the QR code
+const fetchUserDetails = async () => {
+  loading.value = true;
+  try {
+    const response = await axiosInstance.get(`/user-profile`);
+    user.value = response.data.user;
+    user.value.avatarUrl = PlaceHolder;
+    checked.value = response.data.user.two_factor_enabled === 1 ? true : false;
+    // Update QR code details with user information
+    appName.value = "Vet APP";
+    username.value = user.value.email;
+    secret.value = user.value.two_factor_secret;
+
+    // Generate QR code with updated details
+    await generateQRCode();
+
+    loading.value = false; // Stop loading once data is fetched
+  } catch (error) {
+    console.error("Error fetching user details:", error);
+  }
+};
+
+// Form submission handler
+const submitForm = async () => {
+  // try {
+  //   console.log("Profile updated with:", user.value);
+  // } catch (error) {
+  //   console.error("Error updating profile:", error);
+  // }
+  loading.value = true;
+  const submissionData = {
+    name: user.value.name,
+    // email: user.value.email,
+  };
+
+  try {
+    const response = await axiosInstance.put(`/user`, submissionData);
+    // // console.log(response);
+    // emit("submitted", response.data);
+    eventBus.emit("show-toast", {
+      severity: "success",
+      summary: "Data Loaded",
+      detail: "User Details Updated Successfully",
+      life: 5000,
+    });
+  } catch (error) {
+    if (error.response) {
+      console.error("Response:", error.response);
+      console.error("Data:", error.response.data);
+      console.error("Status:", error.response.status);
+      console.error("Headers:", error.response.headers);
+      loading.value = false;
+      message.value = error.response.data.message;
+    } else if (error.request) {
+      console.error("No response received:", error.request);
+      message.value = "No response from server, please check your network.";
+    } else {
+      console.error("Error Message:", error.message);
+      message.value = "Error sending request: " + error.message;
+    }
+  } finally {
   }
 };
 
@@ -364,21 +512,9 @@ const dropHandler = (event) => {
 const dragOverHandler = (event) => {
   event.preventDefault();
 };
-const fetchUserDetails = async () => {
-  loading.value = true;
-  try {
-    // Make the request using the axios instance with interceptors
-    const response = await axiosInstance.get(`/user-profile`);
-    // // console.log(medical_records.value);
-    user.value = response.data;
-    console.log(user.value);
-    loading.value = false; // Stop loading once data is fetched
-    // // console.log(findRecordById(4));
-  } catch (error) {
-    //     // showSuccess("warn", "Warning", "Couldent Fetch Data");
-  } finally {
-  }
-};
+const passwordMatchError = computed(() => {
+  return password_confirmation.value !== newpassword.value;
+});
 onMounted(() => {
   fetchUserDetails();
 });
@@ -394,5 +530,15 @@ onMounted(() => {
 }
 .p-fieldset-content {
   display: flex;
+}
+/* Add this CSS to your style section or external stylesheet */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
+  transform: translateY(-10px); /* or scale(0.95) for a scaling effect */
 }
 </style>

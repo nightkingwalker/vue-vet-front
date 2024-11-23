@@ -12,7 +12,7 @@
         />
       </div>
 
-      <form @submit.prevent="login">
+      <form v-if="!requires2FA" @submit.prevent="login">
         <div>
           <div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400">
             <label for="username">Username</label>
@@ -67,18 +67,86 @@
                 ><i class="pi pi-eye password-shield" @click="togglePassInput()"></i
               ></InputGroupAddon>
             </InputGroup>
-            <small
-              id=""
-              v-if="message"
-              :class="{ 'text-green-500': !isError, 'text-red-500': isError }"
-              >{{ message }}</small
-            >
           </div>
+          <small
+            id=""
+            :class="{ 'text-green-500': !isError, 'text-red-500': isError } + ` h-4`"
+            >{{ message }}</small
+          >
         </div>
         <div class="flex items-end justify-end">
           <button
             type="submit"
-            class="p-button p-button-content !text-[var(--p-primary-color)] py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            class="p-button p-button-content !text-[var(--p-primary-color)] py-2 px-4 rounded focus:outline-none focus:shadow-outline h-8"
+            :disabled="loading ? true : false"
+          >
+            <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
+            <span v-else>Log In</span>
+          </button>
+          <!-- <a
+            href="#"
+            class="inline-block align-baseline font-bold text-sm text-blue-500 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-400"
+          >
+            Forgot Password?
+          </a> -->
+        </div>
+      </form>
+      <form
+        v-if="requires2FA"
+        @submit.prevent="verify2FA"
+        class="transition-transform duration-300 transform"
+        :class="{ 'translate-x-0': requires2FA, 'translate-x-full': !requires2FA }"
+      >
+        <h2 class="text-md font-bold mb-4">Two-Factor Authentication</h2>
+        <p class="text-sm mb-4">Please enter the 2FA code from your authenticator app.</p>
+        <!-- <div>
+          <InputText
+            id="twoFactorCode"
+            v-model="twoFactorCode"
+            placeholder="Enter your 2FA code"
+            fluid
+            style="
+              border-top: 1px solid var(--p-inputgroup-addon-border-color);
+              border-bottom: 1px solid var(--p-inputgroup-addon-border-color);
+            "
+            class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 focus:!ring-0 focus:!ring-offset-0 !border-x-0 focus:!outline-0"
+          />
+        </div> -->
+        <div class="mb-6">
+          <div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400">
+            <InputGroup
+              class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 flex rounded-md overflow-hidden"
+            >
+              <InputGroupAddon
+                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 px-4 flex flex-col item-center justify-center"
+                ><i class="pi pi-shield"></i
+              ></InputGroupAddon>
+              <InputText
+                id="twoFactorCode"
+                v-model="twoFactorCode"
+                placeholder="Enter your 2FA code"
+                :feedback="false"
+                fluid
+                autofocus
+                style="
+                  border-top: 1px solid var(--p-inputgroup-addon-border-color);
+                  border-bottom: 1px solid var(--p-inputgroup-addon-border-color);
+                "
+                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 !ring-0 focus:!ring-0 !ring-offset-0 focus:!ring-offset-0 !border-x-0"
+              />
+            </InputGroup>
+            <small
+              id=""
+              :class="{ 'text-green-500': !isError, 'text-red-500': isError } + ` h-4`"
+              >{{ message }}</small
+            >
+          </div>
+        </div>
+
+        <div class="flex items-end justify-end">
+          <button
+            type="submit"
+            class="p-button p-button-content !text-[var(--p-primary-color)] py-2 px-4 rounded focus:outline-none focus:shadow-outline h-8"
             :disabled="loading ? true : false"
           >
             <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
@@ -116,67 +184,96 @@ const isPassword = ref(true);
 const loading = ref(false);
 const router = useRouter();
 const authStore = useAuthStore(); // Define authStore using useAuthStore
+const requires2FA = ref(false); // Controls 2FA form visibility
+const temporaryToken = ref(""); // Stores the temporary token for 2FA verification
+const twoFactorCode = ref("");
 const login = async () => {
   loading.value = true;
-  const data = JSON.stringify({
-    email: email.value,
-    password: password.value,
-  });
-  const config = {
-    method: "post",
-    url: import.meta.env.VITE_API_URL + "/login",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    data: data,
-  };
 
   try {
-    const response = await axios(config);
+    const response = await axios.post(import.meta.env.VITE_API_URL + "/login", {
+      email: email.value,
+      password: password.value,
+    });
+    console.log(response.data);
+    const {
+      access_token,
+      refresh_token,
+      expires_in,
+      refresh_expires_in,
+      requires_2fa,
+      temporary_token,
+    } = response.data;
 
-    const { access_token, refresh_token, expires_in, refresh_expires_in } = response.data;
-
-    authStore.logIn(access_token, refresh_token, expires_in, refresh_expires_in);
-
-    message.value = "Logged in successfully!";
-    isError.value = false;
-
-    setTimeout(() => {
-      loading.value = false;
-      router.push("/").catch((err) => {
-        console.error("Router push error:", err);
-      });
-    }, 2000);
-  } catch (error) {
-    console.error("Login Error:", error);
-    isError.value = true;
-
-    if (axios.isAxiosError(error)) {
-      if (error.response) {
-        console.error("Data:", error.response.data);
-        console.error("Status:", error.response.status);
-        console.error("Headers:", error.response.headers);
-        loading.value = false;
-        message.value =
-          error.response.data &&
-          error.response.data.error &&
-          error.response.data.error === "invalid_credentials"
-            ? "Invalid Credentials, please try again"
-            : "An error occurred, please try again.";
-      } else if (error.request) {
-        console.error("No response received:", error.request);
-        message.value = "No response from server, please check your network.";
-      } else {
-        console.error("Error Message:", error.message);
-        message.value = "Error sending request: " + error.message;
-      }
+    if (requires_2fa) {
+      requires2FA.value = true;
+      temporaryToken.value = temporary_token;
+      message.value = "Two-Factor Authentication is required.";
     } else {
-      console.error("Non-Axios Error:", error);
-      message.value = "An unexpected error occurred.";
+      authStore.logIn(access_token, refresh_token, expires_in, refresh_expires_in);
+      router.push("/").catch((err) => console.error("Router error:", err));
     }
+
+    isError.value = false;
+  } catch (error) {
+    isError.value = true;
+    message.value = error.response?.data?.message || "Login failed. Please try again.";
+  } finally {
+    loading.value = false;
   }
 };
 
+const verify2FA = async () => {
+  loading.value = true;
+
+  try {
+    const response = await axios.post(
+      import.meta.env.VITE_API_URL + "/2fa/verify",
+      { two_factor_code: twoFactorCode.value },
+      { headers: { Authorization: `Bearer ${temporaryToken.value}` } }
+    );
+    console.log(response.data);
+    const {
+      access_token,
+      refresh_token,
+      expires_in,
+      refresh_expires_in,
+      user,
+    } = response.data;
+
+    authStore.logIn(
+      access_token,
+      refresh_token,
+      expires_in,
+      refresh_expires_in,
+      user.name
+    );
+    message.value = "Two-Factor Authentication verified!";
+    router.push("/").catch((err) => console.error("Router error:", err));
+    isError.value = false;
+  } catch (error) {
+    // isError.value = true;
+    // message.value = error.response?.data?.message || "Invalid 2FA code.";
+    if (error.response) {
+      if (error.response.status === 429) {
+        console.error("Too many attempts. Please try again later.");
+        message.value =
+          error.response?.data?.message || "Too many attempts. Please try again later.";
+        this.showToast("Too many attempts. Please try again in a minute.");
+      } else {
+        console.error("Verification failed: ", error.response.data);
+        message.value =
+          error.response?.data?.message || "Invalid 2FA code. Please try again.";
+        this.showToast("Invalid 2FA code. Please try again.");
+      }
+    } else {
+      console.error("Error sending request: ", error.message);
+      this.showToast("An unexpected error occurred. Please try again.");
+    }
+  } finally {
+    loading.value = false;
+  }
+};
 const togglePassInput = () => {
   isPassword.value = !isPassword.value;
   var element = document.getElementsByClassName("password-shield");
@@ -191,3 +288,16 @@ const togglePassInput = () => {
   }
 };
 </script>
+<style>
+form {
+  transition: transform 0.3s ease-in-out;
+}
+
+form.translate-x-full {
+  transform: translateX(100%);
+}
+
+form.translate-x-0 {
+  transform: translateX(0);
+}
+</style>

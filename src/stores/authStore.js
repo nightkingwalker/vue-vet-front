@@ -1,99 +1,134 @@
-import { defineStore } from 'pinia';
-import axios from 'axios';
-import eventBus from '@/eventBus'; // Import the event bus created with mitt
-import router from '@/router';
+/*NEEDS TO WORK ON SECURITY */
 
-// Create an Axios instance
+import { defineStore } from "pinia";
+import axios from "axios";
+import Cookies from "js-cookie";
+import router from "@/router";
+
 const apiClient = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'https://vet-api.ids-tech.net/api',
+    baseURL: import.meta.env.VITE_API_URL || "https://vet-api.ids-tech.net/api",
+    timeout: 5000,
+    headers: {
+        "Content-Type": "application/json",
+    },
 });
 
-export const useAuthStore = defineStore('auth', {
+// Add an interceptor to attach the access token to requests
+apiClient.interceptors.request.use(
+    (config) => {
+        const accessToken = Cookies.get("access_token");
+        if (accessToken) {
+            config.headers["Authorization"] = `Bearer ${accessToken}`;
+        }
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
+
+export const useAuthStore = defineStore("auth", {
     state: () => ({
-        token: localStorage.getItem('access_token') || null,
-        refreshToken: localStorage.getItem('refresh_token') || null,
-        tokenExpiry: localStorage.getItem('token_expiry') || null,
-        refreshExpiry: localStorage.getItem('refresh_expiry') || null,
+        token: Cookies.get("access_token") || null,
+        refreshToken: Cookies.get("refresh_token") || null,
+        tokenExpiry: Cookies.get("token_expiry") || null,
+        refreshExpiry: Cookies.get("refresh_expiry") || null,
         refreshTimeout: null,
     }),
     getters: {
-        isLoggedIn: (state) => !!state.token
+        isLoggedIn: (state) => !!state.token,
     },
     actions: {
-        logIn(accessToken, refreshToken, tokenExpiry, refreshExpiry) {
+        // Log in user and store tokens
+        logIn(accessToken, refreshToken, tokenExpiry, refreshExpiry, userName) {
             this.token = accessToken;
             this.refreshToken = refreshToken;
             this.tokenExpiry = tokenExpiry;
             this.refreshExpiry = refreshExpiry;
 
-            localStorage.setItem('access_token', accessToken);
-            localStorage.setItem('refresh_token', refreshToken);
-            localStorage.setItem('token_expiry', tokenExpiry);
-            localStorage.setItem('refresh_expiry', refreshExpiry);
+            Cookies.set("name", userName, {
+                secure: true,
+                sameSite: "Strict",
+                expires: new Date(tokenExpiry * 1000), // Convert UNIX timestamp to Date object
+            });
+            Cookies.set("access_token", accessToken, {
+                secure: true,
+                sameSite: "Strict",
+                expires: new Date(tokenExpiry * 1000), // Convert UNIX timestamp to Date object
+            });
+            Cookies.set("refresh_token", refreshToken, {
+                secure: true,
+                sameSite: "Strict",
+                expires: new Date(refreshExpiry * 1000), // Convert UNIX timestamp to Date object
+            });
+            Cookies.set("token_expiry", tokenExpiry, {
+                secure: true,
+                sameSite: "Strict",
+                expires: new Date(tokenExpiry * 1000),
+            });
+            Cookies.set("refresh_expiry", refreshExpiry, {
+                secure: true,
+                sameSite: "Strict",
+                expires: new Date(refreshExpiry * 1000),
+            });
 
             this.startTokenRefresh();
-            this.$patch({ token: accessToken });
         },
+
+        // Log out user and clear cookies
         logOut() {
             this.token = null;
             this.refreshToken = null;
             this.tokenExpiry = null;
             this.refreshExpiry = null;
 
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('refresh_token');
-            localStorage.removeItem('token_expiry');
-            localStorage.removeItem('refresh_expiry');
+            Cookies.remove("access_token");
+            Cookies.remove("refresh_token");
+            Cookies.remove("token_expiry");
+            Cookies.remove("refresh_expiry");
 
-            // eventBus.emit('show-toast', {
-            //     severity: 'error',
-            //     summary: 'Signed Out',
-            //     detail: 'You have been signed out.',
-            //     life: 5000,
-            // });
-
-            router.push('/login');
+            router.push("/login");
         },
+
+        // Schedule token refresh before expiry
         startTokenRefresh() {
             if (!this.token || !this.tokenExpiry) return;
 
-            const currentTime = Date.now() / 1000;
+            const currentTime = Math.floor(Date.now() / 1000);
             const timeUntilExpiry = this.tokenExpiry - currentTime;
 
-            const refreshTime = (timeUntilExpiry - 5 * 60) * 1000; // Convert to milliseconds
-
-            if (refreshTime > 0) {
-                this.refreshTimeout = setTimeout(() => {
-                    this.refreshTokenAction();
-                }, refreshTime);
+            if (timeUntilExpiry > 0) {
+                const refreshTime = (timeUntilExpiry - 5 * 60) * 1000; // Refresh 5 minutes before expiry
+                this.refreshTimeout = setTimeout(() => this.refreshTokenAction(), refreshTime);
             } else {
-                this.logOut(); // Directly log out if the token is already expired
+                this.logOut(); // Log out if the token is already expired
             }
         },
+
+        // Perform token refresh
         async refreshTokenAction() {
-            // console.log("Attempting refresh");
-            const payload = {
-                refresh_token: this.refreshToken
-            }; // Ensure the payload is an object not a string.
+            if (!this.refreshToken) {
+                this.logOut();
+                return;
+            }
+
             try {
-                const response = await apiClient.post('/auth/refresh', payload, {
-                    headers: {
-                        'Content-Type': 'application/json', // Ensuring header is set right here.
-                        'Authorization': `Bearer ${this.token}` // Make sure the current token is sent if needed.
-                    }
+                const response = await apiClient.post("/auth/refresh", {
+                    refresh_token: this.refreshToken,
                 });
 
                 const { access_token, expires_in, refresh_token, refresh_expires_in } = response.data;
 
-                // Calculate the new expiry times based on current time + expiresIn.
-                // const currentTime = Math.floor(Date.now() / 1000);
-                const newTokenExpiry = expires_in;
-                const newRefreshExpiry = refresh_expires_in;
-                this.logIn(access_token, refresh_token, newTokenExpiry, newRefreshExpiry);
+                // Update tokens and restart the refresh process
+                const currentTime = Math.floor(Date.now() / 1000);
+                this.logIn(
+                    access_token,
+                    refresh_token,
+                    currentTime + expires_in,
+                    currentTime + refresh_expires_in
+                );
             } catch (error) {
-                console.error('Token refresh failed', error.response || error);
-                this.logOut(); // Log out if refresh fails
+                console.error("Token refresh failed", error);
+                this.logOut();
             }
-        }
-    }
+        },
+    },
 });
