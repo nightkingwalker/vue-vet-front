@@ -241,6 +241,7 @@ const login = async () => {
       refresh_expires_in,
       requires_2fa,
       temporary_token,
+      user,
     } = response.data;
 
     if (requires_2fa) {
@@ -248,7 +249,13 @@ const login = async () => {
       temporaryToken.value = temporary_token;
       message.value = "Two-Factor Authentication is required.";
     } else {
-      authStore.logIn(access_token, refresh_token, expires_in, refresh_expires_in);
+      authStore.logIn(
+        access_token,
+        refresh_token,
+        expires_in,
+        refresh_expires_in,
+        user.name
+      );
       router.push("/").catch((err) => console.error("Router error:", err));
     }
 

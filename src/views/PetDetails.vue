@@ -135,6 +135,23 @@
         <template #header>
           <div class="flex flex-wrap items-center justify-between gap-2">
             <span class="text-xl font-bold">Visits History</span>
+            <Button
+              v-tooltip.top="{
+                value: 'New Record',
+                pt: {
+                  arrow: {
+                    style: {
+                      borderTopColor: 'var(--p-primary-color)',
+                    },
+                  },
+                  text:
+                    '!bg-[var(--p-primary-color)] !font-thin 2xl:!text-lg lg:!text-xs shadow-md',
+                },
+              }"
+              icon="pi pi-plus"
+              @click="addAppointment"
+              class="p-button p-button-icon-only !text-sm !font-thin h-8"
+            />
           </div>
         </template>
         <Column field="start" header="Date" :class="`!rtl w-1/8 `"></Column>
@@ -311,6 +328,22 @@
     />
     <template #footer> </template>
   </Dialog>
+  <Dialog
+    header="New Record"
+    v-model:visible="isNewApointmentVisible"
+    @hide="isNewApointmentVisible = false"
+    modal
+    :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2">
+        <span class="font-bold whitespace-nowrap">New Medical Record</span>
+      </div>
+    </template>
+    <addNewAppointment :petMicrochip="petmicrochip" @submitted="handleSubmit" />
+    <template #footer> </template>
+  </Dialog>
 </template>
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
@@ -330,10 +363,13 @@ import PetTreatments from "@/views/TreatmentsList.vue"; // Adjust the path as ne
 import TestResults from "@/views/TestResults.vue"; // Adjust the path as needed
 import AddNewTreatment from "@/views/AddNewTreatment.vue"; // Adjust the path as needed
 import AddNewTestResult from "@/views/AddNewTestResult.vue"; // Adjust the path as needed
+import addNewAppointment from "@/views/addNewAppointment.vue"; // Adjust the path as needed
+
 const isTreatmentsListVisible = ref(false);
 const isTestResultsVisible = ref(false);
 const isNewTreatmentVisible = ref(false);
 const isNewTestResultVisible = ref(false);
+const isNewApointmentVisible = ref(false);
 const route = useRoute();
 const petmicrochip = ref(route.params.petmicrochip);
 const pet = ref({
@@ -349,6 +385,7 @@ const pet = ref({
     name: "",
   },
 });
+
 const showAddTreatmentModal = () => {
   isNewTreatmentVisible.value = true;
 };
@@ -362,6 +399,17 @@ const showAddTestResultModal = () => {
 const handleNewTestResult = () => {
   isNewTestResultVisible.value = false;
   eventBus.emit("newTestResultAdded");
+};
+const handleSubmit = (data) => {
+  console.log(data);
+  isNewApointmentVisible.value = false;
+  // currentPage.value = 1; // Reset to the first page when searching
+
+  // fetchAppointments();
+};
+const addAppointment = () => {
+  console.log(petmicrochip.value);
+  isNewApointmentVisible.value = true;
 };
 // console.log(pet.value);
 const owner = ref(""); // Initialize owner as an empty string

@@ -136,7 +136,7 @@
     </div>
   </div>
   <Dialog
-    header="New Test Result"
+    header="New Appointment"
     v-model:visible="isNewApointmentVisible"
     @hide="isNewApointmentVisible = false"
     modal

@@ -45,7 +45,7 @@ export const useAuthStore = defineStore("auth", {
             this.refreshExpiry = refreshExpiry;
 
             Cookies.set("name", userName, {
-                secure: true,
+                // secure: true,
                 sameSite: "Strict",
                 expires: new Date(tokenExpiry * 1000), // Convert UNIX timestamp to Date object
             });

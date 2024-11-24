@@ -8,10 +8,9 @@
         <input type="hidden" id="branch_id" value="1" v-model="appointment.branch_id" />
         <input type="hidden" id="client_id" v-model="appointment.client_id" />
 
-        <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-full">
+        <div class="field mt-6 w-1/2" :class="appointment.petmicrochip ? `hidden` : ``">
+          <FloatLabel class="w-full" v-if="!appointment.petmicrochip">
             <AutoComplete
-              placeholder="Select Pet"
               v-model="selectedPet"
               optionLabel="name"
               :suggestions="filteredPets"
@@ -26,26 +25,25 @@
             </AutoComplete>
             <label for="pet">Select Pet</label>
           </FloatLabel>
+          <InputText
+            id="name"
+            v-model="selectedPet"
+            class="hidden"
+            v-else
+            placeholder="Enter pet name"
+          />
         </div>
 
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-full">
-            <InputText
-              id="title"
-              v-model="appointment.title"
-              placeholder="Enter appointment title"
-            />
+            <InputText id="title" v-model="appointment.title" />
             <label for="title">Title</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-full">
-            <InputText
-              id="description"
-              v-model="appointment.description"
-              placeholder="Enter description (optional)"
-            />
+            <InputText id="description" v-model="appointment.description" />
             <label for="description">Description</label>
           </FloatLabel>
         </div>
@@ -56,7 +54,6 @@
               id="start"
               v-model="appointment.start"
               dateFormat="yy-mm-dd"
-              placeholder="Select start date and time"
               class="w-full"
             />
             <label for="start">Start Date & Time</label>
@@ -69,7 +66,6 @@
               id="end"
               v-model="appointment.end"
               dateFormat="yy-mm-dd"
-              placeholder="Select end date and time"
               class="w-full"
             />
             <label for="end">End Date & Time</label>
@@ -82,7 +78,6 @@
               v-model="appointment.type"
               :options="appointmentTypes"
               optionLabel="label"
-              placeholder="Select Appointment Type"
               class="w-full"
             />
             <label for="type">Type</label>
@@ -94,7 +89,6 @@
               v-model="appointment.status"
               :options="appointmentStatus"
               optionLabel="label"
-              placeholder="Select Status"
               class="w-full"
             />
             <label for="status">Status</label>
@@ -119,7 +113,7 @@ import axiosInstance from "@/axios"; // Assuming you've created a global axios i
 import eventBus from "@/eventBus";
 const emit = defineEmits(["submitted"]); // Define the event to be emitted
 
-const props = defineProps(["activeDate"]); // Receiving activeDate as a prop
+const props = defineProps(["activeDate", "petMicrochip"]); // Receiving activeDate as a prop
 const appointment = ref({
   client_id: null, // To be set after selecting the pet
   branch_id: 1,
@@ -142,8 +136,11 @@ const appointmentStatus = ref([
   { label: "Scheduled", value: "Scheduled" },
   { label: "Walkin", value: "Walkin" },
 ]);
-
 const selectedPet = ref(null);
+if (props.petMicrochip) {
+  selectedPet.value = props.petMicrochip;
+}
+
 const filteredPets = ref([]);
 
 const pet = ref({
@@ -296,6 +293,8 @@ const submitForm = async () => {
 onMounted(() => {
   appointment.value.start = props.activeDate;
   appointment.value.end = props.activeDate;
+  appointment.value.petmicrochip = props.petMicrochip;
+  console.log(props.petMicrochip);
   setRandomTime();
   fetchPets();
 });
