@@ -148,12 +148,23 @@
             @expired="onExpired"
           /> -->
           <div class="mt-4">
-            <RecaptchaV2
+            <!-- <RecaptchaV2
               ref="recaptcha"
               :sitekey="GOOGLE_RECAPTCHA_SITE_KEY"
               @verify="onVerify"
               @expired="onExpired"
-            />
+            /> -->
+            <!-- <div
+              class="g-recaptcha"
+              data-sitekey="6LcbhogqAAAAAAAiHYfqdm_JFDnTAJRun2RS8etl"
+              data-action="LOGIN"
+            ></div> -->
+            <!-- <VueRecaptcha
+              :sitekey="GOOGLE_RECAPTCHA_SITE_KEY"
+              :load-recaptcha-script="true"
+              @verify="handleSuccess"
+              @error="handleError"
+            ></VueRecaptcha> -->
           </div>
         </div>
 
@@ -164,7 +175,7 @@
             :disabled="!captchaToken"
           >
             <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
-            <span v-else>Log In</span>
+            <span v-else>Verify</span>
           </button>
           <!-- <a
             href="#"
@@ -189,7 +200,8 @@ import { useAuthStore } from "@/stores/authStore";
 import axios from "axios";
 import Logo from "@/assets/logo.png";
 import Image from "primevue/image";
-import { RecaptchaV2 } from "vue3-recaptcha-v2";
+// import { VueRecaptcha } from "vue-recaptcha";
+import { VueReCaptcha, useReCaptcha } from "vue-recaptcha-v3";
 
 const email = ref("");
 const password = ref("");
@@ -203,31 +215,23 @@ const requires2FA = ref(false); // Controls 2FA form visibility
 const temporaryToken = ref(""); // Stores the temporary token for 2FA verification
 const twoFactorCode = ref("");
 const GOOGLE_RECAPTCHA_SITE_KEY = import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY;
-
+const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
 const captchaToken = ref(null);
-console.log("Site Key:", GOOGLE_RECAPTCHA_SITE_KEY);
-console.log("Captcha Token:", captchaToken.value);
-// Methods
-const onVerify = (token) => {
-  captchaToken.value = token;
-};
-
-const onExpired = () => {
-  captchaToken.value = null;
-};
-
 const login = async () => {
-  if (!captchaToken.value) {
-    alert("Please complete the CAPTCHA.");
-    return;
-  }
-  loading.value = true;
   try {
+    await recaptchaLoaded();
+    const recaptchaToken = await executeRecaptcha("login");
+    if (!recaptchaToken) {
+      alert("Please complete the CAPTCHA.");
+      return;
+    }
+    captchaToken.value = recaptchaToken;
+    loading.value = true;
     const response = await axios.post(import.meta.env.VITE_API_URL + "/login", {
       email: email.value,
       password: password.value,
+      captchaToken: recaptchaToken,
     });
-    console.log(response.data);
     const {
       access_token,
       refresh_token,
@@ -264,7 +268,6 @@ const verify2FA = async () => {
       { two_factor_code: twoFactorCode.value },
       { headers: { Authorization: `Bearer ${temporaryToken.value}` } }
     );
-    console.log(response.data);
     const {
       access_token,
       refresh_token,
@@ -331,5 +334,10 @@ form.translate-x-full {
 
 form.translate-x-0 {
   transform: translateX(0);
+}
+.g-recaptcha {
+  margin: 1rem 0;
+  display: block;
+  visibility: visible;
 }
 </style>

@@ -16,7 +16,7 @@ import { definePreset } from '@primevue/themes';
 import ConfirmationService from 'primevue/confirmationservice';
 import ConfirmDialog from 'primevue/confirmdialog';
 // import { useToast } from "primevue/usetoast";
-
+import { VueReCaptcha } from 'vue-recaptcha-v3'
 const app = createApp(App)
 
 const MyPreset = definePreset(Aura, {
@@ -104,6 +104,13 @@ app.use(PrimeVue, {
     },
     // ripple: true
 });
+app.use(VueReCaptcha, {
+    siteKey: import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY,
+    loaderOptions: {
+        useRecaptchaNet: true,
+        autoHideBadge: false
+    }
+})
 app.use(createPinia())
 app.use(router);
 app.directive("ripple", Ripple);
