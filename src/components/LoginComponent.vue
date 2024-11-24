@@ -141,13 +141,25 @@
               >{{ message }}</small
             >
           </div>
+          <!-- <RecaptchaV2
+            ref="recaptcha"
+            :sitekey="GOOGLE_RECAPTCHA_SITE_KEY"
+            @verify="onVerify"
+            @expired="onExpired"
+          /> -->
+          <RecaptchaV2
+            ref="recaptcha"
+            :sitekey="GOOGLE_RECAPTCHA_SITE_KEY"
+            @verify="onVerify"
+            @expired="onExpired"
+          ></RecaptchaV2>
         </div>
 
         <div class="flex items-end justify-end">
           <button
             type="submit"
             class="p-button p-button-content !text-[var(--p-primary-color)] py-2 px-4 rounded focus:outline-none focus:shadow-outline h-8"
-            :disabled="loading ? true : false"
+            :disabled="!captchaToken"
           >
             <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
             <span v-else>Log In</span>
@@ -175,6 +187,7 @@ import { useAuthStore } from "@/stores/authStore";
 import axios from "axios";
 import Logo from "@/assets/logo.png";
 import Image from "primevue/image";
+import { RecaptchaV2 } from "vue3-recaptcha-v2";
 
 const email = ref("");
 const password = ref("");
@@ -187,9 +200,25 @@ const authStore = useAuthStore(); // Define authStore using useAuthStore
 const requires2FA = ref(false); // Controls 2FA form visibility
 const temporaryToken = ref(""); // Stores the temporary token for 2FA verification
 const twoFactorCode = ref("");
-const login = async () => {
-  loading.value = true;
+const GOOGLE_RECAPTCHA_SITE_KEY = import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY;
 
+const captchaToken = ref(null);
+
+// Methods
+const onVerify = (token) => {
+  captchaToken.value = token;
+};
+
+const onExpired = () => {
+  captchaToken.value = null;
+};
+
+const login = async () => {
+  if (!captchaToken.value) {
+    alert("Please complete the CAPTCHA.");
+    return;
+  }
+  loading.value = true;
   try {
     const response = await axios.post(import.meta.env.VITE_API_URL + "/login", {
       email: email.value,

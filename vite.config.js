@@ -11,7 +11,8 @@ export default defineConfig({
     server: {
         // https:true,
         // host: '38.242.154.159',
-        // port: 3000,
+        host: 'local.ids-tech.net'
+            // port: 3000,
     },
     resolve: {
         alias: {
