@@ -83,14 +83,20 @@
             <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
             <span v-else>Log In</span>
           </button>
-          <!-- <a
-            href="#"
-            class="inline-block align-baseline font-bold text-sm text-blue-500 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-400"
-          >
-            Forgot Password?
-          </a> -->
         </div>
+        <small id="" class="text-[8pt] text-gray-600"
+          >This site is protected by reCAPTCHA and the Google
+          <a href="https://policies.google.com/privacy" class="text-blue-500"
+            >Privacy Policy</a
+          >
+          and
+          <a href="https://policies.google.com/terms" class="text-blue-500"
+            >Terms of Service</a
+          >
+          apply.</small
+        >
       </form>
+
       <form
         v-if="requires2FA"
         @submit.prevent="verify2FA"
@@ -336,9 +342,7 @@ form.translate-x-full {
 form.translate-x-0 {
   transform: translateX(0);
 }
-.g-recaptcha {
-  margin: 1rem 0;
-  display: block;
-  visibility: visible;
+.grecaptcha-badge {
+  visibility: hidden;
 }
 </style>
