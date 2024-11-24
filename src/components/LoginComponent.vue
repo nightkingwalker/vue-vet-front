@@ -147,12 +147,14 @@
             @verify="onVerify"
             @expired="onExpired"
           /> -->
-          <RecaptchaV2
-            ref="recaptcha"
-            :sitekey="GOOGLE_RECAPTCHA_SITE_KEY"
-            @verify="onVerify"
-            @expired="onExpired"
-          ></RecaptchaV2>
+          <div class="mt-4">
+            <RecaptchaV2
+              ref="recaptcha"
+              :sitekey="GOOGLE_RECAPTCHA_SITE_KEY"
+              @verify="onVerify"
+              @expired="onExpired"
+            />
+          </div>
         </div>
 
         <div class="flex items-end justify-end">
@@ -203,7 +205,8 @@ const twoFactorCode = ref("");
 const GOOGLE_RECAPTCHA_SITE_KEY = import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY;
 
 const captchaToken = ref(null);
-
+console.log("Site Key:", GOOGLE_RECAPTCHA_SITE_KEY);
+console.log("Captcha Token:", captchaToken.value);
 // Methods
 const onVerify = (token) => {
   captchaToken.value = token;
