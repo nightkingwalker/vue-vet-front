@@ -268,6 +268,7 @@ const verify2FA = async () => {
       { two_factor_code: twoFactorCode.value },
       { headers: { Authorization: `Bearer ${temporaryToken.value}` } }
     );
+    // console.log(response.data);
     const {
       access_token,
       refresh_token,
