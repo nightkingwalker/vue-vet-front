@@ -84,17 +84,6 @@
             <span v-else>Log In</span>
           </button>
         </div>
-        <small id="" class="text-[8pt] text-gray-600"
-          >This site is protected by reCAPTCHA and the Google
-          <a href="https://policies.google.com/privacy" class="text-blue-500"
-            >Privacy Policy</a
-          >
-          and
-          <a href="https://policies.google.com/terms" class="text-blue-500"
-            >Terms of Service</a
-          >
-          apply.</small
-        >
       </form>
 
       <form
@@ -193,6 +182,13 @@
       </form>
     </div>
   </div>
+  <small id="" class="text-[8pt] text-gray-600"
+    >Site is protected by reCAPTCHA. Google
+    <a href="https://policies.google.com/privacy" class="text-blue-500">Privacy Policy</a>
+    and
+    <a href="https://policies.google.com/terms" class="text-blue-500">Terms of Service</a>
+    apply.</small
+  >
 </template>
 
 <script setup>
