@@ -16,8 +16,16 @@
             <label for="address">Message</label>
           </FloatLabel>
         </div>
-
-        <Button type="submit" label="Send" icon="pi pi-check" class="mt-4 w-full" />
+        <button
+          type="submit"
+          class="p-button p-button-content py-2 px-4 rounded focus:outline-none focus:shadow-outline h-8"
+          :disabled="loading"
+        >
+          <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
+          <span v-else>Send</span>
+        </button>
+        <!-- <Button type="submit" class="mt-4 w-full" > -->
+        <!-- <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i> -->
       </fieldset>
     </form>
   </div>
@@ -36,7 +44,7 @@ import axios from "axios";
 const WAHA_API_KEY = import.meta.env.VITE_WAHA_API_KEY;
 const WAHA_API_URL = import.meta.env.VITE_WAHA_API_URL;
 const WAHA_API_SESSION = import.meta.env.VITE_WAHA_API_SESSION;
-
+const loading = ref(false);
 // Define the form data with reactive properties
 const owner = ref({
   name: "",
@@ -63,6 +71,7 @@ const sleep = (milliseconds) =>
 
 // Handle form submission
 const submitForm = async () => {
+  loading.value = true;
   whatsAppStartTyping(); // Begin the typing indicator
 
   // Random delay between 3-6 seconds
@@ -72,10 +81,24 @@ const submitForm = async () => {
   await sleep(randomDelay);
   whatsAppStopTyping();
   whatsAppSendText();
+  loading.value = false;
 };
 
 // Function to send a message via WhatsApp API
 const whatsAppSendText = async () => {
+  // Check if the message is too short
+  if (wahaMessageText.value.length <= 5) {
+    // Show an alert or toast message that the message is too short
+    eventBus.emit("show-toast", {
+      severity: "error",
+      summary: "Message too short",
+      detail: "Your message must be longer than 5 characters to be sent.",
+      life: 5000, // Toast duration
+    });
+    return; // Exit the function early if the message is too short
+  }
+
+  // Proceed with sending the message if it's valid
   const data = JSON.stringify({
     chatId: `${props.contactNumber}@c.us`, // WhatsApp chat ID (formatted)
     reply_to: "", // Empty reply-to value (can be customized if needed)
