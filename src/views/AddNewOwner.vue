@@ -12,32 +12,28 @@
 
         <div class="field w-full">
           <FloatLabel class="w-full">
-            <InputText id="name" v-model="owner.name" placeholder="Enter name" />
+            <InputText id="name" v-model="owner.name" />
             <label for="name">Name</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-full">
           <FloatLabel class="w-full">
-            <InputText id="email" v-model="owner.email" placeholder="Enter email" />
+            <InputText id="email" v-model="owner.email" />
             <label for="email">Email</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-full">
           <FloatLabel class="w-full">
-            <InputText
-              id="phone"
-              v-model="owner.phone"
-              placeholder="Enter phone number"
-            />
+            <InputText id="phone" v-model="owner.phone" />
             <label for="phone">Phone</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-full">
           <FloatLabel class="w-full">
-            <InputText id="address" v-model="owner.address" placeholder="Enter address" />
+            <InputText id="address" v-model="owner.address" />
             <label for="address">Address</label>
           </FloatLabel>
         </div>

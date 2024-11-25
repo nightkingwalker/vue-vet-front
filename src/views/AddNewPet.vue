@@ -10,7 +10,6 @@
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-full md:w-56">
             <AutoComplete
-              placeholder="Select Owner"
               v-model="pet.owner_id"
               optionLabel="name"
               :suggestions="filteredOwners"
@@ -36,7 +35,7 @@
         </div>
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-full md:w-56">
-            <InputText id="name" v-model="pet.name" placeholder="Enter pet name" />
+            <InputText id="name" v-model="pet.name" />
             <label for="name">Name</label>
           </FloatLabel>
         </div>
@@ -46,8 +45,7 @@
               v-model="pet.species"
               :options="species"
               optionLabel="name"
-              placeholder="Species"
-              class="w-full md:w-56"
+              class="w-full md:w-56 h-10"
             >
               <template #value="slotProps">
                 <div v-if="slotProps.value" class="flex items-center">
@@ -69,7 +67,7 @@
         </div>
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-full md:w-56">
-            <InputText id="breed" v-model="pet.breed" placeholder="Enter breed" />
+            <InputText id="breed" v-model="pet.breed" />
 
             <label for="dd-city">Breed</label>
           </FloatLabel>
@@ -81,8 +79,7 @@
               v-model="pet.gender"
               :options="genders"
               optionLabel="label"
-              placeholder="Select gender"
-              class="w-full"
+              class="w-full h-10"
             >
               <template #value="slotProps">
                 <div v-if="slotProps.value" class="flex items-center">
@@ -98,7 +95,7 @@
                 </div>
               </template>
             </Select>
-            <label for="gender">Gender</label>
+            <label for="gender">Select Gender</label>
           </FloatLabel>
         </div>
         <div class="field mt-6 w-1/2">

@@ -6,43 +6,43 @@
       >
         <legend>Add New Test Result</legend>
 
-        <div class="field mt-6 w-[49%]">
+        <div class="field mt-4 w-full">
           <FloatLabel class="w-full md:w-56">
-            <InputText
-              id="test_type"
-              v-model="test.test_type"
-              placeholder="Enter test type"
-            />
+            <InputText id="test_type" v-model="test.test_type" />
             <label for="test_type">Test Type</label>
           </FloatLabel>
         </div>
 
-        <div
-          v-for="(result, index) in test.results"
-          :key="index"
-          class="field mt-6 w-[49%]"
-        >
-          <FloatLabel class="w-full md:w-56">
-            <InputText
-              :id="'label-' + index"
-              v-model="test.results[index].label"
-              placeholder="Enter result label"
+        <div class="flex flex-wrap gap-1 test-results-container w-full">
+          <div
+            v-for="(result, index) in test.results"
+            :key="index"
+            class="field lg:w-[48%] flex !gap-1 items-start mt-6 justify-between !text-xs"
+          >
+            <div class="flex flex-col md:w-[80%] sm:w-full">
+              <FloatLabel class="max-w-[100%]">
+                <InputText
+                  :id="'label-' + index"
+                  v-model="test.results[index].label"
+                  class="md:w-[100%]"
+                />
+                <label :for="'label-' + index">Test Name {{ index + 1 }}</label>
+              </FloatLabel>
+              <FloatLabel class="max-w-[100%] mt-6">
+                <InputText
+                  :id="'value-' + index"
+                  v-model="test.results[index].value"
+                  class="md:w-[100%]"
+                />
+                <label :for="'value-' + index">Test Value {{ index + 1 }}</label>
+              </FloatLabel>
+            </div>
+            <Button
+              icon="pi pi-times"
+              class="p-button-danger !text-[10px] m-0 w-6 h-8 p-2"
+              @click="removeResult(index)"
             />
-            <label :for="'label-' + index">Label {{ index + 1 }}</label>
-          </FloatLabel>
-          <FloatLabel class="w-full md:w-56 mt-2">
-            <InputText
-              :id="'value-' + index"
-              v-model="test.results[index].value"
-              placeholder="Enter result value"
-            />
-            <label :for="'value-' + index">Value {{ index + 1 }}</label>
-          </FloatLabel>
-          <Button
-            icon="pi pi-times"
-            class="ml-2 p-button-danger"
-            @click="removeResult(index)"
-          />
+          </div>
         </div>
 
         <div class="flex items-center mt-4">
