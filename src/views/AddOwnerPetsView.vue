@@ -21,7 +21,7 @@
               v-model="pet.species"
               :options="species"
               optionLabel="name"
-              class="w-full md:w-56"
+              class="w-full md:w-56 h-10"
             >
               <template #value="slotProps">
                 <div v-if="slotProps.value" class="flex items-center">
@@ -55,7 +55,7 @@
               v-model="pet.gender"
               :options="genders"
               optionLabel="label"
-              class="w-full"
+              class="w-full h-10"
             >
               <template #value="slotProps">
                 <div v-if="slotProps.value" class="flex items-center">
