@@ -341,7 +341,11 @@
         <span class="font-bold whitespace-nowrap">New Medical Record</span>
       </div>
     </template>
-    <addNewAppointment :petMicrochip="petmicrochip" @submitted="handleSubmit" />
+    <addNewAppointment
+      :petMicrochip="petmicrochip"
+      :petOwnerID="pet.owner.id"
+      @submitted="handleSubmit"
+    />
     <template #footer> </template>
   </Dialog>
 </template>
@@ -382,6 +386,7 @@ const pet = ref({
   date_of_birth: "",
   deceased: "",
   owner: {
+    id: "",
     name: "",
   },
 });
@@ -545,6 +550,7 @@ const fetchPets = async () => {
     // totalRecords.value = response.data.total;
     // currentPage.value = response.data.current_page;
     owner.value = pet.value.length > 0 ? pet.value[0].owner.name : "Unknown Owner"; // Set owner name if pets exist
+    // ownerID.value = pet.value.length > 0 ? pet.value[0].owner.id : "Unknown Owner"; // Set owner name if pets exist
     // // console.log(medical_records.value);
     loading.value = false; // Stop loading once data is fetched
     // // console.log(findRecordById(4));
