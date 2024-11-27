@@ -135,6 +135,23 @@
         <template #header>
           <div class="flex flex-wrap items-center justify-between gap-2">
             <span class="text-xl font-bold">Visits History</span>
+            <Button
+              v-tooltip.top="{
+                value: 'New Record',
+                pt: {
+                  arrow: {
+                    style: {
+                      borderTopColor: 'var(--p-primary-color)',
+                    },
+                  },
+                  text:
+                    '!bg-[var(--p-primary-color)] !font-thin 2xl:!text-lg lg:!text-xs shadow-md',
+                },
+              }"
+              icon="pi pi-plus"
+              @click="addAppointment"
+              class="p-button p-button-icon-only !text-sm !font-thin h-8"
+            />
           </div>
         </template>
         <Column field="start" header="Date" :class="`!rtl w-1/8 `"></Column>
@@ -350,10 +367,13 @@ import PetTreatments from "@/views/TreatmentsList.vue"; // Adjust the path as ne
 import TestResults from "@/views/TestResults.vue"; // Adjust the path as needed
 import AddNewTreatment from "@/views/AddNewTreatment.vue"; // Adjust the path as needed
 import AddNewTestResult from "@/views/AddNewTestResult.vue"; // Adjust the path as needed
+import addNewAppointment from "@/views/addNewAppointment.vue"; // Adjust the path as needed
+
 const isTreatmentsListVisible = ref(false);
 const isTestResultsVisible = ref(false);
 const isNewTreatmentVisible = ref(false);
 const isNewTestResultVisible = ref(false);
+const isNewApointmentVisible = ref(false);
 const route = useRoute();
 const petmicrochip = ref(route.params.petmicrochip);
 const pet = ref({
@@ -370,6 +390,7 @@ const pet = ref({
     name: "",
   },
 });
+
 const showAddTreatmentModal = () => {
   isNewTreatmentVisible.value = true;
 };
@@ -383,6 +404,17 @@ const showAddTestResultModal = () => {
 const handleNewTestResult = () => {
   isNewTestResultVisible.value = false;
   eventBus.emit("newTestResultAdded");
+};
+const handleSubmit = (data) => {
+  console.log(data);
+  isNewApointmentVisible.value = false;
+  // currentPage.value = 1; // Reset to the first page when searching
+
+  // fetchAppointments();
+};
+const addAppointment = () => {
+  console.log(petmicrochip.value);
+  isNewApointmentVisible.value = true;
 };
 // console.log(pet.value);
 const owner = ref(""); // Initialize owner as an empty string

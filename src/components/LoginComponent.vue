@@ -177,7 +177,7 @@
         <div class="flex items-end justify-end">
           <button
             type="submit"
-            class="p-button p-button-content !text-[var(--p-primary-color)] py-2 px-4 rounded focus:outline-none focus:shadow-outline h-8"
+            class="p-button p-button-content py-2 px-4 rounded focus:outline-none focus:shadow-outline h-8"
             :disabled="!captchaToken"
           >
             <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
@@ -193,6 +193,13 @@
       </form>
     </div>
   </div>
+  <small id="" class="text-[8pt] text-gray-600"
+    >Site is protected by reCAPTCHA. Google
+    <a href="https://policies.google.com/privacy" class="text-blue-500">Privacy Policy</a>
+    and
+    <a href="https://policies.google.com/terms" class="text-blue-500">Terms of Service</a>
+    apply.</small
+  >
 </template>
 
 <script setup>
@@ -245,6 +252,7 @@ const login = async () => {
       refresh_expires_in,
       requires_2fa,
       temporary_token,
+      user,
     } = response.data;
 
     if (requires_2fa) {
@@ -252,7 +260,13 @@ const login = async () => {
       temporaryToken.value = temporary_token;
       message.value = "Two-Factor Authentication is required.";
     } else {
-      authStore.logIn(access_token, refresh_token, expires_in, refresh_expires_in);
+      authStore.logIn(
+        access_token,
+        refresh_token,
+        expires_in,
+        refresh_expires_in,
+        user.name
+      );
       router.push("/").catch((err) => console.error("Router error:", err));
     }
 
@@ -274,6 +288,7 @@ const verify2FA = async () => {
       { two_factor_code: twoFactorCode.value },
       { headers: { Authorization: `Bearer ${temporaryToken.value}` } }
     );
+    // console.log(response.data);
     const {
       access_token,
       refresh_token,

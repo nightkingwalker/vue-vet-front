@@ -65,6 +65,7 @@
                 <i class="pi pi-search"></i
               ></InputGroupAddon>
               <InputText
+                size="small"
                 v-model="searchQuery"
                 @input="onSearchChange"
                 ref="inputRef"
@@ -109,11 +110,9 @@
               {{ slotProps.data.owner.name }}
               <i class="pi pi-external-link !text-[0.6rem] text-gray-500"></i>
             </router-link>
-            <!-- Display the owner's name followed by the pet's name -->
           </template>
         </template>
       </Column>
-      <!-- Name Column with filtering -->
       <Column class="text-md" field="name" header="Name" sortable="">
         <template #body="slotProps">
           <template v-if="loading">
