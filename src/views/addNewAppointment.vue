@@ -6,7 +6,7 @@
       >
         <legend>Add New Appointment</legend>
         <input type="hidden" id="branch_id" value="1" v-model="appointment.branch_id" />
-        <input type="hidden" id="client_id" v-model="appointment.client_id" />
+        <!-- <input type="hidden" id="client_id" v-model="appointment.client_id" /> -->
 
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-full">
@@ -119,7 +119,7 @@ import axiosInstance from "@/axios"; // Assuming you've created a global axios i
 import eventBus from "@/eventBus";
 const emit = defineEmits(["submitted"]); // Define the event to be emitted
 
-const props = defineProps(["activeDate"]); // Receiving activeDate as a prop
+const props = defineProps(["activeDate", "petMicrochip", "petOwnerID"]); // Receiving activeDate as a prop
 const appointment = ref({
   client_id: null, // To be set after selecting the pet
   branch_id: 1,
@@ -144,6 +144,10 @@ const appointmentStatus = ref([
 ]);
 
 const selectedPet = ref(null);
+if (props.petMicrochip) {
+  // selectedPet.petmicrochip.value = props.petMicrochip;
+}
+
 const filteredPets = ref([]);
 
 const pet = ref({
@@ -170,7 +174,10 @@ const fetchPets = async (page = 1) => {
       `/pets?page=${page}&per_page=${itemsPerPage.value}&search=${searchQuery.value}`
     );
     filteredPets.value = response.data.data; // Populate filtered pets
-    console.log(filteredPets.value);
+    if (props.petOwnerID) {
+      selectedPet.value = response.data.data; // Populate filtered pets
+    }
+    // console.log(filteredPets.value);
     totalRecords.value = response.data.total;
     currentPage.value = response.data.current_page;
     loading.value = false;
@@ -194,7 +201,7 @@ const setRandomTime = () => {
     const randomHour = Math.floor(Math.random() * 5) + 12; // Generates a number between 12 and 16 (inclusive)
     startDate.setHours(randomHour, 0, 0); // Set hours to a random value between 12:00:00 and 17:00:00
     appointment.value.start = startDate;
-    console.log("START: " + appointment.value.start);
+    // console.log("START: " + appointment.value.start);
     // Set the end time to 15 minutes after the start time
     const endDate = new Date(startDate);
     endDate.setMinutes(endDate.getMinutes() + 15);
@@ -214,9 +221,15 @@ const setRandomTime = () => {
 // Form submission
 const submitForm = async () => {
   // Assign the client_id and pet_id based on the selected pet
+  console.log(selectedPet.value);
   if (selectedPet.value) {
-    appointment.value.client_id = selectedPet.value.owner_id; // Assuming this is the client's ID
-    appointment.value.pet_id = selectedPet.value.id; // ID of the selected pet
+    console.log(selectedPet.value);
+    appointment.value.client_id = !props.petOwnerID
+      ? selectedPet.value.owner_id
+      : selectedPet.value[0].owner_id; // Assuming this is the client's ID
+    appointment.value.pet_id = !props.petOwnerID
+      ? selectedPet.value.id
+      : selectedPet.value[0].id; // ID of the selected pet
     appointment.value.type = appointment.value.type.value; // Type selected from the dropdown
     appointment.value.status = appointment.value.status.value; // Status selected from the dropdown
   } else {
@@ -270,6 +283,7 @@ const submitForm = async () => {
   try {
     // Log the data being sent to ensure all required fields are included
     // console.log("Submitting appointment data:", appointment.value);
+    console.log(JSON.stringify(appointment.value));
     const response = await axiosInstance.post("/appointments", appointment.value);
     emit("submitted", response.data); // You may modify this based on your response structure
     console.log(response.data);
@@ -296,7 +310,14 @@ const submitForm = async () => {
 onMounted(() => {
   appointment.value.start = props.activeDate;
   appointment.value.end = props.activeDate;
+  appointment.value.petmicrochip = props.petMicrochip;
+  appointment.value.owner_id = props.petOwnerID;
+  // console.log("owner_id " + appointment.value.owner_id);
   setRandomTime();
+  if (props.petMicrochip) {
+    // console.log("props.petMicrochip " + props.petMicrochip);
+    searchQuery.value = props.petMicrochip;
+  }
   fetchPets();
 });
 </script>

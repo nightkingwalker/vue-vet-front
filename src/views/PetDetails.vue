@@ -311,6 +311,26 @@
     />
     <template #footer> </template>
   </Dialog>
+  <Dialog
+    header="New Record"
+    v-model:visible="isNewApointmentVisible"
+    @hide="isNewApointmentVisible = false"
+    modal
+    :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2">
+        <span class="font-bold whitespace-nowrap">New Medical Record</span>
+      </div>
+    </template>
+    <addNewAppointment
+      :petMicrochip="petmicrochip"
+      :petOwnerID="pet.owner.id"
+      @submitted="handleSubmit"
+    />
+    <template #footer> </template>
+  </Dialog>
 </template>
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
@@ -346,6 +366,7 @@ const pet = ref({
   date_of_birth: "",
   deceased: "",
   owner: {
+    id: "",
     name: "",
   },
 });
@@ -497,6 +518,7 @@ const fetchPets = async () => {
     // totalRecords.value = response.data.total;
     // currentPage.value = response.data.current_page;
     owner.value = pet.value.length > 0 ? pet.value[0].owner.name : "Unknown Owner"; // Set owner name if pets exist
+    // ownerID.value = pet.value.length > 0 ? pet.value[0].owner.id : "Unknown Owner"; // Set owner name if pets exist
     // // console.log(medical_records.value);
     loading.value = false; // Stop loading once data is fetched
     // // console.log(findRecordById(4));
