@@ -166,7 +166,7 @@
         <div class="flex items-end justify-end">
           <button
             type="submit"
-            class="p-button p-button-content !text-[var(--p-primary-color)] py-2 px-4 rounded focus:outline-none focus:shadow-outline h-8"
+            class="p-button p-button-content py-2 px-4 rounded focus:outline-none focus:shadow-outline h-8"
             :disabled="!captchaToken"
           >
             <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
