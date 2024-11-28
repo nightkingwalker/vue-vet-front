@@ -221,18 +221,18 @@ const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
 const captchaToken = ref(null);
 const login = async () => {
   try {
-    // await recaptchaLoaded();
-    // const recaptchaToken = await executeRecaptcha("login");
-    // if (!recaptchaToken) {
-    //   alert("Please complete the CAPTCHA.");
-    //   return;
-    // }
-    // captchaToken.value = recaptchaToken;
+    await recaptchaLoaded();
+    const recaptchaToken = await executeRecaptcha("login");
+    if (!recaptchaToken) {
+      alert("Please complete the CAPTCHA.");
+      return;
+    }
+    captchaToken.value = recaptchaToken;
     loading.value = true;
     const response = await axios.post(import.meta.env.VITE_API_URL + "/login", {
       email: email.value,
       password: password.value,
-      // captchaToken: recaptchaToken,
+      captchaToken: recaptchaToken,
     });
     const {
       access_token,
