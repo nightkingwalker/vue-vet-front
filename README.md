@@ -27,3 +27,6 @@ npm run dev
 ```sh
 npm run build
 ```
+failed to find a valid digest in the integrity attribute for resource the resource has been blocked
+
+I'm getting this on some computers
