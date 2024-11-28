@@ -135,23 +135,22 @@
         <template #header>
           <div class="flex flex-wrap items-center justify-between gap-2">
             <span class="text-xl font-bold">Visits History</span>
-            <Button
-              v-tooltip.top="{
-                value: 'New Record',
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
-                  },
-                  text:
-                    '!bg-[var(--p-primary-color)] !font-thin 2xl:!text-lg lg:!text-xs shadow-md',
-                },
-              }"
-              icon="pi pi-plus"
-              @click="addAppointment"
-              class="p-button p-button-icon-only !text-sm !font-thin h-8"
-            />
+            <div class="flex gap-2">
+              <Button
+                v-tooltip.bottom="`Refresh Data`"
+                icon="pi pi-plus"
+                @click="addAppointment"
+                class="p-button p-button-icon-only !text-sm !font-thin h-8"
+              />
+              <Button
+                type="button"
+                icon="pi pi-refresh !text-sm"
+                label=""
+                v-tooltip.bottom="`Refresh Data`"
+                class="p-button p-button-icon-only !text-sm !font-thin h-8"
+                @click="refreshData"
+              />
+            </div>
           </div>
         </template>
         <Column field="start" header="Date" :class="`!rtl w-1/8 `"></Column>
@@ -197,7 +196,7 @@
                     },
                   },
                   text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin 2xl:!text-lg lg:!text-xs',
+                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
               }"
               raised
@@ -218,7 +217,7 @@
                     },
                   },
                   text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin 2xl:!text-lg lg:!text-xs',
+                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
               }"
               raised
@@ -237,7 +236,7 @@
                     },
                   },
                   text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin 2xl:!text-lg lg:!text-xs',
+                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
               }"
               raised
@@ -408,6 +407,7 @@ const handleNewTestResult = () => {
 const handleSubmit = (data) => {
   console.log(data);
   isNewApointmentVisible.value = false;
+  fetchPets();
   // currentPage.value = 1; // Reset to the first page when searching
 
   // fetchAppointments();
@@ -415,6 +415,10 @@ const handleSubmit = (data) => {
 const addAppointment = () => {
   console.log(petmicrochip.value);
   isNewApointmentVisible.value = true;
+};
+const refreshData = () => {
+  loading.value = true; // Set loading state to true to show skeletons
+  fetchPets(); // Fetch the pets data again
 };
 // console.log(pet.value);
 const owner = ref(""); // Initialize owner as an empty string
@@ -547,13 +551,8 @@ const fetchPets = async () => {
     pet.value = response.data;
     visits.value = response.data.appointments;
     medical_records.value = response.data.medical_records;
-    // totalRecords.value = response.data.total;
-    // currentPage.value = response.data.current_page;
     owner.value = pet.value.length > 0 ? pet.value[0].owner.name : "Unknown Owner"; // Set owner name if pets exist
-    // ownerID.value = pet.value.length > 0 ? pet.value[0].owner.id : "Unknown Owner"; // Set owner name if pets exist
-    // // console.log(medical_records.value);
     loading.value = false; // Stop loading once data is fetched
-    // // console.log(findRecordById(4));
   } catch (error) {
     //     // showSuccess("warn", "Warning", "Couldent Fetch Data");
   } finally {

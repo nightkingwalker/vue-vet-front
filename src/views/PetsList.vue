@@ -103,7 +103,7 @@
                     },
                   },
                   text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin 2xl:!text-lg lg:!text-xs',
+                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
               }"
             >
@@ -215,6 +215,32 @@
           </template>
           <template v-else>
             {{ computeAge(slotProps.data.date_of_birth) }}
+          </template>
+        </template>
+      </Column>
+
+      <!-- ِؤفهخىس Column -->
+      <Column class="text-md !font-thin" field="date_of_birth" header="Age">
+        <template #body="slotProps">
+          <template v-if="loading">
+            <Skeleton width="60%" height="1rem" />
+          </template>
+          <template v-else>
+            <!-- <Button
+              type="button"
+              :icon="showDeceased ? `pi pi-eye-slash !text-sm` : `pi pi-eye !text-sm`"
+              label=""
+              v-tooltip.bottom="showDeceased ? `Hide Deceased` : `Show Deceased`"
+              class="!text-sm ml-2"
+              @click="toggleDeceasedVisibility"
+            /> -->
+            <router-link
+              class="!text-sm ml-2 p-button"
+              v-tooltip.bottom="`View Details`"
+              :to="`/pets/` + slotProps.data.microchip_num"
+            >
+              <i class="fa-solid fa-paw"></i>
+            </router-link>
           </template>
         </template>
       </Column>

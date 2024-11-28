@@ -379,6 +379,7 @@ const signOut = () => {
       detail: "User logged out",
       life: 3000,
     });
+    clearTimers();
     router.push("/login"); // Redirect to the login page
     // console.log("User signed out successfully");
   } catch (error) {

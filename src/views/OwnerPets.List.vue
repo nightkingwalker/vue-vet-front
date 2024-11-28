@@ -265,7 +265,7 @@
                           },
                         },
                         text:
-                          '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin 2xl:!text-lg lg:!text-xs',
+                          '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                       },
                     }"
                     :to="{

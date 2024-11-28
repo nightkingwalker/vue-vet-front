@@ -140,7 +140,7 @@
                           },
                         },
                         text:
-                          '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin 2xl:!text-lg lg:!text-xs',
+                          '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                       },
                     }"
                   >
@@ -166,7 +166,7 @@
                         },
                       },
                       text:
-                        '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin 2xl:!text-lg lg:!text-xs',
+                        '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                     },
                   }"
                   class="p-component text-xs !bg-[var(--p-primary-color)] !text-[var(--p-primary-contrast-color)]"
@@ -183,7 +183,7 @@
                         },
                       },
                       text:
-                        '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin 2xl:!text-lg lg:!text-xs',
+                        '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                     },
                   }"
                 >
@@ -202,7 +202,7 @@
                         },
                       },
                       text:
-                        '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin 2xl:!text-lg lg:!text-xs',
+                        '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                     },
                   }"
                   class="p-component text-xs !bg-[var(--p-primary-color)] !text-[var(--p-primary-contrast-color)]"
@@ -223,7 +223,7 @@
                         },
                       },
                       text:
-                        '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin 2xl:!text-lg lg:!text-xs',
+                        '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                     },
                   }"
                   @click="toggleDetails(owner)"
@@ -310,7 +310,7 @@
                           },
                         },
                         text:
-                          '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin 2xl:!text-lg lg:!text-xs',
+                          '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                       },
                     }"
                     class="cursor-pointer"
@@ -339,7 +339,7 @@
                           },
                         },
                         text:
-                          '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin 2xl:!text-lg lg:!text-xs',
+                          '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                       },
                     }"
                     class="p-component text-xs !bg-[var(--p-primary-color)] !text-[var(--p-primary-contrast-color)]"
@@ -356,7 +356,7 @@
                           },
                         },
                         text:
-                          '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin 2xl:!text-lg lg:!text-xs',
+                          '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                       },
                     }"
                   >
@@ -376,7 +376,7 @@
                           },
                         },
                         text:
-                          '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin 2xl:!text-lg lg:!text-xs',
+                          '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                       },
                     }"
                     class="p-component text-xs !bg-[var(--p-primary-color)] !text-[var(--p-primary-contrast-color)]"
@@ -397,7 +397,7 @@
                           },
                         },
                         text:
-                          '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin 2xl:!text-lg lg:!text-xs',
+                          '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                       },
                     }"
                     @click="toggleDetails(owner)"

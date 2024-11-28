@@ -30,6 +30,7 @@
                 placeholder="Username"
                 :feedback="false"
                 fluid
+                required
                 style="
                   border-top: 1px solid var(--p-inputgroup-addon-border-color);
                   border-bottom: 1px solid var(--p-inputgroup-addon-border-color);
@@ -56,6 +57,7 @@
                 placeholder="Password"
                 :feedback="false"
                 fluid
+                required
                 style="
                   border-top: 1px solid var(--p-inputgroup-addon-border-color);
                   border-bottom: 1px solid var(--p-inputgroup-addon-border-color);
@@ -68,11 +70,9 @@
               ></InputGroupAddon>
             </InputGroup>
           </div>
-          <small
-            id=""
-            :class="{ 'text-green-500': !isError, 'text-red-500': isError } + ` h-4`"
-            >{{ message }}</small
-          >
+          <small id="" :class="!isError ? `text-green-500 h-4` : `text-red-500 h-4`">{{
+            message
+          }}</small>
         </div>
         <div class="flex items-end justify-end">
           <button
@@ -221,18 +221,18 @@ const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
 const captchaToken = ref(null);
 const login = async () => {
   try {
-    await recaptchaLoaded();
-    const recaptchaToken = await executeRecaptcha("login");
-    if (!recaptchaToken) {
-      alert("Please complete the CAPTCHA.");
-      return;
-    }
-    captchaToken.value = recaptchaToken;
+    // await recaptchaLoaded();
+    // const recaptchaToken = await executeRecaptcha("login");
+    // if (!recaptchaToken) {
+    //   alert("Please complete the CAPTCHA.");
+    //   return;
+    // }
+    // captchaToken.value = recaptchaToken;
     loading.value = true;
     const response = await axios.post(import.meta.env.VITE_API_URL + "/login", {
       email: email.value,
       password: password.value,
-      captchaToken: recaptchaToken,
+      // captchaToken: recaptchaToken,
     });
     const {
       access_token,
@@ -248,6 +248,7 @@ const login = async () => {
       requires2FA.value = true;
       temporaryToken.value = temporary_token;
       message.value = "Two-Factor Authentication is required.";
+      isError.value = true;
     } else {
       authStore.logIn(
         access_token,
@@ -293,6 +294,7 @@ const verify2FA = async () => {
       refresh_expires_in,
       user.name
     );
+    isError.value = false;
     message.value = "Two-Factor Authentication verified!";
     router.push("/").catch((err) => console.error("Router error:", err));
     isError.value = false;
@@ -304,9 +306,11 @@ const verify2FA = async () => {
         console.error("Too many attempts. Please try again later.");
         message.value =
           error.response?.data?.message || "Too many attempts. Please try again later.";
+        isError.value = true;
         this.showToast("Too many attempts. Please try again in a minute.");
       } else {
         console.error("Verification failed: ", error.response.data);
+        isError.value = true;
         message.value =
           error.response?.data?.message || "Invalid 2FA code. Please try again.";
         this.showToast("Invalid 2FA code. Please try again.");
