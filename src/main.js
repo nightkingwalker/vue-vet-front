@@ -104,13 +104,13 @@ app.use(PrimeVue, {
     },
     // ripple: true
 });
-app.use(VueReCaptcha, {
-    siteKey: import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY,
-    loaderOptions: {
-        useRecaptchaNet: true,
-        autoHideBadge: false
-    }
-})
+// app.use(VueReCaptcha, {
+//     siteKey: import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY,
+//     loaderOptions: {
+//         useRecaptchaNet: true,
+//         autoHideBadge: false
+//     }
+// })
 app.use(createPinia())
 app.use(router);
 app.directive("ripple", Ripple);
