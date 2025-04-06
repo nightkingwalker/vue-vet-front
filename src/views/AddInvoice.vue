@@ -418,6 +418,16 @@ import Tag from "primevue/tag";
 import InputText from "primevue/inputtext";
 
 const toast = useToast();
+const props = defineProps({
+  pet: {
+    type: Object,
+    required: false,
+  },
+  medical_record_id: {
+    type: Number,
+    default: "",
+  },
+});
 
 // Client & Pet Data
 const clientSearch = ref("");
@@ -543,7 +553,50 @@ const selectPet = (event) => {
   selectedPet.value.age = computeAge(selectedPet.value.date_of_birth);
   console.log(selectedPet.value);
 };
+const selectPetProps = (pet) => {
+  selectedPet.value = pet;
+  selectedPet.value.age = computeAge(selectedPet.value.date_of_birth);
+  console.log(selectedPet.value);
+};
+const computeAge = (dateOfBirth) => {
+  const birthDate = new Date(dateOfBirth);
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth();
+  const birthYear = birthDate.getFullYear();
+  const birthMonth = birthDate.getMonth();
 
+  let ageInYears = currentYear - birthYear;
+  let ageInMonths = currentMonth - birthMonth;
+
+  // Adjust for case where the current month is less than the birth month
+  if (ageInMonths < 0) {
+    ageInYears--;
+    ageInMonths += 12; // Adding 12 because it's a full year back
+  }
+
+  // Construct the age string
+  const yearsText = ageInYears > 0 ? `${ageInYears} ${ageInYears > 1 ? "Y" : "Y"}` : "";
+  const monthsText =
+    ageInMonths > 0 ? `${ageInMonths} ${ageInMonths > 1 ? "M" : "M"}` : "";
+
+  // Combine them into a single string, handling cases where there are no months or no years
+  return `${yearsText}${yearsText && monthsText ? " & " : ""}${monthsText}`;
+};
+
+if (props.pet) {
+  selectedClient.value = props.pet.owner;
+  clientSearch.value = props.pet.owner.name;
+  filteredClients.value = props.pet.owner.name;
+  filteredClients.value = props.pet.owner.id;
+  // selectedPet.value = props.pet;
+  clientPets.value = [props.pet];
+  selectPetProps(props.pet);
+  console.log("medical_record_id", props.medical_record_id);
+  console.log("pet", props.pet.owner);
+  console.log("selectedClient", selectedClient.value);
+  console.log("selectedPet", selectedPet.value);
+}
 const clearPet = () => {
   selectedPet.value = null;
 };
@@ -661,31 +714,6 @@ const addItemToInvoice = () => {
     life: 3000,
   });
 };
-const computeAge = (dateOfBirth) => {
-  const birthDate = new Date(dateOfBirth);
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-  const currentMonth = currentDate.getMonth();
-  const birthYear = birthDate.getFullYear();
-  const birthMonth = birthDate.getMonth();
-
-  let ageInYears = currentYear - birthYear;
-  let ageInMonths = currentMonth - birthMonth;
-
-  // Adjust for case where the current month is less than the birth month
-  if (ageInMonths < 0) {
-    ageInYears--;
-    ageInMonths += 12; // Adding 12 because it's a full year back
-  }
-
-  // Construct the age string
-  const yearsText = ageInYears > 0 ? `${ageInYears} ${ageInYears > 1 ? "Y" : "Y"}` : "";
-  const monthsText =
-    ageInMonths > 0 ? `${ageInMonths} ${ageInMonths > 1 ? "M" : "M"}` : "";
-
-  // Combine them into a single string, handling cases where there are no months or no years
-  return `${yearsText}${yearsText && monthsText ? " & " : ""}${monthsText}`;
-};
 
 const removeItem = (index) => {
   invoiceItems.value.splice(index, 1);
@@ -750,6 +778,7 @@ const createInvoice = async () => {
     total_amount: totalAmount.value,
     deposit_required: depositRequired.value,
     notes: notes.value,
+    medical_record_id: props.medical_record_id,
     items: invoiceItems.value.map((item) => ({
       inventory_item_id: item.inventory_item_id,
       description: item.description,
@@ -760,7 +789,7 @@ const createInvoice = async () => {
       total_price: item.total_price,
     })),
   };
-
+  console.log("PAYLOAD", payload);
   // Add payment if deposit is required
   if (depositRequired.value > 0) {
     payload.payments = [

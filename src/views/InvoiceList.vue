@@ -15,7 +15,6 @@
       v-model:selection="selectedInvoices"
       highlightOnSelect
       dataKey="id"
-      @rowSelect="onSelectionChange"
       :exportFunction="beforeExportFunction"
       responsiveLayout="scroll"
       class="rounded-xl 2xl:overflow-y-scroll drop-shadow-md mt-4 h-[95vh]"
@@ -246,16 +245,26 @@
             <Button
               size="small"
               icon="pi pi-eye"
-              class="p-button-rounded p-button-text p-button-sm"
+              class="p-button-rounded p-button-text p-button-sm !text-[var(--p-primary-900)] dark:!text-[var(--p-primary-contrast-color)]"
               @click="viewInvoice(slotProps.data)"
               v-tooltip.bottom="`View Invoice`"
             />
             <Button
               size="small"
               icon="pi pi-pencil"
-              class="p-button-rounded p-button-text p-button-sm"
+              class="p-button-rounded p-button-text p-button-sm !text-[var(--p-primary-900)] dark:!text-[var(--p-primary-contrast-color)]"
+              :disabled="
+                slotProps.data.payment_status === 'paid' ||
+                slotProps.data.payment_status === 'cancelled'
+              "
               @click="editInvoice(slotProps.data)"
-              v-tooltip.bottom="`Edit Invoice`"
+              v-tooltip="
+                slotProps.data.payment_status === 'paid'
+                  ? 'Invoice is already paid'
+                  : slotProps.data.payment_status === 'cancelled'
+                  ? 'Cannot pay cancelled invoice'
+                  : 'Edit invoice'
+              "
             />
             <Button
               size="small"
@@ -263,6 +272,23 @@
               class="p-button-rounded p-button-text p-button-sm p-button-danger"
               @click="confirmDelete(slotProps.data)"
               v-tooltip.bottom="`Delete Invoice`"
+            />
+            <Button
+              size="small"
+              icon="fa-solid fa-hand-holding-dollar"
+              class="p-button-rounded p-button-text p-button-sm !text-[var(--p-primary-900)] dark:!text-[var(--p-primary-contrast-color)]"
+              @click="openPaymentDialog(slotProps.data)"
+              :disabled="
+                slotProps.data.payment_status === 'paid' ||
+                slotProps.data.payment_status === 'cancelled'
+              "
+              v-tooltip="
+                slotProps.data.payment_status === 'paid'
+                  ? 'Invoice is already paid'
+                  : slotProps.data.payment_status === 'cancelled'
+                  ? 'Cannot pay cancelled invoice'
+                  : 'Add payment to invoice'
+              "
             />
           </template>
         </template>
@@ -331,6 +357,34 @@
       @submitted="handleSubmit"
     />
   </Dialog>
+  <!-- <Dialog
+    header="Add Payment"
+    v-model:visible="paymentDialogVisible"
+    :modal="true"
+    :style="{ width: '450px' }"
+    :closable="false"
+  > -->
+  <Dialog
+    header="Add Payment"
+    v-model:visible="paymentDialogVisible"
+    @hide="resetForm"
+    modal
+    :closable="true"
+    class="w-[11/12] md:w-[500px] h-fit bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2 h-4">
+        <span class="font-bold whitespace-nowrap">Create New Invoice</span>
+      </div>
+    </template>
+    <AddPayment
+      v-if="selectedInvoice"
+      :invoice="selectedInvoice"
+      :paymentMethods="paymentMethods"
+      @submit="handlePaymentSubmit"
+      @cancel="paymentDialogVisible = false"
+    />
+  </Dialog>
 
   <!-- Delete Confirmation Dialog -->
   <Dialog
@@ -383,7 +437,10 @@ import Dropdown from "primevue/dropdown";
 import InvoiceAdd from "@/views/AddInvoice.vue";
 import InvoiceEdit from "@/views/EditInvoice.vue";
 import InvoiceView from "@/views/InvoiceView.vue";
-
+import AddPayment from "@/views/AddInvoicePayment.vue";
+import eventBus from "@/eventBus";
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 // BARCODE READER WORK
 const inputFocused = ref(false);
 const inputRef = ref(null);
@@ -420,7 +477,8 @@ const isEditModalVisible = ref(false);
 const viewDialogVisible = ref(false);
 const editMode = ref(false);
 const selectedInvoice = ref(null);
-
+const paymentDialogVisible = ref(false);
+const paymentLoading = ref(false);
 const statusOptions = ref([
   { label: "Draft", value: "draft" },
   { label: "Pending", value: "pending" },
@@ -527,6 +585,7 @@ const editInvoice = (invoice) => {
 const confirmDelete = (invoice) => {
   selectedInvoice.value = invoice;
   deleteDialogVisible.value = true;
+  // console.log(invoice);
 };
 
 const deleteInvoice = async () => {
@@ -568,6 +627,38 @@ const exportCSV = (event) => {
     selectionOnly: false,
   });
 };
+const openPaymentDialog = (invoice) => {
+  selectedInvoice.value = invoice;
+  paymentDialogVisible.value = true;
+};
+
+const handlePaymentSubmit = async (paymentData) => {
+  paymentLoading.value = true;
+  try {
+    // await axiosInstance.post(
+    //   `/invoices/${selectedInvoice.value.id}/payments`,
+    //   paymentData
+    // );
+    toast.add({
+      severity: "success",
+      summary: "Success",
+      detail: "Payment added successfully",
+      life: 3000,
+    });
+    paymentDialogVisible.value = false;
+    refreshData();
+  } catch (error) {
+    console.error("Error adding payment:", error);
+    toast.add({
+      severity: "error",
+      summary: "Error",
+      detail: error.response?.data?.message || "Failed to add payment",
+      life: 5000,
+    });
+  } finally {
+    paymentLoading.value = false;
+  }
+};
 
 const fetchInvoices = async (page = 1) => {
   try {
@@ -600,22 +691,54 @@ const refreshData = () => {
   fetchInvoices(currentPage.value);
 };
 
-const skeletonRows = Array.from({ length: 10 }).map(() => ({
-  id: "",
-  invoice_number: "",
-  client: "",
-  date: "",
-  due_date: "",
-  status: "",
-  total_amount: "",
-  amount_paid: "",
-  balance_due: "",
-  payment_status: "",
-}));
+// const skeletonRows = Array.from({ length: 10 }).map(() => ({
+//   id: "",
+//   invoice_number: "",
+//   client: "",
+//   date: "",
+//   due_date: "",
+//   status: "",
+//   total_amount: "",
+//   amount_paid: "",
+//   balance_due: "",
+//   payment_status: "",
+// }));
+const generateSkeletonRows = (count = 10) => {
+  const statusOptions = ["draft", "pending", "paid", "cancelled"];
+  const paymentStatusOptions = ["unpaid", "partial", "paid"];
 
+  return Array.from({ length: count }).map((_, index) => {
+    const randomAmount = (Math.random() * 1000).toFixed(2);
+    const randomDateOffset = Math.floor(Math.random() * 30);
+    const date = new Date();
+    date.setDate(date.getDate() - randomDateOffset);
+
+    return {
+      id: `skeleton-${index}`, // Unique ID for each row
+      invoice_number: `INV-${Math.floor(1000 + Math.random() * 9000)}`,
+      client: {
+        name: `Client ${String.fromCharCode(65 + (index % 26))}`,
+      },
+      date: date.toISOString().split("T")[0],
+      due_date: new Date(date.setDate(date.getDate() + 7)).toISOString().split("T")[0],
+      status: statusOptions[index % statusOptions.length],
+      total_amount: randomAmount,
+      amount_paid: (randomAmount * 0.7).toFixed(2),
+      balance_due: (randomAmount * 0.3).toFixed(2),
+      payment_status: paymentStatusOptions[index % paymentStatusOptions.length],
+      __skeleton: true, // Optional flag to identify skeleton rows
+    };
+  });
+};
+
+const skeletonRows = generateSkeletonRows(10);
 onMounted(() => {
   fetchInvoices();
   window.addEventListener("keydown", handleKeydown);
+  eventBus.on("AddInvoice", () => {
+    console.log("OPEN ADD OWNER");
+    showModal();
+  });
 });
 
 onBeforeUnmount(() => {

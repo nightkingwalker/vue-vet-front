@@ -1,0 +1,19 @@
+<template>
+  <div class="bg-gray-50 p-4 rounded-lg">
+    <h3 class="font-bold text-sm mb-2 border-b pb-1">From</h3>
+    <div class="space-y-1">
+      <div class="text-md font-semibold">{{ branch.name }}</div>
+      <div>{{ branch.address }}</div>
+      <div>Phone: {{ branch.phone }}</div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+defineProps({
+  branch: {
+    type: Object,
+    required: true,
+  },
+});
+</script>

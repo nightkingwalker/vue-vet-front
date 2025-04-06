@@ -497,15 +497,46 @@ const ownerSortFunction = (event) => {
   });
 };
 
-const skeletonRows = Array.from({ length: 10 }).map(() => ({
-  owner: "",
-  id: "",
-  name: "",
-  species: "",
-  breed: "",
-  gender: "",
-  date_of_birth: "",
-}));
+// const skeletonRows = Array.from({ length: 10 }).map(() => ({
+//   owner: "",
+//   id: "",
+//   name: "",
+//   species: "",
+//   breed: "",
+//   gender: "",
+//   date_of_birth: "",
+// }));
+const generateSkeletonItems = (count, fields) => {
+  const randomValues = {
+    name: () => `Pet ${Math.ceil(Math.random() * 100)}`,
+    species: () => ["Dog", "Cat", "Bird", "Rabbit"][Math.floor(Math.random() * 4)],
+    status: () => ["Active", "Inactive", "Pending"][Math.floor(Math.random() * 3)],
+    // Add more field generators as needed
+  };
+
+  return Array.from({ length: count }).map((_, index) => {
+    const item = {
+      id: `skeleton-${index}-${Date.now()}`,
+      __isSkeleton: true,
+    };
+
+    fields.forEach((field) => {
+      item[field] = randomValues[field] ? randomValues[field]() : "";
+    });
+
+    return item;
+  });
+};
+const skeletonRows = generateSkeletonItems(10, [
+  "name",
+  "species",
+  "breed",
+  "age",
+  "owner_name",
+  "status",
+  "last_visit",
+]);
+
 const refreshData = () => {
   loading.value = true; // Set loading state to true to show skeletons
   fetchPets(); // Fetch the pets data again

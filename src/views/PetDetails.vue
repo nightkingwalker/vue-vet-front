@@ -503,6 +503,28 @@
             />
             <Button
               type="button"
+              icon="fa-solid fa-dollar-sign"
+              v-tooltip.top="{
+                value: 'Invoice',
+                pt: {
+                  arrow: {
+                    style: {
+                      borderTopColor: 'var(--p-primary-color)',
+                    },
+                  },
+                  text:
+                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+                },
+              }"
+              raised
+              rounded
+              variant="text"
+              size="small"
+              class="p-component !text-sm ml-2"
+              @click="showAddInvoice(slotProps.data.id)"
+            />
+            <Button
+              type="button"
               icon="fa-solid fa-pen-to-square"
               v-tooltip.top="{
                 value: 'Edit Details',
@@ -880,6 +902,62 @@
     />
     <template #footer> </template>
   </Dialog>
+  <!-- View Invoice Dialog -->
+  <Dialog
+    header="Invoice Details"
+    v-model:visible="viewDialogVisible"
+    modal
+    :closable="true"
+    class="w-11/12 md:w-8/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
+  >
+    <InvoiceView
+      :invoice="selectedInvoice"
+      @addInvoice="handleAddInvoiceRequest"
+      @addPayment="handleAddPaymentRequest"
+    />
+    <!-- :paymentMethods="paymentMethods" -->
+  </Dialog>
+
+  <Dialog
+    :header="'Create New Invoice'"
+    v-model:visible="isModalVisible"
+    @hide="isModalVisible = false"
+    modal
+    :closable="true"
+    class="w-11/12 md:w-11/12 h-screen bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2 h-4">
+        <span class="font-bold whitespace-nowrap">Create New Invoice</span>
+      </div>
+    </template>
+    <InvoiceAdd
+      :pet="pet"
+      :medical_record_id="medical_record_id"
+      @submitted="handleInvoiceSubmit"
+    />
+  </Dialog>
+  <Dialog
+    header="Add Payment"
+    v-model:visible="paymentDialogVisible"
+    @hide="resetForm"
+    modal
+    :closable="true"
+    class="w-[11/12] md:w-[500px] h-fit bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2 h-4">
+        <span class="font-bold whitespace-nowrap">Add Payment</span>
+      </div>
+    </template>
+    <AddPayment
+      v-if="selectedInvoice"
+      :invoice="selectedInvoice"
+      :paymentMethods="paymentMethods"
+      @submit="handlePaymentSubmit"
+      @cancel="paymentDialogVisible = false"
+    />
+  </Dialog>
   <!-- <ConfirmDialog class="md:w-[35vw] sm:w-full !text-sm">
     <template #message="slotProps">
       <div class="flex flex-col items-center w-full mx-auto gap-4 text-md text-center">
@@ -920,6 +998,10 @@ import CaseHistory from "@/views/CaseHistory.vue";
 import AddPhysicalExamination from "@/views/addNewMedicalExamination.vue";
 import PhysicalExamination from "@/views/MedicalExamination.vue";
 import FullReport from "@/views/FullReport.vue";
+import InvoiceView from "@/views/InvoiceView.vue";
+import InvoiceAdd from "@/views/AddInvoice.vue";
+import AddPayment from "@/views/AddInvoicePayment.vue";
+const emit = defineEmits([]); // Define the event to be emitted
 
 const isTreatmentsListVisible = ref(false);
 const isTestResultsVisible = ref(false);
@@ -938,12 +1020,15 @@ const isCaseHistorysVisible = ref(false);
 const isAddPhysicalExamination = ref(false);
 const isPhysicalExamination = ref(false);
 const isFullReportVisible = ref(false);
-
+const viewDialogVisible = ref(false);
+const isModalVisible = ref(false);
+const paymentDialogVisible = ref(false);
 const selectedTreatmentId = ref(null);
 const selectedTestResultId = ref(null);
 const selectedMedicalImageId = ref(null);
 const route = useRoute();
 const petmicrochip = ref(route.params.petmicrochip);
+const selectedInvoice = ref(null);
 const pet = ref({
   microchip_num: "",
   name: "",
@@ -1017,10 +1102,36 @@ const showFullReportModal = (MedicalRecordId) => {
   // isAddCaseHistorysVisible.value = true;
   isFullReportVisible.value = true;
 };
+const showAddInvoice = (MedicalRecordId) => {
+  medical_record_id.value = findRecordById(MedicalRecordId);
+  // isAddCaseHistorysVisible.value = true;
+  fetchInvoice().then(() => {
+    viewDialogVisible.value = true;
+  });
+};
+
 const showAddPhysicalExaminationModal = (MedicalRecordId) => {
   medical_record_id.value = MedicalRecordId;
+
   // isAddCaseHistorysVisible.value = true;
   isAddPhysicalExamination.value = true;
+};
+const handleAddInvoiceRequest = () => {
+  // medical_record_id.value = MedicalRecordId;
+  // isAddCaseHistorysVisible.value = true;
+  viewDialogVisible.value = false;
+  console.log("PET", medical_record_id.value);
+  isModalVisible.value = true;
+};
+const handleAddPaymentRequest = () => {
+  // medical_record_id.value = MedicalRecordId;
+  // isAddCaseHistorysVisible.value = true;
+  viewDialogVisible.value = false;
+  console.log("PET", medical_record_id.value);
+  // paymentDialogVisible.value = true;
+  fetchInvoice().then(() => {
+    paymentDialogVisible.value = true;
+  });
 };
 const showAddCaseHistoryModal = (MedicalRecordId) => {
   // selectedTestResultId.value = testresultId;
@@ -1040,6 +1151,13 @@ const handleNewTestResult = () => {
 const handleSubmit = (data) => {
   console.log(data);
   isNewApointmentVisible.value = false;
+  // currentPage.value = 1; // Reset to the first page when searching
+  fetchPets();
+  // fetchAppointments();
+};
+const handleInvoiceSubmit = (data) => {
+  console.log(data);
+  isModalVisible.value = false;
   // currentPage.value = 1; // Reset to the first page when searching
   fetchPets();
   // fetchAppointments();
@@ -1068,6 +1186,10 @@ const handleAppointmentUpdated = (data) => {
   isEditApointmentVisible.value = false;
   fetchPets();
   // Refresh the appointments list or perform other actions
+};
+const handlePaymentSubmit = () => {
+  paymentDialogVisible.value = false;
+  fetchPets();
 };
 const editPetDetails = () => {
   console.log(petmicrochip.value);
@@ -1225,6 +1347,7 @@ const fetchPets = async () => {
     // Make the request using the axios instance with interceptors
     const response = await axiosInstance.get(`/pets/${petmicrochip.value}`);
     pet.value = response.data;
+    console.log(pet.value);
     visits.value = response.data.appointments;
     medical_records.value = response.data.medical_records;
     pet.value.date_of_birth = formatDateForSubmission(pet.value.date_of_birth);
@@ -1235,6 +1358,22 @@ const fetchPets = async () => {
   } finally {
   }
 };
+const fetchInvoice = async () => {
+  // loading.value = true;
+  try {
+    // Make the request using the axios instance with interceptors
+    const response = await axiosInstance.get(
+      `/medical-records/${medical_record_id.value}/invoice`
+    );
+    selectedInvoice.value = response.data.data;
+    console.log("selectedInvoice", selectedInvoice.value);
+    // loading.value = false; // Stop loading once data is fetched
+  } catch (error) {
+    //     // showSuccess("warn", "Warning", "Couldent Fetch Data");
+  } finally {
+  }
+};
+
 const formatDateForSubmission = (dateString) => {
   const date = new Date(dateString);
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(
@@ -1271,5 +1410,11 @@ const findRecordById = (id) => {
 
 onMounted(() => {
   fetchPets();
+  eventBus.on("showPaymentView", (event) => {
+    viewDialogVisible.value = false;
+    paymentDialogVisible.value = true;
+    // console.log(event);
+    // console.log("selectedInvoice", selectedInvoice);
+  });
 });
 </script>

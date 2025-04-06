@@ -347,6 +347,10 @@ const handleKeyDown = (event) => {
       eventBus.emit("AddOwner");
       console.log("Ctrl + N pressed");
     }
+    if (route.path === `/invoices`) {
+      eventBus.emit("AddInvoice");
+      console.log("Ctrl + N pressed");
+    }
   }
   if (event.ctrlKey) {
     switch (event.key) {
@@ -358,6 +362,11 @@ const handleKeyDown = (event) => {
           eventBus.emit("AddOwner");
           console.log("Ctrl + N pressed");
         }
+        if (route.path === `/invoices`) {
+          eventBus.emit("AddInvoice");
+          console.log("Ctrl + N pressed");
+        }
+
         break;
       case "p": // Ctrl + O
         event.preventDefault();
