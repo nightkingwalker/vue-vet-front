@@ -4,7 +4,7 @@
       <fieldset
         class="p-fieldset p-component w-full flex flex-wrap items-center border rounded-lg p-2 justify-start gap-x-2"
       >
-        <legend>Add New Treatment</legend>
+        <legend>Edit Treatment</legend>
         <div class="field mt-6 w-[49%]">
           <FloatLabel class="w-full md:w-56">
             <InputText id="name" v-model="treatment.name" />
@@ -67,23 +67,22 @@
         </div>
       </fieldset>
       <div class="flex justify-end">
-        <Button type="submit" class="mt-4" label="Add Treatment" />
+        <Button type="submit" class="mt-4" label="Update Treatment" />
       </div>
     </form>
   </div>
 </template>
-
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import InputText from "primevue/inputtext";
 import DatePicker from "primevue/datepicker";
 import Select from "primevue/select";
-
 import FloatLabel from "primevue/floatlabel";
 import Button from "primevue/button";
 import axiosInstance from "@/axios";
 import eventBus from "@/eventBus";
 import { useRoute } from "vue-router";
+
 const emit = defineEmits(); // Define the event to be emitted
 
 const route = useRoute();
@@ -92,8 +91,12 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  treatmentId: {
+    type: Number,
+    required: true,
+  },
 });
-// console.log(props.medical_record_id);
+console.log(`treatmentId = ${props.treatmentId}`);
 const treatment = ref({
   name: "",
   dosage: "",
@@ -101,6 +104,7 @@ const treatment = ref({
   administration: "",
   treatment_date: "",
 });
+
 const medicineAdministrationMethods = ref([
   { label: "Oral (Pills, Tablets, Capsules, Syrups, Suspensions)", value: "Oral" },
   { label: "Subcutaneous Injection (Under the Skin)", value: "Subcutaneous" },
@@ -117,6 +121,35 @@ const medicineAdministrationMethods = ref([
   { label: "Intraosseous (Into the Bone)", value: "Intraosseous" },
 ]);
 
+// Fetch the existing treatment data
+const fetchTreatment = async () => {
+  try {
+    const response = await axiosInstance.get(`/treatments/${props.treatmentId}`);
+    const data = response.data;
+    treatment.value = {
+      name: data.name,
+      dosage: data.dosage,
+      description: data.description,
+      administration: medicineAdministrationMethods.value.find(
+        (method) => method.value === data.administration
+      ),
+      treatment_date: new Date(data.treatment_date),
+    };
+  } catch (error) {
+    eventBus.emit("show-toast", {
+      severity: "warn",
+      summary: "Error",
+      detail: error,
+      life: 5000,
+    });
+  }
+};
+
+// Fetch treatment data when the component is mounted
+onMounted(() => {
+  fetchTreatment();
+});
+
 // Form submission
 const submitForm = async () => {
   const submissionData = {
@@ -131,15 +164,17 @@ const submitForm = async () => {
   };
   console.log(submissionData);
   try {
-    const response = await axiosInstance.post("/treatments", submissionData);
-    console.log(response);
+    const response = await axiosInstance.put(
+      `/treatments/${props.treatmentId}`,
+      submissionData
+    );
     eventBus.emit("show-toast", {
       severity: "success",
       summary: "Data Loaded",
-      detail: `Treatment Added Successfully`,
+      detail: `Treatment Updated Successfully`,
       life: 5000,
     });
-    emit("TreatmentAdded", response.data);
+    emit("TreatmentUpdated", response.data);
   } catch (error) {
     eventBus.emit("show-toast", {
       severity: "warn",
@@ -150,15 +185,3 @@ const submitForm = async () => {
   }
 };
 </script>
-<style scoped>
-.form-container {
-  /* max-width: 500px; */
-  margin: auto;
-}
-.field {
-  margin-bottom: 16px;
-}
-.p-fieldset-content {
-  display: flex;
-}
-</style>

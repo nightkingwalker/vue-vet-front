@@ -335,7 +335,8 @@ import router from "@/router";
 import { useRoute } from "vue-router";
 import Breadcrumb from "primevue/breadcrumb";
 import Dialog from "primevue/dialog";
-import NewPatient from "@/views/AddOwnerPetsView.vue"; // Adjust the path as needed
+import Avatar from "primevue/avatar";
+import NewPatient from "@/views/AddOwnerPetsView.vue";
 import eventBus from "@/eventBus";
 const route = useRoute();
 const home = ref({

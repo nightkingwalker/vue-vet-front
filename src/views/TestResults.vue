@@ -3,9 +3,12 @@
     :value="loading ? skeletonRows : medicalRecords"
     class="mx-4 rounded-lg overflow-hidden text-xs"
     stripedRows
+    showGridlines
     scrollable
     scrollHeight="400px"
   >
+    <template #empty> No Test Results Found. </template>
+
     <template #header>
       <div class="flex justify-between items-center !m-b-1">
         <div class="flex">
@@ -56,6 +59,52 @@
         </div>
       </template>
     </Column>
+    <Column header="Data" class="whitespace-nowrap w-[10%]">
+      <template #body="slotProps">
+        <Button
+          type="button"
+          icon="fa-solid fa-pencil !text-primary"
+          v-tooltip.top="{
+            value: 'Edit Details',
+            pt: {
+              arrow: {
+                style: {
+                  borderTopColor: 'var(--p-primary-color)',
+                },
+              },
+              text:
+                '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+            },
+          }"
+          rounded
+          variant="text"
+          size="small"
+          class="!text-xs !text-primary"
+          @click="showEditTestResultModal(slotProps.data.id)"
+        />
+        <Button
+          icon="fa-solid fa-times !text-primary"
+          v-tooltip.top="{
+            value: 'Delete',
+            pt: {
+              arrow: {
+                style: {
+                  borderTopColor: 'var(--p-primary-color)',
+                },
+              },
+              text:
+                '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+            },
+          }"
+          rounded
+          variant="text"
+          size="small"
+          class="!text-x !text-primary"
+          @click.prevent="confirmDelete(slotProps.data.id)"
+          v-if="slotProps.data.type !== `Grooming`"
+        />
+      </template>
+    </Column>
   </DataTable>
 </template>
 <script setup>
@@ -66,6 +115,9 @@ import Skeleton from "primevue/skeleton";
 import Button from "primevue/button";
 import eventBus from "@/eventBus";
 import axiosInstance from "@/axios"; // Assuming axiosInstance is set up correctly
+import { useConfirm } from "primevue/useconfirm";
+
+const confirm = useConfirm(); // Initialize the confirmation service
 const medicalRecords = ref();
 const loading = ref(false);
 const emit = defineEmits(); // Define the event to be emitted
@@ -106,7 +158,7 @@ const fetchTestResults = async () => {
       `/test-results/bymrid/${props.medical_record_id}`
     );
     medicalRecords.value = response.data.data;
-    // console.log(medicalRecords.value);
+    console.log(medicalRecords.value);
 
     loading.value = false; // Stop loading once data is fetched
   } catch (error) {
@@ -117,13 +169,45 @@ const fetchTestResults = async () => {
 const showAddTestResultModal = () => {
   emit("showAddTestResultModal");
 };
+const showEditTestResultModal = (testResultId) => {
+  emit("showEditTestResultModal", testResultId);
+};
 const refreshData = () => {
   loading.value = true; // Set loading state to true to show skeletons
   fetchTestResults(); // Fetch the pets data again
 };
+const confirmDelete = (testResultId) => {
+  confirm.require({
+    message: "Are you sure you want to delete this result?",
+    header: "Delete Confirmation",
+    icon: "pi pi-exclamation-triangle",
+    acceptClass: "p-button-danger",
+    accept: () => {
+      deleteTestResult(testResultId); // Call the delete function if the user confirms
+    },
+    reject: () => {
+      console.log("Deletion cancelled");
+    },
+  });
+};
+
+const deleteTestResult = async (testResultId) => {
+  try {
+    const response = await axiosInstance.delete(`/test-results/${testResultId}`);
+    console.log("Treatment deleted:", response.data);
+    fetchTestResults(); // Refresh the treatments list
+    eventBus.emit("TestResultDeletedSuccessfully"); // Emit an event if needed
+  } catch (error) {
+    console.error("Failed to delete treatment:", error);
+  }
+};
 onMounted(() => {
   fetchTestResults();
   eventBus.on("newTestResultAdded", () => {
+    console.log("newTestResultAdded");
+    fetchTestResults();
+  });
+  eventBus.on("handleTestResultUpdatedSuccessfully", () => {
     console.log("newTestResultAdded");
     fetchTestResults();
   });

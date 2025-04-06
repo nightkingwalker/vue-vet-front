@@ -2,15 +2,15 @@
   <div class="px-4">
     <form @submit.prevent="submitForm" class="mx-auto w-full max-w-md">
       <fieldset
-        class="p-fieldset p-component w-full flex flex-wrap items-center border rounded-lg p-4"
+        class="p-fieldset p-component w-4/5 flex flex-wrap mx-auto gap-2 items-start border rounded-lg p-4"
       >
         <legend
           class="px-4 bg-gray-600 text-white dark:bg-zinc-200 dark:text-zinc-800 rounded"
         >
-          New Client Details
+          Edit Client Details
         </legend>
 
-        <div class="field w-full">
+        <div class="field mt-6 w-full">
           <FloatLabel class="w-full">
             <InputText id="name" v-model="owner.name" />
             <label for="name">Name</label>
@@ -33,20 +33,19 @@
 
         <div class="field mt-6 w-full">
           <FloatLabel class="w-full">
-            <TextArea id="address" v-model="owner.address" />
+            <TextArea id="address" v-model="owner.address" fluid autoResize rows="2" />
             <label for="address">Address</label>
           </FloatLabel>
         </div>
 
-        <Button type="submit" label="Submit" icon="pi pi-check" class="mt-4 w-full" />
+        <Button type="submit" label="Update" icon="pi pi-check" class="mt-4 w-full" />
       </fieldset>
     </form>
   </div>
 </template>
 
 <script setup>
-// import { ref } from "vue";
-import { ref } from "vue"; // Import emit from Vue
+import { ref, watch } from "vue";
 import axiosInstance from "@/axios"; // Assuming axiosInstance is set up correctly
 import InputText from "primevue/inputtext";
 import TextArea from "primevue/textarea";
@@ -54,49 +53,54 @@ import FloatLabel from "primevue/floatlabel";
 import Button from "primevue/button";
 import eventBus from "@/eventBus";
 import router from "@/router";
-// Reactive properties for form data
-const emit = defineEmits(["submitted"]); // Define the event to be emitted
 
-const owner = ref({
-  name: "",
-  email: "",
-  phone: "",
-  address: "",
+// const emit = defineEmits(["updated", "close-dialog"]); // Define the events to be emitted
+
+const props = defineProps({
+  owner: {
+    type: Object,
+    required: true,
+  },
 });
+const emit = defineEmits(); // Define the event to be emitted
+const owner = ref({ ...props.owner }); // Create a local copy of the owner object
+
+// Watch for changes in the owner prop (if the parent updates it)
+watch(
+  () => props.owner,
+  (newOwner) => {
+    owner.value = { ...newOwner }; // Update the local copy
+  },
+  { deep: true }
+);
 
 // Function to handle form submission
 const submitForm = async () => {
+  console.log(owner.value);
   try {
-    // console.log(owner.value);
-    // Make the POST request to the API to create a new client
-    const response = await axiosInstance.post("/owners", owner.value);
+    // Make the PUT request to update the owner
+    const response = await axiosInstance.put(`/owners/${owner.value.id}`, owner.value);
 
-    // Emit the submitted data back to the parent component
-    emit("ownerAdded", response.data.data); // You may modify this based on your response structure
-    eventBus.emit("ownerAdded", response.data.data);
-    // Clear the form fields after successful submission
-    owner.value = {
-      name: "",
-      email: "",
-      phone: "",
-      address: "",
-    };
+    // Emit the updated data back to the parent component
+    emit("OwnerUpdated", response.data); // Notify the parent component
+    emit("close-dialog"); // Close the dialog
 
-    // Optionally, show a success message or perform any other action
+    // Show a success message
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Client Added",
-      detail: "New client has been added successfully.",
+      summary: "Client Updated",
+      detail: "Client details have been updated successfully.",
       life: 5000,
     });
+
+    // Optionally, redirect to the owners list
     await router.push("/owners");
   } catch (error) {
-    // Handle the error
-    console.error("Error adding new client:", error);
+    console.error("Error updating client:", error);
     eventBus.emit("show-toast", {
       severity: "error",
       summary: "Error",
-      detail: "Failed to add new client.",
+      detail: "Failed to update client details.",
       life: 5000,
     });
   }

@@ -220,7 +220,7 @@
       </Column>
 
       <!-- ِؤفهخىس Column -->
-      <Column class="text-md !font-thin" field="date_of_birth" header="Age">
+      <Column class="text-md !font-thin" field="date_of_birth" header="">
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="60%" height="1rem" />
@@ -306,7 +306,8 @@ import axiosInstance from "@/axios"; // Assuming you've created a global axios i
 import Chip from "primevue/chip";
 import Paginator from "primevue/paginator";
 import Dialog from "primevue/dialog";
-import NewPatient from "@/views/AddNewPet.vue"; // Adjust the path as needed
+import NewPatient from "@/views/AddNewPet.vue";
+import Avatar from "primevue/avatar";
 import NewClientForm from "@/views/AddNewOwner.vue";
 // BARCODE READER WORK
 const inputFocused = ref(false);

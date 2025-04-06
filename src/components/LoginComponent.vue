@@ -203,7 +203,7 @@ import axios from "axios";
 import Logo from "@/assets/logo.png";
 import Image from "primevue/image";
 // import { VueRecaptcha } from "vue-recaptcha";
-import { VueReCaptcha, useReCaptcha } from "vue-recaptcha-v3";
+// import { VueReCaptcha, useReCaptcha } from "vue-recaptcha-v3";
 
 const email = ref("");
 const password = ref("");
@@ -217,7 +217,7 @@ const requires2FA = ref(false); // Controls 2FA form visibility
 const temporaryToken = ref(""); // Stores the temporary token for 2FA verification
 const twoFactorCode = ref("");
 const GOOGLE_RECAPTCHA_SITE_KEY = import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY;
-const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
+// const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
 const captchaToken = ref(null);
 const login = async () => {
   try {

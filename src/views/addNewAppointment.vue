@@ -2,28 +2,35 @@
   <div class="w-full">
     <form @submit.prevent="submitForm" class="mx-auto w-full">
       <fieldset
-        class="p-fieldset p-component w-4/5 flex flex-wrap mx-auto items-center border rounded-lg p-4"
+        class="p-fieldset p-component w-4/5 flex flex-wrap mx-auto gap-2 items-center border rounded-lg p-4"
       >
         <legend>Add New Appointment</legend>
         <input type="hidden" id="branch_id" value="1" v-model="appointment.branch_id" />
         <!-- <input type="hidden" id="client_id" v-model="appointment.client_id" /> -->
 
-        <div class="field mt-6 w-1/2" :class="appointment.petmicrochip ? `hidden` : ``">
+        <div class="field mt-6 w-[48%]" :class="appointment.petmicrochip ? `hidden` : ``">
           <FloatLabel class="w-full" v-if="!appointment.petmicrochip">
-            <AutoComplete
-              v-model="selectedPet"
-              optionLabel="name"
-              :suggestions="filteredPets"
-              @complete="searchPets"
-              class="w-full"
-            >
-              <template #option="slotProps">
-                <div class="flex items-center">
-                  <div>{{ slotProps.option.name }}</div>
-                </div>
-              </template>
-            </AutoComplete>
-            <label for="pet">Select Pet</label>
+            <InputGroup class="flex rounded-md overflow-hidden">
+              <AutoComplete
+                v-model="selectedPet"
+                optionLabel="name"
+                :suggestions="filteredPets"
+                @complete="searchPets"
+                class="w-full"
+                fluid
+              >
+                <template #option="slotProps">
+                  <div class="flex items-center">
+                    <div>{{ slotProps.option.name }}</div>
+                  </div>
+                </template>
+              </AutoComplete>
+              <InputGroupAddon
+                class="!bg-transparent px-4 flex flex-col item-center justify-center"
+                ><i class="pi pi-search"></i
+              ></InputGroupAddon>
+            </InputGroup>
+            <label for="pet">Search Pets</label>
           </FloatLabel>
           <InputText
             id="name"
@@ -34,45 +41,58 @@
           />
         </div>
 
-        <div class="field mt-6 w-1/2">
+        <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <InputText id="title" v-model="appointment.title" />
+            <InputText id="title" v-model="appointment.title" fluid />
             <label for="title">Title</label>
           </FloatLabel>
         </div>
 
-        <div class="field mt-6 w-1/2">
+        <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <InputText id="description" v-model="appointment.description" />
+            <InputText id="description" v-model="appointment.description" fluid />
             <label for="description">Description</label>
           </FloatLabel>
         </div>
 
-        <div class="field mt-6 w-1/2">
+        <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
             <DatePicker
               id="start"
+              showTime
+              hourFormat="24"
+              fluid
               v-model="appointment.start"
               dateFormat="yy-mm-dd"
               class="w-full"
             />
+            <!-- <input
+              type="datetime-local"
+              class="p-inputtext p-component p-inputtext-fluid p-datepicker-input w-full"
+              fluid
+              placeholder=""
+              v-model="appointment.start"
+            /> -->
             <label for="start">Start Date & Time</label>
+            <!-- <InputText type="datetime-local" v-model="appointment.start" fluid /> -->
           </FloatLabel>
         </div>
 
-        <div class="field mt-6 w-1/2">
+        <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
+            <label for="end">End Date & Time</label>
             <DatePicker
+              showTime
+              hourFormat="24"
               id="end"
               v-model="appointment.end"
               dateFormat="yy-mm-dd"
               class="w-full"
             />
-            <label for="end">End Date & Time</label>
           </FloatLabel>
         </div>
 
-        <div class="field mt-6 w-1/2">
+        <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
             <Select
               v-model="appointment.type"
@@ -83,7 +103,7 @@
             <label for="type">Type</label>
           </FloatLabel>
         </div>
-        <div class="field mt-6 w-1/2">
+        <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
             <Select
               v-model="appointment.status"
@@ -124,6 +144,30 @@ const appointment = ref({
   end: null,
 });
 
+// Function to format date as `YYYY-MM-DD HH:mm`
+function formatLocalDateTime(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+
+  return `${year}-${month}-${day} ${hours}:${minutes}`;
+}
+
+// Watch the start date to update the end date
+watch(
+  () => appointment.value.start,
+  (newStart) => {
+    if (newStart) {
+      const startDate = new Date(newStart);
+      const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // Add 15 minutes
+      appointment.value.end = formatLocalDateTime(endDate); // Format to `YYYY-MM-DD HH:mm`
+    } else {
+      appointment.value.end = null; // Reset if start is null
+    }
+  }
+);
 // Options for appointment type
 const appointmentTypes = ref([
   { label: "Emergency", value: "Emergency" },
@@ -235,44 +279,27 @@ const submitForm = async () => {
     return; // Stop execution if no pet is selected
   }
 
-  // Generate a random start time between 12:00:00 and 17:00:00
-  const randomHour = Math.floor(Math.random() * 5) + 12; // Random hour between 12 and 16
-  const randomMinute = Math.floor(Math.random() * 60); // Random minute between 0 and 59
+  const formatDateTime = (date) => {
+    return `${date.getFullYear()}-${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${date
+      .getDate()
+      .toString()
+      .padStart(2, "0")} ${date
+      .getHours()
+      .toString()
+      .padStart(2, "0")}:${date
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`;
+  };
 
   const startDate = new Date(appointment.value.start);
-  startDate.setHours(randomHour, randomMinute, 0, 0); // Set the start time with random HH:MM:SS
+  const endDate = new Date(appointment.value.end);
 
-  // Set end time to 15 minutes after start
-  const endDate = new Date(startDate);
-  endDate.setMinutes(endDate.getMinutes() + 15); // Add 15 minutes to the end time
-
-  // Format dates to 'YYYY-MM-DD HH:mm:ss'
-  appointment.value.start = `${startDate.getFullYear()}-${(startDate.getMonth() + 1)
-    .toString()
-    .padStart(2, "0")}-${startDate
-    .getDate()
-    .toString()
-    .padStart(2, "0")} ${startDate
-    .getHours()
-    .toString()
-    .padStart(2, "0")}:${startDate
-    .getMinutes()
-    .toString()
-    .padStart(2, "0")}:${startDate.getSeconds().toString().padStart(2, "0")}`;
-
-  appointment.value.end = `${endDate.getFullYear()}-${(endDate.getMonth() + 1)
-    .toString()
-    .padStart(2, "0")}-${endDate
-    .getDate()
-    .toString()
-    .padStart(2, "0")} ${endDate
-    .getHours()
-    .toString()
-    .padStart(2, "0")}:${endDate
-    .getMinutes()
-    .toString()
-    .padStart(2, "0")}:${endDate.getSeconds().toString().padStart(2, "0")}`;
-
+  // Format start and end times
+  appointment.value.start = formatDateTime(startDate);
+  appointment.value.end = formatDateTime(endDate);
   try {
     // Log the data being sent to ensure all required fields are included
     // console.log("Submitting appointment data:", appointment.value);
@@ -306,7 +333,7 @@ onMounted(() => {
   appointment.value.petmicrochip = props.petMicrochip;
   appointment.value.owner_id = props.petOwnerID;
   // console.log("owner_id " + appointment.value.owner_id);
-  setRandomTime();
+  // setRandomTime();
   if (props.petMicrochip) {
     // console.log("props.petMicrochip " + props.petMicrochip);
     searchQuery.value = props.petMicrochip;

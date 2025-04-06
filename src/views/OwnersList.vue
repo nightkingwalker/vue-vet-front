@@ -114,7 +114,7 @@
               class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-6"
             >
               <div class="w-1/4">
-                <div class="text-lg font-medium border-b-2 w-fit">
+                <div class="text-sm font-medium border-b-2 w-fit">
                   {{ owner.name }}
                 </div>
                 <div class="text-sm">
@@ -146,16 +146,16 @@
                   >
                     +{{ owner.phone }}
                   </a>
-                  <span v-else class="2xl:!text-lg lg:!text-xs">+***********</span></span
+                  <span v-else class="2xl:!text-sm lg:!text-xs">+***********</span></span
                 >
-                <span class="text-sm"
+                <span class="!text-sm"
                   ><i class="fa-solid fa-location-dot mr-2"></i>{{ owner.address }}</span
                 >
               </div>
               <div class="flex gap-1">
                 <Button
                   type="button"
-                  icon="fas fa-user-pen 2xl:!text-lg lg:!text-xs"
+                  icon="fas fa-user-pen 2xl:!text-sm lg:!text-xs"
                   label=""
                   v-tooltip.top="{
                     value: 'Edit',
@@ -169,11 +169,14 @@
                         '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                     },
                   }"
-                  class="p-component text-xs !bg-[var(--p-primary-color)] !text-[var(--p-primary-contrast-color)]"
+                  rounded
+                  variant="text"
+                  size="small"
+                  @click="editOwner(owner)"
                 />
                 <router-link
                   :to="`/` + owner.id + `/pets`"
-                  class="p-button p-component text-xs !bg-[var(--p-primary-color)] !text-[var(--p-primary-contrast-color)]"
+                  class="p-button p-component p-button-icon-only p-button-rounded p-button-text p-button-sm"
                   v-tooltip.top="{
                     value: 'Pets',
                     pt: {
@@ -186,15 +189,19 @@
                         '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                     },
                   }"
+                  rounded
+                  variant="text"
+                  size="small"
                 >
-                  <i class="fas fa-paw 2xl:!text-lg lg:!text-xs"></i>
+                  <i class="fas fa-paw 2xl:!text-sm lg:!text-xs"></i>
                 </router-link>
                 <Button
                   type="button"
-                  icon="fas fa-plus !text-sm"
+                  icon="pi pi-whatsapp !text-sm"
                   label=""
+                  @click="showWahaModal(owner.phone)"
                   v-tooltip.top="{
-                    value: 'New Pet',
+                    value: 'Send WhatsApp Message',
                     pt: {
                       arrow: {
                         style: {
@@ -205,17 +212,19 @@
                         '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                     },
                   }"
-                  class="p-component text-xs !bg-[var(--p-primary-color)] !text-[var(--p-primary-contrast-color)]"
+                  rounded
+                  variant="text"
+                  size="small"
                 />
                 <Button
-                  class="p-button p-component 2xl:!text-lg lg:!text-xs"
+                  class="p-button p-component 2xl:!text-sm lg:!text-xs"
                   :icon="
                     owner.showDetails
-                      ? `pi pi-eye 2xl:!text-lg lg:!text-xs`
-                      : `pi pi-eye-slash 2xl:!text-lg lg:!text-xs`
+                      ? `pi pi-eye-slash 2xl:!text-sm lg:!text-xs`
+                      : `pi pi-eye 2xl:!text-sm lg:!text-xs`
                   "
                   v-tooltip.top="{
-                    value: 'View Details',
+                    value: owner.showDetails ? `Hide Details` : 'View Details',
                     pt: {
                       arrow: {
                         style: {
@@ -226,7 +235,30 @@
                         '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                     },
                   }"
+                  rounded
+                  variant="text"
+                  size="small"
                   @click="toggleDetails(owner)"
+                />
+                <Button
+                  class="p-button p-component 2xl:!text-sm lg:!text-xs"
+                  :icon="`pi pi-times 2xl:!text-sm lg:!text-xs`"
+                  v-tooltip.top="{
+                    value: 'Deactivate Account',
+                    pt: {
+                      arrow: {
+                        style: {
+                          borderTopColor: 'var(--p-primary-color)',
+                        },
+                      },
+                      text:
+                        '!bg-[var(--p-primary-color)] !font-thin 2xl:!text-sm lg:!text-xs shadow-md',
+                    },
+                  }"
+                  rounded
+                  variant="text"
+                  size="small"
+                  @click="deactivateAccount(owner)"
                 />
               </div>
             </div>
@@ -283,7 +315,7 @@
           class="col-span-12 sm:col-span-6 md:col-span-2.5 lg:col-span-2 xl:col-span-3 p-2"
         >
           <div
-            class="p-6 border border-surface-200 dark:border-surface-700 bg-zinc-100 dark:bg-[var(--p-surface-500)] rounded-lg flex flex-col shadow"
+            class="p-6 border border-surface-200 dark:border-surface-700 bg-zinc-100 dark:bg-[var(--p-surface-500)] rounded-lg flex flex-col shadow hover:bg-[var(--p-surface-300)] dark:hover:bg-[var(--p-surface-500)]"
           >
             <div class="">
               <div class="text-lg font-medium border-b">{{ owner.name }}</div>
@@ -342,11 +374,14 @@
                           '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                       },
                     }"
-                    class="p-component text-xs !bg-[var(--p-primary-color)] !text-[var(--p-primary-contrast-color)]"
+                    rounded
+                    variant="text"
+                    size="small"
+                    @click="editOwner(owner)"
                   />
                   <router-link
                     :to="`/` + owner.id + `/pets`"
-                    class="p-button p-component text-xs !bg-[var(--p-primary-color)] !text-[var(--p-primary-contrast-color)]"
+                    class="p-button p-component p-button-icon-only p-button-rounded p-button-text p-button-sm"
                     v-tooltip.top="{
                       value: 'Pets',
                       pt: {
@@ -359,6 +394,9 @@
                           '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                       },
                     }"
+                    rounded
+                    variant="text"
+                    size="small"
                   >
                     <i class="fas fa-paw 2xl:!text-lg lg:!text-xs"></i>
                   </router-link>
@@ -379,17 +417,19 @@
                           '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                       },
                     }"
-                    class="p-component text-xs !bg-[var(--p-primary-color)] !text-[var(--p-primary-contrast-color)]"
+                    rounded
+                    variant="text"
+                    size="small"
                   />
                   <Button
                     class="p-button p-component 2xl:!text-lg lg:!text-xs"
                     :icon="
                       owner.showDetails
-                        ? `pi pi-eye 2xl:!text-lg lg:!text-xs`
-                        : `pi pi-eye-slash 2xl:!text-lg lg:!text-xs`
+                        ? `pi pi-eye-slash 2xl:!text-lg lg:!text-xs`
+                        : `pi pi-eye 2xl:!text-lg lg:!text-xs`
                     "
                     v-tooltip.top="{
-                      value: 'View Details',
+                      value: owner.showDetails ? `Hide Details` : 'View Details',
                       pt: {
                         arrow: {
                           style: {
@@ -400,6 +440,9 @@
                           '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                       },
                     }"
+                    rounded
+                    variant="text"
+                    size="small"
                     @click="toggleDetails(owner)"
                   />
                   <Button
@@ -417,8 +460,28 @@
                           '!bg-[var(--p-primary-color)] !font-thin 2xl:!text-lg lg:!text-xs shadow-md',
                       },
                     }"
+                    rounded
+                    variant="text"
+                    size="small"
                     @click="deactivateAccount(owner)"
                   />
+                  <!-- <Button
+                    class="p-button p-component 2xl:!text-lg lg:!text-xs"
+                    :icon="`pi pi-pencil 2xl:!text-lg lg:!text-xs`"
+                    v-tooltip.top="{
+                      value: 'Deactivate Account',
+                      pt: {
+                        arrow: {
+                          style: {
+                            borderTopColor: 'var(--p-primary-color)',
+                          },
+                        },
+                        text:
+                          '!bg-[var(--p-primary-color)] !font-thin 2xl:!text-lg lg:!text-xs shadow-md',
+                      },
+                    }"
+
+                  /> -->
                 </div>
               </div>
             </div>
@@ -473,6 +536,27 @@
     <SendWhatsApp :contactNumber="whatsAppContact" @submitted="handleWahaSubmit" />
     <template #footer> </template>
   </Dialog>
+  <Dialog
+    header="Edit Owner"
+    v-model:visible="isEditOwnerVisible"
+    @hide="isEditOwnerVisible = false"
+    modal
+    :closable="true"
+    class="w-11/12 md:w-4/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2">
+        <Avatar icon="fas fa-users" shape="circle" />
+        <span class="font-bold whitespace-nowrap">Send WhatsApp Message</span>
+      </div>
+    </template>
+    <EditOwner
+      :owner="selectedOwner"
+      @OwnerUpdated="handleOwnerUpdated"
+      @close-dialog="isEditDialogVisible = false"
+    />
+    <template #footer> </template>
+  </Dialog>
 </template>
 
 <script setup>
@@ -491,13 +575,14 @@ import Dialog from "primevue/dialog";
 import Avatar from "primevue/avatar";
 import eventBus from "@/eventBus";
 import router from "@/router";
-import NewClientForm from "@/views/AddNewOwner.vue"; // Adjust the path as needed
-import SendWhatsApp from "@/views/SendWhatsApp.vue"; // Adjust the path as needed
+import NewClientForm from "@/views/AddNewOwner.vue";
+import SendWhatsApp from "@/views/SendWhatsApp.vue";
+import EditOwner from "@/views/EditOwner.vue";
 const currentPage = ref(1); // Track the current page
 const totalRecords = ref(0); // Total number of records
 const itemsPerPage = ref(25); // Number of items per page (matching your API response)const layout = ref("grid");
 const searchQuery = ref(""); // Reactive search query
-
+const selectedOwner = ref("");
 const owners = ref([
   {
     id: 0,
@@ -510,6 +595,7 @@ const options = ref(["list", "grid"]);
 const whatsAppContact = ref("");
 const isModalVisible = ref(false);
 const isModalWahaVisible = ref(false);
+const isEditOwnerVisible = ref(false);
 
 const showModal = () => {
   isModalVisible.value = true;
@@ -527,6 +613,11 @@ const toggleDetails = (owner) => {
 };
 const deactivateAccount = (owner) => {
   console.log(owner);
+};
+const editOwner = (owner) => {
+  console.log(owner);
+  selectedOwner.value = owner;
+  isEditOwnerVisible.value = true;
 };
 const fetchOwners = async (page = 1) => {
   loading.value = true;
@@ -623,6 +714,11 @@ const handleSubmit = () => {
 const handleWahaSubmit = () => {
   isModalWahaVisible.value = false;
 };
+const handleOwnerUpdated = () => {
+  isEditOwnerVisible.value = false;
+  fetchOwners();
+};
+
 const goToAddOwnerPage = async () => {
   await router.push("/new-owner");
 };

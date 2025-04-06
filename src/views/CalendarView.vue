@@ -145,7 +145,7 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
-        <span class="font-bold whitespace-nowrap">New Test Result</span>
+        <span class="font-bold whitespace-nowrap">New Appointment</span>
       </div>
     </template>
     <addNewAppointment :activeDate="activeDate" @submitted="handleSubmit" />
@@ -175,7 +175,7 @@ import "@schedule-x/theme-default/dist/calendar.css";
 import Tag from "primevue/tag";
 import ContextMenu from "primevue/contextmenu";
 import Dialog from "primevue/dialog";
-import addNewAppointment from "@/views/addNewAppointment.vue"; // Adjust the path as needed
+import addNewAppointment from "@/views/addNewAppointment.vue";
 import Button from "primevue/button";
 import { RouterLink } from "vue-router";
 // import RouterLink from "primevue/routerlink";
@@ -286,7 +286,7 @@ const fetchAppointments = async (page = 1) => {
       theme: getEventTheme(appointment.type),
       status: appointment.status,
       _customContent: {
-        monthGrid: "<h1>" + appointment.pet.name + "</h1>",
+        monthGrid: "<h1>" + appointment.pet.name + "/" + appointment.owner.name + "</h1>",
         dateGrid: "<h1>" + appointment.pet.name + "</h1>",
         timeGrid: "<h1>" + appointment.pet.name + "</h1>",
       },
@@ -302,8 +302,8 @@ const fetchAppointments = async (page = 1) => {
   }
 };
 const eventTheme = {
-  Emergency: {
-    colorName: "Emergency",
+  Regular: {
+    colorName: "Regular",
     lightColors: {
       main: "#f9d71c",
       container: "#fff5aa",
@@ -315,8 +315,8 @@ const eventTheme = {
       container: "#a29742",
     },
   },
-  Regular: {
-    colorName: "Regular",
+  Emergency: {
+    colorName: "Emergency",
     lightColors: {
       main: "#f91c45",
       container: "#ffd2dc",
@@ -375,8 +375,8 @@ function getEventTheme(themeName) {
 const calendarApp = createCalendar({
   selectedDate: formatDateTime(new Date()),
   calendars: {
-    Emergency: {
-      colorName: "Emergency",
+    Regular: {
+      colorName: "Regular",
       lightColors: {
         main: "#f9d71c",
         container: "#fff5aa",
@@ -388,8 +388,8 @@ const calendarApp = createCalendar({
         container: "#a29742",
       },
     },
-    Regular: {
-      colorName: "Regular",
+    Emergency: {
+      colorName: "Emergency",
       lightColors: {
         main: "#f91c45",
         container: "#ffd2dc",

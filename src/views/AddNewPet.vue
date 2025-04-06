@@ -3,12 +3,12 @@
     <!-- <h2>Add New Pet</h2> -->
     <form @submit.prevent="submitForm" class="mx-auto w-full">
       <fieldset
-        class="p-fieldset p-component w-4/5 flex flex-wrap mx-auto items-center border rounded-lg p-4"
+        class="p-fieldset p-component w-4/5 flex flex-wrap mx-auto items-top border rounded-lg p-4"
       >
         <legend>Add New Patient</legend>
         <input type="hidden" id="branch_id" value="1" v-model="pet.branch_id" />
         <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-full md:w-56">
+          <FloatLabel class="w-[95%]">
             <AutoComplete
               v-model="pet.owner_id"
               optionLabel="name"
@@ -34,18 +34,18 @@
           </FloatLabel>
         </div>
         <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-full md:w-56">
-            <InputText id="name" v-model="pet.name" />
+          <FloatLabel class="w-[95%]">
+            <InputText id="name" class="w-full" v-model="pet.name" />
             <label for="name">Name</label>
           </FloatLabel>
         </div>
         <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-full md:w-56">
+          <FloatLabel class="w-[95%]">
             <Select
               v-model="pet.species"
               :options="species"
               optionLabel="name"
-              class="w-full md:w-56 h-10"
+              class="w-full h-10"
             >
               <template #value="slotProps">
                 <div v-if="slotProps.value" class="flex items-center">
@@ -66,14 +66,14 @@
           </FloatLabel>
         </div>
         <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-full md:w-56">
-            <InputText id="breed" v-model="pet.breed" />
+          <FloatLabel class="w-[95%]">
+            <InputText id="breed" class="w-full" v-model="pet.breed" />
 
             <label for="dd-city">Breed</label>
           </FloatLabel>
         </div>
         <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-full md:w-56">
+          <FloatLabel class="w-[95%]">
             <Select
               id="gender"
               v-model="pet.gender"
@@ -99,9 +99,12 @@
           </FloatLabel>
         </div>
         <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-full md:w-56">
+          <FloatLabel class="w-[95%]">
             <label for="dob">Date of Birth</label>
             <DatePicker
+              showTime
+              hourFormat="12"
+              fluid
               id="dob"
               class="w-full"
               v-model="pet.date_of_birth"
@@ -109,6 +112,96 @@
             />
           </FloatLabel>
         </div>
+        <!-- Color -->
+        <div class="field mt-6 w-1/2">
+          <FloatLabel class="w-[95%]">
+            <InputText id="color" class="w-full" v-model="pet.color" />
+            <label for="color">Color</label>
+          </FloatLabel>
+        </div>
+
+        <!-- Distinctive Marks -->
+        <div class="field mt-6 w-1/2">
+          <FloatLabel class="w-[95%]">
+            <InputText
+              id="distinctive_marks"
+              class="w-full"
+              v-model="pet.distinctive_marks"
+            />
+            <label for="distinctive_marks">Distinctive Marks</label>
+          </FloatLabel>
+        </div>
+
+        <!-- Behaviour -->
+        <div class="field mt-6 w-1/2">
+          <FloatLabel class="w-[95%]">
+            <InputText id="behaviour" class="w-full" v-model="pet.behaviour" />
+            <label for="behaviour">Behaviour</label>
+          </FloatLabel>
+        </div>
+
+        <!-- Neutered -->
+        <div class="field mt-6 w-1/2">
+          <FloatLabel class="w-[95%]">
+            <Select
+              v-model="pet.neutered"
+              :options="yesno"
+              optionLabel="label"
+              class="w-full h-10"
+            >
+              <template #value="slotProps">
+                <div v-if="slotProps.value" class="flex items-center">
+                  <div>{{ slotProps.value.value }}</div>
+                </div>
+                <span v-else>
+                  {{ slotProps.placeholder }}
+                </span>
+              </template>
+              <template #option="slotProps">
+                <div class="flex items-center">
+                  <div>{{ slotProps.option.label }}</div>
+                </div>
+              </template>
+            </Select>
+            <label for="neutered">Neutered</label>
+          </FloatLabel>
+        </div>
+
+        <!-- Deceased -->
+        <div class="field mt-6 w-1/2">
+          <FloatLabel class="w-[95%]">
+            <Select
+              v-model="pet.deceased"
+              :options="yesno"
+              optionLabel="label"
+              class="w-full h-10"
+            >
+              <template #value="slotProps">
+                <div v-if="slotProps.value" class="flex items-center">
+                  <div>{{ slotProps.value.value }}</div>
+                </div>
+                <span v-else>
+                  {{ slotProps.placeholder }}
+                </span>
+              </template>
+              <template #option="slotProps">
+                <div class="flex items-center">
+                  <div>{{ slotProps.option.label }}</div>
+                </div>
+              </template>
+            </Select>
+            <label for="deceased">Deceased</label>
+          </FloatLabel>
+        </div>
+
+        <!-- Allergies -->
+        <div class="field mt-6 w-1/2">
+          <FloatLabel class="w-[95%]">
+            <Textarea id="allergies" class="w-full h-24" v-model="pet.allergies" />
+            <label for="allergies">Allergies</label>
+          </FloatLabel>
+        </div>
+
         <Button type="submit" label="Submit" />
       </fieldset>
     </form>
@@ -138,7 +231,17 @@ const pet = ref({
   breed: "",
   gender: "",
   date_of_birth: "",
+  color: "",
+  distinctive_marks: "",
+  behaviour: "",
+  neutered: "",
+  deceased: "",
+  allergies: "",
 });
+const yesno = ref([
+  { label: "Yes", value: "Yes" },
+  { label: "No", value: "No" },
+]);
 const species = ref([
   { label: "Avian", value: "Avian" }, //Birds
   { label: "Bovine", value: "Bovine" }, // Cows
@@ -194,10 +297,16 @@ const submitForm = async () => {
     date_of_birth: pet.value.date_of_birth
       ? pet.value.date_of_birth.toLocaleDateString("en-CA")
       : null,
+    color: pet.value.color,
+    distinctive_marks: pet.value.distinctive_marks,
+    behaviour: pet.value.behaviour,
+    neutered: pet.value.neutered.value === "Yes" ? "Y" : "N",
+    deceased: pet.value.deceased.value === "Yes" ? "Y" : "N",
+    allergies: pet.value.allergies,
   };
 
   // console.log(submissionData); // Verify the structure
-  //   // console.log(pet.value.owner_id.id);
+  console.log(submissionData);
   try {
     const response = await axiosInstance.post("/pets", submissionData);
     emit("submitted", response.data); // You may modify this based on your response structure

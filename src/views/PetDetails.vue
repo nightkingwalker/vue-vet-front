@@ -31,32 +31,31 @@
           <div v-else>{{ pet.name }}</div></template
         >
         <template #subtitle>
-          <Skeleton v-if="loading" width="12rem" height="2rem" />
-          <Chip
-            v-else
-            v-tooltip.top="{
-              value: 'Microchip/Serial Number',
-              pt: {
-                arrow: {
-                  style: {
-                    borderTopColor: 'var(--p-primary-color)',
+          <div class="flex gap-4">
+            <Skeleton v-if="loading" width="12rem" height="2rem" />
+            <Chip
+              v-else
+              v-tooltip.top="{
+                value: 'Microchip/Serial Number',
+                pt: {
+                  arrow: {
+                    style: {
+                      borderTopColor: 'var(--p-primary-color)',
+                    },
                   },
+                  text:
+                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-                text:
-                  '!bg-[var(--p-primary-color)] !font-thin 2xl:!text-lg lg:!text-xs shadow-md',
-              },
-            }"
-            class="!text-sm border"
-          >
-            <i class="fas fa-microchip"></i> {{ pet.microchip_num }}
-          </Chip>
-          <Skeleton v-if="loading" class="mt-2" width="12rem" height="2rem" />
-          <Chip v-else class="2xl:text-xs text-sm mt-2 border">
-            <i class="fas fa-users"></i> {{ pet.owner.name }}
-          </Chip>
+              }"
+              class="!text-sm border"
+            >
+              <i class="fas fa-microchip"></i> {{ pet.microchip_num }}
+            </Chip>
+          </div>
         </template>
         <template #content>
           <div v-if="loading">
+            <Skeleton class="mt-2" width="12rem" height="2rem" />
             <Skeleton width="12rem" height="2rem" />
             <Skeleton class="mt-2" width="9rem" height="2rem" />
             <Skeleton class="mt-2" width="10rem" height="2rem" />
@@ -65,11 +64,82 @@
           </div>
           <div v-else class="flex flex-wrap gap-1">
             <Chip class="2xl:text-xs text-sm mt-2 border">
+              <router-link
+                :to="`/` + pet.owner.id + `/pets`"
+                v-tooltip.top="{
+                  value: 'View Patients',
+                  pt: {
+                    arrow: {
+                      style: {
+                        borderTopColor: 'var(--p-primary-color)',
+                      },
+                    },
+                    text:
+                      '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+                  },
+                }"
+                ><i class="fas fa-users"></i> {{ pet.owner.name }}
+                <i class="pi pi-external-link !text-[0.6rem] text-gray-500"></i>
+              </router-link>
+            </Chip>
+
+            <Chip class="2xl:text-xs text-sm mt-2 border">
               <i :class="getIconClass(pet.species)"></i>
               {{ getSpeciesValue(pet.species) }}
             </Chip>
-            <Chip class="2xl:text-xs text-sm mt-2 border">
+            <Chip
+              class="2xl:text-xs text-sm mt-2 border"
+              v-tooltip.top="{
+                value: 'Breed',
+                pt: {
+                  arrow: {
+                    style: {
+                      borderTopColor: 'var(--p-primary-color)',
+                    },
+                  },
+                  text:
+                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+                },
+              }"
+            >
               {{ pet.breed }}
+            </Chip>
+            <Chip
+              class="2xl:text-xs text-sm mt-2 border"
+              v-if="pet.color !== null"
+              v-tooltip.top="{
+                value: 'Color',
+                pt: {
+                  arrow: {
+                    style: {
+                      borderTopColor: 'var(--p-primary-color)',
+                    },
+                  },
+                  text:
+                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+                },
+              }"
+            >
+              <i class="fa-solid fa-palette"></i> {{ pet.color }}
+            </Chip>
+            <Chip
+              class="2xl:text-xs text-sm mt-2 border"
+              v-if="pet.behaviour !== null"
+              v-tooltip.top="{
+                value: 'Behavior: ' + pet.behaviour,
+                pt: {
+                  arrow: {
+                    style: {
+                      borderTopColor: 'var(--p-primary-color)',
+                    },
+                  },
+                  text:
+                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+                },
+              }"
+            >
+              <i class="fa-solid fa-face-angry"></i>
+              {{ pet.behaviour }}
             </Chip>
             <Chip class="2xl:text-xs text-sm mt-2 border">
               <i
@@ -82,19 +152,75 @@
             <Chip
               class="2xl:text-xs text-sm mt-2 p-button-success p-button-outlined"
               v-if="pet.neutered === 'Y'"
+              v-tooltip.top="{
+                value: 'Neutered/Spayed', //editPetDetails
+
+                pt: {
+                  arrow: {
+                    style: {
+                      borderTopColor: 'var(--p-primary-color)',
+                    },
+                  },
+                  text: '!bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md ',
+                },
+              }"
             >
               {{ pet.gender === "Male" ? `Neutered` : `Spayed` }}
             </Chip>
             <Chip
               class="2xl:text-xs text-sm mt-2 p-button-danger p-button-outlined"
               v-else
+              v-tooltip.top="{
+                value: 'Neutered/Spayed', //editPetDetails
+
+                pt: {
+                  arrow: {
+                    style: {
+                      borderTopColor: 'var(--p-primary-color)',
+                    },
+                  },
+                  text: '!bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md ',
+                },
+              }"
               >Not {{ pet.gender === "Male" ? `Neutered` : `Spayed` }}</Chip
             >
-            <Chip class="2xl:text-xs text-sm mt-2 border">
+            <Chip
+              class="2xl:text-xs text-sm mt-2 border"
+              v-tooltip.top="{
+                value: 'Age', //editPetDetails
+
+                pt: {
+                  arrow: {
+                    style: {
+                      borderTopColor: 'var(--p-primary-color)',
+                    },
+                  },
+                  text: '!bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md ',
+                },
+              }"
+            >
               <i class="fa-solid fa-cake-candles"></i>
               {{
                 pet.deceased === "N" ? computeAge(pet.date_of_birth) : pet.date_of_birth
               }}
+            </Chip>
+            <Chip
+              class="2xl:text-xs text-sm mt-2 border"
+              v-tooltip.top="{
+                value: 'BIrth Date', //editPetDetails
+
+                pt: {
+                  arrow: {
+                    style: {
+                      borderTopColor: 'var(--p-primary-color)',
+                    },
+                  },
+                  text: '!bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md ',
+                },
+              }"
+            >
+              <i class="fa-solid fa-cake-candles"></i>
+              {{ pet.deceased === "N" ? pet.date_of_birth : pet.date_of_birth }}
             </Chip>
             <Chip
               class="2xl:text-xs text-sm mt-2"
@@ -108,11 +234,59 @@
               <i v-else class="fa-solid fa-heart"></i>
               {{ pet.deceased === "Y" ? ` Deceased` : `Alive` }}
               {{
-                pet.deceased === "Y" && pet.date_of_morta !== "null"
+                pet.deceased === "Y" && pet.date_of_morta !== null
                   ? ": " + pet.date_of_morta
-                  : ""
+                  : ": YES"
               }}
             </Chip>
+            <!-- <div
+              v-for="(entry, index) in parseResults(pet.allergies)"
+              :key="index"
+              class="flex gap-2 w-full"
+            > -->
+            <Chip
+              v-if="pet.allergies !== null"
+              class="2xl:text-xs text-sm mt-2 p-button-danger p-button-outlined"
+              v-tooltip.top="{
+                value: 'Allergies: ' + pet.allergies,
+                pt: {
+                  arrow: {
+                    style: {
+                      borderTopColor: 'var(--p-primary-color)',
+                    },
+                  },
+                  text:
+                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+                },
+              }"
+              ><i class="fas fa-disease"></i> {{ pet.allergies }}
+            </Chip>
+            <!-- </div> -->
+            <Chip
+              class="2xl:text-xs text-sm mt-2 cursor-pointer"
+              v-tooltip.top="{
+                value: 'Distinctive Marks', //editPetDetails
+
+                pt: {
+                  arrow: {
+                    style: {
+                      borderTopColor: 'var(--p-primary-color)',
+                    },
+                  },
+                  text: '!bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md ',
+                },
+              }"
+            >
+              {{ pet.distinctive_marks }}
+            </Chip>
+            <Button
+              type="button"
+              icon="fa-solid fa-pencil"
+              label="Edit"
+              v-tooltip.bottom="`Edit Data`"
+              class="2xl:text-xs text-sm mt-2 cursor-pointer !bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md"
+              @click="editPetDetails"
+            />
           </div>
         </template>
         <template #footer>
@@ -161,6 +335,12 @@
           header="Description"
           class="font-normal rtl:!text-right"
         >
+          <template #body="slotProps">
+            <div
+              class="gap-2 px-1"
+              v-html="slotProps.data.description.replace(/\n/g, '<br />')"
+            ></div>
+          </template>
         </Column>
         <Column field="type" header="Type">
           <template #body="slotProps">
@@ -200,6 +380,9 @@
                 },
               }"
               raised
+              rounded
+              variant="text"
+              size="small"
               class="p-component !text-sm ml-2"
               @click.prevent="listTreatments(slotProps.data.id)"
               v-if="slotProps.data.type !== `Grooming`"
@@ -221,8 +404,102 @@
                 },
               }"
               raised
+              rounded
+              variant="text"
+              size="small"
               class="p-component !text-sm ml-2"
               @click.prevent="listTestResults(slotProps.data.id)"
+            />
+            <Button
+              type="button"
+              icon="fa-solid fa-x-ray"
+              v-tooltip.top="{
+                value: 'X-rays & Ultrasound',
+                pt: {
+                  arrow: {
+                    style: {
+                      borderTopColor: 'var(--p-primary-color)',
+                    },
+                  },
+                  text:
+                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+                },
+              }"
+              raised
+              rounded
+              variant="text"
+              size="small"
+              class="p-component !text-sm ml-2"
+              v-if="slotProps.data.type !== `Grooming`"
+              @click.prevent="listImages(slotProps.data.id)"
+            />
+            <Button
+              type="button"
+              icon="fa-solid fa-file-medical"
+              v-tooltip.top="{
+                value: 'Case History',
+                pt: {
+                  arrow: {
+                    style: {
+                      borderTopColor: 'var(--p-primary-color)',
+                    },
+                  },
+                  text:
+                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+                },
+              }"
+              raised
+              rounded
+              variant="text"
+              size="small"
+              class="p-component !text-sm ml-2"
+              v-if="slotProps.data.type !== `Grooming`"
+              @click="showCaseHistoryModal(slotProps.data.id)"
+            />
+            <Button
+              type="button"
+              icon="fa-solid fa-stethoscope"
+              v-tooltip.top="{
+                value: 'Medical Examination',
+                pt: {
+                  arrow: {
+                    style: {
+                      borderTopColor: 'var(--p-primary-color)',
+                    },
+                  },
+                  text:
+                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+                },
+              }"
+              raised
+              rounded
+              variant="text"
+              size="small"
+              class="p-component !text-sm ml-2"
+              v-if="slotProps.data.type !== `Grooming`"
+              @click="showPhysicalExaminationModal(slotProps.data.id)"
+            />
+            <Button
+              type="button"
+              icon="fa-regular fa-chart-bar"
+              v-tooltip.top="{
+                value: 'Full Report',
+                pt: {
+                  arrow: {
+                    style: {
+                      borderTopColor: 'var(--p-primary-color)',
+                    },
+                  },
+                  text:
+                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+                },
+              }"
+              raised
+              rounded
+              variant="text"
+              size="small"
+              class="p-component !text-sm ml-2"
+              @click="showFullReportModal(slotProps.data.id)"
             />
             <Button
               type="button"
@@ -240,8 +517,11 @@
                 },
               }"
               raised
+              rounded
+              variant="text"
+              size="small"
               class="p-component !text-sm ml-2"
-              v-if="slotProps.data.type !== `Grooming`"
+              @click="editAppointment(slotProps.data.id)"
             />
           </template>
         </Column>
@@ -256,6 +536,7 @@
     v-model:visible="isTreatmentsListVisible"
     @hide="isTreatmentsListVisible = false"
     modal
+    v-show="isTreatmentsListVisible"
     :closable="true"
     class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
   >
@@ -267,6 +548,47 @@
     <PetTreatments
       :medical_record_id="medical_record_id"
       @showAddTreatmentModal="showAddTreatmentModal"
+      @showEditTreatmentModal="showEditTreatmentModals"
+    />
+    <template #footer> </template>
+  </Dialog>
+  <Dialog
+    header="Edit Pet Details"
+    v-model:visible="isEditPetDetailsVisible"
+    @hide="isEditPetDetailsVisible = false"
+    modal
+    :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2">
+        <span class="font-bold whitespace-nowrap">Edit Pet Details</span>
+      </div>
+    </template>
+    <EditPetDetails
+      :medical_record_id="medical_record_id"
+      @showEditPetDetailsModal="showEditPetDetailsModal"
+      @details_updated="handleDetailsUpdated"
+    />
+    <template #footer> </template>
+  </Dialog>
+  <Dialog
+    header="Edit Treatment Details"
+    v-model:visible="isEditTreatmentVisible"
+    @hide="isEditTreatmentVisible = false"
+    modal
+    :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2">
+        <span class="font-bold whitespace-nowrap">Edit Treatment Details</span>
+      </div>
+    </template>
+    <EditTreatment
+      @TreatmentUpdated="handleUpdatedTreatment"
+      :treatmentId="selectedTreatmentId"
+      :medical_record_id="medical_record_id"
     />
     <template #footer> </template>
   </Dialog>
@@ -286,6 +608,68 @@
     <TestResults
       :medical_record_id="medical_record_id"
       @showAddTestResultModal="showAddTestResultModal"
+      @showEditTestResultModal="showEditTestResultModal"
+    />
+    <template #footer> </template>
+  </Dialog>
+  <Dialog
+    header="Medical Image"
+    v-model:visible="isEditMedicalImageVisible"
+    @hide="isEditMedicalImageVisible = false"
+    modal
+    :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2">
+        <span class="font-bold whitespace-nowrap">Test Results</span>
+      </div>
+    </template>
+    <EditMedicalImage
+      @MedicalImageUpdated="handleMedicalImageUpdated"
+      :medicalImageId="selectedMedicalImageId"
+      :medical_record_id="medical_record_id"
+    />
+    <template #footer> </template>
+  </Dialog>
+  <Dialog
+    header="XRays and Images"
+    v-model:visible="isImagesListVisible"
+    @hide="isImagesListVisible = false"
+    modal
+    :closable="true"
+    class="w-11/12 md:w-8/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2">
+        <span class="font-bold whitespace-nowrap">XRays and Images</span>
+      </div>
+    </template>
+    <MedicalImages
+      :medical_record_id="medical_record_id"
+      @showAddMedicalImageModal="showAddMedicalImageModal"
+      @showEditMedicalImageModal="showEditMedicalImageModal"
+    />
+    <template #footer> </template>
+  </Dialog>
+
+  <!-- Add Medical Image Modal -->
+  <Dialog
+    header="New Medical Image"
+    v-model:visible="isNewMedicalImageVisible"
+    @hide="isNewMedicalImageVisible = false"
+    modal
+    :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2">
+        <span class="font-bold whitespace-nowrap">New Medical Image</span>
+      </div>
+    </template>
+    <AddNewMedicalImage
+      :medical_record_id="medical_record_id"
+      @NewImageAdded="handleSubmitNewImage"
     />
     <template #footer> </template>
   </Dialog>
@@ -347,6 +731,163 @@
     />
     <template #footer> </template>
   </Dialog>
+  <Dialog
+    header="New Record"
+    v-model:visible="isEditApointmentVisible"
+    @hide="isEditApointmentVisible = false"
+    modal
+    :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2">
+        <span class="font-bold whitespace-nowrap">Edit Medical Record</span>
+      </div>
+    </template>
+    <EditAppointment
+      :appointmentId="appointment_id"
+      @updated="handleAppointmentUpdated"
+    />
+    <template #footer> </template>
+  </Dialog>
+  <Dialog
+    header="Edit Test Result"
+    v-model:visible="isEditTestResultsVisible"
+    @hide="isEditTestResultsVisible = false"
+    modal
+    :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2">
+        <span class="font-bold whitespace-nowrap">Edit Test Result</span>
+      </div>
+    </template>
+    <EditTestResult
+      :testResultId="selectedTestResultId"
+      @TestResultUpdated="handleTestResultUpdated"
+      @close-dialog="isEditTestResultsVisible = false"
+    />
+    <!--@updated="handleTestResultUpdated" -->
+    <template #footer> </template>
+  </Dialog>
+  <Dialog
+    header="Add Case Histyory"
+    v-model:visible="isAddCaseHistorysVisible"
+    @hide="isAddCaseHistorysVisible = false"
+    modal
+    :closable="true"
+    class="w-10/12 h-screen bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2">
+        <span class="font-bold whitespace-nowrap">Add Case Histyory</span>
+      </div>
+    </template>
+    <AddCaseHistory
+      :medical_record_id="medical_record_id"
+      @TestResultUpdated="handleTestResultUpdated"
+      @close-dialog="isEditTestResultsVisible = false"
+    />
+    <!--@updated="handleTestResultUpdated" -->
+    <template #footer> </template>
+  </Dialog>
+  <Dialog
+    header="Case Histyory"
+    v-model:visible="isCaseHistorysVisible"
+    @hide="isCaseHistorysVisible = false"
+    modal
+    :closable="true"
+    class="w-11/12 h-screen bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2">
+        <span class="font-bold whitespace-nowrap">Case Histyory</span>
+      </div>
+    </template>
+    <CaseHistory
+      :medical_record_id="medical_record_id"
+      @showAddCaseHistoryModal="showAddCaseHistoryModal"
+      @CaseHistoryUpdated="handleCaseHistory"
+      @close-dialog="isEditTestResultsVisible = false"
+    />
+    <!--@updated="handleTestResultUpdated" -->
+    <template #footer> </template>
+  </Dialog>
+  <Dialog
+    header="Add Physical Examination"
+    v-model:visible="isAddPhysicalExamination"
+    @hide="isAddPhysicalExamination = false"
+    modal
+    :closable="true"
+    class="w-11/12 h-screen bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2">
+        <span class="font-bold whitespace-nowrap">Add Physical Examination</span>
+      </div>
+    </template>
+    <AddPhysicalExamination
+      :medical_record_id="medical_record_id"
+      @showAddCaseHistoryModal="showAddCaseHistoryModal"
+      @CaseHistoryUpdated="handleCaseHistory"
+      @close-dialog="isEditTestResultsVisible = false"
+    />
+    <!--@updated="handleTestResultUpdated" -->
+    <template #footer> </template>
+  </Dialog>
+  <Dialog
+    header="Physical Examination"
+    v-model:visible="isPhysicalExamination"
+    @hide="isPhysicalExamination = false"
+    modal
+    :closable="true"
+    class="w-11/12 h-screen bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2">
+        <span class="font-bold whitespace-nowrap">Physical Examination</span>
+      </div>
+    </template>
+    <PhysicalExamination
+      :medical_record_id="medical_record_id"
+      :pet_name="pet.name"
+      @showAddPhysicalExaminationModal="showAddPhysicalExaminationModal"
+      @PhysicalExaminationUpdated="handlePhysicalExamination"
+      @close-dialog="isEditTestResultsVisible = false"
+    />
+    <template #footer> </template>
+  </Dialog>
+  <Dialog
+    header="Full Report"
+    v-model:visible="isFullReportVisible"
+    @hide="isFullReportVisible = false"
+    modal
+    :closable="true"
+    class="w-11/12 h-screen bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
+  >
+    <template #header>
+      <div class="inline-flex items-center justify-center gap-2">
+        <span class="font-bold whitespace-nowrap">Full Report</span>
+      </div>
+    </template>
+    <FullReport
+      :medical_record_id="medical_record_id"
+      :pet_name="pet.name"
+      @showAddPhysicalExaminationModal="showAddPhysicalExaminationModal"
+      @PhysicalExaminationUpdated="handlePhysicalExamination"
+      @close-dialog="isEditTestResultsVisible = false"
+    />
+    <template #footer> </template>
+  </Dialog>
+  <!-- <ConfirmDialog class="md:w-[35vw] sm:w-full !text-sm">
+    <template #message="slotProps">
+      <div class="flex flex-col items-center w-full mx-auto gap-4 text-md text-center">
+        <i :class="slotProps.message.icon" class="!text-6xl text-yellow-500"></i>
+        <p>{{ slotProps.message.message }}</p>
+      </div>
+    </template>
+  </ConfirmDialog> -->
 </template>
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
@@ -362,17 +903,45 @@ import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Skeleton from "primevue/skeleton"; // optional
 import Dialog from "primevue/dialog";
-import PetTreatments from "@/views/TreatmentsList.vue"; // Adjust the path as needed
-import TestResults from "@/views/TestResults.vue"; // Adjust the path as needed
-import AddNewTreatment from "@/views/AddNewTreatment.vue"; // Adjust the path as needed
-import AddNewTestResult from "@/views/AddNewTestResult.vue"; // Adjust the path as needed
-import addNewAppointment from "@/views/addNewAppointment.vue"; // Adjust the path as needed
+import PetTreatments from "@/views/TreatmentsList.vue";
+import TestResults from "@/views/TestResults.vue";
+import AddNewTreatment from "@/views/AddNewTreatment.vue";
+import AddNewTestResult from "@/views/AddNewTestResult.vue";
+import addNewAppointment from "@/views/addNewAppointment.vue";
+import MedicalImages from "@/views/MedicalImages.vue";
+import AddNewMedicalImage from "@/views/AddNewMedicalImage.vue";
+import EditPetDetails from "@/views/EditPetDetails.vue";
+import EditTreatment from "@/views/EditTreatment.vue";
+import EditAppointment from "@/views/EditAppointment.vue";
+import EditTestResult from "@/views/EditTestResults.vue";
+import EditMedicalImage from "@/views/EditMedicalImage.vue";
+import AddCaseHistory from "@/views/AddCaseHistory.vue";
+import CaseHistory from "@/views/CaseHistory.vue";
+import AddPhysicalExamination from "@/views/addNewMedicalExamination.vue";
+import PhysicalExamination from "@/views/MedicalExamination.vue";
+import FullReport from "@/views/FullReport.vue";
 
 const isTreatmentsListVisible = ref(false);
 const isTestResultsVisible = ref(false);
 const isNewTreatmentVisible = ref(false);
+const isNewMedicalImageVisible = ref(false);
 const isNewTestResultVisible = ref(false);
 const isNewApointmentVisible = ref(false);
+const isEditApointmentVisible = ref(false);
+const isImagesListVisible = ref(false);
+const isEditPetDetailsVisible = ref(false);
+const isEditTreatmentVisible = ref(false);
+const isEditTestResultsVisible = ref(false);
+const isEditMedicalImageVisible = ref(false);
+const isAddCaseHistorysVisible = ref(false);
+const isCaseHistorysVisible = ref(false);
+const isAddPhysicalExamination = ref(false);
+const isPhysicalExamination = ref(false);
+const isFullReportVisible = ref(false);
+
+const selectedTreatmentId = ref(null);
+const selectedTestResultId = ref(null);
+const selectedMedicalImageId = ref(null);
 const route = useRoute();
 const petmicrochip = ref(route.params.petmicrochip);
 const pet = ref({
@@ -381,6 +950,10 @@ const pet = ref({
   species: "",
   breed: "",
   gender: "",
+  behaviour: "",
+  distinctive_marks: "",
+  color: "",
+  allergies: "",
   neutered: "",
   date_of_birth: "",
   deceased: "",
@@ -389,16 +962,76 @@ const pet = ref({
     name: "",
   },
 });
-
+const treatment_id = ref("");
 const showAddTreatmentModal = () => {
   isNewTreatmentVisible.value = true;
+};
+const showEditTreatmentModals = (treatmentId) => {
+  console.log("LICKED", treatmentId); // Log the treatment ID for debugging
+  selectedTreatmentId.value = treatmentId; // Store the treatment ID
+  isEditTreatmentVisible.value = true; // Show the dialog
+};
+const showAddMedicalImageModal = () => {
+  isNewMedicalImageVisible.value = true;
+  eventBus.emit("newTestResultAdded");
 };
 const handleNewTreatment = () => {
   isNewTreatmentVisible.value = false;
   eventBus.emit("newTreatmentAdded");
 };
+const handleUpdatedTreatment = () => {
+  isEditTreatmentVisible.value = false;
+  eventBus.emit("TreatmentUpdatedSuccessfully");
+};
+const handleMedicalImageUpdated = () => {
+  isEditMedicalImageVisible.value = false;
+  eventBus.emit("MedicalImageUpdatedSuccessfully");
+};
+const handleTestResultUpdated = () => {
+  isEditTestResultsVisible.value = false;
+  eventBus.emit("handleTestResultUpdatedSuccessfully");
+};
+const handleCaseHistory = () => {
+  // isCaseHistorysVisible.value = false;
+  eventBus.emit("handleCaseHistorySuccessfully");
+};
 const showAddTestResultModal = () => {
   isNewTestResultVisible.value = true;
+};
+const showEditTestResultModal = (testresultId) => {
+  selectedTestResultId.value = testresultId;
+  isEditTestResultsVisible.value = true;
+};
+const showCaseHistoryModal = (MedicalRecordId) => {
+  medical_record_id.value = findRecordById(MedicalRecordId);
+  // isAddCaseHistorysVisible.value = true;
+  isCaseHistorysVisible.value = true;
+};
+const showPhysicalExaminationModal = (MedicalRecordId) => {
+  medical_record_id.value = findRecordById(MedicalRecordId);
+  // isAddCaseHistorysVisible.value = true;
+  isPhysicalExamination.value = true;
+};
+const showFullReportModal = (MedicalRecordId) => {
+  medical_record_id.value = findRecordById(MedicalRecordId);
+  // isAddCaseHistorysVisible.value = true;
+  isFullReportVisible.value = true;
+};
+const showAddPhysicalExaminationModal = (MedicalRecordId) => {
+  medical_record_id.value = MedicalRecordId;
+  // isAddCaseHistorysVisible.value = true;
+  isAddPhysicalExamination.value = true;
+};
+const showAddCaseHistoryModal = (MedicalRecordId) => {
+  // selectedTestResultId.value = testresultId;
+  medical_record_id.value = MedicalRecordId;
+  isAddCaseHistorysVisible.value = true;
+  // isCaseHistorysVisible.value = true;
+};
+const showEditMedicalImageModal = (medicalImageId) => {
+  selectedMedicalImageId.value = medicalImageId;
+  console.log(selectedMedicalImageId);
+  isEditMedicalImageVisible.value = true;
 };
 const handleNewTestResult = () => {
   isNewTestResultVisible.value = false;
@@ -407,17 +1040,41 @@ const handleNewTestResult = () => {
 const handleSubmit = (data) => {
   console.log(data);
   isNewApointmentVisible.value = false;
+  // currentPage.value = 1; // Reset to the first page when searching
   fetchPets();
+  // fetchAppointments();
+};
+const handleDetailsUpdated = (data) => {
+  console.log(data);
+  isEditPetDetailsVisible.value = false;
+  fetchPets();
+};
+const handleSubmitNewImage = (data) => {
+  console.log(data);
+  isNewMedicalImageVisible.value = false;
+  eventBus.emit("newImageAdded");
+
   // currentPage.value = 1; // Reset to the first page when searching
 
   // fetchAppointments();
 };
+
 const addAppointment = () => {
   console.log(petmicrochip.value);
   isNewApointmentVisible.value = true;
 };
+const handleAppointmentUpdated = (data) => {
+  console.log("Appointment updated:", data);
+  isEditApointmentVisible.value = false;
+  fetchPets();
+  // Refresh the appointments list or perform other actions
+};
+const editPetDetails = () => {
+  console.log(petmicrochip.value);
+  isEditPetDetailsVisible.value = true;
+};
 const refreshData = () => {
-  loading.value = true; // Set loading state to true to show skeletons
+  // loading.value = true; // Set loading state to true to show skeletons
   fetchPets(); // Fetch the pets data again
 };
 // console.log(pet.value);
@@ -426,6 +1083,7 @@ const loading = ref(true);
 const visits = ref([]);
 const medical_records = ref([]);
 const medical_record_id = ref("");
+const appointment_id = ref("");
 const species = ref([
   { label: "Avian", value: "Birds", icon: "fa-solid fa-dove" },
   { label: "Bovine", value: "Cows", icon: "fa-solid fa-cow" },
@@ -445,13 +1103,31 @@ function getIconClass(speciesLabel) {
   const found = species.value.find((spec) => spec.label === speciesLabel);
   return found ? found.icon : "fa-solid fa-paw";
 }
+const parseResults = (resultsString) => {
+  if (!resultsString) return []; // Return an empty array if input is null or undefined
+  try {
+    // Directly parse the JSON array
+    const results = JSON.parse(resultsString);
+
+    // Ensure results is an array of strings
+    if (Array.isArray(results) && results.every((item) => typeof item === "string")) {
+      return results.map((result) => result.trim()); // Trim whitespace from each string
+    } else {
+      console.error("Unexpected data format:", results);
+      return [];
+    }
+  } catch (error) {
+    console.error("Error parsing results:", error);
+    return [];
+  }
+};
 const getSpeciesValue = (label) => {
   const found = species.value.find((species) => species.label === label);
   return found ? found.value : null;
 };
 const eventTheme = {
-  Emergency: {
-    colorName: "Emergency",
+  Regular: {
+    colorName: "Regular",
     lightColors: {
       main: "#f9d71c",
       container: "#fff5aa",
@@ -463,8 +1139,8 @@ const eventTheme = {
       container: "#a29742",
     },
   },
-  Regular: {
-    colorName: "Regular",
+  Emergency: {
+    colorName: "Emergency",
     lightColors: {
       main: "#f91c45",
       container: "#ffd2dc",
@@ -551,12 +1227,19 @@ const fetchPets = async () => {
     pet.value = response.data;
     visits.value = response.data.appointments;
     medical_records.value = response.data.medical_records;
+    pet.value.date_of_birth = formatDateForSubmission(pet.value.date_of_birth);
     owner.value = pet.value.length > 0 ? pet.value[0].owner.name : "Unknown Owner"; // Set owner name if pets exist
     loading.value = false; // Stop loading once data is fetched
   } catch (error) {
     //     // showSuccess("warn", "Warning", "Couldent Fetch Data");
   } finally {
   }
+};
+const formatDateForSubmission = (dateString) => {
+  const date = new Date(dateString);
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(
+    date.getDate()
+  ).padStart(2, "0")}`;
 };
 function getEventTheme(themeName) {
   // // console.log(themeName);
@@ -567,10 +1250,20 @@ function listTreatments(MedicalRecordId) {
   // console.log("MEDIACAL" + medical_record_id.value);
   isTreatmentsListVisible.value = true;
 }
+function editAppointment(AppointmentID) {
+  appointment_id.value = AppointmentID;
+  console.log("MEDIACAL" + AppointmentID);
+  isEditApointmentVisible.value = true;
+}
 function listTestResults(MedicalRecordId) {
   medical_record_id.value = findRecordById(MedicalRecordId);
   // console.log("MEDIACAL" + medical_record_id.value);
   isTestResultsVisible.value = true;
+}
+function listImages(MedicalRecordId) {
+  medical_record_id.value = findRecordById(MedicalRecordId);
+  // console.log("MEDIACAL" + medical_record_id.value);
+  isImagesListVisible.value = true;
 }
 const findRecordById = (id) => {
   return medical_records.value.find((record) => record.visit_date === id).id;
