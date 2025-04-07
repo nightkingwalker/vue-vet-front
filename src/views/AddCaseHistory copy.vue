@@ -1255,14 +1255,14 @@ const submitForm = async () => {
     formData.value.excessive_licking_of_genital_area = !!formData.value
       .excessive_licking_of_genital_area;
 
-    console.log(formData.value);
+    // console.log(formData.value);
 
     // Send formData to the storeHistory endpoint
     const response = await axiosInstance.post(
       "/medical-records/history/44",
       formData.value
     );
-    console.log("Form submitted successfully:", response.data);
+    // console.log("Form submitted successfully:", response.data);
   } catch (error) {
     console.error("Error submitting form:", error);
   }

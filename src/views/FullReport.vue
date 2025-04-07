@@ -698,7 +698,7 @@ import axiosInstance from "@/axios"; // Assuming axiosInstance is set up correct
 // import brainIcon from "assets/1781410-512.png";
 
 const emit = defineEmits(); // Define the event to be emitted
-console.log("FULL REPORT");
+// console.log("FULL REPORT");
 const props = defineProps({
   medical_record_id: {
     type: Number,
@@ -747,7 +747,7 @@ const parseResults = (resultsString) => {
     const results = JSON.parse(resultsString);
     return results.map((result) => {
       const parts = result.split(":");
-      // console.log(parts);
+      // // console.log(parts);
       return { key: parts[0].trim(), value: parts[1].trim() };
     });
   } catch (error) {
@@ -763,7 +763,7 @@ const fetchMedicalRecord = async () => {
       `/medical-records/${props.medical_record_id}/full`
     );
     medicalRecord.value = response.data;
-    console.log(medicalRecord.value);
+    // console.log(medicalRecord.value);
   } catch (error) {
     console.error("Error fetching medical record:", error);
   }

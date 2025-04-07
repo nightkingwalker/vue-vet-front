@@ -17,6 +17,7 @@ import ConfirmationService from 'primevue/confirmationservice';
 import ConfirmDialog from 'primevue/confirmdialog';
 // import { useToast } from "primevue/usetoast";
 import { VueReCaptcha } from 'vue-recaptcha-v3'
+import FocusTrap from 'primevue/focustrap';
 const app = createApp(App)
 
 const MyPreset = definePreset(Aura, {
@@ -92,6 +93,7 @@ const MyPreset = definePreset(Aura, {
 });
 
 // app.use(PrimeVue);
+document.addEventListener("DOMContentLoaded", async () => {
 app.use(PrimeVue, {
     theme: {
         preset: MyPreset,
@@ -104,6 +106,7 @@ app.use(PrimeVue, {
     },
     // ripple: true
 });
+app.directive('focustrap', FocusTrap);
 // app.use(VueReCaptcha, {
 //     siteKey: import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY,
 //     loaderOptions: {
@@ -120,3 +123,4 @@ app.use(ToastService); // Use ToastService in your app
 app.component('ConfirmDialog', ConfirmDialog);
 app.component('Toast', Toast); // Register the Toast component globally
 app.mount('#app');
+});

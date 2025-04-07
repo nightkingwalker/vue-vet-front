@@ -1292,7 +1292,7 @@ const bloodLocationOptions = [
 ];
 const fetchHistory = async (medicalRecordId) => {
   try {
-    console.log("MID" + props.medical_record_id);
+    // console.log("MID" + props.medical_record_id);
     const response = await axiosInstance.get(
       `/medical-records/${props.medical_record_id}/history`
     );
@@ -1380,7 +1380,7 @@ const fetchHistory = async (medicalRecordId) => {
         history.gastrointestinal_symptom[0].stool_consistency !== null
           ? history.gastrointestinal_symptom[0].stool_consistency
           : "";
-      //   console.log(history.gastrointestinal_symptom[0].stool_consistency + "CONST");
+      //   // console.log(history.gastrointestinal_symptom[0].stool_consistency + "CONST");
       formData.value.stool_color = history.gastrointestinal_symptom[0].stool_color;
       formData.value.stool_frequency =
         history.gastrointestinal_symptom[0].stool_frequency;
@@ -1430,7 +1430,7 @@ const fetchHistory = async (medicalRecordId) => {
         history.urinary_symptom[0].excessive_licking_of_genital_area;
     }
 
-    console.log("Fetched history and updated formData:", formData.value);
+    // console.log("Fetched history and updated formData:", formData.value);
   } catch (error) {
     console.error("Error fetching history:", error);
   }
@@ -1525,14 +1525,14 @@ const submitForm = async () => {
     formData.value.excessive_licking_of_genital_area = !!formData.value
       .excessive_licking_of_genital_area;
 
-    console.log(formData.value);
+    // console.log(formData.value);
 
     // Send formData to the storeHistory endpoint
     const response = await axiosInstance.post(
       "/medical-records/history/31",
       formData.value
     );
-    console.log("Form submitted successfully:", response.data);
+    // console.log("Form submitted successfully:", response.data);
   } catch (error) {
     console.error("Error submitting form:", error);
   }

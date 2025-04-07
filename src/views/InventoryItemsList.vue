@@ -15,7 +15,6 @@
       v-model:selection="selectedItems"
       highlightOnSelect
       dataKey="id"
-      @rowSelect="onSelectionChange"
       :exportFunction="beforeExportFunction"
       responsiveLayout="scroll"
       class="rounded-xl 2xl:overflow-y-scroll drop-shadow-md mt-4 h-[95vh]"
@@ -164,7 +163,7 @@
                   slotProps.data.quantity > slotProps.data.minimum_stock_level,
               }"
               class="shadow-sm !text-xs font-thin border dark:border-transparent h-7"
-              :label="slotProps.data.quantity"
+              :label="slotProps.data.quantity.toString()"
             />
           </template>
         </template>
@@ -267,6 +266,10 @@
     class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
   >
     <InventoryItemForm
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       :item="selectedItem"
       :editMode="editMode"
       @submitted="handleSubmit"
@@ -280,7 +283,13 @@
     header="Confirm"
     :modal="true"
   >
-    <div class="confirmation-content">
+    <div
+      class="confirmation-content"
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
+    >
       <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
       <span v-if="selectedItem"
         >Are you sure you want to delete <b>{{ selectedItem.name }}</b
@@ -446,7 +455,7 @@ const showModal = () => {
 const editItem = (item) => {
   editMode.value = true;
   selectedItem.value = { ...item };
-  console.log(selectedItem.value);
+  // console.log(selectedItem.value);
   isModalVisible.value = true;
 };
 
@@ -486,7 +495,7 @@ const resetForm = () => {
 //   return data.data[data.field];
 // };
 const beforeExportFunction = (data, field) => {
-  console.log(data.data);
+  // console.log(data.data);
   if (data.field === "expiry_date") {
     return formatDate(data.data);
   } else {
@@ -514,7 +523,7 @@ const fetchInventoryItems = async (page = 1) => {
     if (filters.value.category.value) {
       url += `&category=${filters.value.category.value}`;
     }
-    console.log(url);
+    // console.log(url);
     const response = await axiosInstance.get(url);
     inventoryItems.value = response.data.data.data;
     totalRecords.value = response.data.data.total;
@@ -531,8 +540,8 @@ const refreshData = () => {
   fetchInventoryItems(currentPage.value);
 };
 
-const skeletonRows = Array.from({ length: 10 }).map(() => ({
-  id: "",
+const skeletonRows = Array.from({ length: 10 }).map((_, index) => ({
+  id: `skeleton-${index}`, // Unique ID for each item
   name: "",
   category: "",
   type: "",

@@ -314,7 +314,14 @@
         <span class="font-bold whitespace-nowrap">New Patient</span>
       </div>
     </template>
-    <NewPatient @submitted="handleSubmit" @showOwnerModal="showOwnerModal" />
+    <NewPatient
+      @submitted="handleSubmit"
+      @showOwnerModal="showOwnerModal"
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
+    />
     <template #footer> </template>
   </Dialog>
 </template>
@@ -383,7 +390,7 @@ const onPageChange = (event) => {
   itemsPerPage.value = event.rows;
   currentPage.value = event.page + 1; // PrimeVue Paginator uses zero-based index
   fetchPets(currentPage.value); // Fetch pets for the new page
-  // // console.log(event);
+  // // // console.log(event);
 };
 const onSearchChange = () => {
   if (searchQuery.value.length < 3) {
@@ -419,7 +426,7 @@ const fetchPets = async (page = 1) => {
         route: "/" + route.params.ownerid + "/pets",
       },
     ];
-    // console.log(pets.value);
+    // // console.log(pets.value);
     loading.value = false; // Stop loading once data is fetched
   } catch (error) {
     //     // showSuccess("warn", "Warning", "Couldent Fetch Data");
@@ -428,7 +435,7 @@ const fetchPets = async (page = 1) => {
 };
 const inputFocused = ref(false);
 const clearFilters = () => {
-  // // console.log("clearing filters");
+  // // // console.log("clearing filters");
   loading.value = true; // Set loading state to true to show skeletons
   currentPage.value = 1;
   searchQuery.value = "";

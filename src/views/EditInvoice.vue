@@ -443,6 +443,7 @@ import DatePicker from "primevue/datepicker";
 import Textarea from "primevue/textarea";
 import Tag from "primevue/tag";
 import InputText from "primevue/inputtext";
+import Cookies from "js-cookie";
 
 const props = defineProps({
   invoiceData: {
@@ -454,7 +455,7 @@ const props = defineProps({
     default: false,
   },
 });
-console.log(props);
+// console.log(props);
 const emit = defineEmits(["close", "updated"]);
 
 const toast = useToast();
@@ -595,7 +596,7 @@ const searchItems = async (event) => {
 
   try {
     const response = await axiosInstance.get("/inventory-items/search", {
-      params: { branch_id: 1, query: event.query },
+      params: { branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"), query: event.query },
     });
     filteredItems.value = response.data.data.map((item) => ({
       ...item,
@@ -883,7 +884,7 @@ const initializeWithInvoiceData = () => {
     depositPaymentMethod.value = paymentMethods.value[0]?.id;
   }
 };
-
+depositPaymentMethod.value = 1;
 onMounted(() => {
   loadPaymentMethods();
   initializeWithInvoiceData();

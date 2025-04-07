@@ -170,13 +170,14 @@ import Button from "primevue/button";
 import axiosInstance from "@/axios"; // Assuming you've created a global axios instance
 import eventBus from "@/eventBus";
 import { useRoute } from "vue-router";
+import Cookies from "js-cookie";
 
 const route = useRoute();
 const emit = defineEmits(["submitted"]); // Define the event to be emitted
 
 const pet = ref({
   owner_id: route.params.ownerid,
-  branch_id: 1,
+  branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
   name: "",
   species: "",
   breed: "",
@@ -237,7 +238,7 @@ const fetchPetDetails = async () => {
     };
     pet.value.date_of_birth = formatDateForSubmission(pet.value.date_of_birth);
 
-    console.log(pet.value);
+    // console.log(pet.value);
   } catch (error) {
     console.error("Failed to fetch pet details:", error);
   }

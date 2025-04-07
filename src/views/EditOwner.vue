@@ -76,7 +76,7 @@ watch(
 
 // Function to handle form submission
 const submitForm = async () => {
-  console.log(owner.value);
+  // console.log(owner.value);
   try {
     // Make the PUT request to update the owner
     const response = await axiosInstance.put(`/owners/${owner.value.id}`, owner.value);

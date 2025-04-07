@@ -10,6 +10,7 @@
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-[95%]">
             <AutoComplete
+              autoFocus
               v-model="pet.owner_id"
               optionLabel="name"
               :suggestions="filteredOwners"
@@ -214,18 +215,20 @@ import AutoComplete from "primevue/autocomplete";
 import InputText from "primevue/inputtext";
 import DatePicker from "primevue/datepicker";
 import Fieldset from "primevue/fieldset";
+import Textarea from "primevue/textarea";
 import Select from "primevue/select";
 import FloatLabel from "primevue/floatlabel";
 import Button from "primevue/button";
 import axiosInstance from "@/axios"; // Assuming you've created a global axios instance
 import eventBus from "@/eventBus";
 import router from "@/router";
+import Cookies from "js-cookie";
 
 const emit = defineEmits(["submitted"]); // Define the event to be emitted
 const isModalOwnerVisible = ref(false);
 const pet = ref({
   owner_id: null,
-  branch_id: 1,
+  branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
   name: "",
   species: "",
   breed: "",
@@ -267,7 +270,7 @@ const filteredOwners = ref([]);
 async function fetchOwners() {
   try {
     const response = await axiosInstance.get("/owners");
-    // console.log(response.data.data);
+    // // console.log(response.data.data);
     owners.value = response.data.data;
   } catch (error) {
     console.error("Failed to fetch owners:", error);
@@ -305,13 +308,13 @@ const submitForm = async () => {
     allergies: pet.value.allergies,
   };
 
-  // console.log(submissionData); // Verify the structure
-  console.log(submissionData);
+  // // console.log(submissionData); // Verify the structure
+  // console.log(submissionData);
   try {
     const response = await axiosInstance.post("/pets", submissionData);
     emit("submitted", response.data); // You may modify this based on your response structure
 
-    // console.log(response);
+    // // console.log(response);
     eventBus.emit("show-toast", {
       severity: "success",
       summary: "Data Loaded",
@@ -334,7 +337,7 @@ const submitForm = async () => {
 onMounted(() => {
   fetchOwners();
   eventBus.on("ownerAdded", (event) => {
-    // console.log(event);
+    // // console.log(event);
   });
 });
 

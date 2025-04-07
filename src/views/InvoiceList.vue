@@ -327,6 +327,10 @@
     class="w-11/12 md:w-8/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
   >
     <InvoiceView
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       v-if="selectedInvoice"
       :invoice="selectedInvoice"
       :paymentMethods="paymentMethods"
@@ -343,6 +347,10 @@
     class="w-11/12 md:w-11/12 h-screen bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
   >
     <InvoiceEdit
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       :invoiceData="selectedInvoice"
       @updated="handleInvoiceUpdated"
       @close="isEditModalVisible = false"
@@ -362,9 +370,13 @@
       </div>
     </template>
     <InvoiceAdd
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       :invoice="selectedInvoice"
       :editMode="editMode"
-      @submitted="handleSubmit"
+      @InvoiceCreated="handleInvoiceCreated"
     />
   </Dialog>
   <!-- <Dialog
@@ -377,7 +389,10 @@
   <Dialog
     header="Add Payment"
     v-model:visible="paymentDialogVisible"
-    @hide="resetForm"
+    @hide="
+      resetForm;
+      isEditModalVisible = false;
+    "
     modal
     :closable="true"
     class="w-[11/12] md:w-[500px] h-fit bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
@@ -388,6 +403,10 @@
       </div>
     </template>
     <AddPayment
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       v-if="selectedInvoice"
       :invoice="selectedInvoice"
       :paymentMethods="paymentMethods"
@@ -403,7 +422,13 @@
     header="Confirm"
     :modal="true"
   >
-    <div class="confirmation-content">
+    <div
+      class="confirmation-content"
+      v-focustrap="{
+        disabled: false,
+        autoFocus: false,
+      }"
+    >
       <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
       <span v-if="selectedInvoice"
         >Are you sure you want to delete invoice
@@ -603,7 +628,7 @@ const editInvoice = (invoice) => {
 const confirmDelete = (invoice) => {
   selectedInvoice.value = invoice;
   deleteDialogVisible.value = true;
-  // console.log(invoice);
+  // // console.log(invoice);
 };
 
 const deleteInvoice = async () => {
@@ -618,6 +643,16 @@ const deleteInvoice = async () => {
 
 const handleSubmit = () => {
   isModalVisible.value = false;
+  currentPage.value = 1;
+  fetchInvoices(currentPage.value);
+};
+const handleInvoiceCreated = () => {
+  isModalVisible.value = false;
+  currentPage.value = 1;
+  fetchInvoices(currentPage.value);
+};
+const handleInvoiceUpdated = () => {
+  isEditModalVisible.value = false;
   currentPage.value = 1;
   fetchInvoices(currentPage.value);
 };
@@ -695,7 +730,7 @@ const fetchInvoices = async (page = 1) => {
 
     invoices.value = response.data.data.data;
     totalRecords.value = response.data.data.total;
-    console.log(response.data.data.data);
+    // console.log(response.data.data.data);
     currentPage.value = response.data.data.current_page;
   } catch (error) {
     console.error("Error fetching invoices:", error);
@@ -754,7 +789,7 @@ onMounted(() => {
   fetchInvoices();
   window.addEventListener("keydown", handleKeydown);
   eventBus.on("AddInvoice", () => {
-    console.log("OPEN ADD OWNER");
+    // console.log("OPEN ADD OWNER");
     showModal();
   });
 });

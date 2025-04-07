@@ -221,7 +221,7 @@ function toggleDarkMode() {
   const calTheme = isDarkMode.value ? "dark" : "light";
   const element = document.querySelector("html");
   if (route.path === "/") {
-    // console.log("calendar page");
+    // // console.log("calendar page");
     // const savedTheme = isDarkMode.value ? "dark" : "light";
     // calendarApp.setTheme(savedTheme);
     eventBus.emit("themeChange", calTheme);
@@ -253,12 +253,12 @@ const playSound = () => {
 const formattedCountdown = computed(() => {
   const minutes = Math.floor(countdown.value / 60);
   const seconds = countdown.value % 60;
-  // console.log(String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0"));
+  // // console.log(String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0"));
   return String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0");
 });
 
 const showConfirm = () => {
-  // console.log("PLAYING AUDIO");
+  // // console.log("PLAYING AUDIO");
 
   confirm.require({
     message: timeoutMessage.value,
@@ -271,11 +271,11 @@ const showConfirm = () => {
     acceptClass: "!text-sm",
     rejectClass: "!text-sm",
     accept: () => {
-      // console.log("User stays logged in");
+      // // console.log("User stays logged in");
       clearTimers();
     },
     reject: () => {
-      // console.log("User logged out");
+      // // console.log("User logged out");
       clearTimers();
       authStore.logOut();
       router.push("/login");
@@ -290,7 +290,7 @@ const showConfirm = () => {
   startLogoutTimer();
 };
 const resetActivityTimeout = () => {
-  // // console.log(currentRoute._value.meta);
+  // // // console.log(currentRoute._value.meta);
   clearTimeout(activityTimeout);
   activityTimeout = setTimeout(() => {
     if (currentRoute._value.meta.allowSessionTimeout) {
@@ -322,11 +322,11 @@ const resetCountdown = () => {
         acceptClass: "!text-sm",
         rejectClass: "!text-sm",
         accept: () => {
-          // console.log("User stays logged in");
+          // // console.log("User stays logged in");
           clearTimers();
         },
         reject: () => {
-          // console.log("User logged out");
+          // // console.log("User logged out");
           clearTimers();
           authStore.logOut();
           router.push("/login");
@@ -344,7 +344,7 @@ const startLogoutTimer = () => {
   logoutTimerId = setTimeout(() => {
     if (countdown.value <= 0) {
       // Only log out if the countdown has finished
-      // console.log("Automatically logging out due to inactivity");
+      // // console.log("Automatically logging out due to inactivity");
       authStore.logOut();
       router.push("/login");
     }
@@ -353,30 +353,30 @@ const startLogoutTimer = () => {
 const handleKeyDown = (event) => {
   if (event.key === "F2") {
     event.preventDefault();
-    console.log(route.path);
+    // console.log(route.path);
     // router.push({ name: "Owners" });
     if (route.path === `/owners`) {
       eventBus.emit("AddOwner");
-      console.log("Ctrl + N pressed");
+      // console.log("Ctrl + N pressed");
     }
     if (route.path === `/invoices`) {
       eventBus.emit("AddInvoice");
-      console.log("Ctrl + N pressed");
+      // console.log("Ctrl + N pressed");
     }
   }
   if (event.ctrlKey) {
     switch (event.key) {
       case "F2": // Ctrl + O
         event.preventDefault();
-        console.log(route.path);
+        // console.log(route.path);
         // router.push({ name: "Owners" });
         if (route.path === `/owners`) {
           eventBus.emit("AddOwner");
-          console.log("Ctrl + N pressed");
+          // console.log("Ctrl + N pressed");
         }
         if (route.path === `/invoices`) {
           eventBus.emit("AddInvoice");
-          console.log("Ctrl + N pressed");
+          // console.log("Ctrl + N pressed");
         }
 
         break;
@@ -386,18 +386,18 @@ const handleKeyDown = (event) => {
         break;
       case "o": // Ctrl + O
         event.preventDefault(); // Prevent default save action
-        console.log("Ctrl + O pressed");
+        // console.log("Ctrl + O pressed");
         router.push(`/owners`);
         break;
       case "q": // Ctrl + S
         event.preventDefault(); // Prevent default save action
-        console.log("Ctrl + q pressed");
+        // console.log("Ctrl + q pressed");
         // Add your custom save logic here
         signOut();
         break;
       case "z": // Ctrl + Z
         event.preventDefault(); // Prevent default undo action
-        console.log("Ctrl + Z pressed");
+        // console.log("Ctrl + Z pressed");
         // Add your undo logic here
         break;
       // Add more cases as needed for other key combinations
@@ -422,7 +422,7 @@ const signOut = () => {
     });
     clearTimers();
     router.push("/login"); // Redirect to the login page
-    // console.log("User signed out successfully");
+    // // console.log("User signed out successfully");
   } catch (error) {
     // console.error("Error signing out:", error);
   }

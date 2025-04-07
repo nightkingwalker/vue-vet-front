@@ -192,12 +192,13 @@ import axiosInstance from "@/axios"; // Assuming you've created a global axios i
 import eventBus from "@/eventBus";
 import router from "@/router";
 import { useRoute } from "vue-router";
+import Cookies from "js-cookie";
 const route = useRoute();
 const emit = defineEmits(["submitted"]); // Define the event to be emitted
 
 const pet = ref({
   owner_id: route.params.ownerid,
-  branch_id: 1,
+  branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
   name: "",
   species: "",
   breed: "",
@@ -240,7 +241,7 @@ const filteredOwners = ref([]);
 async function fetchOwners() {
   try {
     const response = await axiosInstance.get("/owners/" + ownerid);
-    // console.log(response.data);
+    // // console.log(response.data);
     owners.value = response.data;
   } catch (error) {
     console.error("Failed to fetch owners:", error);
@@ -275,10 +276,10 @@ const submitForm = async () => {
     deceased: pet.value.deceased.value === "Yes" ? "Y" : "N",
     allergies: pet.value.allergies,
   };
-  console.log(submissionData);
+  // console.log(submissionData);
   try {
     const response = await axiosInstance.post("/pets", submissionData);
-    console.log(response);
+    // console.log(response);
     emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",

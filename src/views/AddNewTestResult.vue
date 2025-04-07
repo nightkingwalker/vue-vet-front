@@ -102,10 +102,10 @@ const submitForm = async () => {
     test_type: test.value.test_type,
     result: resultString,
   };
-  console.log(submissionData);
+  // console.log(submissionData);
   try {
     const response = await axiosInstance.post("/test-results", submissionData);
-    console.log(response);
+    // console.log(response);
     eventBus.emit("show-toast", {
       severity: "success",
       summary: "Data Loaded",

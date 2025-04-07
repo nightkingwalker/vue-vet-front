@@ -124,10 +124,10 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     const authStore = useAuthStore();
     if (to.meta.requiresAuth && !authStore.isLoggedIn) {
-        // // console.log("Not logged in, redirecting...");
+        // // // console.log("Not logged in, redirecting...");
         next({ name: 'Login' });
     } else {
-        // // console.log("Logged in or not required, proceeding...");
+        // // // console.log("Logged in or not required, proceeding...");
         next();
     }
 });

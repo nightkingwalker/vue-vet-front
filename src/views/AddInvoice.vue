@@ -416,6 +416,7 @@ import DatePicker from "primevue/datepicker";
 import Textarea from "primevue/textarea";
 import Tag from "primevue/tag";
 import InputText from "primevue/inputtext";
+import Cookies from "js-cookie";
 const emit = defineEmits();
 const toast = useToast();
 const props = defineProps({
@@ -424,8 +425,9 @@ const props = defineProps({
     required: false,
   },
   medical_record_id: {
-    type: Number,
+    type: String,
     default: "",
+    required: false,
   },
 });
 
@@ -541,7 +543,7 @@ const loadClientPets = async () => {
   try {
     const response = await axiosInstance.get(`/owners/${selectedClient.value.id}/pets`);
     clientPets.value = response.data.data;
-    console.log(clientPets.value);
+    // console.log(clientPets.value);
   } catch (error) {
     console.error("Error loading pets:", error);
     clientPets.value = [];
@@ -551,12 +553,12 @@ const loadClientPets = async () => {
 const selectPet = (event) => {
   selectedPet.value = event.value;
   selectedPet.value.age = computeAge(selectedPet.value.date_of_birth);
-  console.log(selectedPet.value);
+  // console.log(selectedPet.value);
 };
 const selectPetProps = (pet) => {
   selectedPet.value = pet;
   selectedPet.value.age = computeAge(selectedPet.value.date_of_birth);
-  console.log(selectedPet.value);
+  // console.log(selectedPet.value);
 };
 const computeAge = (dateOfBirth) => {
   const birthDate = new Date(dateOfBirth);
@@ -592,24 +594,24 @@ if (props.pet) {
   // selectedPet.value = props.pet;
   clientPets.value = [props.pet];
   selectPetProps(props.pet);
-  console.log("medical_record_id", props.medical_record_id);
-  console.log("pet", props.pet.owner);
-  console.log("selectedClient", selectedClient.value);
-  console.log("selectedPet", selectedPet.value);
+  // // console.log("medical_record_id", props.medical_record_id);
+  // // console.log("pet", props.pet.owner);
+  // // console.log("selectedClient", selectedClient.value);
+  // // console.log("selectedPet", selectedPet.value);
 }
 const clearPet = () => {
   selectedPet.value = null;
 };
 
 const searchItems = async (event) => {
-  if (event.query.trim().length < 1) {
+  if (event.query.trim().length < 3) {
     filteredItems.value = [];
     return;
   }
 
   try {
     const response = await axiosInstance.get("/inventory-items/search", {
-      params: { branch_id: 1, query: event.query },
+      params: { branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"), query: event.query },
     });
     filteredItems.value = response.data.data.map((item) => ({
       ...item,
@@ -752,7 +754,7 @@ const createInvoice = async () => {
     });
     return;
   }
-
+  depositPaymentMethod.value = 1;
   if (requiresDeposit.value && !depositPaymentMethod.value) {
     toast.add({
       severity: "error",
@@ -764,7 +766,7 @@ const createInvoice = async () => {
   }
 
   const payload = {
-    branch_id: 1, // Should come from user's session or selection
+    branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"), // Should come from user's session or selection
     client_id: selectedClient.value?.id || null,
     pet_id: selectedPet.value?.id || null,
     invoice_number: invoiceNumber.value,
@@ -789,7 +791,7 @@ const createInvoice = async () => {
       total_price: item.total_price,
     })),
   };
-  console.log("PAYLOAD", payload);
+  // console.log("PAYLOAD", payload);
   // Add payment if deposit is required
   if (depositRequired.value > 0) {
     payload.payments = [
@@ -802,7 +804,7 @@ const createInvoice = async () => {
       },
     ];
   }
-  console.log(payload);
+  // console.log(payload);
   try {
     const response = await axiosInstance.post("/invoices", payload);
     emit("InvoiceCreated");

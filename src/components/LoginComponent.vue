@@ -255,8 +255,10 @@ const login = async () => {
         refresh_token,
         expires_in,
         refresh_expires_in,
-        user.name
+        user.name,
+        user.current_branch
       );
+      // console.log(user);
       router.push("/").catch((err) => console.error("Router error:", err));
     }
 
@@ -278,7 +280,7 @@ const verify2FA = async () => {
       { two_factor_code: twoFactorCode.value },
       { headers: { Authorization: `Bearer ${temporaryToken.value}` } }
     );
-    // console.log(response.data);
+    // // console.log(response.data);
     const {
       access_token,
       refresh_token,
@@ -292,7 +294,8 @@ const verify2FA = async () => {
       refresh_token,
       expires_in,
       refresh_expires_in,
-      user.name
+      user.name,
+      user.current_branch
     );
     isError.value = false;
     message.value = "Two-Factor Authentication verified!";

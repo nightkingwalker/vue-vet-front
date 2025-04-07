@@ -237,7 +237,13 @@
       :modal="true"
       :style="{ width: '50vw' }"
     >
-      <div class="mb-4">
+      <div
+        class="mb-4"
+        v-focustrap="{
+          disabled: false,
+          autoFocus: true,
+        }"
+      >
         <p>We found similar items in our system:</p>
         <DataTable
           :value="matchedItems"
@@ -270,6 +276,7 @@ import { useToast } from "primevue/usetoast";
 // PrimeVue Components
 import InputText from "primevue/inputtext";
 import FloatLabel from "primevue/floatlabel";
+import Cookies from "js-cookie";
 import Button from "primevue/button";
 import Dropdown from "primevue/dropdown";
 import InputNumber from "primevue/inputnumber";
@@ -296,8 +303,8 @@ const isPredefined = ref(false);
 // Form Data
 const props = defineProps({
   item: {
-    type: Array,
-    required: true,
+    type: Object,
+    required: false,
   },
 });
 
@@ -337,7 +344,7 @@ const generateBarcode = () => {
     "8" + Math.floor(100000000000 + Math.random() * 900000000000).toString();
   form.value.barcode = randomBarcode;
 };
-// console.log("TEST", props.item);
+// // console.log("TEST", props.item);
 if (props.item) {
   form.value = {
     ...props.item,
@@ -357,7 +364,7 @@ const searchItems = async (event) => {
   try {
     const { data } = await axiosInstance.get(`/inventory-items/search`, {
       params: {
-        branch_id: 1,
+        branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
         query: event.query,
       },
     });
@@ -418,7 +425,7 @@ const checkExistingItems = async () => {
   try {
     const response = await axiosInstance.get("/inventory-items/search", {
       params: {
-        branch_id: 1, // Get from store or props
+        branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"), // Get from store or props
         query: form.value.searchQuery,
       },
     });
@@ -487,7 +494,7 @@ const handleSubmit = () => {
 
 const submitForm = async () => {
   const payload = {
-    branch_id: 1, // Get from store or props
+    branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"), // Get from store or props
     search_query: form.value.searchQuery,
     quantity_to_add: form.value.quantity,
     purchase_price: form.value.purchasePrice,
@@ -499,7 +506,7 @@ const submitForm = async () => {
     selling_price: form.value.sellingPrice,
     minimum_stock_level: form.value.minStock,
   };
-  console.log("payload", payload);
+  // console.log("payload", payload);
   // Add fields for new items only
   if (!existingItemId.value) {
     Object.assign(payload, {

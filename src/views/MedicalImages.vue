@@ -174,7 +174,7 @@ const fetchMedicalImages = async () => {
       `/medical-images/bymrid/${props.medical_record_id}`
     );
     medicalImages.value = response.data.data;
-    console.log(response.data.data);
+    // console.log(response.data.data);
     loading.value = false;
   } catch (error) {
     console.error("Error fetching medical images:", error);
@@ -220,7 +220,7 @@ const confirmDelete = (medicalImageId) => {
       deleteImage(medicalImageId); // Call the delete function if the user confirms
     },
     reject: () => {
-      console.log("Deletion cancelled");
+      // console.log("Deletion cancelled");
     },
   });
 };
@@ -228,7 +228,7 @@ const confirmDelete = (medicalImageId) => {
 const deleteImage = async (medicalImageId) => {
   try {
     const response = await axiosInstance.delete(`/medical-images/${medicalImageId}`);
-    console.log("Image deleted:", response.data);
+    // console.log("Image deleted:", response.data);
     fetchMedicalImages(); // Refresh the treatments list
     eventBus.emit("ImagetDeletedSuccessfully"); // Emit an event if needed
   } catch (error) {
@@ -238,11 +238,11 @@ const deleteImage = async (medicalImageId) => {
 // OnMounted fetch the initial data
 onMounted(() => {
   eventBus.on("newImageAdded", () => {
-    console.log("newImageAdded");
+    // console.log("newImageAdded");
     fetchMedicalImages();
   });
   eventBus.on("MedicalImageUpdatedSuccessfully", () => {
-    console.log("MedicalImageUpdatedSuccessfully");
+    // console.log("MedicalImageUpdatedSuccessfully");
     fetchMedicalImages();
   });
   fetchMedicalImages();

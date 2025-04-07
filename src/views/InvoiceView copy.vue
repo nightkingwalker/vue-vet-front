@@ -229,7 +229,7 @@ const props = defineProps({
     default: () => [],
   },
 });
-console.log(props.invoice);
+// console.log(props.invoice);
 const toast = useToast();
 
 // Formatting functions

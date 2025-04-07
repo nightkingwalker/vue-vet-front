@@ -131,12 +131,13 @@ import FloatLabel from "primevue/floatlabel";
 import Button from "primevue/button";
 import axiosInstance from "@/axios"; // Assuming you've created a global axios instance
 import eventBus from "@/eventBus";
+import Cookies from "js-cookie";
 const emit = defineEmits(["submitted"]); // Define the event to be emitted
 
 const props = defineProps(["activeDate", "petMicrochip", "petOwnerID"]); // Receiving activeDate as a prop
 const appointment = ref({
   client_id: null, // To be set after selecting the pet
-  branch_id: 1,
+  branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
   title: "",
   description: "",
   type: "",
@@ -189,7 +190,7 @@ const filteredPets = ref([]);
 
 const pet = ref({
   owner_id: null,
-  branch_id: 1,
+  branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
   name: "",
   species: "",
   breed: "",
@@ -214,7 +215,7 @@ const fetchPets = async (page = 1) => {
     if (props.petOwnerID) {
       selectedPet.value = response.data.data; // Populate filtered pets
     }
-    // console.log(filteredPets.value);
+    // // console.log(filteredPets.value);
     totalRecords.value = response.data.total;
     currentPage.value = response.data.current_page;
     loading.value = false;
@@ -238,14 +239,14 @@ const setRandomTime = () => {
     const randomHour = Math.floor(Math.random() * 5) + 12; // Generates a number between 12 and 16 (inclusive)
     startDate.setHours(randomHour, 0, 0); // Set hours to a random value between 12:00:00 and 17:00:00
     appointment.value.start = startDate;
-    // console.log("START: " + appointment.value.start);
+    // // console.log("START: " + appointment.value.start);
     // Set the end time to 15 minutes after the start time
     const endDate = new Date(startDate);
     endDate.setMinutes(endDate.getMinutes() + 15);
     appointment.value.end = endDate;
   }
 };
-// console.log("ACT" + props.activeDate);
+// // console.log("ACT" + props.activeDate);
 // watch(
 //   () => props.activeDate,
 //   (newVal) => {
@@ -258,9 +259,9 @@ const setRandomTime = () => {
 // Form submission
 const submitForm = async () => {
   // Assign the client_id and pet_id based on the selected pet
-  console.log(selectedPet.value);
+  // console.log(selectedPet.value);
   if (selectedPet.value) {
-    console.log(selectedPet.value);
+    // console.log(selectedPet.value);
     appointment.value.client_id = !props.petOwnerID
       ? selectedPet.value.owner_id
       : selectedPet.value[0].owner_id; // Assuming this is the client's ID
@@ -302,11 +303,11 @@ const submitForm = async () => {
   appointment.value.end = formatDateTime(endDate);
   try {
     // Log the data being sent to ensure all required fields are included
-    // console.log("Submitting appointment data:", appointment.value);
-    console.log(JSON.stringify(appointment.value));
+    // // console.log("Submitting appointment data:", appointment.value);
+    // console.log(JSON.stringify(appointment.value));
     const response = await axiosInstance.post("/appointments", appointment.value);
     emit("submitted", response.data); // You may modify this based on your response structure
-    console.log(response.data);
+    // console.log(response.data);
     eventBus.emit("show-toast", {
       severity: "success",
       summary: "Appointment Created",
@@ -332,10 +333,10 @@ onMounted(() => {
   appointment.value.end = props.activeDate;
   appointment.value.petmicrochip = props.petMicrochip;
   appointment.value.owner_id = props.petOwnerID;
-  // console.log("owner_id " + appointment.value.owner_id);
+  // // console.log("owner_id " + appointment.value.owner_id);
   // setRandomTime();
   if (props.petMicrochip) {
-    // console.log("props.petMicrochip " + props.petMicrochip);
+    // // console.log("props.petMicrochip " + props.petMicrochip);
     searchQuery.value = props.petMicrochip;
   }
   fetchPets();

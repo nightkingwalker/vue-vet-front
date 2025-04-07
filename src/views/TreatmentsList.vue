@@ -139,17 +139,17 @@ const skeletonRows = Array.from({ length: 4 }).map(() => ({
   dosage: "",
   description: "",
 }));
-// // console.log("Medical Record ID:", props.medical_record_id);
+// // // console.log("Medical Record ID:", props.medical_record_id);
 const fetchTreatments = async () => {
   loading.value = true;
   try {
-    // console.log("Medical Record ID:", props.medical_record_id);
+    // // console.log("Medical Record ID:", props.medical_record_id);
     // Make the request using the axios instance with interceptors
     const response = await axiosInstance.get(
       `/treatments/bymrid/${props.medical_record_id}`
     );
     medicalRecords.value = response.data.data;
-    console.log(medicalRecords.value);
+    // console.log(medicalRecords.value);
 
     loading.value = false; // Stop loading once data is fetched
   } catch (error) {
@@ -163,7 +163,7 @@ const showAddTreatmentModal = () => {
   emit("showAddTreatmentModal");
 };
 const showEditTreatmentModal = (treatmentId) => {
-  console.log("CLICKED", treatmentId); // Log the treatment ID for debugging
+  // console.log("CLICKED", treatmentId); // Log the treatment ID for debugging
   emit("showEditTreatmentModal", treatmentId); // Pass the treatment ID as a payload
 };
 const refreshData = () => {
@@ -180,7 +180,7 @@ const confirmDelete = (treatmentId) => {
       deleteTreatment(treatmentId); // Call the delete function if the user confirms
     },
     reject: () => {
-      console.log("Deletion cancelled");
+      // console.log("Deletion cancelled");
     },
   });
 };
@@ -188,7 +188,7 @@ const confirmDelete = (treatmentId) => {
 const deleteTreatment = async (treatmentId) => {
   try {
     const response = await axiosInstance.delete(`/treatments/${treatmentId}`);
-    console.log("Treatment deleted:", response.data);
+    // console.log("Treatment deleted:", response.data);
     fetchTreatments(); // Refresh the treatments list
     eventBus.emit("TreatmentDeletedSuccessfully"); // Emit an event if needed
   } catch (error) {
@@ -196,22 +196,22 @@ const deleteTreatment = async (treatmentId) => {
   }
 };
 onMounted(() => {
-  // console.log("Component mounted, setting up event listeners");
+  // // console.log("Component mounted, setting up event listeners");
   fetchTreatments();
 
   eventBus.on("newTreatmentAdded", () => {
-    // console.log("Received newTreatmentAdded event");
+    // // console.log("Received newTreatmentAdded event");
     fetchTreatments();
   });
 
   eventBus.on("TreatmentUpdatedSuccessfully", () => {
-    // console.log("Received TreatmentUpdatedSuccessfully event");
+    // // console.log("Received TreatmentUpdatedSuccessfully event");
     fetchTreatments();
   });
 });
 
 onUnmounted(() => {
-  // console.log("Component unmounted, cleaning up event listeners");
+  // // console.log("Component unmounted, cleaning up event listeners");
   eventBus.off("newTreatmentAdded");
   eventBus.off("TreatmentUpdatedSuccessfully");
 });

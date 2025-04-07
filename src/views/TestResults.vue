@@ -140,7 +140,7 @@ const parseResults = (resultsString) => {
     const results = JSON.parse(resultsString);
     return results.map((result) => {
       const parts = result.split(":");
-      // console.log(parts);
+      // // console.log(parts);
       return { key: parts[0].trim(), value: parts[1].trim() };
     });
   } catch (error) {
@@ -148,17 +148,17 @@ const parseResults = (resultsString) => {
     return [];
   }
 };
-// // console.log("Medical Record ID:", props.medical_record_id);
+// // // console.log("Medical Record ID:", props.medical_record_id);
 const fetchTestResults = async () => {
   loading.value = true;
   try {
-    // // console.log("Medical Record ID:", props.medical_record_id);
+    // // // console.log("Medical Record ID:", props.medical_record_id);
     // Make the request using the axios instance with interceptors
     const response = await axiosInstance.get(
       `/test-results/bymrid/${props.medical_record_id}`
     );
     medicalRecords.value = response.data.data;
-    console.log(medicalRecords.value);
+    // console.log(medicalRecords.value);
 
     loading.value = false; // Stop loading once data is fetched
   } catch (error) {
@@ -186,7 +186,7 @@ const confirmDelete = (testResultId) => {
       deleteTestResult(testResultId); // Call the delete function if the user confirms
     },
     reject: () => {
-      console.log("Deletion cancelled");
+      // console.log("Deletion cancelled");
     },
   });
 };
@@ -194,7 +194,7 @@ const confirmDelete = (testResultId) => {
 const deleteTestResult = async (testResultId) => {
   try {
     const response = await axiosInstance.delete(`/test-results/${testResultId}`);
-    console.log("Treatment deleted:", response.data);
+    // console.log("Treatment deleted:", response.data);
     fetchTestResults(); // Refresh the treatments list
     eventBus.emit("TestResultDeletedSuccessfully"); // Emit an event if needed
   } catch (error) {
@@ -204,11 +204,11 @@ const deleteTestResult = async (testResultId) => {
 onMounted(() => {
   fetchTestResults();
   eventBus.on("newTestResultAdded", () => {
-    console.log("newTestResultAdded");
+    // console.log("newTestResultAdded");
     fetchTestResults();
   });
   eventBus.on("handleTestResultUpdatedSuccessfully", () => {
-    console.log("newTestResultAdded");
+    // console.log("newTestResultAdded");
     fetchTestResults();
   });
 });

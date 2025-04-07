@@ -568,6 +568,10 @@
       </div>
     </template>
     <PetTreatments
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       :medical_record_id="medical_record_id"
       @showAddTreatmentModal="showAddTreatmentModal"
       @showEditTreatmentModal="showEditTreatmentModals"
@@ -588,6 +592,10 @@
       </div>
     </template>
     <EditPetDetails
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       :medical_record_id="medical_record_id"
       @showEditPetDetailsModal="showEditPetDetailsModal"
       @details_updated="handleDetailsUpdated"
@@ -608,6 +616,10 @@
       </div>
     </template>
     <EditTreatment
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       @TreatmentUpdated="handleUpdatedTreatment"
       :treatmentId="selectedTreatmentId"
       :medical_record_id="medical_record_id"
@@ -628,6 +640,10 @@
       </div>
     </template>
     <TestResults
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       :medical_record_id="medical_record_id"
       @showAddTestResultModal="showAddTestResultModal"
       @showEditTestResultModal="showEditTestResultModal"
@@ -648,6 +664,10 @@
       </div>
     </template>
     <EditMedicalImage
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       @MedicalImageUpdated="handleMedicalImageUpdated"
       :medicalImageId="selectedMedicalImageId"
       :medical_record_id="medical_record_id"
@@ -668,6 +688,10 @@
       </div>
     </template>
     <MedicalImages
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       :medical_record_id="medical_record_id"
       @showAddMedicalImageModal="showAddMedicalImageModal"
       @showEditMedicalImageModal="showEditMedicalImageModal"
@@ -690,6 +714,10 @@
       </div>
     </template>
     <AddNewMedicalImage
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       :medical_record_id="medical_record_id"
       @NewImageAdded="handleSubmitNewImage"
     />
@@ -709,6 +737,10 @@
       </div>
     </template>
     <AddNewTreatment
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       :medical_record_id="medical_record_id"
       @TreatmentAdded="handleNewTreatment"
     />
@@ -728,6 +760,10 @@
       </div>
     </template>
     <AddNewTestResult
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       :medical_record_id="medical_record_id"
       @TestResultAdded="handleNewTestResult"
     />
@@ -747,6 +783,10 @@
       </div>
     </template>
     <addNewAppointment
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       :petMicrochip="petmicrochip"
       :petOwnerID="pet.owner.id"
       @submitted="handleSubmit"
@@ -767,6 +807,10 @@
       </div>
     </template>
     <EditAppointment
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       :appointmentId="appointment_id"
       @updated="handleAppointmentUpdated"
     />
@@ -786,6 +830,10 @@
       </div>
     </template>
     <EditTestResult
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       :testResultId="selectedTestResultId"
       @TestResultUpdated="handleTestResultUpdated"
       @close-dialog="isEditTestResultsVisible = false"
@@ -807,6 +855,10 @@
       </div>
     </template>
     <AddCaseHistory
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       :medical_record_id="medical_record_id"
       @TestResultUpdated="handleTestResultUpdated"
       @close-dialog="isEditTestResultsVisible = false"
@@ -828,6 +880,10 @@
       </div>
     </template>
     <CaseHistory
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       :medical_record_id="medical_record_id"
       @showAddCaseHistoryModal="showAddCaseHistoryModal"
       @CaseHistoryUpdated="handleCaseHistory"
@@ -850,6 +906,10 @@
       </div>
     </template>
     <AddPhysicalExamination
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       :medical_record_id="medical_record_id"
       @showAddCaseHistoryModal="showAddCaseHistoryModal"
       @CaseHistoryUpdated="handleCaseHistory"
@@ -872,6 +932,10 @@
       </div>
     </template>
     <PhysicalExamination
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       :medical_record_id="medical_record_id"
       :pet_name="pet.name"
       @showAddPhysicalExaminationModal="showAddPhysicalExaminationModal"
@@ -894,6 +958,10 @@
       </div>
     </template>
     <FullReport
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       :medical_record_id="medical_record_id"
       :pet_name="pet.name"
       @showAddPhysicalExaminationModal="showAddPhysicalExaminationModal"
@@ -911,6 +979,10 @@
     class="w-11/12 md:w-8/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
   >
     <InvoiceView
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       :invoice="selectedInvoice"
       @addInvoice="handleAddInvoiceRequest"
       @addPayment="handleAddPaymentRequest"
@@ -932,6 +1004,10 @@
       </div>
     </template>
     <InvoiceAdd
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       :pet="pet"
       :medical_record_id="medical_record_id"
       @InvoiceCreated="handleInvoiceSubmit"
@@ -951,6 +1027,10 @@
       </div>
     </template>
     <AddPayment
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
       v-if="selectedInvoice"
       :invoice="selectedInvoice"
       :paymentMethods="paymentMethods"
@@ -1052,7 +1132,7 @@ const showAddTreatmentModal = () => {
   isNewTreatmentVisible.value = true;
 };
 const showEditTreatmentModals = (treatmentId) => {
-  console.log("LICKED", treatmentId); // Log the treatment ID for debugging
+  // console.log("LICKED", treatmentId); // Log the treatment ID for debugging
   selectedTreatmentId.value = treatmentId; // Store the treatment ID
   isEditTreatmentVisible.value = true; // Show the dialog
 };
@@ -1120,21 +1200,21 @@ const handleAddInvoiceRequest = () => {
   // medical_record_id.value = MedicalRecordId;
   // isAddCaseHistorysVisible.value = true;
   viewDialogVisible.value = false;
-  console.log("PET", medical_record_id.value);
+  // console.log("PET", medical_record_id.value);
   isModalVisible.value = true;
 };
 // const handleInvoiceSubmit = () => {
 //   // medical_record_id.value = MedicalRecordId;
 //   // isAddCaseHistorysVisible.value = true;
 //   viewDialogVisible.value = false;
-//   console.log("PET", medical_record_id.value);
+//   // console.log("PET", medical_record_id.value);
 //   isModalVisible.value = true;
 // };
 const handleAddPaymentRequest = () => {
   // medical_record_id.value = MedicalRecordId;
   // isAddCaseHistorysVisible.value = true;
   viewDialogVisible.value = false;
-  console.log("PET", medical_record_id.value);
+  // console.log("PET", medical_record_id.value);
   // paymentDialogVisible.value = true;
   fetchInvoice().then(() => {
     paymentDialogVisible.value = true;
@@ -1148,7 +1228,7 @@ const showAddCaseHistoryModal = (MedicalRecordId) => {
 };
 const showEditMedicalImageModal = (medicalImageId) => {
   selectedMedicalImageId.value = medicalImageId;
-  console.log(selectedMedicalImageId);
+  // console.log(selectedMedicalImageId);
   isEditMedicalImageVisible.value = true;
 };
 const handleNewTestResult = () => {
@@ -1156,25 +1236,25 @@ const handleNewTestResult = () => {
   eventBus.emit("newTestResultAdded");
 };
 const handleSubmit = (data) => {
-  console.log(data);
+  // console.log(data);
   isNewApointmentVisible.value = false;
   // currentPage.value = 1; // Reset to the first page when searching
   fetchPets();
   // fetchAppointments();
 };
 const handleInvoiceSubmit = (data) => {
-  console.log(data);
+  // console.log(data);
   isModalVisible.value = false;
   fetchPets();
   // fetchAppointments();
 };
 const handleDetailsUpdated = (data) => {
-  console.log(data);
+  // console.log(data);
   isEditPetDetailsVisible.value = false;
   fetchPets();
 };
 const handleSubmitNewImage = (data) => {
-  console.log(data);
+  // console.log(data);
   isNewMedicalImageVisible.value = false;
   eventBus.emit("newImageAdded");
 
@@ -1184,11 +1264,11 @@ const handleSubmitNewImage = (data) => {
 };
 
 const addAppointment = () => {
-  console.log(petmicrochip.value);
+  // console.log(petmicrochip.value);
   isNewApointmentVisible.value = true;
 };
 const handleAppointmentUpdated = (data) => {
-  console.log("Appointment updated:", data);
+  // console.log("Appointment updated:", data);
   isEditApointmentVisible.value = false;
   fetchPets();
   // Refresh the appointments list or perform other actions
@@ -1198,14 +1278,14 @@ const handlePaymentSubmit = () => {
   fetchPets();
 };
 const editPetDetails = () => {
-  console.log(petmicrochip.value);
+  // console.log(petmicrochip.value);
   isEditPetDetailsVisible.value = true;
 };
 const refreshData = () => {
   // loading.value = true; // Set loading state to true to show skeletons
   fetchPets(); // Fetch the pets data again
 };
-// console.log(pet.value);
+// // console.log(pet.value);
 const owner = ref(""); // Initialize owner as an empty string
 const loading = ref(true);
 const visits = ref([]);
@@ -1346,14 +1426,14 @@ const computeAge = (dateOfBirth) => {
   // Combine them into a single string, handling cases where there are no months or no years
   return `${yearsText}${yearsText && monthsText ? " & " : ""}${monthsText}`;
 };
-// // console.log(petmicrochip.value);
+// // // console.log(petmicrochip.value);
 const fetchPets = async () => {
   loading.value = true;
   try {
     // Make the request using the axios instance with interceptors
     const response = await axiosInstance.get(`/pets/${petmicrochip.value}`);
     pet.value = response.data;
-    console.log(pet.value);
+    // console.log(pet.value);
     visits.value = response.data.appointments;
     medical_records.value = response.data.medical_records;
     pet.value.date_of_birth = formatDateForSubmission(pet.value.date_of_birth);
@@ -1372,7 +1452,7 @@ const fetchInvoice = async () => {
       `/medical-records/${medical_record_id.value}/invoice`
     );
     selectedInvoice.value = response.data.data;
-    console.log("selectedInvoice", selectedInvoice.value);
+    // console.log("selectedInvoice", selectedInvoice.value);
     // loading.value = false; // Stop loading once data is fetched
   } catch (error) {
     //     // showSuccess("warn", "Warning", "Couldent Fetch Data");
@@ -1387,27 +1467,27 @@ const formatDateForSubmission = (dateString) => {
   ).padStart(2, "0")}`;
 };
 function getEventTheme(themeName) {
-  // // console.log(themeName);
+  // // // console.log(themeName);
   return eventTheme[themeName] || null; // Return the corresponding theme or null if not found
 }
 function listTreatments(MedicalRecordId) {
   medical_record_id.value = findRecordById(MedicalRecordId);
-  // console.log("MEDIACAL" + medical_record_id.value);
+  // // console.log("MEDIACAL" + medical_record_id.value);
   isTreatmentsListVisible.value = true;
 }
 function editAppointment(AppointmentID) {
   appointment_id.value = AppointmentID;
-  console.log("MEDIACAL" + AppointmentID);
+  // console.log("MEDIACAL" + AppointmentID);
   isEditApointmentVisible.value = true;
 }
 function listTestResults(MedicalRecordId) {
   medical_record_id.value = findRecordById(MedicalRecordId);
-  // console.log("MEDIACAL" + medical_record_id.value);
+  // // console.log("MEDIACAL" + medical_record_id.value);
   isTestResultsVisible.value = true;
 }
 function listImages(MedicalRecordId) {
   medical_record_id.value = findRecordById(MedicalRecordId);
-  // console.log("MEDIACAL" + medical_record_id.value);
+  // // console.log("MEDIACAL" + medical_record_id.value);
   isImagesListVisible.value = true;
 }
 const findRecordById = (id) => {

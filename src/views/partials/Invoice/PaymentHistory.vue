@@ -62,7 +62,7 @@ const paymentMethods = ref([
   { id: 2, name: "Credit Card" },
   { id: 3, name: "Bank Transfer" },
 ]);
-// console.log("paymentMethods", props.paymentMethods);
+// // console.log("paymentMethods", props.paymentMethods);
 const formatDate = (dateString) => {
   if (!dateString) return "";
   const options = { year: "numeric", month: "short", day: "numeric" };

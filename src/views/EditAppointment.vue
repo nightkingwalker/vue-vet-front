@@ -122,6 +122,7 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import AutoComplete from "primevue/autocomplete";
+import InputGroup from "primevue/inputgroup";
 import InputText from "primevue/inputtext";
 import DatePicker from "primevue/datepicker";
 import Select from "primevue/select";
@@ -130,7 +131,7 @@ import Button from "primevue/button";
 import Textarea from "primevue/textarea";
 import axiosInstance from "@/axios"; // Assuming you've created a global axios instance
 import eventBus from "@/eventBus";
-
+import Cookies from "js-cookie";
 const emit = defineEmits(["updated"]); // Define the event to be emitted
 
 const props = defineProps({
@@ -139,11 +140,11 @@ const props = defineProps({
     required: true,
   },
 });
-console.log(props.appointmentId);
+// console.log(props.appointmentId);
 const appointment = ref({
   id: null,
   client_id: null,
-  branch_id: 1,
+  branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
   title: "",
   description: "",
   type: "",
@@ -230,7 +231,7 @@ const submitForm = async () => {
   appointment.value.pet_id = selectedPet.value.id;
   appointment.value.type = appointment.value.type.value;
   appointment.value.status = appointment.value.status.value;
-  console.log(appointment.value);
+  // console.log(appointment.value);
   try {
     const response = await axiosInstance.put(
       `/appointments/${appointment.value.id}`,

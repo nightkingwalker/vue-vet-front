@@ -54,6 +54,7 @@ import FloatLabel from "primevue/floatlabel";
 import Button from "primevue/button";
 import eventBus from "@/eventBus";
 import router from "@/router";
+import Cookies from "js-cookie";
 // Reactive properties for form data
 const emit = defineEmits(["submitted"]); // Define the event to be emitted
 
@@ -62,6 +63,7 @@ const owner = ref({
   email: "",
   phone: "",
   address: "",
+  branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
 });
 
 // Function to handle form submission

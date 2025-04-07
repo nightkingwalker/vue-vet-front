@@ -180,7 +180,7 @@ const emit = defineEmits([]); // Define the event to be emitted
 const openAddPaymentDialog = () => {
   emit("addInvoice");
 };
-// console.log(props.invoice);
+// // console.log(props.invoice);
 const toast = useToast();
 
 const printInvoice = () => {

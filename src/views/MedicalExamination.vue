@@ -177,6 +177,7 @@ import Divider from "primevue/divider";
 import Panel from "primevue/panel";
 import Button from "primevue/button";
 import axiosInstance from "@/axios"; // Assuming axiosInstance is set up correctly
+import Cookies from "js-cookie";
 
 const emit = defineEmits(); // Define the event to be emitted
 
@@ -197,7 +198,7 @@ const medicalRecord = ref({
 /* {
   id: 44,
   pet_id: 9,
-  branch_id: 1,
+  branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
   visit_date: 62,
   diagnosis: "Test",
   created_at: "2025-03-18T17:43:03.000000Z",
@@ -245,15 +246,15 @@ const medicalRecord = ref({
 
 const fetchMedicalExamination = async () => {
   //   loading.value = true;
-  console.log("Medical Record ID:", props.medical_record_id);
+  // console.log("Medical Record ID:", props.medical_record_id);
   try {
-    // console.log("Medical Record ID:", props.medical_record_id);
+    // // console.log("Medical Record ID:", props.medical_record_id);
     // Make the request using the axios instance with interceptors
     const response = await axiosInstance.get(
       `/medical-records/${props.medical_record_id}/examntn`
     );
     medicalRecord.value = response.data;
-    console.log(medicalRecord.value);
+    // console.log(medicalRecord.value);
 
     loading.value = false; // Stop loading once data is fetched
   } catch (error) {
@@ -269,16 +270,16 @@ const showAddPhysicalExaminationModal = (medicalRecordId) => {
   emit("showAddPhysicalExaminationModal", medicalRecordId);
 };
 onMounted(() => {
-  // console.log("Component mounted, setting up event listeners");
+  // // console.log("Component mounted, setting up event listeners");
   fetchMedicalExamination();
 
   //   eventBus.on("newTreatmentAdded", () => {
-  //     // console.log("Received newTreatmentAdded event");
+  //     // // console.log("Received newTreatmentAdded event");
   //     fetchTreatments();
   //   });
 
   //   eventBus.on("TreatmentUpdatedSuccessfully", () => {
-  //     // console.log("Received TreatmentUpdatedSuccessfully event");
+  //     // // console.log("Received TreatmentUpdatedSuccessfully event");
   //     fetchTreatments();
   //   });
 });

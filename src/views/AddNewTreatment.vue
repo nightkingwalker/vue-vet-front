@@ -93,7 +93,7 @@ const props = defineProps({
     required: true,
   },
 });
-// console.log(props.medical_record_id);
+// // console.log(props.medical_record_id);
 const treatment = ref({
   name: "",
   dosage: "",
@@ -129,10 +129,10 @@ const submitForm = async () => {
       ? treatment.value.treatment_date.toLocaleDateString("en-CA")
       : null,
   };
-  console.log(submissionData);
+  // console.log(submissionData);
   try {
     const response = await axiosInstance.post("/treatments", submissionData);
-    console.log(response);
+    // console.log(response);
     eventBus.emit("show-toast", {
       severity: "success",
       summary: "Data Loaded",

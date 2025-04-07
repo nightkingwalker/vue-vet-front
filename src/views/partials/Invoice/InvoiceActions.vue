@@ -54,5 +54,5 @@ if (props.invoice) {
 const openPaymentDialog = () => {
   eventBus.emit("showPaymentView");
 };
-console.log("INVOICE", payment_status.value);
+// console.log("INVOICE", payment_status.value);
 </script>

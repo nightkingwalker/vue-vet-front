@@ -111,7 +111,7 @@ const submitForm = async () => {
       ? medicalImage.value.image_date.toLocaleDateString("en-CA")
       : null,
   };
-  console.log(submissionData);
+  // console.log(submissionData);
   try {
     const response = await axiosInstance.post("/medical-images", submissionData);
     eventBus.emit("show-toast", {
@@ -124,7 +124,7 @@ const submitForm = async () => {
     // Emit the data back to the parent
     emit("NewImageAdded", response.data);
   } catch (error) {
-    console.log(error.response.data.message);
+    // console.log(error.response.data.message);
     eventBus.emit("show-toast", {
       severity: "error",
       summary: "Error",

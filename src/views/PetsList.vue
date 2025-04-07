@@ -261,7 +261,7 @@
     header="Add New Patient"
     v-model:visible="isModalVisible"
     @hide="isModalVisible = false"
-    modal
+    :modal="true"
     :closable="true"
     class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
   >
@@ -271,7 +271,16 @@
         <span class="font-bold whitespace-nowrap">New Patient</span>
       </div>
     </template>
-    <NewPatient @submitted="handleSubmit" @showOwnerModal="showOwnerModal" />
+
+    <NewPatient
+      @submitted="handleSubmit"
+      @showOwnerModal="showOwnerModal"
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
+    />
+
     <template #footer> </template>
   </Dialog>
   <Dialog
@@ -288,7 +297,13 @@
         <span class="font-bold whitespace-nowrap">New Client</span>
       </div>
     </template>
-    <NewClientForm @ownerAdded="handleOwnerSubmit" />
+    <NewClientForm
+      @ownerAdded="handleOwnerSubmit"
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
+    />
     <template #footer> </template>
   </Dialog>
 </template>
@@ -317,7 +332,7 @@ const typingDelay = 500; // Adjust based on the speed of your scanner
 const isModalVisible = ref(false);
 const isModalOwnerVisible = ref(false);
 const showOwnerModal = () => {
-  // console.log("SHOWING NEW OWNER MODAL");
+  // // console.log("SHOWING NEW OWNER MODAL");
   isModalOwnerVisible.value = true; // Ensure this route is defined in your router configurations
 };
 const showModal = () => {
@@ -344,6 +359,7 @@ const handleKeydown = (event) => {
     // No need for additional logic here; on input, v-model will update searchQuery
   }
 };
+
 const handleSubmit = () => {
   isModalVisible.value = false;
   currentPage.value = 1; // Reset to the first page when searching
@@ -462,7 +478,7 @@ const fetchPets = async (page = 1, hideDeceased = false) => {
       `/pets?page=${page}&per_page=${itemsPerPage.value}&search=${searchQuery.value}`
     );
     pets.value = response.data.data;
-    // console.log(pets.value);
+    // // console.log(pets.value);
     totalRecords.value = response.data.total;
     currentPage.value = response.data.current_page;
     loading.value = false;
@@ -474,7 +490,7 @@ const fetchPets = async (page = 1, hideDeceased = false) => {
 const toggleDeceasedVisibility = () => {
   showDeceased.value = !showDeceased.value;
   if (showDeceased.value) {
-    console.log("showing deseaced");
+    // console.log("showing deseaced");
     currentPage.value = 1;
     fetchPets(currentPage.value, true);
   } else {
@@ -497,15 +513,15 @@ const ownerSortFunction = (event) => {
   });
 };
 
-// const skeletonRows = Array.from({ length: 10 }).map(() => ({
-//   owner: "",
-//   id: "",
-//   name: "",
-//   species: "",
-//   breed: "",
-//   gender: "",
-//   date_of_birth: "",
-// }));
+const skeletonRows = Array.from({ length: 10 }).map((_, index) => ({
+  owner: "",
+  id: `skeleton-${index}`,
+  name: "",
+  species: "",
+  breed: "",
+  gender: "",
+  date_of_birth: "",
+}));
 const generateSkeletonItems = (count, fields) => {
   const randomValues = {
     name: () => `Pet ${Math.ceil(Math.random() * 100)}`,
@@ -527,22 +543,22 @@ const generateSkeletonItems = (count, fields) => {
     return item;
   });
 };
-const skeletonRows = generateSkeletonItems(10, [
-  "name",
-  "species",
-  "breed",
-  "age",
-  "owner_name",
-  "status",
-  "last_visit",
-]);
+// const skeletonRows = generateSkeletonItems(10, [
+//   "name",
+//   "species",
+//   "breed",
+//   "age",
+//   "owner_name",
+//   "status",
+//   "last_visit",
+// ]);
 
 const refreshData = () => {
   loading.value = true; // Set loading state to true to show skeletons
   fetchPets(); // Fetch the pets data again
 };
 function onSelectionChange(event) {
-  // // console.log("Selected Products:", JSON.stringify(selectedPets.value));
+  // // // console.log("Selected Products:", JSON.stringify(selectedPets.value));
 }
 </script>
 
