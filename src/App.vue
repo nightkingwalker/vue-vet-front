@@ -1,3 +1,80 @@
+<template>
+  <div :class="{ rtl: isRtl }">
+    <button
+      @click="toggleDarkMode"
+      type="button"
+      class="absolute right-4 top-2 flex items-center p-1 cursor-pointer gap-3 bg-[var(--p-surface-800)] dark:bg-[var(--p-surface-100)] rounded-xl hover:rounded-xl hover:bg-gray-400 w-6 h-5 text-center shadow-md"
+    >
+      <i v-if="isDarkMode" class="fa-solid fa-sun text-yellow-500 text-md w-4"></i>
+      <i v-else class="fa-solid fa-moon text-md text-white w-4"></i>
+    </button>
+    <div class="flex items-between">
+      <Menu
+        v-if="authStore.isLoggedIn && route.path != `/login`"
+        :model="menuItems"
+        class="w-full md:w-60 !py-8 px-4 sm:text-sm 2xl:text-md lg:text-sm !rounded-none h-[100vh] 2xl:w-1/6 lg:w-1/5 top-0 left-0"
+      >
+        <template #start>
+          <div class="flex justify-center w-full">
+            <Image
+              :src="Logo"
+              alt="Image"
+              class="flex justify-center rounded-[4rem] dark:bg-white w-[5rem] p-1"
+            />
+          </div>
+          <router-link
+            to="/profile"
+            v-ripple
+            class="relative overflow-hidden w-full border-0 bg-transparent flex items-center p-2 pl-4 hover:bg-surface-100 dark:hover:bg-surface-800 rounded-none cursor-pointer transition-colors duration-200"
+          >
+            <Avatar icon="pi pi-user" class="mr-2" shape="circle" />
+            <span class="inline-flex flex-col items-start">
+              <span class="font-bold">{{ userName }}</span>
+              <!-- <span class="text-sm">Admin</span> -->
+            </span>
+          </router-link>
+        </template>
+        <template #submenulabel="{ item }">
+          <span class="text-primary font-bold">{{ item.label }}</span>
+        </template>
+        <template #item="{ item, props }">
+          <RouterLink
+            v-ripple
+            class="flex items-center"
+            v-bind="props.action"
+            :to="item.route ? item.route : item.to"
+          >
+            <span :class="item.icon" />
+            <span>{{ item.label }}</span>
+            <Badge v-if="item.badge" class="ml-auto" :value="item.badge" />
+            <span
+              v-if="item.shortcut"
+              class="ml-auto !text-[10px] p-1 text-gray-100 dark:text-gray-800"
+              >{{ item.shortcut }}</span
+            >
+          </RouterLink>
+        </template>
+        <template #end> </template>
+      </Menu>
+      <div class="container mx-auto mt-6 2xl:px-0 xl:px-6 lg:px-6 md:px-8">
+        <router-view />
+        <!-- <RouterView class="" /> -->
+        <!-- <ConfirmDialog /> -->
+        <ConfirmDialog class="md:w-[35vw] sm:w-full !text-sm">
+          <template #message="slotProps">
+            <div
+              class="flex flex-col items-center w-full mx-auto gap-4 text-md text-center"
+            >
+              <i :class="slotProps.message.icon" class="!text-6xl text-yellow-500"></i>
+              <p>{{ slotProps.message.message }}</p>
+            </div>
+          </template>
+        </ConfirmDialog>
+        <Toast position="bottom-right" />
+      </div>
+    </div>
+  </div>
+</template>
 <script setup>
 import Menu from "primevue/menu";
 import Avatar from "primevue/avatar";
@@ -21,6 +98,7 @@ const confirm = useConfirm();
 const toast = useToast();
 const route = useRoute();
 const checked = ref(false);
+
 let activityTimeout;
 const currentRoute = router.currentRoute;
 const countdown = ref(300); // Countdown starting at 60 seconds
@@ -456,87 +534,11 @@ onUnmounted(() => {
 
   clearTimeout(activityTimeout);
 });
-const username = Cookies.get("name");
+const userName = computed(() => {
+  return authStore.user?.name || Cookies.get("name") || "";
+});
 const authStore = useAuthStore();
 </script>
-
-<template>
-  <div :class="{ rtl: isRtl }">
-    <button
-      @click="toggleDarkMode"
-      type="button"
-      class="absolute right-4 top-2 flex items-center p-1 cursor-pointer gap-3 bg-[var(--p-surface-800)] dark:bg-[var(--p-surface-100)] rounded-xl hover:rounded-xl hover:bg-gray-400 w-6 h-5 text-center shadow-md"
-    >
-      <i v-if="isDarkMode" class="fa-solid fa-sun text-yellow-500 text-md w-4"></i>
-      <i v-else class="fa-solid fa-moon text-md text-white w-4"></i>
-    </button>
-    <div class="flex items-between">
-      <Menu
-        v-if="authStore.isLoggedIn && route.path != `/login`"
-        :model="menuItems"
-        class="w-full md:w-60 !py-8 px-4 sm:text-sm 2xl:text-md lg:text-sm !rounded-none h-[100vh] 2xl:w-1/6 lg:w-1/5 top-0 left-0"
-      >
-        <template #start>
-          <div class="flex justify-center w-full">
-            <Image
-              :src="Logo"
-              alt="Image"
-              class="flex justify-center rounded-[4rem] dark:bg-white w-[5rem] p-1"
-            />
-          </div>
-          <router-link
-            to="/profile"
-            v-ripple
-            class="relative overflow-hidden w-full border-0 bg-transparent flex items-center p-2 pl-4 hover:bg-surface-100 dark:hover:bg-surface-800 rounded-none cursor-pointer transition-colors duration-200"
-          >
-            <Avatar icon="pi pi-user" class="mr-2" shape="circle" />
-            <span class="inline-flex flex-col items-start">
-              <span class="font-bold">{{ username }}</span>
-              <!-- <span class="text-sm">Admin</span> -->
-            </span>
-          </router-link>
-        </template>
-        <template #submenulabel="{ item }">
-          <span class="text-primary font-bold">{{ item.label }}</span>
-        </template>
-        <template #item="{ item, props }">
-          <RouterLink
-            v-ripple
-            class="flex items-center"
-            v-bind="props.action"
-            :to="item.route ? item.route : item.to"
-          >
-            <span :class="item.icon" />
-            <span>{{ item.label }}</span>
-            <Badge v-if="item.badge" class="ml-auto" :value="item.badge" />
-            <span
-              v-if="item.shortcut"
-              class="ml-auto !text-[10px] p-1 text-gray-100 dark:text-gray-800"
-              >{{ item.shortcut }}</span
-            >
-          </RouterLink>
-        </template>
-        <template #end> </template>
-      </Menu>
-      <div class="container mx-auto mt-6 2xl:px-0 xl:px-6 lg:px-6 md:px-8">
-        <router-view />
-        <!-- <RouterView class="" /> -->
-        <!-- <ConfirmDialog /> -->
-        <ConfirmDialog class="md:w-[35vw] sm:w-full !text-sm">
-          <template #message="slotProps">
-            <div
-              class="flex flex-col items-center w-full mx-auto gap-4 text-md text-center"
-            >
-              <i :class="slotProps.message.icon" class="!text-6xl text-yellow-500"></i>
-              <p>{{ slotProps.message.message }}</p>
-            </div>
-          </template>
-        </ConfirmDialog>
-        <Toast position="bottom-right" />
-      </div>
-    </div>
-  </div>
-</template>
 <style scoped>
 :deep(.p-megamenu-item:last-child .p-megamenu-item-content):hover {
   background: none !important;

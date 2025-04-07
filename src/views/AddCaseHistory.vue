@@ -1078,7 +1078,7 @@
                       id="treatment_dosage"
                       v-model="formData.treatment_dosage"
                     />
-                    <label for="treatment_dosage">Dosage</label>
+                    <label for="treatment_dosage">Weight</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
