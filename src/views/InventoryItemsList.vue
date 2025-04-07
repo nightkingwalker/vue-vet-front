@@ -372,7 +372,7 @@ const filters = ref({
 const clearFilters = () => {
   currentPage.value = 1;
   searchQuery.value = "";
-  filters.value.category.value = null;
+  // filters.value.category.value = null;
   fetchInventoryItems(currentPage.value);
 };
 watchEffect(() => {
@@ -384,6 +384,9 @@ watchEffect(() => {
     // isPredefined.value = true;
   } else if (route.path === "/add-inventory-toys") {
     filters.value.category.value = "miscellaneous";
+    // isPredefined.value = true;
+  } else if (route.path === "/add-inventory-grooming") {
+    filters.value.category.value = "Grooming";
     // isPredefined.value = true;
   }
   // Add more route cases as needed

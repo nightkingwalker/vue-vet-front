@@ -284,7 +284,7 @@
               icon="fa-solid fa-pencil"
               label="Edit"
               v-tooltip.bottom="`Edit Data`"
-              class="2xl:text-xs text-sm mt-2 cursor-pointer !bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md"
+              class="2xl:text-xs mt-2 cursor-pointer !bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md"
               @click="editPetDetails"
             />
           </div>
@@ -934,7 +934,7 @@
     <InvoiceAdd
       :pet="pet"
       :medical_record_id="medical_record_id"
-      @submitted="handleInvoiceSubmit"
+      @InvoiceCreated="handleInvoiceSubmit"
     />
   </Dialog>
   <Dialog
@@ -1123,6 +1123,13 @@ const handleAddInvoiceRequest = () => {
   console.log("PET", medical_record_id.value);
   isModalVisible.value = true;
 };
+// const handleInvoiceSubmit = () => {
+//   // medical_record_id.value = MedicalRecordId;
+//   // isAddCaseHistorysVisible.value = true;
+//   viewDialogVisible.value = false;
+//   console.log("PET", medical_record_id.value);
+//   isModalVisible.value = true;
+// };
 const handleAddPaymentRequest = () => {
   // medical_record_id.value = MedicalRecordId;
   // isAddCaseHistorysVisible.value = true;
@@ -1158,7 +1165,6 @@ const handleSubmit = (data) => {
 const handleInvoiceSubmit = (data) => {
   console.log(data);
   isModalVisible.value = false;
-  // currentPage.value = 1; // Reset to the first page when searching
   fetchPets();
   // fetchAppointments();
 };
@@ -1413,8 +1419,11 @@ onMounted(() => {
   eventBus.on("showPaymentView", (event) => {
     viewDialogVisible.value = false;
     paymentDialogVisible.value = true;
-    // console.log(event);
-    // console.log("selectedInvoice", selectedInvoice);
   });
+  // eventBus.on("InvoiceCreated", (event) => {
+  //   isModalVisible.value = false;
+  //   fetchPets();
+  //   // paymentDialogVisible.value = true;
+  // });
 });
 </script>

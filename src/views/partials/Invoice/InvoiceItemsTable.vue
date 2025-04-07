@@ -21,14 +21,14 @@
           ${{ parseFloat(data.unit_price).toFixed(2) }}
         </template>
       </Column>
-      <Column header="Discount" style="width: 100px">
+      <Column header="Discount" style="width: 100px" class="no-print">
         <template #body="{ data }">
           <span class="text-red-500">
             -${{ parseFloat(data.discount_amount).toFixed(2) }}
           </span>
         </template>
       </Column>
-      <Column header="Tax" style="width: 80px">
+      <Column header="Tax" style="width: 80px" class="no-print">
         <template #body="{ data }"> {{ data.tax_rate }}% </template>
       </Column>
       <Column header="Total" style="width: 120px">

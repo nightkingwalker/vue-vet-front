@@ -59,13 +59,94 @@
         <InvoiceNotes v-if="invoice.notes" :notes="invoice.notes" class="mb-4" />
 
         <!-- Footer Actions -->
-        <InvoiceActions
-          @print="printInvoice"
-          @download="downloadPDF"
-          :invoice="invoice"
-        />
+        <!-- @print="printInvoice" -->
+        <InvoiceActions @print="printPOS" @download="downloadPDF" :invoice="invoice" />
       </template>
     </Card>
+
+    <!-- Hidden POS Template -->
+    <div class="pos-template hidden">
+      <div class="pos-header">
+        <div class="pos-business-name">{{ invoice.branch.name }}</div>
+        <div class="pos-address">{{ invoice.branch.address }}</div>
+        <div class="pos-contact">Tel: {{ invoice.branch.phone }}</div>
+      </div>
+
+      <div class="pos-divider">--------------------------------</div>
+
+      <div class="pos-invoice-info">
+        <div>INVOICE: {{ invoice.invoice_number }}</div>
+        <div>DATE: {{ formatPOSDate(invoice.date) }}</div>
+        <div v-if="invoice.owner">CUSTOMER: {{ invoice.owner.name }}</div>
+      </div>
+
+      <div class="pos-divider">--------------------------------</div>
+
+      <div class="pos-items">
+        <div class="pos-item-header">
+          <span class="pos-item-desc">ITEM</span>
+          <span class="pos-item-qty">QTY</span>
+          <span class="pos-item-price">PRICE</span>
+          <span class="pos-item-total">TOTAL</span>
+        </div>
+
+        <div v-for="(item, index) in invoice.items" :key="index" class="pos-item">
+          <span class="pos-item-desc">{{ item.inventory_item.name }}</span>
+          <span class="pos-item-qty">{{ item.quantity }}</span>
+          <span class="pos-item-price">{{ formatPOSCurrency(item.unit_price) }}</span>
+          <span class="pos-item-total">{{ formatPOSCurrency(item.total_price) }}</span>
+        </div>
+      </div>
+
+      <div class="pos-divider">--------------------------------</div>
+
+      <div class="pos-totals">
+        <div class="pos-subtotal">
+          <span>SUBTOTAL:</span>
+          <span>{{ formatPOSCurrency(invoice.subtotal) }}</span>
+        </div>
+        <div v-if="parseFloat(invoice.tax_amount) > 0" class="pos-tax">
+          <span>TAX ({{ invoice.tax_rate }}%):</span>
+          <span>{{ formatPOSCurrency(invoice.tax_amount) }}</span>
+        </div>
+        <div v-if="parseFloat(invoice.discount_amount) > 0" class="pos-discount">
+          <span>DISCOUNT:</span>
+          <span>-{{ formatPOSCurrency(invoice.discount_amount) }}</span>
+        </div>
+        <div class="pos-total">
+          <span>TOTAL:</span>
+          <span>{{ formatPOSCurrency(invoice.total_amount) }}</span>
+        </div>
+      </div>
+
+      <div class="pos-divider">--------------------------------</div>
+
+      <div class="pos-payments">
+        <div
+          v-for="(payment, index) in invoice.payments"
+          :key="index"
+          class="pos-payment"
+        >
+          <div>PAYMENT {{ index + 1 }}: {{ formatPOSDate(payment.payment_date) }}</div>
+          <div>METHOD: {{ getPaymentMethod(payment.payment_method_id) }}</div>
+          <div>AMOUNT: {{ formatPOSCurrency(payment.amount) }}</div>
+        </div>
+        <div v-if="invoice.balance_due === 0" class="pos-paid">
+          <span>PAID IN FULL</span>
+        </div>
+        <div v-else class="pos-balance">
+          <span>BALANCE DUE:</span>
+          <span>{{ formatPOSCurrency(invoice.balance_due) }}</span>
+        </div>
+      </div>
+
+      <div class="pos-divider">--------------------------------</div>
+
+      <div class="pos-footer">
+        <div>Thank you for your business!</div>
+        <div>Visit us again soon</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -292,6 +373,200 @@ const printStyles = `
     }
   }
 `;
+/* POS TEST*/
+// Add payment methods lookup
+const getPaymentMethod = (id) => {
+  const method = props.paymentMethods.find((m) => m.id === id);
+  return method ? method.name : "Unknown";
+};
+
+// POS-specific format functions
+const formatPOSDate = (dateString) => {
+  const date = new Date(dateString);
+  return date
+    .toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+    .replace(",", "");
+};
+
+const formatPOSCurrency = (amount) => {
+  return parseFloat(amount).toFixed(2);
+};
+
+const printPOS = () => {
+  toast.add({
+    severity: "info",
+    summary: "Print",
+    detail: "Preparing POS receipt...",
+    life: 3000,
+  });
+
+  const posTemplate = document.querySelector(".pos-template");
+  if (!posTemplate) {
+    toast.add({
+      severity: "error",
+      summary: "Error",
+      detail: "Could not find POS template",
+      life: 3000,
+    });
+    return;
+  }
+
+  const printWindow = window.open("", "_blank");
+  if (!printWindow) {
+    toast.add({
+      severity: "error",
+      summary: "Error",
+      detail: "Popup was blocked. Please allow popups for this site.",
+      life: 5000,
+    });
+    return;
+  }
+
+  const contentClone = posTemplate.cloneNode(true);
+  contentClone.classList.remove("hidden");
+
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>POS Receipt #${props.invoice.invoice_number}</title>
+      <style>
+        ${posPrintStyles}
+      </style>
+    </head>
+    <body>
+  `);
+
+  printWindow.document.body.appendChild(contentClone);
+  printWindow.document.write("</body></html>");
+  printWindow.document.close();
+
+  printWindow.onload = function () {
+    setTimeout(() => {
+      printWindow.focus();
+      printWindow.print();
+      // printWindow.close();
+    }, 500);
+  };
+};
+
+const posPrintStyles = `
+  @media print {
+    body {
+      margin: 0;
+      padding: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      width: 80mm;
+      max-width: 80mm;
+    }
+    
+    .hidden {
+      display: none !important;
+    }
+    
+    .pos-header {
+      text-align: center;
+      margin-bottom: 5px;
+      line-height: 1.2;
+    }
+    
+    .pos-business-name {
+      font-weight: bold;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+    
+    .pos-address, .pos-contact {
+      font-size: 10px;
+    }
+    
+    .pos-divider {
+      text-align: center;
+      margin: 3px 0;
+      font-size: 10px;
+    }
+    
+    .pos-invoice-info {
+      margin-bottom: 5px;
+      line-height: 1.3;
+      font-size: 11px;
+    }
+    
+    .pos-items {
+      margin-bottom: 5px;
+    }
+    
+    .pos-item-header, .pos-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2px;
+      font-size: 11px;
+    }
+    
+    .pos-item-header {
+      font-weight: bold;
+      border-bottom: 1px dashed #000;
+      padding-bottom: 2px;
+    }
+    
+    .pos-item-desc {
+      flex: 3;
+      word-break: break-word;
+    }
+    
+    .pos-item-qty {
+      flex: 1;
+      text-align: right;
+      padding-right: 5px;
+    }
+    
+    .pos-item-price {
+      flex: 2;
+      text-align: right;
+      padding-right: 5px;
+    }
+    
+    .pos-item-total {
+      flex: 2;
+      text-align: right;
+    }
+    
+    .pos-totals, .pos-payments {
+      margin: 5px 0;
+      font-size: 11px;
+    }
+    
+    .pos-subtotal, .pos-tax, .pos-discount, .pos-total, 
+    .pos-payment, .pos-balance, .pos-paid {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2px;
+    }
+    
+    .pos-total, .pos-paid {
+      font-weight: bold;
+      margin-top: 3px;
+    }
+    
+    .pos-footer {
+      text-align: center;
+      font-size: 10px;
+      margin-top: 5px;
+    }
+    
+    @page {
+      size: 80mm auto;
+      margin: 0;
+    }
+  }
+`;
 </script>
 
 <style scoped>
@@ -319,5 +594,8 @@ const printStyles = `
   .p-datatable-tbody td:last-child {
     display: none;
   }
+}
+.hidden {
+  display: none !important;
 }
 </style>

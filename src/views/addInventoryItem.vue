@@ -135,8 +135,8 @@
               fluid
               v-model="form.quantity"
               mode="decimal"
-              :min="0.01"
-              :max="10000"
+              :min="0.0"
+              :max="5000000"
               :step="1"
             />
             <label for="quantity">Quantity to Add</label>
@@ -152,7 +152,7 @@
               mode="currency"
               currency="USD"
               :min="0"
-              :max="10000"
+              :max="5000000"
             />
             <label for="purchasePrice">Purchase Price</label>
           </FloatLabel>
@@ -167,9 +167,8 @@
               mode="currency"
               currency="USD"
               :min="0"
-              :max="10000"
-              :disabled="!!existingItemId"
-            />
+              :max="5000000"
+            /><!--:disabled="!!existingItemId"-->
             <label for="sellingPrice">Selling Price</label>
           </FloatLabel>
         </div>
@@ -206,7 +205,7 @@
 
         <!-- Notes -->
         <div class="field mt-6 w-full">
-          <FloatLabel class="w-full !text-xs !text-xs">
+          <FloatLabel class="w-full !text-xs">
             <Textarea
               id="notes"
               class="!text-xs"
@@ -338,7 +337,7 @@ const generateBarcode = () => {
     "8" + Math.floor(100000000000 + Math.random() * 900000000000).toString();
   form.value.barcode = randomBarcode;
 };
-console.log("TEST", props.item);
+// console.log("TEST", props.item);
 if (props.item) {
   form.value = {
     ...props.item,
@@ -497,9 +496,10 @@ const submitForm = async () => {
     expiry_date: form.value.expiryDate
       ? form.value.expiryDate.toISOString().split("T")[0]
       : null,
+    selling_price: form.value.sellingPrice,
     minimum_stock_level: form.value.minStock,
   };
-
+  console.log("payload", payload);
   // Add fields for new items only
   if (!existingItemId.value) {
     Object.assign(payload, {

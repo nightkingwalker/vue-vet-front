@@ -103,6 +103,16 @@
         </template>
       </Column>
 
+      <!-- ؛ثف Column -->
+      <Column class="text-xs" field="pet.name" header="Pet" sortable>
+        <template #body="slotProps">
+          <template v-if="loading">
+            <Skeleton width="60%" height="1rem" />
+          </template>
+          <template v-else>{{ slotProps.data.pet?.name || "N/A" }}</template>
+        </template>
+      </Column>
+
       <!-- Date Column -->
       <Column class="text-xs" field="date" header="Date" sortable>
         <template #body="slotProps">
@@ -245,14 +255,14 @@
             <Button
               size="small"
               icon="pi pi-eye"
-              class="p-button-rounded p-button-text p-button-sm !text-[var(--p-primary-900)] dark:!text-[var(--p-primary-contrast-color)]"
+              class="p-button-rounded p-button-text p-button-sm"
               @click="viewInvoice(slotProps.data)"
               v-tooltip.bottom="`View Invoice`"
             />
             <Button
               size="small"
               icon="pi pi-pencil"
-              class="p-button-rounded p-button-text p-button-sm !text-[var(--p-primary-900)] dark:!text-[var(--p-primary-contrast-color)]"
+              class="p-button-rounded p-button-text p-button-sm"
               :disabled="
                 slotProps.data.payment_status === 'paid' ||
                 slotProps.data.payment_status === 'cancelled'
@@ -276,7 +286,7 @@
             <Button
               size="small"
               icon="fa-solid fa-hand-holding-dollar"
-              class="p-button-rounded p-button-text p-button-sm !text-[var(--p-primary-900)] dark:!text-[var(--p-primary-contrast-color)]"
+              class="p-button-rounded p-button-text p-button-sm"
               @click="openPaymentDialog(slotProps.data)"
               :disabled="
                 slotProps.data.payment_status === 'paid' ||
@@ -441,26 +451,6 @@ import AddPayment from "@/views/AddInvoicePayment.vue";
 import eventBus from "@/eventBus";
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
-// BARCODE READER WORK
-const inputFocused = ref(false);
-const inputRef = ref(null);
-let typingTimer = null;
-const typingDelay = 500;
-
-const handleKeydown = (event) => {
-  if (!inputFocused.value && isModalVisible.value === false && !event.ctrlKey) {
-    if (event.key.length === 1) {
-      clearTimeout(typingTimer);
-      typingTimer = setTimeout(() => {
-        if (searchQuery.value.length > 3) {
-          onSearchChange();
-        }
-      }, typingDelay);
-      searchQuery.value += event.key;
-    }
-  }
-};
-// END BARCODE
 
 const invoices = ref([]);
 const loading = ref(true);
@@ -479,6 +469,34 @@ const editMode = ref(false);
 const selectedInvoice = ref(null);
 const paymentDialogVisible = ref(false);
 const paymentLoading = ref(false);
+// BARCODE READER WORK
+const inputFocused = ref(false);
+const inputRef = ref(null);
+let typingTimer = null;
+const typingDelay = 500;
+
+const handleKeydown = (event) => {
+  if (
+    !inputFocused.value &&
+    isModalVisible.value === false &&
+    deleteDialogVisible.value === false &&
+    paymentDialogVisible.value === false &&
+    viewDialogVisible.value === false &&
+    isEditModalVisible.value === false &&
+    !event.ctrlKey
+  ) {
+    if (event.key.length === 1) {
+      clearTimeout(typingTimer);
+      typingTimer = setTimeout(() => {
+        if (searchQuery.value.length > 3) {
+          onSearchChange();
+        }
+      }, typingDelay);
+      searchQuery.value += event.key;
+    }
+  }
+};
+// END BARCODE
 const statusOptions = ref([
   { label: "Draft", value: "draft" },
   { label: "Pending", value: "pending" },

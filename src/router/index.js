@@ -92,14 +92,21 @@ const router = createRouter({
     },
     {
         path: '/add-inventory-toys',
-        name: 'New Inventory Toys',
+        name: 'New Toys Inventory',
         component: () =>
             import('../views/InventoryItemsList.vue'),
         meta: { allowSessionTimeout: true }
     },
     {
         path: '/add-inventory-pharmaceutical',
-        name: 'New Inventory Pharmaceutical',
+        name: 'New Pharmaceutical Inventory',
+        component: () =>
+            import('../views/InventoryItemsList.vue'),
+        meta: { allowSessionTimeout: true }
+    },
+    {
+        path: '/add-inventory-grooming',
+        name: 'New Grooming Inventory',
         component: () =>
             import('../views/InventoryItemsList.vue'),
         meta: { allowSessionTimeout: true }

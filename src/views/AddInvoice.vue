@@ -416,7 +416,7 @@ import DatePicker from "primevue/datepicker";
 import Textarea from "primevue/textarea";
 import Tag from "primevue/tag";
 import InputText from "primevue/inputtext";
-
+const emit = defineEmits();
 const toast = useToast();
 const props = defineProps({
   pet: {
@@ -805,6 +805,7 @@ const createInvoice = async () => {
   console.log(payload);
   try {
     const response = await axiosInstance.post("/invoices", payload);
+    emit("InvoiceCreated");
     toast.add({
       severity: "success",
       summary: "Success",

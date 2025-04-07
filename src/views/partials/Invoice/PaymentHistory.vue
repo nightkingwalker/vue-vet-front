@@ -20,12 +20,13 @@
       <Column field="amount" header="Amount" style="width: 120px">
         <template #body="{ data }"> ${{ parseFloat(data.amount).toFixed(2) }} </template>
       </Column>
-      <Column field="type" header="Type" style="width: 120px">
+      <Column field="notes" header="Note" style="width: 120px">
         <template #body="{ data }">
-          <Tag
-            :value="data.type"
+          {{ data.notes }}
+          <!-- <Tag
+            :value="data.notes"
             :severity="data.type === 'deposit' ? 'info' : 'success'"
-          />
+          /> -->
         </template>
       </Column>
       <Column field="status" header="Status" style="width: 120px">
