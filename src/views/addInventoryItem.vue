@@ -206,14 +206,7 @@
         <!-- Notes -->
         <div class="field mt-6 w-full">
           <FloatLabel class="w-full !text-xs">
-            <Textarea
-              id="notes"
-              class="!text-xs"
-              fluid
-              v-model="form.notes"
-              required
-              rows="2"
-            />
+            <Textarea id="notes" class="!text-xs" fluid v-model="form.notes" rows="2" />
             <label for="notes">Notes</label>
           </FloatLabel>
         </div>
