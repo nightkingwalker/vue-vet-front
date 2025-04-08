@@ -336,6 +336,7 @@ import axiosInstance from "@/axios"; // Assuming axiosInstance is set up correct
 import ToggleSwitch from "primevue/toggleswitch";
 import eventBus from "@/eventBus";
 import InputText from "primevue/inputtext";
+import Message from "primevue/message";
 const qr_details = ref([]);
 const loading = ref(true);
 const user = ref({

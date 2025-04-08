@@ -1,6 +1,4 @@
 <template>
-  <!-- <div class="rounded-xl overflow-scroll drop-shadow-md mt-4 is-light-mode"> -->
-  <!-- <Qalendar :events="events" :config="config" class="!py-4" /> -->
   <div class="flex gap-2">
     <div class="w-4/5">
       <ScheduleXCalendar
@@ -14,7 +12,7 @@
               type=""
               icon="pi pi-refresh !text-sm"
               label=""
-              v-tooltip.bottom="`Refresh Data`"
+              v-tooltip.bottom="$t('calendar.refresh')"
               class="!text-xs !text-[var(--p-primary-color)] hover:!text-[var(--p-primary-contrast-color)] sx__today-button sx__ripple"
               @click="refreshData"
               style="
@@ -28,7 +26,7 @@
               type=""
               icon="pi pi-plus !text-sm"
               label=""
-              v-tooltip.bottom="`Add Appointment`"
+              v-tooltip.bottom="$t('calendar.add_appointment')"
               class="!text-xs !text-[var(--p-primary-color)] hover:!text-[var(--p-primary-contrast-color)] sx__today-button sx__ripple"
               style="
                 padding: var(--sx-spacing-padding3) var(--sx-spacing-padding4);
@@ -40,8 +38,7 @@
           </div>
         </template>
       </ScheduleXCalendar>
-      <ContextMenu ref="menu" :model="menuItems" class="!text-xs"
-        >.
+      <ContextMenu ref="menu" :model="menuItems" class="!text-xs">
         <template #item="{ item, props }">
           <h5 class="!text-xs" v-bind="props.action">
             <i :class="item.icon"></i> {{ item.label }}
@@ -72,26 +69,31 @@
               ` mx-auto w-fit dark:bg-surface-500  mr-2`
             "
           ></i>
-          {{ currentPet.pet.name }}
+          {{ $t("calendar.pet_details.name") }}: {{ currentPet.pet.name }}
         </h4>
         <h4 class="w-full">
-          <i class="fas fa-paw mr-2"></i>{{ getSpeciesValue(currentPet.pet.species) }}
+          <i class="fas fa-paw mr-2"></i>
+          {{ $t("calendar.pet_details.species") }}:
+          {{ getSpeciesValue(currentPet.pet.species) }}
         </h4>
 
         <h4 class="w-full">
-          <i class="fa-solid fa-users"></i> {{ currentPet.people[0] }}
+          <i class="fa-solid fa-users"></i>
+          {{ $t("calendar.pet_details.owner") }}: {{ currentPet.people[0] }}
         </h4>
         <h4 class="w-full">
           <i class="fa-solid fa-location-dot mr-2" aria-hidden="true"></i>
-          {{ currentPet.location }}
+          {{ $t("calendar.pet_details.location") }}: {{ currentPet.location }}
         </h4>
-        <h4 class="w-full text-xs">Details: {{ currentPet.description }}</h4>
+        <h4 class="w-full text-xs">
+          {{ $t("calendar.pet_details.details") }}: {{ currentPet.description }}
+        </h4>
         <RouterLink
           class="p-button p-component !text-xs !text-[var(--p-primary-contrast-color)] !border-none shadow-sm"
           icon="fas fa-paw"
-          label="Details"
+          :label="$t('calendar.pet_details.view_details')"
           v-tooltip.top="{
-            value: 'View Details',
+            value: $t('calendar.pet_details.view_details'),
             pt: {
               arrow: {
                 style: {
@@ -107,12 +109,13 @@
             params: { petmicrochip: currentPet.pet.microchip_num },
           }"
         >
-          <i class="fas fa-paw"></i><span>Details</span>
+          <i class="fas fa-paw"></i
+          ><span>{{ $t("calendar.pet_details.view_details") }}</span>
         </RouterLink>
       </div>
 
       <div class="flex flex-col">
-        <h4>Legend</h4>
+        <h4>{{ $t("calendar.legend") }}</h4>
         <div class="flex flex-wrap gap-2">
           <div v-for="(theme, name) in eventTheme" :key="name" class="theme-box">
             <Tag
@@ -127,7 +130,9 @@
               }"
             >
               <div class="gap-2 px-1">
-                <span class="!text-xs font-normal">{{ theme.colorName }}</span>
+                <span class="!text-xs font-normal">{{
+                  $t(`calendar.appointment.${name.toLowerCase()}`)
+                }}</span>
               </div>
             </Tag>
           </div>
@@ -136,7 +141,7 @@
     </div>
   </div>
   <Dialog
-    header="New Appointment"
+    :header="$t('calendar.appointment.new')"
     v-model:visible="isNewApointmentVisible"
     @hide="isNewApointmentVisible = false"
     modal
@@ -145,14 +150,15 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
-        <span class="font-bold whitespace-nowrap">New Appointment</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("calendar.appointment.new")
+        }}</span>
       </div>
     </template>
     <addNewAppointment :activeDate="activeDate" @submitted="handleSubmit" />
     <template #footer> </template>
   </Dialog>
 </template>
-
 <script setup>
 import { ref, onMounted, nextTick } from "vue";
 // import { Qalendar } from "qalendar";
@@ -172,12 +178,14 @@ import { createDragAndDropPlugin } from "@schedule-x/drag-and-drop";
 import { createScrollControllerPlugin } from "@schedule-x/scroll-controller";
 import eventBus from "@/eventBus";
 import "@schedule-x/theme-default/dist/calendar.css";
+import { translations, mergeLocales } from "@schedule-x/translations";
 import Tag from "primevue/tag";
 import ContextMenu from "primevue/contextmenu";
 import Dialog from "primevue/dialog";
 import addNewAppointment from "@/views/addNewAppointment.vue";
 import Button from "primevue/button";
 import { RouterLink } from "vue-router";
+import { useI18n } from "vue-i18n";
 // import RouterLink from "primevue/routerlink";
 import axiosInstance from "@/axios"; // Ensure this is correctly set up with baseURL
 const eventsServicePlugin = createEventsServicePlugin();
@@ -193,6 +201,7 @@ const isNewApointmentVisible = ref(false);
 const scrollController = createScrollControllerPlugin({
   initialScroll: "12:00",
 });
+const { t } = useI18n();
 const formatDateTime = (dateTimeStr) => {
   const date = new Date(dateTimeStr);
   const formattedDate =
@@ -446,6 +455,26 @@ const calendarApp = createCalendar({
   },
   views: [viewMonthGrid, viewWeek, viewDay],
   defaultView: viewMonthGrid.name,
+  locale: "ar-AR",
+  translations: mergeLocales(translations, {
+    "ar-AR": {
+      Today: "اليوم",
+      Month: "شهر",
+      Week: "أسبوع",
+      Day: "يوم",
+      "Select View": "اختر طريقة العرض",
+      events: "مواعيد",
+      event: "موعد",
+      "No events": "لا مواعيد",
+      "Next period": "الفترة التالية",
+      "Previous period": "الفترة السابقة",
+      to: "حتى", // as in 2/1/2020 to 2/2/2020
+      "Full day- and multiple day events": "موعد يستمر كامل اليوم - وعلى عدة أيام",
+      "Link to {{n}} more events on {{date}}":
+        "رابط لـ {{n}} مواعيد إضافية بتاريخ: {{date}}",
+      "Link to 1 more event on {{date}}": "رابطة لموعد إضافي واحد بتاريخ:  {{date}}",
+    },
+  }),
   callbacks: {
     /**
      * Is called when:
@@ -562,7 +591,7 @@ const calendarApp = createCalendar({
 });
 const menuItems = ref([
   {
-    label: "Go To Day Calendar",
+    label: t("calendar.context_menu.day_view"),
     icon: "pi pi-calendar",
     command: () => {
       // Implement navigation to day view
@@ -570,7 +599,7 @@ const menuItems = ref([
     },
   },
   {
-    label: "Add New Appointment",
+    label: t("calendar.context_menu.add_new"),
     icon: "pi pi-calendar-plus",
     command: () => {
       addAppointment();
@@ -657,6 +686,38 @@ const menu = ref();
 const onRightClick = () => {
   menu.value.show(event);
 };
+/*testing calendar multilanguage*/
+const datePickerArAr = {
+  Date: "Date",
+  "MM/DD/YYYY": "MM/DD/YYYY",
+  "Next month": "الشهر التالي",
+  "Previous month": "الشهر السابق",
+  "Choose Date": "اختر تاريخا",
+};
+
+const calendarArAr = {
+  Today: "اليوم",
+  Month: "شهر",
+  Week: "أسبوع",
+  Day: "يوم",
+  "Select View": "اختر طريقة العرض",
+  events: "مواعيد",
+  event: "موعد",
+  "No events": "لا مواعيد",
+  "Next period": "الفترة التالية",
+  "Previous period": "الفترة السابقة",
+  to: "حتى", // as in 2/1/2020 to 2/2/2020
+  "Full day- and multiple day events": "موعد يستمر كامل اليوم - وعلى عدة أيام",
+  "Link to {{n}} more events on {{date}}": "رابط لـ {{n}} مواعيد إضافية بتاريخ: {{date}}",
+  "Link to 1 more event on {{date}}": "رابطة لموعد إضافي واحد بتاريخ:  {{date}}",
+};
+
+const arAR = {
+  ...datePickerArAr,
+  ...calendarArAr,
+};
+
+/*end testing calendar*/
 onMounted(() => {
   eventBus.on("themeChange", setCalendarTheme);
   initializeCalendarTheme();

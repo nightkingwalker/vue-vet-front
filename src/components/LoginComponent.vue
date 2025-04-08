@@ -3,7 +3,6 @@
     class="flex items-center justify-center min-h-[90vh] bg-stone-100 dark:bg-stone-800 container mx-auto"
   >
     <div class="p-8 bg-white dark:bg-stone-900 shadow-lg rounded-lg max-w-md w-full">
-      <!-- <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Login</h2> -->
       <div class="w-full flex justify-center">
         <Image
           :src="Logo"
@@ -15,7 +14,7 @@
       <form v-if="!requires2FA" @submit.prevent="login">
         <div>
           <div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400">
-            <label for="username">Username</label>
+            <label for="username">{{ $t("login.username") }}</label>
             <InputGroup
               class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 flex rounded-md overflow-hidden"
             >
@@ -27,7 +26,7 @@
                 id="username"
                 v-model="email"
                 aria-describedby="username-help"
-                placeholder="Username"
+                :placeholder="$t('login.username')"
                 :feedback="false"
                 fluid
                 required
@@ -42,7 +41,7 @@
         </div>
         <div class="mb-6">
           <div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400">
-            <label for="password">Password</label>
+            <label for="password">{{ $t("login.password") }}</label>
             <InputGroup
               class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 flex rounded-md overflow-hidden"
             >
@@ -54,7 +53,7 @@
                 v-model="password"
                 id="password"
                 type="password"
-                placeholder="Password"
+                :placeholder="$t('login.password')"
                 :feedback="false"
                 fluid
                 required
@@ -81,7 +80,7 @@
             :disabled="loading ? true : false"
           >
             <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
-            <span v-else>Log In</span>
+            <span v-else>{{ $t("login.submit") }}</span>
           </button>
         </div>
       </form>
@@ -92,21 +91,8 @@
         class="transition-transform duration-300 transform"
         :class="{ 'translate-x-0': requires2FA, 'translate-x-full': !requires2FA }"
       >
-        <h2 class="text-md font-bold mb-4">Two-Factor Authentication</h2>
-        <p class="text-sm mb-4">Please enter the 2FA code from your authenticator app.</p>
-        <!-- <div>
-          <InputText
-            id="twoFactorCode"
-            v-model="twoFactorCode"
-            placeholder="Enter your 2FA code"
-            fluid
-            style="
-              border-top: 1px solid var(--p-inputgroup-addon-border-color);
-              border-bottom: 1px solid var(--p-inputgroup-addon-border-color);
-            "
-            class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 focus:!ring-0 focus:!ring-offset-0 !border-x-0 focus:!outline-0"
-          />
-        </div> -->
+        <h2 class="text-md font-bold mb-4">{{ $t("two_factor.title") }}</h2>
+        <p class="text-sm mb-4">{{ $t("two_factor.description") }}</p>
         <div class="mb-6">
           <div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400">
             <InputGroup
@@ -119,7 +105,7 @@
               <InputText
                 id="twoFactorCode"
                 v-model="twoFactorCode"
-                placeholder="Enter your 2FA code"
+                :placeholder="$t('two_factor.placeholder')"
                 :feedback="false"
                 fluid
                 autofocus
@@ -136,31 +122,6 @@
               >{{ message }}</small
             >
           </div>
-          <!-- <RecaptchaV2
-            ref="recaptcha"
-            :sitekey="GOOGLE_RECAPTCHA_SITE_KEY"
-            @verify="onVerify"
-            @expired="onExpired"
-          /> -->
-          <div class="mt-4">
-            <!-- <RecaptchaV2
-              ref="recaptcha"
-              :sitekey="GOOGLE_RECAPTCHA_SITE_KEY"
-              @verify="onVerify"
-              @expired="onExpired"
-            /> -->
-            <!-- <div
-              class="g-recaptcha"
-              data-sitekey="6LcbhogqAAAAAAAiHYfqdm_JFDnTAJRun2RS8etl"
-              data-action="LOGIN"
-            ></div> -->
-            <!-- <VueRecaptcha
-              :sitekey="GOOGLE_RECAPTCHA_SITE_KEY"
-              :load-recaptcha-script="true"
-              @verify="handleSuccess"
-              @error="handleError"
-            ></VueRecaptcha> -->
-          </div>
         </div>
 
         <div class="flex items-end justify-end">
@@ -170,31 +131,29 @@
             :disabled="!captchaToken"
           >
             <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
-            <span v-else>Verify</span>
+            <span v-else>{{ $t("two_factor.verify") }}</span>
           </button>
-          <!-- <a
-            href="#"
-            class="inline-block align-baseline font-bold text-sm text-blue-500 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-400"
-          >
-            Forgot Password?
-          </a> -->
         </div>
       </form>
     </div>
   </div>
   <small id="" class="text-[8pt] text-gray-600"
-    >Site is protected by reCAPTCHA. Google
-    <a href="https://policies.google.com/privacy" class="text-blue-500">Privacy Policy</a>
-    and
-    <a href="https://policies.google.com/terms" class="text-blue-500">Terms of Service</a>
-    apply.</small
+    >{{ $t("recaptcha.notice") }}
+    <a href="https://policies.google.com/privacy" class="text-blue-500">{{
+      $t("recaptcha.privacy")
+    }}</a>
+    {{ $t("and") }}
+    <a href="https://policies.google.com/terms" class="text-blue-500">{{
+      $t("recaptcha.terms")
+    }}</a>
+    {{ $t("apply") }}.</small
   >
 </template>
 
 <script setup>
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
-// import { FwbInput } from "flowbite-vue";
+import { useI18n } from "vue-i18n";
 import InputText from "primevue/inputtext";
 import InputGroupAddon from "primevue/inputgroupaddon";
 import InputGroup from "primevue/inputgroup";
@@ -202,9 +161,8 @@ import { useAuthStore } from "@/stores/authStore";
 import axios from "axios";
 import Logo from "@/assets/logo.png";
 import Image from "primevue/image";
-// import { VueRecaptcha } from "vue-recaptcha";
-// import { VueReCaptcha, useReCaptcha } from "vue-recaptcha-v3";
 
+const { t } = useI18n();
 const email = ref("");
 const password = ref("");
 const message = ref("");
@@ -212,27 +170,19 @@ const isError = ref(false);
 const isPassword = ref(true);
 const loading = ref(false);
 const router = useRouter();
-const authStore = useAuthStore(); // Define authStore using useAuthStore
-const requires2FA = ref(false); // Controls 2FA form visibility
-const temporaryToken = ref(""); // Stores the temporary token for 2FA verification
+const authStore = useAuthStore();
+const requires2FA = ref(false);
+const temporaryToken = ref("");
 const twoFactorCode = ref("");
 const GOOGLE_RECAPTCHA_SITE_KEY = import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY;
-// const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
 const captchaToken = ref(null);
+
 const login = async () => {
   try {
-    // await recaptchaLoaded();
-    // const recaptchaToken = await executeRecaptcha("login");
-    // if (!recaptchaToken) {
-    //   alert("Please complete the CAPTCHA.");
-    //   return;
-    // }
-    // captchaToken.value = recaptchaToken;
     loading.value = true;
     const response = await axios.post(import.meta.env.VITE_API_URL + "/login", {
       email: email.value,
       password: password.value,
-      // captchaToken: recaptchaToken,
     });
     const {
       access_token,
@@ -247,7 +197,7 @@ const login = async () => {
     if (requires_2fa) {
       requires2FA.value = true;
       temporaryToken.value = temporary_token;
-      message.value = "Two-Factor Authentication is required.";
+      message.value = t("two_factor.required");
       isError.value = true;
     } else {
       authStore.logIn(
@@ -258,14 +208,13 @@ const login = async () => {
         user.name,
         user.current_branch
       );
-      // console.log(user);
       router.push("/").catch((err) => console.error("Router error:", err));
     }
 
     isError.value = false;
   } catch (error) {
     isError.value = true;
-    message.value = error.response?.data?.message || "Login failed. Please try again.";
+    message.value = error.response?.data?.message || t("login.error");
   } finally {
     loading.value = false;
   }
@@ -280,7 +229,6 @@ const verify2FA = async () => {
       { two_factor_code: twoFactorCode.value },
       { headers: { Authorization: `Bearer ${temporaryToken.value}` } }
     );
-    // // console.log(response.data);
     const {
       access_token,
       refresh_token,
@@ -298,34 +246,26 @@ const verify2FA = async () => {
       user.current_branch
     );
     isError.value = false;
-    message.value = "Two-Factor Authentication verified!";
+    message.value = t("two_factor.success");
     router.push("/").catch((err) => console.error("Router error:", err));
     isError.value = false;
   } catch (error) {
-    // isError.value = true;
-    // message.value = error.response?.data?.message || "Invalid 2FA code.";
     if (error.response) {
       if (error.response.status === 429) {
-        console.error("Too many attempts. Please try again later.");
-        message.value =
-          error.response?.data?.message || "Too many attempts. Please try again later.";
+        message.value = error.response?.data?.message || t("two_factor.throttled");
         isError.value = true;
-        this.showToast("Too many attempts. Please try again in a minute.");
       } else {
-        console.error("Verification failed: ", error.response.data);
         isError.value = true;
-        message.value =
-          error.response?.data?.message || "Invalid 2FA code. Please try again.";
-        this.showToast("Invalid 2FA code. Please try again.");
+        message.value = error.response?.data?.message || t("two_factor.invalid");
       }
     } else {
-      console.error("Error sending request: ", error.message);
-      this.showToast("An unexpected error occurred. Please try again.");
+      message.value = t("login.error");
     }
   } finally {
     loading.value = false;
   }
 };
+
 const togglePassInput = () => {
   isPassword.value = !isPassword.value;
   var element = document.getElementsByClassName("password-shield");
@@ -340,6 +280,7 @@ const togglePassInput = () => {
   }
 };
 </script>
+
 <style>
 form {
   transition: transform 0.3s ease-in-out;

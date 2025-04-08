@@ -316,7 +316,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, watchEffect } from "vue";
+import { ref, onMounted, onBeforeUnmount, watchEffect, watch } from "vue";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Skeleton from "primevue/skeleton";
@@ -560,6 +560,12 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener("keydown", handleKeydown);
 });
+watch(
+  () => route.path,
+  () => {
+    fetchInventoryItems();
+  }
+);
 </script>
 
 <style>

@@ -1,0 +1,50 @@
+{
+    "login": {
+        "title": "Login",
+        "username": "Username",
+        "password": "Password",
+        "submit": "Log In",
+        "loading": "Loading...",
+        "error": "Login failed. Please try again.",
+        "success": "Login successful!"
+    },
+    "two_factor": {
+        "title": "Two-Factor Authentication",
+        "description": "Please enter the 2FA code from your authenticator app.",
+        "placeholder": "Enter your 2FA code",
+        "verify": "Verify",
+        "required": "Two-Factor Authentication is required.",
+        "invalid": "Invalid 2FA code. Please try again.",
+        "throttled": "Too many attempts. Please try again later."
+    },
+    "recaptcha": {
+        "notice": "Site is protected by reCAPTCHA.",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service"
+    },
+    "calendar": {
+        "refresh": "Refresh Data",
+        "add_appointment": "Add Appointment",
+        "pet_details": {
+            "name": "Name",
+            "species": "Species",
+            "owner": "Owner",
+            "location": "Location",
+            "details": "Details",
+            "view_details": "View Details"
+        },
+        "legend": "Legend",
+        "appointment": {
+            "new": "New Appointment",
+            "regular": "Regular",
+            "emergency": "Emergency",
+            "followup": "Follow Up",
+            "surgery": "Surgery",
+            "grooming": "Grooming"
+        },
+        "context_menu": {
+            "day_view": "Go To Day Calendar",
+            "add_new": "Add New Appointment"
+        }
+    }
+}

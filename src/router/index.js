@@ -118,6 +118,13 @@ const router = createRouter({
             import('../views/InvoiceList.vue'),
         meta: { allowSessionTimeout: true }
     },
+    {
+        path: '/settings',
+        name: 'Settings',
+        component: () =>
+            import('../views/InvoiceList.vue'),
+        meta: { allowSessionTimeout: true }
+    },
     ]
 });
 
