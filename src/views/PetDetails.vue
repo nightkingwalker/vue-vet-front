@@ -5,13 +5,12 @@
     >
       <Card class="w-full">
         <template #header>
-          <!-- <img alt="user header" src="/images/usercard.png" /> -->
           <Button
             @click="router.go(-1)"
             class="p-button p-component p-button-icon-only !w-6 h-6 !text-xs m-2"
             icon="pi pi-arrow-left !text-xs"
             v-tooltip.top="{
-              value: 'Go back',
+              value: $t('pet_details.go_back'),
               pt: {
                 arrow: {
                   style: {
@@ -36,7 +35,7 @@
             <Chip
               v-else
               v-tooltip.top="{
-                value: 'Microchip/Serial Number',
+                value: $t('pet_details.microchip'),
                 pt: {
                   arrow: {
                     style: {
@@ -67,7 +66,7 @@
               <router-link
                 :to="`/` + pet.owner.id + `/pets`"
                 v-tooltip.top="{
-                  value: 'View Patients',
+                  value: $t('pet_details.view_patients'),
                   pt: {
                     arrow: {
                       style: {
@@ -85,12 +84,12 @@
 
             <Chip class="2xl:text-xs text-sm mt-2 border">
               <i :class="getIconClass(pet.species)"></i>
-              {{ getSpeciesValue(pet.species) }}
+              {{ $t(`pet_details.species.${getSpeciesValue(pet.species)}`) }}
             </Chip>
             <Chip
               class="2xl:text-xs text-sm mt-2 border"
               v-tooltip.top="{
-                value: 'Breed',
+                value: $t('pet_details.breed'),
                 pt: {
                   arrow: {
                     style: {
@@ -108,7 +107,7 @@
               class="2xl:text-xs text-sm mt-2 border"
               v-if="pet.color !== null"
               v-tooltip.top="{
-                value: 'Color',
+                value: $t('pet_details.color'),
                 pt: {
                   arrow: {
                     style: {
@@ -126,7 +125,7 @@
               class="2xl:text-xs text-sm mt-2 border"
               v-if="pet.behaviour !== null"
               v-tooltip.top="{
-                value: 'Behavior: ' + pet.behaviour,
+                value: $t('pet_details.behavior') + ': ' + pet.behaviour,
                 pt: {
                   arrow: {
                     style: {
@@ -147,14 +146,13 @@
                 v-if="pet.gender === `Female`"
               ></i>
               <i class="fa-solid fa-mars !text-blue-600" v-else></i>
-              {{ pet.gender }}
+              {{ $t(`pet_details.${pet.gender}`) }}
             </Chip>
             <Chip
               class="2xl:text-xs text-sm mt-2 p-button-success p-button-outlined"
               v-if="pet.neutered === 'Y'"
               v-tooltip.top="{
-                value: 'Neutered/Spayed', //editPetDetails
-
+                value: $t('pet_details.neutered'),
                 pt: {
                   arrow: {
                     style: {
@@ -165,14 +163,17 @@
                 },
               }"
             >
-              {{ pet.gender === "Male" ? `Neutered` : `Spayed` }}
+              {{
+                pet.gender === "Male"
+                  ? $t("pet_details.neutered")
+                  : $t("pet_details.neutered")
+              }}
             </Chip>
             <Chip
               class="2xl:text-xs text-sm mt-2 p-button-danger p-button-outlined"
               v-else
               v-tooltip.top="{
-                value: 'Neutered/Spayed', //editPetDetails
-
+                value: $t('pet_details.neutered'),
                 pt: {
                   arrow: {
                     style: {
@@ -182,13 +183,16 @@
                   text: '!bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md ',
                 },
               }"
-              >Not {{ pet.gender === "Male" ? `Neutered` : `Spayed` }}</Chip
+              >{{
+                pet.gender === "Male"
+                  ? $t("pet_details.not_neutered")
+                  : $t("pet_details.not_spayed")
+              }}</Chip
             >
             <Chip
               class="2xl:text-xs text-sm mt-2 border"
               v-tooltip.top="{
-                value: 'Age', //editPetDetails
-
+                value: $t('pet_details.age'),
                 pt: {
                   arrow: {
                     style: {
@@ -207,8 +211,7 @@
             <Chip
               class="2xl:text-xs text-sm mt-2 border"
               v-tooltip.top="{
-                value: 'BIrth Date', //editPetDetails
-
+                value: $t('pet_details.birth_date'),
                 pt: {
                   arrow: {
                     style: {
@@ -232,23 +235,22 @@
             >
               <i v-if="pet.deceased === 'Y'" class="fa-solid fa-heart-crack"></i>
               <i v-else class="fa-solid fa-heart"></i>
-              {{ pet.deceased === "Y" ? ` Deceased` : `Alive` }}
+              {{
+                pet.deceased === "Y"
+                  ? $t("pet_details.deceased")
+                  : $t("pet_details.alive")
+              }}
               {{
                 pet.deceased === "Y" && pet.date_of_morta !== null
                   ? ": " + pet.date_of_morta
                   : ": YES"
               }}
             </Chip>
-            <!-- <div
-              v-for="(entry, index) in parseResults(pet.allergies)"
-              :key="index"
-              class="flex gap-2 w-full"
-            > -->
             <Chip
               v-if="pet.allergies !== null"
               class="2xl:text-xs text-sm mt-2 p-button-danger p-button-outlined"
               v-tooltip.top="{
-                value: 'Allergies: ' + pet.allergies,
+                value: $t('pet_details.allergies') + ': ' + pet.allergies,
                 pt: {
                   arrow: {
                     style: {
@@ -261,12 +263,10 @@
               }"
               ><i class="fas fa-disease"></i> {{ pet.allergies }}
             </Chip>
-            <!-- </div> -->
             <Chip
               class="2xl:text-xs text-sm mt-2 cursor-pointer"
               v-tooltip.top="{
-                value: 'Distinctive Marks', //editPetDetails
-
+                value: $t('pet_details.distinctive_marks'),
                 pt: {
                   arrow: {
                     style: {
@@ -282,8 +282,8 @@
             <Button
               type="button"
               icon="fa-solid fa-pencil"
-              label="Edit"
-              v-tooltip.bottom="`Edit Data`"
+              :label="$t('pet_details.edit')"
+              v-tooltip.bottom="$t('pet_details.edit')"
               class="2xl:text-xs mt-2 cursor-pointer !bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md"
               @click="editPetDetails"
             />
@@ -308,10 +308,10 @@
       >
         <template #header>
           <div class="flex flex-wrap items-center justify-between gap-2">
-            <span class="text-xl font-bold">Visits History</span>
+            <span class="text-xl font-bold">{{ $t("pet_details.visits_history") }}</span>
             <div class="flex gap-2">
               <Button
-                v-tooltip.bottom="`Refresh Data`"
+                v-tooltip.bottom="$t('pet_details.add_appointment')"
                 icon="pi pi-plus"
                 @click="addAppointment"
                 class="p-button p-button-icon-only !text-sm !font-thin h-8"
@@ -320,19 +320,27 @@
                 type="button"
                 icon="pi pi-refresh !text-sm"
                 label=""
-                v-tooltip.bottom="`Refresh Data`"
+                v-tooltip.bottom="$t('pet_details.refresh_data')"
                 class="p-button p-button-icon-only !text-sm !font-thin h-8"
                 @click="refreshData"
               />
             </div>
           </div>
         </template>
-        <Column field="start" header="Date" :class="`!rtl w-1/8 `"></Column>
-        <Column field="title" header="Title" class="font-normal !rtl"></Column>
+        <Column
+          field="start"
+          :header="$t('pet_details.date')"
+          :class="`!rtl w-1/8 `"
+        ></Column>
+        <Column
+          field="title"
+          :header="$t('pet_details.description')"
+          class="font-normal !rtl"
+        ></Column>
 
         <Column
           field="description"
-          header="Description"
+          :header="$t('pet_details.description')"
           class="font-normal rtl:!text-right"
         >
           <template #body="slotProps">
@@ -342,7 +350,7 @@
             ></div>
           </template>
         </Column>
-        <Column field="type" header="Type">
+        <Column field="type" :header="$t('pet_details.type')">
           <template #body="slotProps">
             <Tag
               class="shadow-md border-gray-500 rtl:border-r-2 rtl:border-r-[var(--border-color)] border-l-2 border-l-[var(--border-color)]"
@@ -357,18 +365,20 @@
               }"
             >
               <div class="gap-2 px-1">
-                <span class="!text-xs font-normal">{{ slotProps.data.type }}</span>
+                <span class="!text-xs font-normal">{{
+                  $t(`calendar.appointment.${slotProps.data.type.toLowerCase()}`)
+                }}</span>
               </div>
             </Tag>
           </template>
         </Column>
-        <Column header="Data" class="w-fit whitespace-nowrap">
+        <Column class="w-fit whitespace-nowrap">
           <template #body="slotProps">
             <Button
               type="button"
               icon="fa-solid fa-syringe"
               v-tooltip.top="{
-                value: 'View Treatments',
+                value: $t('pet_details.view_treatments'),
                 pt: {
                   arrow: {
                     style: {
@@ -392,7 +402,7 @@
               type="button"
               icon="fa-solid fa-vials"
               v-tooltip.top="{
-                value: 'View Tests',
+                value: $t('pet_details.view_tests'),
                 pt: {
                   arrow: {
                     style: {
@@ -414,7 +424,7 @@
               type="button"
               icon="fa-solid fa-x-ray"
               v-tooltip.top="{
-                value: 'X-rays & Ultrasound',
+                value: $t('pet_details.xray_ultrasound'),
                 pt: {
                   arrow: {
                     style: {
@@ -437,7 +447,7 @@
               type="button"
               icon="fa-solid fa-file-medical"
               v-tooltip.top="{
-                value: 'Case History',
+                value: $t('pet_details.case_history'),
                 pt: {
                   arrow: {
                     style: {
@@ -460,7 +470,7 @@
               type="button"
               icon="fa-solid fa-stethoscope"
               v-tooltip.top="{
-                value: 'Medical Examination',
+                value: $t('pet_details.medical_examination'),
                 pt: {
                   arrow: {
                     style: {
@@ -483,7 +493,7 @@
               type="button"
               icon="fa-regular fa-chart-bar"
               v-tooltip.top="{
-                value: 'Full Report',
+                value: $t('pet_details.full_report'),
                 pt: {
                   arrow: {
                     style: {
@@ -505,7 +515,7 @@
               type="button"
               icon="fa-solid fa-dollar-sign"
               v-tooltip.top="{
-                value: 'Invoice',
+                value: $t('pet_details.invoice'),
                 pt: {
                   arrow: {
                     style: {
@@ -527,7 +537,7 @@
               type="button"
               icon="fa-solid fa-pen-to-square"
               v-tooltip.top="{
-                value: 'Edit Details',
+                value: $t('pet_details.edit_details'),
                 pt: {
                   arrow: {
                     style: {
@@ -548,23 +558,23 @@
           </template>
         </Column>
         <template #footer>
-          In total there are {{ visits ? visits.length : 0 }} records.
+          {{ $t("pet_details.total_records", { count: visits ? visits.length : 0 }) }}
         </template>
       </DataTable>
     </div>
   </div>
   <Dialog
-    header="Treatments"
     v-model:visible="isTreatmentsListVisible"
     @hide="isTreatmentsListVisible = false"
     modal
-    v-show="isTreatmentsListVisible"
     :closable="true"
     class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
-        <span class="font-bold whitespace-nowrap">Treatments</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pet_details.treatments")
+        }}</span>
       </div>
     </template>
     <PetTreatments
@@ -579,7 +589,7 @@
     <template #footer> </template>
   </Dialog>
   <Dialog
-    header="Edit Pet Details"
+    :header="$t('pet_details.edit_pet_details')"
     v-model:visible="isEditPetDetailsVisible"
     @hide="isEditPetDetailsVisible = false"
     modal
@@ -588,7 +598,9 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
-        <span class="font-bold whitespace-nowrap">Edit Pet Details</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pet_details.edit_pet_details")
+        }}</span>
       </div>
     </template>
     <EditPetDetails
@@ -603,7 +615,7 @@
     <template #footer> </template>
   </Dialog>
   <Dialog
-    header="Edit Treatment Details"
+    :header="$t('pet_details.edit_treatment')"
     v-model:visible="isEditTreatmentVisible"
     @hide="isEditTreatmentVisible = false"
     modal
@@ -612,7 +624,9 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
-        <span class="font-bold whitespace-nowrap">Edit Treatment Details</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pet_details.edit_treatment")
+        }}</span>
       </div>
     </template>
     <EditTreatment
@@ -627,7 +641,7 @@
     <template #footer> </template>
   </Dialog>
   <Dialog
-    header="Test Results"
+    :header="$t('pet_details.test_results')"
     v-model:visible="isTestResultsVisible"
     @hide="isTestResultsVisible = false"
     modal
@@ -636,7 +650,9 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
-        <span class="font-bold whitespace-nowrap">Test Results</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pet_details.test_results")
+        }}</span>
       </div>
     </template>
     <TestResults
@@ -651,7 +667,7 @@
     <template #footer> </template>
   </Dialog>
   <Dialog
-    header="Medical Image"
+    :header="$t('pet_details.medical_image')"
     v-model:visible="isEditMedicalImageVisible"
     @hide="isEditMedicalImageVisible = false"
     modal
@@ -660,7 +676,9 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
-        <span class="font-bold whitespace-nowrap">Test Results</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pet_details.test_results")
+        }}</span>
       </div>
     </template>
     <EditMedicalImage
@@ -675,7 +693,7 @@
     <template #footer> </template>
   </Dialog>
   <Dialog
-    header="XRays and Images"
+    :header="$t('pet_details.xrays_images')"
     v-model:visible="isImagesListVisible"
     @hide="isImagesListVisible = false"
     modal
@@ -684,7 +702,9 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
-        <span class="font-bold whitespace-nowrap">XRays and Images</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pet_details.xrays_images")
+        }}</span>
       </div>
     </template>
     <MedicalImages
@@ -701,7 +721,7 @@
 
   <!-- Add Medical Image Modal -->
   <Dialog
-    header="New Medical Image"
+    :header="$t('pet_details.new_medical_image')"
     v-model:visible="isNewMedicalImageVisible"
     @hide="isNewMedicalImageVisible = false"
     modal
@@ -710,7 +730,9 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
-        <span class="font-bold whitespace-nowrap">New Medical Image</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pet_details.new_medical_image")
+        }}</span>
       </div>
     </template>
     <AddNewMedicalImage
@@ -724,7 +746,7 @@
     <template #footer> </template>
   </Dialog>
   <Dialog
-    header="New Treatment"
+    :header="$t('pet_details.new_treatment')"
     v-model:visible="isNewTreatmentVisible"
     @hide="isNewTreatmentVisible = false"
     modal
@@ -733,7 +755,9 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
-        <span class="font-bold whitespace-nowrap">New Treatment</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pet_details.new_treatment")
+        }}</span>
       </div>
     </template>
     <AddNewTreatment
@@ -747,7 +771,7 @@
     <template #footer> </template>
   </Dialog>
   <Dialog
-    header="New Test Result"
+    :header="$t('pet_details.new_test_result')"
     v-model:visible="isNewTestResultVisible"
     @hide="isNewTestResultVisible = false"
     modal
@@ -756,7 +780,9 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
-        <span class="font-bold whitespace-nowrap">New Test Result</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pet_details.new_test_result")
+        }}</span>
       </div>
     </template>
     <AddNewTestResult
@@ -770,7 +796,7 @@
     <template #footer> </template>
   </Dialog>
   <Dialog
-    header="New Record"
+    :header="$t('pet_details.new_record')"
     v-model:visible="isNewApointmentVisible"
     @hide="isNewApointmentVisible = false"
     modal
@@ -779,13 +805,14 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
-        <span class="font-bold whitespace-nowrap">New Medical Record</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pet_details.new_record")
+        }}</span>
       </div>
     </template>
-    <addNewAppointment
+    <AddNewAppointment
       v-focustrap="{
         disabled: false,
-        autoFocus: true,
       }"
       :petMicrochip="petmicrochip"
       :petOwnerID="pet.owner.id"
@@ -794,7 +821,7 @@
     <template #footer> </template>
   </Dialog>
   <Dialog
-    header="New Record"
+    :header="$t('pet_details.edit_record')"
     v-model:visible="isEditApointmentVisible"
     @hide="isEditApointmentVisible = false"
     modal
@@ -803,7 +830,9 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
-        <span class="font-bold whitespace-nowrap">Edit Medical Record</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pet_details.edit_record")
+        }}</span>
       </div>
     </template>
     <EditAppointment
@@ -817,7 +846,7 @@
     <template #footer> </template>
   </Dialog>
   <Dialog
-    header="Edit Test Result"
+    :header="$t('pet_details.edit_test_result')"
     v-model:visible="isEditTestResultsVisible"
     @hide="isEditTestResultsVisible = false"
     modal
@@ -826,7 +855,9 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
-        <span class="font-bold whitespace-nowrap">Edit Test Result</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pet_details.edit_test_result")
+        }}</span>
       </div>
     </template>
     <EditTestResult
@@ -838,11 +869,10 @@
       @TestResultUpdated="handleTestResultUpdated"
       @close-dialog="isEditTestResultsVisible = false"
     />
-    <!--@updated="handleTestResultUpdated" -->
     <template #footer> </template>
   </Dialog>
   <Dialog
-    header="Add Case Histyory"
+    :header="$t('pet_details.add_case_history')"
     v-model:visible="isAddCaseHistorysVisible"
     @hide="isAddCaseHistorysVisible = false"
     modal
@@ -851,7 +881,9 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
-        <span class="font-bold whitespace-nowrap">Add Case Histyory</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pet_details.add_case_history")
+        }}</span>
       </div>
     </template>
     <AddCaseHistory
@@ -863,11 +895,10 @@
       @TestResultUpdated="handleTestResultUpdated"
       @close-dialog="isEditTestResultsVisible = false"
     />
-    <!--@updated="handleTestResultUpdated" -->
     <template #footer> </template>
   </Dialog>
   <Dialog
-    header="Case Histyory"
+    :header="$t('pet_details.case_history')"
     v-model:visible="isCaseHistorysVisible"
     @hide="isCaseHistorysVisible = false"
     modal
@@ -876,7 +907,9 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
-        <span class="font-bold whitespace-nowrap">Case Histyory</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pet_details.case_history")
+        }}</span>
       </div>
     </template>
     <CaseHistory
@@ -889,11 +922,10 @@
       @CaseHistoryUpdated="handleCaseHistory"
       @close-dialog="isEditTestResultsVisible = false"
     />
-    <!--@updated="handleTestResultUpdated" -->
     <template #footer> </template>
   </Dialog>
   <Dialog
-    header="Add Physical Examination"
+    :header="$t('pet_details.add_physical_examination')"
     v-model:visible="isAddPhysicalExamination"
     @hide="isAddPhysicalExamination = false"
     modal
@@ -902,7 +934,9 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
-        <span class="font-bold whitespace-nowrap">Add Physical Examination</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pet_details.add_physical_examination")
+        }}</span>
       </div>
     </template>
     <AddPhysicalExamination
@@ -915,11 +949,10 @@
       @CaseHistoryUpdated="handleCaseHistory"
       @close-dialog="isEditTestResultsVisible = false"
     />
-    <!--@updated="handleTestResultUpdated" -->
     <template #footer> </template>
   </Dialog>
   <Dialog
-    header="Physical Examination"
+    :header="$t('pet_details.physical_examination')"
     v-model:visible="isPhysicalExamination"
     @hide="isPhysicalExamination = false"
     modal
@@ -928,7 +961,9 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
-        <span class="font-bold whitespace-nowrap">Physical Examination</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pet_details.physical_examination")
+        }}</span>
       </div>
     </template>
     <PhysicalExamination
@@ -945,7 +980,7 @@
     <template #footer> </template>
   </Dialog>
   <Dialog
-    header="Full Report"
+    :header="$t('pet_details.full_report')"
     v-model:visible="isFullReportVisible"
     @hide="isFullReportVisible = false"
     modal
@@ -954,7 +989,9 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
-        <span class="font-bold whitespace-nowrap">Full Report</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pet_details.full_report")
+        }}</span>
       </div>
     </template>
     <FullReport
@@ -965,14 +1002,13 @@
       :medical_record_id="medical_record_id"
       :pet_name="pet.name"
       @showAddPhysicalExaminationModal="showAddPhysicalExaminationModal"
-      @PhysicalExaminationUpdated="handlePhysicalExamination"
       @close-dialog="isEditTestResultsVisible = false"
     />
     <template #footer> </template>
   </Dialog>
   <!-- View Invoice Dialog -->
   <Dialog
-    header="Invoice Details"
+    :header="$t('pet_details.invoice_details')"
     v-model:visible="viewDialogVisible"
     modal
     :closable="true"
@@ -987,11 +1023,10 @@
       @addInvoice="handleAddInvoiceRequest"
       @addPayment="handleAddPaymentRequest"
     />
-    <!-- :paymentMethods="paymentMethods" -->
   </Dialog>
 
   <Dialog
-    :header="'Create New Invoice'"
+    :header="$t('pet_details.create_invoice')"
     v-model:visible="isModalVisible"
     @hide="isModalVisible = false"
     modal
@@ -1000,7 +1035,9 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2 h-4">
-        <span class="font-bold whitespace-nowrap">Create New Invoice</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pet_details.create_invoice")
+        }}</span>
       </div>
     </template>
     <InvoiceAdd
@@ -1014,7 +1051,7 @@
     />
   </Dialog>
   <Dialog
-    header="Add Payment"
+    :header="$t('pet_details.add_payment')"
     v-model:visible="paymentDialogVisible"
     @hide="resetForm"
     modal
@@ -1023,7 +1060,9 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2 h-4">
-        <span class="font-bold whitespace-nowrap">Add Payment</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pet_details.add_payment")
+        }}</span>
       </div>
     </template>
     <AddPayment
@@ -1038,17 +1077,11 @@
       @cancel="paymentDialogVisible = false"
     />
   </Dialog>
-  <!-- <ConfirmDialog class="md:w-[35vw] sm:w-full !text-sm">
-    <template #message="slotProps">
-      <div class="flex flex-col items-center w-full mx-auto gap-4 text-md text-center">
-        <i :class="slotProps.message.icon" class="!text-6xl text-yellow-500"></i>
-        <p>{{ slotProps.message.message }}</p>
-      </div>
-    </template>
-  </ConfirmDialog> -->
 </template>
+
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
+import { useI18n } from "vue-i18n";
 import Card from "primevue/card";
 import Chip from "primevue/chip";
 import router from "@/router";
@@ -1056,16 +1089,16 @@ import { useRoute } from "vue-router";
 import Tag from "primevue/tag";
 import Button from "primevue/button";
 import eventBus from "@/eventBus";
-import axiosInstance from "@/axios"; // Assuming axiosInstance is set up correctly
+import axiosInstance from "@/axios";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
-import Skeleton from "primevue/skeleton"; // optional
+import Skeleton from "primevue/skeleton";
 import Dialog from "primevue/dialog";
 import PetTreatments from "@/views/TreatmentsList.vue";
 import TestResults from "@/views/TestResults.vue";
 import AddNewTreatment from "@/views/AddNewTreatment.vue";
 import AddNewTestResult from "@/views/AddNewTestResult.vue";
-import addNewAppointment from "@/views/addNewAppointment.vue";
+import AddNewAppointment from "@/views/addNewAppointment.vue";
 import MedicalImages from "@/views/MedicalImages.vue";
 import AddNewMedicalImage from "@/views/AddNewMedicalImage.vue";
 import EditPetDetails from "@/views/EditPetDetails.vue";
@@ -1081,7 +1114,9 @@ import FullReport from "@/views/FullReport.vue";
 import InvoiceView from "@/views/InvoiceView.vue";
 import InvoiceAdd from "@/views/AddInvoice.vue";
 import AddPayment from "@/views/AddInvoicePayment.vue";
-const emit = defineEmits([]); // Define the event to be emitted
+
+const { t } = useI18n();
+const emit = defineEmits([]);
 
 const isTreatmentsListVisible = ref(false);
 const isTestResultsVisible = ref(false);
@@ -1151,6 +1186,10 @@ const handleUpdatedTreatment = () => {
 const handleMedicalImageUpdated = () => {
   isEditMedicalImageVisible.value = false;
   eventBus.emit("MedicalImageUpdatedSuccessfully");
+};
+const handlePhysicalExamination = () => {
+  isPhysicalExamination.value = false;
+  eventBus.emit("PhysicalExaminationUpdatedSuccessfully");
 };
 const handleTestResultUpdated = () => {
   isEditTestResultsVisible.value = false;
@@ -1293,23 +1332,83 @@ const medical_records = ref([]);
 const medical_record_id = ref("");
 const appointment_id = ref("");
 const species = ref([
-  { label: "Avian", value: "Birds", icon: "fa-solid fa-dove" },
-  { label: "Bovine", value: "Cows", icon: "fa-solid fa-cow" },
-  { label: "Camelid", value: "Camels", icon: "fa-solid fa-paw" }, // Default icon
-  { label: "Canine", value: "Dogs", icon: "fa-solid fa-dog" },
-  { label: "Caprine", value: "Goats", icon: "fa-solid fa-paw" }, // Default icon
-  { label: "Cavies", value: "Guinea Pigs", icon: "fa-solid fa-paw" }, // Default icon
-  { label: "Cervidae", value: "Deers", icon: "fa-solid fa-paw" },
-  { label: "Equine", value: "Horses", icon: "fa-duotone fa-horse " },
-  { label: "Feline", value: "Cats", icon: "fa-solid fa-cat" },
-  { label: "Lapine", value: "Rabbits", icon: "fa-solid fad fa-rabbit" },
-  { label: "Murine", value: "Mice", icon: "fa-solid fa-paw" },
-  { label: "Ovine", value: "Sheeps", icon: "fa-solid fa-sheep" },
+  {
+    label: t("species.avian"),
+    en_label: "Avian",
+    value: "Birds",
+    icon: "fa-solid fa-dove",
+  },
+  {
+    label: t("species.bovine"),
+    en_label: "Bovine",
+    value: "Cows",
+    icon: "fa-solid fa-cow",
+  },
+  {
+    label: t("species.camelid"),
+    en_label: "Camelid",
+    value: "Camels",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.canine"),
+    en_label: "Canine",
+    value: "Dogs",
+    icon: "fa-solid fa-dog",
+  },
+  {
+    label: t("species.caprine"),
+    en_label: "Caprine",
+    value: "Goats",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.cavies"),
+    en_label: "Cavies",
+    value: "Guinea Pigs",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.cervidae"),
+    en_label: "Cervidae",
+    value: "Deers",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.equine"),
+    en_label: "Equine",
+    value: "Horses",
+    icon: "fa-duotone fa-horse",
+  },
+  {
+    label: t("species.feline"),
+    en_label: "Feline",
+    value: "Cats",
+    icon: "fa-solid fa-cat",
+  },
+  {
+    label: t("species.lapine"),
+    en_label: "Lapine",
+    value: "Rabbits",
+    icon: "fa-solid fad fa-rabbit",
+  },
+  {
+    label: t("species.murine"),
+    en_label: "Murine",
+    value: "Mice",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.ovine"),
+    en_label: "Ovine",
+    value: "Sheeps",
+    icon: "fa-solid fa-sheep",
+  },
 ]);
 
 function getIconClass(speciesLabel) {
-  const found = species.value.find((spec) => spec.label === speciesLabel);
-  return found ? found.icon : "fa-solid fa-paw";
+  const found = species.value.find((spec) => spec.en_label === speciesLabel);
+  return found ? found.label : "fa-solid fa-paw";
 }
 const parseResults = (resultsString) => {
   if (!resultsString) return []; // Return an empty array if input is null or undefined
@@ -1330,8 +1429,9 @@ const parseResults = (resultsString) => {
   }
 };
 const getSpeciesValue = (label) => {
-  const found = species.value.find((species) => species.label === label);
-  return found ? found.value : null;
+  console.log(label);
+  const found = species.value.find((species) => species.en_label === label);
+  return found ? found.en_label : null;
 };
 const eventTheme = {
   Regular: {
@@ -1445,15 +1545,12 @@ const fetchPets = async () => {
   }
 };
 const fetchInvoice = async () => {
-  // loading.value = true;
   try {
     // Make the request using the axios instance with interceptors
     const response = await axiosInstance.get(
       `/medical-records/${medical_record_id.value}/invoice`
     );
     selectedInvoice.value = response.data.data;
-    // console.log("selectedInvoice", selectedInvoice.value);
-    // loading.value = false; // Stop loading once data is fetched
   } catch (error) {
     //     // showSuccess("warn", "Warning", "Couldent Fetch Data");
   } finally {
@@ -1493,6 +1590,10 @@ function listImages(MedicalRecordId) {
 const findRecordById = (id) => {
   return medical_records.value.find((record) => record.visit_date === id).id;
 };
+const resetForm = () => {
+  selectedInvoice.value = null;
+  editMode.value = false;
+};
 
 onMounted(() => {
   fetchPets();
@@ -1500,10 +1601,5 @@ onMounted(() => {
     viewDialogVisible.value = false;
     paymentDialogVisible.value = true;
   });
-  // eventBus.on("InvoiceCreated", (event) => {
-  //   isModalVisible.value = false;
-  //   fetchPets();
-  //   // paymentDialogVisible.value = true;
-  // });
 });
 </script>

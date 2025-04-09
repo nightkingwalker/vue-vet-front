@@ -1,104 +1,164 @@
 <template>
   <div class="px-4">
-    <form @submit.prevent="submitForm" class="mx-auto w-full max-w-md">
+    <form @submit.prevent="submitForm" class="mx-auto w-full">
       <fieldset
-        class="p-fieldset p-component w-full flex flex-wrap items-center border rounded-lg p-4"
+        class="p-fieldset p-component w-full flex flex-wrap items-start border rounded-lg p-4 gap-4"
       >
         <legend
           class="px-4 bg-gray-600 text-white dark:bg-zinc-200 dark:text-zinc-800 rounded"
         >
-          New Client Details
+          {{ $t("add_owner.title") }}
         </legend>
 
         <div class="field w-full">
           <FloatLabel class="w-full">
-            <InputText id="name" v-model="owner.name" />
-            <label for="name">Name</label>
+            <InputText fluid id="name" v-model="owner.name" />
+            <label for="name">{{ $t("add_owner.fields.name") }}</label>
+          </FloatLabel>
+        </div>
+
+        <div class="field mt-6 w-[48%]">
+          <FloatLabel class="w-full">
+            <InputText fluid id="email" v-model="owner.email" />
+            <label for="email">{{ $t("add_owner.fields.email") }}</label>
+          </FloatLabel>
+        </div>
+
+        <div class="field mt-6 w-[48%]">
+          <FloatLabel class="w-full">
+            <InputText fluid id="phone" v-model="owner.phone" />
+            <label for="phone">{{ $t("add_owner.fields.phone") }}</label>
+          </FloatLabel>
+        </div>
+
+        <div class="field mt-6 w-[48%]">
+          <FloatLabel class="w-full">
+            <InputText fluid id="landline" v-model="owner.landline" />
+            <label for="landline">{{ $t("add_owner.fields.landline") }}</label>
+          </FloatLabel>
+        </div>
+
+        <div class="field mt-6 w-[48%]">
+          <FloatLabel class="w-full">
+            <DatePicker
+              fluid
+              id="birth_date"
+              v-model="owner.birth_date"
+              dateFormat="yy-mm-dd"
+              showIcon
+            />
+            <label for="birth_date">{{ $t("add_owner.fields.birth_date") }}</label>
+          </FloatLabel>
+        </div>
+
+        <div class="field mt-6 w-[48%]">
+          <FloatLabel class="w-full">
+            <InputText fluid id="facebook_link" v-model="owner.facebook_link" />
+            <label for="facebook_link">{{ $t("add_owner.fields.facebook_link") }}</label>
+          </FloatLabel>
+        </div>
+
+        <div class="field mt-6 w-[48%]">
+          <FloatLabel class="w-full">
+            <InputText fluid id="instagram_link" v-model="owner.instagram_link" />
+            <label for="instagram_link">{{
+              $t("add_owner.fields.instagram_link")
+            }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-full">
           <FloatLabel class="w-full">
-            <InputText id="email" v-model="owner.email" />
-            <label for="email">Email</label>
+            <TextArea autoResize fluid id="referral" v-model="owner.referral" rows="4" />
+            <label for="referral">{{ $t("add_owner.fields.referral") }}</label>
           </FloatLabel>
         </div>
 
-        <div class="field mt-6 w-full">
+        <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <InputText id="phone" v-model="owner.phone" />
-            <label for="phone">Phone</label>
+            <TextArea autoResize fluid id="address" v-model="owner.address" rows="4" />
+            <label for="address">{{ $t("add_owner.fields.address") }}</label>
           </FloatLabel>
         </div>
 
-        <div class="field mt-6 w-full">
+        <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <TextArea id="address" v-model="owner.address" />
-            <label for="address">Address</label>
+            <TextArea
+              autoResize
+              fluid
+              id="clinic_notes"
+              v-model="owner.clinic_notes"
+              rows="4"
+            />
+            <label for="clinic_notes">{{ $t("add_owner.fields.clinic_notes") }}</label>
           </FloatLabel>
         </div>
 
-        <Button type="submit" label="Submit" icon="pi pi-check" class="mt-4 w-full" />
+        <Button
+          type="submit"
+          :label="$t('add_owner.actions.submit')"
+          icon="pi pi-check"
+          class="mt-4 w-full"
+        />
       </fieldset>
     </form>
   </div>
 </template>
 
 <script setup>
-// import { ref } from "vue";
-import { ref } from "vue"; // Import emit from Vue
-import axiosInstance from "@/axios"; // Assuming axiosInstance is set up correctly
+import { ref } from "vue";
+import { useI18n } from "vue-i18n";
+import axiosInstance from "@/axios";
 import InputText from "primevue/inputtext";
 import TextArea from "primevue/textarea";
 import FloatLabel from "primevue/floatlabel";
 import Button from "primevue/button";
+import DatePicker from "primevue/datepicker";
+import Calendar from "primevue/calendar";
 import eventBus from "@/eventBus";
 import router from "@/router";
 import Cookies from "js-cookie";
-// Reactive properties for form data
-const emit = defineEmits(["submitted"]); // Define the event to be emitted
+
+const { t } = useI18n();
+
+const emit = defineEmits(["submitted"]);
 
 const owner = ref({
   name: "",
   email: "",
   phone: "",
+  landline: "",
   address: "",
+  birth_date: null,
+  facebook_link: "",
+  instagram_link: "",
+  referral: "",
+  clinic_notes: "",
   branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
 });
 
-// Function to handle form submission
 const submitForm = async () => {
   try {
-    // console.log(owner.value);
-    // Make the POST request to the API to create a new client
-    const response = await axiosInstance.post("/owners", owner.value);
-
-    // Emit the submitted data back to the parent component
-    emit("ownerAdded", response.data.data); // You may modify this based on your response structure
-    eventBus.emit("ownerAdded", response.data.data);
-    // Clear the form fields after successful submission
-    owner.value = {
-      name: "",
-      email: "",
-      phone: "",
-      address: "",
+    const formatDate = (isoDateString) => {
+      return isoDateString ? new Date(isoDateString).toISOString().split("T")[0] : null;
     };
-
-    // Optionally, show a success message or perform any other action
+    owner.value.birth_date = formatDate(owner.value.birth_date);
+    const response = await axiosInstance.post("/owners", owner.value);
+    console.log(response.data);
+    emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Client Added",
-      detail: "New client has been added successfully.",
+      summary: t("add_owner.title"),
+      detail: t("add_owner.messages.success"),
       life: 5000,
     });
     await router.push("/owners");
   } catch (error) {
-    // Handle the error
-    console.error("Error adding new client:", error);
+    console.error("Failed to add owner:", error);
     eventBus.emit("show-toast", {
       severity: "error",
-      summary: "Error",
-      detail: "Failed to add new client.",
+      summary: t("add_owner.title"),
+      detail: t("add_owner.messages.error"),
       life: 5000,
     });
   }

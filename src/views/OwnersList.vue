@@ -13,7 +13,7 @@
             icon="pi pi-refresh !text-sm"
             label=""
             v-tooltip.top="{
-              value: 'Refresh Data',
+              value: $t('owners.actions.refresh'),
               pt: {
                 arrow: {
                   style: {
@@ -31,7 +31,7 @@
             icon="pi pi-plus"
             @click="showModal"
             v-tooltip.top="{
-              value: 'New Owner',
+              value: $t('owners.actions.new_owner'),
               pt: {
                 arrow: {
                   style: {
@@ -45,21 +45,21 @@
             class="p-button p-button-icon-only !text-sm !font-thin h-7"
           />
         </div>
-        <h2 class="text-xl">Owners List</h2>
+        <h2 class="text-xl">{{ $t("owners.title") }}</h2>
         <InputGroup
           class="!text-gray-800 flex rounded-md overflow-hidden border !border-gray-400 h-8 !w-1/5"
         >
           <InputGroupAddon
             class="!text-gray-800 px-4 flex flex-col item-center justify-center"
           >
-            <i class="pi pi-search"></i
-          ></InputGroupAddon>
+            <i class="pi pi-search"></i>
+          </InputGroupAddon>
           <InputText
             v-model="searchQuery"
             @input="onSearchChange"
             type="text"
             class="!text-sm !text-gray-800 focus:!ring-0 focus:!ring-offset-0 focus:!border-gray-400 border-transparent"
-            placeholder="Search Owners"
+            :placeholder="$t('owners.search_placeholder')"
           />
           <Button
             icon="pi pi-spin pi-spinner-dotted"
@@ -101,7 +101,6 @@
     </template>
 
     <template #list="slotProps" v-else>
-      <!--contents-->
       <div class="flex flex-col p-4">
         <div v-for="(owner, index) in slotProps.items" :key="index">
           <div
@@ -115,11 +114,10 @@
             >
               <div class="w-1/4">
                 <div class="text-sm font-medium border-b-2 w-fit">
-                  {{ owner.name }}
+                  {{ $t("owners.columns.name") }}: {{ owner.name }}
                 </div>
                 <div class="text-sm">
                   <i class="fa-solid fa-at mr-2"></i>
-                  <!-- {{ owner.email }} -->
                   <span v-if="owner.showDetails">{{ owner.email }}</span>
                   <span v-else>******@****.***</span>
                 </div>
@@ -132,7 +130,7 @@
                     :href="`https://wa.me/` + owner.phone"
                     target="_blank"
                     v-tooltip.top="{
-                      value: 'WhatsApp ',
+                      value: 'WhatsApp ' + owner.phone,
                       pt: {
                         arrow: {
                           style: {
@@ -146,11 +144,14 @@
                   >
                     +{{ owner.phone }}
                   </a>
-                  <span v-else class="2xl:!text-sm lg:!text-xs">+***********</span></span
-                >
-                <span class="!text-sm"
-                  ><i class="fa-solid fa-location-dot mr-2"></i>{{ owner.address }}</span
-                >
+                  <span v-else class="2xl:!text-sm lg:!text-xs">{{
+                    $t("owners.hidden_phone")
+                  }}</span>
+                </span>
+                <span class="!text-sm">
+                  <i class="fa-solid fa-location-dot mr-2"></i>
+                  {{ $t("owners.columns.address") }}: {{ owner.address }}
+                </span>
               </div>
               <div class="flex gap-1">
                 <Button
@@ -158,7 +159,7 @@
                   icon="fas fa-user-pen 2xl:!text-sm lg:!text-xs"
                   label=""
                   v-tooltip.top="{
-                    value: 'Edit',
+                    value: $t('owners.actions.edit'),
                     pt: {
                       arrow: {
                         style: {
@@ -178,7 +179,7 @@
                   :to="`/` + owner.id + `/pets`"
                   class="p-button p-component p-button-icon-only p-button-rounded p-button-text p-button-sm"
                   v-tooltip.top="{
-                    value: 'Pets',
+                    value: $t('owners.actions.pets'),
                     pt: {
                       arrow: {
                         style: {
@@ -201,7 +202,7 @@
                   label=""
                   @click="showWahaModal(owner.phone)"
                   v-tooltip.top="{
-                    value: 'Send WhatsApp Message',
+                    value: t('owners.actions.whatsapp'),
                     pt: {
                       arrow: {
                         style: {
@@ -218,13 +219,11 @@
                 />
                 <Button
                   class="p-button p-component 2xl:!text-sm lg:!text-xs"
-                  :icon="
-                    owner.showDetails
-                      ? `pi pi-eye-slash 2xl:!text-sm lg:!text-xs`
-                      : `pi pi-eye 2xl:!text-sm lg:!text-xs`
-                  "
+                  :icon="owner.showDetails ? 'pi pi-eye-slash' : 'pi pi-eye'"
                   v-tooltip.top="{
-                    value: owner.showDetails ? `Hide Details` : 'View Details',
+                    value: owner.showDetails
+                      ? $t('owners.actions.hide_details')
+                      : $t('owners.actions.view_details'),
                     pt: {
                       arrow: {
                         style: {
@@ -242,9 +241,9 @@
                 />
                 <Button
                   class="p-button p-component 2xl:!text-sm lg:!text-xs"
-                  :icon="`pi pi-times 2xl:!text-sm lg:!text-xs`"
+                  icon="pi pi-times"
                   v-tooltip.top="{
-                    value: 'Deactivate Account',
+                    value: $t('owners.actions.deactivate'),
                     pt: {
                       arrow: {
                         style: {
@@ -307,7 +306,6 @@
     </template>
 
     <template #grid="slotProps" v-else>
-      <!--contents-->
       <div class="grid xl:grid-cols-12 grid-cols-10 p-4">
         <div
           v-for="(owner, index) in slotProps.items"
@@ -318,23 +316,25 @@
             class="p-6 border border-surface-200 dark:border-surface-700 bg-zinc-100 dark:bg-[var(--p-surface-500)] rounded-lg flex flex-col shadow hover:bg-[var(--p-surface-300)] dark:hover:bg-[var(--p-surface-500)]"
           >
             <div class="">
-              <div class="text-lg font-medium border-b">{{ owner.name }}</div>
+              <div class="text-lg font-medium border-b">
+                {{ $t("owners.columns.name") }}: {{ owner.name }}
+              </div>
 
               <div class="mt-4 text-sm">
                 <div class="2xl:!text-lg lg:!text-xs">
-                  <!-- <i class="fa-solid fa-at mr-2 mt-2"></i>{{ owner.email }} -->
                   <i class="fa-solid fa-at mr-2 mt-2"></i>
                   <span v-if="owner.showDetails">{{ owner.email }}</span>
-                  <span v-else class="lg:text-xs xl:text-xs">******@****.***</span>
+                  <span v-else class="lg:text-xs xl:text-xs"> ******@****.*** </span>
                 </div>
                 <div>
                   <i class="fa-solid fa-phone-volume mr-2 mt-2"></i>
                   <a
+                    dir="ltr"
                     v-if="owner.showDetails"
                     @click="showWahaModal(owner.phone)"
                     target="_blank"
                     v-tooltip.top="{
-                      value: 'Send WhatsApp Message to ' + owner.phone,
+                      value: $t('owners.actions.whatsapp') + ' ' + owner.phone,
                       pt: {
                         arrow: {
                           style: {
@@ -349,21 +349,21 @@
                   >
                     +{{ owner.phone }}
                   </a>
-                  <span v-else>***********</span>
+                  <span v-else>{{ $t("owners.hidden_phone") }}</span>
                 </div>
                 <div class="whitespace-normal">
                   <i class="fa-solid fa-location-dot mr-2 mt-2"></i>
-                  {{ owner.address }}
+                  {{ $t("owners.columns.address") }}: {{ owner.address }}
                 </div>
               </div>
               <div class="flex flex-col gap-6 mt-6">
                 <div class="flex gap-1 justify-between">
                   <Button
                     type="button"
-                    icon="fas fa-user-pen 2xl:!text-lg lg:!text-xs"
+                    icon="fas fa-user-pen 2xl:!text-sm lg:!text-xs"
                     label=""
                     v-tooltip.top="{
-                      value: 'Edit',
+                      value: $t('owners.actions.edit'),
                       pt: {
                         arrow: {
                           style: {
@@ -383,7 +383,7 @@
                     :to="`/` + owner.id + `/pets`"
                     class="p-button p-component p-button-icon-only p-button-rounded p-button-text p-button-sm"
                     v-tooltip.top="{
-                      value: 'Pets',
+                      value: $t('owners.actions.pets'),
                       pt: {
                         arrow: {
                           style: {
@@ -398,7 +398,7 @@
                     variant="text"
                     size="small"
                   >
-                    <i class="fas fa-paw 2xl:!text-lg lg:!text-xs"></i>
+                    <i class="fas fa-paw 2xl:!text-sm lg:!text-xs"></i>
                   </router-link>
                   <Button
                     type="button"
@@ -406,7 +406,7 @@
                     label=""
                     @click="showWahaModal(owner.phone)"
                     v-tooltip.top="{
-                      value: 'Send WhatsApp Message',
+                      value: t('owners.actions.whatsapp'),
                       pt: {
                         arrow: {
                           style: {
@@ -422,14 +422,12 @@
                     size="small"
                   />
                   <Button
-                    class="p-button p-component 2xl:!text-lg lg:!text-xs"
-                    :icon="
-                      owner.showDetails
-                        ? `pi pi-eye-slash 2xl:!text-lg lg:!text-xs`
-                        : `pi pi-eye 2xl:!text-lg lg:!text-xs`
-                    "
+                    class="p-button p-component 2xl:!text-sm lg:!text-xs"
+                    :icon="owner.showDetails ? 'pi pi-eye-slash' : 'pi pi-eye'"
                     v-tooltip.top="{
-                      value: owner.showDetails ? `Hide Details` : 'View Details',
+                      value: owner.showDetails
+                        ? $t('owners.actions.hide_details')
+                        : $t('owners.actions.view_details'),
                       pt: {
                         arrow: {
                           style: {
@@ -446,10 +444,10 @@
                     @click="toggleDetails(owner)"
                   />
                   <Button
-                    class="p-button p-component 2xl:!text-lg lg:!text-xs"
-                    :icon="`pi pi-times 2xl:!text-lg lg:!text-xs`"
+                    class="p-button p-component 2xl:!text-sm lg:!text-xs"
+                    icon="pi pi-times"
                     v-tooltip.top="{
-                      value: 'Deactivate Account',
+                      value: $t('owners.actions.deactivate'),
                       pt: {
                         arrow: {
                           style: {
@@ -457,7 +455,7 @@
                           },
                         },
                         text:
-                          '!bg-[var(--p-primary-color)] !font-thin 2xl:!text-lg lg:!text-xs shadow-md',
+                          '!bg-[var(--p-primary-color)] !font-thin 2xl:!text-sm lg:!text-xs shadow-md',
                       },
                     }"
                     rounded
@@ -465,23 +463,6 @@
                     size="small"
                     @click="deactivateAccount(owner)"
                   />
-                  <!-- <Button
-                    class="p-button p-component 2xl:!text-lg lg:!text-xs"
-                    :icon="`pi pi-pencil 2xl:!text-lg lg:!text-xs`"
-                    v-tooltip.top="{
-                      value: 'Deactivate Account',
-                      pt: {
-                        arrow: {
-                          style: {
-                            borderTopColor: 'var(--p-primary-color)',
-                          },
-                        },
-                        text:
-                          '!bg-[var(--p-primary-color)] !font-thin 2xl:!text-lg lg:!text-xs shadow-md',
-                      },
-                    }"
-
-                  /> -->
                 </div>
               </div>
             </div>
@@ -489,6 +470,7 @@
         </div>
       </div>
     </template>
+
     <template #footer>
       <Paginator
         :rows="itemsPerPage"
@@ -503,17 +485,19 @@
   </DataView>
 
   <Dialog
-    header="Add New Client"
+    :header="$t('owners.modals.new_client')"
     v-model:visible="isModalVisible"
     @hide="isModalVisible = false"
     modal
     :closable="true"
-    class="w-11/12 md:w-4/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <Avatar icon="fas fa-users" shape="circle" />
-        <span class="font-bold whitespace-nowrap">New Client</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("owners.modals.new_client")
+        }}</span>
       </div>
     </template>
     <NewClientForm
@@ -525,8 +509,9 @@
     />
     <template #footer> </template>
   </Dialog>
+
   <Dialog
-    header="Send WhatsApp Message"
+    :header="$t('owners.modals.whatsapp')"
     v-model:visible="isModalWahaVisible"
     @hide="isModalWahaVisible = false"
     modal
@@ -536,7 +521,9 @@
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <Avatar icon="fas fa-users" shape="circle" />
-        <span class="font-bold whitespace-nowrap">Send WhatsApp Message</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("owners.modals.whatsapp")
+        }}</span>
       </div>
     </template>
     <SendWhatsApp
@@ -549,18 +536,21 @@
     />
     <template #footer> </template>
   </Dialog>
+
   <Dialog
-    header="Edit Owner"
+    :header="$t('owners.modals.edit_owner')"
     v-model:visible="isEditOwnerVisible"
     @hide="isEditOwnerVisible = false"
     modal
     :closable="true"
-    class="w-11/12 md:w-4/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
+    class="w-11/12 md:w-8/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <Avatar icon="fas fa-users" shape="circle" />
-        <span class="font-bold whitespace-nowrap">Send WhatsApp Message</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("owners.modals.edit_owner")
+        }}</span>
       </div>
     </template>
     <EditOwner
@@ -595,6 +585,8 @@ import router from "@/router";
 import NewClientForm from "@/views/AddNewOwner.vue";
 import SendWhatsApp from "@/views/SendWhatsApp.vue";
 import EditOwner from "@/views/EditOwner.vue";
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 const currentPage = ref(1); // Track the current page
 const totalRecords = ref(0); // Total number of records
 const itemsPerPage = ref(25); // Number of items per page (matching your API response)const layout = ref("grid");
@@ -632,7 +624,7 @@ const deactivateAccount = (owner) => {
   // console.log(owner);
 };
 const editOwner = (owner) => {
-  // console.log(owner);
+  console.log(owner);
   selectedOwner.value = owner;
   isEditOwnerVisible.value = true;
 };
@@ -647,12 +639,23 @@ const fetchOwners = async (page = 1) => {
         `&search=${searchQuery.value}`
     );
     owners.value = response.data.data.map((owner) => ({
+      // id: owner.id.toString(),
+      // name: owner.name,
+      // email: owner.email,
+      // phone: owner.phone,
+      // address: owner.address,
+      // showDetails: false,
       id: owner.id.toString(),
       name: owner.name,
       email: owner.email,
       phone: owner.phone,
+      landline: owner.landline,
       address: owner.address,
-      showDetails: false,
+      birth_date: owner.birth_date,
+      facebook_link: owner.facebook_link,
+      instagram_link: owner.instagram_link,
+      referral: owner.referral,
+      clinic_notes: owner.clinic_notes,
     }));
 
     // const response = await axiosInstance.get("/owners");
@@ -745,6 +748,7 @@ const goToListOwnerPetsPage = async (ownerid) => {
 const goToAddOwnerPetsPage = async (ownerid) => {
   await router.push({ path: "/" + ownerid + "/new-pet" });
 };
+
 onMounted(() => {
   fetchOwners();
   eventBus.on("AddOwner", () => {

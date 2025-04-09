@@ -8,7 +8,7 @@
       :loading="loading"
       :metaKeySelection="metaKey"
       sortMode="multiple"
-      exportFilename="Patients_Details"
+      :exportFilename="$t('pets.title') + '_Details'"
       removableSort
       stripedRows
       v-model:selection="selectedPets"
@@ -27,7 +27,7 @@
               type="button"
               icon="pi pi-refresh !text-sm"
               label=""
-              v-tooltip.bottom="`Refresh Data`"
+              v-tooltip.bottom="$t('pets.header.refresh')"
               class="!text-sm ml-2"
               @click="refreshData"
             />
@@ -35,25 +35,29 @@
               type="button"
               :icon="showDeceased ? `pi pi-eye-slash !text-sm` : `pi pi-eye !text-sm`"
               label=""
-              v-tooltip.bottom="showDeceased ? `Hide Deceased` : `Show Deceased`"
+              v-tooltip.bottom="
+                showDeceased
+                  ? $t('pets.header.hide_deceased')
+                  : $t('pets.header.show_deceased')
+              "
               class="!text-sm ml-2"
               @click="toggleDeceasedVisibility"
             />
             <Button
               icon="pi pi-plus"
               @click="showModal"
-              v-tooltip.bottom="`Add New Patient`"
+              v-tooltip.bottom="$t('pets.header.add_new')"
               class="p-button p-component p-button-icon-only !text-sm ml-2"
             />
             <Button
               icon="pi pi-download !text-sm"
               class="!text-sm ml-2"
-              v-tooltip.bottom="`Export`"
+              v-tooltip.bottom="$t('pets.header.export')"
               @click="exportCSV($event)"
             />
           </div>
           <h2 class="text-2xl !mb-0 pb-0 flex">
-            <i class="fa-solid fa-paw mr-2"></i> Patients
+            <i class="fa-solid fa-paw mr-2"></i> {{ $t("pets.title") }}
           </h2>
           <span class="p-input-icon-left text-sm">
             <InputGroup
@@ -62,8 +66,8 @@
               <InputGroupAddon
                 class="!text-gray-800 px-4 flex flex-col item-center justify-center"
               >
-                <i class="pi pi-search"></i
-              ></InputGroupAddon>
+                <i class="pi pi-search"></i>
+              </InputGroupAddon>
               <InputText
                 size="small"
                 v-model="searchQuery"
@@ -74,19 +78,15 @@
                 autofocus="true"
                 type="text"
                 class="!text-sm !text-gray-800 focus:!ring-0 focus:!ring-offset-0 focus:!border-gray-400 border-transparent"
-                placeholder="Search All Columns"
+                :placeholder="$t('pets.header.search_placeholder')"
               />
               <Button icon="pi pi-times" @click="clearFilters" />
             </InputGroup>
           </span>
         </div>
       </template>
-      <!-- <Column
-        selectionMode="multiple"
-        class="p-datatable"
-        headerStyle="width: 3rem"
-      ></Column> -->
-      <Column class="text-md !font-thin" field="owner" header="Owner">
+
+      <Column class="text-md !font-thin" field="owner" :header="$t('pets.columns.owner')">
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
@@ -95,7 +95,7 @@
             <router-link
               :to="slotProps.data.owner.id + `/pets`"
               v-tooltip.top="{
-                value: 'View Patients',
+                value: $t('pets.columns.view_details'),
                 pt: {
                   arrow: {
                     style: {
@@ -113,7 +113,7 @@
           </template>
         </template>
       </Column>
-      <Column class="text-md" field="name" header="Name" sortable="">
+      <Column class="text-md" field="name" :header="$t('pets.columns.name')" sortable="">
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
@@ -122,8 +122,12 @@
         </template>
       </Column>
 
-      <!-- Species Column with filtering -->
-      <Column class="text-md" field="species" header="Species" sortable>
+      <Column
+        class="text-md"
+        field="species"
+        :header="$t('pets.columns.species')"
+        sortable
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="20%" height="1rem" />
@@ -138,24 +142,23 @@
         </template>
       </Column>
 
-      <!-- Breed Column with filtering -->
-      <Column class="text-md" field="breed" header="Breed">
+      <Column class="text-md" field="breed" :header="$t('pets.columns.breed')">
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
           </template>
-          <template v-else
-            ><Chip
+          <template v-else>
+            <Chip
               :label="slotProps.data.breed"
               class="shadow-sm !text-sm font-thin border dark:border-transparent h-7"
-          /></template>
+            />
+          </template>
         </template>
       </Column>
 
-      <!-- Gender Column -->
       <Column class="text-md" field="gender">
         <template #header>
-          <i class="fa-solid fa-venus-mars" v-tooltip.top="`Gender`"></i>
+          <i class="fa-solid fa-venus-mars" v-tooltip.top="$t('pets.columns.gender')"></i>
         </template>
         <template #body="slotProps">
           <template v-if="loading">
@@ -163,7 +166,7 @@
           </template>
           <template v-else>
             <Chip
-              :label="slotProps.data.gender"
+              :label="$t(`pets.status.${slotProps.data.gender.toLowerCase()}`)"
               :class="slotProps.data.gender === 'Male' ? `!bg-blue-400` : `!bg-pink-400`"
               class="shadow-sm !text-sm font-thin border dark:border-transparent h-7 !text-white"
             />
@@ -171,10 +174,9 @@
         </template>
       </Column>
 
-      <!-- Neuterd Column -->
       <Column class="text-md" field="neutered">
         <template #header>
-          <i class="fa-solid fa-neuter" v-tooltip.top="`Neutered/Spayed`"></i>
+          <i class="fa-solid fa-neuter" v-tooltip.top="$t('pets.columns.neutered')"></i>
         </template>
         <template #body="slotProps">
           <template v-if="loading">
@@ -183,32 +185,41 @@
           <template v-else>
             <Chip
               v-if="slotProps.data.neutered === 'Y'"
-              :label="slotProps.data.gender === 'Male' ? `Neutered` : `Spayed`"
+              :label="
+                slotProps.data.gender === 'Male'
+                  ? $t('pets.status.neutered')
+                  : $t('pets.status.spayed')
+              "
               class="shadow-sm !text-sm font-thin border dark:border-transparent h-7"
             />
           </template>
         </template>
       </Column>
 
-      <!-- Deceased Column -->
-
       <Column class="text-md" field="deceased">
-        <template #header> Active </template>
+        <template #header> {{ $t("pets.columns.active") }} </template>
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="20%" height="1rem" />
           </template>
           <template v-else>
             <Chip
-              :label="slotProps.data.deceased === 'Y' ? `Deceased` : `Alive`"
+              :label="
+                slotProps.data.deceased === 'Y'
+                  ? $t('pets.status.deceased')
+                  : $t('pets.status.alive')
+              "
               class="shadow-sm !text-sm font-thin border dark:border-transparent h-7"
             />
           </template>
         </template>
       </Column>
 
-      <!-- Age Column -->
-      <Column class="text-md !font-thin" field="date_of_birth" header="Age">
+      <Column
+        class="text-md !font-thin"
+        field="date_of_birth"
+        :header="$t('pets.columns.age')"
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="60%" height="1rem" />
@@ -219,24 +230,19 @@
         </template>
       </Column>
 
-      <!-- ِؤفهخىس Column -->
-      <Column class="text-md !font-thin" field="date_of_birth" header="">
+      <Column
+        class="text-md !font-thin"
+        field="date_of_birth"
+        :header="$t('pets.columns.actions')"
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="60%" height="1rem" />
           </template>
           <template v-else>
-            <!-- <Button
-              type="button"
-              :icon="showDeceased ? `pi pi-eye-slash !text-sm` : `pi pi-eye !text-sm`"
-              label=""
-              v-tooltip.bottom="showDeceased ? `Hide Deceased` : `Show Deceased`"
-              class="!text-sm ml-2"
-              @click="toggleDeceasedVisibility"
-            /> -->
             <router-link
               class="!text-sm ml-2 p-button"
-              v-tooltip.bottom="`View Details`"
+              v-tooltip.bottom="$t('pets.columns.view_details')"
               :to="`/pets/` + slotProps.data.microchip_num"
             >
               <i class="fa-solid fa-paw"></i>
@@ -258,7 +264,7 @@
     </DataTable>
   </div>
   <Dialog
-    header="Add New Patient"
+    :header="$t('pets.modals.add_patient.title')"
     v-model:visible="isModalVisible"
     @hide="isModalVisible = false"
     :modal="true"
@@ -268,7 +274,9 @@
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <Avatar icon="fas fa-users" shape="circle" />
-        <span class="font-bold whitespace-nowrap">New Patient</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pets.modals.add_patient.new_patient")
+        }}</span>
       </div>
     </template>
 
@@ -284,7 +292,7 @@
     <template #footer> </template>
   </Dialog>
   <Dialog
-    header="Add New Patient"
+    :header="$t('pets.modals.add_owner.title')"
     :visible="isModalOwnerVisible"
     @hide="isModalOwnerVisible = false"
     modal
@@ -294,7 +302,9 @@
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <Avatar icon="fas fa-users" shape="circle" />
-        <span class="font-bold whitespace-nowrap">New Client</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("pets.modals.add_owner.new_client")
+        }}</span>
       </div>
     </template>
     <NewClientForm
@@ -317,13 +327,16 @@ import InputText from "primevue/inputtext";
 import InputGroupAddon from "primevue/inputgroupaddon";
 import InputGroup from "primevue/inputgroup";
 import Button from "primevue/button";
-import axiosInstance from "@/axios"; // Assuming you've created a global axios instance
+import axiosInstance from "@/axios";
 import Chip from "primevue/chip";
 import Paginator from "primevue/paginator";
 import Dialog from "primevue/dialog";
 import NewPatient from "@/views/AddNewPet.vue";
 import Avatar from "primevue/avatar";
 import NewClientForm from "@/views/AddNewOwner.vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 // BARCODE READER WORK
 const inputFocused = ref(false);
 const inputRef = ref(null); // Reference to the input element
@@ -413,26 +426,87 @@ const onPageChange = (event) => {
   fetchPets(currentPage.value); // Fetch pets for the new page
 };
 const species = ref([
-  { label: "Avian", value: "Birds", icon: "fa-solid fa-dove" },
-  { label: "Bovine", value: "Cows", icon: "fa-solid fa-cow" },
-  { label: "Camelid", value: "Camels", icon: "fa-solid fa-paw" }, // Default icon
-  { label: "Canine", value: "Dogs", icon: "fa-solid fa-dog" },
-  { label: "Caprine", value: "Goats", icon: "fa-solid fa-paw" }, // Default icon
-  { label: "Cavies", value: "Guinea Pigs", icon: "fa-solid fa-paw" }, // Default icon
-  { label: "Cervidae", value: "Deers", icon: "fa-solid fa-paw" },
-  { label: "Equine", value: "Horses", icon: "fa-duotone fa-horse " },
-  { label: "Feline", value: "Cats", icon: "fa-solid fa-cat" },
-  { label: "Lapine", value: "Rabbits", icon: "fa-solid fad fa-rabbit" },
-  { label: "Murine", value: "Mice", icon: "fa-solid fa-paw" },
-  { label: "Ovine", value: "Sheeps", icon: "fa-solid fa-sheep" },
+  {
+    label: t("species.avian"),
+    en_label: "Avian",
+    value: "Birds",
+    icon: "fa-solid fa-dove",
+  },
+  {
+    label: t("species.bovine"),
+    en_label: "Bovine",
+    value: "Cows",
+    icon: "fa-solid fa-cow",
+  },
+  {
+    label: t("species.camelid"),
+    en_label: "Camelid",
+    value: "Camels",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.canine"),
+    en_label: "Canine",
+    value: "Dogs",
+    icon: "fa-solid fa-dog",
+  },
+  {
+    label: t("species.caprine"),
+    en_label: "Caprine",
+    value: "Goats",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.cavies"),
+    en_label: "Cavies",
+    value: "Guinea Pigs",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.cervidae"),
+    en_label: "Cervidae",
+    value: "Deers",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.equine"),
+    en_label: "Equine",
+    value: "Horses",
+    icon: "fa-duotone fa-horse",
+  },
+  {
+    label: t("species.feline"),
+    en_label: "Feline",
+    value: "Cats",
+    icon: "fa-solid fa-cat",
+  },
+  {
+    label: t("species.lapine"),
+    en_label: "Lapine",
+    value: "Rabbits",
+    icon: "fa-solid fad fa-rabbit",
+  },
+  {
+    label: t("species.murine"),
+    en_label: "Murine",
+    value: "Mice",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.ovine"),
+    en_label: "Ovine",
+    value: "Sheeps",
+    icon: "fa-solid fa-sheep",
+  },
 ]);
 function getIconClass(speciesLabel) {
-  const found = species.value.find((spec) => spec.label === speciesLabel);
+  const found = species.value.find((spec) => spec.en_label === speciesLabel);
   return found ? found.icon : "fa-solid fa-paw";
 }
 const getSpeciesValue = (label) => {
-  const found = species.value.find((species) => species.label === label);
-  return found ? found.value : null;
+  console.log(label);
+  const found = species.value.find((species) => species.en_label === label);
+  return found ? found.label : null;
 };
 // Function to compute the age of the pet in years and months
 const computeAge = (dateOfBirth) => {

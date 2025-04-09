@@ -138,15 +138,11 @@
     </div>
   </div>
   <small id="" class="text-[8pt] text-gray-600"
-    >{{ $t("recaptcha.notice") }}
-    <a href="https://policies.google.com/privacy" class="text-blue-500">{{
-      $t("recaptcha.privacy")
-    }}</a>
-    {{ $t("and") }}
-    <a href="https://policies.google.com/terms" class="text-blue-500">{{
-      $t("recaptcha.terms")
-    }}</a>
-    {{ $t("apply") }}.</small
+    >Site is protected by reCAPTCHA. Google
+    <a href="https://policies.google.com/privacy" class="text-blue-500">Privacy Policy</a>
+    and
+    <a href="https://policies.google.com/terms" class="text-blue-500">Terms of Service</a>
+    apply.</small
   >
 </template>
 

@@ -7,13 +7,13 @@
         <legend
           class="px-4 bg-gray-600 text-white dark:bg-zinc-200 dark:text-zinc-800 rounded"
         >
-          Send WhatsApp Message
+          {{ $t("whatsapp.title") }}
         </legend>
         <div class="field mt-6 w-full">
           <input type="hidden" v-model="wahaMessageNumber" />
           <FloatLabel class="w-full">
             <Textarea v-model="wahaMessageText" rows="5" cols="30" fluid />
-            <label for="address">Message</label>
+            <label for="address">{{ $t("whatsapp.fields.message") }}</label>
           </FloatLabel>
         </div>
         <button
@@ -22,10 +22,8 @@
           :disabled="loading"
         >
           <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
-          <span v-else>Send</span>
+          <span v-else>{{ $t("whatsapp.buttons.send") }}</span>
         </button>
-        <!-- <Button type="submit" class="mt-4 w-full" > -->
-        <!-- <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i> -->
       </fieldset>
     </form>
   </div>
@@ -39,7 +37,9 @@ import FloatLabel from "primevue/floatlabel";
 import Button from "primevue/button";
 import eventBus from "@/eventBus";
 import axios from "axios";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 // Environment variables for API configuration
 const WAHA_API_KEY = import.meta.env.VITE_WAHA_API_KEY;
 const WAHA_API_URL = import.meta.env.VITE_WAHA_API_URL;
@@ -91,8 +91,9 @@ const whatsAppSendText = async () => {
     // Show an alert or toast message that the message is too short
     eventBus.emit("show-toast", {
       severity: "error",
-      summary: "Message too short",
-      detail: "Your message must be longer than 5 characters to be sent.",
+      summary: t("whatsapp.messages.too_short"),
+      detail: t("whatsapp.messages.too_short_detail"),
+      // detail: "Your message must be longer than 5 characters to be sent.",
       life: 5000, // Toast duration
     });
     return; // Exit the function early if the message is too short
@@ -123,8 +124,8 @@ const whatsAppSendText = async () => {
       emit("submitted", response.data); // Emit success event with response data
       eventBus.emit("show-toast", {
         severity: "success",
-        summary: "Message sent",
-        detail: "Message sent successfully.",
+        summary: t("whatsapp.messages.sent"),
+        detail: t("whatsapp.messages.sent_detail"),
         life: 5000, // Toast duration
       });
     })

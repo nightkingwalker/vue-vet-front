@@ -47,9 +47,9 @@
                     inputId="animal_weight"
                     showButtons
                     mode="decimal"
-                    suffix=" kg"
                     :min="0"
                     :max="500"
+                    minFractionDigits="2"
                   />
                   <label for="animal_weight">Animal Weight</label>
                 </FloatLabel>
@@ -549,7 +549,7 @@ const props = defineProps({
 const emit = defineEmits(["submitted"]); // Define the event to be emitted
 
 const examination = ref(
-  /*{
+  {
     medical_record_id: props.medical_record_id,
     examination_date: "",
     animal_weight: null,
@@ -582,8 +582,8 @@ const examination = ref(
     preliminary_diagnosis: "",
     recommendations: "",
     notes: "",
-  }*/
-  {
+  }
+  /*{
     medical_record_id: props.medical_record_id,
     examination_date: "2025-03-22",
     animal_weight: 25.5,
@@ -616,7 +616,7 @@ const examination = ref(
     preliminary_diagnosis: "No significant abnormalities detected",
     recommendations: "Continue regular diet and exercise. Monitor for any changes.",
     notes: "Patient appears to be in good health. No immediate concerns.",
-  }
+  }*/
 );
 const activeStep = ref("1");
 

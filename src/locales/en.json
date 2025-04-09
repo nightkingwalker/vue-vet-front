@@ -46,5 +46,282 @@
             "day_view": "Go To Day Calendar",
             "add_new": "Add New Appointment"
         }
+    },
+    "owners": {
+        "title": "Owners List",
+        "search_placeholder": "Search Owners",
+        "actions": {
+            "refresh": "Refresh Data",
+            "new_owner": "New Owner",
+            "edit": "Edit",
+            "pets": "Pets",
+            "whatsapp": "Send WhatsApp Message",
+            "view_details": "View Details",
+            "hide_details": "Hide Details",
+            "deactivate": "Deactivate Account"
+        },
+        "modals": {
+            "new_client": "Add New Client",
+            "edit_owner": "Edit Owner",
+            "whatsapp": "Send WhatsApp Message"
+        },
+        "columns": {
+            "name": "Name",
+            "email": "Email",
+            "phone": "Phone",
+            "address": "Address"
+        },
+        "hidden_phone": "***********"
+    },
+    "edit_owner": {
+        "title": "Edit Client Details",
+        "fields": {
+            "name": "Name",
+            "email": "Email",
+            "phone": "Phone",
+            "address": "Address"
+        },
+        "actions": {
+            "update": "Update"
+        },
+        "messages": {
+            "success": "Client details have been updated successfully",
+            "error": "Failed to update client details"
+        }
+    },
+    "app": {
+        "menu": {
+            "calendar": "Calendar",
+            "patients": "Patients",
+            "owners": "Owners",
+            "pets": "Pets",
+            "inventories": "Inventories",
+            "pet_food": "Pet Food",
+            "toys_tools": "Toys & Tools",
+            "pharmaceutical": "Pharmaceutical",
+            "grooming": "Grooming",
+            "invoices": "Invoices",
+            "reports": "Reports",
+            "settings": "Settings",
+            "logout": "Log out"
+        },
+        "profile": {
+            "title": "Profile"
+        },
+        "session": {
+            "timeout_message": "You've been inactive for a while. You will be automatically logged out in {time} seconds.",
+            "timeout_header": "Session Timeout",
+            "stay_logged_in": "Stay Logged in",
+            "log_out": "Log out"
+        },
+        "toast": {
+            "signed_out": "Signed out",
+            "signed_out_detail": "User logged out"
+        }
+    },
+    "whatsapp": {
+        "title": "Send WhatsApp Message",
+        "fields": {
+            "message": "Message"
+        },
+        "buttons": {
+            "send": "Send"
+        },
+        "messages": {
+            "too_short": "Message too short",
+            "too_short_detail": "Your message must be longer than 5 characters to be sent.",
+            "sent": "Message sent",
+            "sent_detail": "Message sent successfully."
+        }
+    },
+    "add_owner": {
+        "title": "New Client Details",
+        "fields": {
+            "name": "Name",
+            "email": "Email",
+            "phone": "Phone Number",
+            "landline": "Landline Number",
+            "birth_date": "Birth Date",
+            "address": "Address",
+            "facebook_link": "Facebook Link",
+            "instagram_link": "Instagram Link",
+            "referral": "How did you hear about us?",
+            "clinic_notes": "Clinic Notes"
+        },
+        "actions": {
+            "submit": "Submit"
+        },
+        "messages": {
+            "success": "Owner added successfully.",
+            "error": "Failed to add owner. Please try again."
+        }
+    },
+    "pets": {
+        "title": "Patients",
+        "header": {
+            "refresh": "Refresh Data",
+            "show_deceased": "Show Deceased",
+            "hide_deceased": "Hide Deceased",
+            "add_new": "Add New Patient",
+            "export": "Export",
+            "search_placeholder": "Search All Columns"
+        },
+        "columns": {
+            "owner": "Owner",
+            "name": "Name",
+            "species": "Species",
+            "breed": "Breed",
+            "gender": "Gender",
+            "neutered": "Neutered/Spayed",
+            "active": "Active",
+            "age": "Age",
+            "actions": "Actions",
+            "view_details": "View Details"
+        },
+        "status": {
+            "deceased": "Deceased",
+            "alive": "Alive",
+            "male": "Male",
+            "female": "Female",
+            "neutered": "Neutered",
+            "spayed": "Spayed"
+        },
+        "modals": {
+            "add_patient": {
+                "title": "Add New Patient",
+                "new_patient": "New Patient"
+            },
+            "add_owner": {
+                "title": "Add New Client",
+                "new_client": "New Client"
+            }
+        }
+    },
+    "species": {
+        "avian": "Avian",
+        "bovine": "Bovine",
+        "camelid": "Camelid",
+        "canine": "Canine",
+        "caprine": "Caprine",
+        "cavies": "Cavies",
+        "cervidae": "Cervidae",
+        "equine": "Equine",
+        "feline": "Feline",
+        "lapine": "Lapine",
+        "murine": "Murine",
+        "ovine": "Ovine"
+    },
+    "pet_form": {
+        "title": "Add New Patient",
+        "fields": {
+            "select_owner": "Select Owner",
+            "name": "Name",
+            "select_species": "Select a Species",
+            "breed": "Breed",
+            "select_gender": "Select Gender",
+            "date_of_birth": "Date of Birth",
+            "color": "Color",
+            "distinctive_marks": "Distinctive Marks",
+            "behaviour": "Behaviour",
+            "neutered": "Neutered",
+            "deceased": "Deceased",
+            "allergies": "Allergies"
+        },
+        "buttons": {
+            "add_new_owner": "Add New Owner",
+            "submit": "Submit"
+        },
+        "options": {
+            "yes": "Yes",
+            "no": "No",
+            "male": "Male",
+            "female": "Female"
+        },
+        "species": {
+            "avian": "Avian",
+            "bovine": "Bovine",
+            "camelid": "Camelid",
+            "canine": "Canine",
+            "caprine": "Caprine",
+            "cavies": "Cavies",
+            "cervidae": "Cervidae",
+            "equine": "Equine",
+            "feline": "Feline",
+            "lapine": "Lapine",
+            "murine": "Murine",
+            "ovine": "Ovine"
+        },
+        "toast": {
+            "success": "Pet Added Successfully",
+            "error": "Error adding pet"
+        }
+    },
+    "pet_details": {
+        "title": "Pet Details",
+        "go_back": "Go back",
+        "microchip": "Microchip/Serial Number",
+        "view_patients": "View Patients",
+        "breed": "Breed",
+        "color": "Color",
+        "behavior": "Behavior",
+        "neutered": "Neutered/Spayed",
+        "not_neutered": "Not Neutered",
+        "not_spayed": "Not Spayed",
+        "age": "Age",
+        "birth_date": "Birth Date",
+        "deceased": "Deceased",
+        "alive": "Alive",
+        "allergies": "Allergies",
+        "distinctive_marks": "Distinctive Marks",
+        "edit": "Edit",
+        "visits_history": "Visits History",
+        "refresh_data": "Refresh Data",
+        "date": "Date",
+        "description": "Description",
+        "type": "Type",
+        "view_treatments": "View Treatments",
+        "view_tests": "View Tests",
+        "xray_ultrasound": "X-rays & Ultrasound",
+        "medical_examination": "Medical Examination",
+        "full_report": "Full Report",
+        "invoice": "Invoice",
+        "edit_details": "Edit Details",
+        "total_records": "In total there are {count} records.",
+        "treatments": "Treatments",
+        "edit_pet_details": "Edit Pet Details",
+        "test_results": "Test Results",
+        "medical_image": "Medical Image",
+        "xrays_images": "XRays and Images",
+        "new_medical_image": "New Medical Image",
+        "new_treatment": "New Treatment",
+        "new_test_result": "New Test Result",
+        "new_record": "New Medical Record",
+        "edit_record": "Edit Medical Record",
+        "edit_test_result": "Edit Test Result",
+        "add_case_history": "Add Case History",
+        "case_history": "Case History",
+        "add_physical_examination": "Add Physical Examination",
+        "physical_examination": "Physical Examination",
+        "invoice_details": "Invoice Details",
+        "create_invoice": "Create New Invoice",
+        "add_payment": "Add Payment",
+        "add_appointment": "Add New Appointment",
+        "Male": "Male",
+        "Female": "Female",
+        "edit_treatment": "Edit Treatment",
+        "species": {
+            "Avian": "Avian",
+            "Bovine": "Bovine",
+            "Camelid": "Camelid",
+            "Canine": "Canine",
+            "Caprine": "Caprine",
+            "Cavies": "Cavies",
+            "Cervidae": "Cervidae",
+            "equine": "Equine",
+            "Feline": "Feline",
+            "Lapine": "Lapine",
+            "Murine": "Murine",
+            "Ovine": "Ovine"
+        }
     }
 }

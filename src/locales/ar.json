@@ -41,5 +41,282 @@
             "day_view": "الذهاب إلى عرض اليوم",
             "add_new": "إضافة موعد جديد"
         }
+    },
+    "owners": {
+        "title": "قائمة المالكين",
+        "search_placeholder": "بحث عن المالكين",
+        "actions": {
+            "refresh": "تحديث البيانات",
+            "new_owner": "مالك جديد",
+            "edit": "تعديل",
+            "pets": "الحيوانات الأليفة",
+            "whatsapp": "إرسال رسالة واتساب",
+            "view_details": "عرض التفاصيل",
+            "hide_details": "إخفاء التفاصيل",
+            "deactivate": "تعطيل الحساب"
+        },
+        "modals": {
+            "new_client": "إضافة عميل جديد",
+            "edit_owner": "تعديل المالك",
+            "whatsapp": "إرسال رسالة واتساب"
+        },
+        "columns": {
+            "name": "الاسم",
+            "email": "البريد الإلكتروني",
+            "phone": "الهاتف",
+            "address": "العنوان"
+        },
+        "hidden_phone": "***********"
+    },
+    "edit_owner": {
+        "title": "تعديل بيانات العميل",
+        "fields": {
+            "name": "الاسم",
+            "email": "البريد الإلكتروني",
+            "phone": "الهاتف",
+            "address": "العنوان"
+        },
+        "actions": {
+            "update": "تحديث"
+        },
+        "messages": {
+            "success": "تم تحديث بيانات العميل بنجاح",
+            "error": "فشل تحديث بيانات العميل"
+        }
+    },
+    "app": {
+        "menu": {
+            "calendar": "التقويم",
+            "patients": "المرضى",
+            "owners": "الزبائن",
+            "pets": "المرضى",
+            "inventories": "المخزون",
+            "pet_food": "أطعمة",
+            "toys_tools": "الألعاب والأدوات",
+            "pharmaceutical": "الأدوية",
+            "grooming": "العناية",
+            "invoices": "الفواتير",
+            "reports": "تقارير",
+            "settings": "الإعدادات",
+            "logout": "تسجيل الخروج"
+        },
+        "profile": {
+            "title": "الملف الشخصي"
+        },
+        "session": {
+            "timeout_message": "لقد كنت غير نشط لفترة. سيتم تسجيل خروجك تلقائيًا خلال {time} ثانية.",
+            "timeout_header": "انتهاء الجلسة",
+            "stay_logged_in": "البقاء مسجل الدخول",
+            "log_out": "تسجيل الخروج"
+        },
+        "toast": {
+            "signed_out": "تم تسجيل الخروج",
+            "signed_out_detail": "تم تسجيل خروج المستخدم"
+        }
+    },
+    "whatsapp": {
+        "title": "إرسال رسالة واتساب",
+        "fields": {
+            "message": "الرسالة"
+        },
+        "buttons": {
+            "send": "إرسال"
+        },
+        "messages": {
+            "too_short": "الرسالة قصيرة جدًا",
+            "too_short_detail": "يجب أن تكون الرسالة أطول من 5 أحرف ليتم إرسالها.",
+            "sent": "تم إرسال الرسالة",
+            "sent_detail": "تم إرسال الرسالة بنجاح."
+        }
+    },
+    "add_owner": {
+        "title": "بيانات العميل الجديد",
+        "fields": {
+            "name": "الاسم",
+            "email": "البريد الإلكتروني",
+            "phone": "رقم الهاتف",
+            "landline": "رقم الأرضي",
+            "birth_date": "تاريخ الميلاد",
+            "address": "العنوان",
+            "facebook_link": "رابط الفيسبوك",
+            "instagram_link": "رابط الإنستغرام",
+            "referral": "كيف سمعت عنا؟",
+            "clinic_notes": "ملاحظات العيادة"
+        },
+        "actions": {
+            "submit": "إرسال"
+        },
+        "messages": {
+            "success": "تمت إضافة العميل بنجاح.",
+            "error": "فشل في إضافة العميل. يرجى المحاولة مرة أخرى."
+        }
+    },
+    "pets": {
+        "title": "قائمة المرضى",
+        "header": {
+            "refresh": "تحديث البيانات",
+            "show_deceased": "إظهار المتوفين",
+            "hide_deceased": "إخفاء المتوفين",
+            "add_new": "إضافة مريض جديد",
+            "export": "تصدير",
+            "search_placeholder": "بحث في جميع الأعمدة"
+        },
+        "columns": {
+            "owner": "المالك",
+            "name": "الاسم",
+            "species": "الفصيلة",
+            "breed": "السلالة",
+            "gender": "الجنس",
+            "neutered": "مخصي/معقمة",
+            "active": "نشط",
+            "age": "العمر",
+            "actions": "إجراءات",
+            "view_details": "عرض التفاصيل"
+        },
+        "status": {
+            "deceased": "متوفى",
+            "alive": "على قيد الحياة",
+            "male": "ذكر",
+            "female": "أنثى",
+            "neutered": "مخصي",
+            "spayed": "معقمة"
+        },
+        "modals": {
+            "add_patient": {
+                "title": "إضافة مريض جديد",
+                "new_patient": "مريض جديد"
+            },
+            "add_owner": {
+                "title": "إضافة عميل جديد",
+                "new_client": "عميل جديد"
+            }
+        }
+    },
+    "species": {
+        "avian": "طيور",
+        "bovine": "أبقار",
+        "camelid": "جمال",
+        "canine": "كلاب",
+        "caprine": "ماعز",
+        "cavies": "خنازير غينيا",
+        "cervidae": "غزلان",
+        "equine": "خيول",
+        "feline": "قطط",
+        "lapine": "أرانب",
+        "murine": "فئران",
+        "ovine": "أغنام"
+    },
+    "pet_form": {
+        "title": "إضافة مريض جديد",
+        "fields": {
+            "select_owner": "اختر المالك",
+            "name": "الاسم",
+            "select_species": "اختر النوع",
+            "breed": "السلالة",
+            "select_gender": "اختر الجنس",
+            "date_of_birth": "تاريخ الميلاد",
+            "color": "اللون",
+            "distinctive_marks": "علامات مميزة",
+            "behaviour": "السلوك",
+            "neutered": "مخصي/معقمة",
+            "deceased": "متوفى",
+            "allergies": "حساسيات"
+        },
+        "buttons": {
+            "add_new_owner": "إضافة مالك جديد",
+            "submit": "إرسال"
+        },
+        "options": {
+            "yes": "نعم",
+            "no": "لا",
+            "male": "ذكر",
+            "female": "أنثى"
+        },
+        "species": {
+            "avian": "طيور",
+            "bovine": "أبقار",
+            "camelid": "جمال",
+            "canine": "كلاب",
+            "caprine": "ماعز",
+            "cavies": "خنازير غينيا",
+            "cervidae": "غزلان",
+            "equine": "خيول",
+            "feline": "قطط",
+            "lapine": "أرانب",
+            "murine": "فئران",
+            "ovine": "أغنام"
+        },
+        "toast": {
+            "success": "تمت إضافة الحيوان الأليف بنجاح",
+            "error": "خطأ في إضافة الحيوان الأليف"
+        }
+    },
+    "pet_details": {
+        "title": "تفاصيل الحيوان الأليف",
+        "go_back": "العودة",
+        "microchip": "رقم الشريحة / التسلسلي",
+        "view_patients": "عرض المرضى",
+        "breed": "السلالة",
+        "color": "اللون",
+        "behavior": "السلوك",
+        "neutered": "مخصي",
+        "not_neutered": "غير مخصي",
+        "not_spayed": "غير معقم",
+        "age": "العمر",
+        "birth_date": "تاريخ الميلاد",
+        "deceased": "متوفى",
+        "alive": "على قيد الحياة",
+        "allergies": "الحساسيات",
+        "distinctive_marks": "علامات مميزة",
+        "edit": "تعديل",
+        "visits_history": "سجل الزيارات",
+        "refresh_data": "تحديث البيانات",
+        "date": "التاريخ",
+        "description": "الوصف",
+        "type": "النوع",
+        "view_treatments": "عرض العلاجات",
+        "view_tests": "عرض الاختبارات",
+        "xray_ultrasound": "الأشعة والموجات فوق الصوتية",
+        "medical_examination": "الفحص الطبي",
+        "full_report": "تقرير كامل",
+        "invoice": "فاتورة",
+        "edit_details": "تعديل التفاصيل",
+        "total_records": "إجمالي السجلات {count}.",
+        "treatments": "العلاجات",
+        "edit_pet_details": "تعديل تفاصيل الحيوان الأليف",
+        "test_results": "نتائج الاختبارات",
+        "medical_image": "صورة طبية",
+        "xrays_images": "الأشعة والصور",
+        "new_medical_image": "صورة طبية جديدة",
+        "new_treatment": "علاج جديد",
+        "new_test_result": "نتيجة اختبار جديدة",
+        "new_record": "سجل طبي جديد",
+        "edit_record": "تعديل السجل الطبي",
+        "edit_test_result": "تعديل نتيجة الاختبار",
+        "add_case_history": "إضافة تاريخ حالة",
+        "case_history": "تاريخ الحالة",
+        "add_physical_examination": "إضافة فحص بدني",
+        "physical_examination": "الفحص البدني",
+        "invoice_details": "تفاصيل الفاتورة",
+        "create_invoice": "إنشاء فاتورة جديدة",
+        "add_payment": "إضافة دفعة",
+        "add_appointment": "إضافة زيارة جديدة",
+        "Male": "ذكر",
+        "Female": "أنثى",
+        "edit_treatment": "تعديل العلاجات",
+        "species": {
+            "Avian": "طيور",
+            "Bovine": "أبقار",
+            "Camelid": "جمال",
+            "Canine": "كلاب",
+            "Caprine": "ماعز",
+            "Cavies": "خنازير غينيا",
+            "Cervidae": "غزلان",
+            "Equine": "خيول",
+            "Feline": "قطط",
+            "Lapine": "أرانب",
+            "Murine": "فئران",
+            "Ovine": "أغنام"
+        }
     }
 }

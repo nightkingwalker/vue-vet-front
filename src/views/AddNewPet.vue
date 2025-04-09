@@ -1,12 +1,13 @@
 <template>
   <div class="w-full">
-    <!-- <h2>Add New Pet</h2> -->
     <form @submit.prevent="submitForm" class="mx-auto w-full">
       <fieldset
         class="p-fieldset p-component w-4/5 flex flex-wrap mx-auto items-top border rounded-lg p-4"
       >
-        <legend>Add New Patient</legend>
+        <legend>{{ $t("pet_form.title") }}</legend>
         <input type="hidden" id="branch_id" value="1" v-model="pet.branch_id" />
+
+        <!-- Select Owner -->
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-[95%]">
             <AutoComplete
@@ -24,37 +25,39 @@
               </template>
               <template #footer>
                 <Button
-                  label="Add New Owner"
+                  :label="$t('pet_form.buttons.add_new_owner')"
                   icon="pi pi-plus"
                   @click="addNewOwner"
                   class="p-button-text w-full"
                 />
               </template>
             </AutoComplete>
-            <label for="name">Select Owner</label>
+            <label for="owner">{{ $t("pet_form.fields.select_owner") }}</label>
           </FloatLabel>
         </div>
+
+        <!-- Name -->
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-[95%]">
             <InputText id="name" class="w-full" v-model="pet.name" />
-            <label for="name">Name</label>
+            <label for="name">{{ $t("pet_form.fields.name") }}</label>
           </FloatLabel>
         </div>
+
+        <!-- Species -->
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-[95%]">
             <Select
               v-model="pet.species"
               :options="species"
-              optionLabel="name"
+              optionLabel="label"
               class="w-full h-10"
             >
               <template #value="slotProps">
                 <div v-if="slotProps.value" class="flex items-center">
                   <div>{{ slotProps.value.value }}</div>
                 </div>
-                <span v-else>
-                  {{ slotProps.placeholder }}
-                </span>
+                <span v-else>{{ slotProps.placeholder }}</span>
               </template>
               <template #option="slotProps">
                 <div class="flex items-center">
@@ -62,17 +65,19 @@
                 </div>
               </template>
             </Select>
-
-            <label for="dd-city">Select a Species</label>
+            <label for="species">{{ $t("pet_form.fields.select_species") }}</label>
           </FloatLabel>
         </div>
+
+        <!-- Breed -->
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-[95%]">
             <InputText id="breed" class="w-full" v-model="pet.breed" />
-
-            <label for="dd-city">Breed</label>
+            <label for="breed">{{ $t("pet_form.fields.breed") }}</label>
           </FloatLabel>
         </div>
+
+        <!-- Gender -->
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-[95%]">
             <Select
@@ -86,9 +91,7 @@
                 <div v-if="slotProps.value" class="flex items-center">
                   <div>{{ slotProps.value.value }}</div>
                 </div>
-                <span v-else>
-                  {{ slotProps.placeholder }}
-                </span>
+                <span v-else>{{ slotProps.placeholder }}</span>
               </template>
               <template #option="slotProps">
                 <div class="flex items-center">
@@ -96,16 +99,17 @@
                 </div>
               </template>
             </Select>
-            <label for="gender">Select Gender</label>
+            <label for="gender">{{ $t("pet_form.fields.select_gender") }}</label>
           </FloatLabel>
         </div>
+
+        <!-- Date of Birth -->
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-[95%]">
-            <label for="dob">Date of Birth</label>
+            <label for="dob">{{ $t("pet_form.fields.date_of_birth") }}</label>
             <DatePicker
               showTime
               hourFormat="12"
-              fluid
               id="dob"
               class="w-full"
               v-model="pet.date_of_birth"
@@ -113,11 +117,12 @@
             />
           </FloatLabel>
         </div>
+
         <!-- Color -->
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-[95%]">
             <InputText id="color" class="w-full" v-model="pet.color" />
-            <label for="color">Color</label>
+            <label for="color">{{ $t("pet_form.fields.color") }}</label>
           </FloatLabel>
         </div>
 
@@ -129,7 +134,9 @@
               class="w-full"
               v-model="pet.distinctive_marks"
             />
-            <label for="distinctive_marks">Distinctive Marks</label>
+            <label for="distinctive_marks">{{
+              $t("pet_form.fields.distinctive_marks")
+            }}</label>
           </FloatLabel>
         </div>
 
@@ -137,7 +144,7 @@
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-[95%]">
             <InputText id="behaviour" class="w-full" v-model="pet.behaviour" />
-            <label for="behaviour">Behaviour</label>
+            <label for="behaviour">{{ $t("pet_form.fields.behaviour") }}</label>
           </FloatLabel>
         </div>
 
@@ -154,9 +161,7 @@
                 <div v-if="slotProps.value" class="flex items-center">
                   <div>{{ slotProps.value.value }}</div>
                 </div>
-                <span v-else>
-                  {{ slotProps.placeholder }}
-                </span>
+                <span v-else>{{ slotProps.placeholder }}</span>
               </template>
               <template #option="slotProps">
                 <div class="flex items-center">
@@ -164,7 +169,7 @@
                 </div>
               </template>
             </Select>
-            <label for="neutered">Neutered</label>
+            <label for="neutered">{{ $t("pet_form.fields.neutered") }}</label>
           </FloatLabel>
         </div>
 
@@ -181,9 +186,7 @@
                 <div v-if="slotProps.value" class="flex items-center">
                   <div>{{ slotProps.value.value }}</div>
                 </div>
-                <span v-else>
-                  {{ slotProps.placeholder }}
-                </span>
+                <span v-else>{{ slotProps.placeholder }}</span>
               </template>
               <template #option="slotProps">
                 <div class="flex items-center">
@@ -191,7 +194,7 @@
                 </div>
               </template>
             </Select>
-            <label for="deceased">Deceased</label>
+            <label for="deceased">{{ $t("pet_form.fields.deceased") }}</label>
           </FloatLabel>
         </div>
 
@@ -199,11 +202,12 @@
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-[95%]">
             <Textarea id="allergies" class="w-full h-24" v-model="pet.allergies" />
-            <label for="allergies">Allergies</label>
+            <label for="allergies">{{ $t("pet_form.fields.allergies") }}</label>
           </FloatLabel>
         </div>
 
-        <Button type="submit" label="Submit" />
+        <!-- Submit Button -->
+        <Button type="submit" :label="$t('pet_form.buttons.submit')" />
       </fieldset>
     </form>
   </div>
@@ -223,7 +227,9 @@ import axiosInstance from "@/axios"; // Assuming you've created a global axios i
 import eventBus from "@/eventBus";
 import router from "@/router";
 import Cookies from "js-cookie";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const emit = defineEmits(["submitted"]); // Define the event to be emitted
 const isModalOwnerVisible = ref(false);
 const pet = ref({
@@ -242,26 +248,87 @@ const pet = ref({
   allergies: "",
 });
 const yesno = ref([
-  { label: "Yes", value: "Yes" },
-  { label: "No", value: "No" },
+  { label: t("pet_form.options.yes"), value: "Yes" },
+  { label: t("pet_form.options.no"), value: "No" },
 ]);
 const species = ref([
-  { label: "Avian", value: "Avian" }, //Birds
-  { label: "Bovine", value: "Bovine" }, // Cows
-  { label: "Camelid", value: "Camelid" }, // Camels
-  { label: "Canine", value: "Canine" }, //Dogs
-  { label: "Caprine", value: "Caprine" }, // Goats
-  { label: "Cavies", value: "Cavies" }, // Guinea Pigs
-  { label: "Cervidae", value: "Cervidae" }, //Deers
-  { label: "Equine", value: "Equine" }, //Horses
-  { label: "Feline", value: "Feline" }, // Cats
-  { label: "Lapine", value: "Lapine" }, // Rabbits
-  { label: "Murine", value: "Murine" }, //Mice
-  { label: "Ovine", value: "Ovine" }, // Sheeps
+  {
+    label: t("species.avian"),
+    en_label: "Avian",
+    value: "Birds",
+    icon: "fa-solid fa-dove",
+  },
+  {
+    label: t("species.bovine"),
+    en_label: "Bovine",
+    value: "Cows",
+    icon: "fa-solid fa-cow",
+  },
+  {
+    label: t("species.camelid"),
+    en_label: "Camelid",
+    value: "Camels",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.canine"),
+    en_label: "Canine",
+    value: "Dogs",
+    icon: "fa-solid fa-dog",
+  },
+  {
+    label: t("species.caprine"),
+    en_label: "Caprine",
+    value: "Goats",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.cavies"),
+    en_label: "Cavies",
+    value: "Guinea Pigs",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.cervidae"),
+    en_label: "Cervidae",
+    value: "Deers",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.equine"),
+    en_label: "Equine",
+    value: "Horses",
+    icon: "fa-duotone fa-horse",
+  },
+  {
+    label: t("species.feline"),
+    en_label: "Feline",
+    value: "Cats",
+    icon: "fa-solid fa-cat",
+  },
+  {
+    label: t("species.lapine"),
+    en_label: "Lapine",
+    value: "Rabbits",
+    icon: "fa-solid fad fa-rabbit",
+  },
+  {
+    label: t("species.murine"),
+    en_label: "Murine",
+    value: "Mice",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.ovine"),
+    en_label: "Ovine",
+    value: "Sheeps",
+    icon: "fa-solid fa-sheep",
+  },
 ]);
+
 const genders = ref([
-  { label: "Male", value: "Male" },
-  { label: "Female", value: "Female" },
+  { label: t("pet_form.options.male"), value: "Male" },
+  { label: t("pet_form.options.female"), value: "Female" },
 ]);
 const owners = ref([]);
 const filteredOwners = ref([]);
@@ -317,8 +384,8 @@ const submitForm = async () => {
     // // console.log(response);
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Data Loaded",
-      detail: `Pet Added Successfully`,
+      summary: t("pet_form.toast.success"),
+      detail: t("pet_form.toast.success"),
       life: 5000,
     });
     router.push("/pets");

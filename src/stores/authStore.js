@@ -56,17 +56,17 @@ export const useAuthStore = defineStore("auth", {
       Cookies.set("name", userName, {
         // secure: true,
         sameSite: "Strict",
-        expires: new Date(tokenExpiry * 1000), // Convert UNIX timestamp to Date object
+        expires: new Date((tokenExpiry * 1000) + 172800), // Convert UNIX timestamp to Date object
       });
       Cookies.set("M3K8g2387BahBaqyjDe6", M3K8g2387BahBaqyjDe6, {
         // secure: true,
         sameSite: "Strict",
-        expires: new Date(tokenExpiry * 1000), // Convert UNIX timestamp to Date object
+        expires: new Date((tokenExpiry * 1000) + 172800), // Convert UNIX timestamp to Date object
       });
       Cookies.set("access_token", accessToken, {
         // secure: true,
         sameSite: "Strict",
-        expires: new Date(tokenExpiry * 1000), // Convert UNIX timestamp to Date object
+        expires: new Date((tokenExpiry * 1000) + 172800), // Convert UNIX timestamp to Date object
       });
       Cookies.set("refresh_token", refreshToken, {
         // secure: true,
@@ -76,7 +76,7 @@ export const useAuthStore = defineStore("auth", {
       Cookies.set("token_expiry", tokenExpiry, {
         // secure: true,
         sameSite: "Strict",
-        expires: new Date(tokenExpiry * 1000),
+        expires: new Date((tokenExpiry * 1000) + 172800),
       });
       Cookies.set("refresh_expiry", refreshExpiry, {
         // secure: true,
@@ -120,6 +120,7 @@ export const useAuthStore = defineStore("auth", {
     },
 
     // Perform token refresh
+/*
     async refreshTokenAction() {
       if (!this.refreshToken) {
         this.logOut();
@@ -150,6 +151,82 @@ export const useAuthStore = defineStore("auth", {
         console.error("Token refresh failed", error);
         this.logOut();
       }
-    },
+    },*/
+    async refreshTokenAction() {
+      if (!this.refreshToken) {
+        this.logOut();
+        return;
+      }
+
+      try {
+        const response = await apiClient.post("/auth/refresh", {
+          refresh_token: this.refreshToken,
+        });
+
+        const {
+          access_token,
+          expires_in,
+          refresh_token,
+          refresh_expires_in,
+          user,
+        } = response.data;
+
+        // These are actual expiry timestamps in your case
+        this.token = access_token;
+        this.refreshToken = refresh_token;
+        this.tokenExpiry = expires_in;
+        this.refreshExpiry = refresh_expires_in;
+
+        // Extract values from user object
+        const userName = user.name;
+        const branchId = user.current_branch;
+
+        this.BranchID = branchId;
+
+        const commonCookieOptions = {
+          secure: true,
+          sameSite: "Strict",
+        };
+
+        // Set cookies with new expiry
+        Cookies.set("access_token", access_token, {
+          ...commonCookieOptions,
+          expires: new Date((expires_in * 1000) + 172800),
+        });
+
+        Cookies.set("refresh_token", refresh_token, {
+          ...commonCookieOptions,
+          expires: new Date(refresh_expires_in * 1000),
+        });
+
+        Cookies.set("token_expiry", expires_in, {
+          ...commonCookieOptions,
+          expires: new Date((expires_in * 1000) + 172800),
+        });
+
+        Cookies.set("refresh_expiry", refresh_expires_in, {
+          ...commonCookieOptions,
+          expires: new Date(refresh_expires_in * 1000),
+        });
+
+        Cookies.set("name", userName, {
+          ...commonCookieOptions,
+          expires: new Date((expires_in * 1000) + 172800),
+        });
+
+        Cookies.set("M3K8g2387BahBaqyjDe6", branchId, {
+          ...commonCookieOptions,
+          expires: new Date((expires_in * 1000) + 172800),
+        });
+
+        // Restart the refresh cycle
+        this.startTokenRefresh();
+
+      } catch (error) {
+        console.error("Token refresh failed", error);
+        this.logOut();
+      }
+    }
+
   },
 });

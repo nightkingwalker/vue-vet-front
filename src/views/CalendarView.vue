@@ -186,6 +186,7 @@ import addNewAppointment from "@/views/addNewAppointment.vue";
 import Button from "primevue/button";
 import { RouterLink } from "vue-router";
 import { useI18n } from "vue-i18n";
+import { arSA } from "date-fns/locale"; // Arabic locale
 // import RouterLink from "primevue/routerlink";
 import axiosInstance from "@/axios"; // Ensure this is correctly set up with baseURL
 const eventsServicePlugin = createEventsServicePlugin();
@@ -456,8 +457,9 @@ const calendarApp = createCalendar({
   views: [viewMonthGrid, viewWeek, viewDay],
   defaultView: viewMonthGrid.name,
   locale: "ar-AR",
+  isRTL: true,
   translations: mergeLocales(translations, {
-    "ar-AR": {
+    arAR: {
       Today: "اليوم",
       Month: "شهر",
       Week: "أسبوع",

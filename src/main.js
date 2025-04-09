@@ -16,7 +16,7 @@ import { definePreset } from '@primevue/themes';
 import ConfirmationService from 'primevue/confirmationservice';
 import ConfirmDialog from 'primevue/confirmdialog';
 // import { useToast } from "primevue/usetoast";
-import { VueReCaptcha } from 'vue-recaptcha-v3'
+// import { VueReCaptcha } from 'vue-recaptcha-v3'
 import FocusTrap from 'primevue/focustrap';
 import { i18n } from './plugins/i18n';
 const app = createApp(App)
@@ -108,13 +108,13 @@ app.use(PrimeVue, {
     // ripple: true
 });
 app.directive('focustrap', FocusTrap);
-app.use(VueReCaptcha, {
-    siteKey: import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY,
-    loaderOptions: {
-        useRecaptchaNet: true,
-        autoHideBadge: false
-    }
-})
+// app.use(VueReCaptcha, {
+//     siteKey: import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY,
+//     loaderOptions: {
+//         useRecaptchaNet: true,
+//         autoHideBadge: false
+//     }
+// })
 app.use(createPinia())
 app.use(router);
 app.directive("ripple", Ripple);
