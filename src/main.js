@@ -117,7 +117,8 @@ app.directive('focustrap', FocusTrap);
 // })
 app.use(createPinia())
 app.use(router);
-app.directive("ripple", Ripple);
+// app.directive("ripple", Ripple);
+app.directive('ripple', Ripple);
 app.directive("tooltip", Tooltip);
 app.use(ConfirmationService);
 app.use(ToastService); // Use ToastService in your app

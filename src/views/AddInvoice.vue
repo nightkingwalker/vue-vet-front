@@ -96,7 +96,7 @@
                     </div>
                   </div>
                   <div class="flex items-center">
-                    <span class="!!2xl:text-lg lg:text-xs font-semibold mr-2"
+                    <span class="!!2xl:text-lg lg:text-xs font-semibold ltr:mr-2 rtl:ml-2"
                       >${{ slotProps.item.selling_price }}</span
                     >
                     <Tag

@@ -137,7 +137,7 @@
               mode="decimal"
               :min="0.0"
               :max="5000000"
-              minFractionDigits="3"
+              :minFractionDigits="3"
               :step="1"
             />
             <label for="quantity">Quantity to Add</label>
@@ -152,7 +152,7 @@
               v-model="form.purchasePrice"
               mode="currency"
               currency="USD"
-              minFractionDigits="3"
+              :minFractionDigits="3"
               :min="0"
               :max="5000000"
             />
@@ -168,7 +168,7 @@
               v-model="form.sellingPrice"
               mode="currency"
               currency="USD"
-              minFractionDigits="3"
+              :minFractionDigits="3"
               :min="0"
               :max="5000000"
             /><!--:disabled="!!existingItemId"-->

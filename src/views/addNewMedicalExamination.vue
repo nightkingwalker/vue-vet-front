@@ -49,7 +49,7 @@
                     mode="decimal"
                     :min="0"
                     :max="500"
-                    minFractionDigits="2"
+                    :minFractionDigits="2"
                   />
                   <label for="animal_weight">Animal Weight</label>
                 </FloatLabel>

@@ -29,7 +29,7 @@
             />
           </div>
           <h2 class="text-sm !mb-0 pb-0 flex">
-            <i class="fa-solid fa-x-ray mr-2"></i> Medical Images
+            <i class="fa-solid fa-x-ray ltr:mr-2 rtl:ml-2"></i> Medical Images
           </h2>
         </div>
       </template>

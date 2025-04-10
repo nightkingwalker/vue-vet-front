@@ -9,6 +9,7 @@
             </template>
           </SelectButton>
           <Button
+            v-if="!isMobile"
             type="button"
             icon="pi pi-refresh !text-sm"
             label=""
@@ -117,14 +118,14 @@
                   {{ $t("owners.columns.name") }}: {{ owner.name }}
                 </div>
                 <div class="text-sm">
-                  <i class="fa-solid fa-at mr-2"></i>
+                  <i class="fa-solid fa-at ltr:mr-2 rtl:ml-2"></i>
                   <span v-if="owner.showDetails">{{ owner.email }}</span>
                   <span v-else>******@****.***</span>
                 </div>
               </div>
               <div class="flex flex-col md:items-start gap-2 w-1/3">
                 <span class="text-sm">
-                  <i class="fa-solid fa-phone-volume mr-2 mt-2"></i>
+                  <i class="fa-solid fa-phone-volume ltr:mr-2 rtl:ml-2 mt-2"></i>
                   <a
                     v-if="owner.showDetails"
                     :href="`https://wa.me/` + owner.phone"
@@ -149,7 +150,7 @@
                   }}</span>
                 </span>
                 <span class="!text-sm">
-                  <i class="fa-solid fa-location-dot mr-2"></i>
+                  <i class="fa-solid fa-location-dot ltr:mr-2 rtl:ml-2"></i>
                   {{ $t("owners.columns.address") }}: {{ owner.address }}
                 </span>
               </div>
@@ -322,12 +323,12 @@
 
               <div class="mt-4 text-sm">
                 <div class="2xl:!text-lg lg:!text-xs">
-                  <i class="fa-solid fa-at mr-2 mt-2"></i>
+                  <i class="fa-solid fa-at ltr:mr-2 rtl:ml-2 mt-2"></i>
                   <span v-if="owner.showDetails">{{ owner.email }}</span>
                   <span v-else class="lg:text-xs xl:text-xs"> ******@****.*** </span>
                 </div>
                 <div>
-                  <i class="fa-solid fa-phone-volume mr-2 mt-2"></i>
+                  <i class="fa-solid fa-phone-volume ltr:mr-2 rtl:ml-2 mt-2"></i>
                   <a
                     dir="ltr"
                     v-if="owner.showDetails"
@@ -352,7 +353,7 @@
                   <span v-else>{{ $t("owners.hidden_phone") }}</span>
                 </div>
                 <div class="whitespace-normal">
-                  <i class="fa-solid fa-location-dot mr-2 mt-2"></i>
+                  <i class="fa-solid fa-location-dot ltr:mr-2 rtl:ml-2 mt-2"></i>
                   {{ $t("owners.columns.address") }}: {{ owner.address }}
                 </div>
               </div>
@@ -586,6 +587,9 @@ import NewClientForm from "@/views/AddNewOwner.vue";
 import SendWhatsApp from "@/views/SendWhatsApp.vue";
 import EditOwner from "@/views/EditOwner.vue";
 import { useI18n } from "vue-i18n";
+import { useDevice } from "@/composables/useDevice";
+
+const { isMobile, mobileMenuVisible } = useDevice();
 const { t } = useI18n();
 const currentPage = ref(1); // Track the current page
 const totalRecords = ref(0); // Total number of records
@@ -598,7 +602,7 @@ const owners = ref([
     showDetails: false,
   },
 ]);
-const layout = ref("grid");
+const layout = ref("");
 const loading = ref(true);
 const options = ref(["list", "grid"]);
 const whatsAppContact = ref("");
@@ -609,6 +613,7 @@ const isEditOwnerVisible = ref(false);
 const showModal = () => {
   isModalVisible.value = true;
 };
+layout.value = isMobile ? "grid" : "list";
 const refreshData = () => {
   loading.value = true; // Set loading state to true to show skeletons
   fetchOwners(); // Fetch the pets data again

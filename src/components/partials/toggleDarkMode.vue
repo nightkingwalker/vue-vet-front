@@ -3,7 +3,7 @@
     @click="toggleDarkMode"
     type="button"
     title="Toggle Dark Mode"
-    class="absolute top-4 left-4 inline-flex items-center p-2 mt-2 mr-3 text-sm text-gray-600 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-0 border-gray-200 border-2 dark:border-gray-600 dark:text-gray-400 dark:bg-gray-700 dark:hover:bg-gray-500 focus:outline-none float-right"
+    class="absolute top-4 left-4 inline-flex items-center p-2 mt-2 ltr:mr-3 rtl:ml-3 text-sm text-gray-600 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-0 border-gray-200 border-2 dark:border-gray-600 dark:text-gray-400 dark:bg-gray-700 dark:hover:bg-gray-500 focus:outline-none ltr:float-right rtl:float-left"
   >
     <svg
       v-if="isDarkMode"

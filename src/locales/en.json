@@ -31,13 +31,15 @@
             "owner": "Owner",
             "location": "Location",
             "details": "Details",
-            "view_details": "View Details"
+            "view_details": "View Details",
+            "select_appointment": "Please Select a Patient First"
         },
         "legend": "Legend",
         "appointment": {
             "new": "New Appointment",
             "regular": "Regular",
             "emergency": "Emergency",
+            "non-emergency": "Non-Emergency",
             "followup": "Follow Up",
             "surgery": "Surgery",
             "grooming": "Grooming"
@@ -103,6 +105,7 @@
             "invoices": "Invoices",
             "reports": "Reports",
             "settings": "Settings",
+            "shortcuts": "Shortcuts",
             "logout": "Log out"
         },
         "profile": {

@@ -26,13 +26,15 @@
             "owner": "المالك",
             "location": "الموقع",
             "details": "التفاصيل",
-            "view_details": "عرض التفاصيل"
+            "view_details": "عرض التفاصيل",
+            "select_appointment": "قم باختيار موعد"
         },
         "legend": "وسيلة الإيضاح",
         "appointment": {
             "new": "موعد جديد",
             "regular": "عادي",
             "emergency": "طارئ",
+            "non-emergency": "غير طارئ",
             "followup": "متابعة",
             "surgery": "جراحة",
             "grooming": "تجميل"
@@ -98,6 +100,7 @@
             "invoices": "الفواتير",
             "reports": "تقارير",
             "settings": "الإعدادات",
+            "shortcuts": "اختصارات",
             "logout": "تسجيل الخروج"
         },
         "profile": {
@@ -106,7 +109,7 @@
         "session": {
             "timeout_message": "لقد كنت غير نشط لفترة. سيتم تسجيل خروجك تلقائيًا خلال {time} ثانية.",
             "timeout_header": "انتهاء الجلسة",
-            "stay_logged_in": "البقاء مسجل الدخول",
+            "stay_logged_in": "البقاء متصلاً",
             "log_out": "تسجيل الخروج"
         },
         "toast": {

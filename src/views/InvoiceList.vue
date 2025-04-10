@@ -429,7 +429,7 @@
         autoFocus: false,
       }"
     >
-      <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+      <i class="pi pi-exclamation-triangle ltr:mr-3 rtl:ml-3" style="font-size: 2rem" />
       <span v-if="selectedInvoice"
         >Are you sure you want to delete invoice
         <b>{{ selectedInvoice.invoice_number }}</b

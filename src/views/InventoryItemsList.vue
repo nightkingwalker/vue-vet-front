@@ -290,7 +290,7 @@
         autoFocus: true,
       }"
     >
-      <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+      <i class="pi pi-exclamation-triangle ltr:mr-3 rtl:ml-3" style="font-size: 2rem" />
       <span v-if="selectedItem"
         >Are you sure you want to delete <b>{{ selectedItem.name }}</b
         >?</span

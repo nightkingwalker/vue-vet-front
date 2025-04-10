@@ -1460,6 +1460,20 @@ const eventTheme = {
       container: "#a24258",
     },
   },
+  "Non-Emergency": {
+    colorName: "Non-Emergency",
+    lightColors: {
+      main: "#1db954", // Vibrant green (similar to Spotify's green)
+      container: "#86e8b6", // Very light mint green
+      onContainer: "#064e3b", // Dark green (for text on container)
+    },
+    darkColors: {
+      main: "#a7f3d0", // Soft mint green
+      onContainer: "#86e8b6", // Very light mint green
+      container: "#065f46", // Deep emerald green
+    },
+  },
+
   FollowUp: {
     colorName: "FollowUp",
     lightColors: {

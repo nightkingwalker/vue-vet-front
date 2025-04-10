@@ -157,6 +157,7 @@ const selectedPet = ref(null);
 const filteredPets = ref([]);
 const appointmentTypes = ref([
   { label: "Emergency", value: "Emergency" },
+  { label: "Non-Emergency", value: "Non-Emergency" },
   { label: "Regular", value: "Regular" },
   { label: "FollowUp", value: "FollowUp" },
   { label: "Surgery", value: "Surgery" },

@@ -1,13 +1,17 @@
 <template>
-  <div class="flex gap-2">
-    <div class="w-4/5">
+  <div class="flex gap-2" :class="{ 'flex-wrap': isMobile }">
+    <div :class="{ 'w-4/5': !isMobile, 'w-9/10 mx-auto': isMobile }">
       <ScheduleXCalendar
         :calendar-app="calendarApp"
-        class="!h-[calc(100vh-100px)] !w-full mt-6 mx-auto"
-        :headerContentRightPrepend="``"
+        class="mt-6 mx-auto"
+        :class="{
+          '!w-full !h-[calc(100vh-100px)]': !isMobile,
+          '!w-full !h-[400px]': isMobile,
+        }"
       >
+        <!-- :headerContentRightPrepend="``" -->
         <template #headerContentRightPrepend>
-          <div class="sx__calendar-header-content">
+          <div :class="{ 'sx__calendar-header-content': !isMobile, hidden: isMobile }">
             <Button
               type=""
               icon="pi pi-refresh !text-sm"
@@ -27,6 +31,7 @@
               icon="pi pi-plus !text-sm"
               label=""
               v-tooltip.bottom="$t('calendar.add_appointment')"
+              @click="addAppointment"
               class="!text-xs !text-[var(--p-primary-color)] hover:!text-[var(--p-primary-contrast-color)] sx__today-button sx__ripple"
               style="
                 padding: var(--sx-spacing-padding3) var(--sx-spacing-padding4);
@@ -47,7 +52,11 @@
       </ContextMenu>
     </div>
     <div
-      class="w-1/5 !h-[calc(100vh-100px)] mt-6 !bg-gray-200 dark:!bg-zinc-600 border rounded-lg p-4 flex flex-col justify-between"
+      :class="{
+        '!h-[calc(100vh-100px)] w-1/5': !isMobile,
+        'w-9/10 h-fit mx-auto': isMobile,
+      }"
+      class="mt-6 !bg-gray-200 dark:!bg-zinc-600 border rounded-lg p-4 flex flex-col justify-between"
     >
       <div
         class="flex flex-col items-center gap-4 mb-4 bg-gray-100 dark:bg-zinc-500 shadow-md rounded-lg p-4 !text-sm"
@@ -55,9 +64,10 @@
           '--border-color': currentPet.theme.lightColors.main,
           '--background-color': currentPet.theme.lightColors.container,
           '--text-color': currentPet.theme.lightColors.onContainer,
-          'border-left': `4px solid var(--border-color)`,
+          'border-inline-start': `4px solid var(--border-color)`,
           background: `var(--background-color)`,
           color: `var(--text-color)`,
+          transition: `1s`,
         }"
       >
         <h4 class="w-full">
@@ -66,34 +76,43 @@
               getIconClass(currentPet.pet.species) +
               ` text-sm text-center ` +
               (currentPet.pet.gender === `Male` ? `text-blue-600` : 'text-pink-600') +
-              ` mx-auto w-fit dark:bg-surface-500  mr-2`
+              ` mx-auto w-fit dark:bg-surface-500   ltr:mr-2 rtl:ml-2`
             "
           ></i>
-          {{ $t("calendar.pet_details.name") }}: {{ currentPet.pet.name }}
+          {{ $t("calendar.pet_details.name") }}:
+          {{ currentPet.pet.name ? currentPet.pet.name : "" }}
         </h4>
         <h4 class="w-full">
-          <i class="fas fa-paw mr-2"></i>
+          <i class="fas fa-paw ltr:mr-2 rtl:ml-2"></i>
           {{ $t("calendar.pet_details.species") }}:
-          {{ getSpeciesValue(currentPet.pet.species) }}
+          <!-- {{ getSpeciesValue(currentPet.pet.species) }} -->
+          {{ currentPet.pet.species ? getSpeciesValue(currentPet.pet.species) : "" }}
         </h4>
 
         <h4 class="w-full">
           <i class="fa-solid fa-users"></i>
-          {{ $t("calendar.pet_details.owner") }}: {{ currentPet.people[0] }}
+          {{ $t("calendar.pet_details.owner") }}:
+          {{ currentPet.people[0] ? currentPet.people[0] : "" }}
         </h4>
         <h4 class="w-full">
-          <i class="fa-solid fa-location-dot mr-2" aria-hidden="true"></i>
-          {{ $t("calendar.pet_details.location") }}: {{ currentPet.location }}
+          <i class="fa-solid fa-location-dot ltr:mr-2 rtl:ml-2" aria-hidden="true"></i>
+          {{ $t("calendar.pet_details.location") }}:
+          {{ currentPet.location ? currentPet.location : "" }}
         </h4>
         <h4 class="w-full text-xs">
-          {{ $t("calendar.pet_details.details") }}: {{ currentPet.description }}
+          {{ $t("calendar.pet_details.details") }}:
+          {{ currentPet.description ? currentPet.description : "" }}
         </h4>
         <RouterLink
+          v-if="!(currentPet.pet.microchip_num === '123123')"
           class="p-button p-component !text-xs !text-[var(--p-primary-contrast-color)] !border-none shadow-sm"
           icon="fas fa-paw"
           :label="$t('calendar.pet_details.view_details')"
           v-tooltip.top="{
-            value: $t('calendar.pet_details.view_details'),
+            value:
+              currentPet.pet.microchip_num === '123123'
+                ? `Please Select a Patient First`
+                : $t('calendar.pet_details.view_details'),
             pt: {
               arrow: {
                 style: {
@@ -112,6 +131,35 @@
           <i class="fas fa-paw"></i
           ><span>{{ $t("calendar.pet_details.view_details") }}</span>
         </RouterLink>
+        <Button
+          v-else
+          :disabled="currentPet.pet.microchip_num === '123123'"
+          class="p-button p-component !text-xs !text-[var(--p-primary-contrast-color)] !border-none shadow-sm"
+          icon="fas fa-paw"
+          :label="$t('calendar.pet_details.view_details')"
+          v-tooltip.top="{
+            value:
+              currentPet.pet.microchip_num === '123123'
+                ? $t('calendar.pet_details.select_appointment')
+                : $t('calendar.pet_details.view_details'),
+            pt: {
+              arrow: {
+                style: {
+                  borderTopColor: 'var(--p-primary-color)',
+                },
+              },
+              text:
+                '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+            },
+          }"
+          :to="{
+            name: 'PetDetails',
+            params: { petmicrochip: currentPet.pet.microchip_num },
+          }"
+        >
+          <i class="fas fa-paw"></i
+          ><span>{{ $t("calendar.pet_details.select_appointment") }}</span>
+        </Button>
       </div>
 
       <div class="flex flex-col">
@@ -155,7 +203,14 @@
         }}</span>
       </div>
     </template>
-    <addNewAppointment :activeDate="activeDate" @submitted="handleSubmit" />
+    <AddNewAppointment
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
+      :activeDate="activeDate"
+      @submitted="handleSubmit"
+    />
     <template #footer> </template>
   </Dialog>
 </template>
@@ -182,13 +237,16 @@ import { translations, mergeLocales } from "@schedule-x/translations";
 import Tag from "primevue/tag";
 import ContextMenu from "primevue/contextmenu";
 import Dialog from "primevue/dialog";
-import addNewAppointment from "@/views/addNewAppointment.vue";
+import AddNewAppointment from "@/views/addNewAppointment.vue";
 import Button from "primevue/button";
 import { RouterLink } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { arSA } from "date-fns/locale"; // Arabic locale
 // import RouterLink from "primevue/routerlink";
 import axiosInstance from "@/axios"; // Ensure this is correctly set up with baseURL
+import { useDevice } from "@/composables/useDevice";
+
+const { isMobile, mobileMenuVisible } = useDevice();
 const eventsServicePlugin = createEventsServicePlugin();
 const eventModal = createEventModalPlugin();
 const calendarControls = createCalendarControlsPlugin();
@@ -298,12 +356,26 @@ const fetchAppointments = async (page = 1) => {
       status: appointment.status,
       _customContent: {
         monthGrid: "<h1>" + appointment.pet.name + "/" + appointment.owner.name + "</h1>",
-        dateGrid: "<h1>" + appointment.pet.name + "</h1>",
-        timeGrid: "<h1>" + appointment.pet.name + "</h1>",
+        dateGrid:
+          "<h1>" +
+          appointment.pet.name +
+          "/" +
+          appointment.owner.name +
+          "</h1><br><span>" +
+          appointment.title +
+          "</span>",
+        timeGrid:
+          "<h1>" +
+          appointment.pet.name +
+          "/" +
+          appointment.owner.name +
+          "</h1><br><span>" +
+          appointment.title +
+          "</span>",
       },
     }));
     if (events.value.length > 0) {
-      currentPet.value = events.value[0];
+      // currentPet.value = events.value[0];
       // // console.log(events.value);
     }
     visible.value = true;
@@ -339,6 +411,19 @@ const eventTheme = {
       main: "#ffc0cc",
       onContainer: "#ffdee6",
       container: "#a24258",
+    },
+  },
+  "Non-Emergency": {
+    colorName: "Non-Emergency",
+    lightColors: {
+      main: "#1db954", // Vibrant green (similar to Spotify's green)
+      container: "#86e8b6", // Very light mint green
+      onContainer: "#064e3b", // Dark green (for text on container)
+    },
+    darkColors: {
+      main: "#a7f3d0", // Soft mint green
+      onContainer: "#86e8b6", // Very light mint green
+      container: "#065f46", // Deep emerald green
     },
   },
   FollowUp: {
@@ -458,6 +543,10 @@ const calendarApp = createCalendar({
   defaultView: viewMonthGrid.name,
   locale: "ar-AR",
   isRTL: true,
+  gridHeight: 500,
+  isResponsive: true,
+  skipValidation: true,
+
   translations: mergeLocales(translations, {
     arAR: {
       Today: "اليوم",
@@ -645,6 +734,7 @@ const onEventUpdate = async (updatedEvent) => {
 };
 const addAppointment = () => {
   isNewApointmentVisible.value = true;
+  // console.log("CLICKED");
 };
 eventModal.close(); // close the modal
 const changeView = (date) => {

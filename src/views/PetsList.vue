@@ -22,7 +22,7 @@
     >
       <template #header>
         <div class="flex justify-between">
-          <div class="flex">
+          <div class="flex" v-if="!isMobile">
             <Button
               type="button"
               icon="pi pi-refresh !text-sm"
@@ -57,7 +57,7 @@
             />
           </div>
           <h2 class="text-2xl !mb-0 pb-0 flex">
-            <i class="fa-solid fa-paw mr-2"></i> {{ $t("pets.title") }}
+            <i class="fa-solid fa-paw ltr:mr-2 rtl:ml-2"></i> {{ $t("pets.title") }}
           </h2>
           <span class="p-input-icon-left text-sm">
             <InputGroup
@@ -142,7 +142,12 @@
         </template>
       </Column>
 
-      <Column class="text-md" field="breed" :header="$t('pets.columns.breed')">
+      <Column
+        v-if="!isMobile"
+        class="text-md"
+        field="breed"
+        :header="$t('pets.columns.breed')"
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
@@ -156,7 +161,7 @@
         </template>
       </Column>
 
-      <Column class="text-md" field="gender">
+      <Column v-if="!isMobile" class="text-md" field="gender">
         <template #header>
           <i class="fa-solid fa-venus-mars" v-tooltip.top="$t('pets.columns.gender')"></i>
         </template>
@@ -174,7 +179,7 @@
         </template>
       </Column>
 
-      <Column class="text-md" field="neutered">
+      <Column v-if="!isMobile" class="text-md" field="neutered">
         <template #header>
           <i class="fa-solid fa-neuter" v-tooltip.top="$t('pets.columns.neutered')"></i>
         </template>
@@ -196,7 +201,7 @@
         </template>
       </Column>
 
-      <Column class="text-md" field="deceased">
+      <Column v-if="!isMobile" class="text-md" field="deceased">
         <template #header> {{ $t("pets.columns.active") }} </template>
         <template #body="slotProps">
           <template v-if="loading">
@@ -335,7 +340,10 @@ import NewPatient from "@/views/AddNewPet.vue";
 import Avatar from "primevue/avatar";
 import NewClientForm from "@/views/AddNewOwner.vue";
 import { useI18n } from "vue-i18n";
+import eventBus from "@/eventBus";
+import { useDevice } from "@/composables/useDevice";
 
+const { isMobile, mobileMenuVisible } = useDevice();
 const { t } = useI18n();
 // BARCODE READER WORK
 const inputFocused = ref(false);
@@ -574,6 +582,10 @@ const toggleDeceasedVisibility = () => {
 onMounted(() => {
   fetchPets();
   window.addEventListener("keydown", handleKeydown);
+  eventBus.on("AddPet", () => {
+    // console.log("OPEN ADD OWNER");
+    isModalVisible.value = true;
+  });
 });
 onBeforeUnmount(() => {
   window.removeEventListener("keydown", handleKeydown);

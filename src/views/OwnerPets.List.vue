@@ -229,13 +229,13 @@
               <div class="text-lg font-medium border-b flex pb-2">
                 <a
                   v-if="pet.gender === 'Male'"
-                  class="bg-blue-600 text-white w-8 text-sm rounded-lg text-center flex flex-col justify-center mr-2"
+                  class="bg-blue-600 text-white w-8 text-sm rounded-lg text-center flex flex-col justify-center ltr:mr-2 rtl:ml-2"
                 >
                   <i :class="getIconClass(pet.species) + ` text-sm text-center`"></i>
                 </a>
                 <a
                   v-else
-                  class="bg-pink-600 text-white w-8 text-sm rounded-lg text-center flex flex-col justify-center mr-2"
+                  class="bg-pink-600 text-white w-8 text-sm rounded-lg text-center flex flex-col justify-center ltr:mr-2 rtl:ml-2"
                 >
                   <i :class="getIconClass(pet.species) + ` text-sm text-center`"></i>
                 </a>

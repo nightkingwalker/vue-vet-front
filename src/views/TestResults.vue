@@ -28,7 +28,7 @@
           />
         </div>
         <h2 class="text-sm !mb-0 pb-0 flex">
-          <i class="fa-solid fa-paw mr-2"></i> Test Results
+          <i class="fa-solid fa-paw ltr:mr-2 rtl:ml-2"></i> Test Results
         </h2>
       </div>
     </template>
