@@ -4,60 +4,73 @@
       <fieldset
         class="p-fieldset p-component w-full flex flex-wrap items-center border rounded-lg p-2 justify-start gap-x-2"
       >
-        <legend>Add New Medical Image</legend>
+        <legend>{{ $t("add_medical_image.title") }}</legend>
 
         <div class="field mt-6 w-[49%]">
-          <FloatLabel class="w-full md:w-56">
-            <InputText id="ref_number" v-model="medicalImage.ref_number" />
-            <label for="ref_number">Reference Number</label>
+          <FloatLabel class="w-full">
+            <InputText fluid id="ref_number" v-model="medicalImage.ref_number" />
+            <label for="ref_number">{{
+              $t("add_medical_image.fields.ref_number")
+            }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[49%]">
-          <FloatLabel class="w-full md:w-56">
-            <InputText id="organ" v-model="medicalImage.organ" />
-            <label for="organ">Organ</label>
+          <FloatLabel class="w-full">
+            <InputText fluid id="organ" v-model="medicalImage.organ" />
+            <label for="organ">{{ $t("add_medical_image.fields.organ") }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[49%]">
-          <FloatLabel class="w-full md:w-56">
-            <InputText id="measurements" v-model="medicalImage.measurements" />
-            <label for="measurements">Measurements</label>
+          <FloatLabel class="w-full">
+            <InputText fluid id="measurements" v-model="medicalImage.measurements" />
+            <label for="measurements">{{
+              $t("add_medical_image.fields.measurements")
+            }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[49%]">
-          <FloatLabel class="w-full md:w-56">
+          <FloatLabel class="w-full">
             <Select
+              fluid
               v-model="medicalImage.type"
               :options="imageTypes"
               optionLabel="label"
               class="w-full"
             />
-            <label for="type">Image Type</label>
+            <label for="type">{{ $t("add_medical_image.fields.type") }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[49%]">
-          <FloatLabel class="w-full md:w-56">
+          <FloatLabel class="w-full">
             <DatePicker
+              showIcon
+              iconDisplay="input"
+              showButtonBar
+              fluid
               id="image_date"
               v-model="medicalImage.image_date"
               dateFormat="yy-mm-dd"
               class="w-full"
             />
-            <label for="image_date">Date of Image</label>
+            <label for="image_date">{{
+              $t("add_medical_image.fields.image_date")
+            }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[49%]">
-          <FloatLabel class="w-full md:w-56">
-            <Textarea id="description" v-model="medicalImage.description" />
-            <label for="description">Description</label>
+          <FloatLabel class="w-full">
+            <Textarea fluid id="description" v-model="medicalImage.description" />
+            <label for="description">{{
+              $t("add_medical_image.fields.description")
+            }}</label>
           </FloatLabel>
         </div>
-        <Button type="submit" label="Add Medical Image" class="mt-4" />
+        <Button type="submit" :label="$t('add_medical_image.submit')" class="mt-4" />
       </fieldset>
     </form>
   </div>
@@ -65,6 +78,7 @@
 
 <script setup>
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 import InputText from "primevue/inputtext";
 import Textarea from "primevue/textarea";
 import DatePicker from "primevue/datepicker";
@@ -73,8 +87,8 @@ import FloatLabel from "primevue/floatlabel";
 import Button from "primevue/button";
 import axiosInstance from "@/axios";
 import eventBus from "@/eventBus";
-import { defineProps } from "vue";
 
+const { t } = useI18n();
 const emit = defineEmits(["submitted"]);
 
 const props = defineProps({
@@ -94,11 +108,10 @@ const medicalImage = ref({
 });
 
 const imageTypes = ref([
-  { label: "Ultrasound", value: "Ultrasound" },
-  { label: "X-ray", value: "X-ray" },
+  { label: t("add_medical_image.image_types.ultrasound"), value: "Ultrasound" },
+  { label: t("add_medical_image.image_types.xray"), value: "X-ray" },
 ]);
 
-// Form submission
 const submitForm = async () => {
   const submissionData = {
     medical_record_id: props.medical_record_id,
@@ -111,24 +124,22 @@ const submitForm = async () => {
       ? medicalImage.value.image_date.toLocaleDateString("en-CA")
       : null,
   };
-  // console.log(submissionData);
+
   try {
     const response = await axiosInstance.post("/medical-images", submissionData);
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Medical Image Added",
-      detail: `Medical image added successfully.`,
+      summary: t("add_medical_image.toast.title"),
+      detail: t("add_medical_image.toast.success"),
       life: 5000,
     });
 
-    // Emit the data back to the parent
     emit("NewImageAdded", response.data);
   } catch (error) {
-    // console.log(error.response.data.message);
     eventBus.emit("show-toast", {
       severity: "error",
-      summary: "Error",
-      detail: error.response.data.message || "Failed to add medical image.",
+      summary: t("add_medical_image.toast.title"),
+      detail: error.response?.data?.message || t("add_medical_image.toast.error"),
       life: 5000,
     });
   }
@@ -137,7 +148,6 @@ const submitForm = async () => {
 
 <style scoped>
 .form-container {
-  /* max-width: 500px; */
   margin: auto;
 }
 .field {

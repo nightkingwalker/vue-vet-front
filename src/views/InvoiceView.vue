@@ -1,20 +1,20 @@
 <template>
   <div v-if="!invoice">
-    No invoice has been issues for this service.
+    {{ $t('invoice.no_invoice') }}
     <Button
       size="medium"
-      label="Create Invoice"
+      :label="$t('invoice.create_invoice')"
       icon="fa-solid fa-hand-holding-dollar"
       class="p-button-sm !text-[var(--p-primary-contrast-color)] dark:!text-[var(--p-primary-900)]"
       @click="openAddPaymentDialog"
-      v-tooltip="'Create Invoice'"
+      v-tooltip="$t('invoice.create_invoice')"
     />
   </div>
   <div v-else class="invoice-details-container">
     <Card>
       <template #title>
         <div class="flex justify-between items-center">
-          <span>Invoice #{{ invoice.invoice_number }}</span>
+          <span>{{ $t('invoice.invoice_number', { number: invoice.invoice_number }) }}</span>
           <InvoiceStatusTag :status="invoice.status" />
         </div>
       </template>
@@ -59,7 +59,6 @@
         <InvoiceNotes v-if="invoice.notes" :notes="invoice.notes" class="mb-4" />
 
         <!-- Footer Actions -->
-        <!-- @print="printInvoice" -->
         <InvoiceActions @print="printPOS" @download="downloadPDF" :invoice="invoice" />
       </template>
     </Card>
@@ -75,7 +74,7 @@
       <div class="pos-divider">--------------------------------</div>
 
       <div class="pos-invoice-info">
-        <div>INVOICE: {{ invoice.invoice_number }}</div>
+        <div>{{ $t('invoice.invoice_number', { number: invoice.invoice_number }) }}</div>
         <div>DATE: {{ formatPOSDate(invoice.date) }}</div>
         <div v-if="invoice.owner">CUSTOMER: {{ invoice.owner.name }}</div>
       </div>
@@ -84,10 +83,10 @@
 
       <div class="pos-items">
         <div class="pos-item-header">
-          <span class="pos-item-desc">ITEM</span>
-          <span class="pos-item-qty">QTY</span>
-          <span class="pos-item-price">PRICE</span>
-          <span class="pos-item-total">TOTAL</span>
+          <span class="pos-item-desc">{{ $t('invoice.items.item') }}</span>
+          <span class="pos-item-qty">{{ $t('invoice.items.qty') }}</span>
+          <span class="pos-item-price">{{ $t('invoice.items.price') }}</span>
+          <span class="pos-item-total">{{ $t('invoice.items.total') }}</span>
         </div>
 
         <div v-for="(item, index) in invoice.items" :key="index" class="pos-item">
@@ -102,19 +101,19 @@
 
       <div class="pos-totals">
         <div class="pos-subtotal">
-          <span>SUBTOTAL:</span>
+          <span>{{ $t('invoice.totals.subtotal') }}</span>
           <span>{{ formatPOSCurrency(invoice.subtotal) }}</span>
         </div>
         <div v-if="parseFloat(invoice.tax_amount) > 0" class="pos-tax">
-          <span>TAX ({{ invoice.tax_rate }}%):</span>
+          <span>{{ $t('invoice.totals.tax', { rate: invoice.tax_rate }) }}</span>
           <span>{{ formatPOSCurrency(invoice.tax_amount) }}</span>
         </div>
         <div v-if="parseFloat(invoice.discount_amount) > 0" class="pos-discount">
-          <span>DISCOUNT:</span>
+          <span>{{ $t('invoice.totals.discount') }}</span>
           <span>-{{ formatPOSCurrency(invoice.discount_amount) }}</span>
         </div>
         <div class="pos-total">
-          <span>TOTAL:</span>
+          <span>{{ $t('invoice.totals.total') }}</span>
           <span>{{ formatPOSCurrency(invoice.total_amount) }}</span>
         </div>
       </div>
@@ -127,15 +126,15 @@
           :key="index"
           class="pos-payment"
         >
-          <div>PAYMENT {{ index + 1 }}: {{ formatPOSDate(payment.payment_date) }}</div>
-          <div>METHOD: {{ getPaymentMethod(payment.payment_method_id) }}</div>
-          <div>AMOUNT: {{ formatPOSCurrency(payment.amount) }}</div>
+          <div>{{ $t('invoice.payments.payment', { number: index + 1 }) }}: {{ formatPOSDate(payment.payment_date) }}</div>
+          <div>{{ $t('invoice.payments.method') }}: {{ getPaymentMethod(payment.payment_method_id) }}</div>
+          <div>{{ $t('invoice.payments.amount') }}: {{ formatPOSCurrency(payment.amount) }}</div>
         </div>
         <div v-if="invoice.balance_due === 0" class="pos-paid">
-          <span>PAID IN FULL</span>
+          <span>{{ $t('invoice.totals.paid_full') }}</span>
         </div>
         <div v-else class="pos-balance">
-          <span>BALANCE DUE:</span>
+          <span>{{ $t('invoice.totals.balance_due') }}:</span>
           <span>{{ formatPOSCurrency(invoice.balance_due) }}</span>
         </div>
       </div>
@@ -143,8 +142,8 @@
       <div class="pos-divider">--------------------------------</div>
 
       <div class="pos-footer">
-        <div>Thank you for your business!</div>
-        <div>Visit us again soon</div>
+        <div>{{ $t('invoice.footer.thank_you') }}</div>
+        <div>{{ $t('invoice.footer.visit_again') }}</div>
       </div>
     </div>
   </div>
@@ -153,6 +152,7 @@
 <script setup>
 import { ref } from "vue";
 import { useToast } from "primevue/usetoast";
+import { useI18n } from 'vue-i18n';
 import Card from "primevue/card";
 import InvoiceStatusTag from "./partials/Invoice/InvoiceStatusTag.vue";
 import InvoiceMetaData from "./partials/Invoice/InvoiceMetaData.vue";
@@ -165,6 +165,7 @@ import InvoiceNotes from "./partials/Invoice/InvoiceNotes.vue";
 import InvoiceActions from "./partials/Invoice/InvoiceActions.vue";
 import Button from "primevue/button";
 
+const { t } = useI18n();
 const props = defineProps({
   invoice: {
     type: Object,
@@ -175,63 +176,53 @@ const props = defineProps({
     default: () => [],
   },
 });
-const emit = defineEmits([]); // Define the event to be emitted
+const emit = defineEmits([]);
 
 const openAddPaymentDialog = () => {
   emit("addInvoice");
 };
-// // console.log(props.invoice);
+
 const toast = useToast();
 
 const printInvoice = () => {
   toast.add({
     severity: "info",
     summary: "Print",
-    detail: "Preparing invoice for printing...",
+    detail: t('invoice.print_preparing'),
     life: 3000,
   });
 
-  // Get the invoice container
   const invoiceContainer = document.querySelector(".invoice-details-container");
   if (!invoiceContainer) {
     toast.add({
       severity: "error",
       summary: "Error",
-      detail: "Could not find invoice content to print",
+      detail: t('invoice.print_error_content'),
       life: 3000,
     });
     return;
   }
 
-  // const openAddPaymentDialog = () => {
-  //   emit("addInvoice");
-  // };
-
-  // Create a new window
   const printWindow = window.open("", "_blank");
   if (!printWindow) {
     toast.add({
       severity: "error",
       summary: "Error",
-      detail: "Popup was blocked. Please allow popups for this site.",
+      detail: t('invoice.print_error_popup'),
       life: 5000,
     });
     return;
   }
 
-  // Clone the content (deep clone to keep all child elements)
   const contentClone = invoiceContainer.cloneNode(true);
-
-  // Remove any elements that shouldn't be printed
   const noPrintElements = contentClone.querySelectorAll(".no-print, button");
   noPrintElements.forEach((el) => el.remove());
 
-  // Create the print document
   printWindow.document.write(`
     <!DOCTYPE html>
     <html>
     <head>
-      <title>Invoice #${props.invoice.invoice_number}</title>
+      <title>${t('invoice.invoice_number', { number: props.invoice.invoice_number })}</title>
       <style>
         ${printStyles}
         @media print {
@@ -261,29 +252,26 @@ const printInvoice = () => {
       <div class="invoice-print">
   `);
 
-  // Add the cloned content
   printWindow.document.body.appendChild(contentClone);
   printWindow.document.write("</div></body></html>");
   printWindow.document.close();
 
-  // Wait for content to load
   printWindow.onload = function () {
     setTimeout(() => {
       printWindow.focus();
       printWindow.print();
-      // Optional: Close the window after printing
       printWindow.close();
     }, 500);
   };
 };
+
 const downloadPDF = () => {
   toast.add({
     severity: "info",
     summary: "Download",
-    detail: "Generating PDF...",
+    detail: t('invoice.download_preparing'),
     life: 3000,
   });
-  // PDF generation logic would go here
 };
 
 const printStyles = `
@@ -373,14 +361,12 @@ const printStyles = `
     }
   }
 `;
-/* POS TEST*/
-// Add payment methods lookup
+
 const getPaymentMethod = (id) => {
   const method = props.paymentMethods.find((m) => m.id === id);
   return method ? method.name : "Unknown";
 };
 
-// POS-specific format functions
 const formatPOSDate = (dateString) => {
   const date = new Date(dateString);
   return date
@@ -402,7 +388,7 @@ const printPOS = () => {
   toast.add({
     severity: "info",
     summary: "Print",
-    detail: "Preparing POS receipt...",
+    detail: t('invoice.pos_preparing'),
     life: 3000,
   });
 
@@ -411,7 +397,7 @@ const printPOS = () => {
     toast.add({
       severity: "error",
       summary: "Error",
-      detail: "Could not find POS template",
+      detail: t('invoice.pos_error_template'),
       life: 3000,
     });
     return;
@@ -422,7 +408,7 @@ const printPOS = () => {
     toast.add({
       severity: "error",
       summary: "Error",
-      detail: "Popup was blocked. Please allow popups for this site.",
+      detail: t('invoice.print_error_popup'),
       life: 5000,
     });
     return;
@@ -435,7 +421,7 @@ const printPOS = () => {
     <!DOCTYPE html>
     <html>
     <head>
-      <title>POS Receipt #${props.invoice.invoice_number}</title>
+      <title>${t('invoice.invoice_number', { number: props.invoice.invoice_number })}</title>
       <style>
         ${posPrintStyles}
       </style>
@@ -451,7 +437,6 @@ const printPOS = () => {
     setTimeout(() => {
       printWindow.focus();
       printWindow.print();
-      // printWindow.close();
     }, 500);
   };
 };

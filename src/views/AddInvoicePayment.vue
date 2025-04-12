@@ -48,6 +48,9 @@
         <div class="field mt-6 w-full">
           <FloatLabel class="w-full">
             <DatePicker
+              showIcon
+              iconDisplay="input"
+              showButtonBar
               id="paymentDate"
               fluid
               v-model="payment.payment_date"

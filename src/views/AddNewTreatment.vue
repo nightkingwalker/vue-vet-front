@@ -4,23 +4,24 @@
       <fieldset
         class="p-fieldset p-component w-full flex flex-wrap items-center border rounded-lg p-2 justify-start gap-x-2"
       >
-        <legend>Add New Treatment</legend>
+        <legend>{{ $t("add_treatment.title") }}</legend>
         <div class="field mt-6 w-[49%]">
-          <FloatLabel class="w-full md:w-56">
-            <InputText id="name" v-model="treatment.name" />
-            <label for="name">Name</label>
+          <FloatLabel class="w-full">
+            <InputText fluid id="name" v-model="treatment.name" />
+            <label for="name">{{ $t("add_treatment.fields.name") }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[49%]">
-          <FloatLabel class="w-full md:w-56">
-            <InputText id="dosage" v-model="treatment.dosage" />
-            <label for="dosage">Dosage</label>
+          <FloatLabel class="w-full">
+            <InputText fluid id="dosage" v-model="treatment.dosage" />
+            <label for="dosage">{{ $t("add_treatment.fields.dosage") }}</label>
           </FloatLabel>
         </div>
         <div class="field mt-6 w-[49%]">
           <FloatLabel class="w-[95%]">
             <Select
+              fluid
               v-model="treatment.administration"
               :options="medicineAdministrationMethods"
               optionLabel="label"
@@ -30,9 +31,9 @@
                 <div v-if="slotProps.value" class="flex items-center">
                   <div>{{ slotProps.value.value }}</div>
                 </div>
-                <span v-else>
-                  {{ slotProps.placeholder }}
-                </span>
+                <!-- <span v-else>
+                  {{ $t("add_treatment.fields.delivery") }}
+                </span> -->
               </template>
               <template #option="slotProps">
                 <div class="flex items-center">
@@ -41,20 +42,22 @@
               </template>
             </Select>
 
-            <label for="dd-city">Delivery</label>
+            <label for="dd-city">{{ $t("add_treatment.fields.delivery") }}</label>
           </FloatLabel>
         </div>
         <div class="field mt-6 w-[49%]">
-          <FloatLabel class="w-full md:w-56">
-            <InputText id="description" v-model="treatment.description" />
-            <label for="description">Description</label>
+          <FloatLabel class="w-full">
+            <InputText fluid id="description" v-model="treatment.description" />
+            <label for="description">{{ $t("add_treatment.fields.description") }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[49%]">
-          <FloatLabel class="w-full md:w-56">
-            <label for="treatment_date">Treatment Date</label>
+          <FloatLabel class="w-full">
             <DatePicker
+              showIcon
+              iconDisplay="input"
+              showButtonBar
               showTime
               hourFormat="12"
               fluid
@@ -63,11 +66,14 @@
               v-model="treatment.treatment_date"
               dateFormat="yy-mm-dd"
             />
+            <label for="treatment_date">{{
+              $t("add_treatment.fields.treatment_date")
+            }}</label>
           </FloatLabel>
         </div>
       </fieldset>
       <div class="flex justify-end">
-        <Button type="submit" class="mt-4" label="Add Treatment" />
+        <Button type="submit" class="mt-4" :label="$t('add_treatment.submit')" />
       </div>
     </form>
   </div>
@@ -75,17 +81,18 @@
 
 <script setup>
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 import InputText from "primevue/inputtext";
 import DatePicker from "primevue/datepicker";
 import Select from "primevue/select";
-
 import FloatLabel from "primevue/floatlabel";
 import Button from "primevue/button";
 import axiosInstance from "@/axios";
 import eventBus from "@/eventBus";
 import { useRoute } from "vue-router";
-const emit = defineEmits(); // Define the event to be emitted
 
+const { t } = useI18n();
+const emit = defineEmits();
 const route = useRoute();
 const props = defineProps({
   medical_record_id: {
@@ -93,7 +100,7 @@ const props = defineProps({
     required: true,
   },
 });
-// // console.log(props.medical_record_id);
+
 const treatment = ref({
   name: "",
   dosage: "",
@@ -101,23 +108,32 @@ const treatment = ref({
   administration: "",
   treatment_date: "",
 });
+
 const medicineAdministrationMethods = ref([
-  { label: "Oral (Pills, Tablets, Capsules, Syrups, Suspensions)", value: "Oral" },
-  { label: "Subcutaneous Injection (Under the Skin)", value: "Subcutaneous" },
-  { label: "Intramuscular Injection (Into the Muscle)", value: "Intramuscular" },
-  { label: "Intravenous Injection (Into the Vein)", value: "Intravenous" },
-  { label: "Topical (Creams, Ointments, Gels)", value: "Topical" },
-  { label: "Transdermal (Patches, Absorption through Skin)", value: "Transdermal" },
-  { label: "Ophthalmic (Eye Drops, Ointments)", value: "Ophthalmic" },
-  { label: "Otic (Ear Drops, Medications)", value: "Otic" },
-  { label: "Inhalation (Nebulizers, Inhalers)", value: "Inhalation" },
-  { label: "Rectal (Suppositories, Enemas)", value: "Rectal" },
-  { label: "Sublingual (Under the Tongue)", value: "Sublingual" },
-  { label: "Intranasal (Nasal Sprays, Drops)", value: "Intranasal" },
-  { label: "Intraosseous (Into the Bone)", value: "Intraosseous" },
+  { label: t("add_treatment.administration_methods.oral"), value: "Oral" },
+  {
+    label: t("add_treatment.administration_methods.subcutaneous"),
+    value: "Subcutaneous",
+  },
+  {
+    label: t("add_treatment.administration_methods.intramuscular"),
+    value: "Intramuscular",
+  },
+  { label: t("add_treatment.administration_methods.intravenous"), value: "Intravenous" },
+  { label: t("add_treatment.administration_methods.topical"), value: "Topical" },
+  { label: t("add_treatment.administration_methods.transdermal"), value: "Transdermal" },
+  { label: t("add_treatment.administration_methods.ophthalmic"), value: "Ophthalmic" },
+  { label: t("add_treatment.administration_methods.otic"), value: "Otic" },
+  { label: t("add_treatment.administration_methods.inhalation"), value: "Inhalation" },
+  { label: t("add_treatment.administration_methods.rectal"), value: "Rectal" },
+  { label: t("add_treatment.administration_methods.sublingual"), value: "Sublingual" },
+  { label: t("add_treatment.administration_methods.intranasal"), value: "Intranasal" },
+  {
+    label: t("add_treatment.administration_methods.intraosseous"),
+    value: "Intraosseous",
+  },
 ]);
 
-// Form submission
 const submitForm = async () => {
   const submissionData = {
     medical_record_id: props.medical_record_id,
@@ -129,30 +145,29 @@ const submitForm = async () => {
       ? treatment.value.treatment_date.toLocaleDateString("en-CA")
       : null,
   };
-  // console.log(submissionData);
+
   try {
     const response = await axiosInstance.post("/treatments", submissionData);
-    // console.log(response);
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Data Loaded",
-      detail: `Treatment Added Successfully`,
+      summary: t("add_treatment.title"),
+      detail: t("add_treatment.toast.success"),
       life: 5000,
     });
     emit("TreatmentAdded", response.data);
   } catch (error) {
     eventBus.emit("show-toast", {
       severity: "warn",
-      summary: "Error",
-      detail: error,
+      summary: t("add_treatment.title"),
+      detail: t("add_treatment.toast.error"),
       life: 5000,
     });
   }
 };
 </script>
+
 <style scoped>
 .form-container {
-  /* max-width: 500px; */
   margin: auto;
 }
 .field {

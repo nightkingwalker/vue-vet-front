@@ -15,10 +15,9 @@
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-[95%]">
             <label for="examination_date">Examination Date</label>
-            <DatePicker
+            <DatePicker showIcon  iconDisplay="input" showButtonBar
               showTime
               hourFormat="12"
-              showIcon
               id="examination_date"
               v-model="examination.examination_date"
               dateFormat="yy-mm-dd"

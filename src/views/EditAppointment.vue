@@ -4,7 +4,7 @@
       <fieldset
         class="p-fieldset p-component w-4/5 flex flex-wrap mx-auto gap-2 items-start border rounded-lg p-4"
       >
-        <legend>Edit Appointment</legend>
+        <legend>{{ $t("appointment.edit_title") }}</legend>
         <input type="hidden" id="branch_id" value="1" v-model="appointment.branch_id" />
         <input type="hidden" id="appointment_id" v-model="appointment.id" />
 
@@ -30,21 +30,21 @@
                 ><i class="pi pi-search"></i
               ></InputGroupAddon>
             </InputGroup>
-            <label for="pet">Search Pets</label>
+            <label for="pet">{{ $t("appointment.fields.pet") }}</label>
           </FloatLabel>
           <InputText
             id="name"
             v-model="selectedPet"
             class="hidden"
             v-else
-            placeholder="Enter pet name"
+            :placeholder="$t('appointment.fields.pet')"
           />
         </div>
 
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
             <InputText id="title" v-model="appointment.title" fluid />
-            <label for="title">Title</label>
+            <label for="title">{{ $t("appointment.fields.title") }}</label>
           </FloatLabel>
         </div>
 
@@ -57,13 +57,16 @@
               autoResize
               rows="2"
             />
-            <label for="description">Description</label>
+            <label for="description">{{ $t("appointment.fields.description") }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
             <DatePicker
+              showIcon
+              iconDisplay="input"
+              showButtonBar
               id="start"
               showTime
               hourFormat="24"
@@ -72,14 +75,17 @@
               dateFormat="yy-mm-dd"
               class="w-full"
             />
-            <label for="start">Start Date & Time</label>
+            <label for="start">{{ $t("appointment.fields.start") }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <label for="end">End Date & Time</label>
+            <label for="end">{{ $t("appointment.fields.end") }}</label>
             <DatePicker
+              showIcon
+              iconDisplay="input"
+              showButtonBar
               showTime
               hourFormat="24"
               id="end"
@@ -98,7 +104,7 @@
               optionLabel="label"
               class="w-full"
             />
-            <label for="type">Type</label>
+            <label for="type">{{ $t("appointment.fields.type") }}</label>
           </FloatLabel>
         </div>
         <div class="field mt-6 w-[48%]">
@@ -109,18 +115,19 @@
               optionLabel="label"
               class="w-full"
             />
-            <label for="status">Status</label>
+            <label for="status">{{ $t("appointment.fields.status") }}</label>
           </FloatLabel>
         </div>
 
-        <Button type="submit" label="Update" class="mt-4" />
+        <Button type="submit" :label="$t('appointment.actions.update')" class="mt-4" />
       </fieldset>
     </form>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted } from "vue";
+import { useI18n } from "vue-i18n";
 import AutoComplete from "primevue/autocomplete";
 import InputGroup from "primevue/inputgroup";
 import InputText from "primevue/inputtext";
@@ -129,10 +136,12 @@ import Select from "primevue/select";
 import FloatLabel from "primevue/floatlabel";
 import Button from "primevue/button";
 import Textarea from "primevue/textarea";
-import axiosInstance from "@/axios"; // Assuming you've created a global axios instance
+import axiosInstance from "@/axios";
 import eventBus from "@/eventBus";
 import Cookies from "js-cookie";
-const emit = defineEmits(["updated"]); // Define the event to be emitted
+
+const { t } = useI18n();
+const emit = defineEmits(["updated"]);
 
 const props = defineProps({
   appointmentId: {
@@ -140,7 +149,7 @@ const props = defineProps({
     required: true,
   },
 });
-// console.log(props.appointmentId);
+
 const appointment = ref({
   id: null,
   client_id: null,
@@ -155,47 +164,44 @@ const appointment = ref({
 
 const selectedPet = ref(null);
 const filteredPets = ref([]);
+
 const appointmentTypes = ref([
-  { label: "Emergency", value: "Emergency" },
-  { label: "Non-Emergency", value: "Non-Emergency" },
-  { label: "Regular", value: "Regular" },
-  { label: "FollowUp", value: "FollowUp" },
-  { label: "Surgery", value: "Surgery" },
-  { label: "Grooming", value: "Grooming" },
-]);
-const appointmentStatus = ref([
-  { label: "Scheduled", value: "Scheduled" },
-  { label: "Walkin", value: "Walkin" },
+  { label: t("appointment.types.emergency"), value: "Emergency" },
+  { label: t("appointment.types.non_emergency"), value: "Non-Emergency" },
+  { label: t("appointment.types.regular"), value: "Regular" },
+  { label: t("appointment.types.followup"), value: "FollowUp" },
+  { label: t("appointment.types.surgery"), value: "Surgery" },
+  { label: t("appointment.types.grooming"), value: "Grooming" },
 ]);
 
-// Fetch appointment data by ID
-// const fetchAppointment = async () => {
-//   try {
-//     const response = await axiosInstance.get(`/appointments/${props.appointmentId}`);
-//     appointment.value = response.data;
-//     selectedPet.value = response.data.pet; // Set the selected pet
-//   } catch (error) {
-//     console.error("Failed to fetch appointment:", error);
-//   }
-// };
+const appointmentStatus = ref([
+  { label: t("appointment.statuses.scheduled"), value: "Scheduled" },
+  { label: t("appointment.statuses.walkin"), value: "Walkin" },
+]);
+
 const fetchAppointment = async () => {
   try {
     const response = await axiosInstance.get(`/appointments/${props.appointmentId}`);
     const data = response.data;
 
-    // Map the type and status to match the Select component's structure
     appointment.value = {
       ...data,
       type: appointmentTypes.value.find((type) => type.value === data.type),
       status: appointmentStatus.value.find((status) => status.value === data.status),
     };
 
-    selectedPet.value = data.pet; // Set the selected pet
+    selectedPet.value = data.pet;
   } catch (error) {
     console.error("Failed to fetch appointment:", error);
+    eventBus.emit("show-toast", {
+      severity: "error",
+      summary: t("appointment.edit_title"),
+      detail: t("appointment.messages.fetch_error"),
+      life: 5000,
+    });
   }
 };
-// Fetch pets for the autocomplete
+
 const fetchPets = async () => {
   try {
     const response = await axiosInstance.get("/pets");
@@ -205,7 +211,6 @@ const fetchPets = async () => {
   }
 };
 
-// Search function for AutoComplete
 const searchPets = async (event) => {
   if (event.query.length < 3) return;
   try {
@@ -216,13 +221,12 @@ const searchPets = async (event) => {
   }
 };
 
-// Form submission
 const submitForm = async () => {
   if (!selectedPet.value) {
     eventBus.emit("show-toast", {
       severity: "warn",
-      summary: "Error",
-      detail: "Please select a pet.",
+      summary: t("appointment.edit_title"),
+      detail: t("appointment.messages.pet_required"),
       life: 5000,
     });
     return;
@@ -232,31 +236,32 @@ const submitForm = async () => {
   appointment.value.pet_id = selectedPet.value.id;
   appointment.value.type = appointment.value.type.value;
   appointment.value.status = appointment.value.status.value;
-  // console.log(appointment.value);
+
   try {
     const response = await axiosInstance.put(
       `/appointments/${appointment.value.id}`,
       appointment.value
     );
-    emit("updated", response.data); // Emit event to notify parent component
+    emit("updated", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Appointment Updated",
-      detail: `Appointment for ${selectedPet.value.name} updated successfully.`,
+      summary: t("appointment.edit_title"),
+      detail: t("appointment.messages.update_success", {
+        petName: selectedPet.value.name,
+      }),
       life: 5000,
     });
   } catch (error) {
     console.error("Error updating appointment:", error);
     eventBus.emit("show-toast", {
       severity: "error",
-      summary: "Error",
-      detail: error.response?.data?.message || "Failed to update appointment.",
+      summary: t("appointment.edit_title"),
+      detail: error.response?.data?.message || t("appointment.messages.update_error"),
       life: 5000,
     });
   }
 };
 
-// Load appointment and pets when component is mounted
 onMounted(() => {
   fetchAppointment();
   fetchPets();

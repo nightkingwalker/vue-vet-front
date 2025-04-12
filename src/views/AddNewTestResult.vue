@@ -4,12 +4,12 @@
       <fieldset
         class="p-fieldset p-component w-full flex flex-col items-center border rounded-lg p-2 justify-start gap-x-2"
       >
-        <legend>Add New Test Result</legend>
+        <legend>{{ $t("add_test_result.title") }}</legend>
 
         <div class="field mt-4 w-full">
           <FloatLabel class="w-full md:w-56">
             <InputText id="test_type" v-model="test.test_type" />
-            <label for="test_type">Test Type</label>
+            <label for="test_type">{{ $t("add_test_result.fields.test_type") }}</label>
           </FloatLabel>
         </div>
 
@@ -26,7 +26,9 @@
                   v-model="test.results[index].label"
                   class="md:w-[100%]"
                 />
-                <label :for="'label-' + index">Test Name {{ index + 1 }}</label>
+                <label :for="'label-' + index">
+                  {{ $t("add_test_result.fields.test_name", { index: index + 1 }) }}
+                </label>
               </FloatLabel>
               <FloatLabel class="max-w-[100%] mt-6">
                 <InputText
@@ -34,7 +36,9 @@
                   v-model="test.results[index].value"
                   class="md:w-[100%]"
                 />
-                <label :for="'value-' + index">Test Value {{ index + 1 }}</label>
+                <label :for="'value-' + index">
+                  {{ $t("add_test_result.fields.test_value", { index: index + 1 }) }}
+                </label>
               </FloatLabel>
             </div>
             <Button
@@ -46,11 +50,15 @@
         </div>
 
         <div class="flex items-center mt-4">
-          <Button label="Add Result" @click="addResult" />
+          <Button :label="$t('add_test_result.buttons.add_result')" @click="addResult" />
         </div>
       </fieldset>
       <div class="flex justify-end">
-        <Button type="submit" class="mt-4" label="Add Test Result" />
+        <Button
+          type="submit"
+          class="mt-4"
+          :label="$t('add_test_result.buttons.submit')"
+        />
       </div>
     </form>
   </div>
@@ -58,15 +66,18 @@
 
 <script setup>
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 import InputText from "primevue/inputtext";
 import FloatLabel from "primevue/floatlabel";
 import Button from "primevue/button";
 import axiosInstance from "@/axios";
 import eventBus from "@/eventBus";
 import { useRoute } from "vue-router";
-const emit = defineEmits(); // Define the event to be emitted
 
+const { t } = useI18n();
+const emit = defineEmits();
 const route = useRoute();
+
 const props = defineProps({
   medical_record_id: {
     type: Number,
@@ -80,17 +91,14 @@ const test = ref({
   results: [{ label: "", value: "" }],
 });
 
-// Function to add a new input field for a result
 const addResult = () => {
   test.value.results.push({ label: "", value: "" });
 };
 
-// Function to remove a result from the results array
 const removeResult = (index) => {
   test.value.results.splice(index, 1);
 };
 
-// Form submission
 const submitForm = async () => {
   const formattedResults = test.value.results
     .filter((result) => result.label && result.value)
@@ -102,27 +110,27 @@ const submitForm = async () => {
     test_type: test.value.test_type,
     result: resultString,
   };
-  // console.log(submissionData);
+
   try {
     const response = await axiosInstance.post("/test-results", submissionData);
-    // console.log(response);
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Data Loaded",
-      detail: `Test Result Added Successfully`,
+      summary: t("add_test_result.title"),
+      detail: t("add_test_result.toast.success"),
       life: 5000,
     });
     emit("TestResultAdded", response.data);
   } catch (error) {
     eventBus.emit("show-toast", {
       severity: "warn",
-      summary: "Error",
-      detail: error,
+      summary: t("add_test_result.title"),
+      detail: t("add_test_result.toast.error"),
       life: 5000,
     });
   }
 };
 </script>
+
 <style scoped>
 .form-container {
   margin: auto;

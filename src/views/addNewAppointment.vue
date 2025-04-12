@@ -4,9 +4,8 @@
       <fieldset
         class="p-fieldset p-component w-4/5 flex flex-wrap mx-auto gap-2 items-center border rounded-lg p-4"
       >
-        <legend>Add New Appointment</legend>
+        <legend>{{ $t("appointment.add_title") }}</legend>
         <input type="hidden" id="branch_id" value="1" v-model="appointment.branch_id" />
-        <!-- <input type="hidden" id="client_id" v-model="appointment.client_id" /> -->
 
         <div class="field mt-6 w-[48%]" :class="appointment.petmicrochip ? `hidden` : ``">
           <FloatLabel class="w-full" v-if="!appointment.petmicrochip">
@@ -30,34 +29,37 @@
                 ><i class="pi pi-search"></i
               ></InputGroupAddon>
             </InputGroup>
-            <label for="pet">Search Pets</label>
+            <label for="pet">{{ $t("appointment.fields.pet") }}</label>
           </FloatLabel>
           <InputText
             id="name"
             v-model="selectedPet"
             class="hidden"
             v-else
-            placeholder="Enter pet name"
+            :placeholder="$t('appointment.fields.pet')"
           />
         </div>
 
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
             <InputText id="title" v-model="appointment.title" fluid />
-            <label for="title">Title</label>
+            <label for="title">{{ $t("appointment.fields.title") }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
             <InputText id="description" v-model="appointment.description" fluid />
-            <label for="description">Description</label>
+            <label for="description">{{ $t("appointment.fields.description") }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
             <DatePicker
+              showIcon
+              iconDisplay="input"
+              showButtonBar
               id="start"
               showTime
               hourFormat="24"
@@ -66,22 +68,17 @@
               dateFormat="yy-mm-dd"
               class="w-full"
             />
-            <!-- <input
-              type="datetime-local"
-              class="p-inputtext p-component p-inputtext-fluid p-datepicker-input w-full"
-              fluid
-              placeholder=""
-              v-model="appointment.start"
-            /> -->
-            <label for="start">Start Date & Time</label>
-            <!-- <InputText type="datetime-local" v-model="appointment.start" fluid /> -->
+            <label for="start">{{ $t("appointment.fields.start") }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <label for="end">End Date & Time</label>
+            <label for="end">{{ $t("appointment.fields.end") }}</label>
             <DatePicker
+              showIcon
+              iconDisplay="input"
+              showButtonBar
               showTime
               hourFormat="24"
               id="end"
@@ -100,7 +97,7 @@
               optionLabel="label"
               class="w-full"
             />
-            <label for="type">Type</label>
+            <label for="type">{{ $t("appointment.fields.type") }}</label>
           </FloatLabel>
         </div>
         <div class="field mt-6 w-[48%]">
@@ -111,11 +108,11 @@
               optionLabel="label"
               class="w-full"
             />
-            <label for="status">Status</label>
+            <label for="status">{{ $t("appointment.fields.status") }}</label>
           </FloatLabel>
         </div>
 
-        <Button type="submit" label="Submit" class="mt-4" />
+        <Button type="submit" :label="$t('appointment.actions.submit')" class="mt-4" />
       </fieldset>
     </form>
   </div>
@@ -123,6 +120,7 @@
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import AutoComplete from "primevue/autocomplete";
 import InputText from "primevue/inputtext";
 import DatePicker from "primevue/datepicker";
@@ -131,14 +129,16 @@ import FloatLabel from "primevue/floatlabel";
 import Button from "primevue/button";
 import InputGroupAddon from "primevue/inputgroupaddon";
 import InputGroup from "primevue/inputgroup";
-import axiosInstance from "@/axios"; // Assuming you've created a global axios instance
+import axiosInstance from "@/axios";
 import eventBus from "@/eventBus";
 import Cookies from "js-cookie";
-const emit = defineEmits(["submitted"]); // Define the event to be emitted
 
-const props = defineProps(["activeDate", "petMicrochip", "petOwnerID"]); // Receiving activeDate as a prop
+const { t } = useI18n();
+const emit = defineEmits(["submitted"]);
+
+const props = defineProps(["activeDate", "petMicrochip", "petOwnerID"]);
 const appointment = ref({
-  client_id: null, // To be set after selecting the pet
+  client_id: null,
   branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
   title: "",
   description: "",
@@ -147,10 +147,31 @@ const appointment = ref({
   end: null,
 });
 
-// Function to format date as `YYYY-MM-DD HH:mm`
+const appointmentTypes = ref([
+  { label: t("appointment.types.emergency"), value: "Emergency" },
+  { label: t("appointment.types.non_emergency"), value: "Non-Emergency" },
+  { label: t("appointment.types.regular"), value: "Regular" },
+  { label: t("appointment.types.followup"), value: "FollowUp" },
+  { label: t("appointment.types.surgery"), value: "Surgery" },
+  { label: t("appointment.types.grooming"), value: "Grooming" },
+]);
+
+const appointmentStatus = ref([
+  { label: t("appointment.statuses.scheduled"), value: "Scheduled" },
+  { label: t("appointment.statuses.walkin"), value: "Walkin" },
+]);
+
+const selectedPet = ref(null);
+const filteredPets = ref([]);
+const currentPage = ref(1);
+const totalRecords = ref(0);
+const itemsPerPage = ref(25);
+const searchQuery = ref("");
+const loading = ref(false);
+
 function formatLocalDateTime(date) {
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+  const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   const hours = String(date.getHours()).padStart(2, "0");
   const minutes = String(date.getMinutes()).padStart(2, "0");
@@ -158,130 +179,69 @@ function formatLocalDateTime(date) {
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 }
 
-// Watch the start date to update the end date
 watch(
   () => appointment.value.start,
   (newStart) => {
     if (newStart) {
       const startDate = new Date(newStart);
-      const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // Add 15 minutes
-      appointment.value.end = formatLocalDateTime(endDate); // Format to `YYYY-MM-DD HH:mm`
+      const endDate = new Date(startDate.getTime() + 60 * 60 * 1000);
+      appointment.value.end = formatLocalDateTime(endDate);
     } else {
-      appointment.value.end = null; // Reset if start is null
+      appointment.value.end = null;
     }
   }
 );
-// Options for appointment type
-const appointmentTypes = ref([
-  { label: "Emergency", value: "Emergency" },
-  { label: "Non-Emergency", value: "Non-Emergency" },
-  { label: "Regular", value: "Regular" },
-  { label: "FollowUp", value: "FollowUp" },
-  { label: "Surgery", value: "Surgery" },
-  { label: "Grooming", value: "Grooming" },
-]);
-const appointmentStatus = ref([
-  { label: "Scheduled", value: "Scheduled" },
-  { label: "Walkin", value: "Walkin" },
-]);
-const selectedPet = ref(null);
-if (props.petMicrochip) {
-  // selectedPet.petmicrochip.value = props.petMicrochip;
-}
 
-const filteredPets = ref([]);
-
-const pet = ref({
-  owner_id: null,
-  branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
-  name: "",
-  species: "",
-  breed: "",
-  gender: "",
-  date_of_birth: "",
-});
-const currentPage = ref(1); // Track the current page
-const totalRecords = ref(0); // Total number of records
-const itemsPerPage = ref(25); // Number of items per page (matching your API response)const layout = ref("grid");
-
-const searchQuery = ref(""); // New reactive search query
-const loading = ref(false); // Loading state
-
-// Fetch pets based on search query
 const fetchPets = async (page = 1) => {
   try {
     loading.value = true;
     const response = await axiosInstance.get(
       `/pets?page=${page}&per_page=${itemsPerPage.value}&search=${searchQuery.value}`
     );
-    filteredPets.value = response.data.data; // Populate filtered pets
+    filteredPets.value = response.data.data;
     if (props.petOwnerID) {
-      selectedPet.value = response.data.data; // Populate filtered pets
+      selectedPet.value = response.data.data;
     }
-    // // console.log(filteredPets.value);
     totalRecords.value = response.data.total;
     currentPage.value = response.data.current_page;
     loading.value = false;
   } catch (error) {
     console.error("Failed to fetch pets:", error);
-    loading.value = false; // Ensure loading is set to false even on error
+    eventBus.emit("show-toast", {
+      severity: "error",
+      summary: t("appointment.add_title"),
+      detail: t("appointment.messages.fetch_error"),
+      life: 5000,
+    });
+    loading.value = false;
   }
 };
 
-// Search function for AutoComplete
 const searchPets = async (event) => {
-  if (event.query.length < 3) {
-    return; // Prevent search for less than 3 characters
-  }
-  searchQuery.value = event.query; // Update search query
-  await fetchPets(currentPage.value); // Fetch pets with the updated search query
+  if (event.query.length < 3) return;
+  searchQuery.value = event.query;
+  await fetchPets(currentPage.value);
 };
-const setRandomTime = () => {
-  if (appointment.value.start) {
-    const startDate = new Date(appointment.value.start);
-    const randomHour = Math.floor(Math.random() * 5) + 12; // Generates a number between 12 and 16 (inclusive)
-    startDate.setHours(randomHour, 0, 0); // Set hours to a random value between 12:00:00 and 17:00:00
-    appointment.value.start = startDate;
-    // // console.log("START: " + appointment.value.start);
-    // Set the end time to 15 minutes after the start time
-    const endDate = new Date(startDate);
-    endDate.setMinutes(endDate.getMinutes() + 15);
-    appointment.value.end = endDate;
-  }
-};
-// // console.log("ACT" + props.activeDate);
-// watch(
-//   () => props.activeDate,
-//   (newVal) => {
-//     if (newVal) {
-//       appointment.value.start = new Date(newVal);
-//       setRandomTime(); // Call to set random time and end time when activeDate changes
-//     }
-//   }
-// );
-// Form submission
+
 const submitForm = async () => {
-  // Assign the client_id and pet_id based on the selected pet
-  // console.log(selectedPet.value);
-  if (selectedPet.value) {
-    // console.log(selectedPet.value);
-    appointment.value.client_id = !props.petOwnerID
-      ? selectedPet.value.owner_id
-      : selectedPet.value[0].owner_id; // Assuming this is the client's ID
-    appointment.value.pet_id = !props.petOwnerID
-      ? selectedPet.value.id
-      : selectedPet.value[0].id; // ID of the selected pet
-    appointment.value.type = appointment.value.type.value; // Type selected from the dropdown
-    appointment.value.status = appointment.value.status.value; // Status selected from the dropdown
-  } else {
+  if (!selectedPet.value) {
     eventBus.emit("show-toast", {
       severity: "warn",
-      summary: "Error",
-      detail: "Please select a pet.",
+      summary: t("appointment.add_title"),
+      detail: t("appointment.messages.pet_required"),
       life: 5000,
     });
-    return; // Stop execution if no pet is selected
+    return;
   }
+
+  appointment.value.client_id = !props.petOwnerID
+    ? selectedPet.value.owner_id
+    : selectedPet.value[0].owner_id;
+  appointment.value.pet_id = !props.petOwnerID
+    ? selectedPet.value.id
+    : selectedPet.value[0].id;
+  appointment.value.type = appointment.value.type.value;
+  appointment.value.status = appointment.value.status.value;
 
   const formatDateTime = (date) => {
     return `${date.getFullYear()}-${(date.getMonth() + 1)
@@ -301,45 +261,37 @@ const submitForm = async () => {
   const startDate = new Date(appointment.value.start);
   const endDate = new Date(appointment.value.end);
 
-  // Format start and end times
   appointment.value.start = formatDateTime(startDate);
   appointment.value.end = formatDateTime(endDate);
+
   try {
-    // Log the data being sent to ensure all required fields are included
-    // // console.log("Submitting appointment data:", appointment.value);
-    // console.log(JSON.stringify(appointment.value));
     const response = await axiosInstance.post("/appointments", appointment.value);
-    emit("submitted", response.data); // You may modify this based on your response structure
-    // console.log(response.data);
+    emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Appointment Created",
-      detail: `Appointment for ${selectedPet.value.name} added successfully.`,
+      summary: t("appointment.add_title"),
+      detail: t("appointment.messages.create_success", {
+        petName: !props.petOwnerID ? selectedPet.value.name : selectedPet.value[0].name,
+      }),
       life: 5000,
     });
-    // Reset the form or redirect as needed
   } catch (error) {
-    // Log the error response to see the validation errors
     console.error("Error response:", error);
     eventBus.emit("show-toast", {
       severity: "error",
-      summary: "Error",
-      detail: error.response?.data?.message || "Failed to create appointment.",
+      summary: t("appointment.add_title"),
+      detail: error.response?.data?.message || t("appointment.messages.create_error"),
       life: 5000,
     });
   }
 };
 
-// Load pets when component is mounted
 onMounted(() => {
   appointment.value.start = props.activeDate;
   appointment.value.end = props.activeDate;
   appointment.value.petmicrochip = props.petMicrochip;
   appointment.value.owner_id = props.petOwnerID;
-  // // console.log("owner_id " + appointment.value.owner_id);
-  // setRandomTime();
   if (props.petMicrochip) {
-    // // console.log("props.petMicrochip " + props.petMicrochip);
     searchQuery.value = props.petMicrochip;
   }
   fetchPets();

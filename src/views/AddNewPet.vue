@@ -108,6 +108,9 @@
           <FloatLabel class="w-[95%]">
             <label for="dob">{{ $t("pet_form.fields.date_of_birth") }}</label>
             <DatePicker
+              showIcon
+              iconDisplay="input"
+              showButtonBar
               showTime
               hourFormat="12"
               id="dob"

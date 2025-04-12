@@ -70,6 +70,9 @@
           <FloatLabel class="w-full md:w-56">
             <label for="dob">Date of Birth</label>
             <DatePicker
+              showIcon
+              iconDisplay="input"
+              showButtonBar
               showTime
               hourFormat="12"
               fluid

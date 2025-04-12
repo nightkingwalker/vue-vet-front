@@ -8,8 +8,8 @@
       scrollable
       scrollHeight="400px"
     >
-      <template #empty> No Images Found. </template>
-      <template #loading> Loading Images data. Please wait. </template>
+      <template #empty> {{ $t("medical_images.no_images") }} </template>
+      <template #loading> {{ $t("medical_images.loading") }} </template>
       <template #header>
         <div class="flex justify-between items-center !m-b-1">
           <div class="flex">
@@ -17,24 +17,25 @@
               type="button"
               icon="pi pi-refresh !text-xs"
               label=""
-              v-tooltip.bottom="`Refresh Data`"
+              v-tooltip.bottom="$t('medical_images.refresh')"
               class="!text-xs ml-2 !w-8 !h-8"
               @click="refreshData"
             />
             <Button
               icon="pi pi-plus"
               @click="showAddMedicalImageModal"
-              v-tooltip.bottom="`Add New Medical Image`"
+              v-tooltip.bottom="$t('medical_images.add')"
               class="p-button p-component p-button-icon-only !text-xs !w-8 !h-8 ml-2"
             />
           </div>
           <h2 class="text-sm !mb-0 pb-0 flex">
-            <i class="fa-solid fa-x-ray ltr:mr-2 rtl:ml-2"></i> Medical Images
+            <i class="fa-solid fa-x-ray ltr:mr-2 rtl:ml-2"></i>
+            {{ $t("medical_images.title") }}
           </h2>
         </div>
       </template>
 
-      <Column field="type" header="Type" class="w-1/10">
+      <Column field="type" :header="$t('medical_images.headers.type')" class="w-1/10">
         <template v-if="loading" #body>
           <Skeleton width="100%" height="1rem" />
         </template>
@@ -42,7 +43,11 @@
           {{ slotProps.data.type }}
         </template>
       </Column>
-      <Column field="image_date" header="Date" class="w-1/10">
+      <Column
+        field="image_date"
+        :header="$t('medical_images.headers.date')"
+        class="w-1/10"
+      >
         <template v-if="loading" #body>
           <Skeleton width="100%" height="1rem" />
         </template>
@@ -51,7 +56,7 @@
         </template>
       </Column>
 
-      <Column field="organ" header="Organ" class="w-1/10">
+      <Column field="organ" :header="$t('medical_images.headers.organ')" class="w-1/10">
         <template v-if="loading" #body>
           <Skeleton width="100%" height="1rem" />
         </template>
@@ -60,7 +65,11 @@
         </template>
       </Column>
 
-      <Column field="measurements" header="Measurements" class="w-1/10">
+      <Column
+        field="measurements"
+        :header="$t('medical_images.headers.measurements')"
+        class="w-1/10"
+      >
         <template v-if="loading" #body>
           <Skeleton width="100%" height="1rem" />
         </template>
@@ -69,7 +78,11 @@
         </template>
       </Column>
 
-      <Column field="description" header="Description" class="w-2/5">
+      <Column
+        field="description"
+        :header="$t('medical_images.headers.description')"
+        class="w-2/5"
+      >
         <template v-if="loading" #body>
           <Skeleton width="100%" height="1rem" />
         </template>
@@ -78,7 +91,11 @@
         </template>
       </Column>
 
-      <Column field="ref_number" header="Reference #" class="w-1/10">
+      <Column
+        field="ref_number"
+        :header="$t('medical_images.headers.ref_number')"
+        class="w-1/10"
+      >
         <template v-if="loading" #body>
           <Skeleton width="100%" height="1rem" />
         </template>
@@ -92,7 +109,7 @@
             type="button"
             icon="fa-solid fa-pencil !text-primary"
             v-tooltip.top="{
-              value: 'Edit Details',
+              value: $t('medical_images.actions.edit'),
               pt: {
                 arrow: {
                   style: {
@@ -112,7 +129,7 @@
           <Button
             icon="fa-solid fa-times !text-primary"
             v-tooltip.top="{
-              value: 'Delete',
+              value: $t('medical_images.actions.delete'),
               pt: {
                 arrow: {
                   style: {
@@ -138,20 +155,21 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { useI18n } from "vue-i18n";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Skeleton from "primevue/skeleton";
 import Button from "primevue/button";
-import axiosInstance from "@/axios"; // Assuming axiosInstance is set up correctly
+import axiosInstance from "@/axios";
 import eventBus from "@/eventBus";
 import { useConfirm } from "primevue/useconfirm";
 
-const confirm = useConfirm(); // Initialize the confirmation service
+const { t } = useI18n();
+const confirm = useConfirm();
 
-// Reactive properties for medical images data
 const medicalImages = ref([]);
 const loading = ref(false);
-const isNewMedicalImageVisible = ref(false); // Set the medical record ID from the parent or elsewhere
+const isNewMedicalImageVisible = ref(false);
 const skeletonRows = Array.from({ length: 4 }).map(() => ({
   type: "",
   organ: "",
@@ -159,14 +177,14 @@ const skeletonRows = Array.from({ length: 4 }).map(() => ({
   description: "",
   ref_number: "",
 }));
+
 const props = defineProps({
   medical_record_id: {
     type: Number,
     required: true,
   },
 });
-const medicalRecordId = `${props.medical_record_id}`;
-// Function to fetch medical images
+
 const fetchMedicalImages = async () => {
   loading.value = true;
   try {
@@ -174,7 +192,6 @@ const fetchMedicalImages = async () => {
       `/medical-images/bymrid/${props.medical_record_id}`
     );
     medicalImages.value = response.data.data;
-    // console.log(response.data.data);
     loading.value = false;
   } catch (error) {
     console.error("Error fetching medical images:", error);
@@ -182,45 +199,43 @@ const fetchMedicalImages = async () => {
   }
 };
 
-// Show the modal for adding new medical image
-
-const emit = defineEmits(); // Define the event to be emitted
+const emit = defineEmits();
 
 const showAddMedicalImageModal = () => {
   emit("showAddMedicalImageModal");
 };
+
 const showEditMedicalImageModal = (medicalImageId) => {
   emit("showEditMedicalImageModal", medicalImageId);
 };
 
-// Refresh the medical images data
 const refreshData = () => {
-  loading.value = true; // Set loading state to true to show skeletons
-  fetchMedicalImages(); // Fetch the data again
+  loading.value = true;
+  fetchMedicalImages();
 };
 
-// Handle the submit event after adding a new medical image
 const handleSubmit = (newImageData) => {
   isNewMedicalImageVisible.value = false;
-  medicalImages.value.push(newImageData); // Add the new image to the table
+  medicalImages.value.push(newImageData);
   eventBus.emit("show-toast", {
     severity: "success",
-    summary: "New Medical Image Added",
-    detail: `Medical image for ${newImageData.type} added successfully.`,
+    summary: t("medical_images.toast.title"),
+    detail: t("medical_images.toast.success", { type: newImageData.type }),
     life: 5000,
   });
 };
+
 const confirmDelete = (medicalImageId) => {
   confirm.require({
-    message: "Are you sure you want to delete this Image?",
-    header: "Delete Confirmation",
+    message: t("medical_images.delete_confirm.message"),
+    header: t("medical_images.delete_confirm.header"),
     icon: "pi pi-exclamation-triangle",
     acceptClass: "p-button-danger",
     accept: () => {
-      deleteImage(medicalImageId); // Call the delete function if the user confirms
+      deleteImage(medicalImageId);
     },
     reject: () => {
-      // console.log("Deletion cancelled");
+      console.log("Deletion cancelled");
     },
   });
 };
@@ -228,21 +243,18 @@ const confirmDelete = (medicalImageId) => {
 const deleteImage = async (medicalImageId) => {
   try {
     const response = await axiosInstance.delete(`/medical-images/${medicalImageId}`);
-    // console.log("Image deleted:", response.data);
-    fetchMedicalImages(); // Refresh the treatments list
-    eventBus.emit("ImagetDeletedSuccessfully"); // Emit an event if needed
+    fetchMedicalImages();
+    eventBus.emit("ImagetDeletedSuccessfully");
   } catch (error) {
     console.error("Failed to delete Image:", error);
   }
 };
-// OnMounted fetch the initial data
+
 onMounted(() => {
   eventBus.on("newImageAdded", () => {
-    // console.log("newImageAdded");
     fetchMedicalImages();
   });
   eventBus.on("MedicalImageUpdatedSuccessfully", () => {
-    // console.log("MedicalImageUpdatedSuccessfully");
     fetchMedicalImages();
   });
   fetchMedicalImages();

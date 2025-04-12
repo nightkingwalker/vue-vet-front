@@ -55,6 +55,9 @@
           <FloatLabel class="w-full md:w-56">
             <label for="treatment_date">Treatment Date</label>
             <DatePicker
+              showIcon
+              iconDisplay="input"
+              showButtonBar
               showTime
               hourFormat="12"
               fluid

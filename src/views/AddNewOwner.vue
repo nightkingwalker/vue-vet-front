@@ -41,11 +41,13 @@
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
             <DatePicker
+              showIcon
+              iconDisplay="input"
+              showButtonBar
               fluid
               id="birth_date"
               v-model="owner.birth_date"
               dateFormat="yy-mm-dd"
-              showIcon
             />
             <label for="birth_date">{{ $t("add_owner.fields.birth_date") }}</label>
           </FloatLabel>

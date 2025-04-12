@@ -1,168 +1,296 @@
 <template>
   <div class="px-4">
     <div
-      class="sticky top-0 bg-white dark:bg-gray-800 shadow-md z-10 mb-4 p-2 flex flex-wrap gap-2"
+      class="sticky top-0 bg-white dark:bg-[var(--p-surface-800)] shadow-md z-10 mb-4 p-2 flex flex-wrap gap-2"
     >
       <a
         v-for="section in sections"
         :key="section.id"
         :href="`#${section.id}`"
         :class="{
-          'px-3 py-1 rounded-full text-sm bg-gray-100 dark:bg-gray-700 hover:bg-primary-100 dark:hover:bg-primary-700 transition-colors': true,
-          'bg-[var(--p-primary-color)] text-white dark:bg-[var(--p-primary-contrast-color)] is-active':
+          'px-3 py-1 rounded-full text-sm text-grey-700  bg-gray-100 dark:bg-gray-700 hover:bg-primary-100 dark:hover:bg-primary-700 transition-colors': true,
+          'bg-gray-700 text-white dark:bg-[var(--p-primary-contrast-color)] is-active':
             activeSection === section.id,
         }"
       >
-        {{ section.label }}
+        {{ $t(section.label) }}
       </a>
     </div>
     <Card>
       <template #title>
         <div class="flex justify-between">
-          <span>Full Medical Report</span>
+          <span>{{ $t("medical_examination.title") }}</span>
         </div>
       </template>
       <template #content>
         <!-- General Information -->
         <div class="flex justify-between" id="general-info">
           <Panel class="w-[30%] border rounded-lg shadow p-4">
-            <p><strong>Pet ID:</strong> {{ medicalRecord.pet_id }}</p>
-            <p><strong>Pet Name:</strong> {{ props.pet_name }}</p>
-            <p><strong>Branch ID:</strong> {{ medicalRecord.branch_id }}</p>
-            <p><strong>Visit Date:</strong> {{ formatDate(medicalRecord.created_at) }}</p>
-            <p><strong>Diagnosis:</strong> {{ medicalRecord.diagnosis }}</p>
+            <p>
+              <strong>{{ $t("medical_examination.general_info.pet_id") }}:</strong>
+              {{ medicalRecord.pet_id }}
+            </p>
+            <p>
+              <strong>{{ $t("medical_examination.general_info.pet_name") }}:</strong>
+              {{ props.pet_name }}
+            </p>
+            <p>
+              <strong>{{ $t("medical_examination.general_info.branch_id") }}:</strong>
+              {{ medicalRecord.branch_id }}
+            </p>
+            <p>
+              <strong>{{ $t("medical_examination.general_info.visit_date") }}:</strong>
+              {{ formatDate(medicalRecord.created_at) }}
+            </p>
+            <p>
+              <strong>{{ $t("medical_examination.general_info.diagnosis") }}:</strong>
+              {{ medicalRecord.diagnosis }}
+            </p>
           </Panel>
           <Panel class="w-[30%] border rounded-lg shadow p-4">
-            <p><strong>Created At:</strong> {{ formatDate(medicalRecord.created_at) }}</p>
-            <p><strong>Updated At:</strong> {{ formatDate(medicalRecord.updated_at) }}</p>
+            <p>
+              <strong>{{ $t("medical_examination.general_info.created_at") }}:</strong>
+              {{ formatDate(medicalRecord.created_at) }}
+            </p>
+            <p>
+              <strong>{{ $t("medical_examination.general_info.updated_at") }}:</strong>
+              {{ formatDate(medicalRecord.updated_at) }}
+            </p>
           </Panel>
         </div>
-        <!-- <div class="flex flex-wrap"></div> -->
+
         <!-- Current Symptoms -->
-        <Divider align="left" type="solid" id="symptoms">
-          <span class="text-xl font-bold">Current Symptoms</span>
+        <Divider :align="!isRtl ? `left` : `right`" type="solid" id="symptoms">
+          <span class="text-xl font-bold">{{
+            $t("case_history.steps.current_symptoms")
+          }}</span>
         </Divider>
         <Panel
-          header="Current Symptoms"
+          :header="$t('case_history.steps.current_symptoms')"
           toggleable
           v-for="(symptom, index) in medicalRecord.current_symptom"
           :key="index"
           class="border rounded-lg shadow p-4"
         >
-          <p><strong>Symptom Description:</strong> {{ symptom.symptom_description }}</p>
-          <p><strong>Start Date:</strong> {{ formatDate(symptom.start_date) }}</p>
-          <p><strong>Symptom Progression:</strong> {{ symptom.symptom_progression }}</p>
           <p>
-            <strong>Medication Given:</strong>
-            {{ symptom.medication_given ? "Yes" : "No" }}
+            <strong>{{ $t("case_history.fields.symptom_description") }}:</strong>
+            {{ symptom.symptom_description }}
           </p>
-          <p><strong>Medication Name:</strong> {{ symptom.medication_name }}</p>
-          <p><strong>Medication Dosage:</strong> {{ symptom.medication_dosage }}</p>
-          <p><strong>Prescribed By:</strong> {{ symptom.prescribed_by }}</p>
+          <p>
+            <strong>{{ $t("case_history.fields.start_date") }}:</strong>
+            {{ formatDate(symptom.start_date) }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.symptom_progression") }}:</strong>
+            {{ symptom.symptom_progression }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.medication_given") }}:</strong>
+            {{
+              symptom.medication_given
+                ? $t("medical_examination_form.options.yes")
+                : $t("medical_examination_form.options.no")
+            }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.medication_name") }}:</strong>
+            {{ symptom.medication_name }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.medication_dosage") }}:</strong>
+            {{ symptom.medication_dosage }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.prescribed_by") }}:</strong>
+            {{ symptom.prescribed_by }}
+          </p>
         </Panel>
 
         <!-- General Health -->
-        <Divider align="left" type="solid" id="health">
-          <span class="text-xl font-bold">General Health</span>
+        <Divider :align="!isRtl ? `left` : `right`" type="solid" id="health">
+          <span class="text-xl font-bold">{{
+            $t("case_history.steps.general_health")
+          }}</span>
         </Divider>
         <Panel
-          header="General Health"
+          :header="$t('case_history.steps.general_health')"
           toggleable
           v-for="(health, index) in medicalRecord.general_health"
           :key="index"
           class="border rounded-lg shadow p-4"
         >
-          <p><strong>Activity Level:</strong> {{ health.activity_level }}</p>
-          <p><strong>Vaccination Status:</strong> {{ health.vaccination_status }}</p>
-          <p><strong>Care Location:</strong> {{ health.care_location }}</p>
           <p>
-            <strong>Other Animals in Household:</strong>
-            {{ health.other_animals_in_household ? "Yes" : "No" }}
+            <strong>{{ $t("case_history.fields.activity_level") }}:</strong>
+            {{
+              $t(
+                `case_history.options.activity_level.${health.activity_level.toLowerCase()}`
+              )
+            }}
           </p>
           <p>
-            <strong>Number of Other Animals:</strong> {{ health.number_of_other_animals }}
+            <strong>{{ $t("case_history.fields.vaccination_status") }}:</strong>
+            {{
+              $t(
+                `case_history.options.vaccination_status.${health.vaccination_status.toLowerCase()}`
+              )
+            }}
           </p>
           <p>
-            <strong>Types of Other Animals:</strong> {{ health.types_of_other_animals }}
+            <strong>{{ $t("case_history.fields.care_location") }}:</strong>
+            {{
+              $t(
+                `case_history.options.care_location.${health.care_location.toLowerCase()}`
+              )
+            }}
           </p>
           <p>
-            <strong>Previous Diseases in Other Animals:</strong>
+            <strong>{{ $t("case_history.fields.other_animals_in_household") }}:</strong>
+            {{
+              health.other_animals_in_household
+                ? $t("medical_examination_form.options.yes")
+                : $t("medical_examination_form.options.no")
+            }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.number_of_other_animals") }}:</strong>
+            {{ health.number_of_other_animals }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.types_of_other_animals") }}:</strong>
+            {{ health.types_of_other_animals }}
+          </p>
+          <p>
+            <strong
+              >{{ $t("case_history.fields.previous_diseases_in_other_animals") }}:</strong
+            >
             {{ health.previous_diseases_in_other_animals }}
           </p>
         </Panel>
 
         <!-- Reproductive History -->
-        <Divider align="left" type="solid" id="XYZ">
-          <span class="text-xl font-bold"
-            ><i class="fa-solid fa-mars-and-venus"></i> Reproductive History</span
-          >
+        <Divider :align="!isRtl ? `left` : `right`" type="solid" id="reproductive">
+          <span class="text-xl font-bold">
+            <i class="fa-solid fa-mars-and-venus"></i>
+            {{ $t("case_history.steps.reproductive_history") }}
+          </span>
         </Divider>
         <Panel
-          header="Reproductive History"
+          :header="$t('case_history.steps.reproductive_history')"
           toggleable
           v-for="(history, index) in medicalRecord.reproductive_history"
           :key="index"
           class="border rounded-lg shadow p-4"
         >
           <p>
-            <strong>Last Reproductive Cycle Date:</strong>
+            <strong>{{ $t("case_history.fields.last_reproductive_cycle_date") }}:</strong>
             {{ formatDate(history.last_reproductive_cycle_date) }}
           </p>
-          <p><strong>Cycle Length:</strong> {{ history.cycle_length }}</p>
-          <p><strong>Notable Signs:</strong> {{ history.notable_signs }}</p>
-          <p><strong>Other Discharges:</strong> {{ history.other_discharges }}</p>
+          <p>
+            <strong>{{ $t("case_history.fields.cycle_length") }}:</strong>
+            {{ history.cycle_length }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.notable_signs") }}:</strong>
+            {{ history.notable_signs }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.other_discharges") }}:</strong>
+            {{ history.other_discharges }}
+          </p>
         </Panel>
 
         <!-- Itching and Skin Condition -->
-        <Divider align="left" type="solid" id="XYZ">
-          <span class="text-xl font-bold">Itching and Skin Condition</span>
+        <Divider :align="!isRtl ? `left` : `right`" type="solid" id="itching">
+          <span class="text-xl font-bold">{{
+            $t("case_history.steps.itching_skin")
+          }}</span>
         </Divider>
         <Panel
-          header="Itching and Skin Condition"
+          :header="$t('case_history.steps.itching_skin')"
           toggleable
           v-for="(itching, index) in medicalRecord.itching_skin_condition"
           :key="index"
           class="border rounded-lg shadow p-4"
         >
           <p>
-            <strong>Itching Present:</strong> {{ itching.itching_present ? "Yes" : "No" }}
+            <strong>{{ $t("case_history.fields.itching_present") }}:</strong>
+            {{
+              itching.itching_present
+                ? $t("medical_examination_form.options.yes")
+                : $t("medical_examination_form.options.no")
+            }}
           </p>
-          <p><strong>Itching Location:</strong> {{ itching.itching_location }}</p>
-          <p><strong>Itching Description:</strong> {{ itching.itching_description }}</p>
           <p>
-            <strong>Skin Condition Description:</strong>
+            <strong>{{ $t("case_history.fields.itching_location") }}:</strong>
+            {{ itching.itching_location }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.itching_description") }}:</strong>
+            {{ itching.itching_description }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.skin_condition_description") }}:</strong>
             {{ itching.skin_condition_description }}
           </p>
         </Panel>
 
         <!-- Diet and Water Intake -->
-        <Divider align="left" type="solid" id="XYZ">
+        <Divider :align="!isRtl ? `left` : `right`" type="solid" id="diet">
           <span class="text-xl font-bold">
-            <i class="fa-solid fa-bone"></i> Diet and Water Intake</span
-          >
+            <i class="fa-solid fa-bone"></i> {{ $t("case_history.steps.diet_water") }}
+          </span>
         </Divider>
         <Panel
-          header="Diet and Water Intake"
+          :header="$t('case_history.steps.diet_water')"
           toggleable
           v-for="(diet, index) in medicalRecord.diet_water_intake"
           :key="index"
           class="border rounded-lg shadow p-4"
         >
-          <p><strong>Diet Type:</strong> {{ diet.diet_type }}</p>
-          <p><strong>Diet Details:</strong> {{ diet.diet_details }}</p>
-          <p><strong>Number of Meals:</strong> {{ diet.number_of_meals }}</p>
-          <p><strong>Meal Quantity:</strong> {{ diet.meal_quantity }}</p>
-          <p><strong>Appetite:</strong> {{ diet.appetite }}</p>
           <p>
-            <strong>Recent Diet Change:</strong>
-            {{ diet.recent_diet_change ? "Yes" : "No" }}
+            <strong>{{ $t("case_history.fields.diet_type") }}:</strong>
+            {{ $t(`case_history.options.diet_type.${diet.diet_type.toLowerCase()}`) }}
           </p>
-          <p><strong>Diet Change Type:</strong> {{ diet.diet_change_type }}</p>
-          <p><strong>Water Intake:</strong> {{ diet.water_intake }}</p>
+          <p>
+            <strong>{{ $t("case_history.fields.diet_details") }}:</strong>
+            {{ diet.diet_details }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.number_of_meals") }}:</strong>
+            {{ diet.number_of_meals }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.meal_quantity") }}:</strong>
+            {{ diet.meal_quantity }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.appetite") }}:</strong>
+            {{ $t(`case_history.options.appetite.${diet.appetite.toLowerCase()}`) }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.recent_diet_change") }}:</strong>
+            {{
+              diet.recent_diet_change
+                ? $t("medical_examination_form.options.yes")
+                : $t("medical_examination_form.options.no")
+            }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.diet_change_type") }}:</strong>
+            {{
+              $t(
+                `case_history.options.diet_change_type.${diet.diet_change_type.toLowerCase()}`
+              )
+            }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.water_intake") }}:</strong>
+            {{ diet.water_intake }}
+          </p>
         </Panel>
 
         <!-- Gastrointestinal Symptoms -->
-        <Divider align="left" type="solid" id="XYZ">
+        <Divider :align="!isRtl ? `left` : `right`" type="solid" id="XYZ">
           <span class="text-xl font-bold flex gap-2">
             <svg
               class="w-[24px] !text-[var(--p-dialog-color)] dark:!text-[var(--p-primary-contrast-color)]"
@@ -203,75 +331,142 @@
 	S54.552,35.123,54,35.123z"
               />
             </svg>
-            Gastrointestinal Symptoms</span
-          >
+
+            {{ $t("case_history.steps.gastrointestinal") }}
+          </span>
         </Divider>
         <Panel
-          header="Gastrointestinal Symptoms"
+          :header="$t('case_history.steps.gastrointestinal')"
           toggleable
           v-for="(symptom, index) in medicalRecord.gastrointestinal_symptom"
           :key="index"
           class="border rounded-lg shadow p-4"
         >
-          <p><strong>Vomiting:</strong> {{ symptom.vomiting ? "Yes" : "No" }}</p>
-          <p><strong>Vomit Color:</strong> {{ symptom.vomit_color }}</p>
-          <p><strong>Vomit Contents:</strong> {{ symptom.vomit_contents }}</p>
-          <p><strong>Vomit Smell:</strong> {{ symptom.vomit_smell }}</p>
-          <p><strong>Vomiting Frequency:</strong> {{ symptom.vomiting_frequency }}</p>
           <p>
-            <strong>Vomiting Related to Food:</strong>
-            {{ symptom.vomiting_related_to_food ? "Yes" : "No" }}
+            <strong>{{ $t("case_history.fields.vomiting") }}:</strong>
+            {{
+              symptom.vomiting
+                ? $t("medical_examination_form.options.yes")
+                : $t("medical_examination_form.options.no")
+            }}
           </p>
           <p>
-            <strong>Vomiting Related to Diarrhea:</strong>
-            {{ symptom.vomiting_related_to_diarrhea ? "Yes" : "No" }}
+            <strong>{{ $t("case_history.fields.vomit_color") }}:</strong>
+            {{ symptom.vomit_color }}
           </p>
           <p>
-            <strong>Diarrhea Started First:</strong>
-            {{ symptom.diarrhea_started_first ? "Yes" : "No" }}
+            <strong>{{ $t("case_history.fields.vomit_contents") }}:</strong>
+            {{ symptom.vomit_contents }}
           </p>
-          <p><strong>Stool Consistency:</strong> {{ symptom.stool_consistency }}</p>
-          <p><strong>Stool Color:</strong> {{ symptom.stool_color }}</p>
-          <p><strong>Stool Frequency:</strong> {{ symptom.stool_frequency }}</p>
           <p>
-            <strong>Abnormal Stool Contents:</strong>
+            <strong>{{ $t("case_history.fields.vomit_smell") }}:</strong>
+            {{ symptom.vomit_smell }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.vomiting_frequency") }}:</strong>
+            {{ symptom.vomiting_frequency }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.vomiting_related_to_food") }}:</strong>
+            {{
+              symptom.vomiting_related_to_food
+                ? $t("medical_examination_form.options.yes")
+                : $t("medical_examination_form.options.no")
+            }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.vomiting_related_to_diarrhea") }}:</strong>
+            {{
+              symptom.vomiting_related_to_diarrhea
+                ? $t("medical_examination_form.options.yes")
+                : $t("medical_examination_form.options.no")
+            }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.diarrhea_started_first") }}:</strong>
+            {{
+              symptom.diarrhea_started_first
+                ? $t("medical_examination_form.options.yes")
+                : $t("medical_examination_form.options.no")
+            }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.stool_consistency") }}:</strong>
+            {{
+              $t(
+                `case_history.options.stool_consistency.${symptom.stool_consistency.toLowerCase()}`
+              )
+            }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.stool_color") }}:</strong>
+            {{ symptom.stool_color }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.stool_frequency") }}:</strong>
+            {{ symptom.stool_frequency }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.abnormal_stool_contents") }}:</strong>
             {{ symptom.abnormal_stool_contents }}
           </p>
           <p>
-            <strong>Excessive Licking of Anus:</strong>
-            {{ symptom.excessive_licking_of_anus ? "Yes" : "No" }}
+            <strong>{{ $t("case_history.fields.excessive_licking_of_anus") }}:</strong>
+            {{
+              symptom.excessive_licking_of_anus
+                ? $t("medical_examination_form.options.yes")
+                : $t("medical_examination_form.options.no")
+            }}
           </p>
         </Panel>
 
         <!-- Neurological Symptoms -->
-        <Divider align="left" type="solid" id="XYZ">
+        <Divider :align="!isRtl ? `left` : `right`" type="solid" id="neurological">
           <span class="text-xl font-bold">
-            <i class="fa-solid fa-brain"></i> Neurological Symptoms</span
-          >
+            <i class="fa-solid fa-brain"></i> {{ $t("case_history.steps.neurological") }}
+          </span>
         </Divider>
         <Panel
-          header="Neurological Symptoms"
+          :header="$t('case_history.steps.neurological')"
           toggleable
           v-for="(symptom, index) in medicalRecord.neurological_symptom"
           :key="index"
           class="border rounded-lg shadow p-4"
         >
-          <p><strong>Neurological Signs:</strong> {{ symptom.neurological_signs }}</p>
           <p>
-            <strong>Neurological Signs Frequency:</strong>
+            <strong>{{ $t("case_history.fields.neurological_signs") }}:</strong>
+            {{ symptom.neurological_signs }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.neurological_signs_frequency") }}:</strong>
             {{ symptom.neurological_signs_frequency }}
           </p>
-          <p><strong>Associated Symptoms:</strong> {{ symptom.associated_symptoms }}</p>
-          <p><strong>Sudden Onset:</strong> {{ symptom.sudden_onset ? "Yes" : "No" }}</p>
           <p>
-            <strong>Related to Eating or Activity:</strong>
+            <strong>{{ $t("case_history.fields.associated_symptoms") }}:</strong>
+            {{ symptom.associated_symptoms }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.sudden_onset") }}:</strong>
+            {{
+              symptom.sudden_onset
+                ? $t("medical_examination_form.options.yes")
+                : $t("medical_examination_form.options.no")
+            }}
+          </p>
+          <p>
+            <strong
+              >{{ $t("case_history.fields.related_to_eating_or_activity") }}:</strong
+            >
             {{ symptom.related_to_eating_or_activity }}
           </p>
-          <p><strong>Additional Details:</strong> {{ symptom.additional_details }}</p>
+          <p>
+            <strong>{{ $t("case_history.fields.additional_details") }}:</strong>
+            {{ symptom.additional_details }}
+          </p>
         </Panel>
 
         <!-- Respiratory Symptoms -->
-        <Divider align="left" type="solid" id="XYZ">
+        <Divider :align="!isRtl ? `left` : `right`" type="solid" id="respiratory">
           <span class="text-xl font-bold flex gap-2">
             <svg
               class="w-[24px] !text-[var(--p-dialog-color)] dark:!text-[var(--p-primary-contrast-color)]"
@@ -296,33 +491,60 @@
                 </g>
               </g>
             </svg>
-            Respiratory Symptoms</span
-          >
+            {{ $t("case_history.steps.respiratory") }}
+          </span>
         </Divider>
         <Panel
-          header="Respiratory Symptoms"
+          :header="$t('case_history.steps.respiratory')"
           toggleable
           v-for="(symptom, index) in medicalRecord.respiratory_symptom"
           :key="index"
           class="border rounded-lg shadow p-4"
         >
-          <p><strong>Cough:</strong> {{ symptom.cough ? "Yes" : "No" }}</p>
           <p>
-            <strong>Cough Start Date:</strong> {{ formatDate(symptom.cough_start_date) }}
+            <strong>{{ $t("case_history.fields.cough") }}:</strong>
+            {{
+              symptom.cough
+                ? $t("medical_examination_form.options.yes")
+                : $t("medical_examination_form.options.no")
+            }}
           </p>
-          <p><strong>Cough Frequency:</strong> {{ symptom.cough_frequency }}</p>
-          <p><strong>Cough Type:</strong> {{ symptom.cough_type }}</p>
           <p>
-            <strong>Breathing Difficulty:</strong>
-            {{ symptom.breathing_difficulty ? "Yes" : "No" }}
+            <strong>{{ $t("case_history.fields.cough_start_date") }}:</strong>
+            {{ formatDate(symptom.cough_start_date) }}
           </p>
-          <p><strong>Sneezing:</strong> {{ symptom.sneezing ? "Yes" : "No" }}</p>
+          <p>
+            <strong>{{ $t("case_history.fields.cough_frequency") }}:</strong>
+            {{ symptom.cough_frequency }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.cough_type") }}:</strong>
+            {{
+              $t(`case_history.options.cough_type.${symptom.cough_type.toLowerCase()}`)
+            }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.breathing_difficulty") }}:</strong>
+            {{
+              symptom.breathing_difficulty
+                ? $t("medical_examination_form.options.yes")
+                : $t("medical_examination_form.options.no")
+            }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.sneezing") }}:</strong>
+            {{
+              symptom.sneezing
+                ? $t("medical_examination_form.options.yes")
+                : $t("medical_examination_form.options.no")
+            }}
+          </p>
         </Panel>
-
         <!-- Urinary Symptoms -->
-        <Divider align="left" type="solid" id="XYZ">
-          <span class="text-xl font-bold flex gap-2"
-            ><svg
+        <!-- Urinary Symptoms -->
+        <Divider :align="!isRtl ? `left` : `right`" type="solid" id="urinary">
+          <span class="text-xl font-bold flex gap-2">
+            <svg
               class="w-[24px] !text-[var(--p-dialog-color)] dark:!text-[var(--p-primary-contrast-color)]"
               fill="currentColor"
               version="1.1"
@@ -349,41 +571,82 @@
 	s0.447,1,1,1H12z M44,24.178h-6c0.553,0,1-0.447,1-1s-0.447-1-1-1h6c0.553,0,1,0.447,1,1S44.553,24.178,44,24.178z"
               />
             </svg>
-            Urinary Symptoms</span
-          >
+            {{ $t("case_history.steps.urinary") }}
+          </span>
         </Divider>
         <Panel
-          header="Urinary Symptoms"
+          :header="$t('case_history.steps.urinary')"
           toggleable
           v-for="(symptom, index) in medicalRecord.urinary_symptom"
           :key="index"
           class="border rounded-lg shadow p-4"
         >
-          <p><strong>Urination Frequency:</strong> {{ symptom.urination_frequency }}</p>
           <p>
-            <strong>Frequent Litter Box Visits:</strong>
-            {{ symptom.frequent_litter_box_visits ? "Yes" : "No" }}
+            <strong>{{ $t("case_history.fields.urination_frequency") }}:</strong>
+            {{ symptom.urination_frequency }}
           </p>
-          <p><strong>Urine Volume:</strong> {{ symptom.urine_volume }}</p>
-          <p><strong>Urine Color:</strong> {{ symptom.urine_color }}</p>
-          <p><strong>Urination Type:</strong> {{ symptom.urination_type }}</p>
           <p>
-            <strong>Blood in Urine:</strong> {{ symptom.blood_in_urine ? "Yes" : "No" }}
+            <strong>{{ $t("case_history.fields.stool_frequency") }}:</strong>
+            {{
+              symptom.stool_frequency
+                ? $t("medical_examination_form.options.yes")
+                : $t("medical_examination_form.options.no")
+            }}
           </p>
-          <p><strong>Blood Location:</strong> {{ symptom.blood_location }}</p>
           <p>
-            <strong>Abnormal Urinary Discharge:</strong>
+            <strong>{{ $t("case_history.fields.urine_volume") }}:</strong>
+            {{ symptom.urine_volume }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.urine_color") }}:</strong>
+            {{ symptom.urine_color }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.urination_type") }}:</strong>
+            {{
+              $t(
+                `case_history.options.urination_type.${symptom.urination_type.toLowerCase()}`
+              )
+            }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.blood_in_urine") }}:</strong>
+            {{
+              symptom.blood_in_urine
+                ? $t("medical_examination_form.options.yes")
+                : $t("medical_examination_form.options.no")
+            }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.blood_location") }}:</strong>
+            {{
+              $t(
+                `case_history.options.blood_location.${symptom.blood_location.toLowerCase()}`
+              )
+            }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.abnormal_urinary_discharge") }}:</strong>
             {{ symptom.abnormal_urinary_discharge }}
           </p>
-          <p><strong>Genital Discharge:</strong> {{ symptom.genital_discharge }}</p>
           <p>
-            <strong>Excessive Licking of Genital Area:</strong>
-            {{ symptom.excessive_licking_of_genital_area ? "Yes" : "No" }}
+            <strong>{{ $t("case_history.fields.genital_discharge") }}:</strong>
+            {{ symptom.genital_discharge }}
+          </p>
+          <p>
+            <strong
+              >{{ $t("case_history.fields.excessive_licking_of_genital_area") }}:</strong
+            >
+            {{
+              symptom.excessive_licking_of_genital_area
+                ? $t("medical_examination_form.options.yes")
+                : $t("medical_examination_form.options.no")
+            }}
           </p>
         </Panel>
 
         <!-- Vaccination History -->
-        <Divider align="left" type="solid" id="vaccines">
+        <Divider :align="!isRtl ? `left` : `right`" type="solid" id="vaccines">
           <span class="text-xl font-bold flex gap-2">
             <svg
               version="1.1"
@@ -404,50 +667,94 @@
                 />
               </g>
             </svg>
-            Vaccination History</span
-          >
+            {{ $t("case_history.additional.vaccination_history") }}
+          </span>
         </Divider>
         <Panel
-          header="Vaccination History"
+          :header="$t('case_history.additional.vaccination_history')"
           toggleable
           v-for="(vaccine, index) in medicalRecord.vaccination_history"
           :key="index"
           class="border rounded-lg shadow p-4"
         >
-          <p><strong>Vaccine Name:</strong> {{ vaccine.vaccine_name }}</p>
-          <p><strong>Vaccine Date:</strong> {{ formatDate(vaccine.vaccine_date) }}</p>
-          <p><strong>Next Due Date:</strong> {{ formatDate(vaccine.next_due_date) }}</p>
-          <p><strong>Administered By:</strong> {{ vaccine.administered_by }}</p>
-          <p><strong>Notes:</strong> {{ vaccine.notes }}</p>
+          <p>
+            <strong>{{ $t("case_history.fields.vaccine_name") }}:</strong>
+            {{ vaccine.vaccine_name }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.vaccine_date") }}:</strong>
+            {{ formatDate(vaccine.vaccine_date) }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.next_due_date") }}:</strong>
+            {{ formatDate(vaccine.next_due_date) }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.administered_by") }}:</strong>
+            {{ vaccine.administered_by }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.additional_notes") }}:</strong>
+            {{ vaccine.notes }}
+          </p>
         </Panel>
 
         <!-- Medication History -->
-        <Divider align="left" type="solid" id="medications">
-          <span class="text-xl font-bold"
-            ><i class="fa-solid fa-capsules"></i> Medication History</span
-          >
+        <Divider :align="!isRtl ? `left` : `right`" type="solid" id="medications">
+          <span class="text-xl font-bold">
+            <i class="fa-solid fa-capsules"></i>
+            {{ $t("case_history.additional.medication_history") }}
+          </span>
         </Divider>
         <Panel
-          header="Medication History"
+          :header="$t('case_history.additional.medication_history')"
           toggleable
           v-for="(medication, index) in medicalRecord.medication_history"
           :key="index"
           class="border rounded-lg shadow p-4"
         >
-          <p><strong>Medication Name:</strong> {{ medication.medication_name }}</p>
-          <p><strong>Medication Type:</strong> {{ medication.medication_type }}</p>
-          <p><strong>Dosage:</strong> {{ medication.dosage }}</p>
-          <p><strong>Frequency:</strong> {{ medication.frequency }}</p>
-          <p><strong>Start Date:</strong> {{ formatDate(medication.start_date) }}</p>
-          <p><strong>End Date:</strong> {{ formatDate(medication.end_date) }}</p>
-          <p><strong>Prescribed By:</strong> {{ medication.prescribed_by }}</p>
-          <p><strong>Notes:</strong> {{ medication.notes }}</p>
+          <p>
+            <strong>{{ $t("case_history.fields.medication_name") }}:</strong>
+            {{ medication.medication_name }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.medication_type") }}:</strong>
+            {{
+              $t(
+                `case_history.options.medication_type.${medication.medication_type.toLowerCase()}`
+              )
+            }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.dosage") }}:</strong>
+            {{ medication.dosage }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.frequency") }}:</strong>
+            {{ medication.frequency }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.medication_start_date") }}:</strong>
+            {{ formatDate(medication.start_date) }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.medication_end_date") }}:</strong>
+            {{ formatDate(medication.end_date) }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.prescribed_by") }}:</strong>
+            {{ medication.prescribed_by }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.additional_notes") }}:</strong>
+            {{ medication.notes }}
+          </p>
         </Panel>
 
         <!-- Antiparasitic Treatment -->
-        <Divider align="left" type="solid" id="XYZ">
-          <span class="text-xl font-bold flex gap-2"
-            ><svg
+        <Divider :align="!isRtl ? `left` : `right`" type="solid" id="antiparasitic">
+          <span class="text-xl font-bold flex gap-2">
+            <svg
               class="w-[24px] !text-[var(--p-dialog-color)] dark:!text-[var(--p-primary-contrast-color)]"
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
@@ -458,104 +765,146 @@
                 d="M164.5 107.4l33.4-73.5c5.5-12.1 .1-26.3-11.9-31.8s-26.3-.1-31.8 11.9L128 71.7 101.9 14.1C96.4 2 82.1-3.3 70.1 2.1S52.7 21.9 58.1 33.9l33.4 73.5c-10.2 7.1-18.2 17-22.9 28.6l-17 0-4.1-20.7c-2.6-13-15.2-21.4-28.2-18.8S-2.1 111.7 .5 124.7l8 40C10.7 175.9 20.6 184 32 184l32 0 0 23.3-37.8 9.5c-9.5 2.4-16.6 10.2-17.9 19.9l-8 56c-1.9 13.1 7.2 25.3 20.4 27.2s25.3-7.2 27.2-20.4l5.7-40 18.4-4.6C82.7 274.6 103.8 288 128 288s45.3-13.4 56.1-33.2l18.4 4.6 5.7 40c1.9 13.1 14 22.2 27.2 20.4s22.2-14 20.4-27.2l-8-56c-1.4-9.7-8.5-17.5-17.9-19.9L192 207.3l0-23.3 32 0c11.4 0 21.3-8.1 23.5-19.3l8-40c2.6-13-5.8-25.6-18.8-28.2s-25.6 5.8-28.2 18.8L204.3 136l-17 0c-4.7-11.6-12.7-21.5-22.9-28.6zM496 286.5l65.6-47c10.8-7.7 13.3-22.7 5.6-33.5s-22.7-13.3-33.5-5.6l-51.4 36.8 6.1-62.9c1.3-13.2-8.4-24.9-21.6-26.2s-24.9 8.4-26.2 21.6L432.8 250c-12.3 1-24.2 5.6-34.1 13.3L384 254.8l6.8-20c4.2-12.6-2.5-26.2-15-30.4s-26.2 2.5-30.4 15l-13.1 38.6c-3.7 10.8 .8 22.8 10.7 28.5l27.7 16L359 322.7 321.5 312c-9.4-2.7-19.5 .6-25.5 8.3l-34.9 44.5c-8.2 10.4-6.4 25.5 4.1 33.7s25.5 6.4 33.7-4.1l25-31.8 18.2 5.2c-.5 22.6 11 44.7 32 56.8s45.9 11 65.2-.7l13.6 13.2-15.1 37.5c-4.9 12.3 1 26.3 13.3 31.2s26.3-1 31.2-13.3L503.5 440c3.6-9.1 1.4-19.4-5.6-26.2l-28-27.1 11.6-20.1 27.7 16c9.9 5.7 22.5 3.7 30-4.9L566.2 347c8.7-10 7.8-25.1-2.2-33.9s-25.1-7.8-33.9 2.2l-13.9 15.9-14.7-8.5c1.7-12.4-.2-25-5.5-36.2z"
               />
             </svg>
-            Antiparasitic Treatment</span
-          >
+            {{ $t("case_history.additional.antiparasitic_treatment") }}
+          </span>
         </Divider>
         <Panel
-          header="Antiparasitic Treatment"
+          :header="$t('case_history.additional.antiparasitic_treatment')"
           toggleable
           v-for="(treatment, index) in medicalRecord.antiparasitic_treatment"
           :key="index"
           class="border rounded-lg shadow p-4"
         >
-          <p><strong>Treatment Name:</strong> {{ treatment.treatment_name }}</p>
-          <p><strong>Treatment Type:</strong> {{ treatment.treatment_type }}</p>
-          <p><strong>Dosage:</strong> {{ treatment.dosage }}</p>
           <p>
-            <strong>Administration Date:</strong>
+            <strong>{{ $t("case_history.fields.treatment_name") }}:</strong>
+            {{ treatment.treatment_name }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.treatment_type") }}:</strong>
+            {{
+              $t(
+                `case_history.options.treatment_type.${treatment.treatment_type.toLowerCase()}`
+              )
+            }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.dosage") }}:</strong>
+            {{ treatment.dosage }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.administration_date") }}:</strong>
             {{ formatDate(treatment.administration_date) }}
           </p>
-          <p><strong>Next Due Date:</strong> {{ formatDate(treatment.next_due_date) }}</p>
-          <p><strong>Administered By:</strong> {{ treatment.administered_by }}</p>
-          <p><strong>Notes:</strong> {{ treatment.notes }}</p>
+          <p>
+            <strong>{{ $t("case_history.fields.next_due_date") }}:</strong>
+            {{ formatDate(treatment.next_due_date) }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.administered_by") }}:</strong>
+            {{ treatment.administered_by }}
+          </p>
+          <p>
+            <strong>{{ $t("case_history.fields.additional_notes") }}:</strong>
+            {{ treatment.notes }}
+          </p>
         </Panel>
-
         <!-- Additional Notes -->
-        <Divider align="left" type="solid" id="XYZ">
+        <!-- Additional Notes -->
+        <Divider :align="!isRtl ? `left` : `right`" type="solid" id="XYZ">
           <span class="text-xl font-bold"
-            ><i class="fa-solid fa-note-sticky"></i> Additional Notes</span
+            ><i class="fa-solid fa-note-sticky"></i>
+            {{ $t("medical_examination.sections.notes") }}</span
           >
         </Divider>
         <Panel
-          header="Additional Notes"
+          :header="$t('medical_examination.sections.notes')"
           toggleable
           v-for="(note, index) in medicalRecord.additional_note"
           :key="index"
           class="border rounded-lg shadow p-4"
         >
-          <p><strong>Notes:</strong> {{ note.notes }}</p>
+          <p>
+            <strong>{{ $t("case_history.fields.additional_notes") }}:</strong>
+            {{ note.notes }}
+          </p>
         </Panel>
 
         <!-- Test Results -->
-        <Divider align="left" type="solid" id="tests">
+        <Divider :align="!isRtl ? `left` : `right`" type="solid" id="tests">
           <span class="text-xl font-bold"
-            ><i class="fa-solid fa-vials"></i> Test Results</span
+            ><i class="fa-solid fa-vials"></i> {{ $t("pet_details.test_results") }}</span
           >
         </Divider>
         <Panel
-          header="Test Results"
+          :header="$t('pet_details.test_results')"
           toggleable
           v-for="(test, index) in medicalRecord.test_results"
           :key="index"
           class="border rounded-lg shadow p-4"
         >
           <div class="flex flex-wrap w-full">
-            <p class="w-[30%]"><strong>Test Type:</strong> {{ test.test_type }}</p>
+            <p class="w-[30%]">
+              <strong>{{ $t("add_test_result.fields.test_type") }}:</strong>
+              {{ test.test_type }}
+            </p>
             <div class="w-2/3">
-              <strong>Result:</strong>
+              <strong>{{ $t("add_test_result.fields.test_name") }}:</strong>
               <div
                 v-for="(entry, index) in parseResults(test.result)"
                 :key="index"
                 class="flex gap-2"
               >
-                <!-- </div> -->
-                <!-- <strong>{{ key }}:</strong> {{ value }} -->
                 <p class="!text-sm m-1">
                   <strong>{{ entry.key }}:</strong> {{ entry.value }}
                 </p>
               </div>
             </div>
           </div>
-
-          <!-- <strong>{{ test.key }}:</strong> {{ test.value }} -->
         </Panel>
 
         <!-- Medical Images -->
-        <Divider align="left" type="solid" id="images">
+        <Divider :align="!isRtl ? `left` : `right`" type="solid" id="images">
           <span class="text-xl font-bold"
-            ><i class="fa-solid fa-x-ray text-2xl"></i> Medical Images
+            ><i class="fa-solid fa-x-ray text-2xl"></i>
+            {{ $t("pet_details.xray_ultrasound") }}
           </span>
         </Divider>
         <div class="flex flex-wrap w-full gap-4">
           <Panel
-            header="Medical Images"
+            :header="$t('pet_details.xray_ultrasound')"
             toggleable
             v-for="(image, index) in medicalRecord.medical_images"
             :key="index"
             class="border rounded-lg shadow p-4 w-[48%]"
           >
-            <p><strong>Type:</strong> {{ image.type }}</p>
-            <p><strong>Organ:</strong> {{ image.organ }}</p>
-            <p><strong>Measurements:</strong> {{ image.measurements }}</p>
-            <p><strong>Description:</strong> {{ image.description }}</p>
-            <p><strong>Ref Number:</strong> {{ image.ref_number }}</p>
+            <p>
+              <strong>{{ $t("medical_images.headers.type") }}:</strong>
+              {{ image.type }}
+            </p>
+            <p>
+              <strong>{{ $t("medical_images.headers.organ") }}:</strong>
+              {{ image.organ }}
+            </p>
+            <p>
+              <strong>{{ $t("medical_images.headers.measurements") }}:</strong>
+              {{ image.measurements }}
+            </p>
+            <p>
+              <strong>{{ $t("medical_images.headers.description") }}:</strong>
+              {{ image.description }}
+            </p>
+            <p>
+              <strong>{{ $t("medical_images.headers.ref_number") }}:</strong>
+              {{ image.ref_number }}
+            </p>
           </Panel>
         </div>
 
         <!-- Physical Examination -->
-        <Divider align="left" type="solid" id="examination">
+        <Divider :align="!isRtl ? `left` : `right`" type="solid" id="examination">
           <span class="text-xl font-bold"
-            ><i class="fa-solid fa-stethoscope"></i> Physical Examination</span
+            ><i class="fa-solid fa-stethoscope"></i>
+            {{ $t("medical_examination.title") }}</span
           >
         </Divider>
         <div
@@ -565,122 +914,241 @@
         >
           <div class="w-full pb-4">
             <p>
-              <strong>Examination Date:</strong> {{ formatDate(exam.examination_date) }}
+              <strong>{{ $t("medical_examination.exam_data.examination_date") }}:</strong>
+              {{ formatDate(exam.examination_date) }}
             </p>
-            <p><strong>Animal Weight:</strong> {{ exam.animal_weight }} kg</p>
-            <p><strong>Temperature:</strong> {{ exam.temperature }} °C</p>
-            <p><strong>Behavior:</strong> {{ exam.animal_behavior }}</p>
+            <p>
+              <strong>{{ $t("medical_examination.exam_data.animal_weight") }}:</strong>
+              {{ exam.animal_weight }} kg
+            </p>
+            <p>
+              <strong>{{ $t("medical_examination.exam_data.temperature") }}:</strong>
+              {{ exam.temperature }} °C
+            </p>
+            <p>
+              <strong>{{ $t("medical_examination.exam_data.behavior") }}:</strong>
+              {{ exam.animal_behavior }}
+            </p>
           </div>
 
           <div class="flex flex-wrap gap-4">
             <!-- Head and Neck Examination -->
             <Panel
-              header="Head and Neck Examination"
+              :header="$t('medical_examination.sections.head_neck')"
               toggleable
               class="w-[30%] border rounded-lg shadow p-4"
             >
-              <p><strong>Eyes:</strong> {{ exam.eyes }}</p>
-              <p><strong>Eye Sunkenness:</strong> {{ exam.eye_sunkenness }}</p>
-              <p><strong>Nose:</strong> {{ exam.nose }}</p>
-              <p><strong>Nasal Discharge:</strong> {{ exam.nasal_discharge }}</p>
-              <p><strong>Mouth:</strong> {{ exam.mouth }}</p>
-              <p><strong>Teeth:</strong> {{ exam.teeth }}</p>
-              <p><strong>Gums:</strong> {{ exam.gums }}</p>
-              <p><strong>Tongue:</strong> {{ exam.tongue }}</p>
-              <p><strong>Mucous Membranes:</strong> {{ exam.mucous_membranes }}</p>
-              <p><strong>Ears:</strong> {{ exam.ears }}</p>
+              <p>
+                <strong>{{ $t("medical_examination.sections.eyes") }}:</strong>
+                {{ exam.eyes }}
+              </p>
+              <p>
+                <strong>{{ $t("medical_examination.sections.eye_sunkenness") }}:</strong>
+                {{ exam.eye_sunkenness }}
+              </p>
+              <p>
+                <strong>{{ $t("medical_examination.sections.nose") }}:</strong>
+                {{ exam.nose }}
+              </p>
+              <p>
+                <strong>{{ $t("medical_examination.sections.nasal_discharge") }}:</strong>
+                {{ exam.nasal_discharge }}
+              </p>
+              <p>
+                <strong>{{ $t("medical_examination.sections.mouth") }}:</strong>
+                {{ exam.mouth }}
+              </p>
+              <p>
+                <strong>{{ $t("medical_examination.sections.teeth") }}:</strong>
+                {{ exam.teeth }}
+              </p>
+              <p>
+                <strong>{{ $t("medical_examination.sections.gums") }}:</strong>
+                {{ exam.gums }}
+              </p>
+              <p>
+                <strong>{{ $t("medical_examination.sections.tongue") }}:</strong>
+                {{ exam.tongue }}
+              </p>
+              <p>
+                <strong
+                  >{{ $t("medical_examination.sections.mucous_membranes") }}:</strong
+                >
+                {{ exam.mucous_membranes }}
+              </p>
+              <p>
+                <strong>{{ $t("medical_examination.sections.ears") }}:</strong>
+                {{ exam.ears }}
+              </p>
             </Panel>
             <!-- Vital Signs -->
             <Panel
-              header="Vital Signs"
+              :header="$t('medical_examination.sections.vital_signs')"
               toggleable
               class="w-[30%] border rounded-lg shadow p-4"
             >
               <template #header>
                 <div class="flex items-center gap-2">
                   <i class="fa-solid fa-heart-pulse text-2xl"></i>
-                  <span class="font-bold">Vital Signs</span>
+                  <span class="font-bold">{{
+                    $t("medical_examination.sections.vital_signs")
+                  }}</span>
                 </div>
               </template>
-              <p><strong>Pulse Rate:</strong> {{ exam.pulse_rate }} bpm</p>
-              <p><strong>Respiratory Rate:</strong> {{ exam.respiratory_rate }}</p>
-              <p><strong>Breathing Pattern:</strong> {{ exam.breathing_pattern }}</p>
-              <p><strong>Breath Sound:</strong> {{ exam.breath_sound }}</p>
-              <p><strong>Oxygenation:</strong> {{ exam.oxygenation }}</p>
               <p>
-                <strong>Capillary Refill Time:</strong> {{ exam.capillary_refill_time }}
+                <strong>{{ $t("medical_examination.sections.pulse_rate") }}:</strong>
+                {{ exam.pulse_rate }} bpm
+              </p>
+              <p>
+                <strong
+                  >{{ $t("medical_examination.sections.respiratory_rate") }}:</strong
+                >
+                {{ exam.respiratory_rate }}
+              </p>
+              <p>
+                <strong
+                  >{{ $t("medical_examination.sections.breathing_pattern") }}:</strong
+                >
+                {{ exam.breathing_pattern }}
+              </p>
+              <p>
+                <strong>{{ $t("medical_examination.sections.breath_sound") }}:</strong>
+                {{ exam.breath_sound }}
+              </p>
+              <p>
+                <strong>{{ $t("medical_examination.sections.oxygenation") }}:</strong>
+                {{ exam.oxygenation }}
+              </p>
+              <p>
+                <strong
+                  >{{ $t("medical_examination.sections.capillary_refill_time") }}:</strong
+                >
+                {{ exam.capillary_refill_time }}
               </p>
             </Panel>
             <!-- Nervous System and Skin -->
             <Panel
-              header="Nervous System"
+              :header="$t('medical_examination.sections.nervous_system')"
               toggleable
               class="w-[30%] border rounded-lg shadow p-4"
             >
-              <p><strong>Nervous System:</strong> {{ exam.nervous_system }}</p>
+              <p>
+                <strong>{{ $t("medical_examination.sections.nervous_system") }}:</strong>
+                {{ exam.nervous_system }}
+              </p>
             </Panel>
             <Panel
-              header="Skin and Coat"
+              :header="$t('medical_examination.sections.skin_coat')"
               toggleable
               class="w-[30%] border rounded-lg shadow p-4"
             >
-              <p><strong>Skin:</strong> {{ exam.skin }}</p>
               <p>
-                <strong>Skin Lumps or Infections:</strong>
+                <strong>{{ $t("medical_examination.sections.skin") }}:</strong>
+                {{ exam.skin }}
+              </p>
+              <p>
+                <strong
+                  >{{
+                    $t("medical_examination.sections.skin_lumps_or_infections")
+                  }}:</strong
+                >
                 {{ exam.skin_lumps_or_infections }}
               </p>
-              <p><strong>Skin Coat Condition:</strong> {{ exam.skin_coat_condition }}</p>
+              <p>
+                <strong
+                  >{{ $t("medical_examination.sections.skin_coat_condition") }}:</strong
+                >
+                {{ exam.skin_coat_condition }}
+              </p>
             </Panel>
             <!-- Abdominal and Lymph Nodes -->
             <Panel
-              header="Abdominal Examination"
-              toggleable
-              class="w-[30%] border rounded-lg shadow p-4"
-            >
-              <p><strong>Abdominal Palpation:</strong> {{ exam.abdominal_palpation }}</p>
-              <p><strong>Lymph Nodes:</strong> {{ exam.lymph_nodes }}</p>
-            </Panel>
-            <!-- Body Condition and Hydration -->
-            <Panel
-              header="Body Condition"
+              :header="$t('medical_examination.sections.abdominal')"
               toggleable
               class="w-[30%] border rounded-lg shadow p-4"
             >
               <p>
-                <strong>Body Condition Score:</strong> {{ exam.body_condition_score }}
+                <strong
+                  >{{ $t("medical_examination.sections.abdominal_palpation") }}:</strong
+                >
+                {{ exam.abdominal_palpation }}
               </p>
-              <p><strong>Hydration Status:</strong> {{ exam.hydration_status }}</p>
+              <p>
+                <strong>{{ $t("medical_examination.sections.lymph_nodes") }}:</strong>
+                {{ exam.lymph_nodes }}
+              </p>
+            </Panel>
+            <!-- Body Condition and Hydration -->
+            <Panel
+              :header="$t('medical_examination.sections.body_condition')"
+              toggleable
+              class="w-[30%] border rounded-lg shadow p-4"
+            >
+              <p>
+                <strong
+                  >{{ $t("medical_examination.sections.body_condition_score") }}:</strong
+                >
+                {{ exam.body_condition_score }}
+              </p>
+              <p>
+                <strong
+                  >{{ $t("medical_examination.sections.hydration_status") }}:</strong
+                >
+                {{ exam.hydration_status }}
+              </p>
             </Panel>
             <!-- Preliminary Diagnosis and Recommendations -->
             <div class="col-12">
               <p>
-                <strong>Preliminary Diagnosis:</strong> {{ exam.preliminary_diagnosis }}
+                <strong
+                  >{{ $t("medical_examination.sections.preliminary_diagnosis") }}:</strong
+                >
+                {{ exam.preliminary_diagnosis }}
               </p>
-              <p><strong>Recommendations:</strong> {{ exam.recommendations }}</p>
-              <p><strong>Notes:</strong> {{ exam.notes }}</p>
+              <p>
+                <strong>{{ $t("medical_examination.sections.recommendations") }}:</strong>
+                {{ exam.recommendations }}
+              </p>
+              <p>
+                <strong>{{ $t("medical_examination.sections.notes") }}:</strong>
+                {{ exam.notes }}
+              </p>
             </div>
           </div>
         </div>
         <!-- Treatments -->
-        <Divider align="left" type="solid" id="treatments">
+        <Divider :align="!isRtl ? `left` : `right`" type="solid" id="treatments">
           <span class="text-xl font-bold"
-            ><i class="fa-solid fa-syringe"></i> Treatments</span
+            ><i class="fa-solid fa-syringe"></i> {{ $t("treatments.title") }}</span
           >
         </Divider>
         <div class="flex flex-wrap w-full gap-4">
           <Panel
-            header="Treatments"
+            :header="$t('treatments.title')"
             toggleable
             v-for="(treatment, index) in medicalRecord.treatments"
             :key="index"
             class="border rounded-lg shadow p-4 w-[48%]"
           >
-            <p><strong>Name:</strong> {{ treatment.name }}</p>
-            <p><strong>Dosage:</strong> {{ treatment.dosage }}</p>
-            <p><strong>Administration:</strong> {{ treatment.administration }}</p>
-            <p><strong>Description:</strong> {{ treatment.description }}</p>
             <p>
-              <strong>Treatment Date:</strong> {{ formatDate(treatment.treatment_date) }}
+              <strong>{{ $t("case_history.fields.medication_name") }}:</strong>
+              {{ treatment.name }}
+            </p>
+            <p>
+              <strong>{{ $t("case_history.fields.dosage") }}:</strong>
+              {{ treatment.dosage }}
+            </p>
+            <p>
+              <strong>{{ $t("treatments.headers.delivery") }}:</strong>
+              {{ treatment.administration }}
+            </p>
+            <p>
+              <strong>{{ $t("treatments.headers.description") }}:</strong>
+              {{ treatment.description }}
+            </p>
+            <p>
+              <strong>{{ $t("case_history.fields.administration_date") }}:</strong>
+              {{ formatDate(treatment.treatment_date) }}
             </p>
           </Panel>
         </div>
@@ -690,12 +1158,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick } from "vue";
+import { ref, onMounted, onUnmounted, nextTick, computed } from "vue";
 import Card from "primevue/card";
 import Divider from "primevue/divider";
 import Panel from "primevue/panel";
-import axiosInstance from "@/axios"; // Assuming axiosInstance is set up correctly
-// import brainIcon from "assets/1781410-512.png";
+import axiosInstance from "@/axios";
+import { useI18n } from "vue-i18n";
+const { t, locale } = useI18n();
 
 const emit = defineEmits(); // Define the event to be emitted
 // console.log("FULL REPORT");
@@ -709,17 +1178,15 @@ const props = defineProps({
     required: true,
   },
 });
-const sections = [
-  { id: "general-info", label: "General Info" },
-  { id: "symptoms", label: "Symptoms" },
-  { id: "health", label: "General Health" },
-  { id: "vaccines", label: "Vaccines" },
-  { id: "medications", label: "Medications" },
-  { id: "tests", label: "Tests" },
-  { id: "images", label: "Images" },
-  { id: "examination", label: "Examination" },
+const isRtl = computed(() => ["ar", "he", "fa"].includes(locale.value));
 
-  { id: "treatments", label: "Treatments" },
+const sections = [
+  { id: "general-info", label: "medical_examination_form.section_titles.general_info" },
+  { id: "symptoms", label: "case_history.steps.current_symptoms" },
+  { id: "health", label: "case_history.steps.general_health" },
+  { id: "reproductive", label: "case_history.steps.reproductive_history" },
+  { id: "itching", label: "case_history.steps.itching_skin" },
+  { id: "diet", label: "case_history.steps.diet_water" },
 ];
 const medicalRecord = ref({
   medical_examinations: [],

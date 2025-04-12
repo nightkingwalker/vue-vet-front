@@ -94,7 +94,7 @@
     "app": {
         "menu": {
             "calendar": "Calendar",
-            "patients": "Patients",
+            "patients": "Clinic",
             "owners": "Owners",
             "pets": "Pets",
             "inventories": "Inventories",
@@ -325,6 +325,605 @@
             "Lapine": "Lapine",
             "Murine": "Murine",
             "Ovine": "Ovine"
+        }
+    },
+    "treatments": {
+        "title": "Treatments",
+        "no_treatments": "No Treatments Found",
+        "refresh": "Refresh Data",
+        "add": "Add New Treatment",
+        "headers": {
+            "date": "Date",
+            "treatment": "Treatment",
+            "dosage": "Dosage",
+            "delivery": "Delivery",
+            "description": "Description"
+        },
+        "actions": {
+            "edit": "Edit Details",
+            "delete": "Delete"
+        },
+        "delete_confirm": {
+            "message": "Are you sure you want to delete this treatment?",
+            "header": "Delete Confirmation"
+        }
+    },
+    "add_treatment": {
+        "title": "Add New Treatment",
+        "fields": {
+            "name": "Name",
+            "dosage": "Dosage",
+            "delivery": "Delivery",
+            "description": "Description",
+            "treatment_date": "Treatment Date"
+        },
+        "submit": "Add Treatment",
+        "toast": {
+            "success": "Treatment Added Successfully",
+            "error": "Error adding treatment"
+        },
+        "administration_methods": {
+            "oral": "Oral (Pills, Tablets, Capsules, Syrups, Suspensions)",
+            "subcutaneous": "Subcutaneous Injection (Under the Skin)",
+            "intramuscular": "Intramuscular Injection (Into the Muscle)",
+            "intravenous": "Intravenous Injection (Into the Vein)",
+            "topical": "Topical (Creams, Ointments, Gels)",
+            "transdermal": "Transdermal (Patches, Absorption through Skin)",
+            "ophthalmic": "Ophthalmic (Eye Drops, Ointments)",
+            "otic": "Otic (Ear Drops, Medications)",
+            "inhalation": "Inhalation (Nebulizers, Inhalers)",
+            "rectal": "Rectal (Suppositories, Enemas)",
+            "sublingual": "Sublingual (Under the Tongue)",
+            "intranasal": "Intranasal (Nasal Sprays, Drops)",
+            "intraosseous": "Intraosseous (Into the Bone)"
+        }
+    },
+    "test_results": {
+        "title": "Test Results",
+        "no_results": "No Test Results Found",
+        "refresh": "Refresh Data",
+        "add": "Add New Test Result",
+        "headers": {
+            "test": "Test",
+            "result": "Result"
+        },
+        "actions": {
+            "edit": "Edit Details",
+            "delete": "Delete"
+        },
+        "delete_confirm": {
+            "message": "Are you sure you want to delete this result?",
+            "header": "Delete Confirmation"
+        }
+    },
+    "add_test_result": {
+        "title": "Add New Test Result",
+        "fields": {
+            "test_type": "Test Type",
+            "test_name": "Test Name {index}",
+            "test_value": "Test Value {index}"
+        },
+        "buttons": {
+            "add_result": "Add Result",
+            "submit": "Add Test Result"
+        },
+        "toast": {
+            "success": "Test Result Added Successfully",
+            "error": "Error adding test result"
+        }
+    },
+    "medical_images": {
+        "title": "Medical Images",
+        "no_images": "No Images Found",
+        "loading": "Loading Images data. Please wait.",
+        "refresh": "Refresh Data",
+        "add": "Add New Medical Image",
+        "headers": {
+            "type": "Type",
+            "date": "Date",
+            "organ": "Organ",
+            "measurements": "Measurements",
+            "description": "Description",
+            "ref_number": "Reference #"
+        },
+        "actions": {
+            "edit": "Edit Details",
+            "delete": "Delete"
+        },
+        "delete_confirm": {
+            "message": "Are you sure you want to delete this Image?",
+            "header": "Delete Confirmation"
+        },
+        "toast": {
+            "success": "Medical image for {type} added successfully",
+            "title": "New Medical Image Added"
+        }
+    },
+    "add_medical_image": {
+        "title": "Add New Medical Image",
+        "fields": {
+            "ref_number": "Reference Number",
+            "organ": "Organ",
+            "measurements": "Measurements",
+            "type": "Image Type",
+            "image_date": "Date of Image",
+            "description": "Description"
+        },
+        "image_types": {
+            "ultrasound": "Ultrasound",
+            "xray": "X-ray"
+        },
+        "submit": "Add Medical Image",
+        "toast": {
+            "success": "Medical image added successfully",
+            "error": "Failed to add medical image",
+            "title": "Medical Image Added"
+        }
+    },
+    "case_history": {
+        "title": "Case History Details",
+        "edit_button": "Edit Case History",
+        "add_button": "Add Case History",
+        "no_history": "No Case History Added Yet.",
+        "steps": {
+            "current_symptoms": "Current Symptoms",
+            "general_health": "General Health",
+            "reproductive_history": "Reproductive History",
+            "itching_skin": "Itching & Skin",
+            "diet_water": "Diet & Water",
+            "gastrointestinal": "Gastrointestinal",
+            "neurological": "Neurological",
+            "respiratory": "Respiratory",
+            "urinary": "Urinary",
+            "vaccination_medication": "Vaccination & Medication"
+        },
+        "fields": {
+            "symptom_description": "Symptom Description",
+            "start_date": "Start Date",
+            "symptom_progression": "Symptom Progression",
+            "medication_given": "Medication Given",
+            "medication_name": "Medication Name",
+            "medication_dosage": "Medication Dosage",
+            "prescribed_by": "Prescribed By",
+            "activity_level": "Activity Level",
+            "vaccination_status": "Vaccination Status",
+            "care_location": "Care Location",
+            "other_animals_in_household": "Other Animals in Household",
+            "number_of_other_animals": "Number of Other Animals",
+            "types_of_other_animals": "Types of Other Animals",
+            "previous_diseases_in_other_animals": "Previous Diseases in Other Animals",
+            "last_reproductive_cycle_date": "Last Reproductive Cycle Date",
+            "cycle_length": "Cycle Length / Days",
+            "notable_signs": "Notable Signs",
+            "other_discharges": "Other Discharges",
+            "itching_present": "Itching Present",
+            "itching_location": "Itching Location",
+            "itching_description": "Itching Description",
+            "skin_condition_description": "Skin Condition Description",
+            "diet_type": "Diet Type",
+            "diet_details": "Diet Details",
+            "number_of_meals": "Number of Meals",
+            "meal_quantity": "Meal Quantity",
+            "appetite": "Appetite",
+            "recent_diet_change": "Recent Diet Change",
+            "diet_change_type": "Diet Change Type",
+            "water_intake": "Water Intake",
+            "vomiting": "Vomiting",
+            "vomit_color": "Vomit Color",
+            "vomit_contents": "Vomit Contents",
+            "vomit_smell": "Vomit Smell",
+            "vomiting_frequency": "Vomiting Frequency",
+            "vomiting_related_to_food": "Vomiting Related to Food",
+            "vomiting_related_to_diarrhea": "Vomiting Related to Diarrhea",
+            "diarrhea_started_first": "Diarrhea Started First",
+            "stool_consistency": "Stool Consistency",
+            "stool_color": "Stool Color",
+            "stool_frequency": "Litterbox visits Frequency",
+            "abnormal_stool_contents": "Abnormal Stool Contents",
+            "excessive_licking_of_anus": "Excessive Licking of Anus",
+            "neurological_signs": "Neurological Signs",
+            "neurological_signs_frequency": "Frequency",
+            "associated_symptoms": "Associated Symptoms",
+            "sudden_onset": "Sudden Onset",
+            "related_to_eating_or_activity": "Related to Eating or Activity",
+            "additional_details": "Additional Details",
+            "cough": "Cough",
+            "cough_start_date": "Cough Start Date",
+            "cough_frequency": "Cough Frequency",
+            "cough_type": "Cough Type",
+            "breathing_difficulty": "Breathing Difficulty",
+            "sneezing": "Sneezing",
+            "urination_frequency": "Urination Frequency",
+            "urine_volume": "Urine Volume",
+            "urine_color": "Urine Color",
+            "urination_type": "Urination Type",
+            "blood_in_urine": "Blood in Urine",
+            "blood_location": "Blood Location",
+            "abnormal_urinary_discharge": "Abnormal Urinary Discharge",
+            "genital_discharge": "Genital Discharge",
+            "excessive_licking_of_genital_area": "Excessive Licking of Genital Area",
+            "vaccine_name": "Vaccine Name",
+            "vaccine_date": "Vaccine Date",
+            "next_due_date": "Next Due Date",
+            "administered_by": "Administered By",
+            "treatment_name": "Treatment Name",
+            "treatment_type": "Treatment Type",
+            "treatment_dosage": "Dosage",
+            "administration_date": "Administration Date",
+            "medication_name": "Medication Name",
+            "medication_type": "Medication Type",
+            "dosage": "Dosage",
+            "frequency": "Frequency",
+            "medication_start_date": "Start Date",
+            "medication_end_date": "End Date",
+            "additional_notes": "Additional Notes"
+        },
+        "options": {
+            "symptom_progression": {
+                "increasing": "Increasing",
+                "decreasing": "Decreasing",
+                "constant": "Constant"
+            },
+            "activity_level": {
+                "active": "Active",
+                "lethargic": "Lethargic",
+                "sometimes_active": "Sometimes Active",
+                "other": "Other"
+            },
+            "stool_consistency": {
+                "normal": "Normal",
+                "soft": "Soft",
+                "watery": "Watery",
+                "hard": "Hard"
+            },
+            "vaccination_status": {
+                "complete": "Complete",
+                "incomplete": "Incomplete"
+            },
+            "care_location": {
+                "home": "Home",
+                "home_garden": "Home Garden",
+                "street": "Street",
+                "indoor_outdoor": "Indoor/Outdoor"
+            },
+            "diet_type": {
+                "dry": "Dry",
+                "canned": "Canned",
+                "home_cooked": "Home Cooked",
+                "raw": "Raw",
+                "mixed": "Mixed"
+            },
+            "appetite": {
+                "good": "Good",
+                "leaves_meal": "Leaves Meal",
+                "no_appetite": "No Appetite"
+            },
+            "diet_change_type": {
+                "sudden": "Sudden",
+                "gradual": "Gradual"
+            },
+            "cough_type": {
+                "dry": "Dry",
+                "productive": "Productive"
+            },
+            "urination_type": {
+                "continuous": "Continuous",
+                "intermittent": "Intermittent"
+            },
+            "blood_location": {
+                "beginning": "Beginning",
+                "end": "End",
+                "throughout": "Throughout"
+            },
+            "medication_type": {
+                "antibiotic": "Antibiotic",
+                "painkiller": "Painkiller",
+                "anti-inflammatory": "Anti-inflammatory",
+                "other": "Other"
+            },
+            "treatment_type": {
+                "flea": "Flea",
+                "tick": "Tick",
+                "worm": "Worm",
+                "other": "Other"
+            }
+        },
+        "actions": {
+            "next": "Next",
+            "back": "Back",
+            "submit": "Submit"
+        },
+        "messages": {
+            "success": "Case history updated successfully"
+        },
+        "additional": {
+            "vaccination_history": "Vaccination History",
+            "medication_history": "Medication History",
+            "antiparasitic_treatment": "Antiparasitic Treatment History"
+        },
+        "toast": {
+            "case_history_added": "تاريخ الحالة",
+            "case_history_added_detail": "تم تسجيل و حفظ تاريخ الحالة للمريض"
+        }
+    },
+    "medical_examination": {
+        "title": "Physical Examination Report",
+        "no_examination": "No Examination has been performed yet.",
+        "add_examination": "Add Physical Examination",
+        "general_info": {
+            "pet_id": "Pet ID",
+            "pet_name": "Pet Name",
+            "branch_name": "Clinic",
+            "branch_id": "Branch ID",
+            "visit_date": "Visit Date",
+            "diagnosis": "Diagnosis",
+            "created_at": "Created At",
+            "updated_at": "Updated At"
+        },
+        "examination_details": "Examination Details",
+        "exam_data": {
+            "examination_date": "Examination Date",
+            "animal_weight": "Animal Weight",
+            "temperature": "Temperature",
+            "behavior": "Behavior"
+        },
+        "sections": {
+            "head_neck": "Head and Neck Examination",
+            "eyes": "Eyes",
+            "eye_sunkenness": "Eye Sunkenness",
+            "nose": "Nose",
+            "nasal_discharge": "Nasal Discharge",
+            "mouth": "Mouth",
+            "teeth": "Teeth",
+            "gums": "Gums",
+            "tongue": "Tongue",
+            "mucous_membranes": "Mucous Membranes",
+            "ears": "Ears",
+            "vital_signs": "Vital Signs",
+            "pulse_rate": "Pulse Rate",
+            "respiratory_rate": "Respiratory Rate",
+            "breathing_pattern": "Breathing Pattern",
+            "breath_sound": "Breath Sound",
+            "oxygenation": "Oxygenation",
+            "capillary_refill_time": "Capillary Refill Time",
+            "nervous_system": "Nervous System",
+            "skin_coat": "Skin and Coat",
+            "skin": "Skin",
+            "skin_lumps_or_infections": "Skin Lumps or Infections",
+            "skin_coat_condition": "Skin Coat Condition",
+            "abdominal": "Abdominal Examination",
+            "abdominal_palpation": "Abdominal Palpation",
+            "lymph_nodes": "Lymph Nodes",
+            "body_condition": "Body Condition",
+            "body_condition_score": "Body Condition Score",
+            "hydration_status": "Hydration Status",
+            "preliminary_diagnosis": "Preliminary Diagnosis",
+            "recommendations": "Recommendations",
+            "notes": "Notes"
+        }
+    },
+    "medical_examination_form": {
+        "title": "Case History Details",
+        "steps": {
+            "general_info": "General Info",
+            "head_neck": "Head & Neck",
+            "vital_signs": "Vital Signs",
+            "nervous_skin": "Nervous & Skin",
+            "abdomen_lymph": "Abdomen & Lymph",
+            "body_condition": "Body Condition",
+            "diagnosis": "Diagnosis"
+        },
+        "section_titles": {
+            "general_info": "General Info",
+            "head_neck": "Head and Neck",
+            "vital_signs": "Vital Signs",
+            "nervous_skin": "Nervous System & Skin",
+            "abdomen_lymph": "Abdomen & Lymph Nodes",
+            "body_condition": "Body Condition & Hydration",
+            "diagnosis": "Diagnosis and Recommendations"
+        },
+        "fields": {
+            "examination_date": "Examination Date",
+            "animal_weight": "Animal Weight",
+            "temperature": "Temperature",
+            "animal_behavior": "Animal Behavior",
+            "eyes": "Eyes",
+            "eye_sunkenness": "Eye Sunkenness",
+            "nose": "Nose",
+            "nasal_discharge": "Nasal Discharge",
+            "mouth": "Mouth",
+            "teeth": "Teeth",
+            "gums": "Gums",
+            "tongue": "Tongue",
+            "mucous_membranes": "Mucous Membranes",
+            "ears": "Ears",
+            "pulse_rate": "Pulse Rate",
+            "respiratory_rate": "Respiratory Rate",
+            "breathing_pattern": "Breathing Pattern",
+            "breath_sound": "Breath Sound",
+            "oxygenation": "Oxygenation",
+            "capillary_refill_time": "Capillary Refill Time (CRT)",
+            "nervous_system": "Nervous System",
+            "skin": "Skin",
+            "skin_lumps_or_infections": "Skin Lumps or Infections",
+            "skin_coat_condition": "Skin Coat Condition",
+            "abdominal_palpation": "Abdominal Palpation",
+            "lymph_nodes": "Lymph Nodes",
+            "body_condition_score": "Body Condition Score (BCS)",
+            "hydration_status": "Hydration Status",
+            "preliminary_diagnosis": "Preliminary Diagnosis",
+            "recommendations": "Recommendations",
+            "notes": "Notes",
+            "respiratory_rate_unit": "breaths/min"
+        },
+        "buttons": {
+            "back": "Back",
+            "next": "Next",
+            "submit": "Submit"
+        },
+        "options": {
+            "yes": "Yes",
+            "no": "No"
+        },
+        "messages": {
+            "success_title": "Success",
+            "error_title": "Error",
+            "success": "Medical examination added successfully",
+            "error": "Failed to submit medical examination"
+        }
+    },
+    "invoice": {
+        "no_invoice": "No invoice has been issued for this service.",
+        "create_invoice": "Create Invoice",
+        "invoice_number": "Invoice #{number}",
+        "print_preparing": "Preparing invoice for printing...",
+        "print_error_content": "Could not find invoice content to print",
+        "print_error_popup": "Popup was blocked. Please allow popups for this site.",
+        "download_preparing": "Generating PDF...",
+        "pos_preparing": "Preparing POS receipt...",
+        "pos_error_template": "Could not find POS template",
+        "items": {
+            "item": "Item",
+            "qty": "Qty",
+            "price": "Price",
+            "total": "Total"
+        },
+        "totals": {
+            "subtotal": "Subtotal:",
+            "tax": "Tax ({rate}%):",
+            "discount": "Discount:",
+            "total": "Total:",
+            "paid_full": "Paid in full",
+            "balance_due": "Balance due:"
+        },
+        "payments": {
+            "payment": "Payment {number}",
+            "method": "Method:",
+            "amount": "Amount:"
+        },
+        "footer": {
+            "thank_you": "Thank you for your business!",
+            "visit_again": "Visit us again soon"
+        },
+        "status": {
+            "draft": "Draft",
+            "pending": "Pending",
+            "partially_paid": "Partially Paid",
+            "paid": "Paid",
+            "cancelled": "Cancelled",
+            "refunded": "Refunded"
+        },
+        "metadata": {
+            "date": "Date:",
+            "due_date": "Due Date:",
+            "payment_terms": "Payment Terms:",
+            "terms": {
+                "due_on_receipt": "Due on Receipt",
+                "net_15": "Net 15 Days",
+                "net_30": "Net 30 Days",
+                "50_upfront": "50% Upfront, 50% on Completion"
+            }
+        },
+        "branch_info": {
+            "from": "From",
+            "phone": "Phone:"
+        },
+        "client_info": {
+            "bill_to": "Bill To",
+            "phone": "Phone:",
+            "email": "Email:",
+            "phone_masked": "*** *** ****"
+        },
+        "summary": {
+            "title": "Invoice Summary",
+            "subtotal": "Subtotal:",
+            "discount": "Discount:",
+            "tax": "Tax:",
+            "total": "Total:",
+            "first_deposit": "First Deposit:",
+            "amount_paid": "Total Amount Paid:",
+            "balance_due": "Balance Due:"
+        },
+        "items_table": {
+            "title": "Items",
+            "headers": {
+                "item": "Item",
+                "qty": "Qty",
+                "price": "Price",
+                "discount": "Discount",
+                "tax": "Tax",
+                "total": "Total"
+            }
+        },
+        "payment_history": {
+            "title": "Payment History",
+            "headers": {
+                "date": "Date",
+                "method": "Method",
+                "amount": "Amount",
+                "note": "Note",
+                "status": "Status"
+            },
+            "status": {
+                "verified": "Verified",
+                "pending": "Pending"
+            },
+            "methods": {
+                "cash": "Cash",
+                "credit_card": "Credit Card",
+                "bank_transfer": "Bank Transfer",
+                "unknown": "Unknown"
+            }
+        },
+        "notes": {
+            "title": "Notes"
+        },
+        "actions": {
+            "print": "Print Invoice",
+            "download": "Download PDF",
+            "add_payment": "Add Payment",
+            "tooltips": {
+                "paid": "Invoice is already paid",
+                "cancelled": "Cannot pay cancelled invoice",
+                "default": "Add payment to invoice"
+            }
+        }
+    },
+    "appointment": {
+        "edit_title": "Edit Appointment",
+        "add_title": "Add New Appointment",
+        "fields": {
+            "pet": "Search Pets",
+            "title": "Title",
+            "description": "Description",
+            "start": "Start Date & Time",
+            "end": "End Date & Time",
+            "type": "Type",
+            "status": "Status"
+        },
+        "types": {
+            "emergency": "Emergency",
+            "non_emergency": "Non-Emergency",
+            "regular": "Regular",
+            "followup": "FollowUp",
+            "surgery": "Surgery",
+            "grooming": "Grooming"
+        },
+        "statuses": {
+            "scheduled": "Scheduled",
+            "walkin": "Walkin"
+        },
+        "actions": {
+            "update": "Update",
+            "submit": "Submit"
+        },
+        "messages": {
+            "pet_required": "Please select a pet.",
+            "create_success": "Appointment for {petName} added successfully.",
+            "create_error": "Failed to create appointment.",
+            "update_success": "Appointment for {petName} updated successfully.",
+            "update_error": "Failed to update appointment.",
+            "fetch_error": "Failed to fetch appointment data."
         }
     }
 }

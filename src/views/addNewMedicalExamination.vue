@@ -5,14 +5,28 @@
     >
       <legend>Case History Details</legend>
       <Stepper :value="activeStep" class="w-full">
-        <StepList class="mb-4">
-          <Step value="1">General Info</Step>
-          <Step value="2">Head & Neck</Step>
-          <Step value="3">Vital Signs</Step>
-          <Step value="4">Nervous & Skin</Step>
-          <Step value="5">Abdomen & Lymph</Step>
-          <Step value="6">Body Condition</Step>
-          <Step value="7">Diagnosis</Step>
+        <StepList class="flex flex-wrap mb-4">
+          <Step class="w-1/7" value="1">{{
+            $t("medical_examination_form.steps.general_info")
+          }}</Step>
+          <Step class="w-1/7" value="2">{{
+            $t("medical_examination_form.steps.head_neck")
+          }}</Step>
+          <Step class="w-1/7" value="3">{{
+            $t("medical_examination_form.steps.vital_signs")
+          }}</Step>
+          <Step class="w-1/7" value="4">{{
+            $t("medical_examination_form.steps.nervous_skin")
+          }}</Step>
+          <Step class="w-1/7" value="5">{{
+            $t("medical_examination_form.steps.abdomen_lymph")
+          }}</Step>
+          <Step class="w-1/7" value="6">{{
+            $t("medical_examination_form.steps.body_condition")
+          }}</Step>
+          <Step class="w-1/7" value="7">{{
+            $t("medical_examination_form.steps.diagnosis")
+          }}</Step>
         </StepList>
 
         <StepPanels>
@@ -20,25 +34,29 @@
           <StepPanel value="1" v-slot="{ activateCallback }">
             <div class="flex flex-col gap-4">
               <h4 class="border-b-4 rounded border-b-violet-800 w-fit font-bold">
-                General Info
+                {{ $t("medical_examination_form.section_titles.general_info") }}
               </h4>
             </div>
-            <div class="grid grid-cols-2 gap-6">
-              <div class="field mt-6 w-2/3">
+            <div class="grid grid-cols-2 gap-2 mt-3">
+              <div class="field mt-3 w-2/3">
                 <FloatLabel>
-                  <label for="examination_date">Examination Date</label>
                   <DatePicker
+                    showIcon
+                    iconDisplay="input"
+                    showButtonBar
                     fluid
                     id="examination_date"
                     v-model="examination.examination_date"
                     showTime
                     hourFormat="12"
-                    showIcon
                     dateFormat="yy-mm-dd"
                   />
+                  <label for="examination_date">{{
+                    $t("medical_examination_form.fields.examination_date")
+                  }}</label>
                 </FloatLabel>
               </div>
-              <div class="field mt-6 w-2/3">
+              <div class="field mt-3 w-2/3">
                 <FloatLabel>
                   <InputNumber
                     fluid
@@ -51,10 +69,12 @@
                     :max="500"
                     :minFractionDigits="2"
                   />
-                  <label for="animal_weight">Animal Weight</label>
+                  <label for="animal_weight">{{
+                    $t("medical_examination_form.fields.animal_weight")
+                  }}</label>
                 </FloatLabel>
               </div>
-              <div class="field mt-6 w-2/3">
+              <div class="field mt-3 w-2/3">
                 <FloatLabel>
                   <InputNumber
                     fluid
@@ -67,10 +87,12 @@
                     :min="0"
                     :max="45"
                   />
-                  <label for="temperature">Temperature</label>
+                  <label for="temperature">{{
+                    $t("medical_examination_form.fields.temperature")
+                  }}</label>
                 </FloatLabel>
               </div>
-              <div class="field mt-6 w-2/3">
+              <div class="field mt-3 w-2/3">
                 <FloatLabel>
                   <Textarea
                     fluid
@@ -79,12 +101,17 @@
                     autoResize
                     v-model="examination.animal_behavior"
                   />
-                  <label for="animal_behavior">Animal Behavior</label>
+                  <label for="animal_behavior">{{
+                    $t("medical_examination_form.fields.animal_behavior")
+                  }}</label>
                 </FloatLabel>
               </div>
             </div>
             <div class="flex justify-end pt-4">
-              <Button label="Next" @click="activateCallback('2')" />
+              <Button
+                :label="$t('medical_examination_form.buttons.next')"
+                @click="activateCallback('2')"
+              />
             </div>
           </StepPanel>
 
@@ -93,127 +120,161 @@
             <fieldset class="p-4 border rounded-lg">
               <div class="flex flex-col gap-4">
                 <h4 class="border-b-4 rounded border-b-violet-800 w-fit font-bold">
-                  Head and Neck
+                  {{ $t("medical_examination_form.section_titles.head_neck") }}
                 </h4>
               </div>
-              <div class="grid grid-cols-2 gap-6">
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Textarea
+              <div class="grid grid-cols-2 gap-2 mt-3">
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Textarea
                       fluid
                       id="eyes"
                       rows="2"
                       autoResize
                       v-model="examination.eyes"
-                    /><label for="eyes">Eyes</label></FloatLabel
-                  >
+                    />
+                    <label for="eyes">{{
+                      $t("medical_examination_form.fields.eyes")
+                    }}</label>
+                  </FloatLabel>
                 </div>
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Select
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Select
                       v-model="examination.eye_sunkenness"
                       :options="yesno"
+                      fluid
                       optionLabel="label"
                       optionValue="value"
-                    /><label for="eye_sunkenness">Eye Sunkenness</label></FloatLabel
-                  >
+                    />
+                    <label for="eye_sunkenness">{{
+                      $t("medical_examination_form.fields.eye_sunkenness")
+                    }}</label>
+                  </FloatLabel>
                 </div>
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Textarea
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Textarea
                       fluid
                       id="nose"
                       rows="2"
                       autoResize
                       v-model="examination.nose"
-                    /><label for="nose">Nose</label></FloatLabel
-                  >
+                    />
+                    <label for="nose">{{
+                      $t("medical_examination_form.fields.nose")
+                    }}</label>
+                  </FloatLabel>
                 </div>
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Textarea
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Textarea
                       fluid
                       id="nasal_discharge"
                       rows="2"
                       autoResize
                       v-model="examination.nasal_discharge"
-                    /><label for="nasal_discharge">Nasal Discharge</label></FloatLabel
-                  >
+                    />
+                    <label for="nasal_discharge">{{
+                      $t("medical_examination_form.fields.nasal_discharge")
+                    }}</label>
+                  </FloatLabel>
                 </div>
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Textarea
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Textarea
                       fluid
                       id="mouth"
                       rows="2"
                       autoResize
                       v-model="examination.mouth"
-                    /><label for="mouth">Mouth</label></FloatLabel
-                  >
+                    />
+                    <label for="mouth">{{
+                      $t("medical_examination_form.fields.mouth")
+                    }}</label>
+                  </FloatLabel>
                 </div>
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Textarea
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Textarea
                       fluid
                       id="teeth"
                       rows="2"
                       autoResize
                       v-model="examination.teeth"
-                    /><label for="teeth">Teeth</label></FloatLabel
-                  >
+                    />
+                    <label for="teeth">{{
+                      $t("medical_examination_form.fields.teeth")
+                    }}</label>
+                  </FloatLabel>
                 </div>
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Textarea
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Textarea
                       fluid
                       id="gums"
                       rows="2"
                       autoResize
                       v-model="examination.gums"
-                    /><label for="gums">Gums</label></FloatLabel
-                  >
+                    />
+                    <label for="gums">{{
+                      $t("medical_examination_form.fields.gums")
+                    }}</label>
+                  </FloatLabel>
                 </div>
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Textarea
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Textarea
                       fluid
                       id="tongue"
                       rows="2"
                       autoResize
                       v-model="examination.tongue"
-                    /><label for="tongue">Tongue</label></FloatLabel
-                  >
+                    />
+                    <label for="tongue">{{
+                      $t("medical_examination_form.fields.tongue")
+                    }}</label>
+                  </FloatLabel>
                 </div>
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Textarea
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Textarea
                       fluid
                       id="mucous_membranes"
                       rows="2"
                       autoResize
                       v-model="examination.mucous_membranes"
-                    /><label for="mucous_membranes">Mucous Membranes</label></FloatLabel
-                  >
+                    />
+                    <label for="mucous_membranes">{{
+                      $t("medical_examination_form.fields.mucous_membranes")
+                    }}</label>
+                  </FloatLabel>
                 </div>
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Textarea
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Textarea
                       fluid
                       id="ears"
                       rows="2"
                       autoResize
                       v-model="examination.ears"
-                    /><label for="ears">Ears</label></FloatLabel
-                  >
+                    />
+                    <label for="ears">{{
+                      $t("medical_examination_form.fields.ears")
+                    }}</label>
+                  </FloatLabel>
                 </div>
               </div>
               <div class="flex justify-between pt-4">
                 <Button
-                  label="Back"
+                  :label="$t('medical_examination_form.buttons.back')"
                   @click="activateCallback('1')"
                   severity="secondary"
                 />
-                <Button label="Next" @click="activateCallback('3')" />
+                <Button
+                  :label="$t('medical_examination_form.buttons.next')"
+                  @click="activateCallback('3')"
+                />
               </div>
             </fieldset>
           </StepPanel>
@@ -223,88 +284,107 @@
             <fieldset class="p-4 border rounded-lg">
               <div class="flex flex-col gap-4">
                 <h4 class="border-b-4 rounded border-b-violet-800 w-fit font-bold">
-                  Vital Signs
+                  {{ $t("medical_examination_form.section_titles.vital_signs") }}
                 </h4>
               </div>
-              <div class="grid grid-cols-2 gap-6">
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><InputNumber
+              <div class="grid grid-cols-2 gap-2 mt-3">
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <InputNumber
                       fluid
                       v-model="examination.pulse_rate"
                       showButtons
                       suffix=" bpm"
                       :min="0"
                       :max="300"
-                    /><label for="pulse_rate">Pulse Rate</label></FloatLabel
-                  >
+                    />
+                    <label for="pulse_rate">{{
+                      $t("medical_examination_form.fields.pulse_rate")
+                    }}</label>
+                  </FloatLabel>
                 </div>
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><InputNumber
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <InputNumber
                       fluid
                       v-model="examination.respiratory_rate"
                       showButtons
                       suffix=" breaths/min"
                       :min="0"
                       :max="100"
-                    /><label for="respiratory_rate">Respiratory Rate</label></FloatLabel
-                  >
+                    />
+                    <label for="respiratory_rate">{{
+                      $t("medical_examination_form.fields.respiratory_rate")
+                    }}</label>
+                  </FloatLabel>
                 </div>
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Textarea
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Textarea
                       fluid
                       id="breathing_pattern"
                       rows="2"
                       autoResize
                       v-model="examination.breathing_pattern"
-                    /><label for="breathing_pattern">Breathing Pattern</label></FloatLabel
-                  >
+                    />
+                    <label for="breathing_pattern">{{
+                      $t("medical_examination_form.fields.breathing_pattern")
+                    }}</label>
+                  </FloatLabel>
                 </div>
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Textarea
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Textarea
                       fluid
                       id="breath_sound"
                       rows="2"
                       autoResize
                       v-model="examination.breath_sound"
-                    /><label for="breath_sound">Breath Sound</label></FloatLabel
-                  >
+                    />
+                    <label for="breath_sound">{{
+                      $t("medical_examination_form.fields.breath_sound")
+                    }}</label>
+                  </FloatLabel>
                 </div>
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Textarea
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Textarea
                       fluid
                       id="oxygenation"
                       rows="2"
                       autoResize
                       v-model="examination.oxygenation"
-                    /><label for="oxygenation">Oxygenation</label></FloatLabel
-                  >
+                    />
+                    <label for="oxygenation">{{
+                      $t("medical_examination_form.fields.oxygenation")
+                    }}</label>
+                  </FloatLabel>
                 </div>
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Textarea
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Textarea
                       fluid
                       id="capillary_refill_time"
                       rows="2"
                       autoResize
                       v-model="examination.capillary_refill_time"
-                    /><label for="capillary_refill_time"
-                      >Capillary Refill Time (CRT)</label
-                    ></FloatLabel
-                  >
+                    />
+                    <label for="capillary_refill_time">{{
+                      $t("medical_examination_form.fields.capillary_refill_time")
+                    }}</label>
+                  </FloatLabel>
                 </div>
               </div>
               <div class="flex justify-between pt-4">
                 <Button
-                  label="Back"
+                  :label="$t('medical_examination_form.buttons.back')"
                   @click="activateCallback('2')"
                   severity="secondary"
                 />
-                <Button label="Next" @click="activateCallback('4')" />
+                <Button
+                  :label="$t('medical_examination_form.buttons.next')"
+                  @click="activateCallback('4')"
+                />
               </div>
             </fieldset>
           </StepPanel>
@@ -314,111 +394,128 @@
             <fieldset class="p-4 border rounded-lg">
               <div class="flex flex-col gap-4">
                 <h4 class="border-b-4 rounded border-b-violet-800 w-fit font-bold">
-                  Nervous System & Skin
+                  {{ $t("medical_examination_form.section_titles.nervous_skin") }}
                 </h4>
               </div>
-              <div class="grid grid-cols-2 gap-6">
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Textarea
+              <div class="grid grid-cols-2 gap-2 mt-3">
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Textarea
                       fluid
                       id="nervous_system"
                       rows="2"
                       autoResize
                       v-model="examination.nervous_system"
-                    /><label for="nervous_system">Nervous System</label></FloatLabel
-                  >
+                    />
+                    <label for="nervous_system">{{
+                      $t("medical_examination_form.fields.nervous_system")
+                    }}</label>
+                  </FloatLabel>
                 </div>
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Textarea
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Textarea
                       fluid
                       id="skin"
                       rows="2"
                       autoResize
                       v-model="examination.skin"
-                    /><label for="skin">Skin</label></FloatLabel
-                  >
+                    />
+                    <label for="skin">{{
+                      $t("medical_examination_form.fields.skin")
+                    }}</label>
+                  </FloatLabel>
                 </div>
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Textarea
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Textarea
                       fluid
                       id="skin_lumps_or_infections"
                       rows="2"
                       autoResize
                       v-model="examination.skin_lumps_or_infections"
-                    /><label for="skin_lumps_or_infections"
-                      >Skin Lumps or Infections</label
-                    ></FloatLabel
-                  >
+                    />
+                    <label for="skin_lumps_or_infections">{{
+                      $t("medical_examination_form.fields.skin_lumps_or_infections")
+                    }}</label>
+                  </FloatLabel>
                 </div>
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Textarea
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Textarea
                       fluid
                       id="skin_coat_condition"
                       rows="2"
                       autoResize
                       v-model="examination.skin_coat_condition"
-                    /><label for="skin_coat_condition"
-                      >Skin Coat Condition</label
-                    ></FloatLabel
-                  >
+                    />
+                    <label for="skin_coat_condition">{{
+                      $t("medical_examination_form.fields.skin_coat_condition")
+                    }}</label>
+                  </FloatLabel>
                 </div>
               </div>
               <div class="flex justify-between pt-4">
                 <Button
-                  label="Back"
+                  :label="$t('medical_examination_form.buttons.back')"
                   @click="activateCallback('3')"
                   severity="secondary"
                 />
-                <Button label="Next" @click="activateCallback('5')" />
+                <Button
+                  :label="$t('medical_examination_form.buttons.next')"
+                  @click="activateCallback('5')"
+                />
               </div>
             </fieldset>
           </StepPanel>
-
           <!-- Step 5 -->
           <StepPanel value="5" v-slot="{ activateCallback }">
             <fieldset class="p-4 border rounded-lg">
               <div class="flex flex-col gap-4">
                 <h4 class="border-b-4 rounded border-b-violet-800 w-fit font-bold">
-                  Abdomen & Lymph Nodes
+                  {{ $t("medical_examination_form.section_titles.abdomen_lymph") }}
                 </h4>
               </div>
-              <div class="grid grid-cols-2 gap-6">
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Textarea
+              <div class="grid grid-cols-2 gap-2 mt-3">
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Textarea
                       fluid
                       id="abdominal_palpation"
                       rows="2"
                       autoResize
                       v-model="examination.abdominal_palpation"
-                    /><label for="abdominal_palpation"
-                      >Abdominal Palpation</label
-                    ></FloatLabel
-                  >
+                    />
+                    <label for="abdominal_palpation">
+                      {{ $t("medical_examination_form.fields.abdominal_palpation") }}
+                    </label>
+                  </FloatLabel>
                 </div>
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Textarea
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Textarea
                       fluid
                       id="lymph_nodes"
                       rows="2"
                       autoResize
                       v-model="examination.lymph_nodes"
-                    /><label for="lymph_nodes">Lymph Nodes</label></FloatLabel
-                  >
+                    />
+                    <label for="lymph_nodes">
+                      {{ $t("medical_examination_form.fields.lymph_nodes") }}
+                    </label>
+                  </FloatLabel>
                 </div>
               </div>
               <div class="flex justify-between pt-4">
                 <Button
-                  label="Back"
+                  :label="$t('medical_examination_form.buttons.back')"
                   @click="activateCallback('4')"
                   severity="secondary"
                 />
-                <Button label="Next" @click="activateCallback('6')" />
+                <Button
+                  :label="$t('medical_examination_form.buttons.next')"
+                  @click="activateCallback('6')"
+                />
               </div>
             </fieldset>
           </StepPanel>
@@ -428,42 +525,49 @@
             <fieldset class="p-4 border rounded-lg">
               <div class="flex flex-col gap-4">
                 <h4 class="border-b-4 rounded border-b-violet-800 w-fit font-bold">
-                  Body Condition & Hydration
+                  {{ $t("medical_examination_form.section_titles.body_condition") }}
                 </h4>
               </div>
-              <div class="grid grid-cols-2 gap-6">
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><InputNumber
+              <div class="grid grid-cols-2 gap-2 mt-3">
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <InputNumber
                       fluid
                       v-model="examination.body_condition_score"
                       showButtons
                       :min="1"
                       :max="10"
-                    /><label for="body_condition_score"
-                      >Body Condition Score (BCS)</label
-                    ></FloatLabel
-                  >
+                    />
+                    <label for="body_condition_score">
+                      {{ $t("medical_examination_form.fields.body_condition_score") }}
+                    </label>
+                  </FloatLabel>
                 </div>
-                <div class="field mt-6 w-2/3">
-                  <FloatLabel
-                    ><Textarea
+                <div class="field mt-3 w-2/3">
+                  <FloatLabel>
+                    <Textarea
                       fluid
                       id="hydration_status"
                       rows="2"
                       autoResize
                       v-model="examination.hydration_status"
-                    /><label for="hydration_status">Hydration Status</label>
+                    />
+                    <label for="hydration_status">
+                      {{ $t("medical_examination_form.fields.hydration_status") }}
+                    </label>
                   </FloatLabel>
                 </div>
               </div>
               <div class="flex justify-between pt-4">
                 <Button
-                  label="Back"
+                  :label="$t('medical_examination_form.buttons.back')"
                   @click="activateCallback('5')"
                   severity="secondary"
                 />
-                <Button label="Next" @click="activateCallback('7')" />
+                <Button
+                  :label="$t('medical_examination_form.buttons.next')"
+                  @click="activateCallback('7')"
+                />
               </div>
             </fieldset>
           </StepPanel>
@@ -472,49 +576,64 @@
           <StepPanel value="7" v-slot="{ activateCallback }">
             <div class="flex flex-col gap-4">
               <h4 class="border-b-4 rounded border-b-violet-800 w-fit font-bold">
-                Diagnosis and Recommendations
+                {{ $t("medical_examination_form.section_titles.diagnosis") }}
               </h4>
             </div>
-            <div class="grid grid-cols-2 gap-6">
-              <div class="field mt-6 w-2/3">
-                <FloatLabel
-                  ><Textarea
+            <div class="grid grid-cols-2 gap-2 mt-3">
+              <div class="field mt-3 w-2/3">
+                <FloatLabel>
+                  <Textarea
                     fluid
                     id="preliminary_diagnosis"
                     rows="2"
                     autoResize
                     v-model="examination.preliminary_diagnosis"
-                  /><label for="preliminary_diagnosis"
-                    >Preliminary Diagnosis</label
-                  ></FloatLabel
-                >
+                  />
+                  <label for="preliminary_diagnosis">
+                    {{ $t("medical_examination_form.fields.preliminary_diagnosis") }}
+                  </label>
+                </FloatLabel>
               </div>
-              <div class="field mt-6 w-2/3">
-                <FloatLabel
-                  ><Textarea
+              <div class="field mt-3 w-2/3">
+                <FloatLabel>
+                  <Textarea
                     fluid
                     id="recommendations"
                     rows="2"
                     autoResize
                     v-model="examination.recommendations"
-                  /><label for="recommendations">Recommendations</label></FloatLabel
-                >
+                  />
+                  <label for="recommendations">
+                    {{ $t("medical_examination_form.fields.recommendations") }}
+                  </label>
+                </FloatLabel>
               </div>
-              <div class="field mt-6 w-2/3">
-                <FloatLabel
-                  ><Textarea
+              <div class="field mt-3 w-2/3">
+                <FloatLabel>
+                  <Textarea
                     fluid
                     id="notes"
                     rows="2"
                     autoResize
                     v-model="examination.notes"
-                  /><label for="notes">Notes</label></FloatLabel
-                >
+                  />
+                  <label for="notes">
+                    {{ $t("medical_examination_form.fields.notes") }}
+                  </label>
+                </FloatLabel>
               </div>
             </div>
             <div class="flex justify-between pt-4">
-              <Button label="Back" @click="activateCallback('6')" severity="secondary" />
-              <Button label="Submit" type="submit" @click="submitForm" />
+              <Button
+                :label="$t('medical_examination_form.buttons.back')"
+                @click="activateCallback('6')"
+                severity="secondary"
+              />
+              <Button
+                :label="$t('medical_examination_form.buttons.submit')"
+                type="submit"
+                @click="submitForm"
+              />
             </div>
           </StepPanel>
         </StepPanels>
@@ -539,7 +658,8 @@ import StepList from "primevue/steplist";
 import StepPanels from "primevue/steppanels";
 import Step from "primevue/step";
 import StepPanel from "primevue/steppanel";
-
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 const props = defineProps({
   medical_record_id: {
     type: Number,
@@ -621,34 +741,39 @@ const examination = ref(
 const activeStep = ref("1");
 
 const yesno = ref([
-  { label: "Yes", value: "yes" },
-  { label: "No", value: "no" },
+  { label: t("medical_examination_form.options.yes"), value: "yes" },
+  { label: t("medical_examination_form.options.no"), value: "no" },
 ]);
-
 // Form submission
 const submitForm = async () => {
+  const { t } = useI18n();
+
   const submissionData = {
     ...examination.value,
     medical_record_id: props.medical_record_id,
     eye_sunkenness: examination.value.eye_sunkenness,
-    respiratory_rate: examination.value.respiratory_rate + "breaths/min",
+    respiratory_rate:
+      examination.value.respiratory_rate +
+      " " +
+      t("medical_examination_form.fields.respiratory_rate_unit"),
   };
-  // console.log(submissionData);
+
   try {
     const response = await axiosInstance.post("/medical-examinations", submissionData);
-    emit("submitted", response.data); // You may modify this based on your response structure
+    emit("submitted", response.data);
 
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Data Loaded",
-      detail: `Medical Examination Added Successfully`,
+      summary: t("medical_examination_form.messages.success_title"),
+      detail: t("medical_examination_form.messages.success"),
       life: 5000,
     });
   } catch (error) {
     eventBus.emit("show-toast", {
-      severity: "warn",
-      summary: "Error",
-      detail: error,
+      severity: "error",
+      summary: t("medical_examination_form.messages.error_title"),
+      detail:
+        error.response?.data?.message || t("medical_examination_form.messages.error"),
       life: 5000,
     });
     console.error("Error submitting form:", error);

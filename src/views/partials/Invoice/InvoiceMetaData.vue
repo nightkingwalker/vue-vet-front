@@ -1,15 +1,24 @@
 <template>
   <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
-    <div><span class="font-medium">Date:</span> {{ formatDate(date) }}</div>
-    <div><span class="font-medium">Due Date:</span> {{ formatDate(dueDate) }}</div>
+    <div>
+      <span class="font-medium">{{ $t("invoice.metadata.date") }}</span>
+      {{ formatDate(date) }}
+    </div>
+    <div>
+      <span class="font-medium">{{ $t("invoice.metadata.due_date") }}</span>
+      {{ formatDate(dueDate) }}
+    </div>
     <div v-if="paymentTerms">
-      <span class="font-medium">Payment Terms:</span>
-      {{ formatPaymentTerms(paymentTerms) }}
+      <span class="font-medium">{{ $t("invoice.metadata.payment_terms") }}</span>
+      {{ $t(`invoice.metadata.terms.${paymentTerms}`) }}
     </div>
   </div>
 </template>
 
 <script setup>
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const props = defineProps({
   date: String,
   dueDate: String,
@@ -20,15 +29,5 @@ const formatDate = (dateString) => {
   if (!dateString) return "";
   const options = { year: "numeric", month: "short", day: "numeric" };
   return new Date(dateString).toLocaleDateString(undefined, options);
-};
-
-const formatPaymentTerms = (terms) => {
-  const termsMap = {
-    due_on_receipt: "Due on Receipt",
-    net_15: "Net 15 Days",
-    net_30: "Net 30 Days",
-    "50_upfront": "50% Upfront, 50% on Completion",
-  };
-  return termsMap[terms] || terms;
 };
 </script>

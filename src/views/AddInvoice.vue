@@ -269,6 +269,9 @@
           <div>
             <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
               <DatePicker
+                showIcon
+                iconDisplay="input"
+                showButtonBar
                 size="small"
                 v-model="invoiceDate"
                 dateFormat="yy-mm-dd"

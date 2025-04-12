@@ -4,13 +4,14 @@
       <div class="text-sm text-gray-500"></div>
       <div class="flex gap-2">
         <Button
-          label="Print Invoice"
+          :label="$t('invoice.actions.print')"
           icon="pi pi-print"
           @click="$emit('print')"
           class="p-button-sm no-print"
         />
+        <!-- Uncomment if needed -->
         <!-- <Button
-          label="Download PDF"
+          :label="$t('invoice.actions.download')"
           icon="pi pi-download"
           class="p-button-sm p-button-outlined no-print"
           @click="$emit('download')"
@@ -20,14 +21,14 @@
           icon="fa-solid fa-hand-holding-dollar"
           class="p-button-sm !text-[var(--p-primary-contrast-color)] dark:!text-[var(--p-primary-900)]"
           @click="openPaymentDialog(invoice)"
-          label="Add payment"
+          :label="$t('invoice.actions.add_payment')"
           v-if="payment_status !== 'paid' && payment_status !== 'cancelled'"
           v-tooltip="
             payment_status === 'paid'
-              ? 'Invoice is already paid'
+              ? $t('invoice.actions.tooltips.paid')
               : payment_status === 'cancelled'
-              ? 'Cannot pay cancelled invoice'
-              : 'Add payment to invoice'
+              ? $t('invoice.actions.tooltips.cancelled')
+              : $t('invoice.actions.tooltips.default')
           "
         />
       </div>
@@ -36,23 +37,27 @@
 </template>
 
 <script setup>
+import { useI18n } from "vue-i18n";
 import { ref } from "vue";
-
 import Button from "primevue/button";
 import eventBus from "@/eventBus";
-const emit = defineEmits(["submit", "cancel"]);
+
+const { t } = useI18n();
+const emit = defineEmits(["print", "download"]);
 const payment_status = ref(null);
+
 const props = defineProps({
   invoice: {
     type: Object,
     required: true,
   },
 });
+
 if (props.invoice) {
-  payment_status.value = props.invoice;
+  payment_status.value = props.invoice.payment_status;
 }
+
 const openPaymentDialog = () => {
   eventBus.emit("showPaymentView");
 };
-// console.log("INVOICE", payment_status.value);
 </script>

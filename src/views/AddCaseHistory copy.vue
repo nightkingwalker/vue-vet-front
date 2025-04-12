@@ -3,7 +3,7 @@
     <fieldset
       class="p-fieldset p-component w-4/5 flex flex-wrap mx-auto gap-2 items-start border rounded-lg p-4"
     >
-    <legend>Case History Details</legend>
+      <legend>Case History Details</legend>
       <Stepper :value="activeStep" class="w-full">
         <!-- Step List -->
         <StepList class="flex flex-wrap items-start w-full mx-auto">
@@ -16,7 +16,8 @@
           <Step value="7">Neurological</Step>
           <Step value="8">Respiratory</Step>
           <Step value="9">Urinary</Step>
-          <Step value="10">Review & Submit</Step>
+          <Step value="10">Vaccination & Medication</Step>
+          <Step value="11">Review & Submit</Step>
         </StepList>
 
         <!-- Step Panels -->
@@ -46,6 +47,9 @@
                   <FloatLabel>
                     <DatePicker
                       showIcon
+                      iconDisplay="input"
+                      showButtonBar
+                      dateFormat="yy-mm-dd"
                       id="start_date"
                       v-model="formData.start_date"
                       hourFormat="24"
@@ -244,6 +248,9 @@
               <FloatLabel>
                 <DatePicker
                   showIcon
+                  iconDisplay="input"
+                  showButtonBar
+                  dateFormat="yy-mm-dd"
                   id="last_reproductive_cycle_date"
                   v-model="formData.last_reproductive_cycle_date"
                 />
@@ -727,6 +734,9 @@
               <FloatLabel>
                 <DatePicker
                   showIcon
+                  iconDisplay="input"
+                  showButtonBar
+                  dateFormat="yy-mm-dd"
                   id="cough_start_date"
                   v-model="formData.cough_start_date"
                 />
@@ -807,6 +817,14 @@
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
                     <InputText fluid id="urine_volume" v-model="formData.urine_volume" />
+                    <Select
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="blood_location"
+                      v-model="formData.urine_volume"
+                      :options="urineVolumeOptions"
+                    />
                     <label for="urine_volume">Urine Volume</label>
                   </FloatLabel>
                 </div>
@@ -821,7 +839,6 @@
                     <Select
                       fluid
                       optionLabel="label"
-                      optionValue="value"
                       id="urination_type"
                       v-model="formData.urination_type"
                       :options="urinationTypeOptions"
@@ -904,11 +921,227 @@
             </div>
           </StepPanel>
 
-          <!-- Step 10: Review & Submit -->
+          <!-- Step 10: Vaccination & Medication -->
           <StepPanel v-slot="{ activateCallback }" value="10">
             <div class="flex flex-col gap-4">
-              <h3 class="text-xl font-bold">Review Your Entries</h3>
-              <pre>{{ formData }}</pre>
+              <h4 class="border-b-4 rounded border-b-violet-800 w-fit font-bold">
+                Vaccination & Medication
+              </h4>
+            </div>
+            <div class="flex flex-col flex-wrap gap-8">
+              <!-- Vaccination History -->
+              <div class="w-[48%] basis-1/2">
+                <h5 class="font-semibold mt-6">Vaccination History</h5>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <InputText fluid id="vaccine_name" v-model="formData.vaccine_name" />
+                    <label for="vaccine_name">Vaccine Name</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <DatePicker
+                      showIcon
+                      iconDisplay="input"
+                      showButtonBar
+                      dateFormat="yy-mm-dd"
+                      id="vaccine_date"
+                      v-model="formData.vaccine_date"
+                    />
+                    <label for="vaccine_date">Vaccine Date</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <DatePicker
+                      showIcon
+                      iconDisplay="input"
+                      showButtonBar
+                      dateFormat="yy-mm-dd"
+                      id="next_due_date"
+                      v-model="formData.next_due_date"
+                    />
+                    <label for="next_due_date">Next Due Date</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <InputText
+                      fluid
+                      id="administered_by"
+                      v-model="formData.administered_by"
+                    />
+                    <label for="administered_by">Administered By</label>
+                  </FloatLabel>
+                </div>
+              </div>
+
+              <!-- Medication History -->
+              <div class="w-[48%] basis-1/2">
+                <h5 class="font-semibold mt-6">Medication History</h5>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <InputText
+                      fluid
+                      id="medication_name"
+                      v-model="formData.medication_name"
+                    />
+                    <label for="medication_name">Medication Name</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <Select
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="medication_type"
+                      v-model="formData.medication_type"
+                      :options="medicationTypeOptions"
+                    />
+                    <label for="medication_type">Medication Type</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <InputText fluid id="dosage" v-model="formData.dosage" />
+                    <label for="dosage">Dosage</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <InputText fluid id="frequency" v-model="formData.frequency" />
+                    <label for="frequency">Frequency</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <DatePicker
+                      showIcon
+                      iconDisplay="input"
+                      showButtonBar
+                      dateFormat="yy-mm-dd"
+                      id="start_date"
+                      v-model="formData.medication_start_date"
+                    />
+                    <label for="start_date">Start Date</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <DatePicker
+                      showIcon
+                      iconDisplay="input"
+                      showButtonBar
+                      dateFormat="yy-mm-dd"
+                      id="end_date"
+                      v-model="formData.medication_end_date"
+                    />
+                    <label for="end_date">End Date</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <InputText
+                      fluid
+                      id="prescribed_by"
+                      v-model="formData.prescribed_by"
+                    />
+                    <label for="prescribed_by">Prescribed By</label>
+                  </FloatLabel>
+                </div>
+              </div>
+
+              <!-- Antiparasitic Treatment -->
+              <div class="w-[48%] basis-1/2">
+                <h5 class="font-semibold mt-6">Antiparasitic Treatment</h5>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <InputText
+                      fluid
+                      id="treatment_name"
+                      v-model="formData.treatment_name"
+                    />
+                    <label for="treatment_name">Treatment Name</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <Select
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="treatment_type"
+                      v-model="formData.treatment_type"
+                      :options="treatmentTypeOptions"
+                    />
+                    <label for="treatment_type">Treatment Type</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <InputText
+                      fluid
+                      id="treatment_dosage"
+                      v-model="formData.treatment_dosage"
+                    />
+                    <label for="treatment_dosage">Weight</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <DatePicker
+                      showIcon
+                      iconDisplay="input"
+                      showButtonBar
+                      dateFormat="yy-mm-dd"
+                      id="administration_date"
+                      v-model="formData.administration_date"
+                    />
+                    <label for="administration_date">Administration Date</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <DatePicker
+                      showIcon
+                      iconDisplay="input"
+                      showButtonBar
+                      dateFormat="yy-mm-dd"
+                      id="next_due_date"
+                      v-model="formData.treatment_next_due_date"
+                    />
+                    <label for="next_due_date">Next Due Date</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <InputText
+                      fluid
+                      id="administered_by"
+                      v-model="formData.treatment_administered_by"
+                    />
+                    <label for="administered_by">Administered By</label>
+                  </FloatLabel>
+                </div>
+              </div>
+
+              <!-- Additional Notes -->
+              <div class="w-[48%] basis-1/2">
+                <h5 class="font-semibold mt-6">Additional Notes</h5>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <TextArea
+                      fluid
+                      autoResize
+                      rows="4"
+                      id="additional_notes"
+                      v-model="formData.additional_notes"
+                    />
+                    <label for="additional_notes">Additional Notes</label>
+                  </FloatLabel>
+                </div>
+              </div>
             </div>
             <div class="flex pt-6 justify-between">
               <Button
@@ -916,6 +1149,28 @@
                 severity="secondary"
                 icon="pi pi-arrow-left"
                 @click="activateCallback('9')"
+              />
+              <Button
+                label="Next"
+                icon="pi pi-arrow-right"
+                iconPos="right"
+                @click="activateCallback('11')"
+              />
+            </div>
+          </StepPanel>
+
+          <!-- Step 11: Review & Submit -->
+          <StepPanel v-slot="{ activateCallback }" value="11">
+            <!-- <div class="flex flex-col gap-4">
+              <h3 class="text-xl font-bold">Review Your Entries</h3>
+              <pre>{{ formData }}</pre>
+            </div> -->
+            <div class="flex pt-6 justify-between">
+              <Button
+                label="Back"
+                severity="secondary"
+                icon="pi pi-arrow-left"
+                @click="activateCallback('10')"
               />
               <Button label="Submit" @click="submitForm" />
             </div>
@@ -941,51 +1196,46 @@ import Select from "primevue/select";
 import Checkbox from "primevue/checkbox";
 import Button from "primevue/button";
 import axiosInstance from "@/axios"; // Assuming you've created a global axios instance
-
+const emit = defineEmits();
 const activeStep = ref("1");
+const props = defineProps({
+  medical_record_id: {
+    type: Number,
+    required: true,
+  },
+});
 const formData = ref(
-  {
-    // Step 1: Current Symptoms
-    symptom_description: "",
-    start_date: null,
-    symptom_progression: "",
+  /*{
+    symptom_description: "No signs of pregnancy 6 weeks post-mating",
+    start_date: "2025-03-10",
+    symptom_progression: "constant",
     medication_given: false,
     medication_name: "",
     medication_dosage: "",
     prescribed_by: "",
-
-    // Step 2: General Health
-    activity_level: "",
-    vaccination_status: "",
-    care_location: "",
-    other_animals_in_household: false,
-    number_of_other_animals: 0,
-    types_of_other_animals: "",
-    previous_diseases_in_other_animals: "",
-
-    // Step 3: Reproductive History
-    last_reproductive_cycle_date: null,
-    cycle_length: 0,
-    notable_signs: "",
-    other_discharges: "",
-
-    // Step 4: Itching & Skin
+    activity_level: "active",
+    vaccination_status: "complete",
+    care_location: "home",
+    other_animals_in_household: true,
+    number_of_other_animals: 2,
+    types_of_other_animals: "1 male cat, 1 female dog",
+    previous_diseases_in_other_animals: "None",
+    last_reproductive_cycle_date: "2025-02-20",
+    cycle_length: 7,
+    notable_signs: "No nipple enlargement, no weight gain",
+    other_discharges: "None",
     itching_present: false,
     itching_location: "",
     itching_description: "",
-    skin_condition_description: "",
-
-    // Step 5: Diet & Water
-    diet_type: "",
-    diet_details: "",
-    number_of_meals: 0,
-    meal_quantity: "",
-    appetite: "",
+    skin_condition_description: "Normal",
+    diet_type: "canned",
+    diet_details: "Premium grain-free poultry",
+    number_of_meals: 3,
+    meal_quantity: "200g",
+    appetite: "good",
     recent_diet_change: false,
     diet_change_type: "",
-    water_intake: "",
-
-    // Step 6: Gastrointestinal
+    water_intake: "normal",
     vomiting: false,
     vomit_color: "",
     vomit_contents: "",
@@ -994,32 +1244,110 @@ const formData = ref(
     vomiting_related_to_food: false,
     vomiting_related_to_diarrhea: false,
     diarrhea_started_first: false,
-    stool_consistency: "",
-    stool_color: "",
-    stool_frequency: 0,
+    stool_consistency: "normal",
+    stool_color: "brown",
+    stool_frequency: 1,
     abnormal_stool_contents: "",
     excessive_licking_of_anus: false,
-
-    // Step 7: Neurological
-    neurological_signs: "",
+    neurological_signs: null,
+    neurological_signs_frequency: "",
+    associated_symptoms: "",
+    sudden_onset: false,
+    related_to_eating_or_activity: "",
+    additional_details: "Owner reports successful mating observed 6 weeks ago.",
+    cough: false,
+    cough_start_date: "",
+    cough_frequency: "",
+    cough_type: "",
+    breathing_difficulty: false,
+    sneezing: false,
+    urination_frequency: 4,
+    frequent_litter_box_visits: false,
+    urine_volume: "small",
+    urine_color: "pale yellow",
+    urination_type: "continuous",
+    blood_in_urine: false,
+    blood_location: "",
+    abnormal_urinary_discharge: "",
+    genital_discharge: "None",
+    excessive_licking_of_genital_area: false,
+    vaccine_name: "FVRCP",
+    vaccine_date: "2025-01-15",
+    next_due_date: "2026-01-15",
+    administered_by: "Dr. Lee",
+    medication_type: "",
+    dosage: "",
+    frequency: "",
+    medication_start_date: "",
+    medication_end_date: "",
+    treatment_name: "",
+    treatment_type: "",
+    treatment_dosage: "",
+    administration_date: "",
+    treatment_next_due_date: "",
+    treatment_administered_by: "",
+    additional_notes:
+      "Recommend ultrasound to confirm pregnancy status. Rule out pseudopregnancy.",
+  }*/
+  {
+    symptom_description: "",
+    start_date: null,
+    symptom_progression: "",
+    medication_given: false,
+    medication_name: "",
+    medication_dosage: "",
+    prescribed_by: "",
+    activity_level: "",
+    vaccination_status: "",
+    care_location: "",
+    other_animals_in_household: false,
+    number_of_other_animals: null,
+    types_of_other_animals: "",
+    previous_diseases_in_other_animals: "",
+    last_reproductive_cycle_date: null,
+    cycle_length: null,
+    notable_signs: "",
+    other_discharges: "",
+    itching_present: false,
+    itching_location: "",
+    itching_description: "",
+    skin_condition_description: "",
+    diet_type: "",
+    diet_details: "",
+    number_of_meals: null,
+    meal_quantity: "",
+    appetite: "",
+    recent_diet_change: false,
+    diet_change_type: "",
+    water_intake: "",
+    vomiting: false,
+    vomit_color: "",
+    vomit_contents: "",
+    vomit_smell: "",
+    vomiting_frequency: null,
+    vomiting_related_to_food: false,
+    vomiting_related_to_diarrhea: false,
+    diarrhea_started_first: false,
+    stool_consistency: "",
+    stool_color: "",
+    stool_frequency: null,
+    abnormal_stool_contents: "",
+    excessive_licking_of_anus: false,
+    neurological_signs: null,
     neurological_signs_frequency: "",
     associated_symptoms: "",
     sudden_onset: false,
     related_to_eating_or_activity: "",
     additional_details: "",
-
-    // Step 8: Respiratory
     cough: false,
     cough_start_date: null,
     cough_frequency: "",
     cough_type: "",
     breathing_difficulty: false,
     sneezing: false,
-
-    // Step 9: Urinary
-    urination_frequency: 0,
+    urination_frequency: null,
     frequent_litter_box_visits: false,
-    urine_volume: "",
+    urine_volume: null,
     urine_color: "",
     urination_type: "",
     blood_in_urine: false,
@@ -1027,82 +1355,23 @@ const formData = ref(
     abnormal_urinary_discharge: "",
     genital_discharge: "",
     excessive_licking_of_genital_area: false,
+    vaccine_name: "",
+    vaccine_date: null,
+    next_due_date: null,
+    administered_by: "",
+    medication_type: "",
+    dosage: "",
+    frequency: "",
+    medication_start_date: null,
+    medication_end_date: null,
+    treatment_name: "",
+    treatment_type: "",
+    treatment_dosage: "",
+    administration_date: null,
+    treatment_next_due_date: null,
+    treatment_administered_by: "",
+    additional_notes: "",
   }
-  // ,{
-  //   symptom_description: "Frequent vomiting and diarrhea",
-  //   start_date: "2023-10-01",
-  //   symptom_progression: "increasing",
-  //   medication_given: true,
-  //   medication_name: "Antibiotics",
-  //   medication_dosage: "500mg",
-  //   prescribed_by: "Dr. Smith",
-
-  //   activity_level: "lethargic",
-  //   vaccination_status: "complete",
-  //   care_location: "home",
-  //   other_animals_in_household: true,
-  //   number_of_other_animals: 2,
-  //   types_of_other_animals: "1 dog, 1 cat",
-  //   previous_diseases_in_other_animals: "None",
-
-  //   last_reproductive_cycle_date: "2023-09-15",
-  //   cycle_length: 7,
-  //   notable_signs: "Increased appetite",
-  //   other_discharges: "None",
-
-  //   itching_present: true,
-  //   itching_location: "ears and paws",
-  //   itching_description: "Constant scratching",
-  //   skin_condition_description: "Redness and flaky skin",
-
-  //   diet_type: "mixed",
-  //   diet_details: "Dry kibble and canned food",
-  //   number_of_meals: 2,
-  //   meal_quantity: "1 cup per meal",
-  //   appetite: "good",
-  //   recent_diet_change: false,
-  //   diet_change_type: null,
-  //   water_intake: "500ml per day",
-
-  //   vomiting: true,
-  //   vomit_color: "yellow",
-  //   vomit_contents: "undigested food",
-  //   vomit_smell: "sour",
-  //   vomiting_frequency: 3,
-  //   vomiting_related_to_food: true,
-  //   vomiting_related_to_diarrhea: true,
-  //   diarrhea_started_first: false,
-  //   stool_consistency: "watery",
-  //   stool_color: "brown",
-  //   stool_frequency: 5,
-  //   abnormal_stool_contents: "mucus",
-  //   excessive_licking_of_anus: true,
-
-  //   neurological_signs: "seizures",
-  //   neurological_signs_frequency: "once a week",
-  //   associated_symptoms: "dilated pupils, drooling",
-  //   sudden_onset: true,
-  //   related_to_eating_or_activity: "after eating",
-  //   additional_details: "Seizures last for 2-3 minutes",
-
-  //   cough: true,
-  //   cough_start_date: "2023-10-05",
-  //   cough_frequency: "3 times a day",
-  //   cough_type: "dry",
-  //   breathing_difficulty: false,
-  //   sneezing: true,
-
-  //   urination_frequency: 4,
-  //   frequent_litter_box_visits: true,
-  //   urine_volume: "medium",
-  //   urine_color: "yellow",
-  //   urination_type: "continuous",
-  //   blood_in_urine: false,
-  //   blood_location: null,
-  //   abnormal_urinary_discharge: "None",
-  //   genital_discharge: "None",
-  //   excessive_licking_of_genital_area: false,
-  // }
 );
 
 const symptomProgressionOptions = [
@@ -1117,7 +1386,12 @@ const activityLevelOptions = [
   { label: "Sometimes Active", value: "sometimes_active" },
   { label: "Other", value: "other" },
 ];
-
+const stoolConsistencyOptions = [
+  { label: "Normal", value: "normal" },
+  { label: "Soft", value: "soft" },
+  { label: "Watery", value: "watery" },
+  { label: "Hard", value: "hard" },
+];
 const vaccinationStatusOptions = [
   { label: "Complete", value: "complete" },
   { label: "Incomplete", value: "incomplete" },
@@ -1164,24 +1438,79 @@ const bloodLocationOptions = [
   { label: "End", value: "end" },
   { label: "Throughout", value: "throughout" },
 ];
+const urineVolumeOptions = [
+  { label: "Small", value: "small" },
+  { label: "Medium", value: "medium" },
+  { label: "Large", value: "large" },
+];
+const medicationTypeOptions = [
+  { label: "Antibiotic", value: "antibiotic" },
+  { label: "Painkiller", value: "painkiller" },
+  { label: "Anti-inflammatory", value: "anti-inflammatory" },
+  { label: "Other", value: "other" },
+];
+const neurologicalSignsOptions = [
+  { label: "Seizures", value: "seizures" },
+  { label: "Fainting", value: "fainting" },
+  { label: "Nystagmus", value: "nystagmus" },
+  { label: "Other", value: "other" },
+];
+const treatmentTypeOptions = [
+  { label: "Flea", value: "flea" },
+  { label: "Tick", value: "tick" },
+  { label: "Worm", value: "worm" },
+  { label: "Other", value: "other" },
+];
 
 const submitForm = async () => {
   try {
+    // Utility function to format dates
+    const formatDate = (isoDateString) => {
+      return isoDateString ? new Date(isoDateString).toISOString().split("T")[0] : null;
+    };
+
     // Extract values from dropdown/select fields
-    formData.value.symptom_progression =
-      formData.value.symptom_progression?.value || null;
-    formData.value.activity_level = formData.value.activity_level?.value || null;
-    formData.value.vaccination_status = formData.value.vaccination_status?.value || null;
-    formData.value.care_location = formData.value.care_location?.value || null;
-    formData.value.diet_type = formData.value.diet_type?.value || null;
-    formData.value.appetite = formData.value.appetite?.value || null;
-    formData.value.urination_type = formData.value.urination_type?.value || null;
-    formData.value.cough_type = formData.value.cough_type?.value || null;
-    formData.value.stool_consistency = formData.value.stool_consistency?.value || null;
-    formData.value.urine_volume = formData.value.urine_volume?.value || null;
-    formData.value.blood_location = formData.value.blood_location?.value || null;
-    formData.value.neurological_signs = formData.value.neurological_signs?.value || null;
-    formData.value.diet_change_type = formData.value.diet_change_type?.value || null;
+    formData.value.symptom_progression = formData.value.symptom_progression
+      ? formData.value.symptom_progression
+      : null;
+    formData.value.activity_level = formData.value.activity_level
+      ? formData.value.activity_level
+      : null;
+    formData.value.vaccination_status = formData.value.vaccination_status
+      ? formData.value.vaccination_status
+      : null;
+    formData.value.care_location = formData.value.care_location
+      ? formData.value.care_location
+      : null;
+    formData.value.diet_type = formData.value.diet_type ? formData.value.diet_type : null;
+    formData.value.appetite = formData.value.appetite ? formData.value.appetite : null;
+    formData.value.urination_type = formData.value.urination_type
+      ? formData.value.urination_type
+      : null;
+    formData.value.cough_type = formData.value.cough_type
+      ? formData.value.cough_type
+      : null;
+    formData.value.stool_consistency = formData.value.stool_consistency
+      ? formData.value.stool_consistency
+      : null;
+    formData.value.urine_volume = formData.value.urine_volume
+      ? formData.value.urine_volume
+      : null;
+    formData.value.blood_location = formData.value.blood_location
+      ? formData.value.blood_location
+      : null;
+    formData.value.neurological_signs = formData.value.neurological_signs
+      ? formData.value.neurological_signs
+      : null;
+    formData.value.diet_change_type = formData.value.diet_change_type
+      ? formData.value.diet_change_type
+      : null;
+    formData.value.medication_type = formData.value.medication_type
+      ? formData.value.medication_type
+      : null;
+    formData.value.treatment_type = formData.value.treatment_type
+      ? formData.value.treatment_type
+      : null;
 
     // Convert numeric fields to integers
     formData.value.number_of_other_animals = formData.value.number_of_other_animals
@@ -1213,7 +1542,6 @@ const submitForm = async () => {
       formData.value.skin_condition_description || null;
     formData.value.diet_details = formData.value.diet_details || null;
     formData.value.meal_quantity = formData.value.meal_quantity || null;
-    // formData.value.diet_change_type = formData.value.diet_change_type || null;
     formData.value.water_intake = formData.value.water_intake || null;
     formData.value.vomit_color = formData.value.vomit_color || null;
     formData.value.vomit_contents = formData.value.vomit_contents || null;
@@ -1226,12 +1554,28 @@ const submitForm = async () => {
     formData.value.related_to_eating_or_activity =
       formData.value.related_to_eating_or_activity || null;
     formData.value.additional_details = formData.value.additional_details || null;
-    formData.value.cough_start_date = formData.value.cough_start_date || null;
     formData.value.cough_frequency = formData.value.cough_frequency || null;
     formData.value.urine_color = formData.value.urine_color || null;
     formData.value.abnormal_urinary_discharge =
       formData.value.abnormal_urinary_discharge || null;
     formData.value.genital_discharge = formData.value.genital_discharge || null;
+
+    // Format date fields
+    formData.value.cough_start_date = formatDate(formData.value.cough_start_date);
+    formData.value.vaccine_date = formatDate(formData.value.vaccine_date);
+    formData.value.next_due_date = formatDate(formData.value.next_due_date);
+    formData.value.medication_start_date = formatDate(
+      formData.value.medication_start_date
+    );
+    formData.value.medication_end_date = formatDate(formData.value.medication_end_date);
+    formData.value.administration_date = formatDate(formData.value.administration_date);
+    formData.value.treatment_next_due_date = formatDate(
+      formData.value.treatment_next_due_date
+    );
+    formData.value.last_reproductive_cycle_date = formatDate(
+      formData.value.last_reproductive_cycle_date
+    );
+    formData.value.start_date = formatDate(formData.value.start_date);
 
     // Ensure boolean fields are sent as true/false
     formData.value.medication_given = !!formData.value.medication_given;
@@ -1259,7 +1603,7 @@ const submitForm = async () => {
 
     // Send formData to the storeHistory endpoint
     const response = await axiosInstance.post(
-      "/medical-records/history/44",
+      `/medical-records/history/${props.medical_record_id}`,
       formData.value
     );
     // console.log("Form submitted successfully:", response.data);
@@ -1268,6 +1612,7 @@ const submitForm = async () => {
   }
 };
 </script>
+
 <style scoped>
 .p-step-active {
   color: navy !important;
@@ -1276,3 +1621,4 @@ const submitForm = async () => {
   --color-violet-600: oklch(0.541 0.281 293.009);
 }
 </style>
+b4

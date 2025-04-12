@@ -89,10 +89,10 @@
     "app": {
         "menu": {
             "calendar": "التقويم",
-            "patients": "المرضى",
+            "patients": "العيادة",
             "owners": "الزبائن",
             "pets": "المرضى",
-            "inventories": "المخزون",
+            "inventories": "المستودع",
             "pet_food": "أطعمة",
             "toys_tools": "الألعاب والأدوات",
             "pharmaceutical": "الأدوية",
@@ -320,6 +320,605 @@
             "Lapine": "أرانب",
             "Murine": "فئران",
             "Ovine": "أغنام"
+        }
+    },
+    "treatments": {
+        "title": "العلاجات",
+        "no_treatments": "لا توجد علاجات",
+        "refresh": "تحديث البيانات",
+        "add": "إضافة علاج جديد",
+        "headers": {
+            "date": "التاريخ",
+            "treatment": "العلاج",
+            "dosage": "الجرعة",
+            "delivery": "طريقة الإعطاء",
+            "description": "الوصف"
+        },
+        "actions": {
+            "edit": "تعديل التفاصيل",
+            "delete": "حذف"
+        },
+        "delete_confirm": {
+            "message": "هل أنت متأكد أنك تريد حذف هذا العلاج؟",
+            "header": "تأكيد الحذف"
+        }
+    },
+    "add_treatment": {
+        "title": "إضافة علاج جديد",
+        "fields": {
+            "name": "الاسم",
+            "dosage": "الجرعة",
+            "delivery": "طريقة الإعطاء",
+            "description": "الوصف",
+            "treatment_date": "تاريخ العلاج"
+        },
+        "submit": "إضافة علاج",
+        "toast": {
+            "success": "تم إضافة العلاج بنجاح",
+            "error": "خطأ في إضافة العلاج"
+        },
+        "administration_methods": {
+            "oral": "فموي (أقراص، حبوب، كبسولات، شراب، معلقات)",
+            "subcutaneous": "حقن تحت الجلد",
+            "intramuscular": "حقن عضلي",
+            "intravenous": "حقن وريدي",
+            "topical": "موضعي (كريمات، مراهم، جيل)",
+            "transdermal": "عبر الجلد (لصقات، امتصاص عبر الجلد)",
+            "ophthalmic": "عين (قطرات، مراهم)",
+            "otic": "أذن (قطرات، أدوية)",
+            "inhalation": "استنشاق (بخاخات، أجهزة استنشاق)",
+            "rectal": "شرجي (تحاميل، حقن شرجية)",
+            "sublingual": "تحت اللسان",
+            "intranasal": "أنفي (بخاخات، قطرات)",
+            "intraosseous": "داخل العظم"
+        }
+    },
+    "test_results": {
+        "title": "نتائج الاختبارات",
+        "no_results": "لا توجد نتائج اختبار",
+        "refresh": "تحديث البيانات",
+        "add": "إضافة نتيجة اختبار جديدة",
+        "headers": {
+            "test": "الاختبار",
+            "result": "النتيجة"
+        },
+        "actions": {
+            "edit": "تعديل التفاصيل",
+            "delete": "حذف"
+        },
+        "delete_confirm": {
+            "message": "هل أنت متأكد أنك تريد حذف هذه النتيجة؟",
+            "header": "تأكيد الحذف"
+        }
+    },
+    "add_test_result": {
+        "title": "إضافة نتيجة اختبار جديدة",
+        "fields": {
+            "test_type": "نوع الاختبار",
+            "test_name": "اسم الاختبار {index}",
+            "test_value": "قيمة الاختبار {index}"
+        },
+        "buttons": {
+            "add_result": "إضافة نتيجة",
+            "submit": "إضافة نتيجة الاختبار"
+        },
+        "toast": {
+            "success": "تم إضافة نتيجة الاختبار بنجاح",
+            "error": "خطأ في إضافة نتيجة الاختبار"
+        }
+    },
+    "medical_images": {
+        "title": "الصور الطبية",
+        "no_images": "لا توجد صور",
+        "loading": "جاري تحميل بيانات الصور. يرجى الانتظار.",
+        "refresh": "تحديث البيانات",
+        "add": "إضافة صورة طبية جديدة",
+        "headers": {
+            "type": "النوع",
+            "date": "التاريخ",
+            "organ": "العضو",
+            "measurements": "القياسات",
+            "description": "الوصف",
+            "ref_number": "الرقم المرجعي"
+        },
+        "actions": {
+            "edit": "تعديل التفاصيل",
+            "delete": "حذف"
+        },
+        "delete_confirm": {
+            "message": "هل أنت متأكد أنك تريد حذف هذه الصورة؟",
+            "header": "تأكيد الحذف"
+        },
+        "toast": {
+            "success": "تمت إضافة الصورة الطبية لـ {type} بنجاح",
+            "title": "تمت إضافة صورة طبية جديدة"
+        }
+    },
+    "add_medical_image": {
+        "title": "إضافة صورة طبية جديدة",
+        "fields": {
+            "ref_number": "الرقم المرجعي",
+            "organ": "العضو",
+            "measurements": "القياسات",
+            "type": "نوع الصورة",
+            "image_date": "تاريخ الصورة",
+            "description": "الوصف"
+        },
+        "image_types": {
+            "ultrasound": "موجات فوق صوتية",
+            "xray": "أشعة سينية"
+        },
+        "submit": "إضافة صورة طبية",
+        "toast": {
+            "success": "تمت إضافة الصورة الطبية بنجاح",
+            "error": "فشل في إضافة الصورة الطبية",
+            "title": "تمت إضافة صورة طبية"
+        }
+    },
+    "case_history": {
+        "title": "تفاصيل تاريخ الحالة",
+        "edit_button": "تعديل تاريخ الحالة",
+        "add_button": "إضافة تاريخ حالة",
+        "no_history": "لا يوجد تاريخ حالة مضاف حتى الآن.",
+        "steps": {
+            "current_symptoms": "الأعراض الحالية",
+            "general_health": "الصحة العامة",
+            "reproductive_history": "تاريخ التكاثر",
+            "itching_skin": "الحكة والجلد",
+            "diet_water": "النظام الغذائي والماء",
+            "gastrointestinal": "الجهاز الهضمي",
+            "neurological": "الأعصاب",
+            "respiratory": "الجهاز التنفسي",
+            "urinary": "الجهاز البولي",
+            "vaccination_medication": "التطعيم والأدوية"
+        },
+        "fields": {
+            "symptom_description": "وصف الأعراض",
+            "start_date": "تاريخ البدء",
+            "symptom_progression": "تطور الأعراض",
+            "medication_given": "تم إعطاء الدواء",
+            "medication_name": "اسم الدواء",
+            "medication_dosage": "جرعة الدواء",
+            "prescribed_by": "تم وصفه بواسطة",
+            "activity_level": "مستوى النشاط",
+            "vaccination_status": "حالة التطعيم",
+            "care_location": "مكان الرعاية",
+            "other_animals_in_household": "حيوانات أخرى في المنزل",
+            "number_of_other_animals": "عدد الحيوانات الأخرى",
+            "types_of_other_animals": "أنواع الحيوانات الأخرى",
+            "previous_diseases_in_other_animals": "أمراض سابقة في الحيوانات الأخرى",
+            "last_reproductive_cycle_date": "تاريخ آخر دورة تكاثر",
+            "cycle_length": "طول الدورة / أيام",
+            "notable_signs": "علامات ملحوظة",
+            "other_discharges": "إفرازات أخرى",
+            "itching_present": "وجود حكة",
+            "itching_location": "موقع الحكة",
+            "itching_description": "وصف الحكة",
+            "skin_condition_description": "وصف حالة الجلد",
+            "diet_type": "نوع النظام الغذائي",
+            "diet_details": "تفاصيل النظام الغذائي",
+            "number_of_meals": "عدد الوجبات",
+            "meal_quantity": "كمية الوجبة",
+            "appetite": "الشهية",
+            "recent_diet_change": "تغيير حديث في النظام الغذائي",
+            "diet_change_type": "نوع التغيير في النظام الغذائي",
+            "water_intake": "كمية الماء",
+            "vomiting": "قيء",
+            "vomit_color": "لون القيء",
+            "vomit_contents": "محتويات القيء",
+            "vomit_smell": "رائحة القيء",
+            "vomiting_frequency": "تكرار القيء",
+            "vomiting_related_to_food": "القيء مرتبط بالطعام",
+            "vomiting_related_to_diarrhea": "القيء مرتبط بالإسهال",
+            "diarrhea_started_first": "بدأ الإسهال أولاً",
+            "stool_consistency": "قوام البراز",
+            "stool_color": "لون البراز",
+            "stool_frequency": "عدد مرات زيارة الليتر بوكس",
+            "abnormal_stool_contents": "محتويات براز غير طبيعية",
+            "excessive_licking_of_anus": "لعق مفرط للشرج",
+            "neurological_signs": "علامات عصبية",
+            "neurological_signs_frequency": "التكرار",
+            "associated_symptoms": "أعراض مرتبطة",
+            "sudden_onset": "بداية مفاجئة",
+            "related_to_eating_or_activity": "مرتبط بالأكل أو النشاط",
+            "additional_details": "تفاصيل إضافية",
+            "cough": "سعال",
+            "cough_start_date": "تاريخ بدء السعال",
+            "cough_frequency": "تكرار السعال",
+            "cough_type": "نوع السعال",
+            "breathing_difficulty": "صعوبة في التنفس",
+            "sneezing": "عطس",
+            "urination_frequency": "تكرار التبول",
+            "urine_volume": "حجم البول",
+            "urine_color": "لون البول",
+            "urination_type": "نوع التبول",
+            "blood_in_urine": "دم في البول",
+            "blood_location": "موقع الدم",
+            "abnormal_urinary_discharge": "إفراز بول غير طبيعي",
+            "genital_discharge": "إفرازات تناسلية",
+            "excessive_licking_of_genital_area": "لعق مفرط للمنطقة التناسلية",
+            "vaccine_name": "اسم اللقاح",
+            "vaccine_date": "تاريخ اللقاح",
+            "next_due_date": "تاريخ الاستحقاق التالي",
+            "administered_by": "تم إعطاؤه بواسطة",
+            "treatment_name": "اسم العلاج",
+            "treatment_type": "نوع العلاج",
+            "treatment_dosage": "الجرعة",
+            "administration_date": "تاريخ الإعطاء",
+            "medication_name": "اسم الدواء",
+            "medication_type": "نوع الدواء",
+            "dosage": "الجرعة",
+            "frequency": "التكرار",
+            "medication_start_date": "تاريخ البدء بالمعالجة",
+            "medication_end_date": "تاريخ الانتهاء من المعالجة",
+            "additional_notes": "ملاحظات إضافية"
+        },
+        "options": {
+            "symptom_progression": {
+                "increasing": "متزايد",
+                "decreasing": "متناقص",
+                "constant": "ثابت"
+            },
+            "activity_level": {
+                "active": "نشط",
+                "lethargic": "خامل",
+                "sometimes_active": "نشط أحياناً",
+                "other": "أخرى"
+            },
+            "stool_consistency": {
+                "normal": "طبيعي",
+                "soft": "طري",
+                "watery": "مائي",
+                "hard": "قاسي"
+            },
+            "vaccination_status": {
+                "complete": "مكتمل",
+                "incomplete": "غير مكتمل"
+            },
+            "care_location": {
+                "home": "المنزل",
+                "home_garden": "حديقة المنزل",
+                "street": "الشارع",
+                "indoor_outdoor": "داخلي/خارجي"
+            },
+            "diet_type": {
+                "dry": "جاف",
+                "canned": "معلب",
+                "home_cooked": "مطبوخ منزلي",
+                "raw": "نيء",
+                "mixed": "مختلط"
+            },
+            "appetite": {
+                "good": "جيد",
+                "leaves_meal": "يترك الوجبة",
+                "no_appetite": "لا شهية"
+            },
+            "diet_change_type": {
+                "sudden": "مفاجئ",
+                "gradual": "تدريجي"
+            },
+            "cough_type": {
+                "dry": "جاف",
+                "productive": "منتج"
+            },
+            "urination_type": {
+                "continuous": "مستمر",
+                "intermittent": "متقطع"
+            },
+            "blood_location": {
+                "beginning": "البداية",
+                "end": "النهاية",
+                "throughout": "طوال الوقت"
+            },
+            "medication_type": {
+                "antibiotic": "مضاد حيوي",
+                "painkiller": "مسكن ألم",
+                "anti-inflammatory": "مضاد التهاب",
+                "other": "أخرى"
+            },
+            "treatment_type": {
+                "flea": "براغيث",
+                "tick": "قراد",
+                "worm": "ديدان",
+                "other": "أخرى"
+            }
+        },
+        "actions": {
+            "next": "التالي",
+            "back": "السابق",
+            "submit": "إرسال"
+        },
+        "messages": {
+            "success": "تم تحديث تاريخ الحالة بنجاح"
+        },
+        "additional": {
+            "vaccination_history": "تاريخ اللقاحات",
+            "medication_history": "تاريخ المعالجات الدوائية",
+            "antiparasitic_treatment": "تاريخ معالجات الطفيليات"
+        },
+        "toast": {
+            "case_history_added": "تاريخ الحالة",
+            "case_history_added_detail": "تم تسجيل و حفظ تاريخ الحالة للمريض"
+        }
+    },
+    "medical_examination": {
+        "title": "تقرير الفحص البدني",
+        "no_examination": "لم يتم إجراء أي فحص بعد.",
+        "add_examination": "إضافة فحص بدني",
+        "general_info": {
+            "pet_id": "معرف الحيوان الأليف",
+            "pet_name": "اسم الحيوان الأليف",
+            "branch_name": "العيادة",
+            "branch_id": "معرف الفرع",
+            "visit_date": "تاريخ الزيارة",
+            "diagnosis": "التشخيص",
+            "created_at": "تاريخ الإنشاء",
+            "updated_at": "تاريخ التحديث"
+        },
+        "examination_details": "تفاصيل الفحص",
+        "exam_data": {
+            "examination_date": "تاريخ الفحص",
+            "animal_weight": "وزن الحيوان",
+            "temperature": "درجة الحرارة",
+            "behavior": "السلوك"
+        },
+        "sections": {
+            "head_neck": "فحص الرأس والرقبة",
+            "eyes": "العينان",
+            "eye_sunkenness": "انخفاض العين",
+            "nose": "الأنف",
+            "nasal_discharge": "إفرازات الأنف",
+            "mouth": "الفم",
+            "teeth": "الأسنان",
+            "gums": "اللثة",
+            "tongue": "اللسان",
+            "mucous_membranes": "الأغشية المخاطية",
+            "ears": "الأذنان",
+            "vital_signs": "العلامات الحيوية",
+            "pulse_rate": "معدل النبض",
+            "respiratory_rate": "معدل التنفس",
+            "breathing_pattern": "نمط التنفس",
+            "breath_sound": "صوت التنفس",
+            "oxygenation": "الأكسجين",
+            "capillary_refill_time": "زمن إعادة ملء الشعيرات",
+            "nervous_system": "الجهاز العصبي",
+            "skin_coat": "الجلد والفراء",
+            "skin": "الجلد",
+            "skin_lumps_or_infections": "كتل أو التهابات الجلد",
+            "skin_coat_condition": "حالة الجلد والفراء",
+            "abdominal": "فحص البطن",
+            "abdominal_palpation": "جس البطن",
+            "lymph_nodes": "العقد الليمفاوية",
+            "body_condition": "حالة الجسم",
+            "body_condition_score": "درجة حالة الجسم",
+            "hydration_status": "حالة الترطيب",
+            "preliminary_diagnosis": "التشخيص الأولي",
+            "recommendations": "التوصيات",
+            "notes": "ملاحظات"
+        }
+    },
+    "medical_examination_form": {
+        "title": "تفاصيل التاريخ المرضي",
+        "steps": {
+            "general_info": "المعلومات العامة",
+            "head_neck": "الرأس والرقبة",
+            "vital_signs": "العلامات الحيوية",
+            "nervous_skin": "الجهاز العصبي والجلد",
+            "abdomen_lymph": "البطن والعقد الليمفاوية",
+            "body_condition": "حالة الجسم",
+            "diagnosis": "التشخيص"
+        },
+        "section_titles": {
+            "general_info": "المعلومات العامة",
+            "head_neck": "الرأس والرقبة",
+            "vital_signs": "العلامات الحيوية",
+            "nervous_skin": "الجهاز العصبي والجلد",
+            "abdomen_lymph": "البطن والعقد الليمفاوية",
+            "body_condition": "حالة الجسم والترطيب",
+            "diagnosis": "التشخيص والتوصيات"
+        },
+        "fields": {
+            "examination_date": "تاريخ الفحص",
+            "animal_weight": "وزن الحيوان",
+            "temperature": "درجة الحرارة",
+            "animal_behavior": "سلوك الحيوان",
+            "eyes": "العينان",
+            "eye_sunkenness": "انخفاض العين",
+            "nose": "الأنف",
+            "nasal_discharge": "إفرازات الأنف",
+            "mouth": "الفم",
+            "teeth": "الأسنان",
+            "gums": "اللثة",
+            "tongue": "اللسان",
+            "mucous_membranes": "الأغشية المخاطية",
+            "ears": "الأذنان",
+            "pulse_rate": "معدل النبض",
+            "respiratory_rate": "معدل التنفس",
+            "breathing_pattern": "نمط التنفس",
+            "breath_sound": "صوت التنفس",
+            "oxygenation": "الأكسجين",
+            "capillary_refill_time": "زمن إعادة ملء الشعيرات (CRT)",
+            "nervous_system": "الجهاز العصبي",
+            "skin": "الجلد",
+            "skin_lumps_or_infections": "كتل أو التهابات الجلد",
+            "skin_coat_condition": "حالة الجلد والفراء",
+            "abdominal_palpation": "جس البطن",
+            "lymph_nodes": "العقد الليمفاوية",
+            "body_condition_score": "درجة حالة الجسم (BCS)",
+            "hydration_status": "حالة الترطيب",
+            "preliminary_diagnosis": "تشخيص أولي",
+            "recommendations": "التوصيات",
+            "notes": "ملاحظات",
+            "respiratory_rate_unit": "نفس/دقيقة"
+        },
+        "buttons": {
+            "back": "رجوع",
+            "next": "التالي",
+            "submit": "إرسال"
+        },
+        "options": {
+            "yes": "نعم",
+            "no": "لا"
+        },
+        "messages": {
+            "success_title": "نجاح",
+            "error_title": "خطأ",
+            "success": "تمت إضافة الفحص الطبي بنجاح",
+            "error": "فشل في حفظ الفحص الطبي"
+        }
+    },
+    "invoice": {
+        "no_invoice": "لا يوجد فاتورة صادرة لهذه الخدمة.",
+        "create_invoice": "إنشاء فاتورة",
+        "invoice_number": "فاتورة رقم {number}",
+        "print_preparing": "جارٍ إعداد الفاتورة للطباعة...",
+        "print_error_content": "تعذر العثور على محتوى الفاتورة للطباعة",
+        "print_error_popup": "تم حظر النافذة المنبثقة. يرجى السماح بالنوافذ المنبثقة لهذا الموقع.",
+        "download_preparing": "جارٍ إنشاء ملف PDF...",
+        "pos_preparing": "جارٍ إعداد إيصال نقطة البيع...",
+        "pos_error_template": "تعذر العثور على قالب نقطة البيع",
+        "items": {
+            "item": "المنتج",
+            "qty": "الكمية",
+            "price": "السعر",
+            "total": "الإجمالي"
+        },
+        "totals": {
+            "subtotal": "المجموع الفرعي:",
+            "tax": "الضريبة ({rate}%):",
+            "discount": "الخصم:",
+            "total": "الإجمالي:",
+            "paid_full": "تم الدفع بالكامل",
+            "balance_due": "الرصيد المستحق:"
+        },
+        "payments": {
+            "payment": "الدفعة {number}",
+            "method": "الطريقة:",
+            "amount": "المبلغ:"
+        },
+        "footer": {
+            "thank_you": "شكرًا لتعاملك معنا!",
+            "visit_again": "نراكم قريبًا مرة أخرى"
+        },
+        "status": {
+            "draft": "مسودة",
+            "pending": "قيد الانتظار",
+            "partially_paid": "مدفوع جزئيًا",
+            "paid": "مدفوع",
+            "cancelled": "ملغى",
+            "refunded": "تم الاسترداد"
+        },
+        "metadata": {
+            "date": "التاريخ:",
+            "due_date": "تاريخ الاستحقاق:",
+            "payment_terms": "شروط الدفع:",
+            "terms": {
+                "due_on_receipt": "مستحق عند الاستلام",
+                "net_15": "15 يوم صافي",
+                "net_30": "30 يوم صافي",
+                "50_upfront": "50% مقدماً، 50% عند الانتهاء"
+            }
+        },
+        "branch_info": {
+            "from": "من",
+            "phone": "هاتف:"
+        },
+        "client_info": {
+            "bill_to": "فاتورة إلى",
+            "phone": "هاتف:",
+            "email": "البريد الإلكتروني:",
+            "phone_masked": "*** *** ****"
+        },
+        "summary": {
+            "title": "ملخص الفاتورة",
+            "subtotal": "المجموع الفرعي:",
+            "discount": "الخصم:",
+            "tax": "الضريبة:",
+            "total": "الإجمالي:",
+            "first_deposit": "الدفعة الأولى:",
+            "amount_paid": "إجمالي المبلغ المدفوع:",
+            "balance_due": "الرصيد المستحق:"
+        },
+        "items_table": {
+            "title": "البنود",
+            "headers": {
+                "item": "الصنف",
+                "qty": "الكمية",
+                "price": "السعر",
+                "discount": "الخصم",
+                "tax": "الضريبة",
+                "total": "الإجمالي"
+            }
+        },
+        "payment_history": {
+            "title": "سجل الدفع",
+            "headers": {
+                "date": "التاريخ",
+                "method": "الطريقة",
+                "amount": "المبلغ",
+                "note": "ملاحظة",
+                "status": "الحالة"
+            },
+            "status": {
+                "verified": "تم التحقق",
+                "pending": "قيد الانتظار"
+            },
+            "methods": {
+                "cash": "نقداً",
+                "credit_card": "بطاقة ائتمان",
+                "bank_transfer": "تحويل بنكي",
+                "unknown": "غير معروف"
+            }
+        },
+        "notes": {
+            "title": "ملاحظات"
+        },
+        "actions": {
+            "print": "طباعة الفاتورة",
+            "download": "تحميل PDF",
+            "add_payment": "إضافة دفعة",
+            "tooltips": {
+                "paid": "الفاتورة مدفوعة بالفعل",
+                "cancelled": "لا يمكن دفع فاتورة ملغية",
+                "default": "إضافة دفعة للفاتورة"
+            }
+        }
+    },
+    "appointment": {
+        "edit_title": "تعديل الموعد",
+        "add_title": "إضافة موعد جديد",
+        "fields": {
+            "pet": "بحث الحيوانات الأليفة",
+            "title": "العنوان",
+            "description": "الوصف",
+            "start": "تاريخ ووقت البدء",
+            "end": "تاريخ ووقت الانتهاء",
+            "type": "النوع",
+            "status": "الحالة"
+        },
+        "types": {
+            "emergency": "طارئ",
+            "non_emergency": "غير طارئ",
+            "regular": "عادي",
+            "followup": "متابعة",
+            "surgery": "جراحة",
+            "grooming": "تجميل"
+        },
+        "statuses": {
+            "scheduled": "مجدول",
+            "walkin": "حضور مباشر"
+        },
+        "actions": {
+            "update": "تحديث",
+            "submit": "إضافة زيارة"
+        },
+        "messages": {
+            "pet_required": "الرجاء اختيار حيوان أليف.",
+            "create_success": "تم إضافة موعد لـ {petName} بنجاح.",
+            "create_error": "فشل إنشاء الموعد.",
+            "update_success": "تم تحديث الموعد لـ {petName} بنجاح.",
+            "update_error": "فشل تحديث الموعد.",
+            "fetch_error": "فشل جلب بيانات الموعد."
         }
     }
 }

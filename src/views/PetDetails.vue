@@ -893,6 +893,7 @@
       }"
       :medical_record_id="medical_record_id"
       @TestResultUpdated="handleTestResultUpdated"
+      @CaseHistoryCreated="handleCaseHistoryAdded"
       @close-dialog="isEditTestResultsVisible = false"
     />
     <template #footer> </template>
@@ -973,6 +974,7 @@
       }"
       :medical_record_id="medical_record_id"
       :pet_name="pet.name"
+      :branch_name="pet.branch.name"
       @showAddPhysicalExaminationModal="showAddPhysicalExaminationModal"
       @PhysicalExaminationUpdated="handlePhysicalExamination"
       @close-dialog="isEditTestResultsVisible = false"
@@ -1198,6 +1200,12 @@ const handleTestResultUpdated = () => {
 const handleCaseHistory = () => {
   // isCaseHistorysVisible.value = false;
   eventBus.emit("handleCaseHistorySuccessfully");
+};
+const handleCaseHistoryAdded = () => {
+  isAddCaseHistorysVisible.value = false;
+  isCaseHistorysVisible.value = false;
+  fetchPets();
+  // eventBus.emit("handleCaseHistorySuccessfully");
 };
 const showAddTestResultModal = () => {
   isNewTestResultVisible.value = true;

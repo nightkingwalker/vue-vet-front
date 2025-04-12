@@ -42,6 +42,9 @@
         <div class="field mt-6 w-[49%]">
           <FloatLabel class="w-full md:w-56">
             <DatePicker
+              showIcon
+              iconDisplay="input"
+              showButtonBar
               id="image_date"
               v-model="medicalImage.image_date"
               dateFormat="yy-mm-dd"
