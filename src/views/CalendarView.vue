@@ -52,6 +52,7 @@
       </ContextMenu>
     </div>
     <div
+      id="pet-details"
       :class="{
         '!h-[calc(100vh-100px)] w-1/5': !isMobile,
         'w-9/10 h-fit mx-auto': isMobile,
@@ -90,7 +91,7 @@
         </h4>
 
         <h4 class="w-full">
-          <i class="fa-solid fa-users"></i>
+          <i class="fa-solid fa-user ltr:mr-2 rtl:ml-2"></i>
           {{ $t("calendar.pet_details.owner") }}:
           {{ currentPet.people[0] ? currentPet.people[0] : "" }}
         </h4>
@@ -100,6 +101,7 @@
           {{ currentPet.location ? currentPet.location : "" }}
         </h4>
         <h4 class="w-full text-xs">
+          <i class="fa-solid fa-circle-info ltr:mr-2 rtl:ml-2"></i>
           {{ $t("calendar.pet_details.details") }}:
           {{ currentPet.description ? currentPet.description : "" }}
         </h4>

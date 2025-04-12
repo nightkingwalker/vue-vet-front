@@ -45,15 +45,17 @@
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
                     <TextArea
+                      required
                       fluid
                       autoResize
                       rows="4"
                       id="symptom_description"
                       v-model="formData.symptom_description"
                     />
-                    <label for="symptom_description">{{
-                      $t("case_history.fields.symptom_description")
-                    }}</label>
+                    <label for="symptom_description"
+                      >{{ $t("case_history.fields.symptom_description") }}
+                      <!--<span class="text-red-600">*</span>--></label
+                    >
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
@@ -68,24 +70,27 @@
                       hourFormat="24"
                       fluid
                     />
-                    <label for="start_date">{{
-                      $t("case_history.fields.start_date")
-                    }}</label>
+                    <label for="start_date"
+                      >{{ $t("case_history.fields.start_date") }}
+                      <!--<span class="text-red-600">*</span>--></label
+                    >
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
                     <Select
                       fluid
+                      required
                       optionLabel="label"
                       optionValue="value"
                       id="symptom_progression"
                       v-model="formData.symptom_progression"
                       :options="symptomProgressionOptions"
                     />
-                    <label for="symptom_progression">{{
-                      $t("case_history.fields.symptom_progression")
-                    }}</label>
+                    <label for="symptom_progression"
+                      >{{ $t("case_history.fields.symptom_progression") }}
+                      <!--<span class="text-red-600">*</span>--></label
+                    >
                   </FloatLabel>
                 </div>
               </div>
@@ -1362,7 +1367,7 @@ const props = defineProps({
 });
 const isRtl = computed(() => ["ar", "he", "fa"].includes(locale.value));
 const formData = ref(
-  {
+  /* {
     symptom_description: "No signs of pregnancy 6 weeks post-mating",
     start_date: "2025-03-10",
     symptom_progression: "constant",
@@ -1445,8 +1450,8 @@ const formData = ref(
     treatment_administered_by: "",
     additional_notes:
       "Recommend ultrasound to confirm pregnancy status. Rule out pseudopregnancy.",
-  }
-  /* {
+  }*/
+  {
     symptom_description: "",
     start_date: null,
     symptom_progression: "",
@@ -1528,7 +1533,7 @@ const formData = ref(
     treatment_next_due_date: null,
     treatment_administered_by: "",
     additional_notes: "",
-  }*/
+  }
 );
 
 const symptomProgressionOptions = [
