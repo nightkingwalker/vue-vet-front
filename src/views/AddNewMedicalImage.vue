@@ -14,7 +14,13 @@
             }}</label>
           </FloatLabel>
         </div>
-
+        <Button
+          type="button"
+          icon="pi pi-refresh"
+          @click="generateRefNumber"
+          :pt="{ root: { class: 'p-button-sm' } }"
+          v-tooltip="$t('add_medical_image.generate_tooltip')"
+        />
         <div class="field mt-6 w-[49%]">
           <FloatLabel class="w-full">
             <InputText fluid id="organ" v-model="medicalImage.organ" />
@@ -61,7 +67,14 @@
             }}</label>
           </FloatLabel>
         </div>
-
+        <div class="field mt-6 w-[49%]">
+          <FloatLabel class="w-full">
+            <Textarea fluid id="abnormalities" v-model="medicalImage.abnormalities" />
+            <label for="abnormalities">{{
+              $t("add_medical_image.fields.abnormalities")
+            }}</label>
+          </FloatLabel>
+        </div>
         <div class="field mt-6 w-[49%]">
           <FloatLabel class="w-full">
             <Textarea fluid id="description" v-model="medicalImage.description" />
@@ -104,9 +117,17 @@ const medicalImage = ref({
   organ: "",
   measurements: "",
   type: "",
+  abnormalities: "",
+
   image_date: null,
 });
-
+const generateRefNumber = () => {
+  const prefix = medicalImage.value.type?.value
+    ? medicalImage.value.type.value.substring(0, 2).toUpperCase()
+    : "IM";
+  const timestamp = new Date().getTime().toString().slice(-6);
+  medicalImage.value.ref_number = `${prefix}-${timestamp}`;
+};
 const imageTypes = ref([
   { label: t("add_medical_image.image_types.ultrasound"), value: "Ultrasound" },
   { label: t("add_medical_image.image_types.xray"), value: "X-ray" },
@@ -120,6 +141,8 @@ const submitForm = async () => {
     organ: medicalImage.value.organ,
     measurements: medicalImage.value.measurements,
     type: medicalImage.value.type.value,
+    abnormalities: medicalImage.value.abnormalities,
+
     image_date: medicalImage.value.image_date
       ? medicalImage.value.image_date.toLocaleDateString("en-CA")
       : null,

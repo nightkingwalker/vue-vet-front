@@ -892,6 +892,7 @@
         autoFocus: true,
       }"
       :medical_record_id="medical_record_id"
+      :pet_neutered="pet.neutered"
       @TestResultUpdated="handleTestResultUpdated"
       @CaseHistoryCreated="handleCaseHistoryAdded"
       @close-dialog="isEditTestResultsVisible = false"

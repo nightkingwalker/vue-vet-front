@@ -132,6 +132,22 @@ const medicineAdministrationMethods = ref([
     label: t("add_treatment.administration_methods.intraosseous"),
     value: "Intraosseous",
   },
+  {
+    label: t("add_treatment.administration_methods.intraperitoneal"),
+    value: "Intraperitoneal",
+  },
+  {
+    label: t("add_treatment.administration_methods.intrauterine"),
+    value: "Intrauterine",
+  },
+  {
+    label: t("add_treatment.administration_methods.intraconjunctival"),
+    value: "Intraconjunctival",
+  },
+  {
+    label: t("add_treatment.administration_methods.intraarticular"),
+    value: "Intraarticular",
+  },
 ]);
 
 const submitForm = async () => {

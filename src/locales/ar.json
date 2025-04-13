@@ -370,7 +370,11 @@
             "rectal": "شرجي (تحاميل، حقن شرجية)",
             "sublingual": "تحت اللسان",
             "intranasal": "أنفي (بخاخات، قطرات)",
-            "intraosseous": "داخل العظم"
+            "intraosseous": "داخل العظم",
+            "intraperitoneal": "حقن ضمن البريتون",
+            "intrauterine": "حقن ضمن الرحم",
+            "intraconjunctival": "حقن في ملتحمة العين",
+            "intraarticular": "حقن في مفصل"
         }
     },
     "test_results": {
@@ -442,8 +446,10 @@
             "measurements": "القياسات",
             "type": "نوع الصورة",
             "image_date": "تاريخ الصورة",
+            "abnormalities": "ملاحظات على العضو",
             "description": "الوصف"
         },
+        "generate_tooltip": "إنشاء رقم مرجعي",
         "image_types": {
             "ultrasound": "موجات فوق صوتية",
             "xray": "أشعة سينية"
@@ -470,7 +476,8 @@
             "neurological": "الأعصاب",
             "respiratory": "الجهاز التنفسي",
             "urinary": "الجهاز البولي",
-            "vaccination_medication": "التطعيم والأدوية"
+            "vaccination_medication": "التطعيم والأدوية",
+            "musculoskeletal": "الجهاز العضلي الهيكلي"
         },
         "fields": {
             "symptom_description": "وصف الأعراض",
@@ -551,13 +558,35 @@
             "frequency": "التكرار",
             "medication_start_date": "تاريخ البدء بالمعالجة",
             "medication_end_date": "تاريخ الانتهاء من المعالجة",
-            "additional_notes": "ملاحظات إضافية"
+            "additional_notes": "ملاحظات إضافية",
+            "limping": "عرج",
+            "pain": "ألم",
+            "pain_description": "وصف الألم",
+            "swelling": "تورم",
+            "swelling_location": "موقع التورم",
+            "visible_deformity": "تشوه واضح",
+            "deformity_description": "وصف التشوه",
+            "affected_limbs": "الأطراف المصابة",
+            "weight_bearing": "تحمل الوزن",
+            "symptom_start": "متى بدأت الأعراض",
+            "progression": "تطور الأعراض",
+            "trauma_history": "تاريخ الصدمات",
+            "trauma_details": "تفاصيل الصدمة",
+            "exercise_induced": "ناتج عن التمارين",
+            "worse_after_rest": "يزداد سوءًا بعد الراحة",
+            "difficulty_jumping": "صعوبة في القفز",
+            "difficulty_stairs": "صعوبة في صعود الدرج",
+            "difficulty_rising": "صعوبة في النهوض",
+            "exercise_tolerance": "تحمل التمارين",
+            "pain_meds_given": "تم إعطاء مسكنات الألم",
+            "pain_meds_details": "تفاصيل الأدوية"
         },
         "options": {
             "symptom_progression": {
                 "increasing": "متزايد",
                 "decreasing": "متناقص",
-                "constant": "ثابت"
+                "constant": "ثابت",
+                "comes_n_goes": "متقطعة تظهر و تختفي"
             },
             "activity_level": {
                 "active": "نشط",
@@ -621,6 +650,40 @@
                 "tick": "قراد",
                 "worm": "ديدان",
                 "other": "أخرى"
+            },
+            "mascuskeleton": {
+                "full": "تحمل وزن كامل",
+                "partial": "تحمل وزن جزئي",
+                "non": "عدم تحمل الوزن",
+                "improving": "يتحسن",
+                "worsening": "يتفاقم",
+                "static": "بدون تغيير",
+                "fluctuating": "يأتي ويذهب",
+                "normal": "نشاط طبيعي",
+                "reduced": "نشاط محدود",
+                "severely_limited": "محدود بشدة"
+            },
+            "urine_volume": {
+                "small": "صغير",
+                "medium": "متوسط",
+                "large": "كبير"
+            },
+            "neurological_signs": {
+                "seizures": "نوبات",
+                "fainting": "إغماء",
+                "nystagmus": "رأرأة",
+                "other": "أخرى"
+            },
+            "progression": {
+                "improving": "يتحسن",
+                "worsening": "يتفاقم",
+                "static": "ثابت",
+                "fluctuating": "متقلب"
+            },
+            "pet_neutered": {
+                "pet_neutered_label": "حالة التعقيم الجنسي",
+                "Y": "معقم",
+                "N": "غير معقم"
             }
         },
         "actions": {

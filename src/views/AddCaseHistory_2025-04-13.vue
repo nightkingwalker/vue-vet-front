@@ -7,40 +7,27 @@
       <Stepper :value="activeStep" class="w-full">
         <!-- Step List -->
         <StepList class="flex flex-wrap items-start justify-between w-full mx-auto">
-          <Step class="w-1/6 text-sm" value="1">{{
+          <Step class="w-1/5" value="1">{{
             $t("case_history.steps.current_symptoms")
           }}</Step>
-          <Step class="w-1/6 text-sm" value="2">{{
+          <Step class="w-1/5" value="2">{{
             $t("case_history.steps.general_health")
           }}</Step>
-          <Step class="w-1/6 text-sm" value="3">{{
+          <Step class="w-1/5" value="3">{{
             $t("case_history.steps.reproductive_history")
           }}</Step>
-          <Step class="w-1/6 text-sm" value="4">{{
-            $t("case_history.steps.itching_skin")
-          }}</Step>
-          <Step class="w-1/6 text-sm" value="5">{{
-            $t("case_history.steps.diet_water")
-          }}</Step>
-          <Step class="w-1/6 text-sm" value="6">{{
+          <Step class="w-1/5" value="4">{{ $t("case_history.steps.itching_skin") }}</Step>
+          <Step class="w-1/5" value="5">{{ $t("case_history.steps.diet_water") }}</Step>
+          <Step class="w-1/5" value="6">{{
             $t("case_history.steps.gastrointestinal")
           }}</Step>
-          <Step class="w-1/6 text-sm" value="7">{{
-            $t("case_history.steps.neurological")
-          }}</Step>
-          <Step class="w-1/6 text-sm" value="8">{{
-            $t("case_history.steps.respiratory")
-          }}</Step>
-          <Step class="w-1/6 text-sm" value="9">{{
-            $t("case_history.steps.urinary")
-          }}</Step>
-          <Step class="w-1/6 text-sm" value="10">{{
-            $t("case_history.steps.musculoskeletal")
-          }}</Step>
-          <Step class="w-1/6 text-sm" value="11">{{
+          <Step class="w-1/5" value="7">{{ $t("case_history.steps.neurological") }}</Step>
+          <Step class="w-1/5" value="8">{{ $t("case_history.steps.respiratory") }}</Step>
+          <Step class="w-1/5" value="9">{{ $t("case_history.steps.urinary") }}</Step>
+          <Step class="w-1/5" value="10">{{
             $t("case_history.steps.vaccination_medication")
           }}</Step>
-          <!-- <Step class="w-1/6 text-sm" value="11">{{ $t("case_history.actions.submit") }}</Step> -->
+          <!-- <Step class="w-1/5" value="11">{{ $t("case_history.actions.submit") }}</Step> -->
         </StepList>
 
         <!-- Step Panels -->
@@ -295,17 +282,6 @@
               <h4 class="border-b-4 rounded border-b-violet-800 w-fit font-bold">
                 {{ $t("case_history.steps.reproductive_history") }}
               </h4>
-            </div>
-            <!-- pet_neutered -->
-            <div class="flex items-start mt-6">
-              <span class="text-sm"
-                >{{ $t("case_history.options.pet_neutered.pet_neutered_label") }}:
-              </span>
-              <Tag
-                :severity="props.pet_neutered === `Y` ? `success` : `danger`"
-                :value="$t('case_history.options.pet_neutered.' + props.pet_neutered)"
-                class="!text-s"
-              ></Tag>
             </div>
             <div class="field mt-6 w-[48%]">
               <FloatLabel>
@@ -1073,331 +1049,8 @@
             </div>
           </StepPanel>
 
-          <!-- Step 10: Musculoskeletal System - Owner Observations -->
+          <!-- Step 10: Vaccination & Medication -->
           <StepPanel v-slot="{ activateCallback }" value="10">
-            <div class="flex flex-col gap-4">
-              <h4 class="border-b-4 rounded border-b-violet-800 w-fit font-bold">
-                {{ $t("case_history.steps.musculoskeletal") }}
-              </h4>
-            </div>
-
-            <div class="flex flex-wrap gap-8">
-              <!-- Left Column -->
-              <div class="w-[48%]">
-                <!-- Primary Symptoms -->
-                <div class="field mt-6">
-                  <Checkbox id="limping" v-model="formData.limping" binary class="mx-2" />
-                  <label for="limping">{{ $t("case_history.fields.limping") }}</label>
-                </div>
-
-                <div class="field mt-6">
-                  <Checkbox id="pain" v-model="formData.pain" binary class="mx-2" />
-                  <label for="pain">{{ $t("case_history.fields.pain") }}</label>
-                </div>
-
-                <div class="field mt-6">
-                  <FloatLabel>
-                    <TextArea
-                      fluid
-                      autoResize
-                      rows="2"
-                      id="pain_description"
-                      v-model="formData.pain_description"
-                    />
-                    <label for="pain_description">
-                      {{ $t("case_history.fields.pain_description") }}
-                    </label>
-                  </FloatLabel>
-                </div>
-
-                <div class="field mt-6">
-                  <Checkbox
-                    id="swelling"
-                    v-model="formData.swelling"
-                    binary
-                    class="mx-2"
-                  />
-                  <label for="swelling">{{ $t("case_history.fields.swelling") }}</label>
-                </div>
-
-                <div class="field mt-6">
-                  <FloatLabel>
-                    <InputText
-                      fluid
-                      id="swelling_location"
-                      v-model="formData.swelling_location"
-                    />
-                    <label for="swelling_location">
-                      {{ $t("case_history.fields.swelling_location") }}
-                    </label>
-                  </FloatLabel>
-                </div>
-
-                <div class="field mt-6">
-                  <Checkbox
-                    id="visible_deformity"
-                    v-model="formData.visible_deformity"
-                    binary
-                    class="mx-2"
-                  />
-                  <label for="visible_deformity">
-                    {{ $t("case_history.fields.visible_deformity") }}
-                  </label>
-                </div>
-
-                <div class="field mt-6">
-                  <FloatLabel>
-                    <TextArea
-                      fluid
-                      autoResize
-                      rows="2"
-                      id="deformity_description"
-                      v-model="formData.deformity_description"
-                    />
-                    <label for="deformity_description">
-                      {{ $t("case_history.fields.deformity_description") }}
-                    </label>
-                  </FloatLabel>
-                </div>
-
-                <!-- Affected Limbs -->
-                <div class="field mt-6">
-                  <label class="block mb-2 font-medium">
-                    {{ $t("case_history.fields.affected_limbs") }}
-                  </label>
-                  <div class="flex flex-wrap gap-4">
-                    <Checkbox
-                      v-model="formData.affected_limbs_FL"
-                      inputId="fl"
-                      name="limbs"
-                      value="FL"
-                    />
-                    <label for="fl" class="mr-4">FL</label>
-                    <Checkbox
-                      v-model="formData.affected_limbs_FR"
-                      inputId="fr"
-                      name="limbs"
-                      value="FR"
-                    />
-                    <label for="fr" class="mr-4">FR</label>
-                    <Checkbox
-                      v-model="formData.affected_limbs_HL"
-                      inputId="hl"
-                      name="limbs"
-                      value="HL"
-                    />
-                    <label for="hl" class="mr-4">HL</label>
-                    <Checkbox
-                      v-model="formData.affected_limbs_HR"
-                      inputId="hr"
-                      name="limbs"
-                      value="HR"
-                    />
-                    <label for="hr">HR</label>
-                  </div>
-                </div>
-
-                <div class="field mt-6">
-                  <FloatLabel>
-                    <Select
-                      fluid
-                      optionLabel="label"
-                      optionValue="value"
-                      id="weight_bearing"
-                      v-model="formData.weight_bearing"
-                      :options="weightBearingOptions"
-                    />
-                    <label for="weight_bearing">
-                      {{ $t("case_history.fields.weight_bearing") }}
-                    </label>
-                  </FloatLabel>
-                </div>
-              </div>
-
-              <!-- Right Column -->
-              <div class="w-[48%]">
-                <!-- Symptom Details -->
-                <div class="field mt-6">
-                  <FloatLabel>
-                    <InputText
-                      fluid
-                      id="symptom_start"
-                      v-model="formData.symptom_start"
-                    />
-                    <label for="symptom_start">
-                      {{ $t("case_history.fields.symptom_start") }}
-                    </label>
-                  </FloatLabel>
-                </div>
-
-                <div class="field mt-6">
-                  <FloatLabel>
-                    <Select
-                      fluid
-                      optionLabel="label"
-                      optionValue="value"
-                      id="progression"
-                      v-model="formData.progression"
-                      :options="progressionOptions"
-                    />
-                    <label for="progression">
-                      {{ $t("case_history.fields.progression") }}
-                    </label>
-                  </FloatLabel>
-                </div>
-
-                <!-- Trauma History -->
-                <div class="field mt-6">
-                  <Checkbox
-                    id="trauma_history"
-                    v-model="formData.trauma_history"
-                    binary
-                    class="mx-2"
-                  />
-                  <label for="trauma_history">
-                    {{ $t("case_history.fields.trauma_history") }}
-                  </label>
-                </div>
-
-                <div class="field mt-6">
-                  <FloatLabel>
-                    <TextArea
-                      fluid
-                      autoResize
-                      rows="2"
-                      id="trauma_details"
-                      v-model="formData.trauma_details"
-                    />
-                    <label for="trauma_details">
-                      {{ $t("case_history.fields.trauma_details") }}
-                    </label>
-                  </FloatLabel>
-                </div>
-
-                <div class="flex flex-wrap">
-                  <!-- Functional Impact -->
-                  <div class="field mt-6">
-                    <Checkbox
-                      id="exercise_induced"
-                      v-model="formData.exercise_induced"
-                      binary
-                      class="mx-2"
-                    />
-                    <label for="exercise_induced">
-                      {{ $t("case_history.fields.exercise_induced") }}
-                    </label>
-                  </div>
-                  <div class="field mt-6">
-                    <Checkbox
-                      id="worse_after_rest"
-                      v-model="formData.worse_after_rest"
-                      binary
-                      class="mx-2"
-                    />
-                    <label for="worse_after_rest">
-                      {{ $t("case_history.fields.worse_after_rest") }}
-                    </label>
-                  </div>
-                  <div class="field mt-6">
-                    <Checkbox
-                      id="difficulty_jumping"
-                      v-model="formData.difficulty_jumping"
-                      binary
-                      class="mx-2"
-                    />
-                    <label for="difficulty_jumping">
-                      {{ $t("case_history.fields.difficulty_jumping") }}
-                    </label>
-                  </div>
-                  <div class="field mt-6">
-                    <Checkbox
-                      id="difficulty_stairs"
-                      v-model="formData.difficulty_stairs"
-                      binary
-                      class="mx-2"
-                    />
-                    <label for="difficulty_stairs">
-                      {{ $t("case_history.fields.difficulty_stairs") }}
-                    </label>
-                  </div>
-                  <div class="field mt-6">
-                    <Checkbox
-                      id="difficulty_rising"
-                      v-model="formData.difficulty_rising"
-                      binary
-                      class="mx-2"
-                    />
-                    <label for="difficulty_rising">
-                      {{ $t("case_history.fields.difficulty_rising") }}
-                    </label>
-                  </div>
-                </div>
-
-                <div class="field mt-6">
-                  <FloatLabel>
-                    <Select
-                      fluid
-                      optionLabel="label"
-                      optionValue="value"
-                      id="exercise_tolerance"
-                      v-model="formData.exercise_tolerance"
-                      :options="exerciseToleranceOptions"
-                    />
-                    <label for="exercise_tolerance">
-                      {{ $t("case_history.fields.exercise_tolerance") }}
-                    </label>
-                  </FloatLabel>
-                </div>
-
-                <!-- Current Management -->
-                <div class="field mt-6">
-                  <Checkbox
-                    id="pain_meds_given"
-                    v-model="formData.pain_meds_given"
-                    binary
-                    class="mx-2"
-                  />
-                  <label for="pain_meds_given">
-                    {{ $t("case_history.fields.pain_meds_given") }}
-                  </label>
-                </div>
-
-                <div class="field mt-6">
-                  <FloatLabel>
-                    <TextArea
-                      fluid
-                      autoResize
-                      rows="2"
-                      id="pain_meds_details"
-                      v-model="formData.pain_meds_details"
-                    />
-                    <label for="pain_meds_details">
-                      {{ $t("case_history.fields.pain_meds_details") }}
-                    </label>
-                  </FloatLabel>
-                </div>
-              </div>
-            </div>
-
-            <!-- Navigation Buttons -->
-            <div class="flex pt-6 justify-between">
-              <Button
-                :label="$t('case_history.actions.back')"
-                severity="secondary"
-                :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="right"
-                @click="activateCallback('9')"
-              />
-              <Button
-                :label="$t('case_history.actions.next')"
-                :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="left"
-                @click="activateCallback('11')"
-              />
-            </div>
-          </StepPanel>
-          <!-- Step 11: Vaccination & Medication -->
-          <StepPanel v-slot="{ activateCallback }" value="11">
             <!-- <div class="flex flex-wrap"> -->
             <div class="flex flex-col gap-4">
               <h4 class="border-b-4 rounded border-b-violet-800 w-fit font-bold">
@@ -1667,7 +1320,7 @@
                 severity="secondary"
                 :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
                 :class="{ '!p-button-icon-left': isRtl, '!p-button-icon-righ': !isRtl }"
-                @click="activateCallback('10')"
+                @click="activateCallback('9')"
               />
               <Button :label="$t('case_history.actions.submit')" @click="submitForm" />
               <!-- <Button
@@ -1686,7 +1339,6 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import Tag from "primevue/tag";
 import Stepper from "primevue/stepper";
 import StepList from "primevue/steplist";
 import StepPanels from "primevue/steppanels";
@@ -1712,21 +1364,17 @@ const props = defineProps({
     type: Number,
     required: true,
   },
-  pet_neutered: {
-    required: true,
-  },
 });
-// console.log(props.medical_record_id);
 const isRtl = computed(() => ["ar", "he", "fa"].includes(locale.value));
 const formData = ref(
-  /*{
+  /* {
     symptom_description: "No signs of pregnancy 6 weeks post-mating",
     start_date: "2025-03-10",
     symptom_progression: "constant",
     medication_given: false,
-    medication_name: null,
-    medication_dosage: null,
-    prescribed_by: null,
+    medication_name: "",
+    medication_dosage: "",
+    prescribed_by: "",
     activity_level: "active",
     vaccination_status: "complete",
     care_location: "home",
@@ -1739,8 +1387,8 @@ const formData = ref(
     notable_signs: "No nipple enlargement, no weight gain",
     other_discharges: "None",
     itching_present: false,
-    itching_location: null,
-    itching_description: null,
+    itching_location: "",
+    itching_description: "",
     skin_condition_description: "Normal",
     diet_type: "canned",
     diet_details: "Premium grain-free poultry",
@@ -1748,12 +1396,12 @@ const formData = ref(
     meal_quantity: "200g",
     appetite: "good",
     recent_diet_change: false,
-    diet_change_type: null,
+    diet_change_type: "",
     water_intake: "normal",
     vomiting: false,
-    vomit_color: null,
-    vomit_contents: null,
-    vomit_smell: null,
+    vomit_color: "",
+    vomit_contents: "",
+    vomit_smell: "",
     vomiting_frequency: 0,
     vomiting_related_to_food: false,
     vomiting_related_to_diarrhea: false,
@@ -1761,18 +1409,18 @@ const formData = ref(
     stool_consistency: "normal",
     stool_color: "brown",
     stool_frequency: 1,
-    abnormal_stool_contents: null,
+    abnormal_stool_contents: "",
     excessive_licking_of_anus: false,
-    neurological_signs: "other",
-    neurological_signs_frequency: "once this month",
-    associated_symptoms: "Mild disorientation",
-    sudden_onset: true,
-    related_to_eating_or_activity: "Signs appear after high activity",
+    neurological_signs: null,
+    neurological_signs_frequency: "",
+    associated_symptoms: "",
+    sudden_onset: false,
+    related_to_eating_or_activity: "",
     additional_details: "Owner reports successful mating observed 6 weeks ago.",
     cough: false,
-    cough_start_date: null,
-    cough_frequency: null,
-    cough_type: null,
+    cough_start_date: "",
+    cough_frequency: "",
+    cough_type: "",
     breathing_difficulty: false,
     sneezing: false,
     urination_frequency: 4,
@@ -1781,51 +1429,28 @@ const formData = ref(
     urine_color: "pale yellow",
     urination_type: "continuous",
     blood_in_urine: false,
-    blood_location: null,
-    abnormal_urinary_discharge: null,
+    blood_location: "",
+    abnormal_urinary_discharge: "",
     genital_discharge: "None",
     excessive_licking_of_genital_area: false,
     vaccine_name: "FVRCP",
     vaccine_date: "2025-01-15",
     next_due_date: "2026-01-15",
     administered_by: "Dr. Lee",
-    medication_type: "other",
-    dosage: "10mg",
-    frequency: "Once daily",
-    medication_start_date: "2025-02-01",
-    medication_end_date: "2025-02-10",
-    treatment_name: "Advocate Spot-On",
-    treatment_type: "flea",
-    treatment_dosage: "1 pipette",
-    administration_date: "2025-03-01",
-    treatment_next_due_date: "2025-04-01",
-    treatment_administered_by: "Nurse Sara",
+    medication_type: "",
+    dosage: "",
+    frequency: "",
+    medication_start_date: "",
+    medication_end_date: "",
+    treatment_name: "",
+    treatment_type: "",
+    treatment_dosage: "",
+    administration_date: "",
+    treatment_next_due_date: "",
+    treatment_administered_by: "",
     additional_notes:
       "Recommend ultrasound to confirm pregnancy status. Rule out pseudopregnancy.",
-    limping: true,
-    pain: true,
-    pain_description: "Mild pain in hind left leg when walking",
-    swelling: false,
-    swelling_location: null,
-    visible_deformity: false,
-    deformity_description: null,
-    affected_limbs: ["HL"],
-    weight_bearing: "partial",
-    symptom_start: "2025-03-08 after playtime",
-    progression: "static",
-    trauma_history: true,
-    trauma_details: "Jumped off high surface 5 days ago",
-    exercise_induced: true,
-    worse_after_rest: false,
-    difficulty_jumping: true,
-    difficulty_stairs: false,
-    difficulty_rising: false,
-    exercise_tolerance: "reduced",
-    pain_meds_given: true,
-    pain_meds_details: "Meloxicam oral, 0.05mg/kg SID for 5 days",
-    other_treatments: "Cold compress on affected limb",
-  }
-  */
+  }*/
   {
     symptom_description: "",
     start_date: null,
@@ -1908,168 +1533,95 @@ const formData = ref(
     treatment_next_due_date: null,
     treatment_administered_by: "",
     additional_notes: "",
-    // Musculoskeletal Fields
-    limping: false,
-    pain: false,
-    pain_description: "",
-    swelling: false,
-    swelling_location: "",
-    visible_deformity: false,
-    deformity_description: "",
-    affected_limbs_FL: false,
-    affected_limbs_FR: false,
-    affected_limbs_HL: false,
-    affected_limbs_HR: false,
-    weight_bearing: null,
-    symptom_start: "",
-    progression: null,
-    trauma_history: false,
-    trauma_details: "",
-    exercise_induced: false,
-    worse_after_rest: false,
-    difficulty_jumping: false,
-    difficulty_stairs: false,
-    difficulty_rising: false,
-    exercise_tolerance: null,
-    pain_meds_given: false,
-    pain_meds_details: "",
   }
 );
 
-const weightBearingOptions = [
-  { label: t("case_history.options.mascuskeleton.full"), value: "full" },
-  { label: t("case_history.options.mascuskeleton.partial"), value: "partial" },
-  { label: t("case_history.options.mascuskeleton.non"), value: "non" },
-];
-
-const progressionOptions = [
-  { label: t("case_history.options.mascuskeleton.improving"), value: "improving" },
-  { label: t("case_history.options.mascuskeleton.worsening"), value: "worsening" },
-  { label: t("case_history.options.mascuskeleton.static"), value: "static" },
-  { label: t("case_history.options.mascuskeleton.fluctuating"), value: "fluctuating" },
-];
-
-const exerciseToleranceOptions = [
-  { label: t("case_history.options.mascuskeleton.normal"), value: "normal" },
-  { label: t("case_history.options.mascuskeleton.reduced"), value: "reduced" },
-  {
-    label: t("case_history.options.mascuskeleton.severely_limited"),
-    value: "severely_limited",
-  },
-];
 const symptomProgressionOptions = [
-  {
-    label: t("case_history.options.symptom_progression.increasing"),
-    value: "increasing",
-  },
-  {
-    label: t("case_history.options.symptom_progression.decreasing"),
-    value: "decreasing",
-  },
-  {
-    label: t("case_history.options.symptom_progression.constant"),
-    value: "constant",
-  },
-  {
-    label: t("case_history.options.symptom_progression.comes_n_goes"),
-    value: "comes_n_goes",
-  },
+  { label: "Increasing", value: "increasing" },
+  { label: "Decreasing", value: "decreasing" },
+  { label: "Constant", value: "constant" },
 ];
+
 const activityLevelOptions = [
-  { label: t("case_history.options.activity_level.active"), value: "active" },
-  { label: t("case_history.options.activity_level.lethargic"), value: "lethargic" },
-  {
-    label: t("case_history.options.activity_level.sometimes_active"),
-    value: "sometimes_active",
-  },
-  { label: t("case_history.options.activity_level.other"), value: "other" },
+  { label: "Active", value: "active" },
+  { label: "Lethargic", value: "lethargic" },
+  { label: "Sometimes Active", value: "sometimes_active" },
+  { label: "Other", value: "other" },
 ];
-
 const stoolConsistencyOptions = [
-  { label: t("case_history.options.stool_consistency.normal"), value: "normal" },
-  { label: t("case_history.options.stool_consistency.soft"), value: "soft" },
-  { label: t("case_history.options.stool_consistency.watery"), value: "watery" },
-  { label: t("case_history.options.stool_consistency.hard"), value: "hard" },
+  { label: "Normal", value: "normal" },
+  { label: "Soft", value: "soft" },
+  { label: "Watery", value: "watery" },
+  { label: "Hard", value: "hard" },
 ];
-
 const vaccinationStatusOptions = [
-  { label: t("case_history.options.vaccination_status.complete"), value: "complete" },
-  { label: t("case_history.options.vaccination_status.incomplete"), value: "incomplete" },
+  { label: "Complete", value: "complete" },
+  { label: "Incomplete", value: "incomplete" },
 ];
 
 const careLocationOptions = [
-  { label: t("case_history.options.care_location.home"), value: "home" },
-  { label: t("case_history.options.care_location.home_garden"), value: "home_garden" },
-  { label: t("case_history.options.care_location.street"), value: "street" },
-  {
-    label: t("case_history.options.care_location.indoor_outdoor"),
-    value: "indoor_outdoor",
-  },
+  { label: "Home", value: "home" },
+  { label: "Home Garden", value: "home_garden" },
+  { label: "Street", value: "street" },
+  { label: "Indoor/Outdoor", value: "indoor_outdoor" },
 ];
 
 const dietTypeOptions = [
-  { label: t("case_history.options.diet_type.dry"), value: "dry" },
-  { label: t("case_history.options.diet_type.canned"), value: "canned" },
-  { label: t("case_history.options.diet_type.home_cooked"), value: "home_cooked" },
-  { label: t("case_history.options.diet_type.raw"), value: "raw" },
-  { label: t("case_history.options.diet_type.mixed"), value: "mixed" },
+  { label: "Dry", value: "dry" },
+  { label: "Canned", value: "canned" },
+  { label: "Home Cooked", value: "home_cooked" },
+  { label: "Raw", value: "raw" },
+  { label: "Mixed", value: "mixed" },
 ];
 
 const appetiteOptions = [
-  { label: t("case_history.options.appetite.good"), value: "good" },
-  { label: t("case_history.options.appetite.leaves_meal"), value: "leaves_meal" },
-  { label: t("case_history.options.appetite.no_appetite"), value: "no_appetite" },
+  { label: "Good", value: "good" },
+  { label: "Leaves Meal", value: "leaves_meal" },
+  { label: "No Appetite", value: "no_appetite" },
 ];
 
 const dietChangeTypeOptions = [
-  { label: t("case_history.options.diet_change_type.sudden"), value: "sudden" },
-  { label: t("case_history.options.diet_change_type.gradual"), value: "gradual" },
+  { label: "Sudden", value: "sudden" },
+  { label: "Gradual", value: "gradual" },
 ];
 
 const coughTypeOptions = [
-  { label: t("case_history.options.cough_type.dry"), value: "dry" },
-  { label: t("case_history.options.cough_type.productive"), value: "productive" },
+  { label: "Dry", value: "dry" },
+  { label: "Productive", value: "productive" },
 ];
 
 const urinationTypeOptions = [
-  { label: t("case_history.options.urination_type.continuous"), value: "continuous" },
-  { label: t("case_history.options.urination_type.intermittent"), value: "intermittent" },
+  { label: "Continuous", value: "continuous" },
+  { label: "Intermittent", value: "intermittent" },
 ];
 
 const bloodLocationOptions = [
-  { label: t("case_history.options.blood_location.beginning"), value: "beginning" },
-  { label: t("case_history.options.blood_location.end"), value: "end" },
-  { label: t("case_history.options.blood_location.throughout"), value: "throughout" },
+  { label: "Beginning", value: "beginning" },
+  { label: "End", value: "end" },
+  { label: "Throughout", value: "throughout" },
 ];
-
 const urineVolumeOptions = [
-  { label: t("case_history.options.urine_volume.small"), value: "small" },
-  { label: t("case_history.options.urine_volume.medium"), value: "medium" },
-  { label: t("case_history.options.urine_volume.large"), value: "large" },
+  { label: "Small", value: "small" },
+  { label: "Medium", value: "medium" },
+  { label: "Large", value: "large" },
 ];
-
 const medicationTypeOptions = [
-  { label: t("case_history.options.medication_type.antibiotic"), value: "antibiotic" },
-  { label: t("case_history.options.medication_type.painkiller"), value: "painkiller" },
-  {
-    label: t("case_history.options.medication_type.anti-inflammatory"),
-    value: "anti-inflammatory",
-  },
-  { label: t("case_history.options.medication_type.other"), value: "other" },
+  { label: "Antibiotic", value: "antibiotic" },
+  { label: "Painkiller", value: "painkiller" },
+  { label: "Anti-inflammatory", value: "anti-inflammatory" },
+  { label: "Other", value: "other" },
 ];
-
 const neurologicalSignsOptions = [
-  { label: t("case_history.options.neurological_signs.seizures"), value: "seizures" },
-  { label: t("case_history.options.neurological_signs.fainting"), value: "fainting" },
-  { label: t("case_history.options.neurological_signs.nystagmus"), value: "nystagmus" },
-  { label: t("case_history.options.neurological_signs.other"), value: "other" },
+  { label: "Seizures", value: "seizures" },
+  { label: "Fainting", value: "fainting" },
+  { label: "Nystagmus", value: "nystagmus" },
+  { label: "Other", value: "other" },
 ];
-
 const treatmentTypeOptions = [
-  { label: t("case_history.options.treatment_type.flea"), value: "flea" },
-  { label: t("case_history.options.treatment_type.tick"), value: "tick" },
-  { label: t("case_history.options.treatment_type.worm"), value: "worm" },
-  { label: t("case_history.options.treatment_type.other"), value: "other" },
+  { label: "Flea", value: "flea" },
+  { label: "Tick", value: "tick" },
+  { label: "Worm", value: "worm" },
+  { label: "Other", value: "other" },
 ];
 
 const submitForm = async () => {
@@ -2120,15 +1672,6 @@ const submitForm = async () => {
       : null;
     formData.value.treatment_type = formData.value.treatment_type
       ? formData.value.treatment_type
-      : null;
-    formData.value.weight_bearing = formData.value.weight_bearing
-      ? formData.value.weight_bearing
-      : null;
-    formData.value.progression = formData.value.progression
-      ? formData.value.progression
-      : null;
-    formData.value.exercise_tolerance = formData.value.exercise_tolerance
-      ? formData.value.exercise_tolerance
       : null;
 
     // Convert numeric fields to integers
@@ -2217,24 +1760,6 @@ const submitForm = async () => {
     formData.value.blood_in_urine = !!formData.value.blood_in_urine;
     formData.value.excessive_licking_of_genital_area = !!formData.value
       .excessive_licking_of_genital_area;
-    formData.value.limping = !!formData.value.limping;
-    formData.value.pain = !!formData.value.pain;
-    formData.value.swelling = !!formData.value.swelling;
-    formData.value.visible_deformity = !!formData.value.visible_deformity;
-    formData.value.trauma_history = !!formData.value.trauma_history;
-    formData.value.exercise_induced = !!formData.value.exercise_induced;
-    formData.value.worse_after_rest = !!formData.value.worse_after_rest;
-    formData.value.difficulty_jumping = !!formData.value.difficulty_jumping;
-    formData.value.difficulty_stairs = !!formData.value.difficulty_stairs;
-    formData.value.difficulty_rising = !!formData.value.difficulty_rising;
-    formData.value.pain_meds_given = !!formData.value.pain_meds_given;
-
-    const affectedLimbs = [];
-    if (formData.value.affected_limbs_FL) affectedLimbs.push("FL");
-    if (formData.value.affected_limbs_FR) affectedLimbs.push("FR");
-    if (formData.value.affected_limbs_HL) affectedLimbs.push("HL");
-    if (formData.value.affected_limbs_HR) affectedLimbs.push("HR");
-    formData.value.affected_limbs = affectedLimbs.length > 0 ? affectedLimbs : null;
 
     // console.log(formData.value);
 

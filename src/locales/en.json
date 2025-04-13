@@ -375,7 +375,11 @@
             "rectal": "Rectal (Suppositories, Enemas)",
             "sublingual": "Sublingual (Under the Tongue)",
             "intranasal": "Intranasal (Nasal Sprays, Drops)",
-            "intraosseous": "Intraosseous (Into the Bone)"
+            "intraosseous": "Intraosseous (Into the Bone)",
+            "intraperitoneal": "Intraperitoneal",
+            "intrauterine": "Intrauterine",
+            "intraconjunctival": "Intraconjunctival",
+            "intraarticular": "Intraarticular"
         }
     },
     "test_results": {
@@ -447,8 +451,10 @@
             "measurements": "Measurements",
             "type": "Image Type",
             "image_date": "Date of Image",
+            "abnormalities": "Abnormalities",
             "description": "Description"
         },
+        "generate_tooltip": "Generate reference number",
         "image_types": {
             "ultrasound": "Ultrasound",
             "xray": "X-ray"
@@ -475,6 +481,7 @@
             "neurological": "Neurological",
             "respiratory": "Respiratory",
             "urinary": "Urinary",
+            "musculoskeletal": "Musculoskeletal System",
             "vaccination_medication": "Vaccination & Medication"
         },
         "fields": {
@@ -556,13 +563,35 @@
             "frequency": "Frequency",
             "medication_start_date": "Start Date",
             "medication_end_date": "End Date",
-            "additional_notes": "Additional Notes"
+            "additional_notes": "Additional Notes",
+            "limping": "Limping",
+            "pain": "Pain",
+            "pain_description": "Pain description (e.g., whining, reluctance to move)",
+            "swelling": "Swelling present",
+            "swelling_location": "Swelling location",
+            "visible_deformity": "Visible deformity",
+            "deformity_description": "Deformity description",
+            "affected_limbs": "Affected limbs (check all that apply)",
+            "weight_bearing": "Weight bearing status",
+            "symptom_start": "When symptoms started (e.g., '3 days ago')",
+            "progression": "Symptom progression",
+            "trauma_history": "Recent trauma or injury",
+            "trauma_details": "Trauma details",
+            "exercise_induced": "Symptoms appear after exercise",
+            "worse_after_rest": "Worse after rest/stiffness",
+            "difficulty_jumping": "Difficulty jumping",
+            "difficulty_stairs": "Difficulty with stairs",
+            "difficulty_rising": "Difficulty rising from lying down",
+            "exercise_tolerance": "Exercise tolerance",
+            "pain_meds_given": "Pain medications given at home",
+            "pain_meds_details": "Medication details (name, dose, frequency)"
         },
         "options": {
             "symptom_progression": {
                 "increasing": "Increasing",
                 "decreasing": "Decreasing",
-                "constant": "Constant"
+                "constant": "Constant",
+                "comes_n_goes": "Intermittent"
             },
             "activity_level": {
                 "active": "Active",
@@ -626,6 +655,40 @@
                 "tick": "Tick",
                 "worm": "Worm",
                 "other": "Other"
+            },
+            "mascuskeleton": {
+                "improving": "Improving",
+                "worsening": "Worsening",
+                "static": "Static",
+                "fluctuating": "Fluctuating",
+                "full": "Full",
+                "partial": "Partial",
+                "non": "Non-weight-bearing",
+                "normal": "Normal",
+                "reduced": "Reduced",
+                "severely_limited": "Severely limited"
+            },
+            "urine_volume": {
+                "small": "Small",
+                "medium": "Medium",
+                "large": "Large"
+            },
+            "neurological_signs": {
+                "seizures": "Seizures",
+                "fainting": "Fainting",
+                "nystagmus": "Nystagmus",
+                "other": "Other"
+            },
+            "progression": {
+                "improving": "Improving",
+                "worsening": "Worsening",
+                "static": "Static",
+                "fluctuating": "Fluctuating"
+            },
+            "pet_neutered": {
+                "pet_neutered_label": "Spay Status",
+                "Y": "Neutered",
+                "N": "Not Neutered"
             }
         },
         "actions": {

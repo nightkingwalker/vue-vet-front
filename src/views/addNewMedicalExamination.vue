@@ -79,6 +79,7 @@
                   <InputNumber
                     fluid
                     v-model="examination.temperature"
+                    :minFractionDigits="1"
                     :step="0.5"
                     showButtons
                     inputId="temperature"
