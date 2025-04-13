@@ -314,7 +314,7 @@
           class="col-span-12 sm:col-span-6 md:col-span-2.5 lg:col-span-2 xl:col-span-3 p-2"
         >
           <div
-            class="p-6 border border-surface-200 dark:border-surface-700 bg-zinc-100 dark:bg-[var(--p-surface-500)] rounded-lg flex flex-col shadow hover:bg-[var(--p-surface-300)] dark:hover:bg-[var(--p-surface-500)]"
+            class="p-6 border border-surface-200 dark:border-surface-700 bg-zinc-100 dark:bg-[var(--p-surface-500)] rounded-lg flex flex-col shadow hover:drop-shadow-[0_5px_5px_rgba(0,0,0,0.3)] transition-all hover:-translate-y-1 duration-500 hover:bg-[var(--p-surface-300)] dark:hover:bg-[var(--p-surface-500)]"
           >
             <div class="">
               <div class="text-lg font-medium border-b">
@@ -382,7 +382,7 @@
                   />
                   <router-link
                     :to="`/` + owner.id + `/pets`"
-                    class="p-button p-component p-button-icon-only p-button-rounded p-button-text p-button-sm"
+                    class="p-button p-component p-button-icon-only p-button-rounded p-button-text p-button-sm button-transition"
                     v-tooltip.top="{
                       value: $t('owners.actions.pets'),
                       pt: {

@@ -483,6 +483,26 @@ watchEffect(() => {
 </script>
 
 <style>
+.button-transition:hover {
+  translate: -0.07rem -0.07rem !important;
+  --tw-drop-shadow: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.3));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale)
+    var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia)
+    var(--tw-drop-shadow);
+}
+.button-transition {
+  transition: all 0.2s ease-in-out !important;
+}
+button {
+  transition: all 0.2s ease-in-out !important;
+}
+button:hover {
+  translate: -0.07rem -0.07rem;
+  --tw-drop-shadow: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.3)) !important;
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale)
+    var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia)
+    var(--tw-drop-shadow);
+}
 /* Menu item styling */
 :deep(.p-megamenu-item:last-child .p-megamenu-item-content):hover {
   background: none !important;

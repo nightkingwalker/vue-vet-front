@@ -118,9 +118,9 @@
             </div>
             <div class="flex pt-6 justify-end">
               <Button
-                label="Next"
+                :label="$t('case_history.actions.next')"
                 icon="pi pi-arrow-right"
-                iconPos="right"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('2')"
               />
             </div>
@@ -229,9 +229,9 @@
                 @click="activateCallback('1')"
               />
               <Button
-                label="Next"
+                :label="$t('case_history.actions.next')"
                 icon="pi pi-arrow-right"
-                iconPos="right"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('3')"
               />
             </div>
@@ -289,9 +289,9 @@
                 @click="activateCallback('2')"
               />
               <Button
-                label="Next"
+                :label="$t('case_history.actions.next')"
                 icon="pi pi-arrow-right"
-                iconPos="right"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('4')"
               />
             </div>
@@ -357,9 +357,9 @@
                 @click="activateCallback('3')"
               />
               <Button
-                label="Next"
+                :label="$t('case_history.actions.next')"
                 icon="pi pi-arrow-right"
-                iconPos="right"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('5')"
               />
             </div>
@@ -468,9 +468,9 @@
                 @click="activateCallback('4')"
               />
               <Button
-                label="Next"
+                :label="$t('case_history.actions.next')"
                 icon="pi pi-arrow-right"
-                iconPos="right"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('6')"
               />
             </div>
@@ -617,9 +617,9 @@
                 @click="activateCallback('5')"
               />
               <Button
-                label="Next"
+                :label="$t('case_history.actions.next')"
                 icon="pi pi-arrow-right"
-                iconPos="right"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('7')"
               />
             </div>
@@ -711,9 +711,9 @@
                 @click="activateCallback('6')"
               />
               <Button
-                label="Next"
+                :label="$t('case_history.actions.next')"
                 icon="pi pi-arrow-right"
-                iconPos="right"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('8')"
               />
             </div>
@@ -787,9 +787,9 @@
                 @click="activateCallback('7')"
               />
               <Button
-                label="Next"
+                :label="$t('case_history.actions.next')"
                 icon="pi pi-arrow-right"
-                iconPos="right"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('9')"
               />
             </div>
@@ -913,9 +913,9 @@
                 @click="activateCallback('8')"
               />
               <Button
-                label="Next"
+                :label="$t('case_history.actions.next')"
                 icon="pi pi-arrow-right"
-                iconPos="right"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('10')"
               />
             </div>
@@ -1151,9 +1151,9 @@
                 @click="activateCallback('9')"
               />
               <Button
-                label="Next"
+                :label="$t('case_history.actions.next')"
                 icon="pi pi-arrow-right"
-                iconPos="right"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('11')"
               />
             </div>

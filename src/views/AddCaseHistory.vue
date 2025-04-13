@@ -161,7 +161,7 @@
               <Button
                 :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="left"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('2')"
               />
             </div>
@@ -276,14 +276,14 @@
               <Button
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
-                :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="right"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
                 @click="activateCallback('1')"
               />
               <Button
                 :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="left"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('3')"
               />
             </div>
@@ -354,14 +354,14 @@
               <Button
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
-                :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="right"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
                 @click="activateCallback('2')"
               />
               <Button
                 :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="left"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('4')"
               />
             </div>
@@ -429,14 +429,14 @@
               <Button
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
-                :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="right"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
                 @click="activateCallback('3')"
               />
               <Button
                 :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="left"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('5')"
               />
             </div>
@@ -553,14 +553,14 @@
               <Button
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
-                :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="right"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
                 @click="activateCallback('4')"
               />
               <Button
                 :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="left"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('6')"
               />
             </div>
@@ -725,14 +725,14 @@
               <Button
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
-                :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="right"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
                 @click="activateCallback('5')"
               />
               <Button
                 :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="left"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('7')"
               />
             </div>
@@ -828,14 +828,14 @@
               <Button
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
-                :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="right"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
                 @click="activateCallback('6')"
               />
               <Button
                 :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="left"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('8')"
               />
             </div>
@@ -918,14 +918,14 @@
               <Button
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
-                :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="right"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
                 @click="activateCallback('7')"
               />
               <Button
                 :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="left"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('9')"
               />
             </div>
@@ -1060,14 +1060,14 @@
               <Button
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
-                :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="right"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
                 @click="activateCallback('8')"
               />
               <Button
                 :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="left"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('10')"
               />
             </div>
@@ -1384,29 +1384,31 @@
               <Button
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
-                :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="right"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
                 @click="activateCallback('9')"
               />
               <Button
                 :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="left"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('11')"
               />
             </div>
           </StepPanel>
           <!-- Step 11: Vaccination & Medication -->
+
           <StepPanel v-slot="{ activateCallback }" value="11">
+            <!-- <div class="flex flex-wrap"></div> -->
             <!-- <div class="flex flex-wrap"> -->
             <div class="flex flex-col gap-4">
               <h4 class="border-b-4 rounded border-b-violet-800 w-fit font-bold">
                 {{ $t("case_history.steps.vaccination_medication") }}
               </h4>
             </div>
-            <div class="flex flex-wrap gap-8">
+            <div class="flex flex-wrap gap-4">
               <!-- Vaccination History -->
-              <div class="w-[48%] basis-1/2">
+              <div class="w-[48%]">
                 <h5 class="font-semibold mt-6">
                   {{ $t("case_history.additional.vaccination_history") }}
                 </h5>
@@ -1460,9 +1462,9 @@
                     }}</label>
                   </FloatLabel>
                 </div>
-              </div>
-              <!-- Antiparasitic Treatment -->
-              <div class="w-[48%] basis-1/2 flex flex-wrap">
+
+                <!-- Antiparasitic Treatment -->
+
                 <h5 class="font-semibold mt-6 w-2/3">
                   {{ $t("case_history.additional.antiparasitic_treatment") }}
                 </h5>
@@ -1551,7 +1553,7 @@
                 </div>
               </div>
               <!-- Medication History -->
-              <div class="w-[48%] basis-1/2">
+              <div class="w-[48%]">
                 <h5 class="font-semibold mt-6">
                   {{ $t("case_history.additional.medication_history") }}
                 </h5>
@@ -1638,9 +1640,7 @@
                     }}</label>
                   </FloatLabel>
                 </div>
-              </div>
-              <!-- Additional Notes -->
-              <div class="w-[48%] basis-1/2">
+                <!-- Additional Notes -->
                 <h5 class="font-semibold mt-6">
                   {{ $t("case_history.fields.additional_notes") }}
                 </h5>
@@ -1661,19 +1661,20 @@
               </div>
               <!-- </div> -->
             </div>
+            <!-- </div> -->
             <div class="flex pt-6 justify-between">
               <Button
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
-                :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                :class="{ '!p-button-icon-left': isRtl, '!p-button-icon-righ': !isRtl }"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
                 @click="activateCallback('10')"
               />
               <Button :label="$t('case_history.actions.submit')" @click="submitForm" />
               <!-- <Button
                   :label="$t('case_history.actions.next')"
                   :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                  iconPos="left"
+                  :iconPos="!isRtl ? 'right' : 'left'"
                   @click="activateCallback('11')"
                 /> -->
             </div>

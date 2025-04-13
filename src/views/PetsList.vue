@@ -246,7 +246,7 @@
           </template>
           <template v-else>
             <router-link
-              class="!text-sm ml-2 p-button"
+              class="!text-sm ml-2 p-button button-transition"
               v-tooltip.bottom="$t('pets.columns.view_details')"
               :to="`/pets/` + slotProps.data.microchip_num"
             >

@@ -191,8 +191,8 @@
             <div class="flex pt-6 justify-end">
               <Button
                 :label="$t('case_history.actions.next')"
-                icon="pi pi-arrow-right"
-                iconPos="right"
+                :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('2')"
               />
             </div>
@@ -314,13 +314,14 @@
               <Button
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
-                icon="pi pi-arrow-left"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
                 @click="activateCallback('1')"
               />
               <Button
                 :label="$t('case_history.actions.next')"
-                icon="pi pi-arrow-right"
-                iconPos="right"
+                :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('3')"
               />
             </div>
@@ -391,13 +392,14 @@
               <Button
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
-                icon="pi pi-arrow-left"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
                 @click="activateCallback('2')"
               />
               <Button
                 :label="$t('case_history.actions.next')"
-                icon="pi pi-arrow-right"
-                iconPos="right"
+                :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('4')"
               />
             </div>
@@ -469,13 +471,14 @@
               <Button
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
-                icon="pi pi-arrow-left"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
                 @click="activateCallback('3')"
               />
               <Button
                 :label="$t('case_history.actions.next')"
-                icon="pi pi-arrow-right"
-                iconPos="right"
+                :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('5')"
               />
             </div>
@@ -608,13 +611,14 @@
               <Button
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
-                icon="pi pi-arrow-left"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
                 @click="activateCallback('4')"
               />
               <Button
                 :label="$t('case_history.actions.next')"
-                icon="pi pi-arrow-right"
-                iconPos="right"
+                :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('6')"
               />
             </div>
@@ -802,13 +806,14 @@
               <Button
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
-                icon="pi pi-arrow-left"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
                 @click="activateCallback('5')"
               />
               <Button
                 :label="$t('case_history.actions.next')"
-                icon="pi pi-arrow-right"
-                iconPos="right"
+                :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('7')"
               />
             </div>
@@ -910,13 +915,14 @@
               <Button
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
-                icon="pi pi-arrow-left"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
                 @click="activateCallback('6')"
               />
               <Button
                 :label="$t('case_history.actions.next')"
-                icon="pi pi-arrow-right"
-                iconPos="right"
+                :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('8')"
               />
             </div>
@@ -1007,13 +1013,14 @@
               <Button
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
-                icon="pi pi-arrow-left"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
                 @click="activateCallback('7')"
               />
               <Button
                 :label="$t('case_history.actions.next')"
-                icon="pi pi-arrow-right"
-                iconPos="right"
+                :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('9')"
               />
             </div>
@@ -1035,7 +1042,9 @@
                       id="urination_frequency"
                       v-model="formData.urination_frequency"
                     />
-                    <label for="urination_frequency">Urination Frequency</label>
+                    <label for="urination_frequency"
+                      >{{ $t("case_history.fields.urination_frequency") }}
+                    </label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
@@ -1046,7 +1055,9 @@
                       id="urine_volume"
                       v-model="formData.urine_volume"
                     />
-                    <label for="urine_volume">Urine Volume</label>
+                    <label for="urine_volume">{{
+                      $t("case_history.fields.urine_volume")
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
@@ -1057,7 +1068,9 @@
                       id="urine_color"
                       v-model="formData.urine_color"
                     />
-                    <label for="urine_color">Urine Color</label>
+                    <label for="urine_color">{{
+                      $t("case_history.fields.urine_color")
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
@@ -1071,7 +1084,9 @@
                       v-model="formData.urination_type"
                       :options="urinationTypeOptions"
                     />
-                    <label for="urination_type">Urination Type</label>
+                    <label for="urination_type">{{
+                      $t("case_history.fields.urination_type")
+                    }}</label>
                   </FloatLabel>
                 </div>
               </div>
@@ -1084,7 +1099,9 @@
                     v-model="formData.blood_in_urine"
                     binary
                   />
-                  <label for="blood_in_urine">Blood in Urine</label>
+                  <label for="blood_in_urine">{{
+                    $t("case_history.fields.blood_in_urine")
+                  }}</label>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
@@ -1097,7 +1114,9 @@
                       v-model="formData.blood_location"
                       :options="bloodLocationOptions"
                     />
-                    <label for="blood_location">Blood Location</label>
+                    <label for="blood_location">{{
+                      $t("case_history.fields.blood_location")
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
@@ -1108,9 +1127,9 @@
                       id="abnormal_urinary_discharge"
                       v-model="formData.abnormal_urinary_discharge"
                     />
-                    <label for="abnormal_urinary_discharge"
-                      >Abnormal Urinary Discharge</label
-                    >
+                    <label for="abnormal_urinary_discharge">{{
+                      $t("case_history.fields.abnormal_urinary_discharge")
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
@@ -1121,7 +1140,9 @@
                       id="genital_discharge"
                       v-model="formData.genital_discharge"
                     />
-                    <label for="genital_discharge">Genital Discharge</label>
+                    <label for="genital_discharge">{{
+                      $t("case_history.fields.genital_discharge")
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
@@ -1132,23 +1153,24 @@
                     v-model="formData.excessive_licking_of_genital_area"
                     binary
                   />
-                  <label for="excessive_licking_of_genital_area"
-                    >Excessive Licking of Genital Area</label
-                  >
+                  <label for="excessive_licking_of_genital_area">{{
+                    $t("case_history.fields.excessive_licking_of_genital_area")
+                  }}</label>
                 </div>
               </div>
             </div>
             <div class="flex pt-6 justify-between">
               <Button
-                label="Back"
+                :label="$t('case_history.actions.back')"
                 severity="secondary"
-                icon="pi pi-arrow-left"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
                 @click="activateCallback('8')"
               />
               <Button
-                label="Next"
-                icon="pi pi-arrow-right"
-                iconPos="right"
+                :label="$t('case_history.actions.next')"
+                :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('10')"
               />
             </div>
@@ -1498,14 +1520,14 @@
               <Button
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
-                :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="right"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
                 @click="activateCallback('9')"
               />
               <Button
                 :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="left"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('11')"
               />
             </div>
@@ -1513,267 +1535,318 @@
 
           <!-- Step 11: Vaccination & Medication -->
           <StepPanel v-slot="{ activateCallback }" value="11">
+            <!-- <div class="flex flex-wrap"> -->
             <div class="flex flex-col gap-4">
               <h4 class="border-b-4 rounded border-b-violet-800 w-fit font-bold">
-                Vaccination & Medication
+                {{ $t("case_history.steps.vaccination_medication") }}
               </h4>
             </div>
-            <div class="flex flex gap-8">
-              <div class="flex flex-col w-1/2">
-                <!-- Vaccination History -->
-                <div class="w-full">
-                  <h5 class="font-semibold mt-6">Vaccination History</h5>
-                  <div class="field mt-6 w-2/3">
-                    <FloatLabel>
-                      <InputText
-                        :disabled="!isEditable"
-                        fluid
-                        id="vaccine_name"
-                        v-model="formData.vaccine_name"
-                      />
-                      <label for="vaccine_name">Vaccine Name</label>
-                    </FloatLabel>
-                  </div>
-                  <div class="field mt-6 w-2/3">
-                    <FloatLabel>
-                      <DatePicker
-                        showIcon
-                        iconDisplay="input"
-                        showButtonBar
-                        :disabled="!isEditable"
-                        dateFormat="yy-mm-dd"
-                        id="vaccine_date"
-                        v-model="formData.vaccine_date"
-                      />
-                      <label for="vaccine_date">Vaccine Date</label>
-                    </FloatLabel>
-                  </div>
-                  <div class="field mt-6 w-2/3">
-                    <FloatLabel>
-                      <DatePicker
-                        showIcon
-                        iconDisplay="input"
-                        showButtonBar
-                        :disabled="!isEditable"
-                        dateFormat="yy-mm-dd"
-                        id="next_due_date"
-                        v-model="formData.next_due_date"
-                      />
-                      <label for="next_due_date">Next Due Date</label>
-                    </FloatLabel>
-                  </div>
-                  <div class="field mt-6 w-2/3">
-                    <FloatLabel>
-                      <InputText
-                        fluid
-                        :disabled="!isEditable"
-                        id="administered_by"
-                        v-model="formData.administered_by"
-                      />
-                      <label for="administered_by">Administered By</label>
-                    </FloatLabel>
-                  </div>
+            <div class="flex flex-wrap gap-8">
+              <!-- Vaccination History -->
+              <div class="w-[48%]">
+                <h5 class="font-semibold mt-6">
+                  {{ $t("case_history.additional.vaccination_history") }}
+                </h5>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="vaccine_name"
+                      v-model="formData.vaccine_name"
+                    />
+                    <label for="vaccine_name">{{
+                      $t("case_history.fields.vaccine_name")
+                    }}</label>
+                  </FloatLabel>
                 </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <DatePicker
+                      :disabled="!isEditable"
+                      showIcon
+                      iconDisplay="input"
+                      showButtonBar
+                      dateFormat="yy-mm-dd"
+                      id="vaccine_date"
+                      v-model="formData.vaccine_date"
+                    />
+                    <label for="vaccine_date">{{
+                      $t("case_history.fields.vaccine_date")
+                    }}</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <DatePicker
+                      showIcon
+                      :disabled="!isEditable"
+                      iconDisplay="input"
+                      showButtonBar
+                      dateFormat="yy-mm-dd"
+                      id="next_due_date"
+                      v-model="formData.next_due_date"
+                    />
+                    <label for="next_due_date">{{
+                      $t("case_history.fields.next_due_date")
+                    }}</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <InputText
+                      fluid
+                      id="administered_by"
+                      v-model="formData.administered_by"
+                    />
+                    <label for="administered_by">{{
+                      $t("case_history.fields.administered_by")
+                    }}</label>
+                  </FloatLabel>
+                </div>
+
                 <!-- Antiparasitic Treatment -->
-                <div class="w-full">
-                  <h5 class="font-semibold mt-6">Antiparasitic Treatment</h5>
-                  <div class="field mt-6 w-2/3">
-                    <FloatLabel>
-                      <InputText
-                        :disabled="!isEditable"
-                        fluid
-                        id="treatment_name"
-                        v-model="formData.treatment_name"
-                      />
-                      <label for="treatment_name">Treatment Name</label>
-                    </FloatLabel>
-                  </div>
-                  <div class="field mt-6 w-2/3">
-                    <FloatLabel>
-                      <Select
-                        :disabled="!isEditable"
-                        fluid
-                        optionLabel="label"
-                        optionValue="value"
-                        id="treatment_type"
-                        v-model="formData.treatment_type"
-                        :options="treatmentTypeOptions"
-                      />
-                      <label for="treatment_type">Treatment Type</label>
-                    </FloatLabel>
-                  </div>
-                  <div class="field mt-6 w-2/3">
-                    <FloatLabel>
-                      <InputText
-                        :disabled="!isEditable"
-                        fluid
-                        id="treatment_dosage"
-                        v-model="formData.treatment_dosage"
-                      />
-                      <label for="treatment_dosage">Dosage</label>
-                    </FloatLabel>
-                  </div>
-                  <div class="field mt-6 w-2/3">
-                    <FloatLabel>
-                      <DatePicker
-                        showIcon
-                        iconDisplay="input"
-                        showButtonBar
-                        :disabled="!isEditable"
-                        dateFormat="yy-mm-dd"
-                        id="administration_date"
-                        v-model="formData.administration_date"
-                      />
-                      <label for="administration_date">Administration Date</label>
-                    </FloatLabel>
-                  </div>
-                  <div class="field mt-6 w-2/3">
-                    <FloatLabel>
-                      <DatePicker
-                        showIcon
-                        iconDisplay="input"
-                        showButtonBar
-                        :disabled="!isEditable"
-                        dateFormat="yy-mm-dd"
-                        id="next_due_date"
-                        v-model="formData.treatment_next_due_date"
-                      />
-                      <label for="next_due_date">Next Due Date</label>
-                    </FloatLabel>
-                  </div>
-                  <div class="field mt-6 w-2/3">
-                    <FloatLabel>
-                      <InputText
-                        :disabled="!isEditable"
-                        fluid
-                        id="administered_by"
-                        v-model="formData.treatment_administered_by"
-                      />
-                      <label for="administered_by">Administered By</label>
-                    </FloatLabel>
-                  </div>
+
+                <h5 class="font-semibold mt-6 w-2/3">
+                  {{ $t("case_history.additional.antiparasitic_treatment") }}
+                </h5>
+                <div class="field mt-6 w-1/2">
+                  <FloatLabel class="w-[90%]">
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="treatment_name"
+                      v-model="formData.treatment_name"
+                    />
+                    <label for="treatment_name">{{
+                      $t("case_history.fields.treatment_name")
+                    }}</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-1/2">
+                  <FloatLabel class="w-[90%]">
+                    <Select
+                      :disabled="!isEditable"
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="treatment_type"
+                      v-model="formData.treatment_type"
+                      :options="treatmentTypeOptions"
+                    />
+                    <label for="treatment_type">{{
+                      $t("case_history.fields.treatment_type")
+                    }}</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="treatment_dosage"
+                      v-model="formData.treatment_dosage"
+                    />
+                    <label for="treatment_dosage">{{
+                      $t("case_history.fields.dosage")
+                    }}</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-1/2">
+                  <FloatLabel class="w-[90%]">
+                    <DatePicker
+                      showIcon
+                      :disabled="!isEditable"
+                      fluid
+                      iconDisplay="input"
+                      showButtonBar
+                      dateFormat="yy-mm-dd"
+                      id="administration_date"
+                      v-model="formData.administration_date"
+                    />
+                    <label for="administration_date">{{
+                      $t("case_history.fields.administration_date")
+                    }}</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-1/2">
+                  <FloatLabel class="w-[90%]">
+                    <DatePicker
+                      :disabled="!isEditable"
+                      showIcon
+                      fluid
+                      iconDisplay="input"
+                      showButtonBar
+                      dateFormat="yy-mm-dd"
+                      id="next_due_date"
+                      v-model="formData.treatment_next_due_date"
+                    />
+                    <label for="next_due_date">{{
+                      $t("case_history.fields.next_due_date")
+                    }}</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="administered_by"
+                      v-model="formData.treatment_administered_by"
+                    />
+                    <label for="administered_by">{{
+                      $t("case_history.fields.administered_by")
+                    }}</label>
+                  </FloatLabel>
                 </div>
               </div>
-
-              <div class="flex flex-col w-1/2">
-                <!-- Medication History -->
-                <div class="w-full">
-                  <h5 class="font-semibold mt-6">Medication History</h5>
-                  <div class="field mt-6 w-2/3">
-                    <FloatLabel>
-                      <InputText
-                        fluid
-                        :disabled="!isEditable"
-                        id="medication_name"
-                        v-model="formData.medication_name"
-                      />
-                      <label for="medication_name">Medication Name</label>
-                    </FloatLabel>
-                  </div>
-                  <div class="field mt-6 w-2/3">
-                    <FloatLabel>
-                      <Select
-                        fluid
-                        :disabled="!isEditable"
-                        optionLabel="label"
-                        optionValue="value"
-                        id="medication_type"
-                        v-model="formData.medication_type"
-                        :options="medicationTypeOptions"
-                      />
-                      <label for="medication_type">Medication Type</label>
-                    </FloatLabel>
-                  </div>
-                  <div class="field mt-6 w-2/3">
-                    <FloatLabel>
-                      <InputText
-                        :disabled="!isEditable"
-                        fluid
-                        id="dosage"
-                        v-model="formData.dosage"
-                      />
-                      <label for="dosage">Dosage</label>
-                    </FloatLabel>
-                  </div>
-                  <div class="field mt-6 w-2/3">
-                    <FloatLabel>
-                      <InputText
-                        :disabled="!isEditable"
-                        fluid
-                        id="frequency"
-                        v-model="formData.frequency"
-                      />
-                      <label for="frequency">Frequency</label>
-                    </FloatLabel>
-                  </div>
-                  <div class="field mt-6 w-2/3">
-                    <FloatLabel>
-                      <DatePicker
-                        showIcon
-                        iconDisplay="input"
-                        showButtonBar
-                        :disabled="!isEditable"
-                        dateFormat="yy-mm-dd"
-                        id="medication_start_date"
-                        v-model="formData.medication_start_date"
-                      />
-                      <label for="medication_start_date">Start Date</label>
-                    </FloatLabel>
-                  </div>
-                  <div class="field mt-6 w-2/3">
-                    <FloatLabel>
-                      <DatePicker
-                        showIcon
-                        iconDisplay="input"
-                        showButtonBar
-                        :disabled="!isEditable"
-                        dateFormat="yy-mm-dd"
-                        id="end_date"
-                        v-model="formData.medication_end_date"
-                      />
-                      <label for="end_date">End Date</label>
-                    </FloatLabel>
-                  </div>
-                  <div class="field mt-6 w-2/3">
-                    <FloatLabel>
-                      <InputText
-                        fluid
-                        :disabled="!isEditable"
-                        id="prescribed_by"
-                        v-model="formData.prescribed_by"
-                      />
-                      <label for="prescribed_by">Prescribed By</label>
-                    </FloatLabel>
-                  </div>
+              <!-- </div> -->
+              <!-- Medication History -->
+              <div class="w-[48%]">
+                <h5 class="font-semibold mt-6">
+                  {{ $t("case_history.additional.medication_history") }}
+                </h5>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="medication_name"
+                      v-model="formData.medication_name"
+                    />
+                    <label for="medication_name">{{
+                      $t("case_history.fields.medication_name")
+                    }}</label>
+                  </FloatLabel>
                 </div>
-
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <Select
+                      :disabled="!isEditable"
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="medication_type"
+                      v-model="formData.medication_type"
+                      :options="medicationTypeOptions"
+                    />
+                    <label for="medication_type">{{
+                      $t("case_history.fields.medication_type")
+                    }}</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="dosage"
+                      v-model="formData.dosage"
+                    />
+                    <label for="dosage">{{ $t("case_history.fields.dosage") }}</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="frequency"
+                      v-model="formData.frequency"
+                    />
+                    <label for="frequency">{{
+                      $t("case_history.fields.frequency")
+                    }}</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <DatePicker
+                      :disabled="!isEditable"
+                      showIcon
+                      iconDisplay="input"
+                      showButtonBar
+                      dateFormat="yy-mm-dd"
+                      id="start_date"
+                      v-model="formData.medication_start_date"
+                    />
+                    <label for="start_date">{{
+                      $t("case_history.fields.medication_start_date")
+                    }}</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <DatePicker
+                      :disabled="!isEditable"
+                      showIcon
+                      iconDisplay="input"
+                      showButtonBar
+                      dateFormat="yy-mm-dd"
+                      id="end_date"
+                      v-model="formData.medication_end_date"
+                    />
+                    <label for="end_date">{{
+                      $t("case_history.fields.medication_end_date")
+                    }}</label>
+                  </FloatLabel>
+                </div>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="prescribed_by"
+                      v-model="formData.prescribed_by"
+                    />
+                    <label for="prescribed_by">{{
+                      $t("case_history.fields.prescribed_by")
+                    }}</label>
+                  </FloatLabel>
+                </div>
+                <!-- </div> -->
                 <!-- Additional Notes -->
-                <div class="w-full">
-                  <h5 class="font-semibold mt-6">Additional Notes</h5>
-                  <div class="field mt-6 w-2/3">
-                    <FloatLabel>
-                      <TextArea
-                        :disabled="!isEditable"
-                        fluid
-                        autoResize
-                        rows="4"
-                        id="additional_notes"
-                        v-model="formData.additional_notes"
-                      />
-                      <label for="additional_notes">Additional Notes</label>
-                    </FloatLabel>
-                  </div>
+                <!-- <div class="w-[48%]"> -->
+                <h5 class="font-semibold mt-6">
+                  {{ $t("case_history.fields.additional_notes") }}
+                </h5>
+                <div class="field mt-6 w-2/3">
+                  <FloatLabel>
+                    <TextArea
+                      :disabled="!isEditable"
+                      fluid
+                      autoResize
+                      rows="4"
+                      id="additional_notes"
+                      v-model="formData.additional_notes"
+                    />
+                    <label for="additional_notes">{{
+                      $t("case_history.fields.additional_notes")
+                    }}</label>
+                  </FloatLabel>
                 </div>
               </div>
+              <!-- </div> -->
             </div>
             <div class="flex pt-6 justify-between">
               <Button
-                label="Back"
+                :label="$t('case_history.actions.back')"
                 severity="secondary"
-                icon="pi pi-arrow-left"
-                @click="activateCallback('9')"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
+                @click="activateCallback('10')"
               />
-              <Button label="Submit" @click="submitForm" v-if="isEditable" />
+              <Button
+                :label="$t('case_history.actions.submit')"
+                @click="submitForm"
+                v-if="isEditable"
+              />
+              <!-- <Button
+                  :label="$t('case_history.actions.next')"
+                  :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
+                  :iconPos="!isRtl ? 'right' : 'left'"
+                  @click="activateCallback('11')"
+                /> -->
             </div>
           </StepPanel>
 
@@ -1784,10 +1857,12 @@
               <pre>{{ formData }}</pre>
             </div>
             <div class="flex pt-6 justify-between">
-              <Button
-                label="Back"
+                            <Button
+                :label="$t('case_history.actions.back')"
                 severity="secondary"
-                icon="pi pi-arrow-left"
+                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
+                :iconPos="!isRtl ? 'left' : 'right'"
+
                 @click="activateCallback('9')"
               />
               <Button label="Submit" @click="submitForm" />
@@ -1800,7 +1875,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted, nextTick, computed } from "vue";
 import Stepper from "primevue/stepper";
 import StepList from "primevue/steplist";
 import StepPanels from "primevue/steppanels";
@@ -1834,6 +1909,8 @@ const showAddCaseHistoryModal = (MedicalRecordId) => {
 const formatDate = (isoDateString) => {
   return isoDateString ? new Date(isoDateString).toISOString().split("T")[0] : null;
 };
+const isRtl = computed(() => ["ar", "he", "fa"].includes(locale.value));
+
 const isEditable = ref(false);
 const activeStep = ref("1");
 const formData = ref(

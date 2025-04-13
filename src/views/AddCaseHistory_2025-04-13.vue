@@ -264,7 +264,7 @@
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
                 :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="right"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('1')"
               />
               <Button
@@ -331,7 +331,7 @@
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
                 :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="right"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('2')"
               />
               <Button
@@ -406,7 +406,7 @@
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
                 :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="right"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('3')"
               />
               <Button
@@ -530,7 +530,7 @@
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
                 :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="right"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('4')"
               />
               <Button
@@ -702,7 +702,7 @@
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
                 :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="right"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('5')"
               />
               <Button
@@ -805,7 +805,7 @@
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
                 :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="right"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('6')"
               />
               <Button
@@ -895,7 +895,7 @@
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
                 :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="right"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('7')"
               />
               <Button
@@ -1037,7 +1037,7 @@
                 :label="$t('case_history.actions.back')"
                 severity="secondary"
                 :icon="!isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                iconPos="right"
+                :iconPos="!isRtl ? 'right' : 'left'"
                 @click="activateCallback('8')"
               />
               <Button
