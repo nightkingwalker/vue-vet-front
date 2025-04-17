@@ -758,7 +758,7 @@ const submitForm = async () => {
       " " +
       t("medical_examination_form.fields.respiratory_rate_unit"),
   };
-
+  console.log(submissionData);
   try {
     const response = await axiosInstance.post("/medical-examinations", submissionData);
     emit("submitted", response.data);
