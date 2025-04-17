@@ -752,7 +752,7 @@ const submitForm = async () => {
     medical_record_id: props.medical_record_id,
     eye_sunkenness: examination.value.eye_sunkenness,
     respiratory_rate:
-      examination.value.respiratory_rate,
+      examination.value.respiratory_rate + " " + examination.value.respiratory_rate,
   };
   console.log(submissionData);
   try {
