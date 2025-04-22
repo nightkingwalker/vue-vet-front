@@ -747,18 +747,19 @@ const yesno = ref([
 ]);
 // Form submission
 const submitForm = async () => {
+<<<<<<< HEAD
   //const { t } = useI18n();
 
+=======
+>>>>>>> 1f86cb2cb339354adb2a8dfe658efc228b20dce2
   const submissionData = {
     ...examination.value,
     medical_record_id: props.medical_record_id,
     eye_sunkenness: examination.value.eye_sunkenness,
     respiratory_rate:
-      examination.value.respiratory_rate +
-      " " +
-      t("medical_examination_form.fields.respiratory_rate_unit"),
+      examination.value.respiratory_rate + " " + examination.value.respiratory_rate,
   };
-
+  console.log(submissionData);
   try {
     const response = await axiosInstance.post("/medical-examinations", submissionData);
     emit("submitted", response.data);
