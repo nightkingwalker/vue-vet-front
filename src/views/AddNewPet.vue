@@ -2,16 +2,19 @@
   <div class="w-full">
     <form @submit.prevent="submitForm" class="mx-auto w-full">
       <fieldset
-        class="p-fieldset p-component w-4/5 flex flex-wrap mx-auto items-top border rounded-lg p-4"
+        class="p-fieldset p-component w-4/5 flex flex-wrap gap-4 items-start mx-auto items-top border rounded-lg p-4"
       >
         <legend>{{ $t("pet_form.title") }}</legend>
         <input type="hidden" id="branch_id" value="1" v-model="pet.branch_id" />
 
         <!-- Select Owner -->
-        <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-[95%]">
+        <div class="field mt-3 w-[48%]">
+          <FloatLabel class="w-full">
             <AutoComplete
               autoFocus
+              fluid
+              required
+              :invalid="invalid.pet.owner_id"
               v-model="pet.owner_id"
               optionLabel="name"
               :suggestions="filteredOwners"
@@ -32,111 +35,119 @@
                 />
               </template>
             </AutoComplete>
-            <label for="owner">{{ $t("pet_form.fields.select_owner") }}</label>
+            <label for="owner"
+              >{{ $t("pet_form.fields.select_owner") }}
+              <span class="text-red-600">*</span></label
+            >
           </FloatLabel>
+          <span class="text-[10px] text-red-600" v-if="invalid.pet.owner_id">{{
+            $t("form_messages.warnings.invalid_input")
+          }}</span>
         </div>
 
-        <!-- Name -->
-        <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-[95%]">
-            <InputText id="name" class="w-full" v-model="pet.name" />
-            <label for="name">{{ $t("pet_form.fields.name") }}</label>
+        <div class="field mt-3 w-[48%]">
+          <FloatLabel class="w-full">
+            <InputText
+              fluid
+              id="name"
+              v-model="pet.name"
+              required
+              :invalid="invalid.pet.name"
+            />
+            <label for="name"
+              >{{ $t("pet_form.fields.name") }} <span class="text-red-600">*</span></label
+            >
           </FloatLabel>
+          <span class="text-[10px] text-red-600" v-if="invalid.pet.name">{{
+            $t("form_messages.warnings.invalid_input")
+          }}</span>
         </div>
-
-        <!-- Species -->
-        <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-[95%]">
+        <div class="field mt-3 w-[48%]">
+          <FloatLabel class="w-full">
             <Select
+              required
+              :invalid="invalid.pet.species"
+              fluid
               v-model="pet.species"
               :options="species"
               optionLabel="label"
+              optionValue="value"
               class="w-full h-10"
+            />
+            <label for="dd-city"
+              >{{ $t("pet_form.fields.select_species") }}
+              <span class="text-red-600">*</span></label
             >
-              <template #value="slotProps">
-                <div v-if="slotProps.value" class="flex items-center">
-                  <div>{{ slotProps.value.value }}</div>
-                </div>
-                <span v-else>{{ slotProps.placeholder }}</span>
-              </template>
-              <template #option="slotProps">
-                <div class="flex items-center">
-                  <div>{{ slotProps.option.label }}</div>
-                </div>
-              </template>
-            </Select>
-            <label for="species">{{ $t("pet_form.fields.select_species") }}</label>
+          </FloatLabel>
+          <span class="text-[10px] text-red-600" v-if="invalid.pet.species">{{
+            $t("form_messages.warnings.invalid_input")
+          }}</span>
+        </div>
+        <div class="field mt-3 w-[48%]">
+          <FloatLabel class="w-full">
+            <InputText fluid id="breed" v-model="pet.breed" />
+            <label for="dd-city">{{ $t("pet_form.fields.breed") }}</label>
           </FloatLabel>
         </div>
-
-        <!-- Breed -->
-        <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-[95%]">
-            <InputText id="breed" class="w-full" v-model="pet.breed" />
-            <label for="breed">{{ $t("pet_form.fields.breed") }}</label>
-          </FloatLabel>
-        </div>
-
-        <!-- Gender -->
-        <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-[95%]">
+        <div class="field mt-3 w-[48%]">
+          <FloatLabel class="w-full">
             <Select
               id="gender"
+              required
+              :invalid="invalid.pet.gender"
+              fluid
               v-model="pet.gender"
               :options="genders"
               optionLabel="label"
+              optionValue="value"
               class="w-full h-10"
+            />
+            <label for="gender"
+              >{{ $t("pet_form.fields.select_gender") }}
+              <span class="text-red-600">*</span></label
             >
-              <template #value="slotProps">
-                <div v-if="slotProps.value" class="flex items-center">
-                  <div>{{ slotProps.value.value }}</div>
-                </div>
-                <span v-else>{{ slotProps.placeholder }}</span>
-              </template>
-              <template #option="slotProps">
-                <div class="flex items-center">
-                  <div>{{ slotProps.option.label }}</div>
-                </div>
-              </template>
-            </Select>
-            <label for="gender">{{ $t("pet_form.fields.select_gender") }}</label>
           </FloatLabel>
+          <span class="text-[10px] text-red-600" v-if="invalid.pet.gender">{{
+            $t("form_messages.warnings.invalid_input")
+          }}</span>
         </div>
-
-        <!-- Date of Birth -->
-        <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-[95%]">
-            <label for="dob">{{ $t("pet_form.fields.date_of_birth") }}</label>
+        <div class="field mt-3 w-[48%]">
+          <FloatLabel class="w-full">
             <DatePicker
               showIcon
+              required
+              :invalid="invalid.pet.date_of_birth"
               iconDisplay="input"
               showButtonBar
               showTime
               hourFormat="12"
+              fluid
               id="dob"
               class="w-full"
               v-model="pet.date_of_birth"
               dateFormat="yy-mm-dd"
             />
+            <label for="dob"
+              >{{ $t("pet_form.fields.date_of_birth") }}
+              <span class="text-red-600">*</span></label
+            >
           </FloatLabel>
+          <span class="text-[10px] text-red-600" v-if="invalid.pet.date_of_birth">{{
+            $t("form_messages.warnings.invalid_input")
+          }}</span>
         </div>
-
         <!-- Color -->
-        <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-[95%]">
-            <InputText id="color" class="w-full" v-model="pet.color" />
+        <div class="field mt-3 w-[48%]">
+          <FloatLabel class="w-full">
+            <InputText fluid id="color" v-model="pet.color" />
             <label for="color">{{ $t("pet_form.fields.color") }}</label>
           </FloatLabel>
         </div>
 
         <!-- Distinctive Marks -->
-        <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-[95%]">
-            <InputText
-              id="distinctive_marks"
-              class="w-full"
-              v-model="pet.distinctive_marks"
-            />
+        <div class="field mt-3 w-[48%]">
+          <FloatLabel class="w-full">
+            <InputText fluid id="distinctive_marks" v-model="pet.distinctive_marks" />
             <label for="distinctive_marks">{{
               $t("pet_form.fields.distinctive_marks")
             }}</label>
@@ -144,71 +155,80 @@
         </div>
 
         <!-- Behaviour -->
-        <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-[95%]">
-            <InputText id="behaviour" class="w-full" v-model="pet.behaviour" />
-            <label for="behaviour">{{ $t("pet_form.fields.behaviour") }}</label>
+        <div class="field mt-3 w-[48%]">
+          <FloatLabel class="w-full">
+            <Select
+              v-model="pet.behaviour"
+              :options="behaviorOptions"
+              required
+              :invalid="invalid.pet.behaviour"
+              optionLabel="label"
+              optionValue="value"
+              class="w-full h-10"
+            />
+            <label for="behaviour"
+              >{{ $t("pet_form.fields.behaviour") }}
+              <span class="text-red-600">*</span></label
+            >
           </FloatLabel>
+          <span class="text-[10px] text-red-600" v-if="invalid.pet.behaviour">{{
+            $t("form_messages.warnings.invalid_input")
+          }}</span>
         </div>
 
         <!-- Neutered -->
-        <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-[95%]">
+        <div class="field mt-3 w-[48%]">
+          <FloatLabel class="w-full">
             <Select
+              fluid
               v-model="pet.neutered"
+              required
+              :invalid="invalid.pet.neutered"
               :options="yesno"
               optionLabel="label"
+              optionValue="value"
               class="w-full h-10"
+            />
+            <label for="neutered"
+              >{{ $t("pet_form.fields.neutered") }}
+              <span class="text-red-600">*</span></label
             >
-              <template #value="slotProps">
-                <div v-if="slotProps.value" class="flex items-center">
-                  <div>{{ slotProps.value.value }}</div>
-                </div>
-                <span v-else>{{ slotProps.placeholder }}</span>
-              </template>
-              <template #option="slotProps">
-                <div class="flex items-center">
-                  <div>{{ slotProps.option.label }}</div>
-                </div>
-              </template>
-            </Select>
-            <label for="neutered">{{ $t("pet_form.fields.neutered") }}</label>
           </FloatLabel>
+          <span class="text-[10px] text-red-600" v-if="invalid.pet.neutered">{{
+            $t("form_messages.warnings.invalid_input")
+          }}</span>
         </div>
 
         <!-- Deceased -->
-        <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-[95%]">
+        <div class="field mt-3 w-[48%]">
+          <FloatLabel class="w-full">
             <Select
+              fluid
+              required
+              :invalid="invalid.pet.deceased"
               v-model="pet.deceased"
               :options="yesno"
               optionLabel="label"
+              optionValue="value"
               class="w-full h-10"
+            />
+            <label for="deceased"
+              >{{ $t("pet_form.fields.deceased") }}
+              <span class="text-red-600">*</span></label
             >
-              <template #value="slotProps">
-                <div v-if="slotProps.value" class="flex items-center">
-                  <div>{{ slotProps.value.value }}</div>
-                </div>
-                <span v-else>{{ slotProps.placeholder }}</span>
-              </template>
-              <template #option="slotProps">
-                <div class="flex items-center">
-                  <div>{{ slotProps.option.label }}</div>
-                </div>
-              </template>
-            </Select>
-            <label for="deceased">{{ $t("pet_form.fields.deceased") }}</label>
           </FloatLabel>
+          <span class="text-[10px] text-red-600" v-if="invalid.pet.deceased">{{
+            $t("form_messages.warnings.invalid_input")
+          }}</span>
         </div>
 
         <!-- Allergies -->
-        <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-[95%]">
-            <Textarea id="allergies" class="w-full h-24" v-model="pet.allergies" />
+        <div class="field mt-3 w-full">
+          <FloatLabel class="w-full">
+            <Textarea fluid id="allergies" v-model="pet.allergies" />
             <label for="allergies">{{ $t("pet_form.fields.allergies") }}</label>
           </FloatLabel>
         </div>
-
         <!-- Submit Button -->
         <Button type="submit" :label="$t('pet_form.buttons.submit')" />
       </fieldset>
@@ -235,6 +255,7 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const emit = defineEmits(["submitted"]); // Define the event to be emitted
 const isModalOwnerVisible = ref(false);
+const invalid = ref({ pet: {} });
 const pet = ref({
   owner_id: null,
   branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
@@ -328,6 +349,39 @@ const species = ref([
     icon: "fa-solid fa-sheep",
   },
 ]);
+const behaviorOptions = ref([
+  { label: t("behavior.Friendly"), value: "Friendly", en_label: "Friendly" },
+  { label: t("behavior.Fearful"), value: "Fearful", en_label: "Fearful" },
+  { label: t("behavior.Aggressive"), value: "Aggressive", en_label: "Aggressive" },
+  {
+    label: t("behavior.Fear_Aggression"),
+    value: "Fear_Aggression",
+    en_label: "Fear Induces Aggression",
+  },
+  { label: t("behavior.Nervous"), value: "Nervous", en_label: "Nervous" },
+  { label: t("behavior.Submissive"), value: "Submissive", en_label: "Submissive" },
+  {
+    label: t("behavior.Needs_Sedation"),
+    value: "Needs_Sedation",
+    en_label: "Needs Sedation",
+  },
+  { label: t("behavior.Biter"), value: "Biter", en_label: "Biter" },
+  {
+    label: t("behavior.Muzzle_Required"),
+    value: "Muzzle_Required",
+    en_label: "Muzzle Required",
+  },
+  {
+    label: t("behavior.Escape_Risk"),
+    value: "Escape_Risk",
+    en_label: "Escape Risk",
+  },
+  {
+    label: t("behavior.Urinates"),
+    value: "Urinates",
+    en_label: "Urinates/Defecates from Stress",
+  },
+]);
 
 const genders = ref([
   { label: t("pet_form.options.male"), value: "Male" },
@@ -360,6 +414,28 @@ const addNewOwner = () => {
 
 // Form submission
 const submitForm = async () => {
+  invalid.value.pet = {
+    owner_id: pet.value.owner_id === null ? true : false,
+    name: pet.value.name === "" ? true : false,
+    species: pet.value.species === "" ? true : false,
+    gender: pet.value.gender === "" ? true : false,
+    date_of_birth: pet.value.date_of_birth === "" ? true : false,
+    behaviour: pet.value.behaviour === "" ? true : false,
+    neutered: pet.value.neutered === "" ? true : false,
+    deceased: pet.value.deceased === "" ? true : false,
+  };
+  if (
+    invalid.value.pet.owner_id ||
+    invalid.value.pet.name ||
+    invalid.value.pet.species ||
+    invalid.value.pet.gender ||
+    invalid.value.pet.date_of_birth ||
+    invalid.value.pet.behaviour ||
+    invalid.value.pet.neutered ||
+    invalid.value.pet.deceased
+  ) {
+    return;
+  }
   const submissionData = {
     owner_id: pet.value.owner_id.id,
     branch_id: pet.value.branch_id,

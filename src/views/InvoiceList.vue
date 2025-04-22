@@ -28,7 +28,7 @@
               type="button"
               icon="pi pi-refresh !text-xs"
               label=""
-              v-tooltip.bottom="`Refresh Data`"
+              v-tooltip.bottom="$t('invoices.actions.refresh')"
               class="!text-xs ml-2"
               @click="refreshData"
             />
@@ -36,19 +36,19 @@
               size="small"
               icon="pi pi-plus"
               @click="showModal"
-              v-tooltip.bottom="`Create New Invoice`"
+              v-tooltip.bottom="$t('invoices.actions.create')"
               class="p-button p-component p-button-icon-only !text-xs ml-2"
             />
             <Button
               size="small"
               icon="pi pi-download !text-xs"
               class="!text-xs ml-2"
-              v-tooltip.bottom="`Export`"
+              v-tooltip.bottom="$t('invoices.actions.export')"
               @click="exportCSV($event)"
             />
           </div>
           <h2 class="text-md !mb-0 pb-0 flex items-center">
-            <i class="fa-solid fa-file-invoice mx-2"></i> Invoices
+            <i class="fa-solid fa-file-invoice mx-2"></i> {{ $t("invoices.title") }}
           </h2>
           <span class="p-input-icon-left text-xs">
             <InputGroup
@@ -69,7 +69,7 @@
                 autofocus="true"
                 type="text"
                 class="!text-xs !text-gray-800 focus:!ring-0 focus:!ring-offset-0 focus:!border-gray-400 border-transparent"
-                placeholder="Search All Columns"
+                :placeholder="$t('invoices.search.placeholder')"
               />
               <Button size="small" icon="pi pi-times" @click="clearFilters" />
             </InputGroup>
@@ -78,7 +78,12 @@
       </template>
 
       <!-- Invoice Number Column -->
-      <Column class="text-xs" field="invoice_number" header="Invoice #" sortable>
+      <Column
+        class="text-xs"
+        field="invoice_number"
+        :header="$t('invoices.columns.invoice_number')"
+        sortable
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="80%" height="1rem" />
@@ -94,7 +99,12 @@
       </Column>
 
       <!-- Client Column -->
-      <Column class="text-xs" field="client.name" header="Client" sortable>
+      <Column
+        class="text-xs"
+        field="client.name"
+        :header="$t('invoices.columns.client')"
+        sortable
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="60%" height="1rem" />
@@ -103,8 +113,13 @@
         </template>
       </Column>
 
-      <!-- ؛ثف Column -->
-      <Column class="text-xs" field="pet.name" header="Pet" sortable>
+      <!-- Pet Column -->
+      <Column
+        class="text-xs"
+        field="pet.name"
+        :header="$t('invoices.columns.pet')"
+        sortable
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="60%" height="1rem" />
@@ -114,7 +129,7 @@
       </Column>
 
       <!-- Date Column -->
-      <Column class="text-xs" field="date" header="Date" sortable>
+      <Column class="text-xs" field="date" :header="$t('invoices.columns.date')" sortable>
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="60%" height="1rem" />
@@ -126,7 +141,12 @@
       </Column>
 
       <!-- Due Date Column -->
-      <Column class="text-xs" field="due_date" header="Due Date" sortable>
+      <Column
+        class="text-xs"
+        field="due_date"
+        :header="$t('invoices.columns.due_date')"
+        sortable
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="60%" height="1rem" />
@@ -146,7 +166,12 @@
       </Column>
 
       <!-- Status Column -->
-      <Column class="text-xs" field="status" header="Status" sortable>
+      <Column
+        class="text-xs"
+        field="status"
+        :header="$t('invoices.columns.status')"
+        sortable
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
@@ -164,7 +189,7 @@
                   slotProps.data.status === 'refunded',
               }"
               class="shadow-sm !text-xs font-thin border dark:border-transparent h-7"
-              :label="formatStatus(slotProps.data.status)"
+              :label="$t('invoices.status.' + slotProps.data.status)"
             />
           </template>
         </template>
@@ -174,7 +199,7 @@
             :options="statusOptions"
             optionLabel="label"
             optionValue="value"
-            placeholder="Select Status"
+            :placeholder="$t('invoices.columns.status')"
             class="p-column-filter"
             @change="onStatusFilterChange"
           />
@@ -182,7 +207,12 @@
       </Column>
 
       <!-- Total Amount Column -->
-      <Column class="text-xs" field="total_amount" header="Total" sortable>
+      <Column
+        class="text-xs"
+        field="total_amount"
+        :header="$t('invoices.columns.total_amount')"
+        sortable
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
@@ -194,7 +224,12 @@
       </Column>
 
       <!-- Amount Paid Column -->
-      <Column class="text-xs" field="amount_paid" header="Paid" sortable>
+      <Column
+        class="text-xs"
+        field="amount_paid"
+        :header="$t('invoices.columns.amount_paid')"
+        sortable
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
@@ -206,7 +241,12 @@
       </Column>
 
       <!-- Balance Due Column -->
-      <Column class="text-xs" field="balance_due" header="Balance" sortable>
+      <Column
+        class="text-xs"
+        field="balance_due"
+        :header="$t('invoices.columns.balance_due')"
+        sortable
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
@@ -225,7 +265,12 @@
       </Column>
 
       <!-- Payment Status Column -->
-      <Column class="text-xs" field="payment_status" header="Payment" sortable>
+      <Column
+        class="text-xs"
+        field="payment_status"
+        :header="$t('invoices.columns.payment_status')"
+        sortable
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
@@ -239,14 +284,14 @@
                 '!bg-green-100 !text-green-800': slotProps.data.payment_status === 'paid',
               }"
               class="shadow-sm !text-xs font-thin border dark:border-transparent h-7"
-              :label="formatPaymentStatus(slotProps.data.payment_status)"
+              :label="$t('invoices.status.' + slotProps.data.payment_status)"
             />
           </template>
         </template>
       </Column>
 
       <!-- Actions Column -->
-      <Column header="Actions" :exportable="false">
+      <Column :header="$t('invoices.columns.actions')" :exportable="false">
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="60%" height="1rem" />
@@ -257,7 +302,7 @@
               icon="pi pi-eye"
               class="p-button-rounded p-button-text p-button-sm"
               @click="viewInvoice(slotProps.data)"
-              v-tooltip.bottom="`View Invoice`"
+              v-tooltip.bottom="$t('invoices.actions.view')"
             />
             <Button
               size="small"
@@ -270,10 +315,10 @@
               @click="editInvoice(slotProps.data)"
               v-tooltip="
                 slotProps.data.payment_status === 'paid'
-                  ? 'Invoice is already paid'
+                  ? $t('invoices.dialog.paid_message')
                   : slotProps.data.payment_status === 'cancelled'
-                  ? 'Cannot pay cancelled invoice'
-                  : 'Edit invoice'
+                  ? $t('invoices.dialog.cancelled_message')
+                  : $t('invoices.actions.edit')
               "
             />
             <Button
@@ -281,7 +326,7 @@
               icon="pi pi-trash"
               class="p-button-rounded p-button-text p-button-sm p-button-danger"
               @click="confirmDelete(slotProps.data)"
-              v-tooltip.bottom="`Delete Invoice`"
+              v-tooltip.bottom="$t('invoices.actions.delete')"
             />
             <Button
               size="small"
@@ -294,10 +339,10 @@
               "
               v-tooltip="
                 slotProps.data.payment_status === 'paid'
-                  ? 'Invoice is already paid'
+                  ? $t('invoices.dialog.paid_message')
                   : slotProps.data.payment_status === 'cancelled'
-                  ? 'Cannot pay cancelled invoice'
-                  : 'Add payment to invoice'
+                  ? $t('invoices.dialog.cancelled_message')
+                  : $t('invoices.actions.add_payment')
               "
             />
           </template>
@@ -320,7 +365,7 @@
 
   <!-- View Invoice Dialog -->
   <Dialog
-    header="Invoice Details"
+    :header="$t('invoices.dialog.view_title')"
     v-model:visible="viewDialogVisible"
     modal
     :closable="true"
@@ -339,7 +384,9 @@
 
   <!-- Add/Edit Invoice Dialog -->
   <Dialog
-    :header="editMode ? 'Edit Invoice' : 'Create New Invoice'"
+    :header="
+      editMode ? $t('invoices.dialog.edit_title') : $t('invoices.dialog.create_title')
+    "
     v-model:visible="isEditModalVisible"
     @hide="resetForm"
     modal
@@ -357,7 +404,7 @@
     />
   </Dialog>
   <Dialog
-    :header="editMode ? 'Edit Invoice' : 'Create New Invoice'"
+    :header="$t('invoices.dialog.create_title')"
     v-model:visible="isModalVisible"
     @hide="resetForm"
     modal
@@ -366,7 +413,9 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2 h-4">
-        <span class="font-bold whitespace-nowrap">Create New Invoice</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("invoices.dialog.create_title")
+        }}</span>
       </div>
     </template>
     <InvoiceAdd
@@ -379,15 +428,10 @@
       @InvoiceCreated="handleInvoiceCreated"
     />
   </Dialog>
-  <!-- <Dialog
-    header="Add Payment"
-    v-model:visible="paymentDialogVisible"
-    :modal="true"
-    :style="{ width: '450px' }"
-    :closable="false"
-  > -->
+
+  <!-- Payment Dialog -->
   <Dialog
-    header="Add Payment"
+    :header="$t('invoices.dialog.payment_title')"
     v-model:visible="paymentDialogVisible"
     @hide="
       resetForm;
@@ -399,7 +443,9 @@
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2 h-4">
-        <span class="font-bold whitespace-nowrap">Create New Invoice</span>
+        <span class="font-bold whitespace-nowrap">{{
+          $t("invoices.dialog.payment_title")
+        }}</span>
       </div>
     </template>
     <AddPayment
@@ -419,7 +465,7 @@
   <Dialog
     v-model:visible="deleteDialogVisible"
     :style="{ width: '450px' }"
-    header="Confirm"
+    :header="$t('invoices.dialog.delete_title')"
     :modal="true"
   >
     <div
@@ -430,23 +476,26 @@
       }"
     >
       <i class="pi pi-exclamation-triangle ltr:mr-3 rtl:ml-3" style="font-size: 2rem" />
-      <span v-if="selectedInvoice"
-        >Are you sure you want to delete invoice
-        <b>{{ selectedInvoice.invoice_number }}</b
-        >?</span
-      >
+      <span
+        v-if="selectedInvoice"
+        v-html="
+          $t('invoices.dialog.delete_message', {
+            invoice: selectedInvoice.invoice_number,
+          })
+        "
+      ></span>
     </div>
     <template #footer>
       <Button
         size="small"
-        label="No"
+        :label="$t('invoices.actions.no')"
         icon="pi pi-times"
         class="p-button-text"
         @click="deleteDialogVisible = false"
       />
       <Button
         size="small"
-        label="Yes"
+        :label="$t('invoices.actions.yes')"
         icon="pi pi-check"
         class="p-button-text p-button-danger"
         @click="deleteInvoice"

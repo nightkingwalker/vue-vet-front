@@ -241,6 +241,13 @@ const menuItems = computed(() => [
         class: submenuItemClass,
         command: handleMenuItemClick,
       },
+      {
+        label: t("app.menu.treatment"),
+        route: "/add-inventory-treatment",
+        icon: "fa-solid fa-stethoscope !text-md !text-center",
+        class: submenuItemClass,
+        command: handleMenuItemClick,
+      },
     ],
   },
   {

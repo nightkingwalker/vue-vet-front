@@ -112,6 +112,13 @@ const router = createRouter({
         meta: { allowSessionTimeout: true }
     },
     {
+        path: '/add-inventory-treatment',
+        name: 'New Treatment Inventory',
+        component: () =>
+            import('../views/InventoryItemsList.vue'),
+        meta: { allowSessionTimeout: true }
+    },
+    {
         path: '/invoices',
         name: 'Invoice List',
         component: () =>

@@ -17,7 +17,7 @@
             icon="pi pi-refresh !text-sm"
             label=""
             v-tooltip.top="{
-              value: 'Refresh Data',
+              value: $t('pet_list.tooltips.refresh'),
               pt: {
                 arrow: {
                   style: {
@@ -25,10 +25,12 @@
                   },
                 },
                 text:
-                  '!bg-[var(--p-primary-color)] !font-thin 2xl:!text-lg lg:!text-xs shadow-md',
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
               },
             }"
-            class="p-button p-button-icon-only !text-sm !font-thin h-8"
+            rounded
+            size="small"
+            class="!text-xs !text-primary mx-2"
             @click="refreshData"
           />
           <Button
@@ -96,7 +98,7 @@
             @blur="inputFocused = false"
             type="text"
             class="!text-sm !text-gray-800 focus:!ring-0 focus:!ring-offset-0 focus:!border-gray-400 border-transparent"
-            placeholder="Search Owners"
+            :placeholder="$t('appointment.fields.pet')"
           />
           <Button
             icon="pi pi-spin pi-spinner-dotted"
@@ -345,6 +347,8 @@ import Dialog from "primevue/dialog";
 import Avatar from "primevue/avatar";
 import NewPatient from "@/views/AddOwnerPetsView.vue";
 import eventBus from "@/eventBus";
+import { useI18n } from "vue-i18n";
+const { t, locale } = useI18n();
 const route = useRoute();
 const home = ref({
   icon: "pi pi-home",
@@ -377,9 +381,10 @@ const loading = ref(true);
 const owner = ref([]); // Initialize owner as an empty string
 const options = ref(["list", "grid"]);
 const ownerid = ref(route.params.ownerid);
+// console.log(ownerid);
 const searchQuery = ref(""); // Reactive search query
 const items = ref([
-  { label: "Owners", route: "/owners" },
+  { label: t("app.menu.owners"), route: "/owners" },
   {
     label: pets.value[0].owner.name + " Patients",
     route: "/" + route.params.ownerid + "/pets",
@@ -420,7 +425,7 @@ const fetchPets = async (page = 1) => {
     currentPage.value = response.data.current_page;
     // owner.value = pets.value.length > 0 ? pets.value[0].owner : ["Unknown Owner"]; // Set owner name if pets exist
     items.value = [
-      { label: "Owners", route: "/owners" },
+      { label: t("app.menu.owners"), route: "/owners" },
       {
         label: pets.value[0].owner.name + " Patients",
         route: "/" + route.params.ownerid + "/pets",

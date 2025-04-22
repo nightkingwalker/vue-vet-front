@@ -28,7 +28,7 @@
               type="button"
               icon="pi pi-refresh !text-xs"
               label=""
-              v-tooltip.bottom="`Refresh Data`"
+              v-tooltip.bottom="$t('inventory.actions.refresh')"
               class="!text-xs ml-2"
               @click="refreshData"
             />
@@ -36,19 +36,19 @@
               size="small"
               icon="pi pi-plus"
               @click="showModal"
-              v-tooltip.bottom="`Add New Item`"
+              v-tooltip.bottom="$t('inventory.actions.add')"
               class="p-button p-component p-button-icon-only !text-xs ml-2"
             />
             <Button
               size="small"
               icon="pi pi-download !text-xs"
               class="!text-xs ml-2"
-              v-tooltip.bottom="`Export`"
+              v-tooltip.bottom="$t('inventory.actions.export')"
               @click="exportCSV($event)"
             />
           </div>
           <h2 class="text-md !mb-0 pb-0 flex items-center">
-            <i class="fa-solid fa-store mx-2"></i> Inventory
+            <i class="fa-solid fa-store mx-2"></i> {{ $t("inventory.title") }}
           </h2>
           <span class="p-input-icon-left text-xs">
             <InputGroup
@@ -69,7 +69,7 @@
                 autofocus="true"
                 type="text"
                 class="!text-xs !text-gray-800 focus:!ring-0 focus:!ring-offset-0 focus:!border-gray-400 border-transparent"
-                placeholder="Search All Columns"
+                :placeholder="$t('inventory.search.placeholder')"
               />
               <Button size="small" icon="pi pi-times" @click="clearFilters" />
             </InputGroup>
@@ -78,7 +78,12 @@
       </template>
 
       <!-- Barcode Column -->
-      <Column class="text-xs" field="barcode" header="Barcode" sortable>
+      <Column
+        class="text-xs"
+        field="barcode"
+        :header="$t('inventory.columns.barcode')"
+        sortable
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="80%" height="1rem" />
@@ -93,7 +98,12 @@
         </template>
       </Column>
       <!-- Brand Column -->
-      <Column class="text-xs" field="brand" header="Brand" sortable>
+      <Column
+        class="text-xs"
+        field="brand"
+        :header="$t('inventory.columns.brand')"
+        sortable
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
@@ -103,7 +113,12 @@
       </Column>
 
       <!-- Name Column -->
-      <Column class="text-xs" field="name" header="Name" sortable>
+      <Column
+        class="text-xs"
+        field="name"
+        :header="$t('inventory.columns.name')"
+        sortable
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="60%" height="1rem" />
@@ -113,7 +128,12 @@
       </Column>
 
       <!-- Category Column -->
-      <Column class="text-xs" field="category" header="Category" sortable>
+      <Column
+        class="text-xs"
+        field="category"
+        :header="$t('inventory.columns.category')"
+        sortable
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
@@ -131,7 +151,7 @@
             :options="categories"
             optionLabel="label"
             optionValue="value"
-            placeholder="Select Category"
+            :placeholder="$t('inventory.columns.category')"
             class="p-column-filter"
             @change="onCategoryFilterChange"
           />
@@ -139,7 +159,12 @@
       </Column>
 
       <!-- Type Column -->
-      <Column class="text-xs" field="type" header="Type" sortable>
+      <Column
+        class="text-xs"
+        field="type"
+        :header="$t('inventory.columns.type')"
+        sortable
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
@@ -149,7 +174,12 @@
       </Column>
 
       <!-- Quantity Column -->
-      <Column class="text-xs" field="quantity" header="Qty" sortable>
+      <Column
+        class="text-xs"
+        field="quantity"
+        :header="$t('inventory.columns.quantity')"
+        sortable
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="30%" height="1rem" />
@@ -170,7 +200,12 @@
       </Column>
 
       <!-- Cost Price Column -->
-      <Column class="text-xs" field="cost_price" header="Cost" sortable>
+      <Column
+        class="text-xs"
+        field="cost_price"
+        :header="$t('inventory.columns.cost_price')"
+        sortable
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
@@ -182,7 +217,12 @@
       </Column>
 
       <!-- Selling Price Column -->
-      <Column class="text-xs" field="selling_price" header="Price" sortable>
+      <Column
+        class="text-xs"
+        field="selling_price"
+        :header="$t('inventory.columns.selling_price')"
+        sortable
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
@@ -194,7 +234,12 @@
       </Column>
 
       <!-- Expiry Date Column -->
-      <Column class="text-xs" field="expiry_date" header="Expiry" sortable>
+      <Column
+        class="text-xs"
+        field="expiry_date"
+        :header="$t('inventory.columns.expiry_date')"
+        sortable
+      >
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="60%" height="1rem" />
@@ -218,7 +263,7 @@
       </Column>
 
       <!-- Actions Column -->
-      <Column header="Actions" :exportable="false">
+      <Column :header="$t('inventory.columns.actions')" :exportable="false">
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="60%" height="1rem" />
@@ -229,14 +274,14 @@
               icon="pi pi-pencil"
               class="p-button-rounded p-button-text p-button-sm"
               @click="editItem(slotProps.data)"
-              v-tooltip.bottom="`Edit Item`"
+              v-tooltip.bottom="$t('inventory.actions.edit')"
             />
             <Button
               size="small"
               icon="pi pi-trash"
               class="p-button-rounded p-button-text p-button-sm p-button-danger"
               @click="confirmDelete(slotProps.data)"
-              v-tooltip.bottom="`Delete Item`"
+              v-tooltip.bottom="$t('inventory.actions.delete')"
             />
           </template>
         </template>
@@ -258,7 +303,9 @@
 
   <!-- Add/Edit Item Dialog -->
   <Dialog
-    :header="editMode ? 'Edit Inventory Item' : 'Add New Inventory Item'"
+    :header="
+      editMode ? $t('inventory.dialog.edit_title') : $t('inventory.dialog.add_title')
+    "
     v-model:visible="isModalVisible"
     @hide="resetForm"
     modal
@@ -280,7 +327,7 @@
   <Dialog
     v-model:visible="deleteDialogVisible"
     :style="{ width: '450px' }"
-    header="Confirm"
+    :header="$t('inventory.dialog.delete_title')"
     :modal="true"
   >
     <div
@@ -291,22 +338,22 @@
       }"
     >
       <i class="pi pi-exclamation-triangle ltr:mr-3 rtl:ml-3" style="font-size: 2rem" />
-      <span v-if="selectedItem"
-        >Are you sure you want to delete <b>{{ selectedItem.name }}</b
-        >?</span
-      >
+      <span
+        v-if="selectedItem"
+        v-html="$t('inventory.dialog.delete_message', { item: selectedItem.name })"
+      ></span>
     </div>
     <template #footer>
       <Button
         size="small"
-        label="No"
+        :label="$t('inventory.actions.no')"
         icon="pi pi-times"
         class="p-button-text"
         @click="deleteDialogVisible = false"
       />
       <Button
         size="small"
-        label="Yes"
+        :label="$t('inventory.actions.yes')"
         icon="pi pi-check"
         class="p-button-text p-button-danger"
         @click="deleteItem"
@@ -331,7 +378,10 @@ import Dialog from "primevue/dialog";
 import Dropdown from "primevue/dropdown";
 import InventoryItemForm from "@/views/addInventoryItem.vue";
 import { useRoute } from "vue-router";
+import { useI18n } from "vue-i18n";
 const route = useRoute();
+const { t } = useI18n();
+
 // BARCODE READER WORK
 const inputFocused = ref(false);
 const inputRef = ref(null);
@@ -368,12 +418,11 @@ const editMode = ref(false);
 const selectedItem = ref(null);
 const categoryFilter = ref("");
 const categories = ref([
-  { label: "Food", value: "food" },
-  { label: "Medicine", value: "medicine" },
-  { label: "Accessories", value: "accessories" },
-  { label: "Miscellaneous", value: "miscellaneous" },
+  { label: t("inventory.categories.food"), value: "food" },
+  { label: t("inventory.categories.medicine"), value: "medicine" },
+  { label: t("inventory.categories.accessories"), value: "accessories" },
+  { label: t("inventory.categories.miscellaneous"), value: "miscellaneous" },
 ]);
-
 const filters = ref({
   category: { value: null, matchMode: "equals" },
 });
@@ -396,6 +445,9 @@ watchEffect(() => {
     // isPredefined.value = true;
   } else if (route.path === "/add-inventory-grooming") {
     filters.value.category.value = "Grooming";
+    // isPredefined.value = true;
+  } else if (route.path === "/add-inventory-treatment") {
+    filters.value.category.value = "Treatment";
     // isPredefined.value = true;
   }
   // Add more route cases as needed

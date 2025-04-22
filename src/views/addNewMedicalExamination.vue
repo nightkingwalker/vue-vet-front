@@ -747,7 +747,7 @@ const yesno = ref([
 ]);
 // Form submission
 const submitForm = async () => {
-  const { t } = useI18n();
+  //const { t } = useI18n();
 
   const submissionData = {
     ...examination.value,

@@ -101,6 +101,7 @@
             "reports": "تقارير",
             "settings": "الإعدادات",
             "shortcuts": "اختصارات",
+            "treatment": "المعالجات",
             "logout": "تسجيل الخروج"
         },
         "profile": {
@@ -115,6 +116,10 @@
         "toast": {
             "signed_out": "تم تسجيل الخروج",
             "signed_out_detail": "تم تسجيل خروج المستخدم"
+        },
+        "theme": {
+            "light_mode": "وضع الألوان الفاتحة",
+            "dark_mode": "وضع الألوان الداكنة"
         }
     },
     "whatsapp": {
@@ -152,6 +157,9 @@
         "messages": {
             "success": "تمت إضافة العميل بنجاح.",
             "error": "فشل في إضافة العميل. يرجى المحاولة مرة أخرى."
+        },
+        "errors": {
+            "invalid_phone": "صيغة الرقم غير صحيحة"
         }
     },
     "pets": {
@@ -250,8 +258,10 @@
             "ovine": "أغنام"
         },
         "toast": {
+            "success_summary": "نجاح",
             "success": "تمت إضافة الحيوان الأليف بنجاح",
-            "error": "خطأ في إضافة الحيوان الأليف"
+            "error": "خطأ في إضافة الحيوان الأليف",
+            "error_summary": "خطأ"
         }
     },
     "pet_details": {
@@ -983,5 +993,127 @@
             "update_error": "فشل تحديث الموعد.",
             "fetch_error": "فشل جلب بيانات الموعد."
         }
+    },
+    "inventory": {
+        "title": "المخزون",
+        "actions": {
+            "refresh": "تحديث البيانات",
+            "add": "إضافة عنصر جديد",
+            "export": "تصدير",
+            "edit": "تعديل العنصر",
+            "delete": "حذف العنصر",
+            "yes": "نعم",
+            "no": "لا"
+        },
+        "columns": {
+            "barcode": "الباركود",
+            "brand": "العلامة التجارية",
+            "name": "الاسم",
+            "category": "الفئة",
+            "type": "النوع",
+            "quantity": "الكمية",
+            "cost_price": "التكلفة",
+            "selling_price": "السعر",
+            "expiry_date": "تاريخ الانتهاء",
+            "actions": "الإجراءات"
+        },
+        "search": {
+            "placeholder": "بحث في جميع الأعمدة"
+        },
+        "dialog": {
+            "add_title": "إضافة عنصر جديد للمخزون",
+            "edit_title": "تعديل عنصر المخزون",
+            "delete_title": "تأكيد",
+            "delete_message": "هل أنت متأكد أنك تريد حذف <b>{item}</b>؟"
+        },
+        "status": {
+            "expired": "منتهي الصلاحية",
+            "expiring_soon": "ينتهي قريبًا",
+            "low_stock": "مخزون منخفض"
+        }
+    },
+    "invoices": {
+        "title": "الفواتير",
+        "actions": {
+            "refresh": "تحديث البيانات",
+            "create": "إنشاء فاتورة جديدة",
+            "export": "تصدير",
+            "view": "عرض الفاتورة",
+            "edit": "تعديل الفاتورة",
+            "delete": "حذف الفاتورة",
+            "add_payment": "إضافة دفعة",
+            "yes": "نعم",
+            "no": "لا"
+        },
+        "columns": {
+            "invoice_number": "رقم الفاتورة",
+            "client": "العميل",
+            "pet": "الحيوان الأليف",
+            "date": "التاريخ",
+            "due_date": "تاريخ الاستحقاق",
+            "status": "الحالة",
+            "total_amount": "الإجمالي",
+            "amount_paid": "المدفوع",
+            "balance_due": "الرصيد",
+            "payment_status": "حالة الدفع",
+            "actions": "الإجراءات"
+        },
+        "status": {
+            "draft": "مسودة",
+            "pending": "قيد الانتظار",
+            "partially_paid": "مدفوع جزئيًا",
+            "paid": "مدفوع",
+            "cancelled": "ملغاة",
+            "refunded": "تم الاسترداد",
+            "unpaid": "غير مدفوع",
+            "partial": "جزئي"
+        },
+        "search": {
+            "placeholder": "بحث في جميع الأعمدة"
+        },
+        "dialog": {
+            "view_title": "تفاصيل الفاتورة",
+            "create_title": "إنشاء فاتورة جديدة",
+            "edit_title": "تعديل الفاتورة",
+            "payment_title": "إضافة دفعة",
+            "delete_title": "تأكيد",
+            "delete_message": "هل أنت متأكد أنك تريد حذف الفاتورة <b>{invoice}</b>؟",
+            "paid_message": "الفاتورة مدفوعة بالفعل",
+            "cancelled_message": "لا يمكن دفع فاتورة ملغاة"
+        },
+        "messages": {
+            "payment_success": "تمت إضافة الدفعة بنجاح",
+            "payment_error": "فشل إضافة الدفعة"
+        }
+    },
+    "behavior": {
+        "Friendly": "ودود",
+        "Fearful": "خائف",
+        "Aggressive": "عدواني",
+        "Fear_Aggression": "عدواني بسبب الخوف",
+        "Nervous": "متوتر",
+        "Submissive": "خاضع",
+        "Needs_Sedation": "يحتاج تخديرًا خفيفًا",
+        "Biter": "يعض",
+        "Muzzle_Required": "يحتاج كمامة",
+        "Escape_Risk": "عرضة للهرب",
+        "Urinates": "يتبول أو يتغوط من التوتر"
+    },
+    "form_messages": {
+        "warnings": {
+            "invalid_input": "هذا الحقل مطلوب"
+        }
+    },
+    "pet_list": {
+        "tooltips": {
+            "refresh": "تحديث البيانات",
+            "new_patient": "مريض جديد"
+        },
+        "search_placeholder": "بحث في قائمة الملاك",
+        "species": "النوع",
+        "breed": "السلالة",
+        "gender": "الجنس",
+        "modal_title": "إضافة مريض جديد",
+        "details_button": "التفاصيل"
     }
 }

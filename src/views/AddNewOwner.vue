@@ -10,6 +10,7 @@
           {{ $t("add_owner.title") }}
         </legend>
 
+        <!-- Name Field -->
         <div class="field w-full">
           <FloatLabel class="w-full">
             <InputText fluid id="name" v-model="owner.name" />
@@ -17,20 +18,30 @@
           </FloatLabel>
         </div>
 
+        <!-- Email Field -->
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <InputText fluid id="email" v-model="owner.email" />
+            <InputText fluid id="email" v-model="owner.email" type="email" class="ltr" />
             <label for="email">{{ $t("add_owner.fields.email") }}</label>
           </FloatLabel>
         </div>
 
+        <!-- Phone Field -->
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <InputText fluid id="phone" v-model="owner.phone" />
+            <vue-tel-input
+              id="phone"
+              v-model="rawPhoneInput"
+              mode="international"
+              :inputOptions="phoneInputOptions"
+              :dropdownOptions="phoneDropdownOptions"
+              @validate="validatePhone"
+              class="phone-input rounded-[var(--p-inputtext-border-radius)] border-var(--p-inputtext-border-color) outline-0 ltr"
+            />
             <label for="phone">{{ $t("add_owner.fields.phone") }}</label>
           </FloatLabel>
+          <small v-if="phoneError" class="p-error">{{ phoneError }}</small>
         </div>
-
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
             <InputText fluid id="landline" v-model="owner.landline" />
@@ -108,7 +119,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import axiosInstance from "@/axios";
 import InputText from "primevue/inputtext";
@@ -120,59 +131,103 @@ import Calendar from "primevue/calendar";
 import eventBus from "@/eventBus";
 import router from "@/router";
 import Cookies from "js-cookie";
+import { VueTelInput } from "vue-tel-input";
+import "vue-tel-input/vue-tel-input.css";
 
 const { t } = useI18n();
-
 const emit = defineEmits(["submitted"]);
 
-const owner = ref({
-  name: "",
-  email: "",
-  phone: "",
-  landline: "",
-  address: "",
-  birth_date: null,
-  facebook_link: "",
-  instagram_link: "",
-  referral: "",
-  clinic_notes: "",
-  branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
+// Refs
+const rawPhoneInput = ref("");
+const phoneError = ref(null);
+const owner = ref(createInitialOwner());
+const phoneInputOptions = ref({
+  showDialCode: true,
+  required: true,
+  styleClasses: "w-full p-inputtext p-inputtext-fluid p-filled !border-0",
 });
 
-const submitForm = async () => {
+const phoneDropdownOptions = ref({
+  showDialCodeInList: true,
+  showFlags: true,
+  tabindex: 0,
+});
+
+// Computed
+const cleanedPhoneNumber = computed(() => {
+  return rawPhoneInput.value.replace(/\D/g, "");
+});
+
+// Functions
+function createInitialOwner() {
+  return {
+    name: "",
+    email: "",
+    phone: "",
+    landline: "",
+    address: "",
+    birth_date: null,
+    facebook_link: "",
+    instagram_link: "",
+    referral: "",
+    clinic_notes: "",
+    branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
+  };
+}
+
+function validatePhone(phoneData) {
+  if (!phoneData?.valid) {
+    phoneError.value = t("add_owner.errors.invalid_phone");
+    return;
+  }
+
+  // 1. Get the properly formatted international number from vue-tel-input
+  const formattedNumber = phoneData.number; // "+963 44 465 4654 123"
+
+  // 2. Clean while preserving international format:
+  // - Remove all whitespace
+  // - Keep the + prefix
+  // owner.value.phone = formattedNumber.replace(/\s+/g, ""); // "+963444654654123"
+
+  // Alternative if you want to store without + prefix:
+  owner.value.phone = formattedNumber.replace(/\D/g, ""); // "963444654654123"
+
+  phoneError.value = null;
+}
+async function submitForm() {
+  if (phoneError.value) return;
   try {
-    const formatDate = (isoDateString) => {
-      return isoDateString ? new Date(isoDateString).toISOString().split("T")[0] : null;
-    };
     owner.value.birth_date = formatDate(owner.value.birth_date);
     const response = await axiosInstance.post("/owners", owner.value);
-    console.log(response.data);
-    emit("submitted", response.data);
-    eventBus.emit("show-toast", {
-      severity: "success",
-      summary: t("add_owner.title"),
-      detail: t("add_owner.messages.success"),
-      life: 5000,
-    });
+
+    emit("ownerAdded", response.data);
+    showToast("success", t("add_owner.messages.success"));
     await router.push("/owners");
   } catch (error) {
     console.error("Failed to add owner:", error);
-    eventBus.emit("show-toast", {
-      severity: "error",
-      summary: t("add_owner.title"),
-      detail: t("add_owner.messages.error"),
-      life: 5000,
-    });
+    showToast("error", t("add_owner.messages.error"));
   }
-};
+}
+
+function formatDate(isoDateString) {
+  return isoDateString ? new Date(isoDateString).toISOString().split("T")[0] : null;
+}
+
+function showToast(severity, detail) {
+  eventBus.emit("show-toast", {
+    severity,
+    summary: t("add_owner.title"),
+    detail,
+    life: 5000,
+  });
+}
 </script>
 
 <style scoped>
-/* Tailwind and Theming for light/dark modes */
 body.dark .text-sm {
-  color: #ccc; /* Example color for dark mode */
+  color: #ccc;
 }
 body .text-sm {
-  color: #333; /* Example color for light mode */
+  color: #333;
 }
 </style>
