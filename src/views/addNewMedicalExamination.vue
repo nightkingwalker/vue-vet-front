@@ -747,11 +747,8 @@ const yesno = ref([
 ]);
 // Form submission
 const submitForm = async () => {
-<<<<<<< HEAD
   //const { t } = useI18n();
 
-=======
->>>>>>> 1f86cb2cb339354adb2a8dfe658efc228b20dce2
   const submissionData = {
     ...examination.value,
     medical_record_id: props.medical_record_id,
