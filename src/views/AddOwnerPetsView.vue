@@ -398,7 +398,7 @@ const submitForm = async () => {
     name: pet.value.name,
     species: pet.value.species,
     breed: pet.value.breed,
-    gender: pet.value.gender.value,
+    gender: pet.value.gender,
     date_of_birth: pet.value.date_of_birth
       ? pet.value.date_of_birth.toLocaleDateString("en-CA")
       : null,
@@ -429,6 +429,7 @@ const submitForm = async () => {
       detail: error,
       life: 5000,
     });
+    console.log(error)
   } finally {
   }
 };

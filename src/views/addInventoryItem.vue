@@ -446,6 +446,9 @@ watchEffect(() => {
   } else if (route.path === "/add-inventory-toys") {
     form.value.category = "miscellaneous";
     isPredefined.value = true;
+  } else if (route.path === "/add-inventory-treatment") {
+    form.value.category = "miscellaneous";
+    isPredefined.value = true;
   }
   // Add more route cases as needed
 });
