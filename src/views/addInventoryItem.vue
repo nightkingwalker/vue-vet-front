@@ -327,6 +327,7 @@ const categories = ref([
   { label: "Pharmaceutical", value: "pharmaceutical" },
   { label: "Miscellaneous", value: "miscellaneous" },
   { label: "Toy", value: "toy" },
+  { label: "Treatments", value: "treatment" },
 ]);
 
 // Item Matching
@@ -447,7 +448,7 @@ watchEffect(() => {
     form.value.category = "miscellaneous";
     isPredefined.value = true;
   } else if (route.path === "/add-inventory-treatment") {
-    form.value.category = "miscellaneous";
+    form.value.category = "treatment";
     isPredefined.value = true;
   }
   // Add more route cases as needed
