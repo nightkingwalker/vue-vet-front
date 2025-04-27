@@ -1226,6 +1226,7 @@
             "total": "الإجمالي",
             "balance_after_deposit": "الرصيد بعد الدفعة",
             "save_draft": "حفظ كمسودة",
+            "update_invoice": "تحديث الفاتورة",
             "create_invoice": "إنشاء الفاتورة"
         },
         "payment_terms": {
@@ -1247,11 +1248,13 @@
             "expired_item": "عنصر منتهي الصلاحية",
             "item_added": "تمت إضافة العنصر",
             "invoice_created": "تم إنشاء الفاتورة",
+            "invoice_updated": "تم تعديل الفاتورة",
             "error": "خطأ",
             "messages": {
                 "only_x_available": "فقط <b>{quantity}</b> متوفر",
                 "cannot_add_expired": "لا يمكن إضافة عناصر منتهية الصلاحية إلى الفاتورة",
                 "item_added_success": "تمت إضافة العنصر إلى الفاتورة",
+                "invoice_updated_success": "تم تعديل معلومات الفاتورة بنجاح",
                 "invoice_created_success": "تم إنشاء الفاتورة بنجاح",
                 "invoice_draft_success": "تم حفظ الفاتورة كمسودة",
                 "no_items_error": "يجب أن تحتوي الفاتورة على عنصر واحد على الأقل",
@@ -1268,5 +1271,20 @@
     },
     "common": {
         "not_available": "لا تتوفر بيانات"
+    },
+    "paymentForm": {
+        "title": "إضافة دفعة جديدة",
+        "amount": "المبلغ",
+        "maxAmount": "الحد الأقصى: {maxAmount}",
+        "paymentMethod": "طريقة الدفع",
+        "paymentMethodRequired": "طريقة الدفع مطلوبة",
+        "paymentDate": "تاريخ الدفع",
+        "notes": "ملاحظات",
+        "cancel": "إلغاء",
+        "submit": "إرسال الدفعة",
+        "success": {
+            "title": "تم الدفع",
+            "message": "تمت إضافة دفعة الفاتورة"
+        }
     }
 }

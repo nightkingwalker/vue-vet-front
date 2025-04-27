@@ -38,7 +38,8 @@
         <InvoiceNotes v-if="invoice.notes" :notes="invoice.notes" class="mb-4" />
 
         <!-- Footer Actions -->
-        <InvoiceActions @print="printPOS" @download="downloadPDF" :invoice="invoice" />
+        <InvoiceActions @print="printPOS" @download="downloadPDF" :invoice="invoice"
+          :onAddPayment="openPaymentDialog" />
       </template>
     </Card>
 
@@ -140,6 +141,8 @@ import PaymentHistory from "./partials/Invoice/PaymentHistory.vue";
 import InvoiceNotes from "./partials/Invoice/InvoiceNotes.vue";
 import InvoiceActions from "./partials/Invoice/InvoiceActions.vue";
 import Button from "primevue/button";
+import { onMounted, onBeforeUnmount } from "vue";
+import eventBus from "@/eventBus";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -241,6 +244,11 @@ const printInvoice = () => {
   };
 };
 
+const showPaymentDialog = () => {
+  // Logic to show payment dialog if needed
+  // Or you can directly emit an event to parent if the dialog is managed there
+  emit('showPayment');
+};
 const downloadPDF = () => {
   toast.add({
     severity: "info",
@@ -528,6 +536,13 @@ const posPrintStyles = `
     }
   }
 `;
+onMounted(() => {
+  eventBus.on("showPaymentView", showPaymentDialog);
+});
+
+onBeforeUnmount(() => {
+  eventBus.off("showPaymentView", showPaymentDialog);
+});
 </script>
 
 <style scoped>

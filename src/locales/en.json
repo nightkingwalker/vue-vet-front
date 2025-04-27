@@ -1233,6 +1233,7 @@
             "total": "Total",
             "balance_after_deposit": "Balance After Deposit",
             "save_draft": "Save Draft",
+            "update_invoice": "Update Invoice",
             "create_invoice": "Create Invoice"
         },
         "payment_terms": {
@@ -1254,11 +1255,13 @@
             "expired_item": "Expired Item",
             "item_added": "Item Added",
             "invoice_created": "Invoice Created",
+            "invoice_updated": "Invoice Updated",
             "error": "Error",
             "messages": {
                 "only_x_available": "Only {quantity} available",
                 "cannot_add_expired": "Cannot add expired items to invoice",
                 "item_added_success": "Item has been added to the invoice",
+                "invoice_updated_success": "Invoice updated successfully",
                 "invoice_created_success": "Invoice created successfully",
                 "invoice_draft_success": "Invoice saved as draft",
                 "no_items_error": "Invoice must have at least one item",
@@ -1275,5 +1278,20 @@
     },
     "common": {
         "not_available": "No Data Available"
+    },
+    "paymentForm": {
+        "title": "Add New Payment",
+        "amount": "Amount",
+        "maxAmount": "Maximum: {maxAmount}",
+        "paymentMethod": "Payment Method",
+        "paymentMethodRequired": "Payment method is required",
+        "paymentDate": "Payment Date",
+        "notes": "Notes",
+        "cancel": "Cancel",
+        "submit": "Submit Payment",
+        "success": {
+            "title": "Paid",
+            "message": "Invoice Payment Added"
+        }
     }
 }

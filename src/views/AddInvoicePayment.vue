@@ -1,94 +1,51 @@
 <template>
   <div class="w-full">
-    <form
-      @submit.prevent="submitPayment"
-      class="mt-2 md:mx-auto md:w-3/4 sm:mx-8 sm:w-full"
-    >
+    <form @submit.prevent="submitPayment" class="mt-2 md:mx-auto md:w-3/4 sm:mx-8 sm:w-full">
       <fieldset
-        class="p-fieldset p-component w-full flex flex-wrap items-center border rounded-lg p-2 justify-start gap-x-2"
-      >
-        <legend>Add New Payment</legend>
+        class="p-fieldset p-component w-full flex flex-wrap items-center border rounded-lg p-2 justify-start gap-x-2">
+        <legend>{{ $t('paymentForm.title') }}</legend>
 
         <div class="field mt-6 w-full">
           <FloatLabel class="w-full">
-            <InputNumber
-              id="amount"
-              fluid
-              v-model="payment.amount"
-              mode="currency"
-              currency="USD"
-              :min="0.01"
-              :max="maxAmount"
-              :disabled="loading"
-            />
-            <label for="amount">Amount</label>
+            <InputNumber id="amount" fluid v-model="payment.amount" mode="currency" currency="USD" :min="0.01"
+              :max="maxAmount" :disabled="loading" />
+            <label for="amount">{{ $t('paymentForm.amount') }}</label>
           </FloatLabel>
-          <small class="text-gray-500">Maximum: {{ formatCurrency(maxAmount) }}</small>
+          <small class="text-gray-500">{{ $t('paymentForm.maxAmount', { maxAmount: formatCurrency(maxAmount) })
+          }}</small>
         </div>
 
         <div class="field mt-6 w-full">
           <FloatLabel class="w-full">
-            <Select
-              fluid
-              id="paymentMethod"
-              v-model="payment.payment_method_id"
-              :options="paymentMethods"
-              optionLabel="name"
-              optionValue="id"
-              :disabled="loading"
-              :class="{ 'p-invalid': !payment.payment_method_id && submitted }"
-            />
-            <label for="paymentMethod">Payment Method</label>
+            <Select fluid id="paymentMethod" v-model="payment.payment_method_id" :options="paymentMethods"
+              optionLabel="name" optionValue="id" :disabled="loading"
+              :class="{ 'p-invalid': !payment.payment_method_id && submitted }" />
+            <label for="paymentMethod">{{ $t('paymentForm.paymentMethod') }}</label>
           </FloatLabel>
           <small v-if="!payment.payment_method_id && submitted" class="p-error">
-            Payment method is required
+            {{ $t('paymentForm.paymentMethodRequired') }}
           </small>
         </div>
 
         <div class="field mt-6 w-full">
           <FloatLabel class="w-full">
-            <DatePicker
-              showIcon
-              iconDisplay="input"
-              showButtonBar
-              id="paymentDate"
-              fluid
-              v-model="payment.payment_date"
-              dateFormat="yy-mm-dd"
-              :disabled="loading"
-            />
-            <label for="paymentDate">Payment Date</label>
+            <DatePicker showIcon iconDisplay="input" showButtonBar id="paymentDate" fluid v-model="payment.payment_date"
+              dateFormat="yy-mm-dd" :disabled="loading" />
+            <label for="paymentDate">{{ $t('paymentForm.paymentDate') }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-full">
           <FloatLabel class="w-full">
-            <TextArea
-              fluid
-              autoResize
-              rows="4"
-              id="notes"
-              v-model="payment.notes"
-              :disabled="loading"
-            />
-            <label for="notes">Notes</label>
+            <TextArea fluid autoResize rows="4" id="notes" v-model="payment.notes" :disabled="loading" />
+            <label for="notes">{{ $t('paymentForm.notes') }}</label>
           </FloatLabel>
         </div>
 
         <div class="flex justify-end gap-2 mt-4 w-full">
-          <Button
-            label="Cancel"
-            icon="pi pi-times"
-            @click="$emit('cancel')"
-            class="p-button-text"
-            :disabled="loading"
-          />
-          <Button
-            type="submit"
-            label="Submit Payment"
-            icon="pi pi-check"
-            :loading="loading"
-          />
+          <Button :label="$t('paymentForm.cancel')" icon="pi pi-times" @click="$emit('cancel')" class="p-button-text"
+            :disabled="loading" />
+          <Button type="submit" :label="$t('paymentForm.submit')" icon="pi pi-check" :loading="loading" />
         </div>
       </fieldset>
     </form>
@@ -104,9 +61,11 @@ import DatePicker from "primevue/datepicker";
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
 import TextArea from "primevue/textarea";
-import axiosInstance from "@/axios"; // Assuming you've created a global axios instance
+import axiosInstance from "@/axios";
 import { useToast } from "primevue/usetoast";
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const props = defineProps({
   invoice: {
     type: Object,
@@ -157,7 +116,7 @@ const submitPayment = async () => {
 
   try {
     const response = await axiosInstance.post("/invoice/add-payment", {
-      invoice_id: props.invoice.id, // Pass invoice ID in payload
+      invoice_id: props.invoice.id,
       payment_method_id: payment.value.payment_method_id,
       amount: payment.value.amount,
       payment_date: payment.value.payment_date.toISOString().split("T")[0],
@@ -166,8 +125,8 @@ const submitPayment = async () => {
     });
     toast.add({
       severity: "success",
-      summary: "Paid",
-      detail: "Invoice Payment Added",
+      summary: t('paymentForm.success.title'),
+      detail: t('paymentForm.success.message'),
       life: 3000,
     });
 
@@ -180,7 +139,6 @@ const submitPayment = async () => {
   }
 };
 payment.value.payment_method_id = 1;
-// Initialize with max amount
 payment.value.amount = maxAmount.value > 0 ? maxAmount.value : 0;
 </script>
 

@@ -223,7 +223,8 @@
     <InvoiceView v-focustrap="{
       disabled: false,
       autoFocus: true,
-    }" v-if="selectedInvoice" :invoice="selectedInvoice" :paymentMethods="paymentMethods" />
+}" v-if="selectedInvoice" :invoice="selectedInvoice" :paymentMethods="paymentMethods"
+      @showPayment="openPaymentDialog(selectedInvoice)" />
   </Dialog>
 
   <!-- Add/Edit Invoice Dialog -->
