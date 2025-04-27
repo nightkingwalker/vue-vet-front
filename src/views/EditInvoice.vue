@@ -1,8 +1,7 @@
 <template>
   <div class="w-full mt-2">
     <div
-      class="grid grid-cols-1 lg:grid-cols-3 gap-6 bg-[var(--p-surface-200)] dark:bg-[var(--p-surface-600)] rounded-lg p-2"
-    >
+      class="grid grid-cols-1 lg:grid-cols-3 gap-6 bg-[var(--p-surface-200)] dark:bg-[var(--p-surface-600)] rounded-lg p-2">
       <!-- Left Column - Client & Pet Info -->
       <div class="bg-white p-4 rounded-lg shadow">
         <h2 class="!text-sm font-semibold mb-4 border-b pb-2">
@@ -11,16 +10,8 @@
 
         <div class="mt-3">
           <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
-            <AutoComplete
-              v-model="clientSearch"
-              :suggestions="filteredClients"
-              @complete="searchClients"
-              optionLabel="name"
-              size="small"
-              fluid
-              @item-select="selectClient"
-              :disabled="isEditing"
-            />
+            <AutoComplete v-model="clientSearch" :suggestions="filteredClients" @complete="searchClients"
+              optionLabel="name" size="small" fluid @item-select="selectClient" :disabled="isEditing" />
             <label>Search Client</label>
           </FloatLabel>
         </div>
@@ -28,13 +19,8 @@
         <div v-if="selectedClient" class="my-4 p-3 bg-gray-50 rounded">
           <div class="flex justify-between items-center mb-2">
             <span class="font-medium">{{ selectedClient.name }}</span>
-            <Button
-              v-if="!isEditing"
-              size="small"
-              icon="pi pi-times"
-              class="p-button-text p-button-xs !2xl:text-lg lg:text-xs"
-              @click="clearClient"
-            />
+            <Button v-if="!isEditing" size="small" icon="pi pi-times"
+              class="p-button-text p-button-xs !2xl:text-lg lg:text-xs" @click="clearClient" />
           </div>
           <div class="!!2xl:text-lg lg:text-xs text-gray-600">
             <div>Phone: {{ selectedClient.phone }}</div>
@@ -44,14 +30,8 @@
 
         <div class="mb-4" v-if="selectedClient">
           <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
-            <Select
-              v-model="selectedPet"
-              :options="clientPets"
-              @change="selectPet"
-              optionLabel="name"
-              class="w-full"
-              :disabled="isEditing"
-            />
+            <Select v-model="selectedPet" :options="clientPets" @change="selectPet" optionLabel="name" class="w-full"
+              :disabled="isEditing" />
             <label>Select Pet</label>
           </FloatLabel>
         </div>
@@ -59,13 +39,8 @@
         <div v-if="selectedPet" class="mb-4 p-3 bg-gray-50 rounded">
           <div class="flex justify-between items-center mb-2">
             <span class="font-medium">{{ selectedPet.name }}</span>
-            <Button
-              v-if="!isEditing"
-              size="small"
-              icon="pi pi-times"
-              class="p-button-text p-button-xs !2xl:text-lg lg:text-xs"
-              @click="clearPet"
-            />
+            <Button v-if="!isEditing" size="small" icon="pi pi-times"
+              class="p-button-text p-button-xs !2xl:text-lg lg:text-xs" @click="clearPet" />
           </div>
           <div class="!!2xl:text-lg lg:text-xs text-gray-600">
             <div><b>Species:</b> {{ selectedPet.species }}</div>
@@ -81,16 +56,9 @@
 
         <div class="mt-3" v-if="!isEditing">
           <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
-            <AutoComplete
-              v-model="itemSearch"
-              :suggestions="filteredItems"
-              @complete="searchItems"
-              optionLabel="displayText"
-              size="small"
-              fluid
-              @item-select="selectItem"
-              @keyup.enter="handleBarcodeEnter"
-            >
+            <AutoComplete v-model="itemSearch" :suggestions="filteredItems" @complete="searchItems"
+              optionLabel="displayText" size="small" fluid @item-select="selectItem" @keyup.enter="handleBarcodeEnter"
+              @keydown.enter.prevent="handleBarcodeEnter">
               <template #item="slotProps">
                 <div class="flex items-center justify-between p-2">
                   <div>
@@ -100,22 +68,13 @@
                     </div>
                   </div>
                   <div class="flex items-center">
-                    <span class="!!2xl:text-lg lg:text-xs font-semibold ltr:mr-2 rtl:ml-2"
-                      >${{ slotProps.item.selling_price }}</span
-                    >
-                    <Tag
-                      v-if="slotProps.item.quantity <= 0"
-                      value="Out of stock"
-                      severity="danger"
-                    />
-                    <Tag
-                      v-else-if="
+                    <span class="!!2xl:text-lg lg:text-xs font-semibold ltr:mr-2 rtl:ml-2">${{
+                      slotProps.item.selling_price }}</span>
+                    <Tag v-if="slotProps.item.quantity <= 0" value="Out of stock" severity="danger" />
+                    <Tag v-else-if="
                         slotProps.item.expiry_date &&
                         new Date(slotProps.item.expiry_date) < new Date()
-                      "
-                      value="Expired"
-                      severity="warning"
-                    />
+                      " value="Expired" severity="warning" />
                     <Tag v-else value="In stock" severity="success" />
                   </div>
                 </div>
@@ -133,120 +92,61 @@
                 {{ selectedItem.brand }}
               </div>
             </div>
-            <Button
-              size="small"
-              icon="pi pi-times"
-              class="p-button-text p-button-xs !2xl:text-lg lg:text-xs"
-              @click="clearItem"
-            />
+            <Button size="small" icon="pi pi-times" class="p-button-text p-button-xs !2xl:text-lg lg:text-xs"
+              @click="clearItem" />
           </div>
 
           <div class="grid grid-cols-2 gap-4 mt-3">
             <div class="w-full">
               <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
-                <InputNumber
-                  class="!!2xl:text-lg lg:text-xs"
-                  v-model="itemPrice"
-                  mode="currency"
-                  currency="SYP"
-                  :min="0"
-                  fluid
-                  size="small"
-                />
+                <InputNumber class="!!2xl:text-lg lg:text-xs" v-model="itemPrice" mode="currency" currency="SYP"
+                  :min="0" fluid size="small" />
                 <label>Price</label>
               </FloatLabel>
             </div>
             <div class="w-full">
               <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
-                <InputNumber
-                  class="!!2xl:text-lg lg:text-xs"
-                  v-model="itemQuantity"
-                  :min="0.01"
-                  :max="selectedItem ? selectedItem.quantity : null"
-                  fluid
-                  size="small"
-                />
+                <InputNumber class="!!2xl:text-lg lg:text-xs" v-model="itemQuantity" :min="0.01"
+                  :max="selectedItem ? selectedItem.quantity : null" fluid size="small" />
                 <label>Quantity</label>
               </FloatLabel>
             </div>
             <div class="w-full">
               <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
-                <InputNumber
-                  class="!!2xl:text-lg lg:text-xs"
-                  v-model="itemDiscount"
-                  mode="currency"
-                  currency="SYP"
-                  :min="0"
-                  fluid
-                  size="small"
-                />
+                <InputNumber class="!!2xl:text-lg lg:text-xs" v-model="itemDiscount" mode="currency" currency="SYP"
+                  :min="0" fluid size="small" />
                 <label for="">Discount</label>
               </FloatLabel>
             </div>
             <div class="w-full">
               <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
-                <InputNumber
-                  v-model="itemTaxRate"
-                  suffix="%"
-                  :min="0"
-                  :max="100"
-                  fluid
-                  class="!!2xl:text-lg lg:text-xs"
-                  size="small"
-                />
+                <InputNumber v-model="itemTaxRate" suffix="%" :min="0" :max="100" fluid class="!!2xl:text-lg lg:text-xs"
+                  size="small" />
                 <label>Tax Rate</label>
               </FloatLabel>
             </div>
           </div>
 
           <div class="mt-3 flex justify-end">
-            <Button
-              size="small"
-              label="Add to Invoice"
-              class="!!2xl:text-lg lg:text-xs"
-              icon="pi pi-plus"
-              @click="addItemToInvoice"
-            />
+            <Button size="small" label="Add to Invoice" class="!!2xl:text-lg lg:text-xs" icon="pi pi-plus"
+              @click="addItemToInvoice" />
           </div>
         </div>
 
         <div class="mt-3">
-          <DataTable
-            :value="invoiceItems"
-            class="p-datatable-sm"
-            :scrollable="true"
-            scrollHeight="300px"
-          >
+          <DataTable :value="invoiceItems" class="p-datatable-sm" :scrollable="true" scrollHeight="300px">
             <Column field="name" header="Item" class="!2xl:text-lg lg:text-xs"></Column>
-            <Column
-              field="quantity"
-              header="Qty"
-              class="!2xl:text-lg lg:text-xs"
-              style="width: 80px"
-            >
+            <Column field="quantity" header="Qty" class="!2xl:text-lg lg:text-xs" style="width: 80px">
               <template #body="slotProps">
-                <InputNumber
-                  v-if="!isEditing"
-                  v-model="slotProps.data.quantity"
-                  :min="0.01"
-                  size="small"
-                  fluid
-                  @update:modelValue="updateItemQuantity(slotProps.index, $event)"
-                />
+                <InputNumber v-if="!isEditing" v-model="slotProps.data.quantity" :min="0.01" size="small" fluid
+                  @update:modelValue="updateItemQuantity(slotProps.index, $event)" />
                 <span v-else>{{ slotProps.data.quantity }}</span>
               </template>
             </Column>
             <Column header="Price" class="!2xl:text-lg lg:text-xs" style="width: 100px">
               <template #body="slotProps">
-                <InputNumber
-                  v-if="!isEditing"
-                  v-model="slotProps.data.unit_price"
-                  mode="decimal"
-                  :min="0"
-                  size="small"
-                  fluid
-                  @update:modelValue="updateItemPrice(slotProps.index, $event)"
-                />
+                <InputNumber v-if="!isEditing" v-model="slotProps.data.unit_price" mode="decimal" :min="0" size="small"
+                  fluid @update:modelValue="updateItemPrice(slotProps.index, $event)" />
                 <span v-else>${{ slotProps.data.unit_price.toFixed(2) }}</span>
               </template>
             </Column>
@@ -257,13 +157,8 @@
             </Column>
             <Column header="Actions" class="!2xl:text-lg lg:text-xs" style="width: 80px">
               <template #body="slotProps">
-                <Button
-                  v-if="!isEditing"
-                  size="small"
-                  icon="pi pi-trash"
-                  class="p-button-text p-button-danger"
-                  @click="removeItem(slotProps.index)"
-                />
+                <Button v-if="!isEditing" size="small" icon="pi pi-trash" class="p-button-text p-button-danger"
+                  @click="removeItem(slotProps.index)" />
               </template>
             </Column>
           </DataTable>
@@ -276,12 +171,7 @@
 
         <div class="mt-3">
           <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
-            <InputText
-              v-model="invoiceNumber"
-              size="small"
-              class="w-full !!2xl:text-lg lg:text-xs"
-              disabled
-            />
+            <InputText v-model="invoiceNumber" size="small" class="w-full !!2xl:text-lg lg:text-xs" disabled />
             <label>Invoice Number</label>
           </FloatLabel>
         </div>
@@ -289,31 +179,15 @@
         <div class="grid grid-cols-2 gap-4 mt-6">
           <div>
             <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
-              <DatePicker
-                showIcon
-                iconDisplay="input"
-                showButtonBar
-                size="small"
-                v-model="invoiceDate"
-                dateFormat="yy-mm-dd"
-                class="w-full"
-                :disabled="isEditing"
-              />
+              <DatePicker showIcon iconDisplay="input" showButtonBar size="small" v-model="invoiceDate"
+                dateFormat="yy-mm-dd" class="w-full" :disabled="isEditing" />
               <label>Invoice Date</label>
             </FloatLabel>
           </div>
           <div>
             <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
-              <DatePicker
-                showIcon
-                iconDisplay="input"
-                showButtonBar
-                size="small"
-                v-model="dueDate"
-                dateFormat="yy-mm-dd"
-                class="w-full"
-                :disabled="isEditing"
-              />
+              <DatePicker showIcon iconDisplay="input" showButtonBar size="small" v-model="dueDate"
+                dateFormat="yy-mm-dd" class="w-full" :disabled="isEditing" />
               <label>Due Date</label>
             </FloatLabel>
           </div>
@@ -321,62 +195,27 @@
 
         <div class="mt-3 flex gap-2 justify-between">
           <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs !w-1/2">
-            <Select
-              v-model="paymentTerms"
-              size="small"
-              :options="paymentTermOptions"
-              optionLabel="label"
-              optionValue="value"
-              fluid
-              class="!2xl:text-lg lg:text-xs"
-              :disabled="isEditing"
-            />
+            <Select v-model="paymentTerms" size="small" :options="paymentTermOptions" optionLabel="label"
+              optionValue="value" fluid class="!2xl:text-lg lg:text-xs" :disabled="isEditing" />
             <label>Payment Terms</label>
           </FloatLabel>
           <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs !w-1/2">
-            <Select
-              size="small"
-              v-model="status"
-              :options="statusOptions"
-              optionLabel="label"
-              optionValue="value"
-              fluid
-              class="!2xl:text-lg lg:text-xs"
-              :disabled="isEditing"
-            />
+            <Select size="small" v-model="status" :options="statusOptions" optionLabel="label" optionValue="value" fluid
+              class="!2xl:text-lg lg:text-xs" :disabled="isEditing" />
             <label>Status</label>
           </FloatLabel>
         </div>
 
         <div class="mt-3 flex gap-2 justify-between">
           <FloatLabel variant="on" class="!2xl:text-lg lg:text-xs !w-1/2">
-            <InputNumber
-              v-model="depositRequired"
-              showButtons
-              mode="decimal"
-              size="small"
-              currency="SYP"
-              :min="0"
-              :step="0.25"
-              :max="totalAmount"
-              fluid
-              class="!2xl:text-lg lg:text-xs"
-              :disabled="isEditing"
-            />
+            <InputNumber v-model="depositRequired" showButtons mode="decimal" size="small" currency="SYP" :min="0"
+              :step="0.25" :max="totalAmount" fluid class="!2xl:text-lg lg:text-xs" :disabled="isEditing" />
             <label>Deposit Required</label>
           </FloatLabel>
 
           <FloatLabel variant="on" class="!2xl:text-lg lg:text-xs w-1/2">
-            <Select
-              size="small"
-              v-model="depositPaymentMethod"
-              :options="paymentMethods"
-              optionLabel="name"
-              optionValue="id"
-              fluid
-              class="!2xl:text-lg lg:text-xs"
-              :disabled="isEditing"
-            />
+            <Select size="small" v-model="depositPaymentMethod" :options="paymentMethods" optionLabel="name"
+              optionValue="id" fluid class="!2xl:text-lg lg:text-xs" :disabled="isEditing" />
             <label>Payment Method</label>
           </FloatLabel>
         </div>
@@ -394,10 +233,7 @@
             <span class="!2xl:text-lg lg:text-xs">Tax:</span>
             <span class="!2xl:text-lg lg:text-xs">${{ totalTax.toFixed(2) }}</span>
           </div>
-          <div
-            v-if="depositRequired > 0"
-            class="flex justify-between mb-2 !2xl:text-lg lg:text-xs"
-          >
+          <div v-if="depositRequired > 0" class="flex justify-between mb-2 !2xl:text-lg lg:text-xs">
             <span class="!2xl:text-lg lg:text-xs">Deposit Required:</span>
             <span class="!2xl:text-lg lg:text-xs">${{ depositRequired.toFixed(2) }}</span>
           </div>
@@ -419,12 +255,7 @@
         </div>
 
         <div class="mt-3 flex justify-end gap-2" v-if="!isEditing">
-          <Button
-            size="small"
-            label="Save Draft"
-            severity="secondary"
-            @click="saveDraft"
-          />
+          <Button size="small" label="Save Draft" severity="secondary" @click="saveDraft" />
           <Button size="small" label="Update Invoice" @click="updateInvoice" />
         </div>
       </div>
@@ -615,7 +446,7 @@ const searchItems = async (event) => {
 };
 
 const handleBarcodeEnter = async () => {
-  if (!itemSearch.value) return;
+/*   if (!itemSearch.value) return;
 
   if (/^\d{6,}$/.test(itemSearch.value)) {
     try {
@@ -629,7 +460,8 @@ const handleBarcodeEnter = async () => {
     } catch (error) {
       console.error("Error searching by barcode:", error);
     }
-  }
+  } */
+  return
 };
 
 const selectItem = (event) => {

@@ -323,6 +323,7 @@
         "Male": "Male",
         "Female": "Female",
         "edit_treatment": "Edit Treatment",
+        "print": "Print Report",
         "species": {
             "Avian": "Avian",
             "Bovine": "Bovine",
@@ -1036,7 +1037,72 @@
             "expired": "Expired",
             "expiring_soon": "Expiring Soon",
             "low_stock": "Low Stock"
+        },
+        "add_item": {
+            "title": "Add Inventory Item",
+            "search_label": "Search by name, brand, or scan barcode",
+            "search_hint": "Enter product name or scan barcode",
+            "barcode": "Barcode",
+            "generate_barcode_tooltip": "Generate new barcode",
+            "category": "Category",
+            "type": "Type",
+            "brand": "Brand",
+            "product_name": "Product Name",
+            "description": "Description",
+            "quantity_to_add": "Quantity to Add",
+            "purchase_price": "Purchase Price",
+            "selling_price": "Selling Price",
+            "record_as_adjustment": "Record as adjustment (no purchase)",
+            "stock_adjustment": "Stock Adjustment",
+            "adjustment_type": "Adjustment Type",
+            "increase": "Increase",
+            "decrease": "Decrease",
+            "adjustment_amount": "Adjustment Amount",
+            "adjustment_reason": "Adjustment Reason",
+            "adjustment_notes": "Adjustment Notes",
+            "adjustment_notes_small": "Stock Movement Clarifications",
+            "adding_units": "Adding {units} units",
+            "removing_units": "Removing {units} units",
+            "reason": "Reason",
+            "min_stock_level": "Minimum Stock Level",
+            "expiry_date": "Expiry Date",
+            "notes": "Notes",
+            "create_new_item": "Create New Item",
+            "add_to_existing_item": "Add to Existing Item",
+            "existing_items_found": "Existing Items Found",
+            "similar_items_found": "We found similar items in our system:",
+            "name": "Name",
+            "current_stock": "Current Stock",
+            "add_to_selected": "Add to Selected",
+            "create_new_anyway": "Create New Anyway",
+            "food_types": "Dry Food, Canned Food ...etc"
+        },
+        "categories": {
+            "food": "Food",
+            "pharmaceutical": "Pharmaceutical",
+            "miscellaneous": "Miscellaneous",
+            "toy": "Toy",
+            "treatment": "Treatments"
+        },
+        "adjustment_reasons": {
+            "damaged": "Damaged Goods",
+            "found": "Found Stock",
+            "theft": "Theft/Loss",
+            "expired": "Expired Items",
+            "stocktake": "Stock Take Adjustment",
+            "other": "Other"
+        },
+        "adjustment_types": {
+            "increase": "Increase Stock",
+            "decrease": "Decrease Stock"
+        },
+        "messages": {
+            "items_needed_title": "Required Filds",
+            "items_needed_details": "There are required filds that can't be left empty",
+            "confirm_add_item": "Are you sure you want to create this new inventory item",
+            "confirm_update_item": "Are you sure you want to add {quantity} units to this existing item?"
         }
+
     },
     "invoices": {
         "title": "Invoices",
@@ -1121,5 +1187,93 @@
         "gender": "Gender",
         "modal_title": "Add New Patient",
         "details_button": "Details"
+    },
+    "add_invoice": {
+        "title": "Create New Invoice",
+        "client_section": {
+            "title": "Client & Pet Information",
+            "search_client": "Search Client",
+            "select_pet": "Select Pet",
+            "phone": "Phone",
+            "email": "Email",
+            "species": "Species",
+            "breed": "Breed",
+            "dob": "Date of Birth"
+        },
+        "items_section": {
+            "title": "Add Items",
+            "search_items": "Search Items",
+            "price": "Price",
+            "quantity": "Quantity",
+            "discount": "Discount",
+            "tax_rate": "Tax Rate",
+            "add_to_invoice": "Add to Invoice",
+            "item": "Item",
+            "qty": "Qty",
+            "total": "Total",
+            "actions": "Actions",
+            "out_of_stock": "Out of stock",
+            "almost_out_of_stock": "Low Stock",
+            "expired": "Expired",
+            "in_stock": "In stock"
+        },
+        "summary_section": {
+            "title": "Invoice Summary",
+            "invoice_number": "Invoice Number",
+            "invoice_date": "Invoice Date",
+            "due_date": "Due Date",
+            "payment_terms": "Payment Terms",
+            "status": "Status",
+            "deposit_required": "Deposit Required",
+            "payment_method": "Payment Method",
+            "notes": "Notes",
+            "subtotal": "Subtotal",
+            "discount": "Discount",
+            "tax": "Tax",
+            "total": "Total",
+            "balance_after_deposit": "Balance After Deposit",
+            "save_draft": "Save Draft",
+            "create_invoice": "Create Invoice"
+        },
+        "payment_terms": {
+            "due_on_receipt": "Due on Receipt",
+            "net_15": "Net 15 Days",
+            "net_30": "Net 30 Days",
+            "50_upfront": "50% Upfront, 50% on Completion"
+        },
+        "status_options": {
+            "draft": "Draft",
+            "pending": "Pending",
+            "partially_paid": "Partially Paid",
+            "paid": "Paid",
+            "cancelled": "Cancelled",
+            "refunded": "Refunded"
+        },
+        "toast": {
+            "insufficient_stock": "Insufficient Stock",
+            "expired_item": "Expired Item",
+            "item_added": "Item Added",
+            "invoice_created": "Invoice Created",
+            "error": "Error",
+            "messages": {
+                "only_x_available": "Only {quantity} available",
+                "cannot_add_expired": "Cannot add expired items to invoice",
+                "item_added_success": "Item has been added to the invoice",
+                "invoice_created_success": "Invoice created successfully",
+                "invoice_draft_success": "Invoice saved as draft",
+                "no_items_error": "Invoice must have at least one item",
+                "deposit_method_error": "Please select a payment method for the deposit"
+            }
+        },
+        "payment_methods": {
+            "cash": "Cash",
+            "credit_card": "Credit Card",
+            "bank_transfer": "Bank Transfer",
+            "mobile_payment": "Mobile Payment",
+            "load_error": "Failed to load payment methods"
+        }
+    },
+    "common": {
+        "not_available": "No Data Available"
     }
 }

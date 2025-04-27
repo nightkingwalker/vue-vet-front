@@ -1,85 +1,39 @@
 <template>
-  <div class="w-full">
-    <DataTable
-      id="petlist"
-      ref="dt"
-      :value="loading ? skeletonRows : pets"
-      :row-hover="true"
-      :loading="loading"
-      :metaKeySelection="metaKey"
-      sortMode="multiple"
-      :exportFilename="$t('pets.title') + '_Details'"
-      removableSort
-      stripedRows
-      v-model:selection="selectedPets"
-      highlightOnSelect
-      dataKey="id"
-      @rowSelect="onSelectionChange"
-      :exportFunction="beforeExportFunction"
-      responsiveLayout="scroll"
-      class="rounded-xl 2xl:overflow-y-scroll drop-shadow-md mt-4 h-[95vh]"
-      :size="`small`"
-    >
+  <div class="w-full lg:!text-[14px]">
+    <DataTable id="petlist" ref="dt" :value="loading ? skeletonRows : pets" :row-hover="true" :loading="loading"
+      :metaKeySelection="metaKey" sortMode="multiple" :exportFilename="$t('pets.title') + '_Details'" removableSort
+      stripedRows v-model:selection="selectedPets" highlightOnSelect dataKey="id" @rowSelect="onSelectionChange"
+      :exportFunction="beforeExportFunction" responsiveLayout="scroll"
+      class="rounded-xl 2xl:overflow-y-scroll drop-shadow-md mt-4 h-[95vh]" :size="`small`">
       <template #header>
-        <div class="flex justify-between">
+        <div class="flex justify-between items-center ">
           <div class="flex" v-if="!isMobile">
-            <Button
-              type="button"
-              icon="pi pi-refresh !text-sm"
-              label=""
-              v-tooltip.bottom="$t('pets.header.refresh')"
-              class="!text-sm ml-2"
-              @click="refreshData"
-            />
-            <Button
-              type="button"
-              :icon="showDeceased ? `pi pi-eye-slash !text-sm` : `pi pi-eye !text-sm`"
-              label=""
-              v-tooltip.bottom="
-                showDeceased
-                  ? $t('pets.header.hide_deceased')
-                  : $t('pets.header.show_deceased')
-              "
-              class="!text-sm ml-2"
-              @click="toggleDeceasedVisibility"
-            />
-            <Button
-              icon="pi pi-plus"
-              @click="showModal"
-              v-tooltip.bottom="$t('pets.header.add_new')"
-              class="p-button p-component p-button-icon-only !text-sm ml-2"
-            />
-            <Button
-              icon="pi pi-download !text-sm"
-              class="!text-sm ml-2"
-              v-tooltip.bottom="$t('pets.header.export')"
-              @click="exportCSV($event)"
-            />
+            <Button type="button" icon="pi pi-refresh !text-sm lg:!text-[14px]" label=""
+              v-tooltip.bottom="$t('pets.header.refresh')" class="!text-sm lg:!text-[14px] ml-2" @click="refreshData" />
+            <Button type="button"
+              :icon="showDeceased ? `pi pi-eye-slash !text-sm lg:!text-[14px]` : `pi pi-eye !text-sm lg:!text-[14px]`"
+              label="" v-tooltip.bottom="showDeceased
+                ? $t('pets.header.hide_deceased')
+                : $t('pets.header.show_deceased')
+                " class="!text-sm lg:!text-[14px] ml-2" @click="toggleDeceasedVisibility" />
+            <Button icon="pi pi-plus" @click="showModal" v-tooltip.bottom="$t('pets.header.add_new')"
+              class="p-button p-component p-button-icon-only !text-sm lg:!text-[14px] ml-2" />
+            <Button icon="pi pi-download !text-sm lg:!text-[14px]" class="!text-sm lg:!text-[14px] ml-2"
+              v-tooltip.bottom="$t('pets.header.export')" @click="exportCSV($event)" />
           </div>
-          <h2 class="text-2xl !mb-0 pb-0 flex">
+          <h2 class="text-lg !mb-0 pb-0 flex items-center">
             <i class="fa-solid fa-paw ltr:mr-2 rtl:ml-2"></i> {{ $t("pets.title") }}
           </h2>
-          <span class="p-input-icon-left text-sm">
-            <InputGroup
-              class="!text-gray-800 flex rounded-md overflow-hidden border !border-gray-400"
-            >
-              <InputGroupAddon
-                class="!text-gray-800 px-4 flex flex-col item-center justify-center"
-              >
+          <span class="p-input-icon-left lg:!text-[14px] text-sm ">
+            <InputGroup class="!text-gray-800 flex rounded-md overflow-hidden border !border-gray-400">
+              <InputGroupAddon class="!text-gray-800 px-4 flex flex-col item-center justify-center">
                 <i class="pi pi-search"></i>
               </InputGroupAddon>
-              <InputText
-                size="small"
-                v-model="searchQuery"
-                @input="onSearchChange"
-                ref="inputRef"
-                @focus="inputFocused = true"
-                @blur="inputFocused = false"
-                autofocus="true"
-                type="text"
-                class="!text-sm !text-gray-800 focus:!ring-0 focus:!ring-offset-0 focus:!border-gray-400 border-transparent"
-                :placeholder="$t('pets.header.search_placeholder')"
-              />
+              <InputText size="small" v-model="searchQuery" @input="onSearchChange" @keyup.enter="handleBarcodeEnter"
+                @keydown.enter.prevent="handleBarcodeEnter" ref="inputRef" @focus="inputFocused = true"
+                @blur="inputFocused = false" autofocus="true" type="text"
+                class="!text-sm lg:!text-[14px] !text-gray-800 focus:!ring-0 focus:!ring-offset-0 focus:!border-gray-400 border-transparent"
+                :placeholder="$t('pets.header.search_placeholder')" />
               <Button icon="pi pi-times" @click="clearFilters" />
             </InputGroup>
           </span>
@@ -92,21 +46,18 @@
             <Skeleton width="40%" height="1rem" />
           </template>
           <template v-else>
-            <router-link
-              :to="slotProps.data.owner.id + `/pets`"
-              v-tooltip.top="{
-                value: $t('pets.columns.view_details'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+            <router-link :to="slotProps.data.owner.id + `/pets`" v-tooltip.top="{
+              value: $t('pets.columns.view_details'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }"
-            >
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }">
               {{ slotProps.data.owner.name }}
               <i class="pi pi-external-link !text-[0.6rem] text-gray-500"></i>
             </router-link>
@@ -122,41 +73,26 @@
         </template>
       </Column>
 
-      <Column
-        class="text-md"
-        field="species"
-        :header="$t('pets.columns.species')"
-        sortable
-      >
+      <Column class="text-md" field="species" :header="$t('pets.columns.species')" sortable>
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="20%" height="1rem" />
           </template>
           <template v-else>
-            <Chip
-              class="shadow-sm !text-sm font-thin border dark:border-transparent h-7"
-              :label="getSpeciesValue(slotProps.data.species)"
-              :icon="getIconClass(slotProps.data.species)"
-            />
+            <Chip class="shadow-sm !text-sm lg:!text-[14px] font-thin border dark:border-transparent h-7"
+              :label="getSpeciesValue(slotProps.data.species)" :icon="getIconClass(slotProps.data.species)" />
           </template>
         </template>
       </Column>
 
-      <Column
-        v-if="!isMobile"
-        class="text-md"
-        field="breed"
-        :header="$t('pets.columns.breed')"
-      >
+      <Column v-if="!isMobile" class="text-md" field="breed" :header="$t('pets.columns.breed')">
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
           </template>
           <template v-else>
-            <Chip
-              :label="slotProps.data.breed"
-              class="shadow-sm !text-sm font-thin border dark:border-transparent h-7"
-            />
+            <Chip :label="slotProps.data.breed"
+              class="shadow-sm !text-sm lg:!text-[14px] font-thin border dark:border-transparent h-7" />
           </template>
         </template>
       </Column>
@@ -170,11 +106,9 @@
             <Skeleton width="20%" height="1rem" />
           </template>
           <template v-else>
-            <Chip
-              :label="$t(`pets.status.${slotProps.data.gender.toLowerCase()}`)"
+            <Chip :label="$t(`pets.status.${slotProps.data.gender.toLowerCase()}`)"
               :class="slotProps.data.gender === 'Male' ? `!bg-blue-400` : `!bg-pink-400`"
-              class="shadow-sm !text-sm font-thin border dark:border-transparent h-7 !text-white"
-            />
+              class="shadow-sm !text-sm lg:!text-[14px] font-thin border dark:border-transparent h-7 !text-white" />
           </template>
         </template>
       </Column>
@@ -188,15 +122,10 @@
             <Skeleton width="20%" height="1rem" />
           </template>
           <template v-else>
-            <Chip
-              v-if="slotProps.data.neutered === 'Y'"
-              :label="
-                slotProps.data.gender === 'Male'
-                  ? $t('pets.status.neutered')
-                  : $t('pets.status.spayed')
-              "
-              class="shadow-sm !text-sm font-thin border dark:border-transparent h-7"
-            />
+            <Chip v-if="slotProps.data.neutered === 'Y'" :label="slotProps.data.gender === 'Male'
+              ? $t('pets.status.neutered')
+              : $t('pets.status.spayed')
+              " class="shadow-sm !text-sm lg:!text-[14px] font-thin border dark:border-transparent h-7" />
           </template>
         </template>
       </Column>
@@ -208,23 +137,15 @@
             <Skeleton width="20%" height="1rem" />
           </template>
           <template v-else>
-            <Chip
-              :label="
-                slotProps.data.deceased === 'Y'
-                  ? $t('pets.status.deceased')
-                  : $t('pets.status.alive')
-              "
-              class="shadow-sm !text-sm font-thin border dark:border-transparent h-7"
-            />
+            <Chip :label="slotProps.data.deceased === 'Y'
+              ? $t('pets.status.deceased')
+              : $t('pets.status.alive')
+              " class="shadow-sm !text-sm lg:!text-[14px] font-thin border dark:border-transparent h-7" />
           </template>
         </template>
       </Column>
 
-      <Column
-        class="text-md !font-thin"
-        field="date_of_birth"
-        :header="$t('pets.columns.age')"
-      >
+      <Column class="text-md !font-thin" field="date_of_birth" :header="$t('pets.columns.age')">
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="60%" height="1rem" />
@@ -235,47 +156,27 @@
         </template>
       </Column>
 
-      <Column
-        class="text-md !font-thin"
-        field="date_of_birth"
-        :header="$t('pets.columns.actions')"
-      >
+      <Column class="text-md !font-thin" field="date_of_birth" :header="$t('pets.columns.actions')">
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="60%" height="1rem" />
           </template>
           <template v-else>
-            <router-link
-              class="!text-sm ml-2 p-button button-transition"
-              v-tooltip.bottom="$t('pets.columns.view_details')"
-              :to="`/pets/` + slotProps.data.microchip_num"
-            >
+            <router-link class="!text-sm lg:!text-[14px] ml-2 p-button button-transition"
+              v-tooltip.bottom="$t('pets.columns.view_details')" :to="`/pets/` + slotProps.data.microchip_num">
               <i class="fa-solid fa-paw"></i>
             </router-link>
           </template>
         </template>
       </Column>
       <template #footer>
-        <Paginator
-          :rows="itemsPerPage"
-          :first="1"
-          :totalRecords="totalRecords"
-          :currentPage="currentPage"
-          :rowsPerPageOptions="[25, 50, 100]"
-          @page="onPageChange"
-          class="!rounded-b-xl text-xs"
-        ></Paginator>
+        <Paginator :rows="itemsPerPage" :first="1" :totalRecords="totalRecords" :currentPage="currentPage"
+          :rowsPerPageOptions="[25, 50, 100]" @page="onPageChange" class="!rounded-b-xl text-xs"></Paginator>
       </template>
     </DataTable>
   </div>
-  <Dialog
-    :header="$t('pets.modals.add_patient.title')"
-    v-model:visible="isModalVisible"
-    @hide="isModalVisible = false"
-    :modal="true"
-    :closable="true"
-    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
-  >
+  <Dialog :header="$t('pets.modals.add_patient.title')" v-model:visible="isModalVisible" @hide="isModalVisible = false"
+    :modal="true" :closable="true" class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <Avatar icon="fas fa-users" shape="circle" />
@@ -285,25 +186,15 @@
       </div>
     </template>
 
-    <NewPatient
-      @submitted="handleSubmit"
-      @showOwnerModal="showOwnerModal"
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-    />
+    <NewPatient @submitted="handleSubmit" @showOwnerModal="showOwnerModal" v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" />
 
     <template #footer> </template>
   </Dialog>
-  <Dialog
-    :header="$t('pets.modals.add_owner.title')"
-    :visible="isModalOwnerVisible"
-    @hide="isModalOwnerVisible = false"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
-  >
+  <Dialog :header="$t('pets.modals.add_owner.title')" :visible="isModalOwnerVisible" @hide="isModalOwnerVisible = false"
+    modal :closable="true" class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <Avatar icon="fas fa-users" shape="circle" />
@@ -312,13 +203,10 @@
         }}</span>
       </div>
     </template>
-    <NewClientForm
-      @ownerAdded="handleOwnerSubmit"
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-    />
+    <NewClientForm @ownerAdded="handleOwnerSubmit" v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" />
     <template #footer> </template>
   </Dialog>
 </template>
@@ -380,7 +268,24 @@ const handleKeydown = (event) => {
     // No need for additional logic here; on input, v-model will update searchQuery
   }
 };
+const handleBarcodeEnter = async () => {
+  /*   if (!itemSearch.value) return;
+  
+    if (/^\d{6,}$/.test(itemSearch.value)) {
+      try {
+        const response = await axiosInstance.get("/inventory-items/by-barcode", {
+          params: { barcode: itemSearch.value },
+        });
 
+        if (response.data.data) {
+          selectItem({ value: response.data.data });
+        }
+      } catch (error) {
+        console.error("Error searching by barcode:", error);
+      }
+    } */
+  return
+};
 const handleSubmit = () => {
   isModalVisible.value = false;
   currentPage.value = 1; // Reset to the first page when searching
@@ -426,7 +331,7 @@ const filters = ref({
   breed: { value: null, matchMode: "startsWith" },
   gender: { value: null, matchMode: "equals" },
   owner: { value: null, matchMode: "contains" },
-  deceased: { value: null, matchMode: "startsWith" },
+  deceased: { value: null, matchMode: "equals" },
 });
 const onPageChange = (event) => {
   itemsPerPage.value = event.rows;
@@ -512,7 +417,7 @@ function getIconClass(speciesLabel) {
   return found ? found.icon : "fa-solid fa-paw";
 }
 const getSpeciesValue = (label) => {
-  console.log(label);
+  // console.log(label);
   const found = species.value.find((species) => species.en_label === label);
   return found ? found.label : null;
 };
@@ -554,10 +459,11 @@ const fetchPets = async (page = 1, hideDeceased = false) => {
     loading.value = true;
     let url = `/pets?page=${page}&per_page=${itemsPerPage.value}&search=${searchQuery.value}`;
     if (hideDeceased) {
-      url += `hideDeceased=true`;
+      url += `&hideDeceased=true`;
     }
+    console.log(url)
     const response = await axiosInstance.get(
-      `/pets?page=${page}&per_page=${itemsPerPage.value}&search=${searchQuery.value}`
+      url
     );
     pets.value = response.data.data;
     // // console.log(pets.value);
@@ -570,13 +476,18 @@ const fetchPets = async (page = 1, hideDeceased = false) => {
   }
 };
 const toggleDeceasedVisibility = () => {
+  console.log(showDeceased.value);
   showDeceased.value = !showDeceased.value;
+  console.log(showDeceased.value);
   if (showDeceased.value) {
+    // filters.value.deceased.value = "Y";
     // console.log("showing deseaced");
     currentPage.value = 1;
     fetchPets(currentPage.value, true);
   } else {
-    // filters.value.deceased.value = "N"; // Hide deceased
+    console.log("OH OH")
+    filters.value.deceased.value = "N"; // Hide deceased
+    fetchPets(currentPage.value, false);
   }
 };
 onMounted(() => {

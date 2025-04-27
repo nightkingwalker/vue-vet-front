@@ -317,6 +317,7 @@
         "Male": "ذكر",
         "Female": "أنثى",
         "edit_treatment": "تعديل العلاجات",
+        "print": "طباعة التقرير",
         "species": {
             "Avian": "طيور",
             "Bovine": "أبقار",
@@ -1014,7 +1015,7 @@
             "quantity": "الكمية",
             "cost_price": "التكلفة",
             "selling_price": "السعر",
-            "expiry_date": "تاريخ الانتهاء",
+            "expiry_date": "تاريخ انتهاء الصلاحية",
             "actions": "الإجراءات"
         },
         "search": {
@@ -1024,12 +1025,76 @@
             "add_title": "إضافة عنصر جديد للمخزون",
             "edit_title": "تعديل عنصر المخزون",
             "delete_title": "تأكيد",
-            "delete_message": "هل أنت متأكد أنك تريد حذف <b>{item}</b>؟"
+            "delete_message": "هل أنت متأكد أنك تريد حذف {item}؟"
         },
         "status": {
             "expired": "منتهي الصلاحية",
             "expiring_soon": "ينتهي قريبًا",
             "low_stock": "مخزون منخفض"
+        },
+        "add_item": {
+            "title": "إضافة عنصر للمخزون",
+            "search_label": "البحث بالاسم، الماركة، أو مسح الباركود",
+            "search_hint": "أدخل اسم المنتج أو قم بمسح الباركود",
+            "barcode": "الباركود",
+            "generate_barcode_tooltip": "إنشاء باركود جديد",
+            "category": "الفئة",
+            "type": "النوع",
+            "brand": "العلامة التجارية",
+            "product_name": "اسم المنتج",
+            "description": "الوصف",
+            "quantity_to_add": "الكمية المضافة",
+            "purchase_price": "سعر الشراء",
+            "selling_price": "سعر البيع",
+            "record_as_adjustment": "تسجيل كتعديل (بدون شراء)",
+            "stock_adjustment": "تعديل المخزون",
+            "adjustment_type": "نوع التعديل",
+            "increase": "زيادة",
+            "decrease": "نقص",
+            "adjustment_amount": "مقدار التعديل",
+            "adjustment_reason": "سبب التعديل",
+            "adjustment_notes": "ملاحظات التعديل",
+            "adjustment_notes_small": "شرح لتفصيل حركة المواد",
+            "adding_units": "إضافة {units} وحدة",
+            "removing_units": "إزالة {units} وحدة",
+            "reason": "السبب",
+            "min_stock_level": "الحد الأدنى للمخزون",
+            "expiry_date": "تاريخ انتهاء الصلاحية",
+            "notes": "ملاحظات",
+            "create_new_item": "إنشاء عنصر جديد",
+            "add_to_existing_item": "إضافة إلى عنصر موجود",
+            "existing_items_found": "تم العثور على عناصر موجودة",
+            "similar_items_found": "لقد وجدنا عناصر مشابهة في نظامنا:",
+            "name": "الاسم",
+            "current_stock": "المخزون الحالي",
+            "add_to_selected": "إضافة إلى المحدد",
+            "create_new_anyway": "إنشاء جديد على أي حال",
+            "food_types": "حبوب، معلبات ... إلخ"
+        },
+        "categories": {
+            "food": "طعام",
+            "pharmaceutical": "أدوية",
+            "miscellaneous": "متنوع",
+            "toy": "لعبة",
+            "treatment": "علاجات"
+        },
+        "adjustment_reasons": {
+            "damaged": "بضائع تالفة",
+            "found": "تم العثور على مخزون",
+            "theft": "سرقة/فقدان",
+            "expired": "منتهي الصلاحية",
+            "stocktake": "تعديل جرد المخزون",
+            "other": "أخرى"
+        },
+        "adjustment_types": {
+            "increase": "زيادة المخزون",
+            "decrease": "تقليل المخزون"
+        },
+        "messages": {
+            "items_needed_title": "حقول مطلوبة",
+            "items_needed_details": "الحقول المطلوبة لا يمكن تركها دون بيانات",
+            "confirm_add_item": "هل أنت متأكد من أنك تريد إضافة هذا المنتج؟",
+            "confirm_update_item": "هل أنت متأكد من أنك ترغب في إضافة {quantity} عنصر إلى مخزون المادة؟?"
         }
     },
     "invoices": {
@@ -1115,5 +1180,93 @@
         "gender": "الجنس",
         "modal_title": "إضافة مريض جديد",
         "details_button": "التفاصيل"
+    },
+    "add_invoice": {
+        "title": "إنشاء فاتورة جديدة",
+        "client_section": {
+            "title": "معلومات العميل والحيوان الأليف",
+            "search_client": "بحث عن عميل",
+            "select_pet": "اختر حيوان أليف",
+            "phone": "الهاتف",
+            "email": "البريد الإلكتروني",
+            "species": "النوع",
+            "breed": "السلالة",
+            "dob": "تاريخ الميلاد"
+        },
+        "items_section": {
+            "title": "إضافة عناصر",
+            "search_items": "بحث عن عناصر",
+            "price": "السعر",
+            "quantity": "الكمية",
+            "discount": "الخصم",
+            "tax_rate": "معدل الضريبة",
+            "add_to_invoice": "إضافة إلى الفاتورة",
+            "item": "العنصر",
+            "qty": "الكمية",
+            "total": "الإجمالي",
+            "actions": "الإجراءات",
+            "out_of_stock": "غير متوفر",
+            "almost_out_of_stock": "مخزون قليل",
+            "expired": "منتهي الصلاحية",
+            "in_stock": "متوفر"
+        },
+        "summary_section": {
+            "title": "ملخص الفاتورة",
+            "invoice_number": "رقم الفاتورة",
+            "invoice_date": "تاريخ الفاتورة",
+            "due_date": "تاريخ الاستحقاق",
+            "payment_terms": "شروط الدفع",
+            "status": "الحالة",
+            "deposit_required": "الدفعة المطلوبة",
+            "payment_method": "طريقة الدفع",
+            "notes": "ملاحظات",
+            "subtotal": "المجموع الفرعي",
+            "discount": "الخصم",
+            "tax": "الضريبة",
+            "total": "الإجمالي",
+            "balance_after_deposit": "الرصيد بعد الدفعة",
+            "save_draft": "حفظ كمسودة",
+            "create_invoice": "إنشاء الفاتورة"
+        },
+        "payment_terms": {
+            "due_on_receipt": "دفع عند الاستلام",
+            "net_15": "صافي 15 يوم",
+            "net_30": "صافي 30 يوم",
+            "50_upfront": "50% مقدماً، 50% عند الانتهاء"
+        },
+        "status_options": {
+            "draft": "مسودة",
+            "pending": "قيد الانتظار",
+            "partially_paid": "مدفوع جزئياً",
+            "paid": "مدفوع",
+            "cancelled": "ملغى",
+            "refunded": "تم الاسترداد"
+        },
+        "toast": {
+            "insufficient_stock": "مخزون غير كاف",
+            "expired_item": "عنصر منتهي الصلاحية",
+            "item_added": "تمت إضافة العنصر",
+            "invoice_created": "تم إنشاء الفاتورة",
+            "error": "خطأ",
+            "messages": {
+                "only_x_available": "فقط <b>{quantity}</b> متوفر",
+                "cannot_add_expired": "لا يمكن إضافة عناصر منتهية الصلاحية إلى الفاتورة",
+                "item_added_success": "تمت إضافة العنصر إلى الفاتورة",
+                "invoice_created_success": "تم إنشاء الفاتورة بنجاح",
+                "invoice_draft_success": "تم حفظ الفاتورة كمسودة",
+                "no_items_error": "يجب أن تحتوي الفاتورة على عنصر واحد على الأقل",
+                "deposit_method_error": "الرجاء اختيار طريقة دفع للدفعة"
+            }
+        },
+        "payment_methods": {
+            "cash": "نقداً",
+            "credit_card": "بطاقة ائتمان",
+            "bank_transfer": "تحويل بنكي",
+            "mobile_payment": "دفع عبر الهاتف",
+            "load_error": "فشل تحميل طرق الدفع"
+        }
+    },
+    "common": {
+        "not_available": "لا تتوفر بيانات"
     }
 }

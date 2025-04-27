@@ -1,123 +1,117 @@
 <template>
-  <div class="w-full mt-2">
+  <div class="w-full mt-2 xl:!text-[12px]">
     <div
-      class="grid grid-cols-1 lg:grid-cols-3 gap-6 bg-[var(--p-surface-200)] dark:bg-[var(--p-surface-600)] rounded-lg p-2"
-    >
+      class="grid grid-cols-1 lg:grid-cols-3 gap-6 bg-[var(--p-surface-200)] dark:bg-[var(--p-surface-600)] rounded-lg p-2">
       <!-- Left Column - Client & Pet Info -->
       <div class="bg-white p-4 rounded-lg shadow">
-        <h2 class="!text-sm font-semibold mb-4 border-b pb-2">
-          Client & Pet Information
+        <h2 class="xl:!text-[12px] !text-sm font-semibold mb-4 border-b pb-2">
+          {{ $t('add_invoice.client_section.title') }}
         </h2>
 
         <div class="mt-3">
-          <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
-            <AutoComplete
-              v-model="clientSearch"
-              :suggestions="filteredClients"
-              @complete="searchClients"
-              optionLabel="name"
-              size="small"
-              fluid
-              @item-select="selectClient"
-            />
-            <label>Search Client</label>
+          <FloatLabel variant="on" class="lg:!text-xs">
+            <AutoComplete v-model="clientSearch" :suggestions="filteredClients" @complete="searchClients"
+              optionLabel="name" size="small" fluid @item-select="selectClient" />
+            <label>{{ $t('add_invoice.client_section.search_client') }}</label>
           </FloatLabel>
         </div>
 
         <div v-if="selectedClient" class="my-4 p-3 bg-gray-50 rounded">
           <div class="flex justify-between items-center mb-2">
             <span class="font-medium">{{ selectedClient.name }}</span>
-            <Button
-              size="small"
-              icon="pi pi-times"
-              class="p-button-text p-button-xs !2xl:text-lg lg:text-xs"
-              @click="clearClient"
-            />
+            <Button size="small" icon="pi pi-times" class="p-button-text p-button-xs  lg:!text-xs"
+              @click="clearClient" />
           </div>
-          <div class="!!2xl:text-lg lg:text-xs text-gray-600">
-            <div>Phone: {{ selectedClient.phone }}</div>
-            <div>Email: {{ selectedClient.email }}</div>
+          <div class="lg:!text-xs text-gray-600">
+            <div>{{ $t('add_invoice.client_section.phone') }}: {{ selectedClient.phone }}</div>
+            <div>{{ $t('add_invoice.client_section.email') }}: {{ selectedClient.email }}</div>
           </div>
         </div>
 
         <div class="mb-4" v-if="selectedClient">
-          <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
-            <Select
-              v-model="selectedPet"
-              :options="clientPets"
-              @change="selectPet"
-              optionLabel="name"
-              class="w-full"
-            />
-            <label>Select Pet</label>
+          <FloatLabel variant="on" class="lg:!text-xs">
+            <Select v-model="selectedPet" :options="clientPets" @change="selectPet" optionLabel="name" class="w-full" />
+            <label>{{ $t('add_invoice.client_section.select_pet') }}</label>
           </FloatLabel>
         </div>
 
         <div v-if="selectedPet" class="mb-4 p-3 bg-gray-50 rounded">
           <div class="flex justify-between items-center mb-2">
             <span class="font-medium">{{ selectedPet.name }}</span>
-            <Button
-              size="small"
-              icon="pi pi-times"
-              class="p-button-text p-button-xs !2xl:text-lg lg:text-xs"
-              @click="clearPet"
-            />
+            <Button size="small" icon="pi pi-times" class="p-button-text p-button-xs  lg:!text-xs" @click="clearPet" />
           </div>
-          <div class="!!2xl:text-lg lg:text-xs text-gray-600">
-            <div><b>Species:</b> {{ selectedPet.species }}</div>
-            <div><b>Breed:</b> {{ selectedPet.breed }}</div>
-            <div><b>Date of Birth:</b> {{ computeAge(selectedPet.date_of_birth) }}</div>
+          <div class="lg:!text-xs text-gray-600">
+            <div><b>{{ $t('add_invoice.client_section.species') }}:</b> {{ selectedPet.species }}</div>
+            <div><b>{{ $t('add_invoice.client_section.breed') }}:</b> {{ selectedPet.breed }}</div>
+            <div><b>{{ $t('add_invoice.client_section.dob') }}:</b> {{ computeAge(selectedPet.date_of_birth) }}</div>
           </div>
         </div>
       </div>
 
       <!-- Middle Column - Item Search & List -->
       <div class="bg-white p-4 rounded-lg shadow">
-        <h2 class="!text-sm font-semibold mb-4 border-b pb-2">Add Items</h2>
+        <h2 class="xl:!text-[12px] !text-sm font-semibold mb-4 border-b pb-2">
+          {{ $t('add_invoice.items_section.title') }}
+        </h2>
 
         <div class="mt-3">
-          <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
-            <AutoComplete
-              v-model="itemSearch"
-              :suggestions="filteredItems"
-              @complete="searchItems"
-              optionLabel="displayText"
-              size="small"
-              fluid
-              @item-select="selectItem"
-              @keyup.enter="handleBarcodeEnter"
-            >
+          <FloatLabel variant="on" class="lg:!text-xs">
+            <AutoComplete v-model="itemSearch" :suggestions="filteredItems" @complete="searchItems"
+              optionLabel="displayText" size="small" fluid @item-select="selectItem" @keyup.enter="handleBarcodeEnter"
+              @keydown.enter.prevent="handleBarcodeEnter">
               <template #item="slotProps">
                 <div class="flex items-center justify-between p-2">
                   <div>
                     <div class="font-medium">{{ slotProps.item.name }}</div>
-                    <div class="!!2xl:text-lg lg:text-xs text-gray-500">
+                    <div class="lg:!text-xs text-gray-500">
                       {{ slotProps.item.brand }}
                     </div>
                   </div>
                   <div class="flex items-center">
-                    <span class="!!2xl:text-lg lg:text-xs font-semibold ltr:mr-2 rtl:ml-2"
-                      >${{ slotProps.item.selling_price }}</span
-                    >
-                    <Tag
-                      v-if="slotProps.item.quantity <= 0"
-                      value="Out of stock"
-                      severity="danger"
-                    />
-                    <Tag
-                      v-else-if="
-                        slotProps.item.expiry_date &&
-                        new Date(slotProps.item.expiry_date) < new Date()
-                      "
-                      value="Expired"
-                      severity="warning"
-                    />
-                    <Tag v-else value="In stock" severity="success" />
+                    <span class="lg:!text-xs font-semibold ltr:mr-2 rtl:ml-2">${{
+                      slotProps.item.selling_price }}</span>
+                    <Tag v-if="slotProps.item.quantity <= 0" :value="$t('add_invoice.items_section.out_of_stock')"
+                      severity="danger" />
+                    <Tag v-else-if="
+                      slotProps.item.expiry_date &&
+                      new Date(slotProps.item.expiry_date) < new Date()
+                    " :value="$t('add_invoice.items_section.expired')" severity="warning" />
+                    <Tag v-else :value="$t('add_invoice.items_section.in_stock')" severity="success" />
                   </div>
                 </div>
               </template>
+              <template #option="slotProps">
+                <div class="flex items-center">
+                  <div>
+                    <Chip :icon="slotProps.option.category === 'food'
+                      ? 'fa-solid fa-bone'
+                      : slotProps.option.category === 'miscellaneous'
+                        ? 'fa-solid fa-volleyball'
+                        : slotProps.option.category === 'pharmaceutical'
+                          ? 'fa-solid fa-pills'
+                          : slotProps.option.category === 'grooming'
+                            ? 'fa-solid fa-shower'
+                            : slotProps.option.category === 'treatment'
+                              ? 'fa-solid fa-stethoscope'
+                              : 'fa-solid fa-question'" /> {{ slotProps.option.brand }} {{ slotProps.option.name }} --
+                    {{
+                      slotProps.option.selling_price }}
+                    <Tag v-if="slotProps.option.quantity <= slotProps.option.minimum_stock_level"
+                      :value="$t('add_invoice.items_section.almost_out_of_stock') + ` ` + slotProps.option.quantity"
+                      severity="warn" />
+                    <!-- <Tag v-else-if="slotProps.option.quantity <= 0"
+                      :value="$t('add_invoice.items_section.out_of_stock')" severity="danger" /> -->
+                    <Tag v-else :value="$t('add_invoice.items_section.in_stock') + ` ` + slotProps.option.quantity"
+                      severity="success" />
+                  </div>
+                </div>
+              </template>
+              <template #footer>
+                <Button :label="$t('inventory.actions.add')" icon="pi pi-plus" @click="showModal"
+                  class="p-button-text w-full" />
+              </template>
             </AutoComplete>
-            <label>Search Items</label>
+            <label>{{ $t('add_invoice.items_section.search_items') }}</label>
           </FloatLabel>
         </div>
 
@@ -125,107 +119,63 @@
           <div class="flex justify-between items-start mb-2">
             <div>
               <div class="font-medium">{{ selectedItem.name }}</div>
-              <div class="!!2xl:text-lg lg:text-xs text-gray-500">
+              <div class="lg:!text-xs text-gray-500">
                 {{ selectedItem.brand }}
               </div>
             </div>
-            <Button
-              size="small"
-              icon="pi pi-times"
-              class="p-button-text p-button-xs !2xl:text-lg lg:text-xs"
-              @click="clearItem"
-            />
+            <Button size="small" icon="pi pi-times" class="p-button-text p-button-xs  lg:!text-xs" @click="clearItem" />
           </div>
 
           <div class="grid grid-cols-2 gap-4 mt-3">
             <div class="w-full">
-              <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
-                <InputNumber
-                  class="!!2xl:text-lg lg:text-xs"
-                  v-model="itemPrice"
-                  mode="currency"
-                  currency="SYP"
-                  :min="0"
-                  fluid
-                  size="small"
-                />
-                <label>Price</label>
+              <FloatLabel variant="on" class="lg:!text-xs">
+                <InputNumber class="lg:!text-xs" v-model="itemPrice" mode="currency" currency="SYP" :min="0" fluid
+                  size="small" />
+                <label>{{ $t('add_invoice.items_section.price') }}</label>
               </FloatLabel>
             </div>
             <div class="w-full">
-              <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
-                <InputNumber
-                  class="!!2xl:text-lg lg:text-xs"
-                  v-model="itemQuantity"
-                  :min="0.01"
-                  :max="selectedItem ? selectedItem.quantity : null"
-                  fluid
-                  size="small"
-                />
-                <label>Quantity</label>
+              <FloatLabel variant="on" class="lg:!text-xs">
+                <InputNumber class="lg:!text-xs" v-model="itemQuantity" :min="0.01"
+                  :max="selectedItem ? selectedItem.quantity : null" fluid size="small" />
+                <label>{{ $t('add_invoice.items_section.quantity') }}</label>
               </FloatLabel>
             </div>
             <div class="w-full">
-              <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
-                <InputNumber
-                  class="!!2xl:text-lg lg:text-xs"
-                  v-model="itemDiscount"
-                  mode="currency"
-                  currency="SYP"
-                  :min="0"
-                  fluid
-                  size="small"
-                />
-                <label for="">Discount</label>
+              <FloatLabel variant="on" class="lg:!text-xs">
+                <InputNumber class="lg:!text-xs" v-model="itemDiscount" mode="currency" currency="SYP" :min="0" fluid
+                  size="small" />
+                <label>{{ $t('add_invoice.items_section.discount') }}</label>
               </FloatLabel>
             </div>
             <div class="w-full">
-              <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
-                <InputNumber
-                  v-model="itemTaxRate"
-                  suffix="%"
-                  :min="0"
-                  :max="100"
-                  fluid
-                  class="!!2xl:text-lg lg:text-xs"
-                  size="small"
-                />
-                <label>Tax Rate</label>
+              <FloatLabel variant="on" class="lg:!text-xs">
+                <InputNumber v-model="itemTaxRate" suffix="%" :min="0" :max="100" fluid class="lg:!text-xs"
+                  size="small" />
+                <label>{{ $t('add_invoice.items_section.tax_rate') }}</label>
               </FloatLabel>
             </div>
           </div>
 
           <div class="mt-3 flex justify-end">
-            <Button
-              size="small"
-              label="Add to Invoice"
-              class="!!2xl:text-lg lg:text-xs"
-              icon="pi pi-plus"
-              @click="addItemToInvoice"
-            />
+            <Button size="small" :label="$t('add_invoice.items_section.add_to_invoice')" class="lg:!text-xs"
+              icon="pi pi-plus" @click="addItemToInvoice" />
           </div>
         </div>
 
         <div class="mt-3">
-          <DataTable
-            :value="invoiceItems"
-            class="p-datatable-sm"
-            :scrollable="true"
-            scrollHeight="300px"
-          >
-            <Column field="name" header="Item" class="!2xl:text-lg lg:text-xs"></Column>
-            <Column
-              field="quantity"
-              header="Qty"
-              class="!2xl:text-lg lg:text-xs"
-              style="width: 80px"
-            ></Column>
-            <Column header="Price" class="!2xl:text-lg lg:text-xs" style="width: 100px">
+          <DataTable :value="invoiceItems" class="p-datatable-sm" :scrollable="true" scrollHeight="300px">
+            <Column field="name" :header="$t('add_invoice.items_section.item')" class=" lg:!text-xs">
+            </Column>
+            <Column field="quantity" :header="$t('add_invoice.items_section.qty')" class=" lg:!text-xs"
+              style="width: 80px">
+            </Column>
+            <Column :header="$t('add_invoice.items_section.price')" class=" lg:!text-xs" style="width: 100px">
               <template #body="slotProps">
                 ${{ slotProps.data.unit_price.toFixed(2) }}
               </template>
             </Column>
-            <Column header="Total" class="!2xl:text-lg lg:text-xs" style="width: 100px">
+            <Column :header="$t('add_invoice.items_section.total')" class=" lg:!text-xs" style="width: 100px">
               <template #body="slotProps">
                 ${{
                   (
@@ -235,14 +185,10 @@
                 }}
               </template>
             </Column>
-            <Column header="Actions" class="!2xl:text-lg lg:text-xs" style="width: 80px">
+            <Column :header="$t('add_invoice.items_section.actions')" class=" lg:!text-xs" style="width: 80px">
               <template #body="slotProps">
-                <Button
-                  size="small"
-                  icon="pi pi-trash"
-                  class="p-button-text p-button-danger"
-                  @click="removeItem(slotProps.index)"
-                />
+                <Button size="small" icon="pi pi-trash" class="p-button-text p-button-danger"
+                  @click="removeItem(slotProps.index)" />
               </template>
             </Column>
           </DataTable>
@@ -251,165 +197,122 @@
 
       <!-- Right Column - Invoice Summary -->
       <div class="bg-white p-4 rounded-lg shadow">
-        <h2 class="!text-sm font-semibold mb-4 border-b pb-2">Invoice Summary</h2>
+        <h2 class="xl:!text-[12px] !text-sm font-semibold mb-4 border-b pb-2">
+          {{ $t('add_invoice.summary_section.title') }}
+        </h2>
 
         <div class="mt-3">
-          <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
-            <InputText
-              v-model="invoiceNumber"
-              size="small"
-              class="w-full !!2xl:text-lg lg:text-xs"
-              disabled
-            />
-            <label>Invoice Number</label>
+          <FloatLabel variant="on" class="lg:!text-xs">
+            <InputText v-model="invoiceNumber" size="small" class="w-full lg:!text-xs" disabled />
+            <label>{{ $t('add_invoice.summary_section.invoice_number') }}</label>
           </FloatLabel>
         </div>
 
         <div class="grid grid-cols-2 gap-4 mt-6">
           <div>
-            <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
-              <DatePicker
-                showIcon
-                iconDisplay="input"
-                showButtonBar
-                size="small"
-                v-model="invoiceDate"
-                dateFormat="yy-mm-dd"
-                class="w-full"
-              />
-              <label>Invoice Date</label>
+            <FloatLabel variant="on" class="lg:!text-xs">
+              <DatePicker showIcon iconDisplay="input" showButtonBar size="small" v-model="invoiceDate"
+                dateFormat="yy-mm-dd" class="w-full" />
+              <label>{{ $t('add_invoice.summary_section.invoice_date') }}</label>
             </FloatLabel>
           </div>
           <div>
-            <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
-              <DatePicker
-                size="small"
-                v-model="dueDate"
-                dateFormat="yy-mm-dd"
-                class="w-full"
-              />
-              <label>Due Date</label>
+            <FloatLabel variant="on" class="lg:!text-xs">
+              <DatePicker size="small" v-model="dueDate" dateFormat="yy-mm-dd" class="w-full" />
+              <label>{{ $t('add_invoice.summary_section.due_date') }}</label>
             </FloatLabel>
           </div>
         </div>
 
         <div class="mt-3 flex gap-2 justify-between">
-          <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs !w-1/2">
-            <Select
-              v-model="paymentTerms"
-              size="small"
-              :options="paymentTermOptions"
-              optionLabel="label"
-              optionValue="value"
-              fluid
-              class="!2xl:text-lg lg:text-xs"
-            />
-            <label>Payment Terms</label>
+          <FloatLabel variant="on" class="lg:!text-xs !w-1/2">
+            <Select v-model="paymentTerms" size="small" :options="paymentTermOptions" optionLabel="label"
+              optionValue="value" fluid class=" lg:!text-xs" />
+            <label>{{ $t('add_invoice.summary_section.payment_terms') }}</label>
           </FloatLabel>
-          <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs !w-1/2">
-            <Select
-              size="small"
-              v-model="status"
-              :options="statusOptions"
-              optionLabel="label"
-              optionValue="value"
-              fluid
-              class="!2xl:text-lg lg:text-xs"
-            />
-            <label>Status</label>
+          <FloatLabel variant="on" class="lg:!text-xs !w-1/2">
+            <Select size="small" v-model="status" :options="statusOptions" optionLabel="label" optionValue="value" fluid
+              class=" lg:!text-xs" />
+            <label>{{ $t('add_invoice.summary_section.status') }}</label>
           </FloatLabel>
         </div>
 
         <div class="mt-3 flex gap-2 justify-between">
-          <FloatLabel variant="on" class="!2xl:text-lg lg:text-xs !w-1/2">
-            <InputNumber
-              v-model="depositRequired"
-              showButtons
-              mode="decimal"
-              size="small"
-              currency="SYP"
-              :min="0"
-              :step="0.25"
-              :max="totalAmount"
-              fluid
-              class="!2xl:text-lg lg:text-xs"
-            />
-            <label>Deposit Required</label>
+          <FloatLabel variant="on" class=" lg:!text-xs !w-1/2">
+            <InputNumber v-model="depositRequired" showButtons mode="decimal" size="small" currency="SYP" :min="0"
+              :step="0.25" :max="totalAmount" fluid class=" lg:!text-xs" />
+            <label>{{ $t('add_invoice.summary_section.deposit_required') }}</label>
           </FloatLabel>
 
-          <FloatLabel variant="on" class="!2xl:text-lg lg:text-xs w-1/2">
-            <Select
-              size="small"
-              v-model="depositPaymentMethod"
-              :options="paymentMethods"
-              optionLabel="name"
-              optionValue="id"
-              fluid
-              class="!2xl:text-lg lg:text-xs"
-            />
-            <label>Payment Method</label>
+          <FloatLabel variant="on" class=" lg:!text-xs w-1/2">
+            <Select size="small" v-model="depositPaymentMethod" :options="paymentMethods" optionLabel="name"
+              optionValue="id" fluid class=" lg:!text-xs" />
+            <label>{{ $t('add_invoice.summary_section.payment_method') }}</label>
           </FloatLabel>
         </div>
 
         <div class="border-t mt-4 pt-4">
-          <div class="flex justify-between mb-2 !2xl:text-lg lg:text-xs">
-            <span class="!2xl:text-lg lg:text-xs">Subtotal:</span>
-            <span class="!2xl:text-lg lg:text-xs">${{ subtotal.toFixed(2) }}</span>
+          <div class="flex justify-between mb-2  lg:!text-xs">
+            <span class=" lg:!text-xs">{{ $t('add_invoice.summary_section.subtotal') }}:</span>
+            <span class=" lg:!text-xs">${{ subtotal.toFixed(2) }}</span>
           </div>
-          <div class="flex justify-between mb-2 !2xl:text-lg lg:text-xs">
-            <span class="!2xl:text-lg lg:text-xs">Discount:</span>
-            <span class="!2xl:text-lg lg:text-xs">-${{ totalDiscount.toFixed(2) }}</span>
+          <div class="flex justify-between mb-2  lg:!text-xs">
+            <span class=" lg:!text-xs">{{ $t('add_invoice.summary_section.discount') }}:</span>
+            <span class=" lg:!text-xs">-${{ totalDiscount.toFixed(2) }}</span>
           </div>
-          <div class="flex justify-between mb-2 !2xl:text-lg lg:text-xs">
-            <span class="!2xl:text-lg lg:text-xs">Tax:</span>
-            <span class="!2xl:text-lg lg:text-xs">${{ totalTax.toFixed(2) }}</span>
+          <div class="flex justify-between mb-2  lg:!text-xs">
+            <span class=" lg:!text-xs">{{ $t('add_invoice.summary_section.tax') }}:</span>
+            <span class=" lg:!text-xs">${{ totalTax.toFixed(2) }}</span>
           </div>
-          <div
-            v-if="depositRequired > 0"
-            class="flex justify-between mb-2 !2xl:text-lg lg:text-xs"
-          >
-            <span class="!2xl:text-lg lg:text-xs">Deposit Required:</span>
-            <span class="!2xl:text-lg lg:text-xs">${{ depositRequired.toFixed(2) }}</span>
+          <div v-if="depositRequired > 0" class="flex justify-between mb-2  lg:!text-xs">
+            <span class=" lg:!text-xs">{{ $t('add_invoice.summary_section.deposit_required') }}:</span>
+            <span class=" lg:!text-xs">${{ depositRequired.toFixed(2) }}</span>
           </div>
           <div class="flex justify-between font-bold !text-xs border-t pt-2 mt-2">
-            <span>Total:</span>
+            <span>{{ $t('add_invoice.summary_section.total') }}:</span>
             <span>${{ totalAmount.toFixed(2) }}</span>
           </div>
           <div v-if="depositRequired > 0" class="flex justify-between font-bold !text-xs">
-            <span>Balance After Deposit:</span>
+            <span>{{ $t('add_invoice.summary_section.balance_after_deposit') }}:</span>
             <span>${{ (totalAmount - depositRequired).toFixed(2) }}</span>
           </div>
         </div>
 
         <div class="mt-3">
-          <FloatLabel variant="on" class="!!2xl:text-lg lg:text-xs">
+          <FloatLabel variant="on" class="lg:!text-xs">
             <Textarea v-model="notes" rows="3" class="w-full" />
-            <label>Notes</label>
+            <label>{{ $t('add_invoice.summary_section.notes') }}</label>
           </FloatLabel>
         </div>
 
         <div class="mt-3 flex justify-end gap-2">
-          <Button
-            size="small"
-            label="Save Draft"
-            severity="secondary"
-            @click="saveDraft"
-          />
-          <Button size="small" label="Create Invoice" @click="createInvoice" />
+          <Button size="small" :label="$t('add_invoice.summary_section.save_draft')" severity="secondary"
+            @click="saveDraft" />
+          <Button size="small" :label="$t('add_invoice.summary_section.create_invoice')" @click="createInvoice" />
         </div>
       </div>
     </div>
   </div>
+  <Dialog :header="editMode ? $t('inventory.dialog.edit_title') : $t('inventory.dialog.add_title')
+    " v-model:visible="isModalVisible" modal :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]">
+    <InventoryItemForm v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" :item="selectedItem" :editMode="editMode" @submitted="handleSubmit" />
+  </Dialog>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, watch } from "vue";
 import { useToast } from "primevue/usetoast";
 import axiosInstance from "@/axios";
+import InventoryItemForm from "@/views/addInventoryItem.vue";
 
 // PrimeVue Components
 import Button from "primevue/button";
 import AutoComplete from "primevue/autocomplete";
+import Chip from "primevue/chip";
 import FloatLabel from "primevue/floatlabel";
 import Select from "primevue/select";
 import InputNumber from "primevue/inputnumber";
@@ -419,7 +322,10 @@ import DatePicker from "primevue/datepicker";
 import Textarea from "primevue/textarea";
 import Tag from "primevue/tag";
 import InputText from "primevue/inputtext";
+import Dialog from "primevue/dialog";
 import Cookies from "js-cookie";
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 const emit = defineEmits();
 const toast = useToast();
 const props = defineProps({
@@ -435,12 +341,14 @@ const props = defineProps({
 });
 
 // Client & Pet Data
+const isModalVisible = ref(false);
 const clientSearch = ref("");
 const filteredClients = ref([]);
 const selectedClient = ref(null);
 const clientPets = ref([]);
 const selectedPet = ref(null);
 const petAge = ref("");
+const editMode = ref(false);
 // Item Data
 const itemSearch = ref("");
 const filteredItems = ref([]);
@@ -464,19 +372,19 @@ const paymentMethods = ref([]);
 
 // Constants from models
 const statusOptions = ref([
-  { label: "Draft", value: "draft" },
-  { label: "Pending", value: "pending" },
-  { label: "Partially Paid", value: "partially_paid" },
-  { label: "Paid", value: "paid" },
-  { label: "Cancelled", value: "cancelled" },
-  { label: "Refunded", value: "refunded" },
+  { label: t('add_invoice.status_options.draft'), value: "draft" },
+  { label: t('add_invoice.status_options.pending'), value: "pending" },
+  { label: t('add_invoice.status_options.partially_paid'), value: "partially_paid" },
+  { label: t('add_invoice.status_options.paid'), value: "paid" },
+  { label: t('add_invoice.status_options.cancelled'), value: "cancelled" },
+  { label: t('add_invoice.status_options.refunded'), value: "refunded" },
 ]);
 
 const paymentTermOptions = ref([
-  { label: "Due on Receipt", value: "due_on_receipt" },
-  { label: "Net 15 Days", value: "net_15" },
-  { label: "Net 30 Days", value: "net_30" },
-  { label: "50% Upfront, 50% on Completion", value: "50_upfront" },
+  { label: t('add_invoice.payment_terms.due_on_receipt'), value: "due_on_receipt" },
+  { label: t('add_invoice.payment_terms.net_15'), value: "net_15" },
+  { label: t('add_invoice.payment_terms.net_30'), value: "net_30" },
+  { label: t('add_invoice.payment_terms.50_upfront'), value: "50_upfront" },
 ]);
 
 // Computed Properties
@@ -607,15 +515,18 @@ const clearPet = () => {
 };
 
 const searchItems = async (event) => {
+  // console.log(event)
   if (event.query.trim().length < 3) {
     filteredItems.value = [];
     return;
   }
 
   try {
+    console.log("looking for " + event.query)
     const response = await axiosInstance.get("/inventory-items/search", {
       params: { branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"), query: event.query },
     });
+    console.log(response.data)
     filteredItems.value = response.data.data.map((item) => ({
       ...item,
       displayText: `${item.name} (${item.brand}) - $${item.selling_price}`,
@@ -627,21 +538,22 @@ const searchItems = async (event) => {
 };
 
 const handleBarcodeEnter = async () => {
-  if (!itemSearch.value) return;
-
-  if (/^\d{6,}$/.test(itemSearch.value)) {
-    try {
-      const response = await axiosInstance.get("/inventory-items/by-barcode", {
-        params: { barcode: itemSearch.value },
-      });
-
-      if (response.data.data) {
-        selectItem({ value: response.data.data });
+  /*   if (!itemSearch.value) return;
+  
+    if (/^\d{6,}$/.test(itemSearch.value)) {
+      try {
+        const response = await axiosInstance.get("/inventory-items/by-barcode", {
+          params: { barcode: itemSearch.value },
+        });
+  
+        if (response.data.data) {
+          selectItem({ value: response.data.data });
+        }
+      } catch (error) {
+        console.error("Error searching by barcode:", error);
       }
-    } catch (error) {
-      console.error("Error searching by barcode:", error);
-    }
-  }
+    } */
+  return
 };
 
 const selectItem = (event) => {
@@ -665,8 +577,8 @@ const addItemToInvoice = () => {
   if (selectedItem.value.quantity < itemQuantity.value) {
     toast.add({
       severity: "error",
-      summary: "Insufficient Stock",
-      detail: `Only ${selectedItem.value.quantity} available`,
+      summary: t('add_invoice.toast.insufficient_stock'),
+      detail: t('add_invoice.toast.messages.only_x_available', { quantity: selectedItem.value.quantity }),
       life: 5000,
     });
     return;
@@ -681,8 +593,8 @@ const addItemToInvoice = () => {
   ) {
     toast.add({
       severity: "error",
-      summary: "Expired Item",
-      detail: "Cannot add expired items to invoice",
+      summary: t('add_invoice.toast.expired_item'),
+      detail: t('add_invoice.toast.messages.cannot_add_expired'),
       life: 5000,
     });
     return;
@@ -714,8 +626,8 @@ const addItemToInvoice = () => {
   clearItem();
   toast.add({
     severity: "success",
-    summary: "Item Added",
-    detail: "Item has been added to the invoice",
+    summary: t('add_invoice.toast.item_added'),
+    detail: t('add_invoice.toast.messages.item_added_success'),
     life: 3000,
   });
 };
@@ -724,15 +636,34 @@ const removeItem = (index) => {
   invoiceItems.value.splice(index, 1);
 };
 
-const loadPaymentMethods = async () => {
+/* const loadPaymentMethods = async () => {
   try {
     const response = await axiosInstance.get("/payment-methods");
     paymentMethods.value = response.data.data;
   } catch (error) {
     console.error("Error loading payment methods:", error);
   }
+}; */
+const loadPaymentMethods = async () => {
+  try {
+    const response = await axiosInstance.get("/payment-methods");
+    paymentMethods.value = response.data.data.map(method => ({
+      ...method,
+      // Keep original name for form submission
+      originalName: method.name,
+      // Add translated name for display
+      name: t(`add_invoice.payment_methods.${method.name.toLowerCase().replace(' ', '_')}`)
+    }));
+  } catch (error) {
+    console.error("Error loading payment methods:", error);
+    toast.add({
+      severity: "error",
+      summary: t('add_invoice.general.error'),
+      detail: t('add_invoice.payment_methods.load_error'),
+      life: 5000,
+    });
+  }
 };
-
 const generateInvoiceNumber = () => {
   const date = new Date();
   const prefix = "INV";
@@ -751,8 +682,8 @@ const createInvoice = async () => {
   if (invoiceItems.value.length === 0) {
     toast.add({
       severity: "error",
-      summary: "Error",
-      detail: "Invoice must have at least one item",
+      summary: t('add_invoice.toast.error'),
+      detail: t('add_invoice.toast.messages.no_items_error'),
       life: 5000,
     });
     return;
@@ -761,8 +692,8 @@ const createInvoice = async () => {
   if (requiresDeposit.value && !depositPaymentMethod.value) {
     toast.add({
       severity: "error",
-      summary: "Error",
-      detail: "Please select a payment method for the deposit",
+      summary: t('add_invoice.toast.error'),
+      detail: t('add_invoice.toast.messages.deposit_method_error'),
       life: 5000,
     });
     return;
@@ -813,10 +744,10 @@ const createInvoice = async () => {
     emit("InvoiceCreated");
     toast.add({
       severity: "success",
-      summary: "Success",
-      detail: `Invoice ${
-        status.value === "draft" ? "saved as draft" : "created successfully"
-      }`,
+      summary: t('add_invoice.toast.invoice_created'),
+      detail: status.value === "draft"
+        ? t('add_invoice.toast.messages.invoice_draft_success')
+        : t('add_invoice.toast.messages.invoice_created_success'),
       life: 5000,
     });
     // Reset form or redirect
@@ -824,13 +755,24 @@ const createInvoice = async () => {
     console.error("Error creating invoice:", error);
     toast.add({
       severity: "error",
-      summary: "Error",
-      detail: error.response?.data?.message || "Failed to create invoice",
+      summary: t('add_invoice.toast.error'),
+      detail: error.response?.data?.message || t('add_invoice.toast.messages.error'),
       life: 5000,
     });
   }
 };
+const showModal = () => {
+  editMode.value = false;
+  selectedItem.value = null;
+  isModalVisible.value = true;
+};
+const handleSubmit = ({ data, status, otherInfo }) => {
+  isModalVisible.value = false;
+  console.log(data.data);
+  selectItem({ value: { ...data.data, displayText: `${data.data.name} (${data.data.brand}) - $${data.data.selling_price}` } })
+// searchItems({ query: data.data.barcode })
 
+};
 // Initialize
 onMounted(() => {
   generateInvoiceNumber();

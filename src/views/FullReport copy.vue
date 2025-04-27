@@ -1,7 +1,6 @@
 <template>
   <div id="printable" class="px-4 lg:!text-[14px]">
-    <div
-      class="no-print sticky top-0 bg-white dark:bg-[var(--p-surface-800)] shadow-md z-10 mb-4 p-2 flex flex-wrap gap-2">
+    <div class="sticky top-0 bg-white dark:bg-[var(--p-surface-800)] shadow-md z-10 mb-4 p-2 flex flex-wrap gap-2">
       <a v-for="section in sections" :key="section.id" :href="`#${section.id}`" :class="{
         'px-3 py-1 rounded-full lg:!text-[14px] text-sm text-grey-700  bg-gray-100 dark:bg-gray-700 hover:bg-primary-100 dark:hover:bg-primary-700 transition-colors': true,
         'bg-gray-700 text-white dark:bg-[var(--p-primary-contrast-color)] is-active':
@@ -12,13 +11,10 @@
     </div>
     <Card>
       <template #title>
-        <div class="flex justify-between items-center">
-          <span>{{ $t("medical_examination.title") }}</span>
-          <Button icon="pi pi-print" @click="printComponent" class="p-button p-button-icon-only p-button-rounded"
-            v-tooltip="$t('pet_details.print')" />
+        <div class="flex justify-between">
+          <span>{{ $t("medical_examination.title") }} TTTTT</span>
         </div>
-        <!-- <button onclick="printComponent()">Print Component</button> -->
-
+        <button onclick="printComponent()">Print Component</button>
       </template>
       <template #content>
         <!-- General Information -->
@@ -61,7 +57,7 @@
         <Divider :align="!isRtl ? `left` : `right`" type="solid" id="symptoms">
           <span class="lg:!text-[14px] text-xl font-bold">{{
             $t("case_history.steps.current_symptoms")
-          }}</span>
+            }}</span>
         </Divider>
         <Panel :header="$t('case_history.steps.current_symptoms')" toggleable
           v-for="(symptom, index) in medicalRecord.current_symptom" :key="index" class="border rounded-lg shadow p-4">
@@ -80,9 +76,9 @@
           <p>
             <strong>{{ $t("case_history.fields.medication_given") }}:</strong>
             {{
-              symptom.medication_given
-                ? $t("medical_examination_form.options.yes")
-                : $t("medical_examination_form.options.no")
+            symptom.medication_given
+            ? $t("medical_examination_form.options.yes")
+            : $t("medical_examination_form.options.no")
             }}
           </p>
           <p>
@@ -103,40 +99,42 @@
         <Divider :align="!isRtl ? `left` : `right`" type="solid" id="health">
           <span class="lg:!text-[14px] text-xl font-bold">{{
             $t("case_history.steps.general_health")
-          }}</span>
+            }}</span>
         </Divider>
         <Panel :header="$t('case_history.steps.general_health')" toggleable
           v-for="(health, index) in medicalRecord.general_health" :key="index" class="border rounded-lg shadow p-4">
           <p>
             <strong>{{ $t("case_history.fields.activity_level") }}:</strong>
             {{
-              $t(
-                `case_history.options.activity_level.${health.activity_level.toLowerCase()}`
-              )
+            health.activity_level
+            ? $t(`case_history.options.activity_level.${health.activity_level.toLowerCase()}`)
+            : $t('common.not_available')
             }}
           </p>
           <p>
             <strong>{{ $t("case_history.fields.vaccination_status") }}:</strong>
             {{
-              $t(
-                `case_history.options.vaccination_status.${health.vaccination_status.toLowerCase()}`
-              )
+            health.vaccination_status
+            ? $t(`case_history.options.vaccination_status.${health.vaccination_status.toLowerCase()}`)
+            : $t('common.not_available')
             }}
           </p>
           <p>
             <strong>{{ $t("case_history.fields.care_location") }}:</strong>
+
             {{
-              $t(
-                `case_history.options.care_location.${health.care_location.toLowerCase()}`
-              )
+            health.care_location
+            ? $t(`case_history.options.care_location.${health.care_location.toLowerCase()}`)
+            : $t('common.not_available')
             }}
+
           </p>
           <p>
             <strong>{{ $t("case_history.fields.other_animals_in_household") }}:</strong>
             {{
-              health.other_animals_in_household
-                ? $t("medical_examination_form.options.yes")
-                : $t("medical_examination_form.options.no")
+            health.other_animals_in_household
+            ? $t("medical_examination_form.options.yes")
+            : $t("medical_examination_form.options.no")
             }}
           </p>
           <p>
@@ -185,7 +183,7 @@
         <Divider :align="!isRtl ? `left` : `right`" type="solid" id="itching">
           <span class="lg:!text-[14px] text-xl font-bold">{{
             $t("case_history.steps.itching_skin")
-          }}</span>
+            }}</span>
         </Divider>
         <Panel :header="$t('case_history.steps.itching_skin')" toggleable
           v-for="(itching, index) in medicalRecord.itching_skin_condition" :key="index"
@@ -193,9 +191,9 @@
           <p>
             <strong>{{ $t("case_history.fields.itching_present") }}:</strong>
             {{
-              itching.itching_present
-                ? $t("medical_examination_form.options.yes")
-                : $t("medical_examination_form.options.no")
+            itching.itching_present
+            ? $t("medical_examination_form.options.yes")
+            : $t("medical_examination_form.options.no")
             }}
           </p>
           <p>
@@ -222,7 +220,12 @@
           v-for="(diet, index) in medicalRecord.diet_water_intake" :key="index" class="border rounded-lg shadow p-4">
           <p>
             <strong>{{ $t("case_history.fields.diet_type") }}:</strong>
-            {{ $t(`case_history.options.diet_type.${diet.diet_type.toLowerCase()}`) }}
+            {{
+            health.diet_type
+            ? $t(`case_history.options.diet_type.${health.diet_type.toLowerCase()}`)
+            : $t('common.not_available')
+            }}
+
           </p>
           <p>
             <strong>{{ $t("case_history.fields.diet_details") }}:</strong>
@@ -238,23 +241,29 @@
           </p>
           <p>
             <strong>{{ $t("case_history.fields.appetite") }}:</strong>
-            {{ $t(`case_history.options.appetite.${diet.appetite.toLowerCase()}`) }}
+            {{
+            health.appetite
+            ? $t(`case_history.options.appetite.${health.appetite.toLowerCase()}`)
+            : $t('common.not_available')
+            }}
+
           </p>
           <p>
             <strong>{{ $t("case_history.fields.recent_diet_change") }}:</strong>
             {{
-              diet.recent_diet_change
-                ? $t("medical_examination_form.options.yes")
-                : $t("medical_examination_form.options.no")
+            diet.recent_diet_change
+            ? $t("medical_examination_form.options.yes")
+            : $t("medical_examination_form.options.no")
             }}
           </p>
           <p>
             <strong>{{ $t("case_history.fields.diet_change_type") }}:</strong>
             {{
-              $t(
-                `case_history.options.diet_change_type.${diet.diet_change_type.toLowerCase()}`
-              )
+            health.diet_change_type
+            ? $t(`case_history.options.diet_change_type.${health.diet_change_type.toLowerCase()}`)
+            : $t('common.not_available')
             }}
+
           </p>
           <p>
             <strong>{{ $t("case_history.fields.water_intake") }}:</strong>
@@ -305,9 +314,9 @@
           <p>
             <strong>{{ $t("case_history.fields.vomiting") }}:</strong>
             {{
-              symptom.vomiting
-                ? $t("medical_examination_form.options.yes")
-                : $t("medical_examination_form.options.no")
+            symptom.vomiting
+            ? $t("medical_examination_form.options.yes")
+            : $t("medical_examination_form.options.no")
             }}
           </p>
           <p>
@@ -329,33 +338,33 @@
           <p>
             <strong>{{ $t("case_history.fields.vomiting_related_to_food") }}:</strong>
             {{
-              symptom.vomiting_related_to_food
-                ? $t("medical_examination_form.options.yes")
-                : $t("medical_examination_form.options.no")
+            symptom.vomiting_related_to_food
+            ? $t("medical_examination_form.options.yes")
+            : $t("medical_examination_form.options.no")
             }}
           </p>
           <p>
             <strong>{{ $t("case_history.fields.vomiting_related_to_diarrhea") }}:</strong>
             {{
-              symptom.vomiting_related_to_diarrhea
-                ? $t("medical_examination_form.options.yes")
-                : $t("medical_examination_form.options.no")
+            symptom.vomiting_related_to_diarrhea
+            ? $t("medical_examination_form.options.yes")
+            : $t("medical_examination_form.options.no")
             }}
           </p>
           <p>
             <strong>{{ $t("case_history.fields.diarrhea_started_first") }}:</strong>
             {{
-              symptom.diarrhea_started_first
-                ? $t("medical_examination_form.options.yes")
-                : $t("medical_examination_form.options.no")
+            symptom.diarrhea_started_first
+            ? $t("medical_examination_form.options.yes")
+            : $t("medical_examination_form.options.no")
             }}
           </p>
           <p>
             <strong>{{ $t("case_history.fields.stool_consistency") }}:</strong>
             {{
-              symptom.stool_consistency
-                ? $t(`case_history.options.stool_consistency.${symptom.stool_consistency.toLowerCase()}`)
-                : $t('common.not_available')
+            symptom.stool_consistency
+            ? $t(`case_history.options.stool_consistency.${symptom.stool_consistency.toLowerCase()}`)
+            : $t('common.not_available')
             }}
           </p>
           <p>
@@ -373,9 +382,9 @@
           <p>
             <strong>{{ $t("case_history.fields.excessive_licking_of_anus") }}:</strong>
             {{
-              symptom.excessive_licking_of_anus
-                ? $t("medical_examination_form.options.yes")
-                : $t("medical_examination_form.options.no")
+            symptom.excessive_licking_of_anus
+            ? $t("medical_examination_form.options.yes")
+            : $t("medical_examination_form.options.no")
             }}
           </p>
         </Panel>
@@ -404,9 +413,9 @@
           <p>
             <strong>{{ $t("case_history.fields.sudden_onset") }}:</strong>
             {{
-              symptom.sudden_onset
-                ? $t("medical_examination_form.options.yes")
-                : $t("medical_examination_form.options.no")
+            symptom.sudden_onset
+            ? $t("medical_examination_form.options.yes")
+            : $t("medical_examination_form.options.no")
             }}
           </p>
           <p>
@@ -444,9 +453,9 @@
           <p>
             <strong>{{ $t("case_history.fields.cough") }}:</strong>
             {{
-              symptom.cough
-                ? $t("medical_examination_form.options.yes")
-                : $t("medical_examination_form.options.no")
+            symptom.cough
+            ? $t("medical_examination_form.options.yes")
+            : $t("medical_examination_form.options.no")
             }}
           </p>
           <p>
@@ -463,26 +472,26 @@
             $t(`case_history.options.cough_type.${symptom.cough_type.toLowerCase()}`)
             }} -->
             {{
-              symptom.cough_type
-                ? $t(`case_history.options.stool_consistency.${symptom.cough_type.toLowerCase()}`)
-                : $t('common.not_available')
+            symptom.cough_type
+            ? $t(`case_history.options.stool_consistency.${symptom.cough_type.toLowerCase()}`)
+            : $t('common.not_available')
             }}
 
           </p>
           <p>
             <strong>{{ $t("case_history.fields.breathing_difficulty") }}:</strong>
             {{
-              symptom.breathing_difficulty
-                ? $t("medical_examination_form.options.yes")
-                : $t("medical_examination_form.options.no")
+            symptom.breathing_difficulty
+            ? $t("medical_examination_form.options.yes")
+            : $t("medical_examination_form.options.no")
             }}
           </p>
           <p>
             <strong>{{ $t("case_history.fields.sneezing") }}:</strong>
             {{
-              symptom.sneezing
-                ? $t("medical_examination_form.options.yes")
-                : $t("medical_examination_form.options.no")
+            symptom.sneezing
+            ? $t("medical_examination_form.options.yes")
+            : $t("medical_examination_form.options.no")
             }}
           </p>
         </Panel>
@@ -520,9 +529,9 @@
           <p>
             <strong>{{ $t("case_history.fields.stool_frequency") }}:</strong>
             {{
-              symptom.stool_frequency
-                ? $t("medical_examination_form.options.yes")
-                : $t("medical_examination_form.options.no")
+            symptom.stool_frequency
+            ? $t("medical_examination_form.options.yes")
+            : $t("medical_examination_form.options.no")
             }}
           </p>
           <p>
@@ -541,17 +550,17 @@
             )
             }} -->
             {{
-              symptom.urination_type
-                ? $t(`case_history.options.stool_consistency.${symptom.urination_type.toLowerCase()}`)
-                : $t('common.not_available')
+            symptom.urination_type
+            ? $t(`case_history.options.stool_consistency.${symptom.urination_type.toLowerCase()}`)
+            : $t('common.not_available')
             }}
           </p>
           <p>
             <strong>{{ $t("case_history.fields.blood_in_urine") }}:</strong>
             {{
-              symptom.blood_in_urine
-                ? $t("medical_examination_form.options.yes")
-                : $t("medical_examination_form.options.no")
+            symptom.blood_in_urine
+            ? $t("medical_examination_form.options.yes")
+            : $t("medical_examination_form.options.no")
             }}
           </p>
           <p>
@@ -562,9 +571,9 @@
             )
             }} -->
             {{
-              symptom.blood_location
-                ? $t(`case_history.options.stool_consistency.${symptom.blood_location.toLowerCase()}`)
-                : $t('common.not_available')
+            symptom.blood_location
+            ? $t(`case_history.options.stool_consistency.${symptom.blood_location.toLowerCase()}`)
+            : $t('common.not_available')
             }}
           </p>
           <p>
@@ -578,9 +587,9 @@
           <p>
             <strong>{{ $t("case_history.fields.excessive_licking_of_genital_area") }}:</strong>
             {{
-              symptom.excessive_licking_of_genital_area
-                ? $t("medical_examination_form.options.yes")
-                : $t("medical_examination_form.options.no")
+            symptom.excessive_licking_of_genital_area
+            ? $t("medical_examination_form.options.yes")
+            : $t("medical_examination_form.options.no")
             }}
           </p>
         </Panel>
@@ -642,9 +651,9 @@
           <p>
             <strong>{{ $t("case_history.fields.medication_type") }}:</strong>
             {{
-              $t(
-                `case_history.options.medication_type.${medication.medication_type.toLowerCase()}`
-              )
+            health.medication_type
+            ? $t(`case_history.options.medication_type.${health.medication_type.toLowerCase()}`)
+            : $t('common.not_available')
             }}
           </p>
           <p>
@@ -694,9 +703,9 @@
           <p>
             <strong>{{ $t("case_history.fields.treatment_type") }}:</strong>
             {{
-              $t(
-                `case_history.options.treatment_type.${treatment.treatment_type.toLowerCase()}`
-              )
+            health.treatment_type
+            ? $t(`case_history.options.treatment_type.${health.treatment_type.toLowerCase()}`)
+            : $t('common.not_available')
             }}
           </p>
           <p>
@@ -867,7 +876,7 @@
                   <i class="fa-solid fa-heart-pulse text-2xl"></i>
                   <span class="font-bold">{{
                     $t("medical_examination.sections.vital_signs")
-                  }}</span>
+                    }}</span>
                 </div>
               </template>
               <p>
@@ -912,7 +921,7 @@
               <p>
                 <strong>{{
                   $t("medical_examination.sections.skin_lumps_or_infections")
-                }}:</strong>
+                  }}:</strong>
                 {{ exam.skin_lumps_or_infections }}
               </p>
               <p>
@@ -964,7 +973,7 @@
         <!-- Treatments -->
         <Divider :align="!isRtl ? `left` : `right`" type="solid" id="treatments">
           <span class="lg:!text-[14px] text-xl font-bold"><i class="fa-solid fa-syringe"></i> {{ $t("treatments.title")
-          }}</span>
+            }}</span>
         </Divider>
         <div class="flex flex-wrap w-full gap-4">
           <Panel :header="$t('treatments.title')" toggleable v-for="(treatment, index) in medicalRecord.treatments"
@@ -1001,7 +1010,6 @@ import { ref, onMounted, onUnmounted, nextTick, computed } from "vue";
 import Card from "primevue/card";
 import Divider from "primevue/divider";
 import Panel from "primevue/panel";
-import Button from "primevue/button";
 import axiosInstance from "@/axios";
 import { useI18n } from "vue-i18n";
 const { t, locale } = useI18n();
@@ -1125,75 +1133,30 @@ const setupScrollTracking = () => {
   });
 };
 function printComponent() {
-  // Get the printable content
-  const printContent = document.getElementById('printable');
-  // console.log(printContent)
-  if (!printContent) {
-    console.error('Printable element not found');
-    return;
-  }
+  // Create a new temporary iframe element to hold the printable component
+  let tempIframe = document.createElement('iframe');
 
-  // Create a new window for printing
-  // const printWindow = window.open('', '_blank');
-  const printWindow = window.open(
-    URL,
-    t('medical_examination.title') + " - " + props.pet_name,
-    'width=500,height=600,left=100,top=100'
-  );
+  // Set the source of the iframe to your current page
+  tempIframe.src = window.location.href;
 
-  // Write the HTML content to the new window
-  printWindow.document.write(`
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>Print Report</title>
-            <script src="https://cdn.tailwindcss.com"><\/script>
+  // Append the iframe to the body
+  document.body.appendChild(tempIframe);
 
-        <style>
-          body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-          h1, h2, h3, h4 { color: #333; }
-          .section { margin-bottom: 30px; }
-          .panel { border: 1px solid #ddd; border-radius: 5px; padding: 15px; margin-bottom: 15px; }
-          .flex-row { display: flex; flex-wrap: wrap; gap: 15px; }
-          .w-30 { width: 30%; }
-          .w-48 { width: 48%; }
-          .w-full { width: 100%; }
-          .border { border: 1px solid #eee; }
-          .shadow { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-          .p-4 { padding: 1rem; }
-          .rounded-lg { border-radius: 0.5rem; }
-          .font-bold { font-weight: bold; }
-          .text-sm { font-size: 0.875rem; }
-          .text-xl { font-size: 1.25rem; }
-          .gap-4 { gap: 1rem; }
-          .flex-wrap { flex-wrap: wrap; }
-          @media print {
-            body { padding: 0; }
-            .no-print { display: none !important; }
-            .page-break { page-break-after: always; }
-          }
-        </style>
-      </head>
-      <body dir="${!isRtl ? `ltr` : `rtl`}" >
-        ${printContent.innerHTML}
-        <script>
-          // Close the window after printing
-          window.onload = function() {
-                      setTimeout(function() {
-                        window.print();
-                        setTimeout(function() {
-                          window.close();
-                        }, 500);
-                      }, 500);
-                    };
-        <\/script>
-      </body>
-    </html>
-  `);
+  // Wait for the iframe to load
+  tempIframe.onload = function () {
+    let printContent = this.contentWindow.document.getElementById('printable');
 
-  printWindow.document.close();
+    // Print the contents of the 'printable' element in the iframe
+    this.contentWindow.onafterprint = function () {
+      // Remove the temporary iframe after printing is complete
+      document.body.removeChild(tempIframe);
+    };
+
+    printContent.style.display = "block";
+    this.contentWindow.focus();
+    this.contentWindow.print();
+  };
 }
-
 onMounted(async () => {
   await fetchMedicalRecord();
   nextTick(() => {
@@ -1205,7 +1168,6 @@ onUnmounted(() => {
     observer.value.disconnect();
   }
 });
-
 </script>
 
 <style scoped>

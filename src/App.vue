@@ -2,64 +2,42 @@
   <div>
     <!-- Dark Mode Toggle Button -->
     <div class="flex">
-      <button
-        @click="toggleDarkMode"
-        type="button"
+      <button @click="toggleDarkMode" type="button"
         class="absolute z-50 ltr:right-4 rtl:left-4 top-2 flex items-center justify-center p-1 cursor-pointer gap-3 bg-[var(--p-surface-800)] dark:bg-[var(--p-surface-100)] rounded-lg hover:rounded-lg w-8 h-8 hover:bg-gray-400 text-center shadow-md"
-        :title="titleDark"
-      >
+        :title="titleDark">
         <i v-if="isDarkMode" class="fa-solid fa-sun text-yellow-500 text-md w-4"></i>
         <i v-else class="fa-solid fa-moon text-md text-white w-4"></i>
       </button>
-      <button
-        v-if="isMobile && authStore.isLoggedIn && route.path != `/login`"
+      <button v-if="isMobile && authStore.isLoggedIn && route.path != `/login`"
         @click="mobileMenuVisible = !mobileMenuVisible"
-        class="absolute z-[60] ltr:left-4 rtl:right-4 top-2 flex items-center justify-center p-1 cursor-pointer gap-3 bg-[var(--p-surface-800)] dark:bg-[var(--p-surface-100)] rounded-lg hover:rounded-lg w-8 h-8 menu-toggle-btn"
-      >
-        <i
-          :class="mobileMenuVisible ? 'pi pi-times text-white' : 'pi pi-bars text-white'"
-        ></i>
+        class="absolute z-[60] ltr:left-4 rtl:right-4 top-2 flex items-center justify-center p-1 cursor-pointer gap-3 bg-[var(--p-surface-800)] dark:bg-[var(--p-surface-100)] rounded-lg hover:rounded-lg w-8 h-8 menu-toggle-btn">
+        <i :class="mobileMenuVisible ? 'pi pi-times text-white' : 'pi pi-bars text-white'"></i>
       </button>
     </div>
     <!-- Main Layout -->
     <div class="flex items-between">
       <!-- Sidebar Menu -->
-      <Menu
-        v-if="authStore.isLoggedIn && route.path != `/login`"
-        :model="menuItems"
-        @mouseenter="isHovered = true"
-        @mouseleave="isHovered = false"
-        :class="{
+      <Menu v-if="authStore.isLoggedIn && route.path != `/login`" :model="menuItems" @mouseenter="isHovered = true"
+        @mouseleave="isHovered = false" :class="{
           'absolute ltr:inset-y-0 ltr:left-0 rtl:inset-y-0 rtl:right-0 z-50 w-[100vw] mobile-menu': isMobile,
-          'absolute ltr:left-0 rtl:right-0 w-24 hover:md:w-60 hover:2xl:w-1/6 hover:lg:w-1/5 z-50 drop-shadow-[0_5px_5px_rgba(0,0,0,0.3)]': !isMobile,
+          'absolute ltr:left-0 rtl:right-0 w-24 2xl:w-20 hover:md:w-60 hover:2xl:w-1/6 hover:lg:w-1/5 z-50 drop-shadow-[0_5px_5px_rgba(0,0,0,0.3)]': !isMobile,
           hidden: isMobile && !mobileMenuVisible,
           'collapsed-menu': !isMobile && !isHovered,
           'expanded-menu': !isMobile && isHovered,
         }"
-        class="!py-8 px-4 sm:text-sm 2xl:text-md lg:text-sm !rounded-none h-[100vh] top-0 left-0"
-      >
+        class="!py-8 px-4 2xl:px-1 lg:px-1 scrollbar-hide scroll-smooth sm:text-sm 2xl:text-xs lg:text-sm !rounded-none h-[100vh] top-0 left-0 overflow-y-scroll">
         <template #start>
           <!-- Logo -->
           <div class="flex justify-center w-full">
-            <Image
-              :src="Logo"
-              alt="Application Logo"
-              class="flex justify-center rounded-[4rem] dark:bg-white w-[5rem] p-1"
-            />
+            <Image :src="Logo" alt="Application Logo"
+              class="flex justify-center rounded-[4rem] dark:bg-white w-[5rem] p-1" />
           </div>
 
           <!-- User Profile Link -->
-          <router-link
-            to="/profile"
-            v-ripple
-            class="p-menu-item-link relative overflow-hidden w-full border-0 bg-transparent flex items-center hover:bg-surface-100 dark:hover:bg-surface-800 rounded-none cursor-pointer transition-colors duration-200 h-[40px] min-w-[40px]"
-          >
-            <Avatar
-              icon="pi pi-user"
-              class="w-[40px]"
-              :class="{ 'ltr:mr-2 rtl:ml-2': !isMobile && isHovered }"
-              shape="circle"
-            />
+          <router-link to="/profile" v-ripple
+            class="p-menu-item-link relative overflow-hidden w-full border-0 bg-transparent flex items-center hover:bg-surface-100 dark:hover:bg-surface-800 rounded-none cursor-pointer transition-colors duration-200 h-[40px] min-w-[40px]">
+            <Avatar icon="pi pi-user" class="w-[40px]" :class="{ 'ltr:mr-2 rtl:ml-2': !isMobile && isHovered }"
+              shape="circle" />
             <span class="inline-flex flex-col items-start">
               <span class="font-bold">{{ userName }}</span>
             </span>
@@ -76,24 +54,22 @@
         </template>
 
         <template #item="{ item, props }">
-          <RouterLink
-            v-ripple
-            class="flex items-center"
-            v-bind="props.action"
-            :to="item.route || ''"
-          >
+          <RouterLink v-ripple class="flex items-center" v-bind="props.action" :to="item.route || ''">
             <span :class="item.icon" />
             <span class="menu-item-label">{{ item.label }}</span>
             <Badge v-if="item.badge" class="ml-auto p-badge" :value="item.badge" />
-            <span
-              v-if="item.shortcut"
-              class="shortcut ltr:ml-auto rtl:mr-auto p-1 text-[10px] text-gray-600 dark:text-gray-400 justify-self-end"
-            >
+            <span v-if="item.shortcut"
+              class="shortcut ltr:ml-auto rtl:mr-auto p-1 text-[10px] text-gray-600 dark:text-gray-400 justify-self-end">
               {{ item.shortcut }}
             </span>
           </RouterLink>
         </template>
       </Menu>
+      <span
+        class="animate-bounce h-6 w-6 text-xs bg-[var(--p-surface-800)] dark:bg-[var(--p-surface-100)] text-white dark:text-[var(--p-surface-800)] rounded-full inline-flex items-center justify-center z-50 right-[calc(100vw/12)] bottom-1 absolute"
+        :class="!isMobile && !isHovered ? `hidden` : ``">
+        <i class="pi pi-arrow-down text-xs" />
+      </span>
       <!-- Main Content Area -->
       <div class="container mx-auto mt-6 2xl:px-0 xl:px-6 lg:px-6 md:px-8">
         <router-view />
@@ -101,9 +77,7 @@
         <!-- Global UI Components -->
         <ConfirmDialog class="md:w-[35vw] sm:w-full !text-sm">
           <template #message="slotProps">
-            <div
-              class="flex flex-col items-center w-full mx-auto gap-4 text-md text-center"
-            >
+            <div class="flex flex-col items-center w-full mx-auto gap-4 text-md text-center">
               <i :class="slotProps.message.icon" class="!text-6xl text-yellow-500"></i>
               <p>{{ slotProps.message.message }}</p>
             </div>
@@ -135,6 +109,7 @@ import Image from "primevue/image";
 import Badge from "primevue/badge";
 import Toast from "primevue/toast";
 import ConfirmDialog from "primevue/confirmdialog";
+import ScrollPanel from 'primevue/scrollpanel';
 
 // Assets
 import Logo from "@/assets/logo.png";
@@ -167,9 +142,8 @@ const timeoutMessage = computed(() =>
   t("app.session.timeout_message", { time: formattedCountdown.value })
 );
 const submenuItemClass = computed(() => {
-  return `submenue_item ${
-    !isMobile.value && !isHovered.value ? "ltr:pl-6 rtl:pr-6" : ""
-  }`;
+  return `submenue_item ${!isMobile.value && !isHovered.value ? "ltr:pl-6 rtl:pr-6" : ""
+    }`;
 });
 
 // ============== MENU CONFIGURATION ==============
@@ -295,6 +269,11 @@ const shortcuts = {
     if (route.path === "/owners") eventBus.emit("AddOwner");
     if (route.path === "/invoices") eventBus.emit("AddInvoice");
     if (route.path === "/pets") eventBus.emit("AddPet");
+    if (route.path === "/add-inventory-food") eventBus.emit("AddInventoryItem");
+    if (route.path === "/add-inventory-pharmaceutical") eventBus.emit("AddInventoryItem");
+    if (route.path === "/add-inventory-toys") eventBus.emit("AddInventoryItem");
+    if (route.path === "/add-inventory-grooming") eventBus.emit("AddInventoryItem");
+    if (route.path === "/add-inventory-treatment") eventBus.emit("AddInventoryItem");
   },
   "Ctrl+F2": () => {
     if (route.path === "/owners") eventBus.emit("AddOwner");
@@ -304,7 +283,7 @@ const shortcuts = {
   "Ctrl+o": () => router.push("/owners"),
   "Ctrl+i": () => router.push("/invoices"),
   "Ctrl+l": () => toggleDarkMode(),
-  "Ctrl+z": () => {},
+  "Ctrl+z": () => { },
   "Ctrl+Alt+Home": () => router.push("/"),
   "Ctrl+Alt+p": () => router.push("/preferences"),
   "Ctrl+Alt+q": () => eventBus.emit("QuickActions"),
@@ -493,35 +472,38 @@ watchEffect(() => {
 .button-transition:hover {
   translate: -0.07rem -0.07rem !important;
   --tw-drop-shadow: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.3));
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale)
-    var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia)
-    var(--tw-drop-shadow);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
+
 .button-transition {
   transition: all 0.2s ease-in-out !important;
 }
+
 button {
   transition: all 0.2s ease-in-out !important;
 }
+
 button:hover {
   translate: -0.07rem -0.07rem;
   --tw-drop-shadow: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.3)) !important;
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale)
-    var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia)
-    var(--tw-drop-shadow);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
+
 /* Menu item styling */
 :deep(.p-megamenu-item:last-child .p-megamenu-item-content):hover {
   background: none !important;
 }
+
 :deep(.p-menuitem) {
   height: 40px !important;
   min-height: 40px !important;
 }
+
 .p-menu {
   transition: width 0.3s ease, transform 0.3s ease;
   will-change: width;
 }
+
 /* Container responsive sizing */
 @media (min-width: 1536px) {
   .container {
@@ -540,9 +522,11 @@ button:hover {
   background: var(--p-surface-300);
   color: var(--p-primary-contrast-color) !important;
 }
+
 .dark .router-link-active .shortcut {
   color: var(--p-primary-contrast-color);
 }
+
 /* Base menu styles */
 .mobile-menu {
   top: 0;
@@ -553,6 +537,7 @@ button:hover {
 .mobile-menu-visible {
   transform: translateX(0);
 }
+
 .p-menu-separator {
   width: 80%;
   /* border-bottom: 1px solid; */
@@ -562,9 +547,10 @@ button:hover {
 /* Collapsed Menu Styles */
 .collapsed-menu {
   overflow: hidden;
-  width: 80px !important;
-  min-width: 80px !important;
+  width: 60px !important;
+  min-width: 60px !important;
 }
+
 .collapsed-menu .menu-item-label,
 .collapsed-menu .shortcut,
 .collapsed-menu .p-badge,
@@ -589,6 +575,7 @@ button:hover {
 .collapsed-menu .flex.justify-center {
   padding: 0;
 }
+
 .collapsed-menu .p-image,
 .collapsed-menu .p-image img,
 .expanded-menu .p-image,
@@ -596,6 +583,7 @@ button:hover {
   width: 30px !important;
   max-width: 30px !important;
 }
+
 /* } */
 
 /* Profile link adjustments */
@@ -604,6 +592,7 @@ button:hover {
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
+
 .collapsed-menu .p-avatar {
   margin-right: 0 !important;
   margin-left: 0 !important;
@@ -612,10 +601,12 @@ button:hover {
 .collapsed-menu span.inline-flex {
   display: none;
 }
+
 .collapsed-menu .p-avatar {
   margin-left: 0 !important;
   margin-right: 0 !important;
 }
+
 /* } */
 /* } */
 
@@ -658,13 +649,16 @@ button:hover {
   background: var(--primary-color);
   border-radius: 3px;
 }
+
 .p-menu-list li:not(.p-menu-separator) {
   height: 40px;
 }
+
 .collapsed-menu a {
   height: 40px;
   min-width: 40px;
 }
+
 /* Ensure consistent vertical alignment */
 .p-menu-item {
   padding-top: 0 !important;
@@ -701,11 +695,26 @@ button:hover {
   margin: 0 !important;
   height: auto !important;
 }
+
 .p-avatar {
   margin-left: 0 !important;
-  margin-right: 0.5rem !important; /* Consistent spacing */
+  margin-right: 0.5rem !important;
+  /* Consistent spacing */
 }
+
 .collapsed-menu .p-menu-start .p-menu-item-link {
   justify-content: center;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, and Opera */
 }
 </style>

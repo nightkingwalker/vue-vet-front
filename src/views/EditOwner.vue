@@ -1,12 +1,8 @@
 <template>
-  <div class="px-4">
+  <div class="px-4 lg:!text-[14px]">
     <form @submit.prevent="submitForm" class="mx-auto w-full">
-      <fieldset
-        class="p-fieldset p-component w-4/5 flex flex-wrap mx-auto gap-4 items-start border rounded-lg p-4"
-      >
-        <legend
-          class="px-4 bg-gray-600 text-white dark:bg-zinc-200 dark:text-zinc-800 rounded"
-        >
+      <fieldset class="p-fieldset p-component w-4/5 flex flex-wrap mx-auto gap-4 items-start border rounded-lg p-4">
+        <legend class="px-4 bg-gray-600 text-white dark:bg-zinc-200 dark:text-zinc-800 rounded">
           {{ $t("edit_owner.title") }}
         </legend>
 
@@ -40,15 +36,8 @@
 
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <DatePicker
-              showIcon
-              iconDisplay="input"
-              showButtonBar
-              fluid
-              id="birth_date"
-              v-model="owner.birth_date"
-              dateFormat="yy-mm-dd"
-            />
+            <DatePicker showIcon iconDisplay="input" showButtonBar fluid id="birth_date" v-model="owner.birth_date"
+              dateFormat="yy-mm-dd" />
             <label for="birth_date">{{ $t("add_owner.fields.birth_date") }}</label>
           </FloatLabel>
         </div>
@@ -65,7 +54,7 @@
             <InputText fluid id="instagram_link" v-model="owner.instagram_link" />
             <label for="instagram_link">{{
               $t("add_owner.fields.instagram_link")
-            }}</label>
+              }}</label>
           </FloatLabel>
         </div>
 
@@ -85,23 +74,12 @@
 
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <TextArea
-              id="clinic_notes"
-              v-model="owner.clinic_notes"
-              autoResize
-              fluid
-              rows="2"
-            />
+            <TextArea id="clinic_notes" v-model="owner.clinic_notes" autoResize fluid rows="2" />
             <label for="clinic_notes">{{ $t("add_owner.fields.clinic_notes") }}</label>
           </FloatLabel>
         </div>
 
-        <Button
-          type="submit"
-          :label="$t('edit_owner.actions.update')"
-          icon="pi pi-check"
-          class="mt-4 w-full"
-        />
+        <Button type="submit" :label="$t('edit_owner.actions.update')" icon="pi pi-check" class="mt-4 w-full" />
       </fieldset>
     </form>
   </div>

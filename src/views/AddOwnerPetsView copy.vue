@@ -1,38 +1,26 @@
 <template>
   <div class="w-full lg:text-[14px]">
-    <form @submit.prevent="submitForm" class="mx-auto w-full">
+    <form @submit.prevent="submitForm" class="mt-8 mx-auto w-4/5">
       <fieldset
-        class="p-fieldset p-component w-4/5 flex flex-wrap gap-4 items-start mx-auto items-top border rounded-lg p-4">
-        <legend>{{ $t("pet_form.title") }}</legend>
+        class="p-fieldset p-component w-full flex flex-wrap gap-4 items-center border rounded-lg p-4"
+      >
+        <legend>
+          {{ owners.name }} <i class="pi pi-angle-double-right"></i>
+          {{ $t("pet_form.title") }}
+        </legend>
         <input type="hidden" id="branch_id" value="1" v-model="pet.branch_id" />
-
-        <!-- Select Owner -->
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
-            <AutoComplete autoFocus fluid required :invalid="invalid.pet.owner_id" v-model="pet.owner_id"
-              optionLabel="name" :suggestions="filteredOwners" @complete="searchOwners" class="w-full">
-              <template #option="slotProps">
-                <div class="flex items-center">
-                  <div>{{ slotProps.option.name }}</div>
-                </div>
-              </template>
-              <template #footer>
-                <Button :label="$t('pet_form.buttons.add_new_owner')" icon="pi pi-plus" @click="addNewOwner"
-                  class="p-button-text w-full" />
-              </template>
-            </AutoComplete>
-            <label for="owner">{{ $t("pet_form.fields.select_owner") }}
-              <span class="text-red-600">*</span></label>
-          </FloatLabel>
-          <span class="text-[10px] text-red-600" v-if="invalid.pet.owner_id">{{
-            $t("form_messages.warnings.invalid_input")
-          }}</span>
-        </div>
-
-        <div class="field mt-3 w-[48%]">
-          <FloatLabel class="w-full">
-            <InputText fluid id="name" v-model="pet.name" required :invalid="invalid.pet.name" />
-            <label for="name">{{ $t("pet_form.fields.name") }} <span class="text-red-600">*</span></label>
+            <InputText
+              fluid
+              id="name"
+              v-model="pet.name"
+              required
+              :invalid="invalid.pet.name"
+            />
+            <label for="name"
+              >{{ $t("pet_form.fields.name") }} <span class="text-red-600">*</span></label
+            >
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.name">{{
             $t("form_messages.warnings.invalid_input")
@@ -40,10 +28,20 @@
         </div>
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
-            <Select required :invalid="invalid.pet.species" fluid v-model="pet.species" :options="species"
-              optionLabel="label" optionValue="value" class="w-full h-10" />
-            <label for="dd-city">{{ $t("pet_form.fields.select_species") }}
-              <span class="text-red-600">*</span></label>
+            <Select
+              required
+              :invalid="invalid.pet.species"
+              fluid
+              v-model="pet.species"
+              :options="species"
+              optionLabel="label"
+              optionValue="value"
+              class="w-full h-10"
+            />
+            <label for="dd-city"
+              >{{ $t("pet_form.fields.select_species") }}
+              <span class="text-red-600">*</span></label
+            >
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.species">{{
             $t("form_messages.warnings.invalid_input")
@@ -57,10 +55,21 @@
         </div>
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
-            <Select id="gender" required :invalid="invalid.pet.gender" fluid v-model="pet.gender" :options="genders"
-              optionLabel="label" optionValue="value" class="w-full h-10" />
-            <label for="gender">{{ $t("pet_form.fields.select_gender") }}
-              <span class="text-red-600">*</span></label>
+            <Select
+              id="gender"
+              required
+              :invalid="invalid.pet.gender"
+              fluid
+              v-model="pet.gender"
+              :options="genders"
+              optionLabel="label"
+              optionValue="value"
+              class="w-full h-10"
+            />
+            <label for="gender"
+              >{{ $t("pet_form.fields.select_gender") }}
+              <span class="text-red-600">*</span></label
+            >
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.gender">{{
             $t("form_messages.warnings.invalid_input")
@@ -68,14 +77,27 @@
         </div>
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
-            <DatePicker showIcon required :invalid="invalid.pet.date_of_birth" iconDisplay="input" showButtonBar
-              hourFormat="12" fluid id="dob" class="w-full" v-model="pet.date_of_birth" dateFormat="yy-mm-dd" />
-            <label for="dob">{{ $t("pet_form.fields.date_of_birth") }}
-              <span class="text-red-600">*</span></label>
+            <DatePicker
+              showIcon
+              required
+              :invalid="invalid.pet.date_of_birth"
+              iconDisplay="input"
+              showButtonBar
+              hourFormat="12"
+              fluid
+              id="dob"
+              class="w-full"
+              v-model="pet.date_of_birth"
+              dateFormat="yy-mm-dd"
+            />
+            <label for="dob"
+              >{{ $t("pet_form.fields.date_of_birth") }}
+              <span class="text-red-600">*</span></label
+            >
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.date_of_birth">{{
             $t("form_messages.warnings.invalid_input")
-            }}</span>
+          }}</span>
         </div>
         <!-- Color -->
         <div class="field mt-3 w-[48%]">
@@ -91,47 +113,76 @@
             <InputText fluid id="distinctive_marks" v-model="pet.distinctive_marks" />
             <label for="distinctive_marks">{{
               $t("pet_form.fields.distinctive_marks")
-              }}</label>
+            }}</label>
           </FloatLabel>
         </div>
 
         <!-- Behaviour -->
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
-            <Select v-model="pet.behaviour" :options="behaviorOptions" required :invalid="invalid.pet.behaviour"
-              optionLabel="label" optionValue="value" class="w-full h-10" />
-            <label for="behaviour">{{ $t("pet_form.fields.behaviour") }}
-              <span class="text-red-600">*</span></label>
+            <Select
+              v-model="pet.behaviour"
+              :options="behaviorOptions"
+              required
+              :invalid="invalid.pet.behaviour"
+              optionLabel="label"
+              optionValue="value"
+              class="w-full h-10"
+            />
+            <label for="behaviour"
+              >{{ $t("pet_form.fields.behaviour") }}
+              <span class="text-red-600">*</span></label
+            >
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.behaviour">{{
             $t("form_messages.warnings.invalid_input")
-            }}</span>
+          }}</span>
         </div>
 
         <!-- Neutered -->
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
-            <Select fluid v-model="pet.neutered" required :invalid="invalid.pet.neutered" :options="yesno"
-              optionLabel="label" optionValue="value" class="w-full h-10" />
-            <label for="neutered">{{ $t("pet_form.fields.neutered") }}
-              <span class="text-red-600">*</span></label>
+            <Select
+              fluid
+              v-model="pet.neutered"
+              required
+              :invalid="invalid.pet.neutered"
+              :options="yesno"
+              optionLabel="label"
+              optionValue="value"
+              class="w-full h-10"
+            />
+            <label for="neutered"
+              >{{ $t("pet_form.fields.neutered") }}
+              <span class="text-red-600">*</span></label
+            >
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.neutered">{{
             $t("form_messages.warnings.invalid_input")
-            }}</span>
+          }}</span>
         </div>
 
         <!-- Deceased -->
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
-            <Select fluid required :invalid="invalid.pet.deceased" v-model="pet.deceased" :options="yesno"
-              optionLabel="label" optionValue="value" class="w-full h-10" />
-            <label for="deceased">{{ $t("pet_form.fields.deceased") }}
-              <span class="text-red-600">*</span></label>
+            <Select
+              fluid
+              required
+              :invalid="invalid.pet.deceased"
+              v-model="pet.deceased"
+              :options="yesno"
+              optionLabel="label"
+              optionValue="value"
+              class="w-full h-10"
+            />
+            <label for="deceased"
+              >{{ $t("pet_form.fields.deceased") }}
+              <span class="text-red-600">*</span></label
+            >
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.deceased">{{
             $t("form_messages.warnings.invalid_input")
-            }}</span>
+          }}</span>
         </div>
 
         <!-- Allergies -->
@@ -141,7 +192,6 @@
             <label for="allergies">{{ $t("pet_form.fields.allergies") }}</label>
           </FloatLabel>
         </div>
-        <!-- Submit Button -->
         <Button type="submit" :label="$t('pet_form.buttons.submit')" />
       </fieldset>
     </form>
@@ -149,44 +199,26 @@
 </template>
 
 <script setup>
-import { onMounted, ref, onBeforeUnmount } from "vue";
-import AutoComplete from "primevue/autocomplete";
+import { ref } from "vue";
 import InputText from "primevue/inputtext";
+import Textarea from "primevue/textarea";
 import DatePicker from "primevue/datepicker";
 import Fieldset from "primevue/fieldset";
-import Textarea from "primevue/textarea";
 import Select from "primevue/select";
 import FloatLabel from "primevue/floatlabel";
 import Button from "primevue/button";
+import Message from "primevue/message";
 import axiosInstance from "@/axios"; // Assuming you've created a global axios instance
 import eventBus from "@/eventBus";
 import router from "@/router";
+import { useRoute } from "vue-router";
 import Cookies from "js-cookie";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
+const route = useRoute();
 const emit = defineEmits(["submitted"]); // Define the event to be emitted
-const isModalOwnerVisible = ref(false);
 const invalid = ref({ pet: {} });
-const pet = ref({
-  owner_id: null,
-  branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
-  name: "",
-  species: "",
-  breed: "",
-  gender: "",
-  date_of_birth: "",
-  color: "",
-  distinctive_marks: "",
-  behaviour: "",
-  neutered: "",
-  deceased: "",
-  allergies: "",
-});
-const yesno = ref([
-  { label: t("pet_form.options.yes"), value: "Yes" },
-  { label: t("pet_form.options.no"), value: "No" },
-]);
 const species = ref([
   {
     label: t("species.avian"),
@@ -261,6 +293,10 @@ const species = ref([
     icon: "fa-solid fa-sheep",
   },
 ]);
+const yesno = ref([
+  { label: t("pet_form.options.yes"), value: "Yes" },
+  { label: t("pet_form.options.no"), value: "No" },
+]);
 const behaviorOptions = ref([
   { label: t("behavior.Friendly"), value: "Friendly", en_label: "Friendly" },
   { label: t("behavior.Fearful"), value: "Fearful", en_label: "Fearful" },
@@ -294,20 +330,38 @@ const behaviorOptions = ref([
     en_label: "Urinates/Defecates from Stress",
   },
 ]);
-
 const genders = ref([
   { label: t("pet_form.options.male"), value: "Male" },
   { label: t("pet_form.options.female"), value: "Female" },
 ]);
 const owners = ref([]);
+const ownerid = route.params.ownerid;
 const filteredOwners = ref([]);
-
+const getYesNoLabel = (value) => {
+  const foundSpecies = yesno.value.find((s) => s.value === value);
+  return foundSpecies ? foundSpecies.label : value;
+};
+const pet = ref({
+  owner_id: route.params.ownerid,
+  branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
+  name: "",
+  species: "",
+  breed: "",
+  gender: "",
+  date_of_birth: "",
+  color: "",
+  distinctive_marks: "",
+  behaviour: "",
+  neutered: "No",
+  deceased: "No",
+  allergies: "",
+});
 // Fetch owners from the API
 async function fetchOwners() {
   try {
-    const response = await axiosInstance.get("/owners");
-    // // console.log(response.data.data);
-    owners.value = response.data.data;
+    const response = await axiosInstance.get("/owners/" + ownerid);
+    // // console.log(response.data);
+    owners.value = response.data;
   } catch (error) {
     console.error("Failed to fetch owners:", error);
   }
@@ -315,18 +369,16 @@ async function fetchOwners() {
 
 // Search function for AutoComplete
 function searchOwners(event) {
-  fetchOwners();
   filteredOwners.value = owners.value.filter((owner) =>
     owner.name.toLowerCase().includes(event.query.toLowerCase())
   );
 }
-const addNewOwner = () => {
-  emit("showOwnerModal"); // Emit event to parent to show the owner modal
-};
-
+function addNewOwner() {
+  router.push("/new-owner"); // Ensure this route is defined in your router configurations
+}
 // Form submission
 const submitForm = async () => {
-  invalid.value.pet = {
+    invalid.value.pet = {
     owner_id: pet.value.owner_id === null ? true : false,
     name: pet.value.name === "" ? true : false,
     species: pet.value.species === "" ? true : false,
@@ -336,25 +388,16 @@ const submitForm = async () => {
     neutered: pet.value.neutered === "" ? true : false,
     deceased: pet.value.deceased === "" ? true : false,
   };
-  if (
-    invalid.value.pet.owner_id ||
-    invalid.value.pet.name ||
-    invalid.value.pet.species ||
-    invalid.value.pet.gender ||
-    invalid.value.pet.date_of_birth ||
-    invalid.value.pet.behaviour ||
-    invalid.value.pet.neutered ||
-    invalid.value.pet.deceased
-  ) {
-    return;
+  if (invalid.value.pet.owner_id ||invalid.value.pet.name ||invalid.value.pet.species ||invalid.value.pet.gender ||invalid.value.pet.date_of_birth ||invalid.value.pet.behaviour ||invalid.value.pet.neutered ||invalid.value.pet.deceased) {
+    return
   }
   const submissionData = {
-    owner_id: pet.value.owner_id.id,
+    owner_id: pet.value.owner_id,
     branch_id: pet.value.branch_id,
     name: pet.value.name,
-    species: pet.value.species.value,
+    species: pet.value.species,
     breed: pet.value.breed,
-    gender: pet.value.gender.value,
+    gender: pet.value.gender,
     date_of_birth: pet.value.date_of_birth
       ? pet.value.date_of_birth.toLocaleDateString("en-CA")
       : null,
@@ -366,20 +409,18 @@ const submitForm = async () => {
     allergies: pet.value.allergies,
   };
 
-  // // console.log(submissionData); // Verify the structure
   // console.log(submissionData);
   try {
     const response = await axiosInstance.post("/pets", submissionData);
-    emit("submitted", response.data); // You may modify this based on your response structure
-
-    // // console.log(response);
+    // console.log(response);
+    emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: t("pet_form.toast.success"),
-      detail: t("pet_form.toast.success"),
+      summary: "Data Loaded",
+      detail: `Pet Added Successfully`,
       life: 5000,
     });
-    router.push("/pets");
+    await router.push("/" + route.params.ownerid + "/pets");
   } catch (error) {
     eventBus.emit("show-toast", {
       severity: "warn",
@@ -387,22 +428,13 @@ const submitForm = async () => {
       detail: error,
       life: 5000,
     });
+    console.log(error)
   } finally {
   }
 };
 
 // Load owners when component is mounted
-onMounted(() => {
-  fetchOwners();
-  eventBus.on("ownerAdded", (event) => {
-    // // console.log(event);
-  });
-});
-
-onBeforeUnmount(() => {
-  // Clean up the event listener when the component is destroyed
-  eventBus.off("ownerAdded", fetchOwners);
-});
+fetchOwners();
 </script>
 
 <style scoped>

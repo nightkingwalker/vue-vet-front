@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4">
+  <div class="px-4 lg:!text-[14px]">
     <Card v-if="medicalRecord.medical_examinations.length > 0">
       <template #title>
         <div class="flex justify-between">
@@ -51,14 +51,10 @@
         <Divider :align="!isRtl ? `left` : `right`" type="solid">
           <span class="text-xl font-bold">{{
             $t("medical_examination.examination_details")
-          }}</span>
+            }}</span>
         </Divider>
 
-        <div
-          v-for="(exam, index) in medicalRecord.medical_examinations"
-          :key="index"
-          class="grid"
-        >
+        <div v-for="(exam, index) in medicalRecord.medical_examinations" :key="index" class="grid">
           <div class="w-full pb-4">
             <p>
               <strong>{{ $t("medical_examination.exam_data.examination_date") }}:</strong>
@@ -80,12 +76,8 @@
 
           <div class="flex flex-wrap gap-4">
             <!-- Head and Neck Examination -->
-            <Panel
-              :header="$t('medical_examination.sections.head_neck')"
-              collapsed
-              toggleable
-              class="w-[30%] border rounded-lg shadow p-4"
-            >
+            <Panel :header="$t('medical_examination.sections.head_neck')" collapsed toggleable
+              class="w-[30%] border rounded-lg shadow p-4">
               <p>
                 <strong>{{ $t("medical_examination.sections.eyes") }}:</strong>
                 {{ exam.eyes }}
@@ -119,9 +111,7 @@
                 {{ exam.tongue }}
               </p>
               <p>
-                <strong
-                  >{{ $t("medical_examination.sections.mucous_membranes") }}:</strong
-                >
+                <strong>{{ $t("medical_examination.sections.mucous_membranes") }}:</strong>
                 {{ exam.mucous_membranes }}
               </p>
               <p>
@@ -130,26 +120,18 @@
               </p>
             </Panel>
             <!-- Vital Signs -->
-            <Panel
-              :header="$t('medical_examination.sections.vital_signs')"
-              collapsed
-              toggleable
-              class="w-[30%] border rounded-lg shadow p-4"
-            >
+            <Panel :header="$t('medical_examination.sections.vital_signs')" collapsed toggleable
+              class="w-[30%] border rounded-lg shadow p-4">
               <p>
                 <strong>{{ $t("medical_examination.sections.pulse_rate") }}:</strong>
                 {{ exam.pulse_rate }} bpm
               </p>
               <p>
-                <strong
-                  >{{ $t("medical_examination.sections.respiratory_rate") }}:</strong
-                >
+                <strong>{{ $t("medical_examination.sections.respiratory_rate") }}:</strong>
                 {{ exam.respiratory_rate }}
               </p>
               <p>
-                <strong
-                  >{{ $t("medical_examination.sections.breathing_pattern") }}:</strong
-                >
+                <strong>{{ $t("medical_examination.sections.breathing_pattern") }}:</strong>
                 {{ exam.breathing_pattern }}
               </p>
               <p>
@@ -161,60 +143,40 @@
                 {{ exam.oxygenation }}
               </p>
               <p>
-                <strong
-                  >{{ $t("medical_examination.sections.capillary_refill_time") }}:</strong
-                >
+                <strong>{{ $t("medical_examination.sections.capillary_refill_time") }}:</strong>
                 {{ exam.capillary_refill_time }}
               </p>
             </Panel>
             <!-- Nervous System and Skin -->
-            <Panel
-              :header="$t('medical_examination.sections.nervous_system')"
-              collapsed
-              toggleable
-              class="w-[30%] border rounded-lg shadow p-4"
-            >
+            <Panel :header="$t('medical_examination.sections.nervous_system')" collapsed toggleable
+              class="w-[30%] border rounded-lg shadow p-4">
               <p>
                 <strong>{{ $t("medical_examination.sections.nervous_system") }}:</strong>
                 {{ exam.nervous_system }}
               </p>
             </Panel>
-            <Panel
-              :header="$t('medical_examination.sections.skin_coat')"
-              collapsed
-              toggleable
-              class="w-[30%] border rounded-lg shadow p-4"
-            >
+            <Panel :header="$t('medical_examination.sections.skin_coat')" collapsed toggleable
+              class="w-[30%] border rounded-lg shadow p-4">
               <p>
                 <strong>{{ $t("medical_examination.sections.skin") }}:</strong>
                 {{ exam.skin }}
               </p>
               <p>
-                <strong
-                  >{{
-                    $t("medical_examination.sections.skin_lumps_or_infections")
-                  }}:</strong
-                >
+                <strong>{{
+                  $t("medical_examination.sections.skin_lumps_or_infections")
+                  }}:</strong>
                 {{ exam.skin_lumps_or_infections }}
               </p>
               <p>
-                <strong
-                  >{{ $t("medical_examination.sections.skin_coat_condition") }}:</strong
-                >
+                <strong>{{ $t("medical_examination.sections.skin_coat_condition") }}:</strong>
                 {{ exam.skin_coat_condition }}
               </p>
             </Panel>
             <!-- Abdominal and Lymph Nodes -->
-            <Panel
-              :header="$t('medical_examination.sections.abdominal')"
-              collapsed
-              toggleable
-              class="w-[30%] border rounded-lg shadow p-4"
-            >
+            <Panel :header="$t('medical_examination.sections.abdominal')" collapsed toggleable
+              class="w-[30%] border rounded-lg shadow p-4">
               <p>
-                <strong
-                  >{{ $t("medical_examination.sections.abdominal_palpation") }}:</strong
-                >
+                <strong>{{ $t("medical_examination.sections.abdominal_palpation") }}:</strong>
                 {{ exam.abdominal_palpation }}
               </p>
               <p>
@@ -223,31 +185,21 @@
               </p>
             </Panel>
             <!-- Body Condition and Hydration -->
-            <Panel
-              :header="$t('medical_examination.sections.body_condition')"
-              collapsed
-              toggleable
-              class="w-[30%] border rounded-lg shadow p-4"
-            >
+            <Panel :header="$t('medical_examination.sections.body_condition')" collapsed toggleable
+              class="w-[30%] border rounded-lg shadow p-4">
               <p>
-                <strong
-                  >{{ $t("medical_examination.sections.body_condition_score") }}:</strong
-                >
+                <strong>{{ $t("medical_examination.sections.body_condition_score") }}:</strong>
                 {{ exam.body_condition_score }}
               </p>
               <p>
-                <strong
-                  >{{ $t("medical_examination.sections.hydration_status") }}:</strong
-                >
+                <strong>{{ $t("medical_examination.sections.hydration_status") }}:</strong>
                 {{ exam.hydration_status }}
               </p>
             </Panel>
             <!-- Preliminary Diagnosis and Recommendations -->
             <div class="col-12">
               <p>
-                <strong
-                  >{{ $t("medical_examination.sections.preliminary_diagnosis") }}:</strong
-                >
+                <strong>{{ $t("medical_examination.sections.preliminary_diagnosis") }}:</strong>
                 {{ exam.preliminary_diagnosis }}
               </p>
               <p>
@@ -265,13 +217,9 @@
     </Card>
     <div v-else>
       {{ $t("medical_examination.no_examination") }}
-      <Button
-        :label="$t('medical_examination.add_examination')"
-        icon="pi pi-plus"
+      <Button :label="$t('medical_examination.add_examination')" icon="pi pi-plus"
         @click="showAddPhysicalExaminationModal(props.medical_record_id)"
-        v-tooltip.bottom="$t('medical_examination.add_examination')"
-        class="p-button p-component !text-xs !h-8 ml-2"
-      />
+        v-tooltip.bottom="$t('medical_examination.add_examination')" class="p-button p-component !text-xs !h-8 ml-2" />
     </div>
   </div>
 </template>

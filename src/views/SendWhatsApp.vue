@@ -1,12 +1,8 @@
 <template>
-  <div class="px-4">
+  <div class="px-4 lg:!text-[14px]">
     <form @submit.prevent="submitForm" class="mx-auto w-full max-w-md">
-      <fieldset
-        class="p-fieldset p-component w-full flex flex-wrap items-center border rounded-lg p-4"
-      >
-        <legend
-          class="px-4 bg-gray-600 text-white dark:bg-zinc-200 dark:text-zinc-800 rounded"
-        >
+      <fieldset class="p-fieldset p-component w-full flex flex-wrap items-center border rounded-lg p-4">
+        <legend class="px-4 bg-gray-600 text-white dark:bg-zinc-200 dark:text-zinc-800 rounded">
           {{ $t("whatsapp.title") }}
         </legend>
         <div class="field mt-6 w-full">
@@ -16,11 +12,9 @@
             <label for="address">{{ $t("whatsapp.fields.message") }}</label>
           </FloatLabel>
         </div>
-        <button
-          type="submit"
+        <button type="submit"
           class="p-button p-button-content py-2 px-4 rounded focus:outline-none focus:shadow-outline h-8"
-          :disabled="loading"
-        >
+          :disabled="loading">
           <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
           <span v-else>{{ $t("whatsapp.buttons.send") }}</span>
         </button>

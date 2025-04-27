@@ -1,15 +1,10 @@
 <template>
   <div class="flex gap-2 h-[calc(100vh-60px)] overflow-y-auto my-4 w-full">
-    <div
-      class="w-1/4 h-fit bg-[var(--p-surface-200)] dark:bg-[var(--p-surface-600)] rounded-lg p-2"
-    >
+    <div class="w-1/4 h-fit bg-[var(--p-surface-200)] dark:bg-[var(--p-surface-600)] rounded-lg p-2">
       <Card class="w-full">
         <template #header>
-          <Button
-            @click="router.go(-1)"
-            class="p-button p-component p-button-icon-only !w-6 h-6 !text-xs m-2"
-            icon="pi pi-arrow-left !text-xs"
-            v-tooltip.top="{
+          <Button @click="router.go(-1)" class="p-button p-component p-button-icon-only !w-6 h-6 !text-xs m-2"
+            icon="pi pi-arrow-left !text-xs" v-tooltip.top="{
               value: $t('pet_details.go_back'),
               pt: {
                 arrow: {
@@ -20,34 +15,29 @@
                 text:
                   '!bg-[var(--p-primary-color)] !font-thin 2xl:!text-lg lg:!text-xs shadow-md',
               },
-            }"
-          />
+            }" />
 
           <div class="flex justify-center mt-8"><i class="fas fa-paw text-3xl"></i></div>
         </template>
         <template #title>
           <Skeleton v-if="loading" width="12rem" height="2rem" />
-          <div v-else>{{ pet.name }}</div></template
-        >
+          <div v-else>{{ pet.name }}</div>
+        </template>
         <template #subtitle>
           <div class="flex gap-4">
             <Skeleton v-if="loading" width="12rem" height="2rem" />
-            <Chip
-              v-else
-              v-tooltip.top="{
-                value: $t('pet_details.microchip'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+            <Chip v-else v-tooltip.top="{
+              value: $t('pet_details.microchip'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }"
-              class="!text-sm border"
-            >
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }" class="lg:!text-xs !text-sm border">
               <i class="fas fa-microchip"></i> {{ pet.microchip_num }}
             </Chip>
           </div>
@@ -62,95 +52,76 @@
             <Skeleton class="mt-2" width="5rem" height="2rem" />
           </div>
           <div v-else class="flex flex-wrap gap-1">
-            <Chip class="2xl:text-xs text-sm mt-2 border">
-              <router-link
-                :to="`/` + pet.owner.id + `/pets`"
-                v-tooltip.top="{
-                  value: $t('pet_details.view_patients'),
-                  pt: {
-                    arrow: {
-                      style: {
-                        borderTopColor: 'var(--p-primary-color)',
-                      },
+            <Chip class="lg:!text-xs text-sm mt-2 border">
+              <router-link :to="`/` + pet.owner.id + `/pets`" v-tooltip.top="{
+                value: $t('pet_details.view_patients'),
+                pt: {
+                  arrow: {
+                    style: {
+                      borderTopColor: 'var(--p-primary-color)',
                     },
-                    text:
-                      '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                   },
-                }"
-                ><i class="fas fa-users"></i> {{ pet.owner.name }}
+                  text:
+                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+                },
+              }"><i class="fas fa-users"></i> {{ pet.owner.name }}
                 <i class="pi pi-external-link !text-[0.6rem] text-gray-500"></i>
               </router-link>
             </Chip>
 
-            <Chip class="2xl:text-xs text-sm mt-2 border">
+            <Chip class="lg:!text-xs text-sm mt-2 border">
               <i :class="getIconClass(pet.species)"></i>
               {{ $t(`pet_details.species.${getSpeciesValue(pet.species)}`) }}
             </Chip>
-            <Chip
-              class="2xl:text-xs text-sm mt-2 border"
-              v-tooltip.top="{
-                value: $t('pet_details.breed'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+            <Chip class="lg:!text-xs  text-sm mt-2 border" v-tooltip.top="{
+              value: $t('pet_details.breed'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }"
-            >
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }">
               {{ pet.breed }}
             </Chip>
-            <Chip
-              class="2xl:text-xs text-sm mt-2 border"
-              v-if="pet.color !== null"
-              v-tooltip.top="{
-                value: $t('pet_details.color'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+            <Chip class="lg:!text-xs  text-sm mt-2 border" v-if="pet.color !== null" v-tooltip.top="{
+              value: $t('pet_details.color'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }"
-            >
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }">
               <i class="fa-solid fa-palette"></i> {{ pet.color }}
             </Chip>
-            <Chip
-              class="2xl:text-xs text-sm mt-2 border"
-              v-if="pet.behaviour !== null"
-              v-tooltip.top="{
-                value: $t('pet_details.behavior') + ': ' + pet.behaviour,
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+            <Chip class="lg:!text-xs  text-sm mt-2 border" v-if="pet.behaviour !== null" v-tooltip.top="{
+              value: $t('pet_details.behavior') + ': ' + pet.behaviour,
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }"
-            >
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }">
               <i class="fa-solid fa-face-angry"></i>
               {{ pet.behaviour }}
             </Chip>
-            <Chip class="2xl:text-xs text-sm mt-2 border">
-              <i
-                class="fa-solid fa-venus !text-pink-600"
-                v-if="pet.gender === `Female`"
-              ></i>
+            <Chip class="lg:!text-xs  text-sm mt-2 border">
+              <i class="fa-solid fa-venus !text-pink-600" v-if="pet.gender === `Female`"></i>
               <i class="fa-solid fa-mars !text-blue-600" v-else></i>
               {{ $t(`pet_details.${pet.gender}`) }}
             </Chip>
-            <Chip
-              class="2xl:text-xs text-sm mt-2 p-button-success p-button-outlined"
-              v-if="pet.neutered === 'Y'"
+            <Chip class="lg:!text-xs  text-sm mt-2 p-button-success p-button-outlined" v-if="pet.neutered === 'Y'"
               v-tooltip.top="{
                 value: $t('pet_details.neutered'),
                 pt: {
@@ -161,78 +132,62 @@
                   },
                   text: '!bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md ',
                 },
-              }"
-            >
+              }">
               {{
                 pet.gender === "Male"
                   ? $t("pet_details.neutered")
                   : $t("pet_details.neutered")
               }}
             </Chip>
-            <Chip
-              class="2xl:text-xs text-sm mt-2 p-button-danger p-button-outlined"
-              v-else
-              v-tooltip.top="{
-                value: $t('pet_details.neutered'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+            <Chip class="lg:!text-xs  text-sm mt-2 p-button-danger p-button-outlined" v-else v-tooltip.top="{
+              value: $t('pet_details.neutered'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text: '!bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md ',
                 },
-              }"
-              >{{
-                pet.gender === "Male"
-                  ? $t("pet_details.not_neutered")
-                  : $t("pet_details.not_spayed")
-              }}</Chip
-            >
-            <Chip
-              class="2xl:text-xs text-sm mt-2 border"
-              v-tooltip.top="{
-                value: $t('pet_details.age'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+                text: '!bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md ',
+              },
+            }">{{
+              pet.gender === "Male"
+                ? $t("pet_details.not_neutered")
+                : $t("pet_details.not_spayed")
+            }}</Chip>
+            <Chip class="lg:!text-xs  text-sm mt-2 border" v-tooltip.top="{
+              value: $t('pet_details.age'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text: '!bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md ',
                 },
-              }"
-            >
+                text: '!bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md ',
+              },
+            }">
               <i class="fa-solid fa-cake-candles"></i>
               {{
                 pet.deceased === "N" ? computeAge(pet.date_of_birth) : pet.date_of_birth
               }}
             </Chip>
-            <Chip
-              class="2xl:text-xs text-sm mt-2 border"
-              v-tooltip.top="{
-                value: $t('pet_details.birth_date'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+            <Chip class="lg:!text-xs  text-sm mt-2 border" v-tooltip.top="{
+              value: $t('pet_details.birth_date'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text: '!bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md ',
                 },
-              }"
-            >
+                text: '!bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md ',
+              },
+            }">
               <i class="fa-solid fa-cake-candles"></i>
               {{ pet.deceased === "N" ? pet.date_of_birth : pet.date_of_birth }}
             </Chip>
-            <Chip
-              class="2xl:text-xs text-sm mt-2"
-              :class="
-                `` + pet.deceased === 'Y'
-                  ? `!bg-black !text-white`
-                  : `!bg-green-500 !text-white`
-              "
-            >
+            <Chip class="lg:!text-xs  text-sm mt-2" :class="`` + pet.deceased === 'Y'
+              ? `!bg-black !text-white`
+              : `!bg-green-500 !text-white`
+              ">
               <i v-if="pet.deceased === 'Y'" class="fa-solid fa-heart-crack"></i>
               <i v-else class="fa-solid fa-heart"></i>
               {{
@@ -246,9 +201,7 @@
                   : ": YES"
               }}
             </Chip>
-            <Chip
-              v-if="pet.allergies !== null"
-              class="2xl:text-xs text-sm mt-2 p-button-danger p-button-outlined"
+            <Chip v-if="pet.allergies !== null" class="lg:!text-xs  text-sm mt-2 p-button-danger p-button-outlined"
               v-tooltip.top="{
                 value: $t('pet_details.allergies') + ': ' + pet.allergies,
                 pt: {
@@ -260,33 +213,25 @@
                   text:
                     '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }"
-              ><i class="fas fa-disease"></i> {{ pet.allergies }}
+              }"><i class="fas fa-disease"></i> {{ pet.allergies }}
             </Chip>
-            <Chip
-              class="2xl:text-xs text-sm mt-2 cursor-pointer"
-              v-tooltip.top="{
-                value: $t('pet_details.distinctive_marks'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+            <Chip class="lg:!text-xs  text-sm mt-2 cursor-pointer" v-tooltip.top="{
+              value: $t('pet_details.distinctive_marks'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text: '!bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md ',
                 },
-              }"
-            >
+                text: '!bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md ',
+              },
+            }">
               {{ pet.distinctive_marks }}
             </Chip>
-            <Button
-              type="button"
-              icon="fa-solid fa-pencil"
-              :label="$t('pet_details.edit')"
+            <Button type="button" icon="fa-solid fa-pencil" :label="$t('pet_details.edit')"
               v-tooltip.bottom="$t('pet_details.edit')"
-              class="2xl:text-xs mt-2 cursor-pointer !bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md"
-              @click="editPetDetails"
-            />
+              class="lg:!text-xs  mt-2 cursor-pointer !bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md"
+              @click="editPetDetails" />
           </div>
         </template>
         <template #footer>
@@ -297,57 +242,28 @@
         </template>
       </Card>
     </div>
-    <div
-      class="w-3/4 min-h-full bg-[var(--p-surface-300)] dark:bg-[var(--p-surface-500)] rounded-lg"
-    >
-      <DataTable
-        :value="visits"
-        class="mx-4 my-4 rounded-lg overflow-hidden text-xs"
-        stripedRows
-        v-if="!loading"
-      >
+    <div class="w-3/4 min-h-full bg-[var(--p-surface-300)] dark:bg-[var(--p-surface-500)] rounded-lg">
+      <DataTable :value="visits" class="mx-4 my-4 rounded-lg overflow-hidden text-xs" stripedRows v-if="!loading">
         <template #header>
           <div class="flex flex-wrap items-center justify-between gap-2">
-            <span class="text-xl font-bold">{{ $t("pet_details.visits_history") }}</span>
+            <span class="lg:text-sm text-lg font-bold">{{ $t("pet_details.visits_history") }}</span>
             <div class="flex gap-2">
-              <Button
-                v-tooltip.bottom="$t('pet_details.add_appointment')"
-                icon="pi pi-plus"
-                @click="addAppointment"
-                class="p-button p-button-icon-only !text-sm !font-thin h-8"
-              />
-              <Button
-                type="button"
-                icon="pi pi-refresh !text-sm"
-                label=""
+              <Button v-tooltip.bottom="$t('pet_details.add_appointment')" icon="pi pi-plus" @click="addAppointment"
+                class="p-button p-button-icon-only !text-sm !font-thin h-8" />
+              <Button type="button" icon="pi pi-refresh !text-sm" label=""
                 v-tooltip.bottom="$t('pet_details.refresh_data')"
-                class="p-button p-button-icon-only !text-sm !font-thin h-8"
-                @click="refreshData"
-              />
+                class="p-button p-button-icon-only !text-sm !font-thin h-8" @click="refreshData" />
             </div>
           </div>
         </template>
-        <Column
-          field="start"
-          :header="$t('pet_details.date')"
-          :class="`!rtl w-1/8 `"
-        ></Column>
-        <Column
-          field="title"
-          :header="$t('pet_details.description')"
-          class="font-normal !rtl"
-        ></Column>
+        <Column field="start" :header="$t('pet_details.date')" :class="`!rtl w-1/8 lg:!text-[14px] text-xs `"></Column>
+        <Column field="title" :header="$t('pet_details.description')" class="font-normal lg:!text-[14px] text-xs !rtl">
+        </Column>
 
-        <Column
-          field="description"
-          :header="$t('pet_details.description')"
-          class="font-normal rtl:!text-right"
-        >
+        <Column field="description" :header="$t('pet_details.description')"
+          class="font-normal lg:!text-[14px] text-xs rtl:!text-right">
           <template #body="slotProps">
-            <div
-              class="gap-2 px-1"
-              v-html="slotProps.data.description.replace(/\n/g, '<br />')"
-            ></div>
+            <div class="gap-2 px-1" v-html="slotProps.data.description.replace(/\n/g, '<br />')"></div>
           </template>
         </Column>
         <Column field="type" :header="$t('pet_details.type')">
@@ -362,10 +278,9 @@
                   .onContainer,
                 background: `var(--background-color)`,
                 color: `var(--text-color)`,
-              }"
-            >
+              }">
               <div class="gap-2 px-1">
-                <span class="!text-xs font-normal">{{
+                <span class="lg:!text-[14px] text-xs whitespace-nowrap font-normal">{{
                   $t(`calendar.appointment.${slotProps.data.type.toLowerCase()}`)
                 }}</span>
               </div>
@@ -374,187 +289,110 @@
         </Column>
         <Column class="w-fit whitespace-nowrap">
           <template #body="slotProps">
-            <Button
-              type="button"
-              icon="fa-solid fa-syringe"
-              v-tooltip.top="{
-                value: $t('pet_details.view_treatments'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+            <Button type="button" icon="fa-solid fa-syringe" v-tooltip.top="{
+              value: $t('pet_details.view_treatments'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }"
-              raised
-              rounded
-              variant="text"
-              size="small"
-              class="p-component !text-sm ml-2"
-              @click.prevent="listTreatments(slotProps.data.id)"
-              v-if="slotProps.data.type !== `Grooming`"
-            />
-            <Button
-              v-if="slotProps.data.type !== `Grooming`"
-              type="button"
-              icon="fa-solid fa-vials"
-              v-tooltip.top="{
-                value: $t('pet_details.view_tests'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
+              @click.prevent="listTreatments(slotProps.data.id)" v-if="slotProps.data.type !== `Grooming`" />
+            <Button v-if="slotProps.data.type !== `Grooming`" type="button" icon="fa-solid fa-vials" v-tooltip.top="{
+              value: $t('pet_details.view_tests'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }"
-              raised
-              rounded
-              variant="text"
-              size="small"
-              class="p-component !text-sm ml-2"
-              @click.prevent="listTestResults(slotProps.data.id)"
-            />
-            <Button
-              type="button"
-              icon="fa-solid fa-x-ray"
-              v-tooltip.top="{
-                value: $t('pet_details.xray_ultrasound'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
+              @click.prevent="listTestResults(slotProps.data.id)" />
+            <Button type="button" icon="fa-solid fa-x-ray" v-tooltip.top="{
+              value: $t('pet_details.xray_ultrasound'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }"
-              raised
-              rounded
-              variant="text"
-              size="small"
-              class="p-component !text-sm ml-2"
-              v-if="slotProps.data.type !== `Grooming`"
-              @click.prevent="listImages(slotProps.data.id)"
-            />
-            <Button
-              type="button"
-              icon="fa-solid fa-file-medical"
-              v-tooltip.top="{
-                value: $t('pet_details.case_history'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
+              v-if="slotProps.data.type !== `Grooming`" @click.prevent="listImages(slotProps.data.id)" />
+            <Button type="button" icon="fa-solid fa-file-medical" v-tooltip.top="{
+              value: $t('pet_details.case_history'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }"
-              raised
-              rounded
-              variant="text"
-              size="small"
-              class="p-component !text-sm ml-2"
-              v-if="slotProps.data.type !== `Grooming`"
-              @click="showCaseHistoryModal(slotProps.data.id)"
-            />
-            <Button
-              type="button"
-              icon="fa-solid fa-stethoscope"
-              v-tooltip.top="{
-                value: $t('pet_details.medical_examination'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
+              v-if="slotProps.data.type !== `Grooming`" @click="showCaseHistoryModal(slotProps.data.id)" />
+            <Button type="button" icon="fa-solid fa-stethoscope" v-tooltip.top="{
+              value: $t('pet_details.medical_examination'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }"
-              raised
-              rounded
-              variant="text"
-              size="small"
-              class="p-component !text-sm ml-2"
-              v-if="slotProps.data.type !== `Grooming`"
-              @click="showPhysicalExaminationModal(slotProps.data.id)"
-            />
-            <Button
-              type="button"
-              icon="fa-regular fa-chart-bar"
-              v-tooltip.top="{
-                value: $t('pet_details.full_report'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
+              v-if="slotProps.data.type !== `Grooming`" @click="showPhysicalExaminationModal(slotProps.data.id)" />
+            <Button type="button" icon="fa-regular fa-chart-bar" v-tooltip.top="{
+              value: $t('pet_details.full_report'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }"
-              raised
-              rounded
-              variant="text"
-              size="small"
-              class="p-component !text-sm ml-2"
-              @click="showFullReportModal(slotProps.data.id)"
-            />
-            <Button
-              type="button"
-              icon="fa-solid fa-dollar-sign"
-              v-tooltip.top="{
-                value: $t('pet_details.invoice'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
+              @click="showFullReportModal(slotProps.data.id)" />
+            <Button type="button" icon="fa-solid fa-dollar-sign" v-tooltip.top="{
+              value: $t('pet_details.invoice'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }"
-              raised
-              rounded
-              variant="text"
-              size="small"
-              class="p-component !text-sm ml-2"
-              @click="showAddInvoice(slotProps.data.id)"
-            />
-            <Button
-              type="button"
-              icon="fa-solid fa-pen-to-square"
-              v-tooltip.top="{
-                value: $t('pet_details.edit_details'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
+              @click="showAddInvoice(slotProps.data.id)" />
+            <Button type="button" icon="fa-solid fa-pen-to-square" v-tooltip.top="{
+              value: $t('pet_details.edit_details'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }"
-              raised
-              rounded
-              variant="text"
-              size="small"
-              class="p-component !text-sm ml-2"
-              @click="editAppointment(slotProps.data.id)"
-            />
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
+              @click="editAppointment(slotProps.data.id)" />
           </template>
         </Column>
         <template #footer>
@@ -563,13 +401,8 @@
       </DataTable>
     </div>
   </div>
-  <Dialog
-    v-model:visible="isTreatmentsListVisible"
-    @hide="isTreatmentsListVisible = false"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
-  >
+  <Dialog v-model:visible="isTreatmentsListVisible" @hide="isTreatmentsListVisible = false" modal :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
@@ -577,25 +410,16 @@
         }}</span>
       </div>
     </template>
-    <PetTreatments
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :medical_record_id="medical_record_id"
-      @showAddTreatmentModal="showAddTreatmentModal"
-      @showEditTreatmentModal="showEditTreatmentModals"
-    />
+    <PetTreatments v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" @showAddTreatmentModal="showAddTreatmentModal"
+      @showEditTreatmentModal="showEditTreatmentModals" />
     <template #footer> </template>
   </Dialog>
-  <Dialog
-    :header="$t('pet_details.edit_pet_details')"
-    v-model:visible="isEditPetDetailsVisible"
-    @hide="isEditPetDetailsVisible = false"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
-  >
+  <Dialog :header="$t('pet_details.edit_pet_details')" v-model:visible="isEditPetDetailsVisible"
+    @hide="isEditPetDetailsVisible = false" modal :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
@@ -603,25 +427,16 @@
         }}</span>
       </div>
     </template>
-    <EditPetDetails
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :medical_record_id="medical_record_id"
-      @showEditPetDetailsModal="showEditPetDetailsModal"
-      @details_updated="handleDetailsUpdated"
-    />
+    <EditPetDetails v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" @showEditPetDetailsModal="showEditPetDetailsModal"
+      @details_updated="handleDetailsUpdated" />
     <template #footer> </template>
   </Dialog>
-  <Dialog
-    :header="$t('pet_details.edit_treatment')"
-    v-model:visible="isEditTreatmentVisible"
-    @hide="isEditTreatmentVisible = false"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
-  >
+  <Dialog :header="$t('pet_details.edit_treatment')" v-model:visible="isEditTreatmentVisible"
+    @hide="isEditTreatmentVisible = false" modal :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
@@ -629,25 +444,16 @@
         }}</span>
       </div>
     </template>
-    <EditTreatment
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      @TreatmentUpdated="handleUpdatedTreatment"
-      :treatmentId="selectedTreatmentId"
-      :medical_record_id="medical_record_id"
-    />
+    <EditTreatment v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" @TreatmentUpdated="handleUpdatedTreatment" :treatmentId="selectedTreatmentId"
+      :medical_record_id="medical_record_id" />
     <template #footer> </template>
   </Dialog>
-  <Dialog
-    :header="$t('pet_details.test_results')"
-    v-model:visible="isTestResultsVisible"
-    @hide="isTestResultsVisible = false"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
-  >
+  <Dialog :header="$t('pet_details.test_results')" v-model:visible="isTestResultsVisible"
+    @hide="isTestResultsVisible = false" modal :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
@@ -655,25 +461,16 @@
         }}</span>
       </div>
     </template>
-    <TestResults
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :medical_record_id="medical_record_id"
-      @showAddTestResultModal="showAddTestResultModal"
-      @showEditTestResultModal="showEditTestResultModal"
-    />
+    <TestResults v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" @showAddTestResultModal="showAddTestResultModal"
+      @showEditTestResultModal="showEditTestResultModal" />
     <template #footer> </template>
   </Dialog>
-  <Dialog
-    :header="$t('pet_details.medical_image')"
-    v-model:visible="isEditMedicalImageVisible"
-    @hide="isEditMedicalImageVisible = false"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
-  >
+  <Dialog :header="$t('pet_details.medical_image')" v-model:visible="isEditMedicalImageVisible"
+    @hide="isEditMedicalImageVisible = false" modal :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
@@ -681,25 +478,16 @@
         }}</span>
       </div>
     </template>
-    <EditMedicalImage
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      @MedicalImageUpdated="handleMedicalImageUpdated"
-      :medicalImageId="selectedMedicalImageId"
-      :medical_record_id="medical_record_id"
-    />
+    <EditMedicalImage v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" @MedicalImageUpdated="handleMedicalImageUpdated" :medicalImageId="selectedMedicalImageId"
+      :medical_record_id="medical_record_id" />
     <template #footer> </template>
   </Dialog>
-  <Dialog
-    :header="$t('pet_details.xrays_images')"
-    v-model:visible="isImagesListVisible"
-    @hide="isImagesListVisible = false"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-8/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
-  >
+  <Dialog :header="$t('pet_details.xrays_images')" v-model:visible="isImagesListVisible"
+    @hide="isImagesListVisible = false" modal :closable="true"
+    class="w-11/12 md:w-8/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
@@ -707,27 +495,18 @@
         }}</span>
       </div>
     </template>
-    <MedicalImages
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :medical_record_id="medical_record_id"
-      @showAddMedicalImageModal="showAddMedicalImageModal"
-      @showEditMedicalImageModal="showEditMedicalImageModal"
-    />
+    <MedicalImages v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" @showAddMedicalImageModal="showAddMedicalImageModal"
+      @showEditMedicalImageModal="showEditMedicalImageModal" />
     <template #footer> </template>
   </Dialog>
 
   <!-- Add Medical Image Modal -->
-  <Dialog
-    :header="$t('pet_details.new_medical_image')"
-    v-model:visible="isNewMedicalImageVisible"
-    @hide="isNewMedicalImageVisible = false"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
-  >
+  <Dialog :header="$t('pet_details.new_medical_image')" v-model:visible="isNewMedicalImageVisible"
+    @hide="isNewMedicalImageVisible = false" modal :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
@@ -735,24 +514,15 @@
         }}</span>
       </div>
     </template>
-    <AddNewMedicalImage
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :medical_record_id="medical_record_id"
-      @NewImageAdded="handleSubmitNewImage"
-    />
+    <AddNewMedicalImage v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" @NewImageAdded="handleSubmitNewImage" />
     <template #footer> </template>
   </Dialog>
-  <Dialog
-    :header="$t('pet_details.new_treatment')"
-    v-model:visible="isNewTreatmentVisible"
-    @hide="isNewTreatmentVisible = false"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
-  >
+  <Dialog :header="$t('pet_details.new_treatment')" v-model:visible="isNewTreatmentVisible"
+    @hide="isNewTreatmentVisible = false" modal :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
@@ -760,24 +530,15 @@
         }}</span>
       </div>
     </template>
-    <AddNewTreatment
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :medical_record_id="medical_record_id"
-      @TreatmentAdded="handleNewTreatment"
-    />
+    <AddNewTreatment v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" @TreatmentAdded="handleNewTreatment" />
     <template #footer> </template>
   </Dialog>
-  <Dialog
-    :header="$t('pet_details.new_test_result')"
-    v-model:visible="isNewTestResultVisible"
-    @hide="isNewTestResultVisible = false"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
-  >
+  <Dialog :header="$t('pet_details.new_test_result')" v-model:visible="isNewTestResultVisible"
+    @hide="isNewTestResultVisible = false" modal :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
@@ -785,24 +546,15 @@
         }}</span>
       </div>
     </template>
-    <AddNewTestResult
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :medical_record_id="medical_record_id"
-      @TestResultAdded="handleNewTestResult"
-    />
+    <AddNewTestResult v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" @TestResultAdded="handleNewTestResult" />
     <template #footer> </template>
   </Dialog>
-  <Dialog
-    :header="$t('pet_details.new_record')"
-    v-model:visible="isNewApointmentVisible"
-    @hide="isNewApointmentVisible = false"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
-  >
+  <Dialog :header="$t('pet_details.new_record')" v-model:visible="isNewApointmentVisible"
+    @hide="isNewApointmentVisible = false" modal :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
@@ -810,24 +562,14 @@
         }}</span>
       </div>
     </template>
-    <AddNewAppointment
-      v-focustrap="{
-        disabled: false,
-      }"
-      :petMicrochip="petmicrochip"
-      :petOwnerID="pet.owner.id"
-      @submitted="handleSubmit"
-    />
+    <AddNewAppointment v-focustrap="{
+      disabled: false,
+    }" :petMicrochip="petmicrochip" :petOwnerID="pet.owner.id" @submitted="handleSubmit" />
     <template #footer> </template>
   </Dialog>
-  <Dialog
-    :header="$t('pet_details.edit_record')"
-    v-model:visible="isEditApointmentVisible"
-    @hide="isEditApointmentVisible = false"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
-  >
+  <Dialog :header="$t('pet_details.edit_record')" v-model:visible="isEditApointmentVisible"
+    @hide="isEditApointmentVisible = false" modal :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
@@ -835,24 +577,15 @@
         }}</span>
       </div>
     </template>
-    <EditAppointment
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :appointmentId="appointment_id"
-      @updated="handleAppointmentUpdated"
-    />
+    <EditAppointment v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" :appointmentId="appointment_id" @updated="handleAppointmentUpdated" />
     <template #footer> </template>
   </Dialog>
-  <Dialog
-    :header="$t('pet_details.edit_test_result')"
-    v-model:visible="isEditTestResultsVisible"
-    @hide="isEditTestResultsVisible = false"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
-  >
+  <Dialog :header="$t('pet_details.edit_test_result')" v-model:visible="isEditTestResultsVisible"
+    @hide="isEditTestResultsVisible = false" modal :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
@@ -860,25 +593,16 @@
         }}</span>
       </div>
     </template>
-    <EditTestResult
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :testResultId="selectedTestResultId"
-      @TestResultUpdated="handleTestResultUpdated"
-      @close-dialog="isEditTestResultsVisible = false"
-    />
+    <EditTestResult v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" :testResultId="selectedTestResultId" @TestResultUpdated="handleTestResultUpdated"
+      @close-dialog="isEditTestResultsVisible = false" />
     <template #footer> </template>
   </Dialog>
-  <Dialog
-    :header="$t('pet_details.add_case_history')"
-    v-model:visible="isAddCaseHistorysVisible"
-    @hide="isAddCaseHistorysVisible = false"
-    modal
-    :closable="true"
-    class="w-10/12 h-screen bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
-  >
+  <Dialog :header="$t('pet_details.add_case_history')" v-model:visible="isAddCaseHistorysVisible"
+    @hide="isAddCaseHistorysVisible = false" modal :closable="true"
+    class="w-10/12 h-screen bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
@@ -886,27 +610,17 @@
         }}</span>
       </div>
     </template>
-    <AddCaseHistory
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :medical_record_id="medical_record_id"
-      :pet_neutered="pet.neutered"
-      @TestResultUpdated="handleTestResultUpdated"
-      @CaseHistoryCreated="handleCaseHistoryAdded"
-      @close-dialog="isEditTestResultsVisible = false"
-    />
+    <AddCaseHistory v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" :pet_neutered="pet.neutered"
+      @TestResultUpdated="handleTestResultUpdated" @CaseHistoryCreated="handleCaseHistoryAdded"
+      @close-dialog="isEditTestResultsVisible = false" />
     <template #footer> </template>
   </Dialog>
-  <Dialog
-    :header="$t('pet_details.case_history')"
-    v-model:visible="isCaseHistorysVisible"
-    @hide="isCaseHistorysVisible = false"
-    modal
-    :closable="true"
-    class="w-11/12 h-screen bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
-  >
+  <Dialog :header="$t('pet_details.case_history')" v-model:visible="isCaseHistorysVisible"
+    @hide="isCaseHistorysVisible = false" modal :closable="true"
+    class="w-11/12 h-screen bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
@@ -914,26 +628,16 @@
         }}</span>
       </div>
     </template>
-    <CaseHistory
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :medical_record_id="medical_record_id"
-      @showAddCaseHistoryModal="showAddCaseHistoryModal"
-      @CaseHistoryUpdated="handleCaseHistory"
-      @close-dialog="isEditTestResultsVisible = false"
-    />
+    <CaseHistory v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" @showAddCaseHistoryModal="showAddCaseHistoryModal"
+      @CaseHistoryUpdated="handleCaseHistory" @close-dialog="isEditTestResultsVisible = false" />
     <template #footer> </template>
   </Dialog>
-  <Dialog
-    :header="$t('pet_details.add_physical_examination')"
-    v-model:visible="isAddPhysicalExamination"
-    @hide="isAddPhysicalExamination = false"
-    modal
-    :closable="true"
-    class="w-11/12 h-screen bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
-  >
+  <Dialog :header="$t('pet_details.add_physical_examination')" v-model:visible="isAddPhysicalExamination"
+    @hide="isAddPhysicalExamination = false" modal :closable="true"
+    class="w-11/12 h-screen bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
@@ -941,26 +645,16 @@
         }}</span>
       </div>
     </template>
-    <AddPhysicalExamination
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :medical_record_id="medical_record_id"
-      @showAddCaseHistoryModal="showAddCaseHistoryModal"
-      @CaseHistoryUpdated="handleCaseHistory"
-      @close-dialog="isEditTestResultsVisible = false"
-    />
+    <AddPhysicalExamination v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" @showAddCaseHistoryModal="showAddCaseHistoryModal"
+      @CaseHistoryUpdated="handleCaseHistory" @close-dialog="isEditTestResultsVisible = false" />
     <template #footer> </template>
   </Dialog>
-  <Dialog
-    :header="$t('pet_details.physical_examination')"
-    v-model:visible="isPhysicalExamination"
-    @hide="isPhysicalExamination = false"
-    modal
-    :closable="true"
-    class="w-11/12 h-screen bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
-  >
+  <Dialog :header="$t('pet_details.physical_examination')" v-model:visible="isPhysicalExamination"
+    @hide="isPhysicalExamination = false" modal :closable="true"
+    class="w-11/12 h-screen bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
@@ -968,28 +662,17 @@
         }}</span>
       </div>
     </template>
-    <PhysicalExamination
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :medical_record_id="medical_record_id"
-      :pet_name="pet.name"
-      :branch_name="pet.branch.name"
+    <PhysicalExamination v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" :pet_name="pet.name" :branch_name="pet.branch.name"
       @showAddPhysicalExaminationModal="showAddPhysicalExaminationModal"
-      @PhysicalExaminationUpdated="handlePhysicalExamination"
-      @close-dialog="isEditTestResultsVisible = false"
-    />
+      @PhysicalExaminationUpdated="handlePhysicalExamination" @close-dialog="isEditTestResultsVisible = false" />
     <template #footer> </template>
   </Dialog>
-  <Dialog
-    :header="$t('pet_details.full_report')"
-    v-model:visible="isFullReportVisible"
-    @hide="isFullReportVisible = false"
-    modal
-    :closable="true"
-    class="w-11/12 h-screen bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
-  >
+  <Dialog :header="$t('pet_details.full_report')" v-model:visible="isFullReportVisible"
+    @hide="isFullReportVisible = false" modal :closable="true"
+    class="w-11/12 h-screen bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
@@ -997,45 +680,25 @@
         }}</span>
       </div>
     </template>
-    <FullReport
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :medical_record_id="medical_record_id"
-      :pet_name="pet.name"
+    <FullReport v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" :pet_name="pet.name"
       @showAddPhysicalExaminationModal="showAddPhysicalExaminationModal"
-      @close-dialog="isEditTestResultsVisible = false"
-    />
+      @close-dialog="isEditTestResultsVisible = false" />
     <template #footer> </template>
   </Dialog>
   <!-- View Invoice Dialog -->
-  <Dialog
-    :header="$t('pet_details.invoice_details')"
-    v-model:visible="viewDialogVisible"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-8/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
-  >
-    <InvoiceView
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :invoice="selectedInvoice"
-      @addInvoice="handleAddInvoiceRequest"
-      @addPayment="handleAddPaymentRequest"
-    />
+  <Dialog :header="$t('pet_details.invoice_details')" v-model:visible="viewDialogVisible" modal :closable="true"
+    class="w-11/12 md:w-8/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]">
+    <InvoiceView v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" :invoice="selectedInvoice" @addInvoice="handleAddInvoiceRequest" @addPayment="handleAddPaymentRequest" />
   </Dialog>
 
-  <Dialog
-    :header="$t('pet_details.create_invoice')"
-    v-model:visible="isModalVisible"
-    @hide="isModalVisible = false"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-11/12 h-screen bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
-  >
+  <Dialog :header="$t('pet_details.create_invoice')" v-model:visible="isModalVisible" @hide="isModalVisible = false"
+    modal :closable="true" class="w-11/12 md:w-11/12 h-screen bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2 h-4">
         <span class="font-bold whitespace-nowrap">{{
@@ -1043,24 +706,13 @@
         }}</span>
       </div>
     </template>
-    <InvoiceAdd
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :pet="pet"
-      :medical_record_id="medical_record_id"
-      @InvoiceCreated="handleInvoiceSubmit"
-    />
+    <InvoiceAdd v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" :pet="pet" :medical_record_id="medical_record_id" @InvoiceCreated="handleInvoiceSubmit" />
   </Dialog>
-  <Dialog
-    :header="$t('pet_details.add_payment')"
-    v-model:visible="paymentDialogVisible"
-    @hide="resetForm"
-    modal
-    :closable="true"
-    class="w-[11/12] md:w-[500px] h-fit bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
-  >
+  <Dialog :header="$t('pet_details.add_payment')" v-model:visible="paymentDialogVisible" @hide="resetForm" modal
+    :closable="true" class="w-[11/12] md:w-[500px] h-fit bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2 h-4">
         <span class="font-bold whitespace-nowrap">{{
@@ -1068,17 +720,11 @@
         }}</span>
       </div>
     </template>
-    <AddPayment
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      v-if="selectedInvoice"
-      :invoice="selectedInvoice"
-      :paymentMethods="paymentMethods"
-      @submit="handlePaymentSubmit"
-      @cancel="paymentDialogVisible = false"
-    />
+    <AddPayment v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" v-if="selectedInvoice" :invoice="selectedInvoice" :paymentMethods="paymentMethods"
+      @submit="handlePaymentSubmit" @cancel="paymentDialogVisible = false" />
   </Dialog>
 </template>
 

@@ -1,16 +1,11 @@
 <template>
   <div v-if="!invoice">
     {{ $t('invoice.no_invoice') }}
-    <Button
-      size="medium"
-      :label="$t('invoice.create_invoice')"
-      icon="fa-solid fa-hand-holding-dollar"
+    <Button size="medium" :label="$t('invoice.create_invoice')" icon="fa-solid fa-hand-holding-dollar"
       class="p-button-sm !text-[var(--p-primary-contrast-color)] dark:!text-[var(--p-primary-900)]"
-      @click="openAddPaymentDialog"
-      v-tooltip="$t('invoice.create_invoice')"
-    />
+      @click="openAddPaymentDialog" v-tooltip="$t('invoice.create_invoice')" />
   </div>
-  <div v-else class="invoice-details-container">
+  <div v-else class="invoice-details-container  lg:!text-[14px]">
     <Card>
       <template #title>
         <div class="flex justify-between items-center">
@@ -19,41 +14,25 @@
         </div>
       </template>
       <template #subtitle>
-        <InvoiceMetaData
-          :date="invoice.date"
-          :due-date="invoice.due_date"
-          :payment-terms="invoice.payment_terms"
-        />
+        <InvoiceMetaData :date="invoice.date" :due-date="invoice.due_date" :payment-terms="invoice.payment_terms" />
       </template>
 
       <template #content>
         <!-- Header Section -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <BranchInfo
-            class="bg-zinc-200 text-zinc-800 dark:bg-gray-600 dark:text-white no-print"
-            :branch="invoice.branch"
-          />
-          <ClientInfo
-            class="bg-zinc-200 text-zinc-800 dark:bg-gray-600 dark:text-white"
-            v-if="invoice.client_id"
-            :client="invoice.owner"
-          />
-          <InvoiceSummary
-            class="bg-zinc-200 text-zinc-800 dark:bg-gray-600 dark:text-white"
-            :invoice="invoice"
-          />
+          <BranchInfo class="bg-zinc-200 text-zinc-800 dark:bg-gray-600 dark:text-white no-print"
+            :branch="invoice.branch" />
+          <ClientInfo class="bg-zinc-200 text-zinc-800 dark:bg-gray-600 dark:text-white" v-if="invoice.client_id"
+            :client="invoice.owner" />
+          <InvoiceSummary class="bg-zinc-200 text-zinc-800 dark:bg-gray-600 dark:text-white" :invoice="invoice" />
         </div>
 
         <!-- Items Table -->
         <InvoiceItemsTable :items="invoice.items" class="mb-8" />
 
         <!-- Payment History -->
-        <PaymentHistory
-          v-if="invoice.payment_status !== 'pending'"
-          :payments="invoice.payments"
-          :payment-methods="paymentMethods"
-          class="mb-8"
-        />
+        <PaymentHistory v-if="invoice.payment_status !== 'pending'" :payments="invoice.payments"
+          :payment-methods="paymentMethods" class="mb-8" />
 
         <!-- Notes -->
         <InvoiceNotes v-if="invoice.notes" :notes="invoice.notes" class="mb-4" />
@@ -121,12 +100,9 @@
       <div class="pos-divider">--------------------------------</div>
 
       <div class="pos-payments">
-        <div
-          v-for="(payment, index) in invoice.payments"
-          :key="index"
-          class="pos-payment"
-        >
-          <div>{{ $t('invoice.payments.payment', { number: index + 1 }) }}: {{ formatPOSDate(payment.payment_date) }}</div>
+        <div v-for="(payment, index) in invoice.payments" :key="index" class="pos-payment">
+          <div>{{ $t('invoice.payments.payment', { number: index + 1 }) }}: {{ formatPOSDate(payment.payment_date) }}
+          </div>
           <div>{{ $t('invoice.payments.method') }}: {{ getPaymentMethod(payment.payment_method_id) }}</div>
           <div>{{ $t('invoice.payments.amount') }}: {{ formatPOSCurrency(payment.amount) }}</div>
         </div>

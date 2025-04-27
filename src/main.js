@@ -18,6 +18,8 @@ import ConfirmDialog from 'primevue/confirmdialog';
 // import { useToast } from "primevue/usetoast";
 // import { VueReCaptcha } from 'vue-recaptcha-v3'
 import FocusTrap from 'primevue/focustrap';
+import AnimateOnScroll from 'primevue/animateonscroll';
+
 import { i18n } from './plugins/i18n';
 const app = createApp(App)
 
@@ -120,6 +122,7 @@ app.use(router);
 // app.directive("ripple", Ripple);
 app.directive('ripple', Ripple);
 app.directive("tooltip", Tooltip);
+app.directive('animateonscroll', AnimateOnScroll);
 app.use(ConfirmationService);
 app.use(ToastService); // Use ToastService in your app
 app.use(i18n);
