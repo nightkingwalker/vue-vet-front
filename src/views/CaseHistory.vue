@@ -4,17 +4,17 @@
       <legend>
         {{ $t("case_history.title") }}
         <Button type="button" icon="fa-solid fa-pencil !text-primary" v-tooltip.top="{
-            value: $t('case_history.edit_button'),
-            pt: {
-              arrow: {
-                style: {
-                  borderTopColor: 'var(--p-primary-color)',
-                },
+          value: $t('case_history.edit_button'),
+          pt: {
+            arrow: {
+              style: {
+                borderTopColor: 'var(--p-primary-color)',
               },
-              text:
-                '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
             },
-          }" rounded size="small" class="!text-xs !text-primary mx-2" @click="isEditable = !isEditable" />
+            text:
+              '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+          },
+        }" rounded size="small" class="!text-xs !text-primary mx-2" @click="isEditable = !isEditable" />
       </legend>
 
       <div v-if="!hasCaseHistory">
@@ -25,40 +25,48 @@
 
       <Stepper :value="activeStep" :key="activeStep" class="w-full" v-else>
         <StepList class="flex flex-wrap items-start w-full mx-auto">
-          <Step class="w-1/6 text-sm" value="1">{{
+          <Step class="w-1/6 text-sm " :data-p-invalid="invalid.symptoms.step" value="1">{{
             $t("case_history.steps.current_symptoms")
-            }}</Step>
-          <Step class="w-1/6 text-sm" value="2">{{
+          }}</Step>
+          <Step class="w-1/6 text-sm" :class="{
+            'invalid': invalid.general_health.step
+          }" :data-p-invalid="invalid.general_health.step" value="2">{{
             $t("case_history.steps.general_health")
-            }}</Step>
+          }}</Step>
           <Step class="w-1/6 text-sm" value="3">{{
             $t("case_history.steps.reproductive_history")
-            }}</Step>
+          }}</Step>
           <Step class="w-1/6 text-sm" value="4">{{
             $t("case_history.steps.itching_skin")
-            }}</Step>
-          <Step class="w-1/6 text-sm" value="5">{{
+          }}</Step>
+          <Step class="w-1/6 text-sm" :data-p-invalid="invalid.diet.step" :class="{
+            'invalid': invalid.diet.step
+          }" value="5">{{
             $t("case_history.steps.diet_water")
-            }}</Step>
+          }}</Step>
           <Step class="w-1/6 text-sm" value="6">{{
             $t("case_history.steps.gastrointestinal")
-            }}</Step>
+          }}</Step>
           <Step class="w-1/6 text-sm" value="7">{{
             $t("case_history.steps.neurological")
-            }}</Step>
+          }}</Step>
           <Step class="w-1/6 text-sm" value="8">{{
             $t("case_history.steps.respiratory")
-            }}</Step>
+          }}</Step>
           <Step class="w-1/6 text-sm" value="9">{{
             $t("case_history.steps.urinary")
-            }}</Step>
+          }}</Step>
           <Step class="w-1/6 text-sm" value="10">{{
             $t("case_history.steps.musculoskeletal")
-            }}</Step>
-          <Step class="w-1/6 text-sm" value="11">{{
+          }}</Step>
+          <Step class="w-1/6 text-sm" :data-p-invalid="invalid.vaccine.step" :class="{
+            'invalid': invalid.vaccine.step
+          }" value="11">{{
             $t("case_history.steps.vaccination_medication")
-            }}</Step>
-        </StepList>
+          }}</Step>
+        </StepList> <!-- Step Panels -->
+
+
         <!-- Step Panels -->
 
         <StepPanels>
@@ -74,29 +82,28 @@
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
                     <TextArea :disabled="!isEditable" fluid autoResize rows="4" id="symptom_description"
-                      v-model="formData.symptom_description" invalid="invalid.symptom_description" />
-                    <label for="symptom_description">{{
-                      $t("case_history.fields.symptom_description")
-                      }} <span class="text-red-600">*</span></label>
+                      v-model="formData.symptom_description" :invalid="invalid.symptoms.symptom_description" />
+                    <label for="symptom_description">{{ $t("case_history.fields.symptom_description") }}
+                      <span class="text-red-600">*</span>
+                    </label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <DatePicker showIcon iconDisplay="input" showButtonBar :disabled="!isEditable" id="start_date"
-                      v-model="formData.start_date" hourFormat="24" fluid />
-                    <label for="start_date">{{
-                      $t("case_history.fields.start_date")
-                      }}</label>
+                    <DatePicker :disabled="!isEditable" showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-dd"
+                      id="start_date" v-model="formData.start_date" hourFormat="24" fluid
+                      :invalid="invalid.symptoms.start_date" />
+                    <label for="start_date">{{ $t("case_history.fields.start_date") }}
+                      <span class="text-red-600">*</span></label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
                     <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value"
                       id="symptom_progression" v-model="formData.symptom_progression"
-                      :options="symptomProgressionOptions" />
-                    <label for="symptom_progression">{{
-                      $t("case_history.fields.symptom_progression")
-                      }}</label>
+                      :options="symptomProgressionOptions" :invalid="invalid.symptoms.symptom_progression" />
+                    <label for="symptom_progression">{{ $t("case_history.fields.symptom_progression") }}
+                      <span class="text-red-600">*</span></label>
                   </FloatLabel>
                 </div>
               </div>
@@ -138,7 +145,7 @@
             <div class="flex pt-6 justify-end">
               <Button :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                :iconPos="!isRtl ? 'right' : 'left'" @click="activateCallback('2')" />
+                :iconPos="!isRtl ? 'right' : 'left'" @click="() => { if (validateStep(1)) activateCallback('2') }" />
             </div>
           </StepPanel>
 
@@ -154,29 +161,31 @@
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
                     <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="activity_level"
-                      v-model="formData.activity_level" :options="activityLevelOptions" />
+                      v-model="formData.activity_level" :options="activityLevelOptions"
+                      :invalid="invalid.general_health.activity_level" />
                     <label for="activity_level">{{
                       $t("case_history.fields.activity_level")
-                      }}</label>
+                      }} <span class="text-red-600">*</span></label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
                     <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value"
-                      id="vaccination_status" v-model="formData.vaccination_status"
-                      :options="vaccinationStatusOptions" />
+                      id="vaccination_status" v-model="formData.vaccination_status" :options="vaccinationStatusOptions"
+                      :invalid="invalid.general_health.vaccination_status" />
                     <label for="vaccination_status">{{
                       $t("case_history.fields.vaccination_status")
-                      }}</label>
+                      }} <span class="text-red-600">*</span></label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
                     <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="care_location"
-                      v-model="formData.care_location" :options="careLocationOptions" />
+                      v-model="formData.care_location" :options="careLocationOptions"
+                      :invalid="invalid.general_health.care_location" />
                     <label for="care_location">{{
                       $t("case_history.fields.care_location")
-                      }}</label>
+                      }} <span class="text-red-600">*</span></label>
                   </FloatLabel>
                 </div>
               </div>
@@ -220,10 +229,10 @@
             <div class="flex pt-6 justify-between">
               <Button :label="$t('case_history.actions.back')" severity="secondary"
                 :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
-                :iconPos="!isRtl ? 'left' : 'right'" @click="activateCallback('1')" />
+                :iconPos="!isRtl ? 'left' : 'right'" @click="() => { if (validateStep(2)) activateCallback('1') }" />
               <Button :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                :iconPos="!isRtl ? 'right' : 'left'" @click="activateCallback('3')" />
+                :iconPos="!isRtl ? 'right' : 'left'" @click="() => { if (validateStep(2)) activateCallback('3') }" />
             </div>
           </StepPanel>
 
@@ -234,9 +243,16 @@
                 {{ $t("case_history.steps.reproductive_history") }}
               </h4>
             </div>
+            <!-- pet_neutered -->
+            <div class="flex items-start mt-6">
+              <span class="text-sm">{{ $t("case_history.options.pet_neutered.pet_neutered_label") }}:
+              </span>
+              <Tag :severity="props.pet_neutered === `Y` ? `success` : `danger`"
+                :value="$t('case_history.options.pet_neutered.' + props.pet_neutered)" class="!text-s"></Tag>
+            </div>
             <div class="field mt-6 w-[48%]">
               <FloatLabel>
-                <DatePicker showIcon iconDisplay="input" showButtonBar :disabled="!isEditable"
+                <DatePicker :disabled="!isEditable" showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-dd"
                   id="last_reproductive_cycle_date" v-model="formData.last_reproductive_cycle_date" />
                 <label for="last_reproductive_cycle_date">{{
                   $t("case_history.fields.last_reproductive_cycle_date")
@@ -339,10 +355,10 @@
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
                     <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="diet_type"
-                      v-model="formData.diet_type" :options="dietTypeOptions" />
+                      v-model="formData.diet_type" :options="dietTypeOptions" :invalid="invalid.diet.diet_type" />
                     <label for="diet_type">{{
                       $t("case_history.fields.diet_type")
-                      }}</label>
+                      }} <span class="text-red-600">*</span></label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
@@ -374,8 +390,9 @@
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
                     <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="appetite"
-                      v-model="formData.appetite" :options="appetiteOptions" />
-                    <label for="appetite">{{ $t("case_history.fields.appetite") }}</label>
+                      v-model="formData.appetite" :options="appetiteOptions" :invalid="invalid.diet.appetite" />
+                    <label for="appetite">{{ $t("case_history.fields.appetite") }} <span
+                        class="text-red-600">*</span></label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
@@ -407,10 +424,10 @@
             <div class="flex pt-6 justify-between">
               <Button :label="$t('case_history.actions.back')" severity="secondary"
                 :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
-                :iconPos="!isRtl ? 'left' : 'right'" @click="activateCallback('4')" />
+                :iconPos="!isRtl ? 'left' : 'right'" @click="() => { if (validateStep(5)) activateCallback('4') }" />
               <Button :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                :iconPos="!isRtl ? 'right' : 'left'" @click="activateCallback('6')" />
+                :iconPos="!isRtl ? 'right' : 'left'" @click="() => { if (validateStep(5)) activateCallback('6') }" />
             </div>
           </StepPanel>
 
@@ -468,6 +485,7 @@
                     }}</label>
                 </div>
               </div>
+
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
                   <Checkbox :disabled="!isEditable" class="mx-2" id="vomiting_related_to_diarrhea"
@@ -526,6 +544,7 @@
                 </div>
               </div>
             </div>
+
             <div class="flex pt-6 justify-between">
               <Button :label="$t('case_history.actions.back')" severity="secondary"
                 :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
@@ -618,19 +637,22 @@
                 {{ $t("case_history.steps.respiratory") }}
               </h4>
             </div>
+
             <div class="field mt-6 w-[48%]">
               <Checkbox :disabled="!isEditable" class="mx-2" id="cough" v-model="formData.cough" binary />
               <label for="cough">{{ $t("case_history.fields.cough") }}</label>
             </div>
+
             <div class="field mt-6 w-[48%]">
               <FloatLabel>
-                <DatePicker showIcon iconDisplay="input" showButtonBar :disabled="!isEditable" id="cough_start_date"
-                  v-model="formData.cough_start_date" />
+                <DatePicker :disabled="!isEditable" showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-dd"
+                  id="cough_start_date" v-model="formData.cough_start_date" />
                 <label for="cough_start_date">{{
                   $t("case_history.fields.cough_start_date")
                   }}</label>
               </FloatLabel>
             </div>
+
             <div class="field mt-6 w-[48%]">
               <FloatLabel>
                 <InputText :disabled="!isEditable" fluid id="cough_frequency" v-model="formData.cough_frequency" />
@@ -639,6 +661,7 @@
                   }}</label>
               </FloatLabel>
             </div>
+
             <div class="field mt-6 w-[48%]">
               <FloatLabel>
                 <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="cough_type"
@@ -646,6 +669,7 @@
                 <label for="cough_type">{{ $t("case_history.fields.cough_type") }}</label>
               </FloatLabel>
             </div>
+
             <div class="field mt-6 w-[48%]">
               <Checkbox :disabled="!isEditable" class="mx-2" id="breathing_difficulty"
                 v-model="formData.breathing_difficulty" binary />
@@ -653,10 +677,12 @@
                 $t("case_history.fields.breathing_difficulty")
                 }}</label>
             </div>
+
             <div class="field mt-6 w-[48%]">
               <Checkbox :disabled="!isEditable" class="mx-2" id="sneezing" v-model="formData.sneezing" binary />
               <label for="sneezing">{{ $t("case_history.fields.sneezing") }}</label>
             </div>
+
             <div class="flex pt-6 justify-between">
               <Button :label="$t('case_history.actions.back')" severity="secondary"
                 :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
@@ -670,7 +696,7 @@
           <StepPanel v-slot="{ activateCallback }" value="9">
             <div class="flex flex-col gap-4">
               <h4 class="border-b-4 rounded border-b-violet-800 w-fit font-bold">
-                Urinary Symptoms
+                {{ $t("case_history.steps.urinary") }}
               </h4>
             </div>
             <div class="flex flex-wrap gap-8">
@@ -679,13 +705,15 @@
                   <FloatLabel>
                     <InputText :disabled="!isEditable" fluid id="urination_frequency"
                       v-model="formData.urination_frequency" />
-                    <label for="urination_frequency">{{ $t("case_history.fields.urination_frequency") }}
-                    </label>
+                    <label for="urination_frequency">{{
+                      $t("case_history.fields.urination_frequency")
+                      }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="urine_volume" v-model="formData.urine_volume" />
+                    <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="urine_volume"
+                      v-model="formData.urine_volume" :options="urineVolumeOptions" />
                     <label for="urine_volume">{{
                       $t("case_history.fields.urine_volume")
                       }}</label>
@@ -709,6 +737,7 @@
                   </FloatLabel>
                 </div>
               </div>
+
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
                   <Checkbox :disabled="!isEditable" class="mx-2" id="blood_in_urine" v-model="formData.blood_in_urine"
@@ -747,12 +776,13 @@
                 <div class="field mt-6 w-2/3">
                   <Checkbox :disabled="!isEditable" class="mx-2" id="excessive_licking_of_genital_area"
                     v-model="formData.excessive_licking_of_genital_area" binary />
-                  <label for="excessive_licking_of_genital_area">{{
-                    $t("case_history.fields.excessive_licking_of_genital_area")
-                    }}</label>
+                  <label for="excessive_licking_of_genital_area">
+                    {{ $t("case_history.fields.excessive_licking_of_genital_area") }}
+                  </label>
                 </div>
               </div>
             </div>
+
             <div class="flex pt-6 justify-between">
               <Button :label="$t('case_history.actions.back')" severity="secondary"
                 :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
@@ -796,7 +826,7 @@
                 </div>
 
                 <div class="field mt-6">
-                  <Checkbox id="swelling" v-model="formData.swelling" :disabled="!isEditable" binary class="mx-2" />
+                  <Checkbox :disabled="!isEditable" id="swelling" v-model="formData.swelling" binary class="mx-2" />
                   <label for="swelling">{{ $t("case_history.fields.swelling") }}</label>
                 </div>
 
@@ -811,7 +841,8 @@
                 </div>
 
                 <div class="field mt-6">
-                  <Checkbox id="visible_deformity" v-model="formData.visible_deformity" binary class="mx-2" />
+                  <Checkbox :disabled="!isEditable" id="visible_deformity" v-model="formData.visible_deformity" binary
+                    class="mx-2" />
                   <label for="visible_deformity">
                     {{ $t("case_history.fields.visible_deformity") }}
                   </label>
@@ -833,24 +864,24 @@
                     {{ $t("case_history.fields.affected_limbs") }}
                   </label>
                   <div class="flex flex-wrap gap-4">
-                    <Checkbox v-model="formData.affected_limbs_FL" :disabled="!isEditable" inputId="fl" name="limbs"
-                      binary />
+                    <Checkbox :disabled="!isEditable" v-model="formData.affected_limbs_FL" inputId="fl" name="limbs"
+                      value="FL" />
                     <label for="fl" class="mr-4">FL</label>
-                    <Checkbox v-model="formData.affected_limbs_FR" inputId="fr" name="limbs" :disabled="!isEditable"
-                      binary />
+                    <Checkbox :disabled="!isEditable" v-model="formData.affected_limbs_FR" inputId="fr" name="limbs"
+                      value="FR" />
                     <label for="fr" class="mr-4">FR</label>
-                    <Checkbox v-model="formData.affected_limbs_HL" inputId="hl" :disabled="!isEditable" name="limbs"
-                      binary />
+                    <Checkbox :disabled="!isEditable" v-model="formData.affected_limbs_HL" inputId="hl" name="limbs"
+                      value="HL" />
                     <label for="hl" class="mr-4">HL</label>
-                    <Checkbox v-model="formData.affected_limbs_HR" :disabled="!isEditable" inputId="hr" name="limbs"
-                      binary />
+                    <Checkbox :disabled="!isEditable" v-model="formData.affected_limbs_HR" inputId="hr" name="limbs"
+                      value="HR" />
                     <label for="hr">HR</label>
                   </div>
                 </div>
 
                 <div class="field mt-6">
                   <FloatLabel>
-                    <Select fluid :disabled="!isEditable" optionLabel="label" optionValue="value" id="weight_bearing"
+                    <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="weight_bearing"
                       v-model="formData.weight_bearing" :options="weightBearingOptions" />
                     <label for="weight_bearing">
                       {{ $t("case_history.fields.weight_bearing") }}
@@ -873,7 +904,7 @@
 
                 <div class="field mt-6">
                   <FloatLabel>
-                    <Select fluid :disabled="!isEditable" optionLabel="label" optionValue="value" id="progression"
+                    <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="progression"
                       v-model="formData.progression" :options="progressionOptions" />
                     <label for="progression">
                       {{ $t("case_history.fields.progression") }}
@@ -883,7 +914,7 @@
 
                 <!-- Trauma History -->
                 <div class="field mt-6">
-                  <Checkbox id="trauma_history" :disabled="!isEditable" v-model="formData.trauma_history" binary
+                  <Checkbox :disabled="!isEditable" id="trauma_history" v-model="formData.trauma_history" binary
                     class="mx-2" />
                   <label for="trauma_history">
                     {{ $t("case_history.fields.trauma_history") }}
@@ -892,7 +923,7 @@
 
                 <div class="field mt-6">
                   <FloatLabel>
-                    <TextArea fluid :disabled="!isEditable" autoResize rows="2" id="trauma_details"
+                    <TextArea :disabled="!isEditable" fluid autoResize rows="2" id="trauma_details"
                       v-model="formData.trauma_details" />
                     <label for="trauma_details">
                       {{ $t("case_history.fields.trauma_details") }}
@@ -903,35 +934,35 @@
                 <div class="flex flex-wrap">
                   <!-- Functional Impact -->
                   <div class="field mt-6">
-                    <Checkbox id="exercise_induced" :disabled="!isEditable" v-model="formData.exercise_induced" binary
+                    <Checkbox :disabled="!isEditable" id="exercise_induced" v-model="formData.exercise_induced" binary
                       class="mx-2" />
                     <label for="exercise_induced">
                       {{ $t("case_history.fields.exercise_induced") }}
                     </label>
                   </div>
                   <div class="field mt-6">
-                    <Checkbox id="worse_after_rest" v-model="formData.worse_after_rest" :disabled="!isEditable" binary
+                    <Checkbox :disabled="!isEditable" id="worse_after_rest" v-model="formData.worse_after_rest" binary
                       class="mx-2" />
                     <label for="worse_after_rest">
                       {{ $t("case_history.fields.worse_after_rest") }}
                     </label>
                   </div>
                   <div class="field mt-6">
-                    <Checkbox id="difficulty_jumping" v-model="formData.difficulty_jumping" :disabled="!isEditable"
+                    <Checkbox :disabled="!isEditable" id="difficulty_jumping" v-model="formData.difficulty_jumping"
                       binary class="mx-2" />
                     <label for="difficulty_jumping">
                       {{ $t("case_history.fields.difficulty_jumping") }}
                     </label>
                   </div>
                   <div class="field mt-6">
-                    <Checkbox id="difficulty_stairs" v-model="formData.difficulty_stairs" :disabled="!isEditable" binary
+                    <Checkbox :disabled="!isEditable" id="difficulty_stairs" v-model="formData.difficulty_stairs" binary
                       class="mx-2" />
                     <label for="difficulty_stairs">
                       {{ $t("case_history.fields.difficulty_stairs") }}
                     </label>
                   </div>
                   <div class="field mt-6">
-                    <Checkbox id="difficulty_rising" v-model="formData.difficulty_rising" :disabled="!isEditable" binary
+                    <Checkbox :disabled="!isEditable" id="difficulty_rising" v-model="formData.difficulty_rising" binary
                       class="mx-2" />
                     <label for="difficulty_rising">
                       {{ $t("case_history.fields.difficulty_rising") }}
@@ -941,7 +972,7 @@
 
                 <div class="field mt-6">
                   <FloatLabel>
-                    <Select fluid :disabled="!isEditable" optionLabel="label" optionValue="value"
+                    <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value"
                       id="exercise_tolerance" v-model="formData.exercise_tolerance"
                       :options="exerciseToleranceOptions" />
                     <label for="exercise_tolerance">
@@ -952,7 +983,7 @@
 
                 <!-- Current Management -->
                 <div class="field mt-6">
-                  <Checkbox id="pain_meds_given" v-model="formData.pain_meds_given" :disabled="!isEditable" binary
+                  <Checkbox :disabled="!isEditable" id="pain_meds_given" v-model="formData.pain_meds_given" binary
                     class="mx-2" />
                   <label for="pain_meds_given">
                     {{ $t("case_history.fields.pain_meds_given") }}
@@ -961,7 +992,7 @@
 
                 <div class="field mt-6">
                   <FloatLabel>
-                    <TextArea fluid :disabled="!isEditable" autoResize rows="2" id="pain_meds_details"
+                    <TextArea :disabled="!isEditable" fluid autoResize rows="2" id="pain_meds_details"
                       v-model="formData.pain_meds_details" />
                     <label for="pain_meds_details">
                       {{ $t("case_history.fields.pain_meds_details") }}
@@ -981,16 +1012,17 @@
                 :iconPos="!isRtl ? 'right' : 'left'" @click="activateCallback('11')" />
             </div>
           </StepPanel>
-
           <!-- Step 11: Vaccination & Medication -->
+
           <StepPanel v-slot="{ activateCallback }" value="11">
+            <!-- <div class="flex flex-wrap"></div> -->
             <!-- <div class="flex flex-wrap"> -->
             <div class="flex flex-col gap-4">
               <h4 class="border-b-4 rounded border-b-violet-800 w-fit font-bold">
                 {{ $t("case_history.steps.vaccination_medication") }}
               </h4>
             </div>
-            <div class="flex flex-wrap gap-8">
+            <div class="flex flex-wrap gap-4">
               <!-- Vaccination History -->
               <div class="w-[48%]">
                 <h5 class="font-semibold mt-6">
@@ -998,24 +1030,25 @@
                 </h5>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="vaccine_name" v-model="formData.vaccine_name" />
+                    <InputText :disabled="!isEditable" fluid id="vaccine_name" v-model="formData.vaccine_name"
+                      :invalid="invalid.vaccine.vaccine_name" />
                     <label for="vaccine_name">{{
                       $t("case_history.fields.vaccine_name")
-                      }}</label>
+                      }} <span class="text-red-600">*</span></label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
                     <DatePicker :disabled="!isEditable" showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-dd"
-                      id="vaccine_date" v-model="formData.vaccine_date" />
+                      id="vaccine_date" :invalid="invalid.vaccine.vaccine_date" v-model="formData.vaccine_date" />
                     <label for="vaccine_date">{{
                       $t("case_history.fields.vaccine_date")
-                      }}</label>
+                      }} <span class="text-red-600">*</span></label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <DatePicker showIcon :disabled="!isEditable" iconDisplay="input" showButtonBar dateFormat="yy-mm-dd"
+                    <DatePicker :disabled="!isEditable" showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-dd"
                       id="next_due_date" v-model="formData.next_due_date" />
                     <label for="next_due_date">{{
                       $t("case_history.fields.next_due_date")
@@ -1024,7 +1057,7 @@
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText fluid id="administered_by" v-model="formData.administered_by" />
+                    <InputText :disabled="!isEditable" fluid id="administered_by" v-model="formData.administered_by" />
                     <label for="administered_by">{{
                       $t("case_history.fields.administered_by")
                       }}</label>
@@ -1064,7 +1097,7 @@
                 </div>
                 <div class="field mt-6 w-1/2">
                   <FloatLabel class="w-[90%]">
-                    <DatePicker showIcon :disabled="!isEditable" fluid iconDisplay="input" showButtonBar
+                    <DatePicker :disabled="!isEditable" showIcon fluid iconDisplay="input" showButtonBar
                       dateFormat="yy-mm-dd" id="administration_date" v-model="formData.administration_date" />
                     <label for="administration_date">{{
                       $t("case_history.fields.administration_date")
@@ -1090,7 +1123,6 @@
                   </FloatLabel>
                 </div>
               </div>
-              <!-- </div> -->
               <!-- Medication History -->
               <div class="w-[48%]">
                 <h5 class="font-semibold mt-6">
@@ -1153,29 +1185,29 @@
                       }}</label>
                   </FloatLabel>
                 </div>
-                <!-- </div> -->
                 <!-- Additional Notes -->
-                <!-- <div class="w-[48%]"> -->
                 <h5 class="font-semibold mt-6">
                   {{ $t("case_history.fields.additional_notes") }}
                 </h5>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
                     <TextArea :disabled="!isEditable" fluid autoResize rows="4" id="additional_notes"
-                      v-model="formData.additional_notes" />
+                      v-model="formData.additional_notes" :invalid="invalid.vaccine.additional_notes" />
                     <label for="additional_notes">{{
                       $t("case_history.fields.additional_notes")
-                      }}</label>
+                      }} <span class="text-red-600">*</span></label>
                   </FloatLabel>
                 </div>
               </div>
               <!-- </div> -->
             </div>
+            <!-- </div> -->
             <div class="flex pt-6 justify-between">
               <Button :label="$t('case_history.actions.back')" severity="secondary"
                 :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
-                :iconPos="!isRtl ? 'left' : 'right'" @click="activateCallback('10')" />
-              <Button :label="$t('case_history.actions.submit')" @click="submitForm" v-if="isEditable" />
+                :iconPos="!isRtl ? 'left' : 'right'" @click="() => { if (validateStep(11)) activateCallback('10') }" />
+              <Button :label="$t('case_history.actions.submit')" @click="submitForm"
+                v-if="isEditable" />
               <!-- <Button
                   :label="$t('case_history.actions.next')"
                   :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
@@ -1184,26 +1216,8 @@
                 /> -->
             </div>
           </StepPanel>
-
-          <!-- Step 10: Review & Submit -->
-          <!-- <StepPanel v-slot="{ activateCallback }" value="10">
-            <div class="flex flex-col gap-4">
-              <h3 class="text-xl font-bold">Review Your Entries</h3>
-              <pre>{{ formData }}</pre>
-            </div>
-            <div class="flex pt-6 justify-between">
-                            <Button
-                :label="$t('case_history.actions.back')"
-                severity="secondary"
-                :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
-                :iconPos="!isRtl ? 'left' : 'right'"
-
-                @click="activateCallback('9')"
-              />
-              <Button label="Submit" @click="submitForm" />
-            </div>
-          </StepPanel> -->
         </StepPanels>
+
       </Stepper>
     </fieldset>
   </div>
@@ -1479,6 +1493,11 @@ const symptomProgressionOptions = [
     label: t("case_history.options.symptom_progression.constant"),
     en_label: "Constant",
     value: "constant",
+  },
+  {
+    label: t("case_history.options.symptom_progression.comes_n_goes"),
+    en_label: "Intermittent",
+    value: "comes_n_goes",
   },
 ];
 
@@ -1846,6 +1865,125 @@ const treatmentTypeOptions = [
     console.error("Error fetching history:", error);
   }
 };*/
+const invalid = ref({
+  symptoms: {
+    // symptom_description: false,
+    // symptom_progression: false,
+    // start_date: false
+  },
+  general_health: {
+    // activity_level: false,
+    // care_location: false,
+    // vaccination_status: false
+  },
+  diet: {
+    // appetite: false,
+    // diet_type: false
+  },
+  vaccine: {
+    // vaccine_date: false,
+    // vaccine_name: false
+    // additional_notes: false
+  }
+});
+/* const validateStep = (step) => {
+  let isValid = true;
+
+  switch (step) {
+    case 1: // Symptoms step
+      invalid.value.symptoms = {
+        symptom_description: !formData.value.symptom_description?.trim(),
+        start_date: !formData.value.start_date,
+        symptom_progression: !formData.value.symptom_progression,
+      };
+      isValid = !Object.values(invalid.value.symptoms).some(Boolean);
+      break;
+
+    case 2: // General health step
+      invalid.value.general_health = {
+        activity_level: !formData.value.activity_level,
+        care_location: !formData.value.care_location,
+        vaccination_status: !formData.value.vaccination_status,
+      };
+      isValid = !Object.values(invalid.value.general_health).some(Boolean);
+      break;
+
+    case 5: // Diet step
+      invalid.value.diet = {
+        appetite: !formData.value.appetite,
+        diet_type: !formData.value.diet_type,
+      };
+      isValid = !Object.values(invalid.value.diet).some(Boolean);
+      break;
+
+    case 11: // Diet step
+      invalid.value.vaccine = {
+        vaccine_date: !formData.value.vaccine_date,
+        vaccine_name: !formData.value.vaccine_name,
+        additional_notes: !formData.value.additional_notes,
+      };
+      isValid = !Object.values(invalid.value.vaccine).some(Boolean);
+      break;
+
+    default:
+      isValid = true;
+  }
+
+  // console.log(`Step ${step} validation:`, { isValid, invalid: invalid.value });
+  return isValid;
+};
+ */
+
+const validateStep = (step) => {
+  let isValid = true;
+
+  switch (step) {
+    case 1: // Symptoms step
+      invalid.value.symptoms = {
+        symptom_description: !formData.value.symptom_description?.trim(),
+        start_date: !formData.value.start_date,
+        symptom_progression: !formData.value.symptom_progression,
+      };
+      isValid = !Object.values(invalid.value.symptoms).some(Boolean);
+      invalid.value.symptoms.step = Object.values(invalid.value.symptoms).some(Boolean);
+      break;
+
+    case 2: // General health step
+      invalid.value.general_health = {
+        activity_level: !formData.value.activity_level,
+        care_location: !formData.value.care_location,
+        vaccination_status: !formData.value.vaccination_status,
+      };
+      isValid = !Object.values(invalid.value.general_health).some(Boolean);
+      invalid.value.general_health.step = Object.values(invalid.value.general_health).some(Boolean);
+      break;
+
+    case 5: // Diet step
+      invalid.value.diet = {
+        appetite: !formData.value.appetite,
+        diet_type: !formData.value.diet_type,
+      };
+      isValid = !Object.values(invalid.value.diet).some(Boolean);
+      invalid.value.diet.step = Object.values(invalid.value.diet).some(Boolean);
+      break;
+
+    case 11: // Diet step
+      invalid.value.vaccine = {
+        vaccine_date: !formData.value.vaccine_date,
+        vaccine_name: !formData.value.vaccine_name,
+        additional_notes: !formData.value.additional_notes,
+      };
+      isValid = !Object.values(invalid.value.vaccine).some(Boolean);
+      invalid.value.vaccine.step = Object.values(invalid.value.vaccine).some(Boolean);
+      break;
+
+    default:
+      isValid = true;
+  }
+
+  // console.log(`Step ${step} validation:`, { isValid, invalid: invalid.value });
+  return isValid;
+};
 const fetchHistory = async (medicalRecordId) => {
   try {
     const response = await axiosInstance.get(
@@ -2044,6 +2182,26 @@ const fetchHistory = async (medicalRecordId) => {
 };
 
 const submitForm = async () => {
+  const stepsToValidate = [1, 2, 5, 11];
+
+  let hasErrors = false;
+
+  stepsToValidate.forEach(step => {
+    if (!validateStep(step)) {
+      hasErrors = true;
+    }
+  });
+
+  if (hasErrors) {
+    toast.add({
+      severity: 'error',
+      summary: 'Validation Error',
+      detail: 'Please complete all required fields before submitting',
+      life: 5000
+    });
+    return; // Stop execution if any step is invalid
+  }
+
   try {
     // Extract values from dropdown/select fields
     const safeValue = (val) => (val !== "" && val !== undefined ? val : null);
@@ -2230,6 +2388,7 @@ onMounted(() => {
   --color-violet-600: oklch(0.541 0.281 293.009);
   --p-inputtext-disabled-color: black !important;
 }
+
 .p-inputtext:disabled,
 .p-checkbox-input:disabled,
 .p-select-label,
@@ -2241,13 +2400,19 @@ onMounted(() => {
   /* background: transparent !important; */
   /* border: 0px !important; */
 }
+
 .p-step-active .p-step-number {
   background: var(--p-primary-color) !important;
 
   color: var(--p-primary-contrast-color) !important;
 }
+
 .p-steppanel {
   background: transparent !important;
   padding: 0.5rem;
+}
+div[data-p-invalid="true"]>button>.p-step-number {
+  background: red !important;
+  color: white !important;
 }
 </style>
