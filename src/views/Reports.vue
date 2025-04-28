@@ -137,11 +137,14 @@ import axiosInstance from "@/axios";
 import eventBus from "@/eventBus";
 
 const { t } = useI18n();
-
 const stockMovements = ref([]);
 const loading = ref(false);
 const first = ref(0);
+const itemsPerPage = ref(10);
+const totalRecords = ref(0);
+const currentPage = ref(1);
 const dateRange = ref(null);
+const searchQuery = ref('');
 const filters = ref({
     start_date: null,
     end_date: null,
@@ -159,7 +162,15 @@ const skeletonRows = Array.from({ length: 10 }).map(() => ({
     reference_id: "",
     reference_type: ""
 }));
-
+const movementTypes = ref([
+    { label: t('stock_movements.types.all'), value: null },
+    { label: t('stock_movements.types.purchase'), value: 'purchase' },
+    { label: t('stock_movements.types.sale'), value: 'sale' },
+    { label: t('stock_movements.types.transfer'), value: 'transfer' },
+    { label: t('stock_movements.types.adjustment'), value: 'adjustment' },
+    { label: t('stock_movements.types.expired'), value: 'expired' }
+]);
+const selectedMovementType = ref(movementTypes.value[0]);
 const fetchStockMovements = async (page = 1) => {
     try {
         loading.value = true;
