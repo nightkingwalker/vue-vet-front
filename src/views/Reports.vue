@@ -9,19 +9,30 @@
             <template #loading> {{ $t("stock_movements.loading") }} </template>
             <template #header>
                 <div class="flex justify-between items-center !m-b-1">
-                    <div class="flex">
+                    <div class="flex items-center gap-2">
                         <Button type="button" icon="pi pi-refresh !text-xs" label=""
-                            v-tooltip.bottom="$t('stock_movements.refresh')" class="!text-xs ml-2 !w-8 !h-8"
-                            @click="refreshData" />
-                        <div class="flex items-center ml-4">
-                            <Calendar v-model="dateRange" selectionMode="range" :manualInput="false"
-                                dateFormat="yy-mm-dd" placeholder="Select Date Range" class="!text-xs !h-8" />
-                            <Button icon="pi pi-filter" @click="applyFilters" :label="$t('stock_movements.filter')"
-                                class="!text-xs !h-8 ml-2" />
-                            <Button icon="pi pi-times" @click="clearFilters" :label="$t('stock_movements.clear')"
-                                class="!text-xs !h-8 ml-2 p-button-outlined" />
-                        </div>
+                            v-tooltip.bottom="$t('stock_movements.refresh')" class="!text-xs !w-8 !h-8"
+                            @click="fetchStockMovements(currentPage)" />
+
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search" />
+                            <InputText v-model="searchQuery" :placeholder="$t('stock_movements.search')"
+                                class="!text-xs !h-8" @keyup.enter="applyFilters" />
+                        </span>
+
+                        <Dropdown v-model="selectedMovementType" :options="movementTypes" optionLabel="label"
+                            :placeholder="$t('stock_movements.filter_type')" class="!text-xs !h-8 w-40" />
+
+                        <Calendar v-model="dateRange" selectionMode="range" :manualInput="false" dateFormat="yy-mm-dd"
+                            :placeholder="$t('stock_movements.date_range')" class="!text-xs !h-8 w-60" />
+
+                        <Button icon="pi pi-filter" @click="applyFilters" :label="$t('stock_movements.filter')"
+                            class="!text-xs !h-8" />
+
+                        <Button icon="pi pi-times" @click="clearFilters" :label="$t('stock_movements.clear')"
+                            class="!text-xs !h-8 p-button-outlined" />
                     </div>
+
                     <h2 class="text-sm !mb-0 pb-0 flex">
                         <i class="fa-solid fa-boxes-stacked ltr:mr-2 rtl:ml-2"></i>
                         {{ $t("stock_movements.title") }}
@@ -138,35 +149,45 @@ const filters = ref({
     category: null
 });
 
-const skeletonRows = Array.from({ length: 5 }).map(() => ({
+const skeletonRows = Array.from({ length: 10 }).map(() => ({
     created_at: "",
     inventory_item: { name: "", category: "" },
     movement_type: "",
     effective_quantity: "",
     notes: "",
-    creator: { name: "" }
+    creator: { name: "" },
+    reference_id: "",
+    reference_type: ""
 }));
 
-const fetchStockMovements = async () => {
-    loading.value = true;
+const fetchStockMovements = async (page = 1) => {
     try {
-        let params = {};
-        if (filters.value.start_date && filters.value.end_date) {
-            params.start_date = filters.value.start_date;
-            params.end_date = filters.value.end_date;
+        loading.value = true;
+        let url = `/stock-movements?branch_id=1&page=${page}&per_page=${itemsPerPage.value}`;
+
+        if (searchQuery.value) {
+            url += `&search=${searchQuery.value}`;
         }
 
-        const response = await axiosInstance.get("/stock-movements", { params });
-        stockMovements.value = response.data.data;
-        console.log(response.data.data);
-        rrturn
-        loading.value = false;
+        if (selectedMovementType.value.value) {
+            url += `&movement_type=${selectedMovementType.value.value}`;
+        }
+
+        if (dateRange.value && dateRange.value.length === 2) {
+            url += `&start_date=${formatDateForAPI(dateRange.value[0])}`;
+            url += `&end_date=${formatDateForAPI(dateRange.value[1])}`;
+        }
+
+        const response = await axiosInstance.get(url);
+        stockMovements.value = response.data.data.data;
+        totalRecords.value = response.data.data.total;
+        currentPage.value = response.data.data.current_page;
     } catch (error) {
         console.error("Error fetching stock movements:", error);
+    } finally {
         loading.value = false;
     }
 };
-
 const applyFilters = () => {
     if (dateRange.value && dateRange.value.length === 2) {
         filters.value.start_date = formatDateForAPI(dateRange.value[0]);
