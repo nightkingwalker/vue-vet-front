@@ -10,19 +10,19 @@
             </template>
           </SelectButton>
           <Button type="button" icon="pi pi-refresh !text-sm" label="" v-tooltip.top="{
-            value: $t('pet_list.tooltips.refresh'),
-            pt: {
-              arrow: {
-                style: {
-                  borderTopColor: 'var(--p-primary-color)',
-                },
-              },
-              text:
-                '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
-            },
-          }" rounded size="small" class="!text-xs !text-primary mx-2" @click="refreshData" />
+  value: $t('owner_pet_list.tooltips.refresh'),
+  pt: {
+    arrow: {
+      style: {
+        borderTopColor: 'var(--p-primary-color)',
+      },
+    },
+    text:
+      '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+  },
+}" rounded size="small" class="!text-xs !text-primary mx-2" @click="refreshData" />
           <Button v-tooltip.top="{
-            value: 'New Patient',
+            value: $t('owner_pet_list.buttons.new_patient'),
             pt: {
               arrow: {
                 style: {
@@ -35,11 +35,6 @@
           }" icon="pi pi-plus" @click="showNewPatientModal"
             class="p-button p-button-icon-only !text-sm !font-thin h-8" />
         </div>
-        <!-- <h2 class="text-xl">
-          {{ pets[0].owner.name }} <i class="pi pi-angle-double-right"></i> Patients
-        </h2> -->
-        <!-- <template>
-          <div class="card flex justify-center"> -->
         <Breadcrumb :model="items">
           <template #item="{ item, props }">
             <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
@@ -53,15 +48,6 @@
             </a>
           </template>
         </Breadcrumb>
-        <!-- </div>
-        </template> -->
-        <!-- <div class="flex mt-4"> -->
-        <!--         <InputText
-          v-model="searchQuery"
-          @input="onSearchChange"
-          placeholder="Search by pet's name"
-          class="w-1/5"
-        /> -->
         <InputGroup class="!text-gray-800 flex rounded-md overflow-hidden border !border-gray-400 h-8 !w-1/5">
           <InputGroupAddon class="!text-gray-800 px-4 flex flex-col item-center justify-center">
             <i class="pi pi-search"></i>
@@ -69,11 +55,10 @@
           <InputText v-model="searchQuery" @input="onSearchChange" @focus="inputFocused = true"
             @blur="inputFocused = false" type="text"
             class="lg:!text-[14px] !text-sm !text-gray-800 focus:!ring-0 focus:!ring-offset-0 focus:!border-gray-400 border-transparent"
-            :placeholder="$t('appointment.fields.pet')" />
+            :placeholder="$t('owner_pet_list.search_placeholder')" />
           <Button icon="pi pi-spin pi-spinner-dotted" v-if="loading" @click="clearFilters" />
           <Button icon="pi pi-times" v-else @click="clearFilters" />
         </InputGroup>
-        <!-- </div> -->
       </div>
     </template>
     <template #list v-if="loading">
@@ -81,12 +66,10 @@
         <div v-for="i in 2" :key="i">
           <div class="flex flex-col xl:flex-row xl:items-start p-6 gap-6"
             :class="{ 'border-t border-surface-200 dark:border-surface-700': i !== 0 }">
-            <!-- <Skeleton class="!w-9/12 sm:!w-64 xl:!w-40 !h-24 mx-auto" /> -->
             <div class="flex flex-col sm:flex-row justify-between items-center xl:items-start flex-1 gap-6">
               <div class="flex flex-col items-center sm:items-start gap-4">
                 <Skeleton width="8rem" height="1.5rem" />
                 <Skeleton width="6rem" height="1rem" />
-
                 <div class="flex items-center gap-4">
                   <Skeleton width="6rem" height="1rem" />
                   <Skeleton width="3rem" height="1rem" />
@@ -102,7 +85,6 @@
       </div>
     </template>
     <template #list="slotProps" v-else>
-      <!--contents-->
       <div class="flex flex-col py-4">
         <div v-for="(pet, index) in slotProps.items" :key="index">
           <div class="flex flex-col sm:flex-row sm:items-center p-2 gap-4" :class="{
@@ -118,14 +100,17 @@
               </div>
               <div class="w-1/6 px-2 flex flex-col md:items-start">
                 <div class="text-lg font-medium">{{ pet.name }}</div>
-                <div class="lg:text-[14px] text-sm ">Species: {{ getSpeciesValue(pet.species) }}</div>
+                <div class="lg:text-[14px] text-sm ">{{ $t('owner_pet_list.fields.species') }}: {{
+                  getSpeciesValue(pet.species) }}</div>
               </div>
               <div class="w-1/4 flex flex-col md:items-start">
-                <span class="lg:text-[14px] text-sm "> Breed: {{ pet.breed }}</span>
-                <span class="lg:text-[14px] text-sm ">Gender: {{ pet.gender }}</span>
+                <span class="lg:text-[14px] text-sm "> {{ $t('owner_pet_list.fields.breed') }}: {{ pet.breed }}</span>
+                <span class="lg:text-[14px] text-sm ">{{ $t('owner_pet_list.fields.gender') }}:
+                  {{ $t(`pets.status.${pet.gender.toLowerCase()}`) }}</span>
               </div>
               <div class="w-1/4 flex flex-col md:items-start">
-                <span class="lg:text-[14px] text-sm "> Microchip/Serial: {{ pet.microchip_num }}</span>
+                <span class="lg:text-[14px] text-sm "> {{ $t('owner_pet_list.fields.microchip') }}: {{ pet.microchip_num
+                }}</span>
               </div>
             </div>
           </div>
@@ -140,7 +125,6 @@
             <div class="text-lg font-medium border-b pb-2">
               <Skeleton width="6rem" height="1.5rem" />
             </div>
-
             <div class="mt-4 text-sm">
               <div class="text-sm mt-2">
                 <Skeleton width="12rem" height="1.5rem" />
@@ -157,16 +141,11 @@
                 <Skeleton class="w-full" height="1.5rem" />
               </div>
             </div>
-            <div class="flex flex-col gap-6 mt-1">
-              <div class="flex gap-2">
-                <Skeleton class="w-full" height="1.5rem" />
-              </div>
-            </div>
           </div>
         </div>
       </div>
     </template>
-    <template #grid="slotProps" v-else><!--contents-->
+    <template #grid="slotProps" v-else>
       <div class="grid xl:grid-cols-12 grid-cols-10 p-4">
         <div v-for="(pet, index) in slotProps.items" :key="index"
           class="col-span-12 sm:col-span-6 md:col-span-2.5 lg:col-span-2 xl:col-span-3 p-2">
@@ -185,11 +164,11 @@
                 </a>
                 {{ pet.name }}
               </div>
-
               <div class="mt-4 text-sm">
-                <div class="lg:text-[14px] text-sm ">Species: {{ getSpeciesValue(pet.species) }}</div>
+                <div class="lg:text-[14px] text-sm ">{{ $t('owner_pet_list.fields.species') }}:
+                  {{ getSpeciesValue(pet.species) }}</div>
                 <div class="lg:text-[14px] text-sm ">
-                  Breed:
+                  {{ $t('owner_pet_list.fields.breed') }}:
                   {{ pet.breed }}
                 </div>
               </div>
@@ -197,8 +176,8 @@
                 <div class="flex gap-2">
                   <RouterLink
                     class="p-button p-component !text-xs !bg-[var(--p-primary-color)] !text-[var(--p-primary-contrast-color)]"
-                    icon="fas fa-paw" label="Details" outlined v-tooltip.top="{
-                      value: 'View Details',
+                    icon="fas fa-paw" :label="$t('owner_pet_list.buttons.details')" outlined v-tooltip.top="{
+                      value: $t('owner_pet_list.tooltips.view_details'),
                       pt: {
                         arrow: {
                           style: {
@@ -212,14 +191,8 @@
                       name: 'PetDetails',
                       params: { petmicrochip: pet.microchip_num },
                     }">
-                    <i class="fas fa-paw"></i><span>Details</span>
+                    <i class="fas fa-paw"></i><span>{{ $t('owner_pet_list.buttons.details') }}</span>
                   </RouterLink>
-                  <!-- <Button
-                    icon="fas fa-plus-circle"
-                    label="New Pet"
-                    outlined
-                    class="flex-auto whitespace-nowrap !text-xs"
-                  ></Button> -->
                 </div>
               </div>
             </div>
@@ -232,22 +205,21 @@
         :rowsPerPageOptions="[25, 50, 100]" @page="onPageChange" class="text-xs"></Paginator>
     </template>
   </DataView>
-  <Dialog header="Add New Patient" v-model:visible="isModalVisible" @hide="isModalVisible = false" modal
-    :closable="true" class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]">
+  <Dialog :header="$t('owner_pet_list.modal.header')" v-model:visible="isModalVisible" @hide="isModalVisible = false"
+    modal :closable="true" class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <Avatar icon="fas fa-users" shape="circle" />
-        <span class="font-bold whitespace-nowrap">New Patient</span>
+        <span class="font-bold whitespace-nowrap">{{ $t('owner_pet_list.modal.header') }}</span>
       </div>
     </template>
-    <NewPatient @submitted="handleSubmit" @showOwnerModal="showOwnerModal" v-focustrap="{
+    <NewPatient @submitted="handleSubmit" v-focustrap="{
       disabled: false,
       autoFocus: true,
     }" />
     <template #footer> </template>
   </Dialog>
 </template>
-
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import DataView from "primevue/dataview";
@@ -339,10 +311,10 @@ const fetchPets = async (page = 1) => {
     // Make the request using the axios instance with interceptors
     const response = await axiosInstance.get(
       `/owners/${route.params.ownerid}/pets?page=` +
-        page +
-        `&per_page=` +
-        itemsPerPage.value +
-        `&search=${searchQuery.value}`
+      page +
+      `&per_page=` +
+      itemsPerPage.value +
+      `&search=${searchQuery.value}`
     );
     pets.value = response.data.data;
     totalRecords.value = response.data.total;
@@ -383,27 +355,104 @@ const handleSubmit = () => {
   currentPage.value = 1;
   fetchPets(currentPage.value);
 };
+// const species = ref([
+//   { label: "Avian", value: "Birds", icon: "fa-solid fa-dove" },
+//   { label: "Bovine", value: "Cows", icon: "fa-solid fa-cow" },
+//   { label: "Camelid", value: "Camels", icon: "fa-solid fa-paw" }, // Default icon
+//   { label: "Canine", value: "Dogs", icon: "fa-solid fa-dog" },
+//   { label: "Caprine", value: "Goats", icon: "fa-solid fa-paw" }, // Default icon
+//   { label: "Cavies", value: "Guinea Pigs", icon: "fa-solid fa-paw" }, // Default icon
+//   { label: "Cervidae", value: "Deers", icon: "fa-solid fa-paw" },
+//   { label: "Equine", value: "Horses", icon: "fa-duotone fa-horse " },
+//   { label: "Feline", value: "Cats", icon: "fa-solid fa-cat" },
+//   { label: "Lapine", value: "Rabbits", icon: "fa-solid fad fa-rabbit" },
+//   { label: "Murine", value: "Mice", icon: "fa-solid fa-paw" },
+//   { label: "Ovine", value: "Sheeps", icon: "fa-solid fa-sheep" },
+// ]);
 const species = ref([
-  { label: "Avian", value: "Birds", icon: "fa-solid fa-dove" },
-  { label: "Bovine", value: "Cows", icon: "fa-solid fa-cow" },
-  { label: "Camelid", value: "Camels", icon: "fa-solid fa-paw" }, // Default icon
-  { label: "Canine", value: "Dogs", icon: "fa-solid fa-dog" },
-  { label: "Caprine", value: "Goats", icon: "fa-solid fa-paw" }, // Default icon
-  { label: "Cavies", value: "Guinea Pigs", icon: "fa-solid fa-paw" }, // Default icon
-  { label: "Cervidae", value: "Deers", icon: "fa-solid fa-paw" },
-  { label: "Equine", value: "Horses", icon: "fa-duotone fa-horse " },
-  { label: "Feline", value: "Cats", icon: "fa-solid fa-cat" },
-  { label: "Lapine", value: "Rabbits", icon: "fa-solid fad fa-rabbit" },
-  { label: "Murine", value: "Mice", icon: "fa-solid fa-paw" },
-  { label: "Ovine", value: "Sheeps", icon: "fa-solid fa-sheep" },
+  {
+    label: t("species.avian"),
+    en_label: "Avian",
+    value: "Birds",
+    icon: "fa-solid fa-dove",
+  },
+  {
+    label: t("species.bovine"),
+    en_label: "Bovine",
+    value: "Cows",
+    icon: "fa-solid fa-cow",
+  },
+  {
+    label: t("species.camelid"),
+    en_label: "Camelid",
+    value: "Camels",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.canine"),
+    en_label: "Canine",
+    value: "Dogs",
+    icon: "fa-solid fa-dog",
+  },
+  {
+    label: t("species.caprine"),
+    en_label: "Caprine",
+    value: "Goats",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.cavies"),
+    en_label: "Cavies",
+    value: "Guinea Pigs",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.cervidae"),
+    en_label: "Cervidae",
+    value: "Deers",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.equine"),
+    en_label: "Equine",
+    value: "Horses",
+    icon: "fa-duotone fa-horse",
+  },
+  {
+    label: t("species.feline"),
+    en_label: "Feline",
+    value: "Cats",
+    icon: "fa-solid fa-cat",
+  },
+  {
+    label: t("species.lapine"),
+    en_label: "Lapine",
+    value: "Rabbits",
+    icon: "fa-solid fad fa-rabbit",
+  },
+  {
+    label: t("species.murine"),
+    en_label: "Murine",
+    value: "Mice",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.ovine"),
+    en_label: "Ovine",
+    value: "Sheeps",
+    icon: "fa-solid fa-sheep",
+  },
 ]);
 function getIconClass(speciesLabel) {
   const found = species.value.find((spec) => spec.label === speciesLabel);
   return found ? found.icon : "fa-solid fa-paw";
 }
 const getSpeciesValue = (label) => {
-  const found = species.value.find((species) => species.label === label);
-  return found ? found.value : null;
+  // const found = species.value.find((species) => species.label === label);
+  // return found ? found.value : null;
+  // console.log(label);
+  const found = species.value.find((species) => species.en_label === label);
+  return found ? found.label : null;
 };
 let typingTimer = null;
 const typingDelay = 500; // Adjust based on the speed of your scanner
@@ -432,6 +481,10 @@ const handleKeydown = (event) => {
 
 onMounted(() => {
   fetchPets(1);
+  eventBus.on("AddPet", () => {
+    console.log("OPEN ADD OWNER");
+    isModalVisible.value = true;
+  });
   window.addEventListener("keydown", handleKeydown);
 });
 onBeforeUnmount(() => {

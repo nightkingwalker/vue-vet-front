@@ -34,7 +34,7 @@
           }" class="p-button p-button-icon-only !text-sm !font-thin h-7" />
         </div>
         <div class="flex items-center">
-          <h2 class="text-lg !mb-0 pb-0 flex items-center">{{ $t("owners.title") }}</h2>
+          <h2 class="lg:text-sm text-xl">{{ $t("owners.title") }}</h2>
         </div>
         <InputGroup
           class="!text-gray-800  lg:!text-[14px]  flex rounded-md overflow-hidden border !border-gray-400 h-8 !w-1/5">
@@ -113,7 +113,7 @@
                   </a>
                   <span v-else class="2xl:!text-sm lg:!text-xs">{{
                     $t("owners.hidden_phone")
-                  }}</span>
+                    }}</span>
                 </span>
                 <span class=" lg:!text-[14px] text-sm">
                   <i class="fa-solid fa-location-dot ltr:mr-2 rtl:ml-2 "></i>
@@ -362,7 +362,7 @@
         <Avatar icon="fas fa-users" shape="circle" />
         <span class="font-bold whitespace-nowrap">{{
           $t("owners.modals.new_client")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <NewClientForm @ownerAdded="handleSubmit" v-focustrap="{
@@ -379,7 +379,7 @@
         <Avatar icon="fas fa-users" shape="circle" />
         <span class="font-bold whitespace-nowrap">{{
           $t("owners.modals.whatsapp")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <SendWhatsApp :contactNumber="whatsAppContact" @submitted="handleWahaSubmit" v-focustrap="{
@@ -397,7 +397,7 @@
         <Avatar icon="fas fa-users" shape="circle" />
         <span class="font-bold whitespace-nowrap">{{
           $t("owners.modals.edit_owner")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <EditOwner v-focustrap="{

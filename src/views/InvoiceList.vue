@@ -4,7 +4,7 @@
       :loading="loading" :metaKeySelection="metaKey" sortMode="multiple" exportFilename="Invoices" removableSort
       showGridlines stripedRows v-model:selection="selectedInvoices" highlightOnSelect dataKey="id"
       :exportFunction="beforeExportFunction" responsiveLayout="scroll"
-      class="rounded-xl 2xl:overflow-y-scroll drop-shadow-md mt-4 h-[95vh]" size="small">
+      class="rounded-xl 2xl:overflow-y-auto drop-shadow-md mt-4 h-[95vh]" size="small">
       <template #header>
         <div class="flex justify-between">
           <div class="flex">
@@ -242,7 +242,7 @@
       <div class="inline-flex items-center justify-center gap-2 h-4">
         <span class="font-bold whitespace-nowrap">{{
           $t("invoices.dialog.create_title")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <InvoiceAdd v-focustrap="{
@@ -261,7 +261,7 @@
       <div class="inline-flex items-center justify-center gap-2 h-4">
         <span class="font-bold whitespace-nowrap">{{
           $t("invoices.dialog.payment_title")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddPayment v-focustrap="{

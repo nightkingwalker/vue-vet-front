@@ -161,6 +161,13 @@ const openAddPaymentDialog = () => {
   emit("addInvoice");
 };
 
+// const categories = ref([
+//   { label: t("inventory.categories.food"), value: "food" },
+//   { label: t("inventory.categories.medicine"), value: "medicine" },
+//   { label: t("inventory.categories.accessories"), value: "accessories" },
+//   { label: t("inventory.categories.miscellaneous"), value: "miscellaneous" },
+//   { label: t("inventory.categories.treatment"), value: "treatment" },
+// ]);
 const toast = useToast();
 
 const printInvoice = () => {

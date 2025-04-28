@@ -98,7 +98,10 @@
             "pharmaceutical": "الأدوية",
             "grooming": "العناية",
             "invoices": "الفواتير",
-            "reports": "تقارير",
+            "reports": {
+                "reports": "تقارير",
+                "stockmovement": "حركة المستودع"
+            },
             "settings": "الإعدادات",
             "shortcuts": "اختصارات",
             "treatment": "المعالجات",
@@ -1181,6 +1184,26 @@
         "modal_title": "إضافة مريض جديد",
         "details_button": "التفاصيل"
     },
+    "owner_pet_list": {
+        "tooltips": {
+            "refresh": "تحديث القائمة",
+            "view_details": "عرض تفاصيل الحيوان"
+        },
+        "buttons": {
+            "new_patient": "مريض جديد",
+            "details": "التفاصيل"
+        },
+        "fields": {
+            "species": "النوع",
+            "breed": "السلالة",
+            "gender": "الجنس",
+            "microchip": "رقم الشريحة"
+        },
+        "search_placeholder": "البحث باسم الحيوان",
+        "modal": {
+            "header": "إضافة مريض جديد"
+        }
+    },
     "add_invoice": {
         "title": "إنشاء فاتورة جديدة",
         "client_section": {
@@ -1288,22 +1311,36 @@
         }
     },
     "stock_movements": {
-        "no_movements": "لم يتم العثور على حركات مخزون.",
+        "title": "تقرير حركة المخزون",
+        "no_movements": "لا توجد حركات مخزون",
         "loading": "جاري تحميل حركات المخزون...",
-        "refresh": "تحديث",
+        "refresh": "تحديث البيانات",
         "filter": "تصفية",
-        "clear": "مسح التصفية",
-        "title": "حركات المخزون",
+        "clear": "مسح الفلاتر",
+        "search": "بحث...",
+        "date_range": "اختر نطاق تاريخ",
+        "filter_type": "تصفية حسب النوع",
         "view_invoice": "عرض الفاتورة",
         "headers": {
             "date": "التاريخ",
             "item": "الصنف",
             "category": "الفئة",
-            "type": "نوع الحركة",
+            "type": "النوع",
             "quantity": "الكمية",
             "notes": "ملاحظات",
             "user": "المستخدم",
             "reference": "مرجع"
+        },
+        "types": {
+            "all": "جميع الأنواع",
+            "purchase": "شراء",
+            "sale": "بيع",
+            "transfer": "تحويل",
+            "adjustment": "تعديل",
+            "expired": "منتهي الصلاحية"
+        },
+        "messages": {
+            "fetch_error": "فشل تحميل حركات المخزون"
         }
     }
 }

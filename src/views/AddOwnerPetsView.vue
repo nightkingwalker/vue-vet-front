@@ -14,7 +14,7 @@
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.name">{{
             $t("form_messages.warnings.invalid_input")
-            }}</span>
+}}</span>
         </div>
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
@@ -25,7 +25,7 @@
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.species">{{
             $t("form_messages.warnings.invalid_input")
-            }}</span>
+          }}</span>
         </div>
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
@@ -42,7 +42,7 @@
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.gender">{{
             $t("form_messages.warnings.invalid_input")
-            }}</span>
+          }}</span>
         </div>
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
@@ -53,7 +53,7 @@
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.date_of_birth">{{
             $t("form_messages.warnings.invalid_input")
-            }}</span>
+          }}</span>
         </div>
         <!-- Color -->
         <div class="field mt-3 w-[48%]">
@@ -69,7 +69,7 @@
             <InputText fluid id="distinctive_marks" v-model="pet.distinctive_marks" />
             <label for="distinctive_marks">{{
               $t("pet_form.fields.distinctive_marks")
-              }}</label>
+            }}</label>
           </FloatLabel>
         </div>
 
@@ -83,7 +83,7 @@
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.behaviour">{{
             $t("form_messages.warnings.invalid_input")
-            }}</span>
+          }}</span>
         </div>
 
         <!-- Neutered -->
@@ -96,7 +96,7 @@
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.neutered">{{
             $t("form_messages.warnings.invalid_input")
-            }}</span>
+          }}</span>
         </div>
 
         <!-- Deceased -->
@@ -109,7 +109,7 @@
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.deceased">{{
             $t("form_messages.warnings.invalid_input")
-            }}</span>
+          }}</span>
         </div>
 
         <!-- Allergies -->
@@ -155,19 +155,93 @@ const emit = defineEmits(["submitted"]);
 const invalid = ref({ pet: {} });
 
 // Dropdown options
+// const species = ref([
+//   { label: t("species.avian"), en_label: "Avian", value: "Birds", icon: "fa-solid fa-dove" },
+//   { label: t("species.bovine"), en_label: "Bovine", value: "Cows", icon: "fa-solid fa-cow" },
+//   { label: t("species.camelid"), en_label: "Camelid", value: "Camels", icon: "fa-solid fa-paw" },
+//   { label: t("species.canine"), en_label: "Canine", value: "Dogs", icon: "fa-solid fa-dog" },
+//   { label: t("species.caprine"), en_label: "Caprine", value: "Goats", icon: "fa-solid fa-paw" },
+//   { label: t("species.cavies"), en_label: "Cavies", value: "Guinea Pigs", icon: "fa-solid fa-paw" },
+//   { label: t("species.cervidae"), en_label: "Cervidae", value: "Deers", icon: "fa-solid fa-paw" },
+//   { label: t("species.equine"), en_label: "Equine", value: "Horses", icon: "fa-duotone fa-horse" },
+//   { label: t("species.feline"), en_label: "Feline", value: "Cats", icon: "fa-solid fa-cat" },
+//   { label: t("species.lapine"), en_label: "Lapine", value: "Rabbits", icon: "fa-solid fad fa-rabbit" },
+//   { label: t("species.murine"), en_label: "Murine", value: "Mice", icon: "fa-solid fa-paw" },
+//   { label: t("species.ovine"), en_label: "Ovine", value: "Sheeps", icon: "fa-solid fa-sheep" },
+// ]);
 const species = ref([
-  { label: t("species.avian"), en_label: "Avian", value: "Birds", icon: "fa-solid fa-dove" },
-  { label: t("species.bovine"), en_label: "Bovine", value: "Cows", icon: "fa-solid fa-cow" },
-  { label: t("species.camelid"), en_label: "Camelid", value: "Camels", icon: "fa-solid fa-paw" },
-  { label: t("species.canine"), en_label: "Canine", value: "Dogs", icon: "fa-solid fa-dog" },
-  { label: t("species.caprine"), en_label: "Caprine", value: "Goats", icon: "fa-solid fa-paw" },
-  { label: t("species.cavies"), en_label: "Cavies", value: "Guinea Pigs", icon: "fa-solid fa-paw" },
-  { label: t("species.cervidae"), en_label: "Cervidae", value: "Deers", icon: "fa-solid fa-paw" },
-  { label: t("species.equine"), en_label: "Equine", value: "Horses", icon: "fa-duotone fa-horse" },
-  { label: t("species.feline"), en_label: "Feline", value: "Cats", icon: "fa-solid fa-cat" },
-  { label: t("species.lapine"), en_label: "Lapine", value: "Rabbits", icon: "fa-solid fad fa-rabbit" },
-  { label: t("species.murine"), en_label: "Murine", value: "Mice", icon: "fa-solid fa-paw" },
-  { label: t("species.ovine"), en_label: "Ovine", value: "Sheeps", icon: "fa-solid fa-sheep" },
+  {
+    label: t("species.avian"),
+    value: "Avian",
+    en_label: "Birds",
+    icon: "fa-solid fa-dove",
+  },
+  {
+    label: t("species.bovine"),
+    value: "Bovine",
+    en_label: "Cows",
+    icon: "fa-solid fa-cow",
+  },
+  {
+    label: t("species.camelid"),
+    value: "Camelid",
+    en_label: "Camels",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.canine"),
+    value: "Canine",
+    en_label: "Dogs",
+    icon: "fa-solid fa-dog",
+  },
+  {
+    label: t("species.caprine"),
+    value: "Caprine",
+    en_label: "Goats",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.cavies"),
+    value: "Cavies",
+    en_label: "Guinea Pigs",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.cervidae"),
+    value: "Cervidae",
+    en_label: "Deers",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.equine"),
+    value: "Equine",
+    en_label: "Horses",
+    icon: "fa-duotone fa-horse",
+  },
+  {
+    label: t("species.feline"),
+    value: "Feline",
+    en_label: "Cats",
+    icon: "fa-solid fa-cat",
+  },
+  {
+    label: t("species.lapine"),
+    value: "Lapine",
+    en_label: "Rabbits",
+    icon: "fa-solid fad fa-rabbit",
+  },
+  {
+    label: t("species.murine"),
+    value: "Murine",
+    en_label: "Mice",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.ovine"),
+    value: "Ovine",
+    en_label: "Sheeps",
+    icon: "fa-solid fa-sheep",
+  },
 ]);
 
 const yesno = ref([

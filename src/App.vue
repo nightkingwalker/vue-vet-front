@@ -235,8 +235,8 @@ const menuItems = computed(() => [
     command: handleMenuItemClick,
   },
   {
-    label: t("app.menu.reports"),
-    icon: "fa-solid fa-scroll !text-md",
+    label: t("app.menu.reports.stockmovement"),
+    icon: "fa-solid fa-arrow-trend-up !text-md",
     route: "/reports",
     command: handleMenuItemClick,
   },
@@ -268,7 +268,7 @@ const shortcuts = {
   F2: () => {
     if (route.path === "/owners") eventBus.emit("AddOwner");
     if (route.path === "/invoices") eventBus.emit("AddInvoice");
-    if (route.path === "/pets") eventBus.emit("AddPet");
+    if (route.path === "/pets" || route.path.match(/^\/\d+\/pets$/)) eventBus.emit("AddPet");
     if (route.path === "/add-inventory-food") eventBus.emit("AddInventoryItem");
     if (route.path === "/add-inventory-pharmaceutical") eventBus.emit("AddInventoryItem");
     if (route.path === "/add-inventory-toys") eventBus.emit("AddInventoryItem");

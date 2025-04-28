@@ -136,7 +136,7 @@ const router = createRouter({
         path: '/reports',
         name: 'Reports',
         component: () =>
-            import('../views/Reports.vue'),
+            import('../views/StockMovement.vue'),
         meta: { allowSessionTimeout: true }
     },
     ]

@@ -2,9 +2,9 @@
   <div class="w-full lg:!text-[14px]">
     <DataTable id="petlist" ref="dt" :value="loading ? skeletonRows : pets" :row-hover="true" :loading="loading"
       :metaKeySelection="metaKey" sortMode="multiple" :exportFilename="$t('pets.title') + '_Details'" removableSort
-      stripedRows v-model:selection="selectedPets" highlightOnSelect dataKey="id" @rowSelect="onSelectionChange"
-      :exportFunction="beforeExportFunction" responsiveLayout="scroll"
-      class="rounded-xl 2xl:overflow-y-scroll drop-shadow-md mt-4 h-[95vh]" :size="`small`">
+      stripedRows v-model:selection="selectedPets" showGridlines scrollable scrollHeight="80vh" highlightOnSelect
+      dataKey="id" @rowSelect="onSelectionChange" :exportFunction="beforeExportFunction" responsiveLayout="scroll"
+      class="rounded-xl drop-shadow-md mt-4 h-[95vh]" :size="`small`">
       <template #header>
         <div class="flex justify-between items-center ">
           <div class="flex" v-if="!isMobile">

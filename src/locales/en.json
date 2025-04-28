@@ -103,7 +103,10 @@
             "pharmaceutical": "Pharmaceutical",
             "grooming": "Grooming",
             "invoices": "Invoices",
-            "reports": "Reports",
+            "reports": {
+                "reports": "Reports",
+                "stockmovement": "Stock Movement"
+            },
             "settings": "Settings",
             "shortcuts": "Shortcuts",
             "treatment": "Treatments & Medications",
@@ -1102,7 +1105,6 @@
             "confirm_add_item": "Are you sure you want to create this new inventory item",
             "confirm_update_item": "Are you sure you want to add {quantity} units to this existing item?"
         }
-
     },
     "invoices": {
         "title": "Invoices",
@@ -1187,6 +1189,26 @@
         "gender": "Gender",
         "modal_title": "Add New Patient",
         "details_button": "Details"
+    },
+    "owner_pet_list": {
+        "tooltips": {
+            "refresh": "Refresh list",
+            "view_details": "View pet details"
+        },
+        "buttons": {
+            "new_patient": "New Patient",
+            "details": "Details"
+        },
+        "fields": {
+            "species": "Species",
+            "breed": "Breed",
+            "gender": "Gender",
+            "microchip": "Microchip/Serial"
+        },
+        "search_placeholder": "Search by pet's name",
+        "modal": {
+            "header": "Add New Patient"
+        }
     },
     "add_invoice": {
         "title": "Create New Invoice",
@@ -1295,22 +1317,36 @@
         }
     },
     "stock_movements": {
-        "no_movements": "No stock movements found.",
+        "title": "Stock Movements Report",
+        "no_movements": "No stock movements found",
         "loading": "Loading stock movements...",
-        "refresh": "Refresh",
+        "refresh": "Refresh data",
         "filter": "Filter",
-        "clear": "Clear Filters",
-        "title": "Stock Movements",
-        "view_invoice": "View Invoice",
+        "clear": "Clear filters",
+        "search": "Search...",
+        "date_range": "Select date range",
+        "filter_type": "Filter by type",
+        "view_invoice": "View invoice",
         "headers": {
             "date": "Date",
             "item": "Item",
             "category": "Category",
-            "type": "Movement Type",
+            "type": "Type",
             "quantity": "Quantity",
             "notes": "Notes",
             "user": "User",
             "reference": "Reference"
+        },
+        "types": {
+            "all": "All Types",
+            "purchase": "Purchase",
+            "sale": "Sale",
+            "transfer": "Transfer",
+            "adjustment": "Adjustment",
+            "expired": "Expired"
+        },
+        "messages": {
+            "fetch_error": "Failed to load stock movements"
         }
     }
 }

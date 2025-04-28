@@ -270,7 +270,7 @@ const categories = ref([
   { label: t("inventory.categories.medicine"), value: "medicine" },
   { label: t("inventory.categories.accessories"), value: "accessories" },
   { label: t("inventory.categories.miscellaneous"), value: "miscellaneous" },
-  { label: "inventory.categories.treatment", value: "treatment" },
+  { label: t("inventory.categories.treatment"), value: "treatment" },
 ]);
 const filters = ref({
   category: { value: null, matchMode: "equals" },
