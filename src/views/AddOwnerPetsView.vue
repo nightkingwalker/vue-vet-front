@@ -14,7 +14,7 @@
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.name">{{
             $t("form_messages.warnings.invalid_input")
-          }}</span>
+            }}</span>
         </div>
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
@@ -25,7 +25,7 @@
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.species">{{
             $t("form_messages.warnings.invalid_input")
-          }}</span>
+            }}</span>
         </div>
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
@@ -42,18 +42,18 @@
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.gender">{{
             $t("form_messages.warnings.invalid_input")
-          }}</span>
+            }}</span>
         </div>
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
             <DatePicker showIcon required :invalid="invalid.pet.date_of_birth" iconDisplay="input" showButtonBar
               hourFormat="12" fluid id="dob" class="w-full" v-model="pet.date_of_birth" dateFormat="yy-mm-dd" />
             <label for="dob">{{ $t("pet_form.fields.date_of_birth") }}
-              <span class="text-red-600">*</span></label>
+            </label>
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.date_of_birth">{{
             $t("form_messages.warnings.invalid_input")
-          }}</span>
+            }}</span>
         </div>
         <!-- Color -->
         <div class="field mt-3 w-[48%]">
@@ -69,7 +69,7 @@
             <InputText fluid id="distinctive_marks" v-model="pet.distinctive_marks" />
             <label for="distinctive_marks">{{
               $t("pet_form.fields.distinctive_marks")
-            }}</label>
+              }}</label>
           </FloatLabel>
         </div>
 
@@ -83,7 +83,7 @@
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.behaviour">{{
             $t("form_messages.warnings.invalid_input")
-          }}</span>
+            }}</span>
         </div>
 
         <!-- Neutered -->
@@ -96,7 +96,7 @@
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.neutered">{{
             $t("form_messages.warnings.invalid_input")
-          }}</span>
+            }}</span>
         </div>
 
         <!-- Deceased -->
@@ -271,7 +271,7 @@ const submitForm = async () => {
     name: pet.value.name === "",
     species: pet.value.species === "",
     gender: pet.value.gender === "",
-    date_of_birth: pet.value.date_of_birth === "",
+    // date_of_birth: pet.value.date_of_birth === "",
     behaviour: pet.value.behaviour === "",
     neutered: pet.value.neutered === "",
     deceased: pet.value.deceased === "",

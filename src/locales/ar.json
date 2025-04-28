@@ -189,7 +189,7 @@
             "alive": "على قيد الحياة",
             "male": "ذكر",
             "female": "أنثى",
-            "neutered": "مخصي",
+            "neutered": "معقم",
             "spayed": "معقمة"
         },
         "modals": {
@@ -272,9 +272,9 @@
         "breed": "السلالة",
         "color": "اللون",
         "behavior": "السلوك",
-        "neutered": "مخصي",
-        "not_neutered": "غير مخصي",
-        "not_spayed": "غير معقم",
+        "neutered": "معقم",
+        "not_neutered": "غير معقم",
+        "not_spayed": "غير معقمة",
         "age": "العمر",
         "birth_date": "تاريخ الميلاد",
         "deceased": "متوفى",
@@ -1285,6 +1285,25 @@
         "success": {
             "title": "تم الدفع",
             "message": "تمت إضافة دفعة الفاتورة"
+        }
+    },
+    "stock_movements": {
+        "no_movements": "لم يتم العثور على حركات مخزون.",
+        "loading": "جاري تحميل حركات المخزون...",
+        "refresh": "تحديث",
+        "filter": "تصفية",
+        "clear": "مسح التصفية",
+        "title": "حركات المخزون",
+        "view_invoice": "عرض الفاتورة",
+        "headers": {
+            "date": "التاريخ",
+            "item": "الصنف",
+            "category": "الفئة",
+            "type": "نوع الحركة",
+            "quantity": "الكمية",
+            "notes": "ملاحظات",
+            "user": "المستخدم",
+            "reference": "مرجع"
         }
     }
 }

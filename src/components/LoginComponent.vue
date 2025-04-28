@@ -1,6 +1,5 @@
 <template>
-  <div
-    class="flex items-center justify-center min-h-[90vh] bg-stone-100 dark:bg-stone-800 container mx-auto  lg:!text-[14px]">
+  <div class="flex items-center justify-center min-h-[90vh] bg-stone-100 dark:bg-stone-800 mx-auto  lg:!text-[14px]">
     <div class="p-8 bg-white dark:bg-stone-900 shadow-lg rounded-lg max-w-md w-full">
       <div class="w-full flex justify-center">
         <Image :src="Logo" alt="Image" class="flex justify-center rounded-[4rem] dark:bg-white w-[5rem] p-1" />
@@ -43,7 +42,7 @@
           </div>
           <small id="" :class="!isError ? `text-green-500 h-4` : `text-red-500 h-4`">{{
             message
-          }}</small>
+            }}</small>
         </div>
         <div class="flex items-end justify-end">
           <button type="submit"

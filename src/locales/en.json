@@ -1293,5 +1293,24 @@
             "title": "Paid",
             "message": "Invoice Payment Added"
         }
+    },
+    "stock_movements": {
+        "no_movements": "No stock movements found.",
+        "loading": "Loading stock movements...",
+        "refresh": "Refresh",
+        "filter": "Filter",
+        "clear": "Clear Filters",
+        "title": "Stock Movements",
+        "view_invoice": "View Invoice",
+        "headers": {
+            "date": "Date",
+            "item": "Item",
+            "category": "Category",
+            "type": "Movement Type",
+            "quantity": "Quantity",
+            "notes": "Notes",
+            "user": "User",
+            "reference": "Reference"
+        }
     }
 }

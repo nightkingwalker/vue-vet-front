@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 lg:text-[14px]">
+  <div class="px-4 lg:text-[12px]">
     <form @submit.prevent="submitForm" class="mx-auto w-full">
       <fieldset class="p-fieldset p-component w-full flex flex-wrap items-start border rounded-lg p-4 gap-4">
         <legend class="px-4 bg-gray-600 text-white dark:bg-zinc-200 dark:text-zinc-800 rounded">
@@ -21,8 +21,8 @@
         <!-- Email Field -->
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <InputText fluid id="email" :invalid="invalid.owner.email" v-model="owner.email" type="email" class="ltr" />
-            <label for="email">{{ $t("add_owner.fields.email") }} <span class="text-red-600">*</span></label>
+            <InputText fluid id="email" v-model="owner.email" type="email" class="ltr" />
+            <label for="email">{{ $t("add_owner.fields.email") }} </label>
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.owner.email">{{
             $t("form_messages.warnings.invalid_input")
@@ -95,7 +95,7 @@
         </div>
 
         <Button type="submit" :label="$t('add_owner.actions.submit')" icon="pi pi-check"
-          class="mt-4 w-full lg:text-[14px]" />
+          class="mt-4 w-full lg:text-[12px]" />
       </fieldset>
     </form>
   </div>
@@ -183,11 +183,11 @@ async function submitForm() {
   // if (phoneError.value) return;
   invalid.value.owner = {
     name: owner.value.name === "" ? true : false,
-    email: owner.value.email === "" ? true : false,
+    // email: owner.value.email === "" ? true : false,
     phone: owner.value.phone === "" ? true : false,
     address: owner.value.address === "" ? true : false,
   };
-  if (invalid.value.owner.name || invalid.value.owner.email || invalid.value.owner.phone || invalid.value.owner.address) {
+  if (invalid.value.owner.name || invalid.value.owner.phone || invalid.value.owner.address) {
     return
   }
 

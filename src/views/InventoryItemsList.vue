@@ -293,10 +293,10 @@ watchEffect(() => {
     filters.value.category.value = "miscellaneous";
     // isPredefined.value = true;
   } else if (route.path === "/add-inventory-grooming") {
-    filters.value.category.value = "Grooming";
+    filters.value.category.value = "grooming";
     // isPredefined.value = true;
   } else if (route.path === "/add-inventory-treatment") {
-    filters.value.category.value = "Treatment";
+    filters.value.category.value = "treatment";
     // isPredefined.value = true;
   }
   // Add more route cases as needed

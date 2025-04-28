@@ -26,7 +26,7 @@
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.owner_id">{{
             $t("form_messages.warnings.invalid_input")
-          }}</span>
+}}</span>
         </div>
 
         <div class="field mt-3 w-[48%]">
@@ -71,7 +71,7 @@
             <DatePicker showIcon required :invalid="invalid.pet.date_of_birth" iconDisplay="input" showButtonBar
               hourFormat="12" fluid id="dob" class="w-full" v-model="pet.date_of_birth" dateFormat="yy-mm-dd" />
             <label for="dob">{{ $t("pet_form.fields.date_of_birth") }}
-              <span class="text-red-600">*</span></label>
+            </label>
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.date_of_birth">{{
             $t("form_messages.warnings.invalid_input")
@@ -331,7 +331,7 @@ const submitForm = async () => {
     name: pet.value.name === "" ? true : false,
     species: pet.value.species === "" ? true : false,
     gender: pet.value.gender === "" ? true : false,
-    date_of_birth: pet.value.date_of_birth === "" ? true : false,
+    // date_of_birth: pet.value.date_of_birth === "" ? true : false,
     behaviour: pet.value.behaviour === "" ? true : false,
     neutered: pet.value.neutered === "" ? true : false,
     deceased: pet.value.deceased === "" ? true : false,
@@ -341,7 +341,7 @@ const submitForm = async () => {
     invalid.value.pet.name ||
     invalid.value.pet.species ||
     invalid.value.pet.gender ||
-    invalid.value.pet.date_of_birth ||
+    // invalid.value.pet.date_of_birth ||
     invalid.value.pet.behaviour ||
     invalid.value.pet.neutered ||
     invalid.value.pet.deceased
