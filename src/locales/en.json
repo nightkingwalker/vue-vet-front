@@ -127,7 +127,8 @@
         },
         "theme": {
             "light_mode": "Light Mode",
-            "dark_mode": "Dark Mode"
+            "dark_mode": "Dark Mode",
+            "system": "System"
         }
     },
     "whatsapp": {
@@ -1348,5 +1349,14 @@
         "messages": {
             "fetch_error": "Failed to load stock movements"
         }
+    },
+    "languages": {
+        "ar": "العربية",
+        "en": "English"
+    },
+    "themes": {
+        "dark": "Dark Mode",
+        "light": "Light Mode",
+        "system": "System Colors"
     }
 }

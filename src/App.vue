@@ -2,7 +2,7 @@
   <div>
     <!-- Dark Mode Toggle Button -->
     <div class="flex">
-      <button @click="toggleDarkMode" type="button"
+      <button @click="toggleTheme" type="button"
         class="absolute z-50 ltr:right-4 rtl:left-4 top-2 flex items-center justify-center p-1 cursor-pointer gap-3 bg-[var(--p-surface-800)] dark:bg-[var(--p-surface-100)] rounded-lg hover:rounded-lg w-8 h-8 hover:bg-gray-400 text-center shadow-md"
         :title="titleDark">
         <i v-if="isDarkMode" class="fa-solid fa-sun text-yellow-500 text-md w-4"></i>
@@ -19,8 +19,8 @@
       <!-- Sidebar Menu -->
       <Menu v-if="authStore.isLoggedIn && route.path != `/login`" :model="menuItems" @mouseenter="isHovered = true"
         @mouseleave="isHovered = false" :class="{
-          'absolute ltr:inset-y-0 ltr:left-0 rtl:inset-y-0 rtl:right-0 z-50 w-[100vw] mobile-menu': isMobile,
-          'absolute ltr:left-0 rtl:right-0 w-24 2xl:w-20 hover:md:w-60 hover:2xl:w-1/6 hover:lg:w-1/5 z-50 drop-shadow-[0_5px_5px_rgba(0,0,0,0.3)]': !isMobile,
+  'fixed ltr:inset-y-0 ltr:left-0 rtl:inset-y-0 rtl:right-0 z-50 w-[100vw] mobile-menu': isMobile,
+  'fixed ltr:left-0 rtl:right-0 w-24 2xl:w-20 hover:md:w-60 hover:2xl:w-1/6 hover:lg:w-1/5 z-50 drop-shadow-[0_5px_5px_rgba(0,0,0,0.3)]': !isMobile,
           hidden: isMobile && !mobileMenuVisible,
           'collapsed-menu': !isMobile && !isHovered,
           'expanded-menu': !isMobile && isHovered,
@@ -96,11 +96,14 @@ import { ref, computed, onMounted, onUnmounted, watch, watchEffect } from "vue";
 import { useRoute, RouterLink, RouterView } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useAuthStore } from "@/stores/authStore";
+// import { isAuthenticated } from '/src/stores/authStore.js';
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
 import Cookies from "js-cookie";
 import eventBus from "@/eventBus";
 import router from "@/router";
+import { useTheme } from '@/composables/useTheme';
+import { useLanguage } from '@/composables/useLanguage';
 
 // PrimeVue Components
 import Menu from "primevue/menu";
@@ -120,9 +123,12 @@ const toast = useToast();
 const confirm = useConfirm();
 const route = useRoute();
 const authStore = useAuthStore();
-
+const isLoggedIn = authStore.isLoggedIn;
+const { isDarkMode, initializeTheme, toggleTheme } = useTheme();
+const { initializeLanguage } = useLanguage();
 // ============== REACTIVE STATE ==============
-const isDarkMode = ref(false);
+
+// const isDarkMode = ref(false);
 const titleDark = ref("");
 const activeItem = ref(null);
 const countdown = ref(300);
@@ -306,24 +312,55 @@ const handleKeyDown = (event) => {
 };
 
 // ============== DARK MODE HANDLING ==============
+/* function initializeTheme() {
+  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  console.log("SYSTEM THEME", systemPrefersDark);
+  // Priority: 1. Cookie 2. LocalStorage 3. System preference
+  const cookieTheme = Cookies.get("theme");
+  console.log("Coockie THEME", cookieTheme);
+  const savedTheme = localStorage.getItem("theme");
+
+  let shouldBeDark = false;
+
+  if (cookieTheme) {
+    shouldBeDark = cookieTheme === "system"
+      ? systemPrefersDark
+      : cookieTheme === "dark";
+  } else if (savedTheme) {
+    shouldBeDark = savedTheme === "dark";
+  } else {
+    shouldBeDark = systemPrefersDark;
+  }
+  console.log("shouldBeDark", shouldBeDark);
+  // Apply the theme
+  if (shouldBeDark) {
+    isDarkMode.value = true;
+    document.documentElement.classList.add("dark");
+    titleDark.value = t("app.theme.light_mode");
+  }
+}
+ */
 function toggleDarkMode() {
   isDarkMode.value = !isDarkMode.value;
-  const element = document.documentElement;
-  const theme = isDarkMode.value ? "dark" : "light";
 
-  // Emit theme change for calendar if needed
-  if (route.path === "/") {
-    eventBus.emit("themeChange", theme);
-  }
+  // Update DOM
+  document.documentElement.classList.toggle("dark", isDarkMode.value);
 
-  // Update DOM and storage
-  element.classList.toggle("dark", isDarkMode.value);
+  // Update title
   titleDark.value = isDarkMode.value
     ? t("app.theme.light_mode")
     : t("app.theme.dark_mode");
-  localStorage.setItem("theme", theme);
-}
 
+  // Save preference
+  const theme = isDarkMode.value ? "dark" : "light";
+  localStorage.setItem("theme", theme);
+  Cookies.set("theme", theme); // If you want to use cookies
+
+  // Emit event if needed
+  if (route.path === "/") {
+    eventBus.emit("themeChange", theme);
+  }
+}
 // ============== SESSION MANAGEMENT ==============
 let activityTimeout = null;
 let timerId = null;
@@ -425,12 +462,14 @@ const signOut = () => {
 // ============== LIFECYCLE HOOKS ==============
 onMounted(() => {
   // Initialize theme
-  const savedTheme = localStorage.getItem("theme");
-  if (savedTheme === "dark") {
-    isDarkMode.value = true;
-    titleDark.value = t("app.theme.light_mode");
-    document.documentElement.classList.add("dark");
-  }
+  initializeTheme();
+  initializeLanguage();
+  // const savedTheme = localStorage.getItem("theme");
+  // if (savedTheme === "dark") {
+  //   isDarkMode.value = true;
+  //   titleDark.value = t("app.theme.light_mode");
+  //   document.documentElement.classList.add("dark");
+  // }
 
   // Event listeners
   eventBus.on("show-toast", toast.add);
@@ -461,7 +500,7 @@ watch(
     activeItem.value = newPath;
   }
 );
-
+watch(isLoggedIn, initializeTheme);
 // RTL direction handling
 watchEffect(() => {
   document.documentElement.setAttribute("dir", isRtl.value ? "rtl" : "ltr");

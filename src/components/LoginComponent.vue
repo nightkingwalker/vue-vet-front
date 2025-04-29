@@ -60,25 +60,22 @@
         <p class="text-sm mb-4">{{ $t("two_factor.description") }}</p>
         <div class="mb-6">
           <div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400">
-            <InputGroup class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 flex rounded-md overflow-hidden">
-              <InputGroupAddon
-                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 px-4 flex flex-col item-center justify-center"><i
-                  class="pi pi-shield"></i></InputGroupAddon>
-              <InputText id="twoFactorCode" v-model="twoFactorCode" :placeholder="$t('two_factor.placeholder')"
-                :feedback="false" fluid autofocus style="
-                  border-top: 1px solid var(--p-inputgroup-addon-border-color);
-                  border-bottom: 1px solid var(--p-inputgroup-addon-border-color);
-                "
-                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 !ring-0 focus:!ring-0 !ring-offset-0 focus:!ring-offset-0 !border-x-0" />
-            </InputGroup>
+            <InputOtp v-model="twoFactorCode" id="twoFactorCode" :length="6" dir="ltr" autofocus :invalid="tfaInvalid"
+              class="mx-auto justify-center" placeholder="000000">
+              <template #default="{ attrs, events }">
+                <input type="text" v-bind="attrs" v-on="events" autofocus :class="{
+                  'invalid': tfaInvalid
+                }" class="custom-otp-input " placeholder="0" />
+              </template>
+            </InputOtp>
             <small id="" :class="{ 'text-green-500': !isError, 'text-red-500': isError } + ` h-4`">{{ message }}</small>
           </div>
         </div>
 
         <div class="flex items-end justify-end">
           <button type="submit"
-            class="p-button p-button-content py-2 px-4 rounded focus:outline-none focus:shadow-outline h-8"
-            :disabled="!captchaToken">
+            class="p-button p-button-content py-2 px-4 rounded focus:outline-none focus:shadow-outline h-8">
+            <!-- :disabled="!captchaToken" -->
             <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
             <span v-else>{{ $t("two_factor.verify") }}</span>
           </button>
@@ -104,6 +101,7 @@ import { useAuthStore } from "@/stores/authStore";
 import axios from "axios";
 import Logo from "@/assets/logo.png";
 import Image from "primevue/image";
+import InputOtp from 'primevue/inputotp';
 
 const { t } = useI18n();
 const email = ref("");
@@ -119,7 +117,7 @@ const temporaryToken = ref("");
 const twoFactorCode = ref("");
 const GOOGLE_RECAPTCHA_SITE_KEY = import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY;
 const captchaToken = ref(null);
-
+const tfaInvalid = ref(false)
 const login = async () => {
   try {
     loading.value = true;
@@ -138,6 +136,7 @@ const login = async () => {
     } = response.data;
 
     if (requires_2fa) {
+      // console.log(response.data)
       requires2FA.value = true;
       temporaryToken.value = temporary_token;
       message.value = t("two_factor.required");
@@ -149,6 +148,9 @@ const login = async () => {
         expires_in,
         refresh_expires_in,
         user.name,
+        user.preference.user_theme,
+        user.preference.user_language,
+        user.preference.shortcuts,
         user.current_branch
       );
       router.push("/").catch((err) => console.error("Router error:", err));
@@ -163,15 +165,23 @@ const login = async () => {
   }
 };
 
-const verify2FA = async () => {
-  loading.value = true;
 
+/* const verify2FA = async () => {
+  console.log("TRYING OTP");
+  if (!tfa_code.value) {
+    console.log("NO OTP")
+    tfaInvalid.value = true;
+    return
+  }
+  loading.value = true;
+  console.log("TRYING OTP");
   try {
     const response = await axios.post(
       import.meta.env.VITE_API_URL + "/2fa/verify",
       { two_factor_code: twoFactorCode.value },
       { headers: { Authorization: `Bearer ${temporaryToken.value}` } }
     );
+    console.log(response);
     const {
       access_token,
       refresh_token,
@@ -208,7 +218,71 @@ const verify2FA = async () => {
     loading.value = false;
   }
 };
+ */
+const verify2FA = async () => {
+  // console.log("RUNNING 2FA")
+  if (!twoFactorCode.value || twoFactorCode.value.length !== 6) {
+    tfaInvalid.value = true;
+    message.value = t("two_factor.invalid_length");
+    return;
+  }
 
+  loading.value = true;
+  tfaInvalid.value = false;
+
+  try {
+    const response = await axios.post(
+      import.meta.env.VITE_API_URL + "/2fa/verify",
+      {
+        two_factor_code: twoFactorCode.value,
+        // recaptcha_token: captchaToken.value // Include if your backend expects it
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${temporaryToken.value}`
+        }
+      }
+    );
+
+    const {
+      access_token,
+      refresh_token,
+      expires_in,
+      refresh_expires_in,
+      user,
+    } = response.data;
+
+    authStore.logIn(
+      access_token,
+      refresh_token,
+      expires_in,
+      refresh_expires_in,
+      user.name,
+      user.preference.user_theme,
+      user.preference.user_language,
+      user.preference.shortcuts,
+      user.current_branch
+    );
+
+    message.value = t("two_factor.success");
+    router.push("/").catch((err) => console.error("Router error:", err));
+
+  } catch (error) {
+    tfaInvalid.value = true;
+
+    if (error.response) {
+      if (error.response.status === 429) {
+        message.value = error.response?.data?.message || t("two_factor.throttled");
+      } else {
+        message.value = error.response?.data?.message || t("two_factor.invalid");
+      }
+    } else {
+      message.value = t("login.error");
+    }
+  } finally {
+    loading.value = false;
+  }
+};
 const togglePassInput = () => {
   isPassword.value = !isPassword.value;
   var element = document.getElementsByClassName("password-shield");
@@ -236,7 +310,31 @@ form.translate-x-full {
 form.translate-x-0 {
   transform: translateX(0);
 }
+
 .grecaptcha-badge {
   visibility: hidden;
+}
+
+.custom-otp-input {
+  width: 40px;
+  font-size: 36px;
+  border: 0 none;
+  appearance: none;
+  text-align: center;
+  transition: all 0.2s;
+  background: transparent;
+  border-bottom: 2px solid var(--p-inputtext-border-color);
+}
+
+.custom-otp-input.invalid,
+label.fa_code {
+  border-bottom-color: red;
+  box-shadow: 2px 3px 5px rgba(255, 0, 0, .3);
+  color: red;
+}
+
+.custom-otp-input:focus {
+  outline: 0 none;
+  border-bottom-color: var(--p-primary-color);
 }
 </style>

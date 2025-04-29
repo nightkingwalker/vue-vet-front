@@ -33,9 +33,14 @@ export const useAuthStore = defineStore("auth", {
     refreshExpiry: Cookies.get("refresh_expiry") || null,
     BranchID: Cookies.get("M3K8g2387BahBaqyjDe6") || null,
     refreshTimeout: null,
+    userTheme: Cookies.get("theme") || 'system',
+    userLanguage: Cookies.get("language") || 'en' // Initialize from cookies
+
   }),
   getters: {
     isLoggedIn: (state) => !!state.token,
+    currentTheme: (state) => state.userTheme,
+    currentLanguage: (state) => state.userLanguage // Simple getter from state
   },
   actions: {
     // Log in user and store tokens
@@ -45,15 +50,33 @@ export const useAuthStore = defineStore("auth", {
       tokenExpiry,
       refreshExpiry,
       userName,
-      M3K8g2387BahBaqyjDe6 //clinic_b_uid
+      userTheme = 'light',  // Default value added here
+      userLanguage = 'en',   // Default language
+      shortcuts = null,      // Default shortcuts
+      M3K8g2387BahBaqyjDe6, //clinic_b_uid
     ) {
       this.token = accessToken;
       this.refreshToken = refreshToken;
       this.tokenExpiry = tokenExpiry;
       this.refreshExpiry = refreshExpiry;
       this.BranchID = M3K8g2387BahBaqyjDe6;
-
+      this.updateTheme(userTheme);
       Cookies.set("name", userName, {
+        // secure: true,
+        sameSite: "Strict",
+        expires: new Date((tokenExpiry * 1000) + 172800), // Convert UNIX timestamp to Date object
+      });
+      Cookies.set("theme", userTheme, {
+        // secure: true,
+        sameSite: "Strict",
+        expires: new Date((tokenExpiry * 1000) + 172800), // Convert UNIX timestamp to Date object
+      });
+      Cookies.set("language", userLanguage, {
+        // secure: true,
+        sameSite: "Strict",
+        expires: new Date((tokenExpiry * 1000) + 172800), // Convert UNIX timestamp to Date object
+      });
+      Cookies.set("shortcuts", shortcuts, {
         // secure: true,
         sameSite: "Strict",
         expires: new Date((tokenExpiry * 1000) + 172800), // Convert UNIX timestamp to Date object
@@ -99,11 +122,39 @@ export const useAuthStore = defineStore("auth", {
       Cookies.remove("token_expiry");
       Cookies.remove("refresh_expiry");
       Cookies.remove("name");
+      Cookies.remove("theme");
+      Cookies.remove("language");
+      Cookies.remove("shortcuts");
       Cookies.remove("M3K8g2387BahBaqyjDe6");
+      localStorage.removeItem('theme');
+      document.documentElement.classList.remove('dark');
 
       router.push("/login");
     },
+    updateLanguage(language) {
+      this.userLanguage = language;
+      Cookies.set("language", language, {
+        sameSite: "Strict",
+        expires: new Date((this.tokenExpiry * 1000) + 172800),
+      });
+    },
+    setUserPreferences(preferences) {
+      if (preferences.user_theme) {
+        this.updateTheme(preferences.user_theme); // Use the action
+      }
+      if (preferences.user_language) {
+        // Handle language updates if needed
+      }
+    },
 
+    updateTheme(theme) {
+      this.userTheme = theme;
+      Cookies.set("theme", theme, {
+        sameSite: "Strict",
+        expires: new Date((this.tokenExpiry * 1000) + 172800),
+      });
+      localStorage.setItem('theme', theme);
+    },
     // Schedule token refresh before expiry
     startTokenRefresh() {
       if (!this.token || !this.tokenExpiry) return;

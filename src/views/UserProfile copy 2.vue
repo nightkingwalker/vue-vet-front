@@ -2,9 +2,9 @@
   <div class="w-full bg-[var(--p-content-background)] p-8 rounded-lg mt-4">
     <!-- User Profile Container -->
     <div
-      class="grid grid-cols-2 gap-y-[10px] gap-x-[10px] lg:w-[70%] md:w-[80%] sm:w-full xl:w-[85%] 2xl:w-[75%] mx-auto">
+      class="grid grid-cols-2 grid-rows-2 gap-y-[10px] gap-x-[10px] lg:w-[70%] md:w-[80%] sm:w-full xl:w-[85%] 2xl:w-[75%] h-fit mx-auto">
       <fieldset
-        class=" h-fit border dark:border-gray-100 border-gray-400 rounded-xl p-6 bg-zinc-100 dark:bg-[var(--p-surface-500)] shadow-sm">
+        class="row-1 row-2 col-1 col-2  border dark:border-gray-100 border-gray-400 rounded-xl p-6 bg-zinc-100 dark:bg-[var(--p-surface-500)] shadow-sm">
         <legend
           class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium">
           <i class="fa-solid fa-address-card mr-2"></i> Profile Information
@@ -52,7 +52,7 @@
       </fieldset>
       <!-- Update Password Section -->
       <fieldset
-        class=" h-fit border dark:border-gray-100 border-gray-400 rounded-xl p-6 bg-zinc-100 dark:bg-[var(--p-surface-500)] shadow-sm">
+        class="row-1 row-2 col-1 col-2  border dark:border-gray-100 border-gray-400 rounded-xl p-6 bg-zinc-100 dark:bg-[var(--p-surface-500)] shadow-sm">
         <legend
           class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium">
           <i class="fa-solid fa-lock mr-2"></i> Update Password
@@ -92,36 +92,38 @@
       </fieldset>
       <!-- User Preferences Section -->
       <fieldset
-        class=" h-fit border dark:border-gray-100 border-gray-400 rounded-xl p-6 bg-zinc-100 dark:bg-[var(--p-surface-500)] shadow-sm">
+        class="row-1 row-2 col-1 col-2  border dark:border-gray-100 border-gray-400 rounded-xl p-6 bg-zinc-100 dark:bg-[var(--p-surface-500)] shadow-sm">
         <legend
           class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium">
           <i class="fa-solid fa-user-cog mr-2"></i> Preferences
         </legend>
-        <div class="flex justify-between items-start gap-4">
+        <div class="space-y-6">
           <!-- Language Selection -->
-          <div class="w-1/2">
+          <div>
             <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Language</h3>
-            <div class="flex gap-4 mt-4">
-              <!-- Language Form -->
-              <form @submit.prevent="handleSubmit('language')" class="mx-auto w-full">
-                <FloatLabel class="w-full">
-                  <Select fluid v-model="language" :options="languages" optionLabel="label" optionValue="value"
-                    class="w-full h-10" />
-                  <label for="dd-city">Language
-                    <span class="text-red-600">*</span></label>
-                </FloatLabel>
-                <button type="submit"
-                  class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200 mt-2">
-                  Update Language
-                </button>
-              </form>
+            <div class="flex gap-4">
+              <div class="flex items-center">
+                <input id="language-english" name="language" type="radio"
+                  class="h-4 w-4 text-gray-600 focus:ring-gray-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+                  checked>
+                <label for="language-english" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+                  English
+                </label>
+              </div>
+              <div class="flex items-center">
+                <input id="language-arabic" name="language" type="radio"
+                  class="h-4 w-4 text-gray-600 focus:ring-gray-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700">
+                <label for="language-arabic" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+                  العربية (Arabic)
+                </label>
+              </div>
             </div>
           </div>
           <!-- Theme Selection -->
-          <div class="w-1/2">
+          <div>
             <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Theme</h3>
-            <div class="flex gap-4 mt-4">
-              <!--               <button @click="setTheme('light')"
+            <div class="flex gap-4">
+              <button @click="setTheme('light')"
                 class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                 :class="{ 'bg-gray-200 dark:bg-gray-700': theme === 'light' }">
                 <i class="fa-regular fa-sun text-yellow-500"></i>
@@ -138,32 +140,14 @@
                 :class="{ 'bg-gray-200 dark:bg-gray-700': theme === 'system' }">
                 <i class="fa-solid fa-desktop text-gray-500"></i>
                 <span class="text-sm">System</span>
-              </button> -->
-              <form @submit.prevent="handleSubmit('theme')" class="mx-auto w-full">
-                <FloatLabel class="w-full">
-                  <Select fluid v-model="theme" :options="themes" optionLabel="label" optionValue="value"
-                    class="w-full h-10" />
-                  <label for="dd-city">Theme
-                    <span class="text-red-600">*</span></label>
-                </FloatLabel>
-                <button type="submit"
-                  class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200 mt-2">
-                  Update Theme
-                </button>
-              </form>
-              <!-- <FloatLabel class="w-full">
-                <Select required :invalid="invalidtfaInvalid" fluid v-model="pet.species" :options="species"
-                  optionLabel="label" optionValue="value" class="w-full h-10" />
-                <label for="dd-city">{{ $t("pet_form.fields.select_species") }}
-                  <span class="text-red-600">*</span></label>
-              </FloatLabel> -->
+              </button>
             </div>
           </div>
         </div>
       </fieldset>
       <!-- Two Factor Authentication Section -->
       <fieldset
-        class=" h-fit border dark:border-gray-100 border-gray-400 rounded-xl p-6 bg-zinc-100 dark:bg-[var(--p-surface-500)] shadow-sm">
+        class="row-1 row-2 col-1 col-2  border dark:border-gray-100 border-gray-400 rounded-xl p-6 bg-zinc-100 dark:bg-[var(--p-surface-500)] shadow-sm">
         <legend
           class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium">
           <i class="fa-solid fa-user-shield mr-2"></i> Two Factor Authentication
@@ -193,21 +177,11 @@
               </div>
               <form @submit.prevent="tfaEnabled" class="space-y-3">
                 <div>
-                  <label :class="{
-                    'fa_code': tfaInvalid
-                  }" class="block text-xs text-gray-700 dark:text-gray-300 mb-1" for="2fa_code">
+                  <label class="block text-xs text-gray-700 dark:text-gray-300 mb-1" for="2fa_code">
                     Enter verification code
                   </label>
-                  <!-- <InputText class="w-full" size="small" type="text" placeholder="6-digit code" :required="checked"
-                    v-model="tfa_code" /> -->
-                  <InputOtp v-model="tfa_code" :length="6" dir="ltr" :invalid="tfaInvalid"
-                    class="mx-auto justify-center" placeholder="000000">
-                    <template #default="{ attrs, events }">
-                      <input type="text" v-bind="attrs" v-on="events" :class="{
-                        'invalid': tfaInvalid
-                      }" class="custom-otp-input " placeholder="0" />
-                    </template>
-                  </InputOtp>
+                  <InputText class="w-full" size="small" type="text" placeholder="6-digit code" :required="checked"
+                    v-model="tfa_code" />
                 </div>
                 <button type="submit"
                   class="w-full bg-gray-800 px-4 py-2 text-white rounded-lg hover:bg-gray-700 shadow-md text-xs font-medium transition-colors duration-200">
@@ -231,18 +205,6 @@ import ToggleSwitch from "primevue/toggleswitch";
 import eventBus from "@/eventBus";
 import InputText from "primevue/inputtext";
 import Message from "primevue/message";
-import InputOtp from 'primevue/inputotp';
-import Select from 'primevue/select';
-import FloatLabel from 'primevue/floatlabel';
-import { useI18n } from "vue-i18n";
-import { useTheme } from '@/composables/useTheme';
-import { useAuthStore } from "@/stores/authStore";
-import { useLanguage } from '@/composables/useLanguage';
-
-
-const authStore = useAuthStore();
-const { applyLanguage } = useLanguage();
-const { t } = useI18n();
 const qr_details = ref([]);
 const loading = ref(true);
 const user = ref({
@@ -263,21 +225,11 @@ const newpassword = ref("");
 const password_confirmation = ref("");
 const current_password = ref("");
 const message = ref("");
-const language = ref("")
-const theme = ref("")
 // Computed value for the QR code
 const qrCodeValue = computed(() => {
   return `otpauth://totp/${appName.value}:${username.value}?secret=${secret.value}&issuer=${appName.value}`;
 });
-const languages = ref([
-  { label: t('languages.ar'), value: "ar" },
-  { label: t('languages.en'), value: "en" },
-]);
-const themes = ref([
-  { label: t('themes.dark'), value: "dark" },
-  { label: t('themes.light'), value: "light" },
-  { label: t('themes.system'), value: "system" }
-]);
+
 // Generate the QR code URL
 const generateQRCode = async () => {
   try {
@@ -286,15 +238,8 @@ const generateQRCode = async () => {
     console.error("Error generating QR code:", error);
   }
 };
-const tfaInvalid = ref(false)
 const tfaEnabled = async () => {
   // // console.log("CHECKED " + checked.value);
-  if (!tfa_code.value) {
-    console.log("NO OTP")
-    tfaInvalid.value = true;
-    return
-  }
-
   loading.value = true;
   const submissionData = {
     two_factor_code: tfa_code.value,
@@ -363,128 +308,7 @@ const updatePassword = async () => {
   } finally {
   }
 };
-const handleSubmitLanguag = async () => {
-  loading.value = true;
-  const submissionData = {
-    language: language.value,
-  };
 
-  try {
-    const response = await axiosInstance.put('/user/preferences', submissionData);
-    fetchUserDetails();
-    eventBus.emit("show-toast", {
-      severity: "success",
-      summary: "Success",
-      detail: "Language preference updated successfully",
-      life: 5000,
-    });
-  } catch (error) {
-    if (error.response) {
-      console.error("Error:", error.response.data);
-      message.value = error.response.data.message || 'Failed to update language preference';
-
-      eventBus.emit("show-toast", {
-        severity: "error",
-        summary: "Error",
-        detail: message.value,
-        life: 5000,
-      });
-    } else if (error.request) {
-      console.error("No response received:", error.request);
-      message.value = "No response from server, please check your network.";
-    } else {
-      console.error("Error Message:", error.message);
-      message.value = "Error sending request: " + error.message;
-    }
-  } finally {
-    loading.value = false;
-  }
-};
-const { isDarkMode, applyTheme } = useTheme();
-const handleSubmit = async (type) => {
-  loading.value = true;
-  // Import the composable functions
-
-  const submissionData = {};
-  let successMessage = '';
-
-  if (type === 'language') {
-    submissionData.user_language = language.value;
-    successMessage = 'Language preference updated successfully';
-    applyLanguage(language.value);
-  } else if (type === 'theme') {
-    submissionData.user_theme = theme.value;
-    successMessage = 'Theme preference updated successfully';
-    authStore.updateTheme(theme.value); // Update store first
-    applyTheme(theme.value); // Then apply the theme
-  }
-
-  try {
-    const response = await axiosInstance.put('/user/preferences', submissionData);
-
-    // Update the auth store with new preferences
-    authStore.setUserPreferences(response.data); // Make sure your authStore has this method
-
-    eventBus.emit("show-toast", {
-      severity: "success",
-      summary: "Success",
-      detail: successMessage,
-      life: 5000,
-    });
-  } catch (error) {
-    let errorMessage = '';
-
-    if (error.response) {
-      console.error("Error:", error.response.data);
-      errorMessage = error.response.data.message || `Failed to update ${type} preference`;
-
-      // Revert theme if update failed
-      if (type === 'theme') {
-        // applyTheme(authStore.currentTheme); // Revert to previous theme
-        const previousTheme = authStore.currentTheme;
-        authStore.updateTheme(previousTheme);
-        applyTheme(previousTheme);
-      }
-      if (type === 'language') {
-        const previousLanguage = authStore.currentLanguage;
-        applyLanguage(previousLanguage);
-        language.value = previousLanguage;
-      }
-
-    } else if (error.request) {
-      console.error("No response received:", error.request);
-      errorMessage = "No response from server, please check your network.";
-    } else {
-      console.error("Error Message:", error.message);
-      errorMessage = "Error sending request: " + error.message;
-    }
-
-    eventBus.emit("show-toast", {
-      severity: "error",
-      summary: "Error",
-      detail: errorMessage,
-      life: 5000,
-    });
-  } finally {
-    loading.value = false;
-  }
-};// Add this new function to apply the theme
-// const applyTheme = (themeValue) => {
-//   const isDark = themeValue === 'dark';
-//   document.documentElement.classList.toggle('dark', isDark);
-
-//   // Update any theme-related state in your app
-//   // For example, if you're using a composable:
-//   const { isDarkMode } = useTheme();
-//   isDarkMode.value = isDark;
-
-//   // Or if you're using a store:
-//   // authStore.setDarkMode(isDark);
-
-//   // You might also want to update local storage/cookies
-//   localStorage.setItem('theme', themeValue);
-//   Cookies.set('theme', themeValue);
-// };
 // Fetch user details and update the QR code
 const fetchUserDetails = async () => {
   loading.value = true;
@@ -497,9 +321,7 @@ const fetchUserDetails = async () => {
     appName.value = "Vet APP";
     username.value = user.value.email;
     secret.value = user.value.two_factor_secret;
-    language.value = user.value.preference.user_language;
-    theme.value = user.value.preference.user_theme;
-    // shortcuts.value = user.value.preference.shortcuts;
+
     // Generate QR code with updated details
     await generateQRCode();
 
@@ -595,28 +417,5 @@ onMounted(() => {
   opacity: 0;
   transform: translateY(-10px);
   /* or scale(0.95) for a scaling effect */
-}
-
-.custom-otp-input {
-  width: 40px;
-  font-size: 36px;
-  border: 0 none;
-  appearance: none;
-  text-align: center;
-  transition: all 0.2s;
-  background: transparent;
-  border-bottom: 2px solid var(--p-inputtext-border-color);
-}
-
-.custom-otp-input.invalid,
-label.fa_code {
-  border-bottom-color: red;
-  box-shadow: 2px 3px 5px rgba(255, 0, 0, .3);
-  color: red;
-}
-
-.custom-otp-input:focus {
-  outline: 0 none;
-  border-bottom-color: var(--p-primary-color);
 }
 </style>

@@ -193,6 +193,7 @@ const movementTypes = ref([
     { label: t('stock_movements.types.adjustment'), value: 'adjustment' },
     { label: t('stock_movements.types.expired'), value: 'expired' }
 ]);
+
 const selectedMovementType = ref(movementTypes.value[0]);
 const fetchStockMovements = async (page = 1) => {
     try {

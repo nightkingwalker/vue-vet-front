@@ -34,7 +34,15 @@
         <p>Please enter the 2FA code from your authenticator app.</p>
         <div>
           <label for="twoFactorCode">2FA Code</label>
-          <InputText id="twoFactorCode" v-model="twoFactorCode" placeholder="Enter your 2FA code" class="w-full mb-4" />
+          <!-- <InputText id="twoFactorCode" v-model="twoFactorCode" placeholder="Enter your 2FA code" class="w-full mb-4" /> -->
+          <InputOtp v-model="twoFactorCode" id="twoFactorCode" :length="6" dir="ltr" :invalid="tfaInvalid"
+            class="mx-auto justify-center" placeholder="000000">
+            <template #default="{ attrs, events }">
+              <input type="text" v-bind="attrs" v-on="events" :class="{
+                'invalid': tfaInvalid
+              }" class="custom-otp-input " placeholder="0" />
+            </template>
+          </InputOtp>
         </div>
         <div>
           <button type="submit"
@@ -61,6 +69,7 @@ import { useRouter } from "vue-router";
 import InputText from "primevue/inputtext";
 import InputGroupAddon from "primevue/inputgroupaddon";
 import InputGroup from "primevue/inputgroup";
+import InputOtp from "primevue/inputotp";
 import { useAuthStore } from "@/stores/authStore";
 import axios from "axios";
 import Logo from "@/assets/logo.png";
@@ -85,7 +94,7 @@ const login = async () => {
       email: email.value,
       password: password.value,
     });
-
+    console.log(response.data)
     // Extract values from the response
     const {
       requires_2fa,
