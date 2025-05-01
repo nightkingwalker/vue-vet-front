@@ -212,13 +212,13 @@
           <div>
             <FloatLabel variant="on" class="lg:!text-xs">
               <DatePicker showIcon iconDisplay="input" showButtonBar size="small" v-model="invoiceDate"
-                dateFormat="yy-mm-dd" class="w-full" />
+                dateFormat="yy-mm-d" class="w-full" />
               <label>{{ $t('add_invoice.summary_section.invoice_date') }}</label>
             </FloatLabel>
           </div>
           <div>
             <FloatLabel variant="on" class="lg:!text-xs">
-              <DatePicker size="small" v-model="dueDate" dateFormat="yy-mm-dd" class="w-full" />
+              <DatePicker size="small" v-model="dueDate" dateFormat="yy-mm-d" class="w-full" />
               <label>{{ $t('add_invoice.summary_section.due_date') }}</label>
             </FloatLabel>
           </div>

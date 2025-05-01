@@ -79,7 +79,7 @@
               id="dob"
               class="w-full"
               v-model="pet.date_of_birth"
-              dateFormat="yy-mm-dd"
+              dateFormat="yy-mm-d"
             />
           </FloatLabel>
         </div>

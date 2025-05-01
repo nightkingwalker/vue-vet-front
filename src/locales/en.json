@@ -371,7 +371,10 @@
             "dosage": "Dosage",
             "delivery": "Delivery",
             "description": "Description",
-            "treatment_date": "Treatment Date"
+            "animal_weight": "Pet Weight",
+            "treatment_date": "Treatment Date",
+            "treatment_has_reminder": "Add Reminder",
+            "treatment_next_date": "Next Treatment Date"
         },
         "submit": "Add Treatment",
         "toast": {

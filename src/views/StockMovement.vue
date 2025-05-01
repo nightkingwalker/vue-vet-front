@@ -31,7 +31,7 @@
                         <Select v-model="selectedMovementType" :options="movementTypes" optionLabel="label"
                             :placeholder="$t('stock_movements.filter_type')" class="!text-xs !h-10 w-40" />
 
-                        <DatePicker v-model="dateRange" selectionMode="range" :manualInput="false" dateFormat="yy-mm-dd"
+                        <DatePicker v-model="dateRange" selectionMode="range" :manualInput="false" dateFormat="yy-mm-d"
                             size="small" :placeholder="$t('stock_movements.date_range')" class="!text-xs !h-10 w-60" />
 
                         <Button icon="pi pi-filter" @click="applyFilters" :label="$t('stock_movements.filter')"

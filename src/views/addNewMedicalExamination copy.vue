@@ -20,7 +20,7 @@
               hourFormat="12"
               id="examination_date"
               v-model="examination.examination_date"
-              dateFormat="yy-mm-dd"
+              dateFormat="yy-mm-d"
             />
           </FloatLabel>
         </div>

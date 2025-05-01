@@ -8,18 +8,45 @@
         <div class="field mt-6 w-[49%]">
           <FloatLabel class="w-full">
             <InputText fluid id="name" v-model="treatment.name" />
-            <label for="name">{{ $t("add_treatment.fields.name") }}</label>
+            <label for="name"
+              >{{ $t("add_treatment.fields.name") }}
+              <span class="text-red-600">*</span></label
+            >
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[49%]">
           <FloatLabel class="w-full">
             <InputText fluid id="dosage" v-model="treatment.dosage" />
-            <label for="dosage">{{ $t("add_treatment.fields.dosage") }}</label>
+            <label for="dosage"
+              >{{ $t("add_treatment.fields.dosage") }}
+              <span class="text-red-600">*</span></label
+            >
+          </FloatLabel>
+        </div>
+        <!-- Animal Weight -->
+        <div class="field mt-6 w-1/ w-[49%]">
+          <FloatLabel class="w-full">
+            <InputNumber
+              v-model="treatment.animal_weight"
+              :step="0.25"
+              inputId="animal_weight"
+              showButtons
+              mode="decimal"
+              suffix=" kg"
+              :min="0"
+              :max="500"
+              fluid
+              :minFractionDigits="2"
+            />
+            <label for="animal_weight"
+              >{{ $t("add_treatment.fields.animal_weight") }}
+              <span class="text-red-600">*</span></label
+            >
           </FloatLabel>
         </div>
         <div class="field mt-6 w-[49%]">
-          <FloatLabel class="w-[95%]">
+          <FloatLabel class="w-full">
             <Select
               fluid
               v-model="treatment.administration"
@@ -31,9 +58,6 @@
                 <div v-if="slotProps.value" class="flex items-center">
                   <div>{{ slotProps.value.value }}</div>
                 </div>
-                <!-- <span v-else>
-                  {{ $t("add_treatment.fields.delivery") }}
-                </span> -->
               </template>
               <template #option="slotProps">
                 <div class="flex items-center">
@@ -41,14 +65,19 @@
                 </div>
               </template>
             </Select>
-
-            <label for="dd-city">{{ $t("add_treatment.fields.delivery") }}</label>
+            <label for="dd-city"
+              >{{ $t("add_treatment.fields.delivery") }}
+              <span class="text-red-600">*</span></label
+            >
           </FloatLabel>
         </div>
         <div class="field mt-6 w-[49%]">
           <FloatLabel class="w-full">
             <InputText fluid id="description" v-model="treatment.description" />
-            <label for="description">{{ $t("add_treatment.fields.description") }}</label>
+            <label for="description"
+              >{{ $t("add_treatment.fields.description") }}
+              <span class="text-red-600">*</span></label
+            >
           </FloatLabel>
         </div>
 
@@ -58,18 +87,52 @@
               showIcon
               iconDisplay="input"
               showButtonBar
-              showTime
               hourFormat="12"
               fluid
               id="treatment_date"
               class="w-full"
               v-model="treatment.treatment_date"
-              dateFormat="yy-mm-dd"
+              dateFormat="yy-mm-d"
+              mask="2025-04-04"
             />
-            <label for="treatment_date">{{
-              $t("add_treatment.fields.treatment_date")
+            <label for="treatment_date"
+              >{{ $t("add_treatment.fields.treatment_date") }}
+              <span class="text-red-600">*</span></label
+            >
+          </FloatLabel>
+        </div>
+
+        <!-- New fields -->
+        <div class="field mt-6 w-[49%]">
+          <FloatLabel class="w-full">
+            <DatePicker
+              showIcon
+              iconDisplay="input"
+              showButtonBar
+              hourFormat="12"
+              fluid
+              id="treatment_next_date"
+              class="w-full"
+              v-model="treatment.treatment_next_date"
+              dateFormat="yy-mm-d"
+              mask="2025-04-04"
+            />
+            <label for="treatment_next_date">{{
+              $t("add_treatment.fields.treatment_next_date")
             }}</label>
           </FloatLabel>
+        </div>
+
+        <div class="field mt-6 w-[49%] flex items-center">
+          <CheckBox
+            v-model="treatment.treatment_has_reminder"
+            :binary="true"
+            inputId="treatment_has_reminder"
+            class="rtl:ml-2 ltr:mr-2"
+          />
+          <label for="treatment_has_reminder" class="ml-2">
+            {{ $t("add_treatment.fields.treatment_has_reminder") }}
+          </label>
         </div>
       </fieldset>
       <div class="flex justify-end">
@@ -83,8 +146,11 @@
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import InputText from "primevue/inputtext";
+// import InputMask from "primevue/inputmask";
+import CheckBox from "primevue/checkbox";
 import DatePicker from "primevue/datepicker";
 import Select from "primevue/select";
+import InputNumber from "primevue/inputnumber";
 import FloatLabel from "primevue/floatlabel";
 import Button from "primevue/button";
 import axiosInstance from "@/axios";
@@ -105,8 +171,11 @@ const treatment = ref({
   name: "",
   dosage: "",
   description: "",
+  animal_weight: 0,
   administration: "",
-  treatment_date: "",
+  treatment_date: new Date(),
+  treatment_next_date: null,
+  treatment_has_reminder: false,
 });
 
 const medicineAdministrationMethods = ref([
@@ -156,12 +225,17 @@ const submitForm = async () => {
     name: treatment.value.name,
     dosage: treatment.value.dosage,
     administration: treatment.value.administration.value,
+    pet_weight: treatment.value.animal_weight,
     description: treatment.value.description,
     treatment_date: treatment.value.treatment_date
       ? treatment.value.treatment_date.toLocaleDateString("en-CA")
       : null,
+    treatment_next_date: treatment.value.treatment_next_date
+      ? treatment.value.treatment_next_date.toLocaleDateString("en-CA")
+      : null,
+    treatment_has_reminder: treatment_has_reminder ? 1 : 0,
   };
-
+  console.log(submissionData);
   try {
     const response = await axiosInstance.post("/treatments", submissionData);
     eventBus.emit("show-toast", {

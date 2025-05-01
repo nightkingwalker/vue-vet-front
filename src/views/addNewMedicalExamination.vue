@@ -49,7 +49,7 @@
                     v-model="examination.examination_date"
                     showTime
                     hourFormat="12"
-                    dateFormat="yy-mm-dd"
+                    dateFormat="yy-mm-d"
                   />
                   <label for="examination_date">{{
                     $t("medical_examination_form.fields.examination_date")

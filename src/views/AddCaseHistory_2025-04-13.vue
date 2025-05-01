@@ -64,7 +64,7 @@
                       showIcon
                       iconDisplay="input"
                       showButtonBar
-                      dateFormat="yy-mm-dd"
+                      dateFormat="yy-mm-d"
                       id="start_date"
                       v-model="formData.start_date"
                       hourFormat="24"
@@ -289,7 +289,7 @@
                   showIcon
                   iconDisplay="input"
                   showButtonBar
-                  dateFormat="yy-mm-dd"
+                  dateFormat="yy-mm-d"
                   id="last_reproductive_cycle_date"
                   v-model="formData.last_reproductive_cycle_date"
                 />
@@ -836,7 +836,7 @@
                   showIcon
                   iconDisplay="input"
                   showButtonBar
-                  dateFormat="yy-mm-dd"
+                  dateFormat="yy-mm-d"
                   id="cough_start_date"
                   v-model="formData.cough_start_date"
                 />
@@ -1077,7 +1077,7 @@
                       showIcon
                       iconDisplay="input"
                       showButtonBar
-                      dateFormat="yy-mm-dd"
+                      dateFormat="yy-mm-d"
                       id="vaccine_date"
                       v-model="formData.vaccine_date"
                     />
@@ -1092,7 +1092,7 @@
                       showIcon
                       iconDisplay="input"
                       showButtonBar
-                      dateFormat="yy-mm-dd"
+                      dateFormat="yy-mm-d"
                       id="next_due_date"
                       v-model="formData.next_due_date"
                     />
@@ -1165,7 +1165,7 @@
                       fluid
                       iconDisplay="input"
                       showButtonBar
-                      dateFormat="yy-mm-dd"
+                      dateFormat="yy-mm-d"
                       id="administration_date"
                       v-model="formData.administration_date"
                     />
@@ -1181,7 +1181,7 @@
                       fluid
                       iconDisplay="input"
                       showButtonBar
-                      dateFormat="yy-mm-dd"
+                      dateFormat="yy-mm-d"
                       id="next_due_date"
                       v-model="formData.treatment_next_due_date"
                     />
@@ -1255,7 +1255,7 @@
                       showIcon
                       iconDisplay="input"
                       showButtonBar
-                      dateFormat="yy-mm-dd"
+                      dateFormat="yy-mm-d"
                       id="start_date"
                       v-model="formData.medication_start_date"
                     />
@@ -1270,7 +1270,7 @@
                       showIcon
                       iconDisplay="input"
                       showButtonBar
-                      dateFormat="yy-mm-dd"
+                      dateFormat="yy-mm-d"
                       id="end_date"
                       v-model="formData.medication_end_date"
                     />

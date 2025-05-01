@@ -72,7 +72,7 @@
               hourFormat="24"
               fluid
               v-model="appointment.start"
-              dateFormat="yy-mm-dd"
+              dateFormat="yy-mm-d"
               class="w-full"
             />
             <label for="start">{{ $t("appointment.fields.start") }}</label>
@@ -90,7 +90,7 @@
               hourFormat="24"
               id="end"
               v-model="appointment.end"
-              dateFormat="yy-mm-dd"
+              dateFormat="yy-mm-d"
               class="w-full"
             />
           </FloatLabel>

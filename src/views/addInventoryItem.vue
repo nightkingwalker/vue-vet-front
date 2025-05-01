@@ -200,7 +200,7 @@
         <div class="field mt-6 w-1/3">
           <FloatLabel class="w-[95%] !text-xs">
             <DatePicker showIcon iconDisplay="input" showButtonBar id="expiryDate" v-model="form.expiryDate"
-              dateFormat="yy-mm-dd" :minDate="new Date()" class="!text-xs" />
+              dateFormat="yy-mm-d" :minDate="new Date()" class="!text-xs" />
             <label for="expiryDate">{{ $t('inventory.add_item.expiry_date') }}</label>
           </FloatLabel>
         </div>

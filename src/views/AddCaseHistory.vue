@@ -67,7 +67,7 @@
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <DatePicker showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-dd" id="start_date"
+                    <DatePicker showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-d" id="start_date"
                       v-model="formData.start_date" hourFormat="24" fluid :invalid="invalid.symptoms.start_date" />
                     <label for="start_date">{{ $t("case_history.fields.start_date") }}
                       <span class="text-red-600">*</span></label>
@@ -224,7 +224,7 @@
             </div>
             <div class="field mt-6 w-[48%]">
               <FloatLabel>
-                <DatePicker showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-dd"
+                <DatePicker showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-d"
                   id="last_reproductive_cycle_date" v-model="formData.last_reproductive_cycle_date" />
                 <label for="last_reproductive_cycle_date">{{
                   $t("case_history.fields.last_reproductive_cycle_date")
@@ -607,7 +607,7 @@
 
             <div class="field mt-6 w-[48%]">
               <FloatLabel>
-                <DatePicker showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-dd" id="cough_start_date"
+                <DatePicker showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-d" id="cough_start_date"
                   v-model="formData.cough_start_date" />
                 <label for="cough_start_date">{{
                   $t("case_history.fields.cough_start_date")
@@ -979,7 +979,7 @@
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <DatePicker showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-dd" id="vaccine_date"
+                    <DatePicker showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-d" id="vaccine_date"
                       :invalid="invalid.vaccine.vaccine_date" v-model="formData.vaccine_date" />
                     <label for="vaccine_date">{{
                       $t("case_history.fields.vaccine_date")
@@ -988,7 +988,7 @@
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <DatePicker showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-dd" id="next_due_date"
+                    <DatePicker showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-d" id="next_due_date"
                       v-model="formData.next_due_date" />
                     <label for="next_due_date">{{
                       $t("case_history.fields.next_due_date")
@@ -1036,7 +1036,7 @@
                 </div>
                 <div class="field mt-6 w-1/2">
                   <FloatLabel class="w-[90%]">
-                    <DatePicker showIcon fluid iconDisplay="input" showButtonBar dateFormat="yy-mm-dd"
+                    <DatePicker showIcon fluid iconDisplay="input" showButtonBar dateFormat="yy-mm-d"
                       id="administration_date" v-model="formData.administration_date" />
                     <label for="administration_date">{{
                       $t("case_history.fields.administration_date")
@@ -1045,7 +1045,7 @@
                 </div>
                 <div class="field mt-6 w-1/2">
                   <FloatLabel class="w-[90%]">
-                    <DatePicker showIcon fluid iconDisplay="input" showButtonBar dateFormat="yy-mm-dd"
+                    <DatePicker showIcon fluid iconDisplay="input" showButtonBar dateFormat="yy-mm-d"
                       id="next_due_date" v-model="formData.treatment_next_due_date" />
                     <label for="next_due_date">{{
                       $t("case_history.fields.next_due_date")
@@ -1099,7 +1099,7 @@
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <DatePicker showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-dd" id="start_date"
+                    <DatePicker showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-d" id="start_date"
                       v-model="formData.medication_start_date" />
                     <label for="start_date">{{
                       $t("case_history.fields.medication_start_date")
@@ -1108,7 +1108,7 @@
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <DatePicker showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-dd" id="end_date"
+                    <DatePicker showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-d" id="end_date"
                       v-model="formData.medication_end_date" />
                     <label for="end_date">{{
                       $t("case_history.fields.medication_end_date")

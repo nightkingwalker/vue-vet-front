@@ -88,7 +88,7 @@
               id="dob"
               class="w-full"
               v-model="pet.date_of_birth"
-              dateFormat="yy-mm-dd"
+              dateFormat="yy-mm-d"
             />
             <label for="dob"
               >{{ $t("pet_form.fields.date_of_birth") }}

@@ -30,7 +30,7 @@
         <div class="field mt-6 w-full">
           <FloatLabel class="w-full">
             <DatePicker showIcon iconDisplay="input" showButtonBar id="paymentDate" fluid v-model="payment.payment_date"
-              dateFormat="yy-mm-dd" :disabled="loading" />
+              dateFormat="yy-mm-d" :disabled="loading" />
             <label for="paymentDate">{{ $t('paymentForm.paymentDate') }}</label>
           </FloatLabel>
         </div>

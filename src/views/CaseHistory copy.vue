@@ -1084,7 +1084,7 @@
                         iconDisplay="input"
                         showButtonBar
                         :disabled="!isEditable"
-                        dateFormat="yy-mm-dd"
+                        dateFormat="yy-mm-d"
                         id="vaccine_date"
                         v-model="formData.vaccine_date"
                       />
@@ -1098,7 +1098,7 @@
                         iconDisplay="input"
                         showButtonBar
                         :disabled="!isEditable"
-                        dateFormat="yy-mm-dd"
+                        dateFormat="yy-mm-d"
                         id="next_due_date"
                         v-model="formData.next_due_date"
                       />
@@ -1163,7 +1163,7 @@
                         iconDisplay="input"
                         showButtonBar
                         :disabled="!isEditable"
-                        dateFormat="yy-mm-dd"
+                        dateFormat="yy-mm-d"
                         id="administration_date"
                         v-model="formData.administration_date"
                       />
@@ -1177,7 +1177,7 @@
                         iconDisplay="input"
                         showButtonBar
                         :disabled="!isEditable"
-                        dateFormat="yy-mm-dd"
+                        dateFormat="yy-mm-d"
                         id="next_due_date"
                         v-model="formData.treatment_next_due_date"
                       />
@@ -1256,7 +1256,7 @@
                         iconDisplay="input"
                         showButtonBar
                         :disabled="!isEditable"
-                        dateFormat="yy-mm-dd"
+                        dateFormat="yy-mm-d"
                         id="medication_start_date"
                         v-model="formData.medication_start_date"
                       />
@@ -1270,7 +1270,7 @@
                         iconDisplay="input"
                         showButtonBar
                         :disabled="!isEditable"
-                        dateFormat="yy-mm-dd"
+                        dateFormat="yy-mm-d"
                         id="end_date"
                         v-model="formData.medication_end_date"
                       />

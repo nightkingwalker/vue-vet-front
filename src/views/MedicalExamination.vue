@@ -97,7 +97,7 @@
                     <div class="field mt-3 w-2/3">
                       <FloatLabel>
                         <DatePicker showIcon iconDisplay="input" showButtonBar fluid id="examination_date"
-                          v-model="exam.examination_date" showTime hourFormat="12" dateFormat="yy-mm-dd"
+                          v-model="exam.examination_date" showTime hourFormat="12" dateFormat="yy-mm-d"
                           :disabled="!isEditable" />
                         <label for="examination_date">{{
                           $t("medical_examination_form.fields.examination_date")

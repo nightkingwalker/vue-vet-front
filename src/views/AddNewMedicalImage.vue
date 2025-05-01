@@ -59,7 +59,7 @@
               fluid
               id="image_date"
               v-model="medicalImage.image_date"
-              dateFormat="yy-mm-dd"
+              dateFormat="yy-mm-d"
               class="w-full"
             />
             <label for="image_date">{{

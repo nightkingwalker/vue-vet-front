@@ -364,7 +364,10 @@
             "dosage": "الجرعة",
             "delivery": "طريقة الإعطاء",
             "description": "الوصف",
-            "treatment_date": "تاريخ العلاج"
+            "treatment_date": "تاريخ العلاج",
+            "animal_weight": "وزن المريض",
+            "treatment_has_reminder": "إضافة تذكير",
+            "treatment_next_date": "موعد العلاج القادم"
         },
         "submit": "إضافة علاج",
         "toast": {

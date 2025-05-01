@@ -64,7 +64,7 @@
               id="treatment_date"
               class="w-full"
               v-model="treatment.treatment_date"
-              dateFormat="yy-mm-dd"
+              dateFormat="yy-mm-d"
             />
           </FloatLabel>
         </div>

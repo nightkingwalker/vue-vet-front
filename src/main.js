@@ -97,36 +97,36 @@ const MyPreset = definePreset(Aura, {
 
 // app.use(PrimeVue);
 document.addEventListener("DOMContentLoaded", async () => {
-app.use(PrimeVue, {
-    theme: {
-        preset: MyPreset,
-        options: {
-            prefix: 'p',
-            darkModeSelector: '.dark',
-            name: 'primevue',
-            order: 'tailwind-base, primevue, tailwind-utilities'
-        }
-    },
-    // ripple: true
-});
-app.directive('focustrap', FocusTrap);
-// app.use(VueReCaptcha, {
-//     siteKey: import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY,
-//     loaderOptions: {
-//         useRecaptchaNet: true,
-//         autoHideBadge: false
-//     }
-// })
-app.use(createPinia())
-app.use(router);
-// app.directive("ripple", Ripple);
-app.directive('ripple', Ripple);
-app.directive("tooltip", Tooltip);
-app.directive('animateonscroll', AnimateOnScroll);
-app.use(ConfirmationService);
-app.use(ToastService); // Use ToastService in your app
-app.use(i18n);
-app.component('ConfirmDialog', ConfirmDialog);
-app.component('Toast', Toast); // Register the Toast component globally
-app.mount('#app');
+    app.use(PrimeVue, {
+        theme: {
+            preset: MyPreset,
+            options: {
+                prefix: 'p',
+                darkModeSelector: '.dark',
+                name: 'primevue',
+                order: 'tailwind-base, primevue, tailwind-utilities'
+            }
+        },
+        // ripple: true
+    });
+    app.directive('focustrap', FocusTrap);
+    // app.use(VueReCaptcha, {
+    //     siteKey: import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY,
+    //     loaderOptions: {
+    //         useRecaptchaNet: true,
+    //         autoHideBadge: false
+    //     }
+    // })
+    app.use(createPinia())
+    app.use(router);
+    // app.directive("ripple", Ripple);
+    app.directive('ripple', Ripple);
+    app.directive("tooltip", Tooltip);
+    app.directive('animateonscroll', AnimateOnScroll);
+    app.use(ConfirmationService);
+    app.use(ToastService); // Use ToastService in your app
+    app.use(i18n);
+    app.component('ConfirmDialog', ConfirmDialog);
+    app.component('Toast', Toast); // Register the Toast component globally
+    app.mount('#app');
 });
