@@ -65,6 +65,7 @@
                     inputId="animal_weight"
                     showButtons
                     mode="decimal"
+                    suffix=" kg"
                     :min="0"
                     :max="500"
                     :minFractionDigits="2"
@@ -672,8 +673,8 @@ const emit = defineEmits(["submitted"]); // Define the event to be emitted
 const examination = ref(
   {
     medical_record_id: props.medical_record_id,
-    examination_date: "",
-    animal_weight: null,
+    examination_date: new Date(),
+    animal_weight: 0,
     animal_behavior: "",
     eyes: "",
     eye_sunkenness: "",
