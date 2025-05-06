@@ -11,7 +11,7 @@
       <!-- Logo Slot -->
       <div class="flex justify-center w-full">
         <Image
-          :src="logo"
+          :src="Logo"
           alt="Application Logo"
           class="flex justify-center rounded-[4rem] dark:bg-white w-[5rem] p-1"
         />
@@ -87,7 +87,7 @@ import Menu from "primevue/menu";
 import Avatar from "primevue/avatar";
 import Image from "primevue/image";
 import Badge from "primevue/badge";
-
+import Logo from "@/assets/logo.png";
 interface MenuItem {
   label: string;
   icon: string;
@@ -111,7 +111,7 @@ const props = defineProps({
   },
   logo: {
     type: String,
-    default: "/src/assets/logo.png",
+    default: "/assets/logo-DOqaXMyT.png",
   },
 });
 const emit = defineEmits(["item-click"]);
@@ -227,11 +227,11 @@ const menuItems = computed(() => {
       icon: "pi pi-cog !text-md",
       route: "/settings",
     },
-    {
-      label: t("app.menu.shortcuts"),
-      icon: "fa-solid fa-keyboard !text-md",
-      route: "/shortcuts",
-    },
+    // {
+    //   label: t("app.menu.shortcuts"),
+    //   icon: "fa-solid fa-keyboard !text-md",
+    //   route: "/shortcuts",
+    // },
     {
       label: t("app.menu.logout"),
       icon: "pi pi-sign-out !text-md",

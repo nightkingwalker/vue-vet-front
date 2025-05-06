@@ -158,7 +158,7 @@ import InputGroupAddon from "primevue/inputgroupaddon";
 import InputGroup from "primevue/inputgroup";
 import { useAuthStore } from "@/stores/authStore";
 import axios from "axios";
-import Logo from "@/assets/logo.png";
+import Logo from "@/assets/logo-DOqaXMyT.png";
 import Image from "primevue/image";
 import InputOtp from "primevue/inputotp";
 

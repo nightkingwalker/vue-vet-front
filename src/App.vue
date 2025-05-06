@@ -12,7 +12,7 @@
     <div class="flex items-between">
       <!-- Sidebar Component -->
       <AppSidebar
-        v-if="showSidebar"
+        v-if="authStore.isLoggedIn"
         :is-mobile="isMobile"
         :mobile-menu-visible="mobileMenuVisible"
         @item-click="mobileMenuVisible = false"

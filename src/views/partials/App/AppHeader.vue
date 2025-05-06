@@ -10,7 +10,7 @@
       <i :class="mobileMenuIcon" class="text-white"></i>
     </button>
 
-    <!-- Logo (Optional) -->
+    <!-- Logo (Optional)
     <slot name="logo">
       <div v-if="showLogo" class="flex items-center">
         <Image
@@ -19,7 +19,7 @@
           class="rounded-[4rem] dark:bg-white w-10 p-1"
         />
       </div>
-    </slot>
+    </slot> -->
 
     <!-- Dark Mode Toggle -->
     <button
@@ -52,7 +52,7 @@ const props = withDefaults(defineProps<Props>(), {
   showMobileMenuButton: true,
   mobileMenuVisible: false,
   showLogo: true,
-  logo: "/src/assets/logo.png",
+  logo: "/assets/logo-DOqaXMyT.png",
 });
 
 const emit = defineEmits(["toggle-mobile-menu"]);

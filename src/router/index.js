@@ -133,6 +133,13 @@ const router = createRouter({
             import('../views/Settings.vue'),
         meta: { allowSessionTimeout: true }
     },
+        // {
+        //     path: '/shortcuts',
+        //     name: 'Shortcuts',
+        //     component: () =>
+        //         import('../views/Shortcuts.vue'),
+        //     meta: { allowSessionTimeout: true }
+        // },
     {
         path: '/reports',
         component: Reports, // Your current component
