@@ -218,9 +218,9 @@ const menuItems = computed(() => {
       route: "/invoices",
     },
     {
-      label: t("app.menu.reports.stockmovement"),
+      label: t("app.menu.reports.reports"),
       icon: "fa-solid fa-arrow-trend-up !text-md",
-      route: "/reports",
+      route: "/reports/stock-movement",
     },
     {
       label: t("app.menu.settings"),

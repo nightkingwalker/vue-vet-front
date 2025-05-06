@@ -1362,5 +1362,52 @@
         "dark": "Dark Mode",
         "light": "Light Mode",
         "system": "System Colors"
+    },
+    "appointments": {
+        "title": "Appointments",
+        "no_appointments": "No appointments found",
+        "loading": "Loading appointments...",
+        "header": {
+            "search_placeholder": "Search appointments..."
+        },
+        "filter": {
+            "status": "Filter by status",
+            "type": "Filter by type",
+            "date_range": "Date range",
+            "apply": "Filter",
+            "clear": "Clear"
+        },
+        "refresh": "Refresh",
+        "headers": {
+            "date": "Date & Time",
+            "pet": "Pet",
+            "owner": "Owner",
+            "title": "Title",
+            "type": "Type",
+            "status": "Status",
+            "description": "Description",
+            "actions": "Actions"
+        },
+        "statuses": {
+            "all": "All Statuses",
+            "scheduled": "Scheduled",
+            "walkin": "Walk-in",
+            "completed": "Completed",
+            "cancelled": "Cancelled"
+        },
+        "types": {
+            "all": "All Types",
+            "regular": "Regular",
+            "emergency": "Emergency",
+            "followup": "Follow-up",
+            "grooming": "Grooming",
+            "non_emergency": "Non-Emergency"
+        },
+        "view_record": "View Medical Record"
+    },
+    "medical_records": {
+        "dialog": {
+            "view_title": "Medical Record Details"
+        }
     }
 }

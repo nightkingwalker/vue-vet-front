@@ -4,6 +4,7 @@ import HomeView from '../views/CalendarView.vue';
 import LoginView from '../components/LoginComponent.vue';
 import OwnerPets from '../views/OwnerPets.List.vue';
 import OwnersList from '../views/OwnersList.vue';
+import Reports from '@/views/Reports.vue'
 import { useAuthStore } from '@/stores/authStore';
 
 const router = createRouter({
@@ -133,11 +134,22 @@ const router = createRouter({
         meta: { allowSessionTimeout: true }
     },
     {
-        path: '/stockmovement',
-        name: 'StockMovement',
-        component: () =>
-            import('../views/Reports.vue'),
-        meta: { allowSessionTimeout: true }
+        path: '/reports',
+        component: Reports, // Your current component
+        children: [
+            {
+                path: 'stock-movement', component: () => import('@/views/partials/Reports/StockMovement.vue'),
+                meta: { allowSessionTimeout: true }
+            },
+            {
+                path: 'patients', component: () => import('@/views/partials/Reports/Patients.vue'),
+                meta: { allowSessionTimeout: true }
+            },
+            // {
+            //     path: 'sales', component: () => import('@/views/partials/Reports/Sales.vue'),
+            //     meta: { allowSessionTimeout: true }
+            // },
+        ]
     },
     {
         path: '/logout',
@@ -150,7 +162,7 @@ router.beforeEach((to, from, next) => {
     const authStore = useAuthStore();
     if (to.meta.requiresAuth && !authStore.isLoggedIn) {
         next({ name: 'Login' });
-    } else if(to.fullPath === "/logout"){
+    } else if (to.fullPath === "/logout") {
         authStore.logOut();
     }
     else {

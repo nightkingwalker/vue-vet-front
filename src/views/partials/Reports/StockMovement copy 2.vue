@@ -1,8 +1,11 @@
 <template>
   <div class="w-full">
+    <h4 class="mt-2 mb-4 mx-auto flex items-center justify-center">
+      <i class="pi pi-barcode"></i> {{ $t("reports.menu.stockmovement") }}
+    </h4>
     <DataTable
       :value="loading ? skeletonRows : stockMovements"
-      class="mx-4 rounded-lg overflow-hidden text-xs"
+      class="rounded-lg overflow-hidden text-xs"
       stripedRows
       showGridlines
       scrollable

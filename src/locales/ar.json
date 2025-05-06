@@ -1359,8 +1359,55 @@
     "reports": {
         "menu": {
             "stockmovement": "حركة المستودع",
-            "patients_reports": "تقارير المرضى",
+            "patients_reports": "تقارير زيارات المرضى",
             "sales_reports": "تقارير المبيعات"
+        }
+    },
+    "appointments": {
+        "title": "المواعيد",
+        "no_appointments": "لا توجد مواعيد",
+        "loading": "جاري تحميل المواعيد...",
+        "header": {
+            "search_placeholder": "ابحث في المواعيد..."
+        },
+        "filter": {
+            "status": "تصفية حسب الحالة",
+            "type": "تصفية حسب النوع",
+            "date_range": "نطاق التاريخ",
+            "apply": "تصفية",
+            "clear": "مسح"
+        },
+        "refresh": "تحديث",
+        "headers": {
+            "date": "التاريخ والوقت",
+            "pet": "الحيوان",
+            "owner": "المالك",
+            "title": "العنوان",
+            "type": "النوع",
+            "status": "الحالة",
+            "description": "الوصف",
+            "actions": "إجراءات"
+        },
+        "statuses": {
+            "all": "جميع الحالات",
+            "scheduled": "مجدول",
+            "walkin": "حضور مباشر",
+            "completed": "مكتمل",
+            "cancelled": "ملغى"
+        },
+        "types": {
+            "all": "جميع الأنواع",
+            "regular": "عادي",
+            "emergency": "طارئ",
+            "followup": "متابعة",
+            "grooming": "تجميل",
+            "non_emergency": "غير طارئ"
+        },
+        "view_record": "عرض السجل الطبي"
+    },
+    "medical_records": {
+        "dialog": {
+            "view_title": "تفاصيل السجل الطبي"
         }
     }
 }
