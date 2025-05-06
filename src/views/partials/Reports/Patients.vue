@@ -9,7 +9,7 @@
       stripedRows
       showGridlines
       scrollable
-      scrollHeight="95vh"
+      scrollHeight="92vh"
       :paginator="true"
       :rows="10"
       :rowsPerPageOptions="[10, 25, 50]"
@@ -74,7 +74,10 @@
               :placeholder="$t('appointments.filter.date_range')"
               class="!text-xs !h-10 w-60"
             />
-
+            <ToggleSwitch v-model="reminders" id="is_scheduled"></ToggleSwitch>
+            <label for="is_scheduled">{{
+              $t("appointments.filter.show_reminders")
+            }}</label>
             <Button
               icon="pi pi-filter"
               @click="applyFilters"
@@ -130,7 +133,11 @@
         </template>
         <template v-else #body="slotProps">
           {{ slotProps.data.pet.name }}
-          <Tag :value="slotProps.data.pet.species" severity="info" class="ml-2" />
+          <Tag
+            :value="$t(`pet_details.species.${slotProps.data.pet.species}`)"
+            severity="info"
+            class="ltr:ml-2 rtl:mr-2"
+          />
         </template>
       </Column>
 
@@ -291,6 +298,7 @@ import Button from "primevue/button";
 import Tag from "primevue/tag";
 import DatePicker from "primevue/datepicker";
 import InputText from "primevue/inputtext";
+import ToggleSwitch from "primevue/toggleswitch";
 import InputGroupAddon from "primevue/inputgroupaddon";
 import InputGroup from "primevue/inputgroup";
 import Dialog from "primevue/dialog";
@@ -309,6 +317,7 @@ const dateRange = ref(null);
 const searchQuery = ref("");
 const sortField = ref("start");
 const sortOrder = ref(-1);
+const reminders = ref(null);
 
 const skeletonRows = Array.from({ length: 10 }).map(() => ({
   id: "",
@@ -361,6 +370,9 @@ const fetchAppointments = async (page = 1) => {
     // Add status filter if selected
     if (selectedStatus.value.value) {
       url += `&status=${selectedStatus.value.value}`;
+    }
+    if (reminders.value) {
+      url += `&show_reminders=1`;
     }
 
     // Add type filter if selected

@@ -1,5 +1,5 @@
 <template>
-  <header class="flex items-center justify-between fixed top-0 w-full z-50 px-4 py-2">
+  <header class="flex items-center justify-end fixed top-0 w-full z-50 px-4 py-2">
     <!-- Mobile Menu Button (Conditional) -->
     <button
       v-if="isMobile && showMobileMenuButton"

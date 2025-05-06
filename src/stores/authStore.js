@@ -131,22 +131,31 @@ export const useAuthStore = defineStore("auth", {
 
       router.push("/login");
     },
-    updateLanguage(language) {
-      this.userLanguage = language;
-      Cookies.set("language", language, {
-        sameSite: "Strict",
-        expires: new Date((this.tokenExpiry * 1000) + 172800),
-      });
-    },
+    // updateLanguage(language) {
+    //   this.userLanguage = language;
+    //   Cookies.set("language", language, {
+    //     sameSite: "Strict",
+    //     expires: new Date((this.tokenExpiry * 1000) + 172800),
+    //   });
+    // },
     setUserPreferences(preferences) {
       if (preferences.user_theme) {
         this.updateTheme(preferences.user_theme); // Use the action
       }
       if (preferences.user_language) {
         // Handle language updates if needed
+        this.updateLanguage(preferences.user_language); 
       }
     },
 
+    updateLanguage(language) {
+      console.log(language);
+      this.userLanguage = language;
+      Cookies.set("language", language, {
+        sameSite: "Strict",
+        expires: new Date((this.tokenExpiry * 1000) + 172800),
+      });
+    },
     updateTheme(theme) {
       this.userTheme = theme;
       Cookies.set("theme", theme, {

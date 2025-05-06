@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useAuthStore } from "@/stores/authStore";
@@ -56,21 +56,40 @@ import AppSidebar from "@/views/partials/App/AppSidebar.vue";
 import SessionTimeout from "@/views/partials/App/SessionTimeout.vue";
 import ConfirmDialog from "primevue/confirmdialog";
 import Toast from "primevue/toast";
+import Cookies from "js-cookie";
+import { useTheme } from "@/composables/useTheme";
+import { useLanguage } from "@/composables/useLanguage";
 
 const route = useRoute();
 const { t, locale } = useI18n();
 const authStore = useAuthStore();
 const { isMobile } = useDevice();
+const { initializeLanguage } = useLanguage();
+const { isDarkMode, initializeTheme, toggleTheme } = useTheme();
 
 const mobileMenuVisible = ref(false);
 
 // Computed properties
 const showSidebar = computed(() => authStore.isLoggedIn && route.path !== "/login");
-const isRtl = computed(() => ["ar", "he", "fa"].includes(locale.value));
+const isRtl = computed(() => {
+  // 1. First try to get language from cookie
+  const cookieLanguage = Cookies.get("language");
 
+  // 2. If cookie exists, use it for RTL check
+  if (cookieLanguage) {
+    return ["ar", "he", "fa"].includes(cookieLanguage);
+  }
+
+  // 3. Fall back to current locale if no cookie
+  return ["ar", "he", "fa"].includes(locale.value);
+});
+watchEffect(() => {
+  document.documentElement.setAttribute("dir", isRtl.value ? "rtl" : "ltr");
+});
 // Initialize theme
 onMounted(() => {
-  document.documentElement.setAttribute("dir", isRtl.value ? "rtl" : "ltr");
+  initializeTheme();
+  initializeLanguage();
 });
 </script>
 

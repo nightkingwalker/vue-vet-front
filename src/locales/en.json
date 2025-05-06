@@ -1375,6 +1375,7 @@
             "type": "Filter by type",
             "date_range": "Date range",
             "apply": "Filter",
+            "show_reminders": "Reminders",
             "clear": "Clear"
         },
         "refresh": "Refresh",

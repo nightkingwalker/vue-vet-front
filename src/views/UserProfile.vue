@@ -2,21 +2,31 @@
   <div class="w-full bg-[var(--p-content-background)] p-8 rounded-lg mt-4">
     <!-- User Profile Container -->
     <div
-      class="grid grid-cols-2 gap-y-[10px] gap-x-[10px] lg:w-[70%] md:w-[80%] sm:w-full xl:w-[85%] 2xl:w-[75%] mx-auto">
+      class="grid grid-cols-2 gap-y-[10px] gap-x-[10px] lg:w-[70%] md:w-[80%] sm:w-full xl:w-[85%] 2xl:w-[75%] mx-auto"
+    >
       <fieldset
-        class=" h-fit border dark:border-gray-100 border-gray-400 rounded-xl p-6 bg-zinc-100 dark:bg-[var(--p-surface-500)] shadow-sm">
+        class="h-fit border dark:border-gray-100 border-gray-400 rounded-xl p-6 bg-zinc-100 dark:bg-[var(--p-surface-500)] shadow-sm"
+      >
         <legend
-          class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium">
+          class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium"
+        >
           <i class="fa-solid fa-address-card mr-2"></i> Profile Information
         </legend>
         <div class="flex items-start gap-6">
           <div class="relative group">
-            <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-gray-300 dark:border-gray-600">
-              <img class="w-full h-full object-cover" :src="user.avatarUrl" alt="Profile Avatar" />
+            <div
+              class="w-20 h-20 rounded-full overflow-hidden border-2 border-gray-300 dark:border-gray-600"
+            >
+              <img
+                class="w-full h-full object-cover"
+                :src="user.avatarUrl"
+                alt="Profile Avatar"
+              />
             </div>
             <button
               class="absolute -bottom-1 -right-1 inline-flex items-center justify-center w-7 h-7 text-xs font-bold text-white bg-gray-600 border-2 border-white rounded-full shadow-sm hover:bg-gray-200 hover:text-gray-800 hover:border-gray-500 transition-all duration-200"
-              @click="showAvatarUploader = !showAvatarUploader">
+              @click="showAvatarUploader = !showAvatarUploader"
+            >
               <i class="fa-solid fa-pencil text-xs"></i>
             </button>
           </div>
@@ -29,20 +39,43 @@
             </p>
             <form @submit.prevent="submitForm" class="mt-4 space-y-4">
               <div>
-                <label class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1" for="name">
+                <label
+                  class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1"
+                  for="name"
+                >
                   Full Name
                 </label>
-                <InputText class="w-full" size="small" v-model="user.name" id="name" type="text" required />
+                <InputText
+                  class="w-full"
+                  size="small"
+                  v-model="user.name"
+                  id="name"
+                  type="text"
+                  required
+                />
               </div>
               <div>
-                <label class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1" for="email">
+                <label
+                  class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1"
+                  for="email"
+                >
                   Email Address
                 </label>
-                <InputText class="w-full" size="small" v-model="user.email" id="email" type="email" readonly disabled />
+                <InputText
+                  class="w-full"
+                  size="small"
+                  v-model="user.email"
+                  id="email"
+                  type="email"
+                  readonly
+                  disabled
+                />
               </div>
               <div class="flex justify-end">
-                <button type="submit"
-                  class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200">
+                <button
+                  type="submit"
+                  class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200"
+                >
                   Save Changes
                 </button>
               </div>
@@ -52,39 +85,72 @@
       </fieldset>
       <!-- Update Password Section -->
       <fieldset
-        class=" h-fit border dark:border-gray-100 border-gray-400 rounded-xl p-6 bg-zinc-100 dark:bg-[var(--p-surface-500)] shadow-sm">
+        class="h-fit border dark:border-gray-100 border-gray-400 rounded-xl p-6 bg-zinc-100 dark:bg-[var(--p-surface-500)] shadow-sm"
+      >
         <legend
-          class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium">
+          class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium"
+        >
           <i class="fa-solid fa-lock mr-2"></i> Update Password
         </legend>
         <form @submit.prevent="updatePassword" class="space-y-4">
           <div>
-            <label class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1" for="current_password">
+            <label
+              class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1"
+              for="current_password"
+            >
               Current Password
             </label>
-            <InputText class="w-full" size="small" id="current_password" name="current_password"
-              v-model="current_password" type="password" autocomplete="current-password" />
+            <InputText
+              class="w-full"
+              size="small"
+              id="current_password"
+              name="current_password"
+              v-model="current_password"
+              type="password"
+              autocomplete="current-password"
+            />
           </div>
           <div>
-            <label class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1" for="password_">
+            <label
+              class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1"
+              for="password_"
+            >
               New Password
             </label>
-            <InputText class="w-full" size="small" type="password" v-model="newpassword" autocomplete="new-password" />
+            <InputText
+              class="w-full"
+              size="small"
+              type="password"
+              v-model="newpassword"
+              autocomplete="new-password"
+            />
           </div>
           <div>
-            <label class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1" for="password_confirmation">
+            <label
+              class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1"
+              for="password_confirmation"
+            >
               Confirm Password
             </label>
-            <InputText class="w-full" size="small" id="password_confirmation" name="password_confirmation"
-              v-model="password_confirmation" type="password" :invalid="passwordMatchError"
-              autocomplete="new-password" />
+            <InputText
+              class="w-full"
+              size="small"
+              id="password_confirmation"
+              name="password_confirmation"
+              v-model="password_confirmation"
+              type="password"
+              :invalid="passwordMatchError"
+              autocomplete="new-password"
+            />
             <Message v-if="passwordMatchError" severity="error" class="mt-1 text-xs">
               Passwords do not match
             </Message>
           </div>
           <div class="flex justify-end">
-            <button type="submit"
-              class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200">
+            <button
+              type="submit"
+              class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200"
+            >
               Update Password
             </button>
           </div>
@@ -92,26 +158,39 @@
       </fieldset>
       <!-- User Preferences Section -->
       <fieldset
-        class=" h-fit border dark:border-gray-100 border-gray-400 rounded-xl p-6 bg-zinc-100 dark:bg-[var(--p-surface-500)] shadow-sm">
+        class="h-fit border dark:border-gray-100 border-gray-400 rounded-xl p-6 bg-zinc-100 dark:bg-[var(--p-surface-500)] shadow-sm"
+      >
         <legend
-          class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium">
+          class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium"
+        >
           <i class="fa-solid fa-user-cog mr-2"></i> Preferences
         </legend>
         <div class="flex justify-between items-start gap-4">
           <!-- Language Selection -->
           <div class="w-1/2">
-            <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Language</h3>
+            <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+              Language
+            </h3>
             <div class="flex gap-4 mt-4">
               <!-- Language Form -->
               <form @submit.prevent="handleSubmit('language')" class="mx-auto w-full">
                 <FloatLabel class="w-full">
-                  <Select fluid v-model="language" :options="languages" optionLabel="label" optionValue="value"
-                    class="w-full h-10" />
-                  <label for="dd-city">Language
-                    <span class="text-red-600">*</span></label>
+                  <Select
+                    fluid
+                    v-model="language"
+                    :options="languages"
+                    optionLabel="label"
+                    optionValue="value"
+                    class="w-full h-10"
+                  />
+                  <label for="dd-city"
+                    >Language <span class="text-red-600">*</span></label
+                  >
                 </FloatLabel>
-                <button type="submit"
-                  class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200 mt-2">
+                <button
+                  type="submit"
+                  class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200 mt-2"
+                >
                   Update Language
                 </button>
               </form>
@@ -119,7 +198,9 @@
           </div>
           <!-- Theme Selection -->
           <div class="w-1/2">
-            <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Theme</h3>
+            <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+              Theme
+            </h3>
             <div class="flex gap-4 mt-4">
               <!--               <button @click="setTheme('light')"
                 class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
@@ -141,13 +222,20 @@
               </button> -->
               <form @submit.prevent="handleSubmit('theme')" class="mx-auto w-full">
                 <FloatLabel class="w-full">
-                  <Select fluid v-model="theme" :options="themes" optionLabel="label" optionValue="value"
-                    class="w-full h-10" />
-                  <label for="dd-city">Theme
-                    <span class="text-red-600">*</span></label>
+                  <Select
+                    fluid
+                    v-model="theme"
+                    :options="themes"
+                    optionLabel="label"
+                    optionValue="value"
+                    class="w-full h-10"
+                  />
+                  <label for="dd-city">Theme <span class="text-red-600">*</span></label>
                 </FloatLabel>
-                <button type="submit"
-                  class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200 mt-2">
+                <button
+                  type="submit"
+                  class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200 mt-2"
+                >
                   Update Theme
                 </button>
               </form>
@@ -163,15 +251,19 @@
       </fieldset>
       <!-- Two Factor Authentication Section -->
       <fieldset
-        class=" h-fit border dark:border-gray-100 border-gray-400 rounded-xl p-6 bg-zinc-100 dark:bg-[var(--p-surface-500)] shadow-sm">
+        class="h-fit border dark:border-gray-100 border-gray-400 rounded-xl p-6 bg-zinc-100 dark:bg-[var(--p-surface-500)] shadow-sm"
+      >
         <legend
-          class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium">
+          class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium"
+        >
           <i class="fa-solid fa-user-shield mr-2"></i> Two Factor Authentication
         </legend>
         <div class="space-y-4">
           <div class="flex items-center justify-between">
             <div>
-              <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300">Two-Factor Authentication</h3>
+              <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Two-Factor Authentication
+              </h3>
               <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 Add an extra layer of security to your account
               </p>
@@ -179,38 +271,67 @@
             <ToggleSwitch v-model="checked" />
           </div>
           <transition name="fade">
-            <div v-if="checked"
-              class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
+            <div
+              v-if="checked"
+              class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600"
+            >
               <p class="text-xs text-green-500 mb-2">
-                <i class="fa-solid fa-circle-info mr-1"></i> Scan the QR code with your authenticator app
+                <i class="fa-solid fa-circle-info mr-1"></i> Scan the QR code with your
+                authenticator app
               </p>
               <div class="flex flex-col items-center">
-                <img v-if="checked" class="w-32 h-32 mb-3" :src="qrCodeUrl" alt="2FA QR Code" />
+                <img
+                  v-if="checked"
+                  class="w-32 h-32 mb-3"
+                  :src="qrCodeUrl"
+                  alt="2FA QR Code"
+                />
                 <p class="text-xs text-gray-500 dark:text-gray-400 text-center mb-3">
-                  Secret Key: <code
-                    class="bg-gray-200 dark:bg-gray-600 px-1 rounded">{{ user.two_factor_secret }}</code>
+                  Secret Key:
+                  <code class="bg-gray-200 dark:bg-gray-600 px-1 rounded">{{
+                    user.two_factor_secret
+                  }}</code>
                 </p>
               </div>
               <form @submit.prevent="tfaEnabled" class="space-y-3">
                 <div>
-                  <label :class="{
-                    'fa_code': tfaInvalid
-                  }" class="block text-xs text-gray-700 dark:text-gray-300 mb-1" for="2fa_code">
+                  <label
+                    :class="{
+                      fa_code: tfaInvalid,
+                    }"
+                    class="block text-xs text-gray-700 dark:text-gray-300 mb-1"
+                    for="2fa_code"
+                  >
                     Enter verification code
                   </label>
                   <!-- <InputText class="w-full" size="small" type="text" placeholder="6-digit code" :required="checked"
                     v-model="tfa_code" /> -->
-                  <InputOtp v-model="tfa_code" :length="6" dir="ltr" :invalid="tfaInvalid"
-                    class="mx-auto justify-center" placeholder="000000">
+                  <InputOtp
+                    v-model="tfa_code"
+                    :length="6"
+                    dir="ltr"
+                    :invalid="tfaInvalid"
+                    class="mx-auto justify-center"
+                    placeholder="000000"
+                  >
                     <template #default="{ attrs, events }">
-                      <input type="text" v-bind="attrs" v-on="events" :class="{
-                        'invalid': tfaInvalid
-                      }" class="custom-otp-input " placeholder="0" />
+                      <input
+                        type="text"
+                        v-bind="attrs"
+                        v-on="events"
+                        :class="{
+                          invalid: tfaInvalid,
+                        }"
+                        class="custom-otp-input"
+                        placeholder="0"
+                      />
                     </template>
                   </InputOtp>
                 </div>
-                <button type="submit"
-                  class="w-full bg-gray-800 px-4 py-2 text-white rounded-lg hover:bg-gray-700 shadow-md text-xs font-medium transition-colors duration-200">
+                <button
+                  type="submit"
+                  class="w-full bg-gray-800 px-4 py-2 text-white rounded-lg hover:bg-gray-700 shadow-md text-xs font-medium transition-colors duration-200"
+                >
                   Verify & Activate
                 </button>
               </form>
@@ -223,7 +344,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref, computed, watchEffect } from "vue";
 import QRCode from "qrcode"; // Import the QRCode library
 import PlaceHolder from "@/assets/placeholder-1.png";
 import axiosInstance from "@/axios"; // Assuming axiosInstance is set up correctly
@@ -231,15 +352,27 @@ import ToggleSwitch from "primevue/toggleswitch";
 import eventBus from "@/eventBus";
 import InputText from "primevue/inputtext";
 import Message from "primevue/message";
-import InputOtp from 'primevue/inputotp';
-import Select from 'primevue/select';
-import FloatLabel from 'primevue/floatlabel';
+import InputOtp from "primevue/inputotp";
+import Select from "primevue/select";
+import FloatLabel from "primevue/floatlabel";
 import { useI18n } from "vue-i18n";
-import { useTheme } from '@/composables/useTheme';
+import { useTheme } from "@/composables/useTheme";
 import { useAuthStore } from "@/stores/authStore";
-import { useLanguage } from '@/composables/useLanguage';
+import { useLanguage } from "@/composables/useLanguage";
+import Cookies from "js-cookie";
 
+const isRtl = computed(() => {
+  // 1. First try to get language from cookie
+  const cookieLanguage = Cookies.get("language");
 
+  // 2. If cookie exists, use it for RTL check
+  if (cookieLanguage) {
+    return ["ar", "he", "fa"].includes(cookieLanguage);
+  }
+
+  // 3. Fall back to current locale if no cookie
+  return ["ar", "he", "fa"].includes(locale.value);
+});
 const authStore = useAuthStore();
 const { applyLanguage } = useLanguage();
 const { t } = useI18n();
@@ -263,20 +396,20 @@ const newpassword = ref("");
 const password_confirmation = ref("");
 const current_password = ref("");
 const message = ref("");
-const language = ref("")
-const theme = ref("")
+const language = ref("");
+const theme = ref("");
 // Computed value for the QR code
 const qrCodeValue = computed(() => {
   return `otpauth://totp/${appName.value}:${username.value}?secret=${secret.value}&issuer=${appName.value}`;
 });
 const languages = ref([
-  { label: t('languages.ar'), value: "ar" },
-  { label: t('languages.en'), value: "en" },
+  { label: t("languages.ar"), value: "ar" },
+  { label: t("languages.en"), value: "en" },
 ]);
 const themes = ref([
-  { label: t('themes.dark'), value: "dark" },
-  { label: t('themes.light'), value: "light" },
-  { label: t('themes.system'), value: "system" }
+  { label: t("themes.dark"), value: "dark" },
+  { label: t("themes.light"), value: "light" },
+  { label: t("themes.system"), value: "system" },
 ]);
 // Generate the QR code URL
 const generateQRCode = async () => {
@@ -286,13 +419,13 @@ const generateQRCode = async () => {
     console.error("Error generating QR code:", error);
   }
 };
-const tfaInvalid = ref(false)
+const tfaInvalid = ref(false);
 const tfaEnabled = async () => {
   // // console.log("CHECKED " + checked.value);
   if (!tfa_code.value) {
-    console.log("NO OTP")
+    console.log("NO OTP");
     tfaInvalid.value = true;
-    return
+    return;
   }
 
   loading.value = true;
@@ -370,7 +503,7 @@ const handleSubmitLanguag = async () => {
   };
 
   try {
-    const response = await axiosInstance.put('/user/preferences', submissionData);
+    const response = await axiosInstance.put("/user/preferences", submissionData);
     fetchUserDetails();
     eventBus.emit("show-toast", {
       severity: "success",
@@ -381,7 +514,8 @@ const handleSubmitLanguag = async () => {
   } catch (error) {
     if (error.response) {
       console.error("Error:", error.response.data);
-      message.value = error.response.data.message || 'Failed to update language preference';
+      message.value =
+        error.response.data.message || "Failed to update language preference";
 
       eventBus.emit("show-toast", {
         severity: "error",
@@ -406,23 +540,31 @@ const handleSubmit = async (type) => {
   // Import the composable functions
 
   const submissionData = {};
-  let successMessage = '';
+  let successMessage = "";
 
-  if (type === 'language') {
+  if (type === "language") {
     submissionData.user_language = language.value;
-    successMessage = 'Language preference updated successfully';
+    successMessage = "Language preference updated successfully";
     applyLanguage(language.value);
-  } else if (type === 'theme') {
+  } else if (type === "theme") {
     submissionData.user_theme = theme.value;
-    successMessage = 'Theme preference updated successfully';
+    successMessage = "Theme preference updated successfully";
     authStore.updateTheme(theme.value); // Update store first
     applyTheme(theme.value); // Then apply the theme
   }
 
   try {
-    const response = await axiosInstance.put('/user/preferences', submissionData);
-
+    const response = await axiosInstance.put("/user/preferences", submissionData);
+    // console.log(response.data);
     // Update the auth store with new preferences
+    // Cookies.set("language", response.data.user_language, {
+    //   sameSite: "Strict",
+    //   expires: new Date(this.tokenExpiry * 1000 + 172800),
+    // });
+    document.documentElement.setAttribute(
+      "dir",
+      response.data.user_language === "ar" ? "rtl" : "ltr"
+    );
     authStore.setUserPreferences(response.data); // Make sure your authStore has this method
 
     eventBus.emit("show-toast", {
@@ -432,25 +574,24 @@ const handleSubmit = async (type) => {
       life: 5000,
     });
   } catch (error) {
-    let errorMessage = '';
+    let errorMessage = "";
 
     if (error.response) {
       console.error("Error:", error.response.data);
       errorMessage = error.response.data.message || `Failed to update ${type} preference`;
 
       // Revert theme if update failed
-      if (type === 'theme') {
+      if (type === "theme") {
         // applyTheme(authStore.currentTheme); // Revert to previous theme
         const previousTheme = authStore.currentTheme;
         authStore.updateTheme(previousTheme);
         applyTheme(previousTheme);
       }
-      if (type === 'language') {
+      if (type === "language") {
         const previousLanguage = authStore.currentLanguage;
         applyLanguage(previousLanguage);
         language.value = previousLanguage;
       }
-
     } else if (error.request) {
       console.error("No response received:", error.request);
       errorMessage = "No response from server, please check your network.";
@@ -468,7 +609,7 @@ const handleSubmit = async (type) => {
   } finally {
     loading.value = false;
   }
-};// Add this new function to apply the theme
+}; // Add this new function to apply the theme
 // const applyTheme = (themeValue) => {
 //   const isDark = themeValue === 'dark';
 //   document.documentElement.classList.toggle('dark', isDark);
@@ -562,6 +703,10 @@ const dragOverHandler = (event) => {
 const passwordMatchError = computed(() => {
   return password_confirmation.value !== newpassword.value;
 });
+// watchEffect(() => {
+//   console.log(isRtl.value);
+//   document.documentElement.setAttribute("dir", isRtl.value ? "rtl" : "ltr");
+// });
 onMounted(() => {
   fetchUserDetails();
 });
@@ -590,8 +735,7 @@ onMounted(() => {
 .fade-enter,
 .fade-leave-to
 
-/* .fade-leave-active in <2.1.8 */
-  {
+/* .fade-leave-active in <2.1.8 */ {
   opacity: 0;
   transform: translateY(-10px);
   /* or scale(0.95) for a scaling effect */
@@ -611,7 +755,7 @@ onMounted(() => {
 .custom-otp-input.invalid,
 label.fa_code {
   border-bottom-color: red;
-  box-shadow: 2px 3px 5px rgba(255, 0, 0, .3);
+  box-shadow: 2px 3px 5px rgba(255, 0, 0, 0.3);
   color: red;
 }
 

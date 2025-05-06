@@ -162,7 +162,9 @@ import Logo from "@/assets/logo-DOqaXMyT.png";
 import Image from "primevue/image";
 import InputOtp from "primevue/inputotp";
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
+console.log(locale.value);
+console.log(navigator.language?.substring(0, 2));
 const email = ref("");
 const password = ref("");
 const message = ref("");

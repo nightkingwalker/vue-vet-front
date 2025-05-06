@@ -1359,8 +1359,8 @@
     "reports": {
         "menu": {
             "stockmovement": "حركة المستودع",
-            "patients_reports": "تقارير زيارات المرضى",
-            "sales_reports": "تقارير المبيعات"
+            "patients_reports": "زيارات المرضى",
+            "sales_reports": "المبيعات"
         }
     },
     "appointments": {
@@ -1375,6 +1375,7 @@
             "type": "تصفية حسب النوع",
             "date_range": "نطاق التاريخ",
             "apply": "تصفية",
+            "show_reminders": "التنبيهات المجدولة",
             "clear": "مسح"
         },
         "refresh": "تحديث",

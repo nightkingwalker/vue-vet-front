@@ -169,7 +169,18 @@ import { useDevice } from "@/composables/useDevice";
 const mobileMenuVisible = ref(false);
 
 // ============== COMPUTED PROPERTIES ==============
-const isRtl = computed(() => ["ar", "he", "fa"].includes(locale.value));
+const isRtl = computed(() => {
+  // 1. First try to get language from cookie
+  const cookieLanguage = Cookies.get("language");
+
+  // 2. If cookie exists, use it for RTL check
+  if (cookieLanguage) {
+    return ["ar", "he", "fa"].includes(cookieLanguage);
+  }
+
+  // 3. Fall back to current locale if no cookie
+  return ["ar", "he", "fa"].includes(locale.value);
+});
 const userName = computed(() => authStore.user?.name || Cookies.get("name") || "");
 const formattedCountdown = computed(() => {
   const minutes = Math.floor(countdown.value / 60);
