@@ -90,7 +90,7 @@
         "menu": {
             "calendar": "التقويم",
             "patients": "العيادة",
-            "owners": "الزبائن",
+            "owners": "المالكين",
             "pets": "المرضى",
             "inventories": "المستودع",
             "pet_food": "أطعمة",
@@ -225,6 +225,7 @@
         "fields": {
             "select_owner": "اختر المالك",
             "name": "الاسم",
+            "microchip_num": "رقم شريحة المايكروتشيب",
             "select_species": "اختر النوع",
             "breed": "السلالة",
             "select_gender": "اختر الجنس",
@@ -1354,5 +1355,12 @@
         "dark": "اللون الغامق",
         "light": "اللون الفاتح",
         "system": "ألوان النظام"
+    },
+    "reports": {
+        "menu": {
+            "stockmovement": "حركة المستودع",
+            "patients_reports": "تقارير المرضى",
+            "sales_reports": "تقارير المبيعات"
+        }
     }
 }

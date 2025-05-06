@@ -13,7 +13,7 @@ const apiClient = axios.create({
   },
 });
 
-// Add an interceptor to attach the access token to requests
+// Interceptor to attach the access token to requests
 apiClient.interceptors.request.use(
   (config) => {
     const accessToken = Cookies.get("access_token");
@@ -33,7 +33,7 @@ export const useAuthStore = defineStore("auth", {
     refreshExpiry: Cookies.get("refresh_expiry") || null,
     BranchID: Cookies.get("M3K8g2387BahBaqyjDe6") || null,
     refreshTimeout: null,
-    userTheme: Cookies.get("theme") || 'system',
+    userTheme: Cookies.get("theme") || 'light',
     userLanguage: Cookies.get("language") || 'en' // Initialize from cookies
 
   }),

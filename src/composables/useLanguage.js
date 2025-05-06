@@ -1,40 +1,69 @@
-// src/composables/useLanguage.js
-import { ref, watch } from 'vue';
-import { useAuthStore } from '@/stores/authStore';
-import { useI18n } from 'vue-i18n';
-import Cookies from 'js-cookie';
+import { ref, watch, onMounted ,onUnmounted} from 'vue'
+import { useAuthStore } from '@/stores/authStore'
+import { useI18n } from 'vue-i18n'
+import Cookies from 'js-cookie'
 
 export const useLanguage = () => {
-    const authStore = useAuthStore();
-    const { locale } = useI18n();
+  const authStore = useAuthStore()
+  const { locale } = useI18n()
+  const currentLanguage = ref(locale.value)
 
-    const applyLanguage = (lang) => {
-        // Update i18n locale
-        locale.value = lang;
-        // Update HTML attribute
-        document.documentElement.lang = lang;
-        // Update store and cookies
-        authStore.updateLanguage(lang);
-    };
+  // Main function to apply language changes
+  const applyLanguage = (lang) => {
+    if (!lang || lang === currentLanguage.value) return
+    
+    // 1. Update vue-i18n
+    locale.value = lang
+    
+    // 2. Update DOM
+    document.documentElement.lang = lang
+    
+    // 3. Update local ref
+    currentLanguage.value = lang
+    
+    console.log('Applied language:', lang)
+  }
 
-    const initializeLanguage = () => {
-        const lang = authStore.currentLanguage || 'en';
-        applyLanguage(lang);
-    };
+  // Initialize language from most authoritative source
+  const initializeLanguage = () => {
+    const lang = authStore.currentLanguage || 
+                Cookies.get('language') ||
+                navigator.language?.substring(0, 2) || 
+                'en'
+    applyLanguage(lang)
+  }
 
-    // Initialize language when composable is created
-    initializeLanguage();
+  // Watch for store changes (login/logout)
+  watch(
+    () => authStore.currentLanguage,
+    (newLang) => {
+      if (newLang) applyLanguage(newLang)
+    },
+    { immediate: true }
+  )
 
-    // Watch for auth changes
-    watch(
-        () => authStore.isLoggedIn,
-        (loggedIn) => {
-            if (loggedIn) initializeLanguage();
-        }
-    );
+  // Watch for cookie changes (external modifications)
+  const checkCookieChanges = () => {
+    const cookieLang = Cookies.get('language')
+    if (cookieLang && cookieLang !== currentLanguage.value) {
+      applyLanguage(cookieLang)
+    }
+  }
 
-    return {
-        applyLanguage,
-        initializeLanguage
-    };
-};
+  // Set up periodic cookie checking
+  let cookieInterval
+  onMounted(() => {
+    initializeLanguage()
+    cookieInterval = setInterval(checkCookieChanges, 1000) // Check every second
+  })
+
+  onUnmounted(() => {
+    clearInterval(cookieInterval)
+  })
+
+  return {
+    applyLanguage,
+    initializeLanguage,
+    currentLanguage
+  }
+}

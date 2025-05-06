@@ -1,25 +1,39 @@
 <template>
   <div class="w-full">
-    <!-- <h2>Edit Pet</h2> -->
     <form @submit.prevent="submitForm" class="mt-8 mx-auto w-4/5">
       <fieldset
-        class="p-fieldset p-component w-full flex flex-wrap items-center border rounded-lg p-4"
+        class="p-fieldset p-component w-full flex flex-wrap gap-4 items-start justify-start border rounded-lg p-4"
       >
-        <legend>Edit Pet: {{ pet.name }}</legend>
+        <legend>{{ $t("pet_details.edit_pet_details") }}: {{ pet.name }}</legend>
         <input type="hidden" id="branch_id" value="1" v-model="pet.branch_id" />
 
+        <!-- Microchip Field -->
+        <div class="field mt-6 w-[48%]">
+          <FloatLabel class="w-full">
+            <InputNumber
+              id="microchip_num"
+              v-model="pet.microchip_num"
+              variant="filled"
+              :useGrouping="false"
+              fluid
+            />
+            <label for="microchip_num">{{ $t("pet_form.fields.microchip_num") }}</label>
+          </FloatLabel>
+        </div>
+
         <!-- Name Field -->
-        <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-full md:w-56">
-            <InputText id="name" v-model="pet.name" />
-            <label for="name">Name</label>
+        <div class="field mt-6 w-[48%]">
+          <FloatLabel class="w-full">
+            <InputText fluid id="name" v-model="pet.name" />
+            <label for="name">{{ $t("pet_form.fields.name") }}</label>
           </FloatLabel>
         </div>
 
         <!-- Species Field -->
-        <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-full md:w-56">
+        <div class="field mt-6 w-[48%]">
+          <FloatLabel class="w-full">
             <Select
+              fluid
               v-model="pet.species"
               :options="species"
               optionLabel="label"
@@ -27,26 +41,26 @@
             >
               <template #value="slotProps">
                 <div v-if="slotProps.value" class="flex items-center">
-                  <div>{{ slotProps.value.value }}</div>
+                  <div>{{ $t(`pet_details.species.${slotProps.value.value}`) }}</div>
                 </div>
-                <span v-else>{{ slotProps.placeholder }}</span>
+                <span v-else>{{ $t("pet_form.fields.select_species") }}</span>
               </template>
             </Select>
-            <label for="species">Select a Species</label>
+            <label for="species">{{ $t("pet_form.fields.select_species") }}</label>
           </FloatLabel>
         </div>
 
         <!-- Breed Field -->
-        <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-full md:w-56">
-            <InputText id="breed" v-model="pet.breed" />
-            <label for="breed">Breed</label>
+        <div class="field mt-6 w-[48%]">
+          <FloatLabel class="w-full">
+            <InputText fluid id="breed" v-model="pet.breed" />
+            <label for="breed">{{ $t("pet_form.fields.breed") }}</label>
           </FloatLabel>
         </div>
 
         <!-- Gender Field -->
-        <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-full md:w-56">
+        <div class="field mt-6 w-[48%]">
+          <FloatLabel class="w-full">
             <Select
               id="gender"
               v-model="pet.gender"
@@ -56,19 +70,21 @@
             >
               <template #value="slotProps">
                 <div v-if="slotProps.value" class="flex items-center">
-                  <div>{{ slotProps.value.value }}</div>
+                  <div>
+                    {{ $t(`pet_form.options.${slotProps.value.value.toLowerCase()}`) }}
+                  </div>
                 </div>
-                <span v-else>{{ slotProps.placeholder }}</span>
+                <span v-else>{{ $t("pet_form.fields.select_gender") }}</span>
               </template>
             </Select>
-            <label for="gender">Gender</label>
+            <label for="gender">{{ $t("pet_form.fields.select_gender") }}</label>
           </FloatLabel>
         </div>
 
         <!-- Date of Birth Field -->
-        <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-full md:w-56">
-            <label for="dob">Date of Birth</label>
+        <div class="field mt-6 w-[48%]">
+          <FloatLabel class="w-full">
+            <label for="dob">{{ $t("pet_form.fields.date_of_birth") }}</label>
             <DatePicker
               showIcon
               iconDisplay="input"
@@ -85,32 +101,34 @@
         </div>
 
         <!-- Color Field -->
-        <div class="field mt-6 w-1/2">
+        <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <InputText id="color" v-model="pet.color" />
-            <label for="color">Color</label>
+            <InputText fluid id="color" v-model="pet.color" />
+            <label for="color">{{ $t("pet_form.fields.color") }}</label>
           </FloatLabel>
         </div>
 
         <!-- Distinctive Marks Field -->
-        <div class="field mt-6 w-1/2">
+        <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <InputText id="distinctive_marks" v-model="pet.distinctive_marks" />
-            <label for="distinctive_marks">Distinctive Marks</label>
+            <InputText fluid id="distinctive_marks" v-model="pet.distinctive_marks" />
+            <label for="distinctive_marks">{{
+              $t("pet_form.fields.distinctive_marks")
+            }}</label>
           </FloatLabel>
         </div>
 
         <!-- Behaviour Field -->
-        <div class="field mt-6 w-1/2">
+        <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <InputText id="behaviour" v-model="pet.behaviour" />
-            <label for="behaviour">Behaviour</label>
+            <InputText fluid id="behaviour" v-model="pet.behaviour" />
+            <label for="behaviour">{{ $t("pet_form.fields.behaviour") }}</label>
           </FloatLabel>
         </div>
 
         <!-- Neutered Field -->
-        <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-full md:w-56">
+        <div class="field mt-6 w-[48%]">
+          <FloatLabel class="w-full">
             <Select
               v-model="pet.neutered"
               :options="yesno"
@@ -119,18 +137,20 @@
             >
               <template #value="slotProps">
                 <div v-if="slotProps.value" class="flex items-center">
-                  <div>{{ slotProps.value.value }}</div>
+                  <div>
+                    {{ $t(`pet_form.options.${slotProps.value.value.toLowerCase()}`) }}
+                  </div>
                 </div>
-                <span v-else>{{ slotProps.placeholder }}</span>
+                <span v-else>{{ $t("pet_form.fields.neutered") }}</span>
               </template>
             </Select>
-            <label for="neutered">Neutered</label>
+            <label for="neutered">{{ $t("pet_form.fields.neutered") }}</label>
           </FloatLabel>
         </div>
 
         <!-- Deceased Field -->
-        <div class="field mt-6 w-1/2">
-          <FloatLabel class="w-full md:w-56">
+        <div class="field mt-6 w-[48%]">
+          <FloatLabel class="w-full">
             <Select
               v-model="pet.deceased"
               :options="yesno"
@@ -139,24 +159,26 @@
             >
               <template #value="slotProps">
                 <div v-if="slotProps.value" class="flex items-center">
-                  <div>{{ slotProps.value.value }}</div>
+                  <div>
+                    {{ $t(`pet_form.options.${slotProps.value.value.toLowerCase()}`) }}
+                  </div>
                 </div>
-                <span v-else>{{ slotProps.placeholder }}</span>
+                <span v-else>{{ $t("pet_form.fields.deceased") }}</span>
               </template>
             </Select>
-            <label for="deceased">Deceased</label>
+            <label for="deceased">{{ $t("pet_form.fields.deceased") }}</label>
           </FloatLabel>
         </div>
 
         <!-- Allergies Field -->
-        <div class="field mt-6 w-full">
+        <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <Textarea id="allergies" v-model="pet.allergies" />
-            <label for="allergies">Allergies</label>
+            <Textarea id="allergies" fluid v-model="pet.allergies" />
+            <label for="allergies">{{ $t("pet_form.fields.allergies") }}</label>
           </FloatLabel>
         </div>
 
-        <Button type="submit" label="Submit" />
+        <Button type="submit" :label="$t('pet_form.buttons.submit')" />
       </fieldset>
     </form>
   </div>
@@ -164,22 +186,26 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { useI18n } from "vue-i18n";
 import InputText from "primevue/inputtext";
+import InputNumber from "primevue/inputnumber";
 import Textarea from "primevue/textarea";
 import DatePicker from "primevue/datepicker";
 import Select from "primevue/select";
 import FloatLabel from "primevue/floatlabel";
 import Button from "primevue/button";
-import axiosInstance from "@/axios"; // Assuming you've created a global axios instance
+import axiosInstance from "@/axios";
 import eventBus from "@/eventBus";
 import { useRoute } from "vue-router";
 import Cookies from "js-cookie";
 
+const { t } = useI18n();
 const route = useRoute();
-const emit = defineEmits(["submitted"]); // Define the event to be emitted
+const emit = defineEmits(["submitted"]);
 
 const pet = ref({
   owner_id: route.params.ownerid,
+  microchip_num: null,
   branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
   name: "",
   species: "",
@@ -195,28 +221,28 @@ const pet = ref({
 });
 
 const species = ref([
-  { label: "Avian", value: "Avian" },
-  { label: "Bovine", value: "Bovine" },
-  { label: "Camelid", value: "Camelid" },
-  { label: "Canine", value: "Canine" },
-  { label: "Caprine", value: "Caprine" },
-  { label: "Cavies", value: "Cavies" },
-  { label: "Cervidae", value: "Cervidae" },
-  { label: "Equine", value: "Equine" },
-  { label: "Feline", value: "Feline" },
-  { label: "Lapine", value: "Lapine" },
-  { label: "Murine", value: "Murine" },
-  { label: "Ovine", value: "Ovine" },
+  { label: t("species.avian"), value: "Avian" },
+  { label: t("species.bovine"), value: "Bovine" },
+  { label: t("species.camelid"), value: "Camelid" },
+  { label: t("species.canine"), value: "Canine" },
+  { label: t("species.caprine"), value: "Caprine" },
+  { label: t("species.cavies"), value: "Cavies" },
+  { label: t("species.cervidae"), value: "Cervidae" },
+  { label: t("species.equine"), value: "Equine" },
+  { label: t("species.feline"), value: "Feline" },
+  { label: t("species.lapine"), value: "Lapine" },
+  { label: t("species.murine"), value: "Murine" },
+  { label: t("species.ovine"), value: "Ovine" },
 ]);
 
 const yesno = ref([
-  { label: "Yes", value: "Yes" },
-  { label: "No", value: "No" },
+  { label: t("pet_form.options.yes"), value: "Yes" },
+  { label: t("pet_form.options.no"), value: "No" },
 ]);
 
 const genders = ref([
-  { label: "Male", value: "Male" },
-  { label: "Female", value: "Female" },
+  { label: t("pet_form.options.male"), value: "Male" },
+  { label: t("pet_form.options.female"), value: "Female" },
 ]);
 
 const petmicrochip = ref(route.params.petmicrochip);
@@ -227,7 +253,6 @@ const fetchPetDetails = async () => {
     const response = await axiosInstance.get(`/pets/${petmicrochip.value}`);
     const petData = response.data;
 
-    // Map the fetched data to the expected format for Select components
     pet.value = {
       ...petData,
       species: species.value.find((opt) => opt.value === petData.species),
@@ -240,10 +265,8 @@ const fetchPetDetails = async () => {
       ),
     };
     pet.value.date_of_birth = formatDateForSubmission(pet.value.date_of_birth);
-
-    // console.log(pet.value);
   } catch (error) {
-    console.error("Failed to fetch pet details:", error);
+    console.error(t("pet_form.toast.error"), error);
   }
 };
 
@@ -253,23 +276,24 @@ const formatDateForSubmission = (dateString) => {
     date.getDate()
   ).padStart(2, "0")}`;
 };
-// Form submission
+
 const submitForm = async () => {
   const submissionData = {
     owner_id: pet.value.owner_id,
     branch_id: pet.value.branch_id,
+    microchip_num: pet.value.microchip_num,
     name: pet.value.name,
     species: pet.value.species.value,
     breed: pet.value.breed,
     gender: pet.value.gender.value,
     date_of_birth: pet.value.date_of_birth
-      ? formatDateForSubmission(pet.value.date_of_birth) // Format the date
+      ? formatDateForSubmission(pet.value.date_of_birth)
       : null,
     color: pet.value.color,
     distinctive_marks: pet.value.distinctive_marks,
     behaviour: pet.value.behaviour,
-    neutered: pet.value.neutered.value === "Yes" ? "Y" : "N",
-    deceased: pet.value.deceased.value === "Yes" ? "Y" : "N",
+    neutered: pet.value.neutered.value === t("pet_form.options.yes") ? "Y" : "N",
+    deceased: pet.value.deceased.value === t("pet_form.options.yes") ? "Y" : "N",
     allergies: pet.value.allergies,
   };
 
@@ -278,18 +302,18 @@ const submitForm = async () => {
       `/pets/${petmicrochip.value}`,
       submissionData
     );
-    emit("details_updated", response.data); // Emit the updated pet data
+    emit("details_updated", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Data Updated",
-      detail: `Pet details updated successfully`,
+      summary: t("pet_form.toast.success_summary"),
+      detail: t("pet_form.toast.success"),
       life: 5000,
     });
   } catch (error) {
     eventBus.emit("show-toast", {
       severity: "warn",
-      summary: "Error",
-      detail: error,
+      summary: t("pet_form.toast.error_summary"),
+      detail: t("pet_form.toast.error"),
       life: 5000,
     });
   }

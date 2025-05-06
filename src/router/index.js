@@ -133,11 +133,15 @@ const router = createRouter({
         meta: { allowSessionTimeout: true }
     },
     {
-        path: '/reports',
-        name: 'Reports',
+        path: '/stockmovement',
+        name: 'StockMovement',
         component: () =>
-            import('../views/StockMovement.vue'),
+            import('../views/Reports.vue'),
         meta: { allowSessionTimeout: true }
+    },
+    {
+        path: '/logout',
+        name: 'Logout',
     },
     ]
 });
@@ -145,10 +149,11 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     const authStore = useAuthStore();
     if (to.meta.requiresAuth && !authStore.isLoggedIn) {
-        // // // console.log("Not logged in, redirecting...");
         next({ name: 'Login' });
-    } else {
-        // // // console.log("Logged in or not required, proceeding...");
+    } else if(to.fullPath === "/logout"){
+        authStore.logOut();
+    }
+    else {
         next();
     }
 });

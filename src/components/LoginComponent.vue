@@ -1,80 +1,137 @@
 <template>
-  <div class="flex items-center justify-center min-h-[90vh] bg-stone-100 dark:bg-stone-800 mx-auto  lg:!text-[14px]">
+  <div
+    class="flex items-center justify-center min-h-[90vh] bg-stone-100 dark:bg-stone-800 mx-auto lg:!text-[14px]"
+  >
     <div class="p-8 bg-white dark:bg-stone-900 shadow-lg rounded-lg max-w-md w-full">
       <div class="w-full flex justify-center">
-        <Image :src="Logo" alt="Image" class="flex justify-center rounded-[4rem] dark:bg-white w-[5rem] p-1" />
+        <Image
+          :src="Logo"
+          alt="Image"
+          class="flex justify-center rounded-[4rem] dark:bg-white w-[5rem] p-1"
+        />
       </div>
 
       <form v-if="!requires2FA" @submit.prevent="login">
         <div>
           <div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400">
             <label for="username">{{ $t("login.username") }}</label>
-            <InputGroup class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 flex rounded-md overflow-hidden">
+            <InputGroup
+              class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 flex rounded-md overflow-hidden"
+            >
               <InputGroupAddon
-                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 px-4 flex flex-col item-center justify-center"><i
-                  class="pi pi-user"></i></InputGroupAddon>
-              <InputText id="username" v-model="email" aria-describedby="username-help"
-                :placeholder="$t('login.username')" :feedback="false" fluid required style="
+                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 px-4 flex flex-col item-center justify-center"
+                ><i class="pi pi-user"></i
+              ></InputGroupAddon>
+              <InputText
+                id="username"
+                v-model="email"
+                aria-describedby="username-help"
+                :placeholder="$t('login.username')"
+                :feedback="false"
+                fluid
+                required
+                style="
                   border-top: 1px solid var(--p-inputgroup-addon-border-color);
                   border-bottom: 1px solid var(--p-inputgroup-addon-border-color);
                 "
-                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 focus:!ring-0 focus:!ring-offset-0 !border-x-0 focus:!outline-0" />
+                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 focus:!ring-0 focus:!ring-offset-0 !border-x-0 focus:!outline-0"
+              />
             </InputGroup>
           </div>
         </div>
         <div class="mb-6">
           <div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400">
             <label for="password">{{ $t("login.password") }}</label>
-            <InputGroup class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 flex rounded-md overflow-hidden">
+            <InputGroup
+              class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 flex rounded-md overflow-hidden"
+            >
               <InputGroupAddon
-                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 px-4 flex flex-col item-center justify-center"><i
-                  class="pi pi-shield"></i></InputGroupAddon>
-              <InputText v-model="password" id="password" type="password" :placeholder="$t('login.password')"
-                :feedback="false" fluid required style="
+                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 px-4 flex flex-col item-center justify-center"
+                ><i class="pi pi-shield"></i
+              ></InputGroupAddon>
+              <InputText
+                v-model="password"
+                id="password"
+                type="password"
+                :placeholder="$t('login.password')"
+                :feedback="false"
+                fluid
+                required
+                style="
                   border-top: 1px solid var(--p-inputgroup-addon-border-color);
                   border-bottom: 1px solid var(--p-inputgroup-addon-border-color);
                 "
-                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 !ring-0 focus:!ring-0 !ring-offset-0 focus:!ring-offset-0 !border-x-0" />
+                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 !ring-0 focus:!ring-0 !ring-offset-0 focus:!ring-offset-0 !border-x-0"
+              />
               <InputGroupAddon
-                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 px-4 flex flex-col item-center justify-center"><i
-                  class="pi pi-eye password-shield" @click="togglePassInput()"></i></InputGroupAddon>
+                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 px-4 flex flex-col item-center justify-center"
+                ><i class="pi pi-eye password-shield" @click="togglePassInput()"></i
+              ></InputGroupAddon>
             </InputGroup>
           </div>
           <small id="" :class="!isError ? `text-green-500 h-4` : `text-red-500 h-4`">{{
             message
-            }}</small>
+          }}</small>
         </div>
         <div class="flex items-end justify-end">
-          <button type="submit"
+          <button
+            type="submit"
             class="p-button p-button-content !text-[var(--p-primary-color)] py-2 px-4 rounded focus:outline-none focus:shadow-outline h-8"
-            :disabled="loading ? true : false">
+            :disabled="loading ? true : false"
+          >
             <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
             <span v-else>{{ $t("login.submit") }}</span>
           </button>
         </div>
       </form>
 
-      <form v-if="requires2FA" @submit.prevent="verify2FA" class="transition-transform duration-300 transform"
-        :class="{ 'translate-x-0': requires2FA, 'translate-x-full': !requires2FA }">
+      <form
+        v-if="requires2FA"
+        @submit.prevent="verify2FA"
+        class="transition-transform duration-300 transform"
+        :class="{ 'translate-x-0': requires2FA, 'translate-x-full': !requires2FA }"
+      >
         <h2 class="text-md font-bold mb-4">{{ $t("two_factor.title") }}</h2>
         <p class="text-sm mb-4">{{ $t("two_factor.description") }}</p>
         <div class="mb-6">
           <div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400">
-            <InputOtp v-model="twoFactorCode" id="twoFactorCode" :length="6" dir="ltr" autofocus :invalid="tfaInvalid"
-              class="mx-auto justify-center" placeholder="000000">
+            <InputOtp
+              v-model="twoFactorCode"
+              id="twoFactorCode"
+              :length="6"
+              dir="ltr"
+              autofocus
+              :invalid="tfaInvalid"
+              class="mx-auto justify-center"
+              placeholder="000000"
+            >
               <template #default="{ attrs, events }">
-                <input type="text" v-bind="attrs" v-on="events" autofocus :class="{
-                  'invalid': tfaInvalid
-                }" class="custom-otp-input " placeholder="0" />
+                <input
+                  type="text"
+                  v-bind="attrs"
+                  v-on="events"
+                  autofocus
+                  :class="{
+                    invalid: tfaInvalid,
+                  }"
+                  class="custom-otp-input"
+                  placeholder="0"
+                />
               </template>
             </InputOtp>
-            <small id="" :class="{ 'text-green-500': !isError, 'text-red-500': isError } + ` h-4`">{{ message }}</small>
+            <small
+              id=""
+              :class="{ 'text-green-500': !isError, 'text-red-500': isError } + ` h-4`"
+              >{{ message }}</small
+            >
           </div>
         </div>
 
         <div class="flex items-end justify-end">
-          <button type="submit"
-            class="p-button p-button-content py-2 px-4 rounded focus:outline-none focus:shadow-outline h-8">
+          <button
+            type="submit"
+            class="p-button p-button-content py-2 px-4 rounded focus:outline-none focus:shadow-outline h-8"
+          >
             <!-- :disabled="!captchaToken" -->
             <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
             <span v-else>{{ $t("two_factor.verify") }}</span>
@@ -83,11 +140,13 @@
       </form>
     </div>
   </div>
-  <small id="" class="text-[8pt] text-gray-600">Site is protected by reCAPTCHA. Google
+  <small id="" class="text-[8pt] text-gray-600"
+    >Site is protected by reCAPTCHA. Google
     <a href="https://policies.google.com/privacy" class="text-blue-500">Privacy Policy</a>
     and
     <a href="https://policies.google.com/terms" class="text-blue-500">Terms of Service</a>
-    apply.</small>
+    apply.</small
+  >
 </template>
 
 <script setup>
@@ -101,7 +160,7 @@ import { useAuthStore } from "@/stores/authStore";
 import axios from "axios";
 import Logo from "@/assets/logo.png";
 import Image from "primevue/image";
-import InputOtp from 'primevue/inputotp';
+import InputOtp from "primevue/inputotp";
 
 const { t } = useI18n();
 const email = ref("");
@@ -117,7 +176,7 @@ const temporaryToken = ref("");
 const twoFactorCode = ref("");
 const GOOGLE_RECAPTCHA_SITE_KEY = import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY;
 const captchaToken = ref(null);
-const tfaInvalid = ref(false)
+const tfaInvalid = ref(false);
 const login = async () => {
   try {
     loading.value = true;
@@ -164,7 +223,6 @@ const login = async () => {
     loading.value = false;
   }
 };
-
 
 /* const verify2FA = async () => {
   console.log("TRYING OTP");
@@ -239,8 +297,8 @@ const verify2FA = async () => {
       },
       {
         headers: {
-          Authorization: `Bearer ${temporaryToken.value}`
-        }
+          Authorization: `Bearer ${temporaryToken.value}`,
+        },
       }
     );
 
@@ -251,7 +309,7 @@ const verify2FA = async () => {
       refresh_expires_in,
       user,
     } = response.data;
-
+    console.log(user);
     authStore.logIn(
       access_token,
       refresh_token,
@@ -266,7 +324,6 @@ const verify2FA = async () => {
 
     message.value = t("two_factor.success");
     router.push("/").catch((err) => console.error("Router error:", err));
-
   } catch (error) {
     tfaInvalid.value = true;
 
@@ -329,7 +386,7 @@ form.translate-x-0 {
 .custom-otp-input.invalid,
 label.fa_code {
   border-bottom-color: red;
-  box-shadow: 2px 3px 5px rgba(255, 0, 0, .3);
+  box-shadow: 2px 3px 5px rgba(255, 0, 0, 0.3);
   color: red;
 }
 
