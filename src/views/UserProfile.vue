@@ -10,7 +10,8 @@
         <legend
           class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium"
         >
-          <i class="fa-solid fa-address-card mr-2"></i> Profile Information
+          <i class="fa-solid fa-address-card mr-2"></i>
+          {{ $t("user_profile.profile_information") }}
         </legend>
         <div class="flex items-start gap-6">
           <div class="relative group">
@@ -32,10 +33,10 @@
           </div>
           <div class="flex-1">
             <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
-              Personal Details
+              {{ $t("user_profile.personal_details") }}
             </h2>
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-              Update your account's profile information
+              {{ $t("user_profile.update_profile_info") }}
             </p>
             <form @submit.prevent="submitForm" class="mt-4 space-y-4">
               <div>
@@ -43,7 +44,7 @@
                   class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1"
                   for="name"
                 >
-                  Full Name
+                  {{ $t("user_profile.full_name") }}
                 </label>
                 <InputText
                   class="w-full"
@@ -59,7 +60,7 @@
                   class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1"
                   for="email"
                 >
-                  Email Address
+                  {{ $t("user_profile.email_address") }}
                 </label>
                 <InputText
                   class="w-full"
@@ -76,7 +77,7 @@
                   type="submit"
                   class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200"
                 >
-                  Save Changes
+                  {{ $t("user_profile.save_changes") }}
                 </button>
               </div>
             </form>
@@ -90,7 +91,7 @@
         <legend
           class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium"
         >
-          <i class="fa-solid fa-lock mr-2"></i> Update Password
+          <i class="fa-solid fa-lock mr-2"></i> {{ $t("user_profile.update_password") }}
         </legend>
         <form @submit.prevent="updatePassword" class="space-y-4">
           <div>
@@ -98,7 +99,7 @@
               class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1"
               for="current_password"
             >
-              Current Password
+              {{ $t("user_profile.current_password") }}
             </label>
             <InputText
               class="w-full"
@@ -115,7 +116,7 @@
               class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1"
               for="password_"
             >
-              New Password
+              {{ $t("user_profile.new_password") }}
             </label>
             <InputText
               class="w-full"
@@ -130,7 +131,7 @@
               class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1"
               for="password_confirmation"
             >
-              Confirm Password
+              {{ $t("user_profile.confirm_password") }}
             </label>
             <InputText
               class="w-full"
@@ -143,7 +144,7 @@
               autocomplete="new-password"
             />
             <Message v-if="passwordMatchError" severity="error" class="mt-1 text-xs">
-              Passwords do not match
+              {{ $t("user_profile.passwords_not_match") }}
             </Message>
           </div>
           <div class="flex justify-end">
@@ -151,7 +152,7 @@
               type="submit"
               class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200"
             >
-              Update Password
+              {{ $t("user_profile.update_password") }}
             </button>
           </div>
         </form>
@@ -163,13 +164,13 @@
         <legend
           class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium"
         >
-          <i class="fa-solid fa-user-cog mr-2"></i> Preferences
+          <i class="fa-solid fa-user-cog mr-2"></i> {{ $t("user_profile.preferences") }}
         </legend>
         <div class="flex justify-between items-start gap-4">
           <!-- Language Selection -->
           <div class="w-1/2">
             <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-              Language
+              {{ $t("user_profile.language") }}
             </h3>
             <div class="flex gap-4 mt-4">
               <!-- Language Form -->
@@ -184,14 +185,15 @@
                     class="w-full h-10"
                   />
                   <label for="dd-city"
-                    >Language <span class="text-red-600">*</span></label
+                    >{{ $t("user_profile.language") }}
+                    <span class="text-red-600">*</span></label
                   >
                 </FloatLabel>
                 <button
                   type="submit"
                   class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200 mt-2"
                 >
-                  Update Language
+                  {{ $t("user_profile.update_language") }}
                 </button>
               </form>
             </div>
@@ -199,27 +201,9 @@
           <!-- Theme Selection -->
           <div class="w-1/2">
             <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-              Theme
+              {{ $t("user_profile.theme") }}
             </h3>
             <div class="flex gap-4 mt-4">
-              <!--               <button @click="setTheme('light')"
-                class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                :class="{ 'bg-gray-200 dark:bg-gray-700': theme === 'light' }">
-                <i class="fa-regular fa-sun text-yellow-500"></i>
-                <span class="text-sm">Light</span>
-              </button>
-              <button @click="setTheme('dark')"
-                class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                :class="{ 'bg-gray-200 dark:bg-gray-700': theme === 'dark' }">
-                <i class="fa-regular fa-moon text-indigo-400"></i>
-                <span class="text-sm">Dark</span>
-              </button>
-              <button @click="setTheme('system')"
-                class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                :class="{ 'bg-gray-200 dark:bg-gray-700': theme === 'system' }">
-                <i class="fa-solid fa-desktop text-gray-500"></i>
-                <span class="text-sm">System</span>
-              </button> -->
               <form @submit.prevent="handleSubmit('theme')" class="mx-auto w-full">
                 <FloatLabel class="w-full">
                   <Select
@@ -230,21 +214,18 @@
                     optionValue="value"
                     class="w-full h-10"
                   />
-                  <label for="dd-city">Theme <span class="text-red-600">*</span></label>
+                  <label for="dd-city"
+                    >{{ $t("user_profile.theme") }}
+                    <span class="text-red-600">*</span></label
+                  >
                 </FloatLabel>
                 <button
                   type="submit"
                   class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200 mt-2"
                 >
-                  Update Theme
+                  {{ $t("user_profile.update_theme") }}
                 </button>
               </form>
-              <!-- <FloatLabel class="w-full">
-                <Select required :invalid="invalidtfaInvalid" fluid v-model="pet.species" :options="species"
-                  optionLabel="label" optionValue="value" class="w-full h-10" />
-                <label for="dd-city">{{ $t("pet_form.fields.select_species") }}
-                  <span class="text-red-600">*</span></label>
-              </FloatLabel> -->
             </div>
           </div>
         </div>
@@ -256,16 +237,17 @@
         <legend
           class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium"
         >
-          <i class="fa-solid fa-user-shield mr-2"></i> Two Factor Authentication
+          <i class="fa-solid fa-user-shield mr-2"></i>
+          {{ $t("user_profile.two_factor_auth") }}
         </legend>
         <div class="space-y-4">
           <div class="flex items-center justify-between">
             <div>
               <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300">
-                Two-Factor Authentication
+                {{ $t("user_profile.two_factor_auth") }}
               </h3>
               <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                Add an extra layer of security to your account
+                {{ $t("user_profile.two_factor_desc") }}
               </p>
             </div>
             <ToggleSwitch v-model="checked" />
@@ -276,8 +258,8 @@
               class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600"
             >
               <p class="text-xs text-green-500 mb-2">
-                <i class="fa-solid fa-circle-info mr-1"></i> Scan the QR code with your
-                authenticator app
+                <i class="fa-solid fa-circle-info mr-1"></i>
+                {{ $t("user_profile.scan_qr_code") }}
               </p>
               <div class="flex flex-col items-center">
                 <img
@@ -287,7 +269,7 @@
                   alt="2FA QR Code"
                 />
                 <p class="text-xs text-gray-500 dark:text-gray-400 text-center mb-3">
-                  Secret Key:
+                  {{ $t("user_profile.secret_key") }}:
                   <code class="bg-gray-200 dark:bg-gray-600 px-1 rounded">{{
                     user.two_factor_secret
                   }}</code>
@@ -302,10 +284,8 @@
                     class="block text-xs text-gray-700 dark:text-gray-300 mb-1"
                     for="2fa_code"
                   >
-                    Enter verification code
+                    {{ $t("user_profile.enter_verification_code") }}
                   </label>
-                  <!-- <InputText class="w-full" size="small" type="text" placeholder="6-digit code" :required="checked"
-                    v-model="tfa_code" /> -->
                   <InputOtp
                     v-model="tfa_code"
                     :length="6"
@@ -332,7 +312,7 @@
                   type="submit"
                   class="w-full bg-gray-800 px-4 py-2 text-white rounded-lg hover:bg-gray-700 shadow-md text-xs font-medium transition-colors duration-200"
                 >
-                  Verify & Activate
+                  {{ $t("user_profile.verify_activate") }}
                 </button>
               </form>
             </div>
@@ -342,7 +322,6 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import { onMounted, ref, computed, watchEffect } from "vue";
 import QRCode from "qrcode"; // Import the QRCode library
@@ -637,6 +616,7 @@ const fetchUserDetails = async () => {
     // Update QR code details with user information
     appName.value = "Vet APP";
     username.value = user.value.email;
+    current_password.value = "";
     secret.value = user.value.two_factor_secret;
     language.value = user.value.preference.user_language;
     theme.value = user.value.preference.user_theme;

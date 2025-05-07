@@ -1410,5 +1410,37 @@
         "dialog": {
             "view_title": "تفاصيل السجل الطبي"
         }
+    },
+    "user_profile": {
+        "profile_information": "معلومات الملف الشخصي",
+        "personal_details": "التفاصيل الشخصية",
+        "update_profile_info": "قم بتحديث معلومات ملفك الشخصي",
+        "full_name": "الاسم الكامل",
+        "email_address": "البريد الإلكتروني",
+        "save_changes": "حفظ التغييرات",
+        "update_password": "تحديث كلمة المرور",
+        "current_password": "كلمة المرور الحالية",
+        "new_password": "كلمة المرور الجديدة",
+        "confirm_password": "تأكيد كلمة المرور",
+        "passwords_not_match": "كلمات المرور غير متطابقة",
+        "preferences": "التفضيلات",
+        "language": "اللغة",
+        "theme": "السمة",
+        "update_language": "تحديث اللغة",
+        "update_theme": "تحديث السمة",
+        "two_factor_auth": "المصادقة الثنائية",
+        "two_factor_desc": "أضف طبقة أمان إضافية لحسابك",
+        "scan_qr_code": "امسح رمز QR باستخدام تطبيق المصادقة الخاص بك",
+        "secret_key": "المفتاح السري",
+        "enter_verification_code": "أدخل رمز التحقق",
+        "verify_activate": "تحقق وتفعيل",
+        "success": {
+            "profile_updated": "تم تحديث بيانات المستخدم بنجاح",
+            "password_updated": "تم تحديث كلمة المرور بنجاح",
+            "language_updated": "تم تحديث تفضيلات اللغة بنجاح",
+            "theme_updated": "تم تحديث تفضيلات السمة بنجاح",
+            "2fa_enabled": "تم تفعيل المصادقة الثنائية بنجاح",
+            "2fa_disabled": "تم تعطيل المصادقة الثنائية بنجاح"
+        }
     }
 }

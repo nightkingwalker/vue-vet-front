@@ -217,7 +217,7 @@
   </Dialog>
 </template>
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted, nextTick, watch } from "vue";
 // import { Qalendar } from "qalendar";
 import { ScheduleXCalendar } from "@schedule-x/vue";
 import {
@@ -545,7 +545,7 @@ const calendarApp = createCalendar({
   views: [viewMonthGrid, viewWeek, viewDay],
   defaultView: viewMonthGrid.name,
   // locale: "en-US",
-  locale: Cookies.get("theme") === "ar" ? "ar-SY" : "en-US",
+  locale: Cookies.get("language") === "ar" ? "ar-SY" : "en-US",
   isRTL: true,
   gridHeight: 500,
   isResponsive: true,
@@ -812,7 +812,9 @@ const arAR = {
   ...datePickerArAr,
   ...calendarArAr,
 };
-
+watch(() => {
+  setCalendarTheme(Cookies.get("theme"));
+});
 /*end testing calendar*/
 onMounted(() => {
   eventBus.on("themeChange", setCalendarTheme);

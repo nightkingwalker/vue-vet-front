@@ -2,6 +2,8 @@
 import { ref, watch } from 'vue';
 import { useAuthStore } from '@/stores/authStore';
 import Cookies from 'js-cookie';
+import { useRoute } from "vue-router";
+import eventBus from "@/eventBus";
 
 export const useTheme = () => {
     const authStore = useAuthStore();
@@ -13,6 +15,11 @@ export const useTheme = () => {
 
         isDarkMode.value = isDark;
         document.documentElement.classList.toggle('dark', isDark);
+        localStorage.setItem("theme", theme);
+        Cookies.set("theme", theme); // If you want to use cookies
+
+        // Emit event if needed
+        eventBus.emit("themeChange", theme);
     };
 
     // Initialize theme when composable is created

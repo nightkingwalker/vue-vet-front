@@ -19,7 +19,7 @@
       />
 
       <!-- Main Content -->
-      <div class="container mx-auto mt-6 2xl:px-0 xl:px-6 lg:px-6 md:px-8">
+      <div class="container mx-auto mt-6">
         <router-view />
 
         <!-- Global UI Components -->
@@ -48,6 +48,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watchEffect } from "vue";
 import { useRoute } from "vue-router";
+import router from "@/router";
+import eventBus from "@/eventBus";
 import { useI18n } from "vue-i18n";
 import { useAuthStore } from "@/stores/authStore";
 import { useDevice } from "@/composables/useDevice";
@@ -66,7 +68,7 @@ const authStore = useAuthStore();
 const { isMobile } = useDevice();
 const { initializeLanguage } = useLanguage();
 const { isDarkMode, initializeTheme, toggleTheme } = useTheme();
-
+// console.log("isDarkMode", isDarkMode.value);
 const mobileMenuVisible = ref(false);
 
 // Computed properties
@@ -83,6 +85,56 @@ const isRtl = computed(() => {
   // 3. Fall back to current locale if no cookie
   return ["ar", "he", "fa"].includes(locale.value);
 });
+// ============== KEYBOARD SHORTCUTS ==============
+const shortcuts = {
+  // F2 Shortcuts
+  F2: () => {
+    if (route.path === "/owners") eventBus.emit("AddOwner");
+    if (route.path === "/invoices") eventBus.emit("AddInvoice");
+    if (route.path === "/pets" || route.path.match(/^\/\d+\/pets$/))
+      eventBus.emit("AddPet");
+    if (route.path === "/add-inventory-food") eventBus.emit("AddInventoryItem");
+    if (route.path === "/add-inventory-pharmaceutical") eventBus.emit("AddInventoryItem");
+    if (route.path === "/add-inventory-toys") eventBus.emit("AddInventoryItem");
+    if (route.path === "/add-inventory-grooming") eventBus.emit("AddInventoryItem");
+    if (route.path === "/add-inventory-treatment") eventBus.emit("AddInventoryItem");
+  },
+  "Ctrl+F2": () => {
+    if (route.path === "/owners") eventBus.emit("AddOwner");
+    if (route.path === "/invoices") eventBus.emit("AddInvoice");
+  },
+  "Ctrl+p": () => router.push("/pets"),
+  "Ctrl+o": () => router.push("/owners"),
+  "Ctrl+i": () => router.push("/invoices"),
+  "Ctrl+l": () => {
+    // isDarkMode.value = !isDarkMode.value;
+    toggleTheme();
+    console.log("TOGGLING THEME", isDarkMode.value);
+  },
+  // "Ctrl+l": () => toggleDarkMode(),
+  "Ctrl+r": () => router.push("/reports/stock-movement"),
+  "Ctrl+z": () => {},
+  "Ctrl+Alt+Home": () => router.push("/"),
+  "Ctrl+Alt+p": () => router.push("/preferences"),
+  "Ctrl+Alt+q": () => eventBus.emit("QuickActions"),
+};
+
+const handleKeyDown = (event) => {
+  const combo = [
+    event.ctrlKey && "Ctrl",
+    event.altKey && "Alt",
+    event.shiftKey && "Shift",
+    event.key,
+  ]
+    .filter(Boolean)
+    .join("+");
+
+  if (shortcuts[combo]) {
+    event.preventDefault();
+    shortcuts[combo]();
+  }
+};
+
 watchEffect(() => {
   document.documentElement.setAttribute("dir", isRtl.value ? "rtl" : "ltr");
 });
@@ -90,6 +142,7 @@ watchEffect(() => {
 onMounted(() => {
   initializeTheme();
   initializeLanguage();
+  document.addEventListener("keydown", handleKeyDown);
 });
 </script>
 

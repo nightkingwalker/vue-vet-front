@@ -55,7 +55,19 @@ const MyPreset = definePreset(Aura, {
         zinc: { 50: '#fafafa', 100: '#f4f4f5', 200: '#e4e4e7', 300: '#d4d4d8', 400: '#a1a1aa', 500: '#71717a', 600: '#52525b', 700: '#3f3f46', 800: '#27272a', 900: '#18181b', 950: '#09090b' },
         neutral: { 50: '#fafafa', 100: '#f5f5f5', 200: '#e5e5e5', 300: '#d4d4d4', 400: '#a3a3a3', 500: '#737373', 600: '#525252', 700: '#404040', 800: '#262626', 900: '#171717', 950: '#0a0a0a' },
         stone: { 50: '#fafaf9', 100: '#f5f5f4', 200: '#e7e5e4', 300: '#d6d3d1', 400: '#a8a29e', 500: '#78716c', 600: '#57534e', 700: '#44403c', 800: '#292524', 900: '#1c1917', 950: '#0c0a09' },
-        wash: { 0: '#ffffff', 100: '#d1d1d1',200: '#bababb',300: '#a4a4a4',400: '#8d8d8e',50: '#e8e8e8',500: '#767677',600: '#606060',700: '#49494a',800: '#323233',900: '#1c1c1d' }
+        wash: {
+            0: '#0f0f0f',     // base background (near black)
+            50: '#1a1a1a',    // slightly lighter
+            100: '#1f1f1f',   // Mica background
+            200: '#232323',   // Acrylic base
+            300: '#2a2a2a',   // low elevation layer
+            400: '#333333',   // medium elevation
+            500: '#3d3d3d',   // surface on hover
+            600: '#474747',   // subtle outlines or borders
+            700: '#515151',   // secondary UI elements
+            800: '#5c5c5c',   // muted text
+            900: '#666666',   // disabled text/icons
+        }
     },
     semantic: {
         colorScheme: {
@@ -79,6 +91,22 @@ const MyPreset = definePreset(Aura, {
             dark: {
                 surface: {
                     0: '#ffffff',
+                    50: '{stone.50}',
+                    100: '{stone.100}',
+                    200: '{stone.200}',
+                    300: '{stone.300}',
+                    400: '{stone.400}',
+                    500: '{stone.500}',
+                    600: '{stone.600}',
+                    700: '{stone.700}',
+                    800: '{stone.800}',
+                    900: '{stone.900}',
+                    // 950: '{wash.950}'
+                }
+            }
+/*             dark: {
+                surface: {
+                    0: '#ffffff',
                     50: '{wash.50}',
                     100: '{wash.100}',
                     200: '{wash.200}',
@@ -90,9 +118,10 @@ const MyPreset = definePreset(Aura, {
                     800: '{wash.800}',
                     900: '{wash.900}',
                     // 950: '{wash.950}'
+                    // 950: '#707070' // optional: even lighter
                 }
             }
-        }
+ */        }
     }
 });
 

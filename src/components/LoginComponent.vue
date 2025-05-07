@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="flex items-center justify-center min-h-[90vh] bg-stone-100 dark:bg-stone-800 mx-auto lg:!text-[14px]"
-  >
+  <div class="flex items-center justify-center min-h-[90vh] mx-auto lg:!text-[14px]">
     <div class="p-8 bg-white dark:bg-stone-900 shadow-lg rounded-lg max-w-md w-full">
       <div class="w-full flex justify-center">
         <Image
@@ -16,10 +14,10 @@
           <div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400">
             <label for="username">{{ $t("login.username") }}</label>
             <InputGroup
-              class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 flex rounded-md overflow-hidden"
+              class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 flex rounded-md overflow-hidden"
             >
               <InputGroupAddon
-                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 px-4 flex flex-col item-center justify-center"
+                class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 px-4 flex flex-col item-center justify-center"
                 ><i class="pi pi-user"></i
               ></InputGroupAddon>
               <InputText
@@ -34,7 +32,7 @@
                   border-top: 1px solid var(--p-inputgroup-addon-border-color);
                   border-bottom: 1px solid var(--p-inputgroup-addon-border-color);
                 "
-                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 focus:!ring-0 focus:!ring-offset-0 !border-x-0 focus:!outline-0"
+                class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 focus:!ring-0 focus:!ring-offset-0 !border-x-0 focus:!outline-0"
               />
             </InputGroup>
           </div>
@@ -43,10 +41,10 @@
           <div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400">
             <label for="password">{{ $t("login.password") }}</label>
             <InputGroup
-              class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 flex rounded-md overflow-hidden"
+              class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 flex rounded-md overflow-hidden"
             >
               <InputGroupAddon
-                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 px-4 flex flex-col item-center justify-center"
+                class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 px-4 flex flex-col item-center justify-center"
                 ><i class="pi pi-shield"></i
               ></InputGroupAddon>
               <InputText
@@ -61,10 +59,10 @@
                   border-top: 1px solid var(--p-inputgroup-addon-border-color);
                   border-bottom: 1px solid var(--p-inputgroup-addon-border-color);
                 "
-                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 !ring-0 focus:!ring-0 !ring-offset-0 focus:!ring-offset-0 !border-x-0"
+                class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 !ring-0 focus:!ring-0 !ring-offset-0 focus:!ring-offset-0 !border-x-0"
               />
               <InputGroupAddon
-                class="!bg-gray-200 !dark:bg-gray-600 !text-gray-800 px-4 flex flex-col item-center justify-center"
+                class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 px-4 flex flex-col item-center justify-center"
                 ><i class="pi pi-eye password-shield" @click="togglePassInput()"></i
               ></InputGroupAddon>
             </InputGroup>
@@ -163,8 +161,8 @@ import Image from "primevue/image";
 import InputOtp from "primevue/inputotp";
 
 const { t, locale } = useI18n();
-console.log(locale.value);
-console.log(navigator.language?.substring(0, 2));
+// console.log(locale.value);
+// console.log(navigator.language?.substring(0, 2));
 const email = ref("");
 const password = ref("");
 const message = ref("");

@@ -40,9 +40,9 @@
 
     <!-- Menu Item Templates -->
     <template #submenulabel="{ item }">
-      <div class="font-bold flex items-center p-menu-item-content gap-2">
-        <span :class="item.icon"></span>
-        <span class="menu-item-label">{{ item.label }}</span>
+      <div class="font-bold flex items-center p-menu-item-content gap-2 dark:tex-white">
+        <span class="dark:text-surface-100" :class="item.icon"></span>
+        <span class="menu-item-label dark:text-surface-100">{{ item.label }}</span>
         <span v-if="item.items" class="fa-solid fa-angle-down"></span>
       </div>
     </template>
@@ -55,12 +55,12 @@
         :to="item.route || ''"
         @click="handleMenuItemClick"
       >
-        <span :class="item.icon" />
-        <span class="menu-item-label">{{ item.label }}</span>
+        <span class="dark:text-surface-100" :class="item.icon"></span>
+        <span class="menu-item-label dark:text-surface-100">{{ item.label }}</span>
         <Badge v-if="item.badge" class="ml-auto p-badge" :value="item.badge" />
         <span
           v-if="item.shortcut"
-          class="shortcut ltr:ml-auto rtl:mr-auto p-1 text-[10px] text-gray-600 dark:text-gray-400 justify-self-end"
+          class="shortcut ltr:ml-auto rtl:mr-auto p-1 text-[10px] text-gray-600 dark:text-surface-400 justify-self-end"
         >
           {{ item.shortcut }}
         </span>
@@ -286,7 +286,7 @@ const handleMenuItemClick = () => {
 
 .dark .router-link-active {
   background: var(--p-surface-300);
-  color: var(--p-primary-contrast-color) !important;
+  color: var(--p-primary-color) !important;
 }
 
 .dark .router-link-active .shortcut {

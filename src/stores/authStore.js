@@ -61,6 +61,7 @@ export const useAuthStore = defineStore("auth", {
       this.refreshExpiry = refreshExpiry;
       this.BranchID = M3K8g2387BahBaqyjDe6;
       this.updateTheme(userTheme);
+      this.updateLanguage(userLanguage);
       Cookies.set("name", userName, {
         // secure: true,
         sameSite: "Strict",

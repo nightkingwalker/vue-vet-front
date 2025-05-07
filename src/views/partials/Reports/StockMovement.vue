@@ -1,7 +1,8 @@
 <template>
   <div class="w-full">
     <h4 class="mt-2 mb-4 mx-auto flex items-center justify-center">
-      <i class="pi pi-barcode"></i> {{ $t("reports.menu.stockmovement") }}
+      <i class="pi pi-barcode ltr:mr-2 rtl:ml-2"></i>
+      {{ $t("reports.menu.stockmovement") }}
     </h4>
     <DataTable
       :value="loading ? skeletonRows : stockMovements"
