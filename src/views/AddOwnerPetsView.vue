@@ -189,7 +189,10 @@
             <label for="allergies">{{ $t("pet_form.fields.allergies") }}</label>
           </FloatLabel>
         </div>
-        <Button type="submit" :label="$t('pet_form.buttons.submit')" />
+        <Button type="submit" :disabled="isSubmitting ? true : false">
+          <i class="fa-solid fa-spinner fa-spin" v-if="isSubmitting"></i>
+          <span v-else>{{ $t("pet_form.buttons.submit") }}</span>
+        </Button>
       </fieldset>
     </form>
   </div>
@@ -217,7 +220,7 @@ import Message from "primevue/message";
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
-
+const isSubmitting = ref(true);
 // Define emitted events
 const emit = defineEmits(["submitted"]);
 
@@ -391,8 +394,10 @@ const getYesNoLabel = (value) => {
  */
 async function fetchOwners() {
   try {
+    isSubmitting.value = true;
     const response = await axiosInstance.get("/owners/" + ownerid);
     owners.value = response.data;
+    isSubmitting.value = false;
   } catch (error) {
     console.error("Failed to fetch owners:", error);
     eventBus.emit("show-toast", {
@@ -401,6 +406,7 @@ async function fetchOwners() {
       detail: "Failed to fetch owner data",
       life: 5000,
     });
+    isSubmitting.value = false;
   }
 }
 

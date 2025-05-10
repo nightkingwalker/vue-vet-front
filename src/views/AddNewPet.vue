@@ -226,7 +226,10 @@
           </FloatLabel>
         </div>
         <!-- Submit Button -->
-        <Button type="submit" :label="$t('pet_form.buttons.submit')" />
+        <Button type="submit" :disabled="isSubmitting ? true : false">
+          <i class="fa-solid fa-spinner fa-spin" v-if="isSubmitting"></i>
+          <span v-else>{{ $t("pet_form.buttons.submit") }}</span>
+        </Button>
       </fieldset>
     </form>
   </div>
@@ -252,6 +255,7 @@ const { t } = useI18n();
 const emit = defineEmits(["submitted"]); // Define the event to be emitted
 const isModalOwnerVisible = ref(false);
 const invalid = ref({ pet: {} });
+const isSubmitting = ref(false);
 const pet = ref({
   owner_id: null,
   branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
@@ -436,9 +440,9 @@ const submitForm = async () => {
     owner_id: pet.value.owner_id.id,
     branch_id: pet.value.branch_id,
     name: pet.value.name,
-    species: pet.value.species.value,
+    species: pet.value.species,
     breed: pet.value.breed,
-    gender: pet.value.gender.value,
+    gender: pet.value.gender,
     date_of_birth: pet.value.date_of_birth
       ? pet.value.date_of_birth.toLocaleDateString("en-CA")
       : null,
@@ -450,9 +454,10 @@ const submitForm = async () => {
     allergies: pet.value.allergies,
   };
 
-  // // console.log(submissionData); // Verify the structure
-  // console.log(submissionData);
+  console.log(invalid.value); // Verify the structure
+  console.log(submissionData);
   try {
+    isSubmitting.value = true;
     const response = await axiosInstance.post("/pets", submissionData);
     emit("submitted", response.data); // You may modify this based on your response structure
 
@@ -463,6 +468,7 @@ const submitForm = async () => {
       detail: t("pet_form.toast.success"),
       life: 5000,
     });
+    isSubmitting.value = false;
     router.push("/pets");
   } catch (error) {
     eventBus.emit("show-toast", {
@@ -471,6 +477,7 @@ const submitForm = async () => {
       detail: error,
       life: 5000,
     });
+    isSubmitting.value = false;
   } finally {
   }
 };
