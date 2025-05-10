@@ -233,7 +233,7 @@ const submitForm = async () => {
     treatment_next_date: treatment.value.treatment_next_date
       ? treatment.value.treatment_next_date.toLocaleDateString("en-CA")
       : null,
-    treatment_has_reminder: treatment_has_reminder ? 1 : 0,
+    treatment_has_reminder: treatment.value.treatment_has_reminder ? 1 : 0,
   };
   console.log(submissionData);
   try {
