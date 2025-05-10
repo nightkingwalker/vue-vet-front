@@ -54,7 +54,7 @@
               optionLabel="label"
               class="w-full h-10"
             >
-              <template #value="slotProps">
+              <!-- <template #value="slotProps">
                 <div v-if="slotProps.value" class="flex items-center">
                   <div>{{ slotProps.value.value }}</div>
                 </div>
@@ -63,7 +63,7 @@
                 <div class="flex items-center">
                   <div>{{ slotProps.option.label }}</div>
                 </div>
-              </template>
+              </template> -->
             </Select>
             <label for="dd-city"
               >{{ $t("add_treatment.fields.delivery") }}

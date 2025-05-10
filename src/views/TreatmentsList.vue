@@ -61,7 +61,14 @@
       <template v-if="loading" #body>
         <Skeleton width="100%" height="1rem" />
       </template>
-      <template v-else #body="slotProps"> {{ slotProps.data.administration }}</template>
+      <template v-else #body="slotProps">
+        {{
+          $t(
+            "add_treatment.administration_methods." +
+              slotProps.data.administration.toLowerCase()
+          )
+        }}</template
+      >
     </Column>
     <Column
       field="description"
