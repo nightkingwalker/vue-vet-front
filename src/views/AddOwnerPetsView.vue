@@ -393,6 +393,7 @@ const getYesNoLabel = (value) => {
  * Fetches owners from the API
  */
 async function fetchOwners() {
+  if (isSubmitting.value) return;
   try {
     isSubmitting.value = true;
     const response = await axiosInstance.get("/owners/" + ownerid);

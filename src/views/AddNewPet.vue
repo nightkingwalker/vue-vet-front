@@ -414,6 +414,7 @@ const addNewOwner = () => {
 
 // Form submission
 const submitForm = async () => {
+  if (isSubmitting.value) return;
   invalid.value.pet = {
     owner_id: pet.value.owner_id === null ? true : false,
     name: pet.value.name === "" ? true : false,
