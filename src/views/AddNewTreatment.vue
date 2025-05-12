@@ -235,7 +235,7 @@ const submitForm = async () => {
       : null,
     treatment_has_reminder: treatment.value.treatment_has_reminder ? 1 : 0,
   };
-  console.log(submissionData);
+  // console.log(submissionData);
   try {
     const response = await axiosInstance.post("/treatments", submissionData);
     eventBus.emit("show-toast", {

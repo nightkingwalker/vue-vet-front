@@ -400,9 +400,9 @@ const generateQRCode = async () => {
 };
 const tfaInvalid = ref(false);
 const tfaEnabled = async () => {
-  // // console.log("CHECKED " + checked.value);
+  // console.log("CHECKED " + checked.value);
   if (!tfa_code.value) {
-    console.log("NO OTP");
+    // console.log("NO OTP");
     tfaInvalid.value = true;
     return;
   }
@@ -417,7 +417,7 @@ const tfaEnabled = async () => {
       !checked.value ? `/2fa/disable` : `/2fa/enable`,
       submissionData
     );
-    // // // console.log(response);
+    // console.log(response);
     // emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
@@ -439,7 +439,7 @@ const tfaEnabled = async () => {
   }
 };
 const updatePassword = async () => {
-  // // console.log("CHECKED " + checked.value);
+  // console.log("CHECKED " + checked.value);
   loading.value = true;
   const submissionData = {
     current_password: current_password.value,
@@ -449,7 +449,7 @@ const updatePassword = async () => {
 
   try {
     const response = await axiosInstance.put(`/user/password`, submissionData);
-    // // // console.log(response);
+    // console.log(response);
     // emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
@@ -645,7 +645,7 @@ const submitForm = async () => {
 
   try {
     const response = await axiosInstance.put(`/user`, submissionData);
-    // // // console.log(response);
+    // console.log(response);
     // emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
@@ -684,7 +684,7 @@ const passwordMatchError = computed(() => {
   return password_confirmation.value !== newpassword.value;
 });
 // watchEffect(() => {
-//   console.log(isRtl.value);
+//   // console.log(isRtl.value);
 //   document.documentElement.setAttribute("dir", isRtl.value ? "rtl" : "ltr");
 // });
 onMounted(() => {

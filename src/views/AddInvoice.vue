@@ -505,10 +505,10 @@ if (props.pet) {
   // selectedPet.value = props.pet;
   clientPets.value = [props.pet];
   selectPetProps(props.pet);
-  // // console.log("medical_record_id", props.medical_record_id);
-  // // console.log("pet", props.pet.owner);
-  // // console.log("selectedClient", selectedClient.value);
-  // // console.log("selectedPet", selectedPet.value);
+  // console.log("medical_record_id", props.medical_record_id);
+  // console.log("pet", props.pet.owner);
+  // console.log("selectedClient", selectedClient.value);
+  // console.log("selectedPet", selectedPet.value);
 }
 const clearPet = () => {
   selectedPet.value = null;
@@ -522,11 +522,11 @@ const searchItems = async (event) => {
   }
 
   try {
-    console.log("looking for " + event.query)
+    // console.log("looking for " + event.query)
     const response = await axiosInstance.get("/inventory-items/search", {
       params: { branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"), query: event.query },
     });
-    console.log(response.data)
+    // console.log(response.data)
     filteredItems.value = response.data.data.map((item) => ({
       ...item,
       displayText: `${item.name} (${item.brand}) - $${item.selling_price}`,
@@ -768,7 +768,7 @@ const showModal = () => {
 };
 const handleSubmit = ({ data, status, otherInfo }) => {
   isModalVisible.value = false;
-  console.log(data.data);
+  // console.log(data.data);
   selectItem({ value: { ...data.data, displayText: `${data.data.name} (${data.data.brand}) - $${data.data.selling_price}` } })
 // searchItems({ query: data.data.barcode })
 

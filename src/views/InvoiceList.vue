@@ -466,7 +466,7 @@ const editInvoice = (invoice) => {
 const confirmDelete = (invoice) => {
   selectedInvoice.value = invoice;
   deleteDialogVisible.value = true;
-  // // console.log(invoice);
+  // console.log(invoice);
 };
 
 const deleteInvoice = async () => {

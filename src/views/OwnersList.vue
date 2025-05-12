@@ -470,7 +470,7 @@ const deactivateAccount = (owner) => {
   // console.log(owner);
 };
 const editOwner = (owner) => {
-  console.log(owner);
+  // console.log(owner);
   selectedOwner.value = owner;
   isEditOwnerVisible.value = true;
 };
@@ -505,7 +505,7 @@ const fetchOwners = async (page = 1) => {
     }));
 
     // const response = await axiosInstance.get("/owners");
-    // // // console.log(owners.value);
+    // console.log(owners.value);
     totalRecords.value = response.data.total;
     currentPage.value = response.data.current_page;
     // owners.value = response.data.data;
@@ -514,11 +514,11 @@ const fetchOwners = async (page = 1) => {
     console.error("Failed to fetch owners:", error);
     loading.value = false; // Ensure loading is set to false even on error
   }
-  //   // // console.log(loading.value);
+  //   // console.log(loading.value);
 };
 const deactivateClient = async (data) => {
   try {
-    // // console.log(owner.value);
+    // console.log(owner.value);
     // Make the POST request to the API to create a new client
     const response = await axiosInstance.post("/owners", owner.value);
 
@@ -564,10 +564,10 @@ const onPageChange = (event) => {
   itemsPerPage.value = event.rows;
   currentPage.value = event.page + 1; // PrimeVue Paginator uses zero-based index
   fetchOwners(currentPage.value); // Fetch pets for the new page
-  // // // console.log(event);
+  // console.log(event);
 };
 const clearFilters = () => {
-  // // // console.log("clearing filters");
+  // console.log("clearing filters");
   currentPage.value = 1;
   searchQuery.value = "";
   fetchOwners(currentPage.value);

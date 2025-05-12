@@ -50,10 +50,11 @@ export const useAuthStore = defineStore("auth", {
       tokenExpiry,
       refreshExpiry,
       userName,
-      userTheme = 'light',  // Default value added here
-      userLanguage = 'en',   // Default language
-      shortcuts = null,      // Default shortcuts
-      M3K8g2387BahBaqyjDe6, //clinic_b_uid
+      userTheme = 'light',
+      userLanguage = 'en',
+      shortcuts = null,
+      M3K8g2387BahBaqyjDe6,
+      rememberMe = false
     ) {
       this.token = accessToken;
       this.refreshToken = refreshToken;
@@ -62,50 +63,62 @@ export const useAuthStore = defineStore("auth", {
       this.BranchID = M3K8g2387BahBaqyjDe6;
       this.updateTheme(userTheme);
       this.updateLanguage(userLanguage);
+
+      // Calculate cookie expiration - use longer duration if rememberMe is true
+      const tokenExpiryDate = new Date(tokenExpiry * 1000);
+      const refreshExpiryDate = new Date(refreshExpiry * 1000);
+      const rememberMeExpiry = new Date();
+      rememberMeExpiry.setFullYear(rememberMeExpiry.getFullYear() + 1); // 1 year for remember me
+
+      const commonCookieOptions = {
+        sameSite: "Strict",
+        secure: import.meta.env.PROD, // secure in production only
+      };
+
       Cookies.set("name", userName, {
         // secure: true,
-        sameSite: "Strict",
-        expires: new Date((tokenExpiry * 1000) + 172800), // Convert UNIX timestamp to Date object
+        ...commonCookieOptions,
+        expires: rememberMe ? rememberMeExpiry : tokenExpiryDate,
       });
       Cookies.set("theme", userTheme, {
         // secure: true,
-        sameSite: "Strict",
-        expires: new Date((tokenExpiry * 1000) + 172800), // Convert UNIX timestamp to Date object
+        ...commonCookieOptions,
+        expires: rememberMe ? rememberMeExpiry : refreshExpiryDate,
       });
       Cookies.set("language", userLanguage, {
         // secure: true,
-        sameSite: "Strict",
-        expires: new Date((tokenExpiry * 1000) + 172800), // Convert UNIX timestamp to Date object
+        ...commonCookieOptions,
+        expires: rememberMe ? rememberMeExpiry : tokenExpiryDate,
       });
       Cookies.set("shortcuts", shortcuts, {
         // secure: true,
-        sameSite: "Strict",
-        expires: new Date((tokenExpiry * 1000) + 172800), // Convert UNIX timestamp to Date object
+        ...commonCookieOptions,
+        expires: rememberMe ? rememberMeExpiry : tokenExpiryDate,
       });
       Cookies.set("M3K8g2387BahBaqyjDe6", M3K8g2387BahBaqyjDe6, {
         // secure: true,
-        sameSite: "Strict",
-        expires: new Date((tokenExpiry * 1000) + 172800), // Convert UNIX timestamp to Date object
+        ...commonCookieOptions,
+        expires: rememberMe ? rememberMeExpiry : tokenExpiryDate,
       });
       Cookies.set("access_token", accessToken, {
         // secure: true,
-        sameSite: "Strict",
-        expires: new Date((tokenExpiry * 1000) + 172800), // Convert UNIX timestamp to Date object
+        ...commonCookieOptions,
+        expires: rememberMe ? rememberMeExpiry : tokenExpiryDate,
       });
       Cookies.set("refresh_token", refreshToken, {
         // secure: true,
-        sameSite: "Strict",
-        expires: new Date(refreshExpiry * 1000), // Convert UNIX timestamp to Date object
+        ...commonCookieOptions,
+        expires: rememberMe ? rememberMeExpiry : tokenExpiryDate,
       });
       Cookies.set("token_expiry", tokenExpiry, {
         // secure: true,
-        sameSite: "Strict",
-        expires: new Date((tokenExpiry * 1000) + 172800),
+        ...commonCookieOptions,
+        expires: rememberMe ? rememberMeExpiry : tokenExpiryDate,
       });
       Cookies.set("refresh_expiry", refreshExpiry, {
         // secure: true,
-        sameSite: "Strict",
-        expires: new Date(refreshExpiry * 1000),
+        ...commonCookieOptions,
+        expires: rememberMe ? rememberMeExpiry : tokenExpiryDate,
       });
 
       this.startTokenRefresh();
@@ -145,12 +158,12 @@ export const useAuthStore = defineStore("auth", {
       }
       if (preferences.user_language) {
         // Handle language updates if needed
-        this.updateLanguage(preferences.user_language); 
+        this.updateLanguage(preferences.user_language);
       }
     },
 
     updateLanguage(language) {
-      console.log(language);
+      // console.log(language);
       this.userLanguage = language;
       Cookies.set("language", language, {
         sameSite: "Strict",
@@ -181,38 +194,38 @@ export const useAuthStore = defineStore("auth", {
     },
 
     // Perform token refresh
-/*
-    async refreshTokenAction() {
-      if (!this.refreshToken) {
-        this.logOut();
-        return;
-      }
-
-      try {
-        const response = await apiClient.post("/auth/refresh", {
-          refresh_token: this.refreshToken,
-        });
-
-        const {
-          access_token,
-          expires_in,
-          refresh_token,
-          refresh_expires_in,
-        } = response.data;
-
-        // Update tokens and restart the refresh process
-        const currentTime = Math.floor(Date.now() / 1000);
-        this.logIn(
-          access_token,
-          refresh_token,
-          currentTime + expires_in,
-          currentTime + refresh_expires_in
-        );
-      } catch (error) {
-        console.error("Token refresh failed", error);
-        this.logOut();
-      }
-    },*/
+    /*
+        async refreshTokenAction() {
+          if (!this.refreshToken) {
+            this.logOut();
+            return;
+          }
+    
+          try {
+            const response = await apiClient.post("/auth/refresh", {
+              refresh_token: this.refreshToken,
+            });
+    
+            const {
+              access_token,
+              expires_in,
+              refresh_token,
+              refresh_expires_in,
+            } = response.data;
+    
+            // Update tokens and restart the refresh process
+            const currentTime = Math.floor(Date.now() / 1000);
+            this.logIn(
+              access_token,
+              refresh_token,
+              currentTime + expires_in,
+              currentTime + refresh_expires_in
+            );
+          } catch (error) {
+            console.error("Token refresh failed", error);
+            this.logOut();
+          }
+        },*/
     async refreshTokenAction() {
       if (!this.refreshToken) {
         this.logOut();

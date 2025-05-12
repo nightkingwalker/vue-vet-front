@@ -1337,7 +1337,7 @@ const refreshData = () => {
   // loading.value = true; // Set loading state to true to show skeletons
   fetchPets(); // Fetch the pets data again
 };
-// // console.log(pet.value);
+// console.log(pet.value);
 const owner = ref(""); // Initialize owner as an empty string
 const loading = ref(true);
 const visits = ref([]);
@@ -1442,7 +1442,7 @@ const parseResults = (resultsString) => {
   }
 };
 const getSpeciesValue = (label) => {
-  console.log(label);
+  // console.log(label);
   const found = species.value.find((species) => species.en_label === label);
   return found ? found.en_label : null;
 };
@@ -1553,7 +1553,7 @@ const computeAge = (dateOfBirth) => {
   // Combine them into a single string, handling cases where there are no months or no years
   return `${yearsText}${yearsText && monthsText ? " & " : ""}${monthsText}`;
 };
-// // // console.log(petmicrochip.value);
+// console.log(petmicrochip.value);
 const fetchPets = async () => {
   loading.value = true;
   try {
@@ -1591,12 +1591,12 @@ const formatDateForSubmission = (dateString) => {
   ).padStart(2, "0")}`;
 };
 function getEventTheme(themeName) {
-  // // // console.log(themeName);
+  // console.log(themeName);
   return eventTheme[themeName] || null; // Return the corresponding theme or null if not found
 }
 function listTreatments(MedicalRecordId) {
   medical_record_id.value = findRecordById(MedicalRecordId);
-  // // console.log("MEDIACAL" + medical_record_id.value);
+  // console.log("MEDIACAL" + medical_record_id.value);
   isTreatmentsListVisible.value = true;
 }
 function editAppointment(AppointmentID) {
@@ -1606,12 +1606,12 @@ function editAppointment(AppointmentID) {
 }
 function listTestResults(MedicalRecordId) {
   medical_record_id.value = findRecordById(MedicalRecordId);
-  // // console.log("MEDIACAL" + medical_record_id.value);
+  // console.log("MEDIACAL" + medical_record_id.value);
   isTestResultsVisible.value = true;
 }
 function listImages(MedicalRecordId) {
   medical_record_id.value = findRecordById(MedicalRecordId);
-  // // console.log("MEDIACAL" + medical_record_id.value);
+  // console.log("MEDIACAL" + medical_record_id.value);
   isImagesListVisible.value = true;
 }
 const findRecordById = (id) => {

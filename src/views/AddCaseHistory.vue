@@ -2252,7 +2252,7 @@ const validateStep = (step) => {
   return isValid;
 };
 const onStepChange = async ({ step, callback }) => {
-  console.log(step);
+  // console.log(step);
   // Validate current step before leaving
   // if (!validateStep(activeStep.value)) {
   //   toast.add({
@@ -2263,7 +2263,6 @@ const onStepChange = async ({ step, callback }) => {
   //   });
   //   return false; // Block navigation
   // }
-
   // // Proceed with navigation
   // activeStep.value = step;
   // callback(); // Required to complete the navigation

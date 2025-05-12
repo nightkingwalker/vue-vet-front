@@ -241,7 +241,7 @@ const typingDelay = 500; // Adjust based on the speed of your scanner
 const isModalVisible = ref(false);
 const isModalOwnerVisible = ref(false);
 const showOwnerModal = () => {
-  // // console.log("SHOWING NEW OWNER MODAL");
+  // console.log("SHOWING NEW OWNER MODAL");
   isModalOwnerVisible.value = true; // Ensure this route is defined in your router configurations
 };
 const showModal = () => {
@@ -461,12 +461,12 @@ const fetchPets = async (page = 1, hideDeceased = false) => {
     if (hideDeceased) {
       url += `&hideDeceased=true`;
     }
-    console.log(url)
+    // console.log(url)
     const response = await axiosInstance.get(
       url
     );
     pets.value = response.data.data;
-    // // console.log(pets.value);
+    // console.log(pets.value);
     totalRecords.value = response.data.total;
     currentPage.value = response.data.current_page;
     loading.value = false;
@@ -476,16 +476,16 @@ const fetchPets = async (page = 1, hideDeceased = false) => {
   }
 };
 const toggleDeceasedVisibility = () => {
-  console.log(showDeceased.value);
+  // console.log(showDeceased.value);
   showDeceased.value = !showDeceased.value;
-  console.log(showDeceased.value);
+  // console.log(showDeceased.value);
   if (showDeceased.value) {
     // filters.value.deceased.value = "Y";
     // console.log("showing deseaced");
     currentPage.value = 1;
     fetchPets(currentPage.value, true);
   } else {
-    console.log("OH OH")
+    // console.log("OH OH")
     filters.value.deceased.value = "N"; // Hide deceased
     fetchPets(currentPage.value, false);
   }
@@ -555,7 +555,7 @@ const refreshData = () => {
   fetchPets(); // Fetch the pets data again
 };
 function onSelectionChange(event) {
-  // // // console.log("Selected Products:", JSON.stringify(selectedPets.value));
+  // console.log("Selected Products:", JSON.stringify(selectedPets.value));
 }
 </script>
 

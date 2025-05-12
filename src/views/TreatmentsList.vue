@@ -160,6 +160,13 @@ const skeletonRows = Array.from({ length: 4 }).map(() => ({
   description: "",
 }));
 
+/**
+ * Fetches treatments data for a specific medical record ID from the API
+ * @async
+ * @function fetchTreatments
+ * @returns {Promise<void>} Resolves when the data is fetched or rejects on error
+ * @throws {Error} If the API request fails
+ */
 const fetchTreatments = async () => {
   loading.value = true;
   try {

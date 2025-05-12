@@ -360,7 +360,7 @@ const pet = ref({
 async function fetchOwners() {
   try {
     const response = await axiosInstance.get("/owners/" + ownerid);
-    // // console.log(response.data);
+    // console.log(response.data);
     owners.value = response.data;
   } catch (error) {
     console.error("Failed to fetch owners:", error);
@@ -428,7 +428,7 @@ const submitForm = async () => {
       detail: error,
       life: 5000,
     });
-    console.log(error)
+    // console.log(error)
   } finally {
   }
 };

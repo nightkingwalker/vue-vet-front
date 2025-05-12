@@ -109,7 +109,7 @@ const shortcuts = {
   "Ctrl+l": () => {
     // isDarkMode.value = !isDarkMode.value;
     toggleTheme();
-    console.log("TOGGLING THEME", isDarkMode.value);
+    // console.log("TOGGLING THEME", isDarkMode.value);
   },
   // "Ctrl+l": () => toggleDarkMode(),
   "Ctrl+r": () => router.push("/reports/stock-movement"),

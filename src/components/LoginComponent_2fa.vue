@@ -1,26 +1,45 @@
 <template>
   <div
-    class="flex items-center justify-center min-h-[90vh] bg-stone-100 dark:bg-stone-800 container mx-auto lg:!text-[14px]">
-    <div class="p-8 bg-white dark:bg-stone-900 shadow-lg rounded-lg max-w-md w-full relative">
+    class="flex items-center justify-center min-h-[90vh] bg-stone-100 dark:bg-stone-800 container mx-auto lg:!text-[14px]"
+  >
+    <div
+      class="p-8 bg-white dark:bg-stone-900 shadow-lg rounded-lg max-w-md w-full relative"
+    >
       <div class="w-full flex justify-center">
-        <Image :src="Logo" alt="Image" class="flex justify-center rounded-[4rem] dark:bg-white w-[5rem] p-1" />
+        <Image
+          :src="Logo"
+          alt="Image"
+          class="flex justify-center rounded-[4rem] dark:bg-white w-[5rem] p-1"
+        />
       </div>
 
       <!-- Login Form -->
       <form v-if="!requires2FA" @submit.prevent="login">
         <div>
           <label for="email">Email</label>
-          <InputText id="email" v-model="email" placeholder="Enter your email" class="w-full mb-4" />
+          <InputText
+            id="email"
+            v-model="email"
+            placeholder="Enter your email"
+            class="w-full mb-4"
+          />
         </div>
         <div>
           <label for="password">Password</label>
-          <InputText id="password" type="password" v-model="password" placeholder="Enter your password"
-            class="w-full mb-4" />
+          <InputText
+            id="password"
+            type="password"
+            v-model="password"
+            placeholder="Enter your password"
+            class="w-full mb-4"
+          />
         </div>
         <div>
-          <button type="submit"
+          <button
+            type="submit"
             class="p-button p-button-content py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            :disabled="loading">
+            :disabled="loading"
+          >
             <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
             <span v-else>Log In</span>
           </button>
@@ -28,26 +47,46 @@
       </form>
 
       <!-- 2FA Verification Form -->
-      <form v-if="requires2FA" @submit.prevent="verify2FA" class="transition-transform duration-300 transform"
-        :class="{ 'translate-x-0': requires2FA, 'translate-x-full': !requires2FA }">
+      <form
+        v-if="requires2FA"
+        @submit.prevent="verify2FA"
+        class="transition-transform duration-300 transform"
+        :class="{ 'translate-x-0': requires2FA, 'translate-x-full': !requires2FA }"
+      >
         <h2 class="text-xl font-bold mb-4">Two-Factor Authentication</h2>
         <p>Please enter the 2FA code from your authenticator app.</p>
         <div>
           <label for="twoFactorCode">2FA Code</label>
           <!-- <InputText id="twoFactorCode" v-model="twoFactorCode" placeholder="Enter your 2FA code" class="w-full mb-4" /> -->
-          <InputOtp v-model="twoFactorCode" id="twoFactorCode" :length="6" dir="ltr" :invalid="tfaInvalid"
-            class="mx-auto justify-center" placeholder="000000">
+          <InputOtp
+            v-model="twoFactorCode"
+            id="twoFactorCode"
+            :length="6"
+            dir="ltr"
+            :invalid="tfaInvalid"
+            class="mx-auto justify-center"
+            placeholder="000000"
+          >
             <template #default="{ attrs, events }">
-              <input type="text" v-bind="attrs" v-on="events" :class="{
-                'invalid': tfaInvalid
-              }" class="custom-otp-input " placeholder="0" />
+              <input
+                type="text"
+                v-bind="attrs"
+                v-on="events"
+                :class="{
+                  invalid: tfaInvalid,
+                }"
+                class="custom-otp-input"
+                placeholder="0"
+              />
             </template>
           </InputOtp>
         </div>
         <div>
-          <button type="submit"
+          <button
+            type="submit"
             class="p-button p-button-content py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            :disabled="loading">
+            :disabled="loading"
+          >
             <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
             <span v-else>Verify 2FA</span>
           </button>
@@ -55,7 +94,10 @@
       </form>
 
       <!-- Message Display -->
-      <small v-if="message" :class="{ 'text-red-500': isError, 'text-green-500': !isError }">
+      <small
+        v-if="message"
+        :class="{ 'text-red-500': isError, 'text-green-500': !isError }"
+      >
         {{ message }}
       </small>
     </div>
@@ -94,7 +136,7 @@ const login = async () => {
       email: email.value,
       password: password.value,
     });
-    console.log(response.data)
+    // console.log(response.data)
     // Extract values from the response
     const {
       requires_2fa,

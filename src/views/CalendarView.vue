@@ -379,7 +379,7 @@ const fetchAppointments = async (page = 1) => {
     }));
     if (events.value.length > 0) {
       // currentPet.value = events.value[0];
-      // // console.log(events.value);
+      // console.log(events.value);
     }
     visible.value = true;
     calendarApp.eventsService.set(events.value);
@@ -472,7 +472,7 @@ const eventTheme = {
 function getEventTheme(themeName) {
   return eventTheme[themeName] || null; // Return the corresponding theme or null if not found
 }
-// // console.log(getEventTheme("Emergency"));
+// console.log(getEventTheme("Emergency"));
 const calendarApp = createCalendar({
   selectedDate: formatDateTime(new Date()),
   calendars: {
@@ -585,7 +585,7 @@ const calendarApp = createCalendar({
      * Is called when an event is updated through drag and drop
      * */
     onEventUpdate(updatedEvent) {
-      // // console.log("onEventUpdate", updatedEvent);
+      // console.log("onEventUpdate", updatedEvent);
       onEventUpdate(updatedEvent);
     },
 
@@ -603,8 +603,8 @@ const calendarApp = createCalendar({
      * Is called when clicking a date in the month grid
      * */
     onClickDate(date, event) {
-      // // console.log(date);
-      // // console.log(event);
+      // console.log(date);
+      // console.log(event);
       activeDate.value = date;
       // console.log("Active Date: " + activeDate.value);
       onRightClick();
@@ -703,7 +703,7 @@ const menuItems = ref([
   },
 ]);
 const onEventUpdate = async (updatedEvent) => {
-  // // console.log("onEventUpdate", updatedEvent);
+  // console.log("onEventUpdate", updatedEvent);
   const data = JSON.stringify({
     start: updatedEvent.start + `:00`, // Ensure this matches the model's field name
     end: updatedEvent.end + `:00`, // Ensure this matches the model's field name
@@ -712,14 +712,14 @@ const onEventUpdate = async (updatedEvent) => {
     type: updatedEvent.calendarId,
     status: updatedEvent.status,
   });
-  // // console.log("onEventUpdate", data);
+  // console.log("onEventUpdate", data);
   try {
     const response = await axiosInstance.put(`/appointments/${updatedEvent.id}`, data, {
       headers: {
         "Content-Type": "application/json",
       },
     });
-    // // console.log("Appointment updated successfully:", response.data);
+    // console.log("Appointment updated successfully:", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
       summary: "Appointment Updated",
@@ -742,7 +742,7 @@ const addAppointment = () => {
 };
 eventModal.close(); // close the modal
 const changeView = (date) => {
-  // // console.log(date);
+  // console.log(date);
   calendarControls.setDate(date);
   calendarControls.setView("day");
 };

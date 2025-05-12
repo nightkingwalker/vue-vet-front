@@ -1721,7 +1721,7 @@ const treatmentTypeOptions = [
 };*/
 const fetchHistory = async (medicalRecordId) => {
   try {
-    // // console.log("MID" + props.medical_record_id);
+    // console.log("MID" + props.medical_record_id);
     const response = await axiosInstance.get(
       `/medical-records/${props.medical_record_id}/history`
     );
@@ -1729,7 +1729,7 @@ const fetchHistory = async (medicalRecordId) => {
     if (history.current_symptom.length > 0) {
       hasCaseHistory.value = true;
     }
-    // // console.log(history);
+    // console.log(history);
     // Helper function to find the corresponding option
     const findOption = (options, value) =>
       options.find((option) => option.value === value);
@@ -1907,7 +1907,7 @@ const fetchHistory = async (medicalRecordId) => {
       formData.value.additional_notes = history.additional_note[0].notes;
     }
 
-    // // console.log("Fetched history and updated formData:", formData.value);
+    // console.log("Fetched history and updated formData:", formData.value);
   } catch (error) {
     console.error("Error fetching history:", error);
   }
@@ -2046,7 +2046,7 @@ const submitForm = async () => {
     formData.value.excessive_licking_of_genital_area = !!formData.value
       .excessive_licking_of_genital_area;
 
-    // // console.log(formData.value);
+    // console.log(formData.value);
 
     // Send formData to the storeHistory endpoint
     const response = await axiosInstance.put(
@@ -2060,13 +2060,13 @@ const submitForm = async () => {
       detail: `Case history updated successfully.`,
       life: 5000,
     });
-    // // console.log("Form updated successfully:", response.data);
+    // console.log("Form updated successfully:", response.data);
   } catch (error) {
     console.error("Error submitting form:", error);
   }
 };
 function setActivePanel(panel) {
-  // // console.log("Panel" + panel);
+  // console.log("Panel" + panel);
   activeStep.value = "panel";
 }
 onMounted(() => {

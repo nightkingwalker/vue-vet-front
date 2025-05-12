@@ -892,8 +892,8 @@ const updateInvoice = async () => {
       },
     ];
   }
-  console.log(payload);
-  console.log(props.invoiceData.id);
+  // console.log(payload);
+  // console.log(props.invoiceData.id);
   try {
     const response = await axiosInstance.put(
       `/invoices/${props.invoiceData.id}`,

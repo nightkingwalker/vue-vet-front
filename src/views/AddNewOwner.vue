@@ -153,18 +153,16 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-import { useI18n } from "vue-i18n";
 import axiosInstance from "@/axios";
-import InputText from "primevue/inputtext";
-import TextArea from "primevue/textarea";
-import FloatLabel from "primevue/floatlabel";
+import eventBus from "@/eventBus";
+import Cookies from "js-cookie";
 import Button from "primevue/button";
 import DatePicker from "primevue/datepicker";
-import Calendar from "primevue/calendar";
-import eventBus from "@/eventBus";
-import router from "@/router";
-import Cookies from "js-cookie";
+import FloatLabel from "primevue/floatlabel";
+import InputText from "primevue/inputtext";
+import TextArea from "primevue/textarea";
+import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { VueTelInput } from "vue-tel-input";
 import "vue-tel-input/vue-tel-input.css";
 
@@ -194,6 +192,10 @@ const cleanedPhoneNumber = computed(() => {
 
 // Functions
 function createInitialOwner() {
+  /**
+   * Creates an initial owner object with default values.
+   * @returns {{name: string, email: string, phone: string, landline: string, address: string, birth_date: null, facebook_link: string, instagram_link: string, referral: string, clinic_notes: string, branch_id: string}}
+   */
   return {
     name: "",
     email: "",
@@ -210,34 +212,34 @@ function createInitialOwner() {
 }
 
 function validatePhone(phoneData) {
+  /**
+   * Validates the phone number and updates the owner's phone property accordingly.
+   * @param {{valid: boolean, number: string}} phoneData - The data returned from vue-tel-input.
+   */
   if (!phoneData?.valid) {
     phoneError.value = t("add_owner.errors.invalid_phone");
     invalid.value.owner.phone = true;
-    console.log(t("add_owner.errors.invalid_phone"));
+    // console.log(t("add_owner.errors.invalid_phone"));
     return;
   }
 
-  // 1. Get the properly formatted international number from vue-tel-input
+  // Clean the number while preserving international format:
   const formattedNumber = phoneData.number; // "+963 44 465 4654 123"
-
-  // 2. Clean while preserving international format:
-  // - Remove all whitespace
-  // - Keep the + prefix
-  // owner.value.phone = formattedNumber.replace(/\s+/g, ""); // "+963444654654123"
-
-  // Alternative if you want to store without + prefix:
   owner.value.phone = formattedNumber.replace(/\D/g, ""); // "963444654654123"
 
   phoneError.value = null;
 }
+
 async function submitForm() {
-  // if (phoneError.value) return;
+  /**
+   * Submits the form data to add a new owner.
+   */
   invalid.value.owner = {
     name: owner.value.name === "" ? true : false,
-    // email: owner.value.email === "" ? true : false,
     phone: owner.value.phone === "" ? true : false,
     address: owner.value.address === "" ? true : false,
   };
+
   if (
     invalid.value.owner.name ||
     invalid.value.owner.phone ||
@@ -252,7 +254,6 @@ async function submitForm() {
 
     emit("ownerAdded", response.data);
     showToast("success", t("add_owner.messages.success"));
-    // await router.push("/owners");
   } catch (error) {
     console.error("Failed to add owner:", error);
     showToast("error", t("add_owner.messages.error"));
@@ -260,10 +261,20 @@ async function submitForm() {
 }
 
 function formatDate(isoDateString) {
+  /**
+   * Formats an ISO date string to a readable date format.
+   * @param {string} isoDateString - The ISO date string to be formatted.
+   * @returns {string|null} - The formatted date string or null if the input is falsy.
+   */
   return isoDateString ? new Date(isoDateString).toISOString().split("T")[0] : null;
 }
 
 function showToast(severity, detail) {
+  /**
+   * Emits an event to display a toast notification with the given severity and detail.
+   * @param {string} severity - The severity of the toast (e.g., "success", "error").
+   * @param {string} detail - The detail message to be displayed in the toast.
+   */
   eventBus.emit("show-toast", {
     severity,
     summary: t("add_owner.title"),

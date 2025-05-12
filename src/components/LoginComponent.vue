@@ -71,6 +71,17 @@
             message
           }}</small>
         </div>
+        <div class="flex items-center mb-6">
+          <CheckBox
+            v-model="rememberMe"
+            inputId="rememberMe"
+            :binary="true"
+            class="mr-2"
+          />
+          <label for="rememberMe" class="text-gray-600 dark:text-gray-400 text-sm">
+            {{ $t("login.remember_me") }}
+          </label>
+        </div>
         <div class="flex items-end justify-end">
           <button
             type="submit"
@@ -159,7 +170,7 @@ import axios from "axios";
 import Logo from "@/assets/logo-DOqaXMyT.png";
 import Image from "primevue/image";
 import InputOtp from "primevue/inputotp";
-
+import CheckBox from "primevue/checkbox";
 const { t, locale } = useI18n();
 // console.log(locale.value);
 // console.log(navigator.language?.substring(0, 2));
@@ -176,6 +187,8 @@ const temporaryToken = ref("");
 const twoFactorCode = ref("");
 const GOOGLE_RECAPTCHA_SITE_KEY = import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY;
 const captchaToken = ref(null);
+const rememberMe = ref(false);
+
 const tfaInvalid = ref(false);
 const login = async () => {
   try {
@@ -183,6 +196,7 @@ const login = async () => {
     const response = await axios.post(import.meta.env.VITE_API_URL + "/login", {
       email: email.value,
       password: password.value,
+      remember_me: rememberMe.value, // Send remember_me flag to backend
     });
     const {
       access_token,
@@ -195,7 +209,6 @@ const login = async () => {
     } = response.data;
 
     if (requires_2fa) {
-      // console.log(response.data)
       requires2FA.value = true;
       temporaryToken.value = temporary_token;
       message.value = t("two_factor.required");
@@ -210,7 +223,8 @@ const login = async () => {
         user.preference.user_theme,
         user.preference.user_language,
         user.preference.shortcuts,
-        user.current_branch
+        user.current_branch,
+        rememberMe.value // Pass remember_me to authStore
       );
       router.push("/").catch((err) => console.error("Router error:", err));
     }
@@ -225,21 +239,21 @@ const login = async () => {
 };
 
 /* const verify2FA = async () => {
-  console.log("TRYING OTP");
+  // console.log("TRYING OTP");
   if (!tfa_code.value) {
-    console.log("NO OTP")
+    // console.log("NO OTP")
     tfaInvalid.value = true;
     return
   }
   loading.value = true;
-  console.log("TRYING OTP");
+  // console.log("TRYING OTP");
   try {
     const response = await axios.post(
       import.meta.env.VITE_API_URL + "/2fa/verify",
       { two_factor_code: twoFactorCode.value },
       { headers: { Authorization: `Bearer ${temporaryToken.value}` } }
     );
-    console.log(response);
+    // console.log(response);
     const {
       access_token,
       refresh_token,
@@ -309,7 +323,7 @@ const verify2FA = async () => {
       refresh_expires_in,
       user,
     } = response.data;
-    console.log(user);
+    // console.log(user);
     authStore.logIn(
       access_token,
       refresh_token,

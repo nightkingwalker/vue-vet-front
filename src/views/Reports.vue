@@ -27,7 +27,7 @@ import Menubar from "primevue/menubar";
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
-console.log(route.path);
+// console.log(route.path);
 const items = ref([
   {
     label: t("reports.menu.stockmovement"),

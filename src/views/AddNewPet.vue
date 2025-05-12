@@ -236,19 +236,18 @@
 </template>
 
 <script setup>
-import { onMounted, ref, onBeforeUnmount } from "vue";
-import AutoComplete from "primevue/autocomplete";
-import InputText from "primevue/inputtext";
-import DatePicker from "primevue/datepicker";
-import Fieldset from "primevue/fieldset";
-import Textarea from "primevue/textarea";
-import Select from "primevue/select";
-import FloatLabel from "primevue/floatlabel";
-import Button from "primevue/button";
-import axiosInstance from "@/axios"; // Assuming you've created a global axios instance
+import axiosInstance from "@/axios";
 import eventBus from "@/eventBus";
 import router from "@/router";
 import Cookies from "js-cookie";
+import AutoComplete from "primevue/autocomplete";
+import Button from "primevue/button";
+import DatePicker from "primevue/datepicker";
+import FloatLabel from "primevue/floatlabel";
+import InputText from "primevue/inputtext";
+import Select from "primevue/select";
+import Textarea from "primevue/textarea";
+import { onBeforeUnmount, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -394,7 +393,7 @@ const filteredOwners = ref([]);
 async function fetchOwners() {
   try {
     const response = await axiosInstance.get("/owners");
-    // // console.log(response.data.data);
+    // console.log(response.data.data);
     owners.value = response.data.data;
   } catch (error) {
     console.error("Failed to fetch owners:", error);
@@ -455,14 +454,14 @@ const submitForm = async () => {
     allergies: pet.value.allergies,
   };
 
-  console.log(invalid.value); // Verify the structure
-  console.log(submissionData);
+  // console.log(invalid.value); // Verify the structure
+  // console.log(submissionData);
   try {
     isSubmitting.value = true;
     const response = await axiosInstance.post("/pets", submissionData);
     emit("submitted", response.data); // You may modify this based on your response structure
 
-    // // console.log(response);
+    // console.log(response);
     eventBus.emit("show-toast", {
       severity: "success",
       summary: t("pet_form.toast.success"),
@@ -487,7 +486,7 @@ const submitForm = async () => {
 onMounted(() => {
   fetchOwners();
   eventBus.on("ownerAdded", (event) => {
-    // // console.log(event);
+    // console.log(event);
   });
 });
 

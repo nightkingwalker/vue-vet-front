@@ -2164,11 +2164,11 @@ const fetchHistory = async (medicalRecordId) => {
       } else if (typeof musc.affected_limbs === "string") {
         affectedLimbs = musc.affected_limbs.split(",");
       }
-      console.log(affectedLimbs);
-      console.log("FH", affectedLimbs.includes("FL"));
-      console.log("FH", affectedLimbs.includes("FR"));
-      console.log("FH", affectedLimbs.includes("HL"));
-      console.log("FH", affectedLimbs.includes("FL"));
+      // console.log(affectedLimbs);
+      // console.log("FH", affectedLimbs.includes("FL"));
+      // console.log("FH", affectedLimbs.includes("FR"));
+      // console.log("FH", affectedLimbs.includes("HL"));
+      // console.log("FH", affectedLimbs.includes("FL"));
       formData.value.affected_limbs_FL = affectedLimbs.includes("FL");
       formData.value.affected_limbs_FR = affectedLimbs.includes("FR");
       formData.value.affected_limbs_HL = affectedLimbs.includes("HL");
@@ -2342,7 +2342,7 @@ const submitForm = async () => {
     delete payload.affected_limbs_HL;
     delete payload.affected_limbs_HR;
 
-    console.log("Final payload:", JSON.stringify(payload, null, 2));
+    // console.log("Final payload:", JSON.stringify(payload, null, 2));
     // Submit to backend
     const response = await axiosInstance.put(
       `/medical-records/history/${props.medical_record_id}`,
@@ -2350,7 +2350,7 @@ const submitForm = async () => {
       payload
     );
 
-    console.log("CaseHistoryUpdated", response.data);
+    // console.log("CaseHistoryUpdated", response.data);
     emit("CaseHistoryUpdated", response.data);
 
     eventBus.emit("show-toast", {
@@ -2364,7 +2364,7 @@ const submitForm = async () => {
   }
 };
 function setActivePanel(panel) {
-  // // console.log("Panel" + panel);
+  // console.log("Panel" + panel);
   activeStep.value = "panel";
 }
 onMounted(() => {

@@ -1062,7 +1062,7 @@ const parseResults = (resultsString) => {
     const results = JSON.parse(resultsString);
     return results.map((result) => {
       const parts = result.split(":");
-      // // console.log(parts);
+      // console.log(parts);
       return { key: parts[0].trim(), value: parts[1].trim() };
     });
   } catch (error) {

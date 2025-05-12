@@ -124,7 +124,7 @@ const submitForm = async () => {
     };
     owner.value.birth_date = formatDate(owner.value.birth_date);
     const response = await axiosInstance.put(`/owners/${owner.value.id}`, owner.value);
-    console.log(response.data);
+    // console.log(response.data);
     emit("OwnerUpdated", response.data);
     emit("close-dialog");
 

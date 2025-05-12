@@ -9,6 +9,7 @@ import { useToast } from "primevue/usetoast";
 import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
+import Cookies from "js-cookie";
 
 const { t, locale } = useI18n();
 const props = defineProps({
@@ -53,15 +54,30 @@ const clearTimers = () => {
   emit("activity-reset");
 };
 
+const shouldCheckInactivity = computed(() => {
+  // Check if remember me is set and the session is persistent
+  const rememberMeCookie = Cookies.get("remember_me");
+  return props.allowTimeout && !rememberMeCookie;
+});
+
 const resetActivityTimeout = () => {
   clearTimeout(activityTimeout.value);
-  activityTimeout.value = (setTimeout(() => {
-    if (props.allowTimeout) {
+  if (shouldCheckInactivity.value) {
+    activityTimeout.value = (setTimeout(() => {
       playSound();
       showConfirm();
-    }
-  }, props.timeoutDuration * 1000) as unknown) as number;
+    }, props.timeoutDuration * 1000) as unknown) as number;
+  }
 };
+// const resetActivityTimeout = () => {
+//   clearTimeout(activityTimeout.value);
+//   activityTimeout.value = (setTimeout(() => {
+//     if (props.allowTimeout) {
+//       playSound();
+//       showConfirm();
+//     }
+//   }, props.timeoutDuration * 1000) as unknown) as number;
+// };
 
 const resetCountdown = () => {
   countdown.value = props.timeoutDuration;

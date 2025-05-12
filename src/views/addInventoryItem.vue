@@ -548,7 +548,7 @@ const generateBarcode = () => {
     "8" + Math.floor(100000000000 + Math.random() * 900000000000).toString();
   form.value.barcode = randomBarcode;
 };
-// // console.log("TEST", props.item);
+// console.log("TEST", props.item);
 if (props.item) {
   form.value = {
     ...props.item,
@@ -571,7 +571,7 @@ const searchItems = async (event) => {
     searchResults.value = [];
     return;
   }
-  console.log(event.query);
+  // console.log(event.query);
   try {
     const { data } = await axiosInstance.get(`/inventory-items/search`, {
       params: {
@@ -709,7 +709,7 @@ const handleSubmit = () => {
 };
 const reasonLabel = computed(() => {
   // console.log(adjustmentReasons.value)
-  console.log(adjustmentReason.value);
+  // console.log(adjustmentReason.value);
   const found = adjustmentReasons.value.find((r) => r.value === adjustmentReason.value);
   // console.log(found)
   return found?.label || "NO VALUE";

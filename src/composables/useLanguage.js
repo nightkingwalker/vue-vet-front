@@ -20,8 +20,7 @@ export const useLanguage = () => {
     
     // 3. Update local ref
     currentLanguage.value = lang
-    
-    console.log('Applied language:', lang)
+
   }
 
   // Initialize language from most authoritative source
