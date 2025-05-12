@@ -220,7 +220,7 @@ import Message from "primevue/message";
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
-const isSubmitting = ref(true);
+const isSubmitting = ref(false);
 // Define emitted events
 const emit = defineEmits(["submitted"]);
 
