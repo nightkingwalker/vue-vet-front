@@ -56,6 +56,7 @@ export const useAuthStore = defineStore("auth", {
       M3K8g2387BahBaqyjDe6,
       rememberMe = false
     ) {
+      // console.log("rememberMe", rememberMe);
       this.token = accessToken;
       this.refreshToken = refreshToken;
       this.tokenExpiry = tokenExpiry;
@@ -120,6 +121,11 @@ export const useAuthStore = defineStore("auth", {
         ...commonCookieOptions,
         expires: rememberMe ? rememberMeExpiry : tokenExpiryDate,
       });
+      // Set remember_me cookie first with proper expiration
+      Cookies.set('remember_me', rememberMe ? '1' : '0', {
+        ...commonCookieOptions,
+        expires: rememberMe ? rememberMeExpiry : null // session cookie if not remember me
+      });
 
       this.startTokenRefresh();
     },
@@ -136,8 +142,8 @@ export const useAuthStore = defineStore("auth", {
       Cookies.remove("token_expiry");
       Cookies.remove("refresh_expiry");
       Cookies.remove("name");
-      Cookies.remove("theme");
-      Cookies.remove("language");
+      // Cookies.remove("theme");
+      // Cookies.remove("language");
       Cookies.remove("shortcuts");
       Cookies.remove("M3K8g2387BahBaqyjDe6");
       localStorage.removeItem('theme');

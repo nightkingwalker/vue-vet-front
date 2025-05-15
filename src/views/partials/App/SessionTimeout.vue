@@ -2,7 +2,7 @@
   <!-- This component works invisibly in the background -->
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
@@ -15,6 +15,7 @@ const { t, locale } = useI18n();
 const props = defineProps({
   timeoutDuration: {
     type: Number,
+    // default: 10, // 5 minutes in seconds
     default: 300, // 5 minutes in seconds
   },
   allowTimeout: {
@@ -31,9 +32,14 @@ const authStore = useAuthStore();
 const router = useRouter();
 
 const countdown = ref(props.timeoutDuration);
-const timerId = ref<number>();
-const logoutTimerId = ref<number>();
-const activityTimeout = ref<number>();
+const timerId = ref(null);
+const logoutTimerId = ref(null);
+const activityTimeout = ref(null);
+
+// Check remember me status
+const isRememberMeActive = computed(() => {
+  return Cookies.get("remember_me") === "1";
+});
 
 const formattedCountdown = computed(() => {
   const minutes = Math.floor(countdown.value / 60);
@@ -42,6 +48,7 @@ const formattedCountdown = computed(() => {
 });
 
 const playSound = () => {
+  if (isRememberMeActive.value) return;
   new Audio("/sounds/timeout.mp3")
     .play()
     .catch((e) => console.error("Audio playback failed:", e));
@@ -54,36 +61,26 @@ const clearTimers = () => {
   emit("activity-reset");
 };
 
-const shouldCheckInactivity = computed(() => {
-  // Check if remember me is set and the session is persistent
-  const rememberMeCookie = Cookies.get("remember_me");
-  return props.allowTimeout && !rememberMeCookie;
-});
-
 const resetActivityTimeout = () => {
+  // console.log("resetActivityTimeout");
+  if (isRememberMeActive.value) return;
+
   clearTimeout(activityTimeout.value);
-  if (shouldCheckInactivity.value) {
-    activityTimeout.value = (setTimeout(() => {
+  activityTimeout.value = setTimeout(() => {
+    if (props.allowTimeout) {
       playSound();
       showConfirm();
-    }, props.timeoutDuration * 1000) as unknown) as number;
-  }
+    }
+  }, props.timeoutDuration * 1000);
 };
-// const resetActivityTimeout = () => {
-//   clearTimeout(activityTimeout.value);
-//   activityTimeout.value = (setTimeout(() => {
-//     if (props.allowTimeout) {
-//       playSound();
-//       showConfirm();
-//     }
-//   }, props.timeoutDuration * 1000) as unknown) as number;
-// };
 
 const resetCountdown = () => {
+  if (isRememberMeActive.value) return;
+
   countdown.value = props.timeoutDuration;
   clearInterval(timerId.value);
 
-  timerId.value = (setInterval(() => {
+  timerId.value = setInterval(() => {
     countdown.value--;
     emit("timeout-warning", countdown.value);
 
@@ -93,12 +90,16 @@ const resetCountdown = () => {
     } else {
       updateTimeoutDialog();
     }
-  }, 1000) as unknown) as number;
+  }, 1000);
 };
+
 const timeoutMessage = computed(() =>
   t("app.session.timeout_message", { time: formattedCountdown.value })
 );
+
 const updateTimeoutDialog = () => {
+  if (isRememberMeActive.value) return;
+
   confirm.require({
     message: timeoutMessage.value,
     header: t("app.session.timeout_header"),
@@ -123,18 +124,22 @@ const updateTimeoutDialog = () => {
 };
 
 const showConfirm = () => {
+  if (isRememberMeActive.value) return;
+
   updateTimeoutDialog();
   resetCountdown();
   startLogoutTimer();
 };
 
 const startLogoutTimer = () => {
+  if (isRememberMeActive.value) return;
+
   clearTimeout(logoutTimerId.value);
-  logoutTimerId.value = (setTimeout(() => {
+  logoutTimerId.value = setTimeout(() => {
     if (countdown.value <= 0) {
       handleTimeout();
     }
-  }, props.timeoutDuration * 1000) as unknown) as number;
+  }, props.timeoutDuration * 1000);
 };
 
 const handleTimeout = () => {
@@ -152,6 +157,8 @@ const handleTimeout = () => {
 
 // Activity listeners
 const setupActivityListeners = () => {
+  if (isRememberMeActive.value) return;
+
   window.addEventListener("mousemove", resetActivityTimeout);
   window.addEventListener("keypress", resetActivityTimeout);
   window.addEventListener("click", resetActivityTimeout);
@@ -167,7 +174,9 @@ const cleanupActivityListeners = () => {
 
 onMounted(() => {
   setupActivityListeners();
-  resetActivityTimeout();
+  if (!isRememberMeActive.value) {
+    resetActivityTimeout();
+  }
 });
 
 onUnmounted(() => {

@@ -119,12 +119,24 @@
         <Toast :position="!isRtl ? `bottom-right` : `bottom-left`" />
       </div>
     </div>
+    <div v-if="!online" class="offline-bar">
+      <i class="pi pi-wifi-off mr-2"></i>
+      {{ $t("app.offline_message") }}
+    </div>
   </div>
 </template>
 
 <script setup>
 // ============== IMPORTS ==============
-import { ref, computed, onMounted, onUnmounted, watch, watchEffect } from "vue";
+import {
+  ref,
+  computed,
+  onMounted,
+  onUnmounted,
+  watch,
+  watchEffect,
+  getCurrentInstance,
+} from "vue";
 import { useRoute, RouterLink, RouterView } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useAuthStore } from "@/stores/authStore";
@@ -158,6 +170,7 @@ const authStore = useAuthStore();
 const isLoggedIn = authStore.isLoggedIn;
 const { isDarkMode, initializeTheme, toggleTheme } = useTheme();
 const { initializeLanguage } = useLanguage();
+const { $connectivity } = getCurrentInstance().appContext.config.globalProperties;
 // ============== REACTIVE STATE ==============
 
 // const isDarkMode = ref(false);
@@ -167,6 +180,7 @@ const countdown = ref(300);
 const checked = ref(false);
 import { useDevice } from "@/composables/useDevice";
 const mobileMenuVisible = ref(false);
+const online = ref(true);
 
 // ============== COMPUTED PROPERTIES ==============
 const isRtl = computed(() => {
@@ -505,10 +519,16 @@ const signOut = () => {
 };
 
 // ============== LIFECYCLE HOOKS ==============
-onMounted(() => {
+onMounted(async () => {
   // Initialize theme
   initializeTheme();
   initializeLanguage();
+  const { $connectivity } = getCurrentInstance().appContext.config.globalProperties;
+  online.value = await $connectivity.getOnlineStatus();
+  const interval = setInterval(async () => {
+    online.value = await $connectivity.getOnlineStatus();
+    console.log("Initial connectivity status:", online.value); // Changed to console.log
+  }, 5000);
   // const savedTheme = localStorage.getItem("theme");
   // if (savedTheme === "dark") {
   //   isDarkMode.value = true;
@@ -536,6 +556,7 @@ onUnmounted(() => {
   document.removeEventListener("keypress", resetActivityTimeout);
   document.removeEventListener("keydown", handleKeyDown);
   clearTimers();
+  clearInterval(interval);
 });
 
 // Watch route changes for active menu item

@@ -19,9 +19,37 @@ import ConfirmDialog from 'primevue/confirmdialog';
 // import { VueReCaptcha } from 'vue-recaptcha-v3'
 import FocusTrap from 'primevue/focustrap';
 import AnimateOnScroll from 'primevue/animateonscroll';
+import {
+    processQueue,
+    addToQueue,
+    getPendingCount,
+    initQueueProcessor // Add this import
+} from '@/utils/offlineQueue.js';
+import {
+    getOnlineStatus,
+    startMonitoring,
+    waitForConnection
+} from '@/utils/connectivity';
+
 
 import { i18n } from './plugins/i18n';
+
 const app = createApp(App)
+
+// Initialize queue processor
+
+
+app.config.globalProperties.$connectivity = {
+    getOnlineStatus,
+    startMonitoring,
+    waitForConnection
+};
+
+app.config.globalProperties.$offlineQueue = {
+    addToQueue,
+    processQueue,
+    getPendingCount
+};
 
 const MyPreset = definePreset(Aura, {
     primitive: {
@@ -158,5 +186,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     app.use(i18n);
     app.component('ConfirmDialog', ConfirmDialog);
     app.component('Toast', Toast); // Register the Toast component globally
+    initQueueProcessor();
     app.mount('#app');
+    // startMonitoring();
 });

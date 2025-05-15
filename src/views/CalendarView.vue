@@ -217,7 +217,7 @@
   </Dialog>
 </template>
 <script setup>
-import { ref, onMounted, nextTick, watch } from "vue";
+import { ref, onMounted, nextTick, watchEffect } from "vue";
 // import { Qalendar } from "qalendar";
 import { ScheduleXCalendar } from "@schedule-x/vue";
 import {
@@ -812,7 +812,7 @@ const arAR = {
   ...datePickerArAr,
   ...calendarArAr,
 };
-watch(() => {
+watchEffect(() => {
   setCalendarTheme(Cookies.get("theme"));
 });
 /*end testing calendar*/

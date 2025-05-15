@@ -631,11 +631,19 @@
                 @click="activateCallback('6')"
                 severity="secondary"
               />
-              <Button
+              <!-- <Button
                 :label="$t('medical_examination_form.buttons.submit')"
                 type="submit"
                 @click="submitForm"
-              />
+              /> -->
+              <Button
+                type="submit"
+                :disabled="isSubmitting ? true : false"
+                @click="submitForm"
+              >
+                <i class="fa-solid fa-spinner fa-spin" v-if="isSubmitting"></i>
+                <span v-else>{{ $t("pet_form.buttons.submit") }}</span>
+              </Button>
             </div>
           </StepPanel>
         </StepPanels>
@@ -741,7 +749,7 @@ const examination = ref(
   }*/
 );
 const activeStep = ref("1");
-
+const isSubmitting = ref(false);
 const yesno = ref([
   { label: t("medical_examination_form.options.yes"), value: "yes" },
   { label: t("medical_examination_form.options.no"), value: "no" },
@@ -749,7 +757,7 @@ const yesno = ref([
 // Form submission
 const submitForm = async () => {
   //const { t } = useI18n();
-
+  if (isSubmitting.value) return;
   const submissionData = {
     ...examination.value,
     medical_record_id: props.medical_record_id,
@@ -759,7 +767,9 @@ const submitForm = async () => {
   };
   // console.log(submissionData);
   try {
+    isSubmitting.value = true;
     const response = await axiosInstance.post("/medical-examinations", submissionData);
+
     emit("submitted", response.data);
 
     eventBus.emit("show-toast", {
@@ -768,6 +778,7 @@ const submitForm = async () => {
       detail: t("medical_examination_form.messages.success"),
       life: 5000,
     });
+    isSubmitting.value = false;
   } catch (error) {
     eventBus.emit("show-toast", {
       severity: "error",
@@ -777,6 +788,7 @@ const submitForm = async () => {
       life: 5000,
     });
     console.error("Error submitting form:", error);
+    isSubmitting.value = false;
   }
 };
 </script>

@@ -20,7 +20,14 @@
 
       <!-- Main Content -->
       <div class="container mx-auto mt-6">
-        <router-view />
+        <router-view v-slot="{ Component, route }">
+          <transition :name="route.meta.transition || 'fade'" mode="out-in">
+            <div :key="route.path">
+              <!-- Added wrapper div -->
+              <component :is="Component" />
+            </div>
+          </transition>
+        </router-view>
 
         <!-- Global UI Components -->
         <ConfirmDialog class="md:w-[35vw] sm:w-full !text-sm">
@@ -43,10 +50,27 @@
       :allow-timeout="(route.meta.allowSessionTimeout as boolean) ?? true"
     />
   </div>
+  <Transition name="fade">
+    <div
+      class="offline-bar absolute bottom-0 h-12 bg-red-600 w-full z-50 bg-opacity-60 text-white flex justify-center items-center gap-4"
+      v-if="!online"
+    >
+      <i class="fa-solid fa-wifi"></i>
+      {{ $t("app.offline_message") }}
+    </div>
+  </Transition>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watchEffect } from "vue";
+import {
+  ref,
+  computed,
+  onMounted,
+  onUnmounted,
+  watch,
+  watchEffect,
+  getCurrentInstance,
+} from "vue";
 import { useRoute } from "vue-router";
 import router from "@/router";
 import eventBus from "@/eventBus";
@@ -61,7 +85,8 @@ import Toast from "primevue/toast";
 import Cookies from "js-cookie";
 import { useTheme } from "@/composables/useTheme";
 import { useLanguage } from "@/composables/useLanguage";
-
+const { $connectivity } = getCurrentInstance().appContext.config.globalProperties;
+const online = ref(true);
 const route = useRoute();
 const { t, locale } = useI18n();
 const authStore = useAuthStore();
@@ -143,6 +168,12 @@ onMounted(() => {
   initializeTheme();
   initializeLanguage();
   document.addEventListener("keydown", handleKeyDown);
+  const { $connectivity } = getCurrentInstance().appContext.config.globalProperties;
+  const interval = setInterval(async () => {
+    online.value = true;
+    online.value = await $connectivity.getOnlineStatus();
+    // console.log("online.value", online.value);
+  }, 5000);
 });
 </script>
 
@@ -182,5 +213,42 @@ button:hover {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+/* Fade transition */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.6s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Slide transitions */
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition: all 0.4s ease;
+  position: absolute;
+  width: 100%;
+}
+
+.slide-right-enter-from {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.slide-right-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

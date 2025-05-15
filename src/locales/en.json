@@ -116,6 +116,7 @@
         "profile": {
             "title": "Profile"
         },
+        "offline_message": "No Internet Connection",
         "session": {
             "timeout_message": "You've been inactive for a while. You will be automatically logged out in {time} seconds.",
             "timeout_header": "Session Timeout",
@@ -734,6 +735,7 @@
         "title": "Physical Examination Report",
         "no_examination": "No Examination has been performed yet.",
         "add_examination": "Add Physical Examination",
+        "edit_button": "Edit Physical Examination Details",
         "general_info": {
             "pet_id": "Pet ID",
             "pet_name": "Pet Name",

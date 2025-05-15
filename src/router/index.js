@@ -36,6 +36,7 @@ const router = createRouter({
     {
         path: '/:ownerid/pets',
         name: 'OwnerPets',
+        meta: { transition: 'slide-right' },
         component: OwnerPets,
 
         props: true, // This passes the route params as props to the component,
@@ -162,7 +163,11 @@ const router = createRouter({
         path: '/logout',
         name: 'Logout',
     },
-    ]
+    ],
+    scrollBehavior(to, from, savedPosition) {
+        // always scroll to top
+        return { top: 0 }
+    },
 });
 
 router.beforeEach((to, from, next) => {

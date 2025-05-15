@@ -1,11 +1,13 @@
 <template>
   <div class="w-full lg:text-[14px]">
+    <p class="text-sm text-gray-600 dark:text-gray-400">{{ statusMessage }}</p>
+
     <form @submit.prevent="submitForm" class="mt-8 mx-auto w-4/5">
       <fieldset
         class="p-fieldset p-component w-full flex flex-wrap gap-4 items-center border rounded-lg p-4"
       >
         <legend>
-          {{ owners.name }} <i class="pi pi-angle-double-right"></i>
+          {{ props.ownername }} <i class="pi pi-angle-double-right"></i>
           {{ $t("pet_form.title") }}
         </legend>
         <input type="hidden" id="branch_id" value="1" v-model="pet.branch_id" />
@@ -199,32 +201,48 @@
 </template>
 
 <script setup>
+import { ref, onMounted, getCurrentInstance } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+import Cookies from "js-cookie";
 import axiosInstance from "@/axios";
 import eventBus from "@/eventBus";
-import Cookies from "js-cookie";
-import { ref } from "vue";
-import { useI18n } from "vue-i18n";
-import { useRoute, useRouter } from "vue-router";
-
+import { useToast } from "primevue/usetoast";
 // PrimeVue Components
-import Button from "primevue/button";
-import DatePicker from "primevue/datepicker";
-import FloatLabel from "primevue/floatlabel";
 import InputText from "primevue/inputtext";
-import Select from "primevue/select";
 import Textarea from "primevue/textarea";
+import DatePicker from "primevue/datepicker";
+import Fieldset from "primevue/fieldset";
+import Select from "primevue/select";
+import FloatLabel from "primevue/floatlabel";
+import Button from "primevue/button";
+import Message from "primevue/message";
 
+//Local Database
+// import { startMonitoring, getOnlineStatus } from "@/utils/connectivity"; // Adjust path if needed
+// import { addToQueue } from "@/utils/offlineQueue";
 // Initialize i18n and router
+
+const toast = useToast();
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const isSubmitting = ref(false);
+const isOnline = ref(true);
+const statusMessage = ref("");
 // Define emitted events
 const emit = defineEmits(["submitted"]);
-
+const props = defineProps({
+  ownername: {
+    type: String,
+    required: true,
+  },
+});
 // Form validation state
 const invalid = ref({ pet: {} });
-
+// Access global properties
+const { proxy } = getCurrentInstance();
+const { $connectivity, $offlineQueue } = proxy;
 // Dropdown options
 // const species = ref([
 //   { label: t("species.avian"), en_label: "Avian", value: "Birds", icon: "fa-solid fa-dove" },
@@ -356,9 +374,9 @@ const genders = ref([
 ]);
 
 // Owner data
-const owners = ref([]);
+// const owners = ref([]);
 const ownerid = route.params.ownerid;
-const filteredOwners = ref([]);
+// const filteredOwners = ref([]);
 
 // Pet form data model
 const pet = ref({
@@ -465,36 +483,63 @@ const submitForm = async () => {
     deceased: pet.value.deceased.value === "Yes" ? "Y" : "N",
     allergies: pet.value.allergies,
   };
+  const submission = {
+    data: submissionData,
+    endpoint: "/pets", // Adjust based on your backend route
+    method: "POST",
+  };
+  const online = await $connectivity.getOnlineStatus();
+  if (online) {
+    try {
+      // Submit data to API
+      const response = await axiosInstance.post("/pets", submissionData);
 
-  try {
-    // Submit data to API
-    const response = await axiosInstance.post("/pets", submissionData);
+      // Emit success events
+      emit("submitted", response.data);
+      eventBus.emit("show-toast", {
+        severity: "success",
+        summary: "Success",
+        detail: "Pet added successfully",
+        life: 5000,
+      });
 
-    // Emit success events
-    emit("submitted", response.data);
-    eventBus.emit("show-toast", {
+      // Navigate to pets list
+      await router.push(`/${route.params.ownerid}/pets`);
+    } catch (error) {
+      // Handle submission error
+      eventBus.emit("show-toast", {
+        severity: "error",
+        summary: "Error",
+        detail: error.message || "Failed to add pet",
+        life: 5000,
+      });
+      console.error("Submission error:", error);
+    }
+  } else {
+    // Use global queue method
+    await $offlineQueue.addToQueue(submission);
+    emit("submittedOffline");
+    toast.add({
       severity: "success",
-      summary: "Success",
-      detail: "Pet added successfully",
+      summary: "Offline",
+      detail:
+        "You are offline. Data saved locally and will be submitted later. Please close the dialog",
       life: 5000,
     });
 
-    // Navigate to pets list
-    await router.push(`/${route.params.ownerid}/pets`);
-  } catch (error) {
-    // Handle submission error
-    eventBus.emit("show-toast", {
-      severity: "error",
-      summary: "Error",
-      detail: error.message || "Failed to add pet",
-      life: 5000,
-    });
-    console.error("Submission error:", error);
+    // await router.push(`/${route.params.ownerid}/pets`);
   }
 };
 
 // Fetch owners when component is mounted
-fetchOwners();
+// fetchOwners();
+onMounted(async () => {
+  // Use global connectivity check
+  isOnline.value = await $connectivity.getOnlineStatus();
+  statusMessage.value = isOnline.value
+    ? "Your data is being saved online."
+    : "You are offline. Your work will be saved locally and synced later.";
+});
 </script>
 <style scoped>
 .form-container {
