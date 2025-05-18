@@ -3,7 +3,7 @@
     <div :class="{ 'w-4/5': !isMobile, 'w-9/10 mx-auto': isMobile }">
       <ScheduleXCalendar
         :calendar-app="calendarApp"
-        class="mt-6 mx-auto"
+        class="mx-auto"
         :class="{
           '!w-full !h-[calc(100vh-100px)]': !isMobile,
           '!w-full !h-[400px]': isMobile,
@@ -57,7 +57,7 @@
         '!h-[calc(100vh-100px)] w-1/5': !isMobile,
         'w-9/10 h-fit mx-auto': isMobile,
       }"
-      class="mt-6 !bg-gray-200 dark:!bg-zinc-600 border rounded-lg p-4 flex flex-col justify-between"
+      class="!bg-gray-200 dark:!bg-zinc-600 border rounded-lg p-4 flex flex-col justify-between"
     >
       <div
         class="flex flex-col items-center gap-4 mb-4 bg-gray-100 dark:bg-zinc-500 shadow-md rounded-lg p-4 !text-sm"
@@ -358,13 +358,20 @@ const fetchAppointments = async (page = 1) => {
       theme: getEventTheme(appointment.type),
       status: appointment.status,
       _customContent: {
-        monthGrid: "<h1>" + appointment.pet.name + "/" + appointment.owner.name + "</h1>",
+        monthGrid:
+          "<h1>" +
+          appointment.pet.name +
+          "/" +
+          appointment.owner.name +
+          "</h1><p>" +
+          appointment.description +
+          "</p>",
         dateGrid:
           "<h1>" +
           appointment.pet.name +
           "/" +
           appointment.owner.name +
-          "</h1><br><span>" +
+          "</h1><span>" +
           appointment.title +
           "</span>",
         timeGrid:
@@ -372,14 +379,14 @@ const fetchAppointments = async (page = 1) => {
           appointment.pet.name +
           "/" +
           appointment.owner.name +
-          "</h1><br><span>" +
+          "</h1><span>" +
           appointment.title +
           "</span>",
       },
     }));
     if (events.value.length > 0) {
       // currentPet.value = events.value[0];
-      // console.log(events.value);
+      console.log(events.value);
     }
     visible.value = true;
     calendarApp.eventsService.set(events.value);
@@ -489,6 +496,19 @@ const calendarApp = createCalendar({
         container: "#a29742",
       },
     },
+    "Non-Emergency": {
+      colorName: "Non-Emergency",
+      lightColors: {
+        main: "#1db954", // Vibrant green (similar to Spotify's green)
+        container: "#86e8b6", // Very light mint green
+        onContainer: "#064e3b", // Dark green (for text on container)
+      },
+      darkColors: {
+        main: "#a7f3d0", // Soft mint green
+        onContainer: "#86e8b6", // Very light mint green
+        container: "#065f46", // Deep emerald green
+      },
+    },
     Emergency: {
       colorName: "Emergency",
       lightColors: {
@@ -550,7 +570,12 @@ const calendarApp = createCalendar({
   gridHeight: 500,
   isResponsive: true,
   skipValidation: true,
-
+  monthGridOptions: {
+    /**
+     * Number of events to display in a day cell before the "+ N events" button is shown
+     * */
+    nEventsPerDay: 2,
+  },
   translations: mergeLocales(translations, {
     arAR: {
       Today: "اليوم",
@@ -850,6 +875,12 @@ onMounted(() => {
   border-radius: var(--p-border-radius-md);
   outline-color: transparent;
   gap: 0.5rem;
+}
+.sx__event.sx__month-grid-event.sx__month-grid-cell {
+  height: 50px;
+}
+.sx__forward-backward-navigation {
+  direction: ltr;
 }
 /* .sx__week-grid {
   max-height: 800px;

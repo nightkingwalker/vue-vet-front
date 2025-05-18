@@ -93,6 +93,7 @@
         }
     },
     "app": {
+        "title": "Vet Clinic Management System",
         "menu": {
             "calendar": "Calendar",
             "patients": "Clinic",

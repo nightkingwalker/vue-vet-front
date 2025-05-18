@@ -1,31 +1,32 @@
 <template>
-  <header class="flex items-center justify-end fixed top-0 w-full z-50 px-4 py-2">
+  <header
+    class="flex items-center justify-between fixed top-0 w-full z-30 px-4 py-4 h-12"
+  >
     <!-- Mobile Menu Button (Conditional) -->
     <button
       v-if="isMobile && showMobileMenuButton"
       @click="emit('toggle-mobile-menu')"
-      class="flex items-center justify-center p-1 cursor-pointer gap-3 bg-[var(--p-surface-800)] dark:bg-[var(--p-surface-100)] rounded-lg w-8 h-8 hover:bg-gray-400 shadow-md"
+      class="flex items-center justify-center p-1 cursor-pointer gap-3 bg-[var(--p-surface-500)] dark:bg-[var(--p-surface-100)] rounded-lg w-8 h-8 hover:bg-gray-400 shadow-md z-30 order-1"
       :aria-label="mobileMenuButtonLabel"
     >
       <i :class="mobileMenuIcon" class="text-white"></i>
     </button>
 
-    <!-- Logo (Optional)
-    <slot name="logo">
-      <div v-if="showLogo" class="flex items-center">
-        <Image
-          :src="logo"
-          alt="Application Logo"
-          class="rounded-[4rem] dark:bg-white w-10 p-1"
-        />
-      </div>
-    </slot> -->
+    <!-- Logo (Optional) -->
+    <div class="grow-[3] order-2 flex justify-center items-center gap-2">
+      <Image
+        :src="Logo"
+        alt="Application Logo"
+        class="flex justify-center rounded-[4rem] dark:bg-white w-[2rem] p-1"
+      />
+      <h1 class="text-center">{{ $t("app.title") }}</h1>
+    </div>
 
     <!-- Dark Mode Toggle -->
     <button
       @click="toggleTheme"
       type="button"
-      class="flex items-center justify-center p-1 cursor-pointer gap-3 bg-[var(--p-surface-800)] dark:bg-[var(--p-surface-100)] rounded-lg w-8 h-8 hover:bg-gray-400 shadow-md"
+      class="flex items-center justify-center p-1 cursor-pointer gap-3 bg-[var(--p-surface-600)] dark:bg-[var(--p-surface-100)] rounded-lg w-8 h-8 hover:bg-gray-400 shadow-md order-3"
       :title="themeToggleTitle"
       :aria-label="themeToggleTitle"
     >
@@ -38,6 +39,7 @@
 import { computed } from "vue";
 import Image from "primevue/image";
 import { useTheme } from "@/composables/useTheme";
+import Logo from "@/assets/logo.png";
 
 interface Props {
   isMobile?: boolean;

@@ -4,7 +4,7 @@
       :loading="loading" :metaKeySelection="metaKey" sortMode="multiple" exportFilename="Invoices" removableSort
       showGridlines stripedRows v-model:selection="selectedInvoices" highlightOnSelect dataKey="id"
       :exportFunction="beforeExportFunction" responsiveLayout="scroll"
-      class="rounded-xl 2xl:overflow-y-auto drop-shadow-md mt-4 h-[95vh]" size="small">
+      class="rounded-xl 2xl:overflow-y-auto drop-shadow-md h-[95vh]" size="small">
       <template #header>
         <div class="flex justify-between">
           <div class="flex">

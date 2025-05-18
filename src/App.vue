@@ -19,7 +19,7 @@
       />
 
       <!-- Main Content -->
-      <div class="container mx-auto mt-6">
+      <div class="container mx-auto mt-14">
         <router-view v-slot="{ Component, route }">
           <transition :name="route.meta.transition || 'fade'" mode="out-in">
             <div :key="route.path">
@@ -52,7 +52,7 @@
   </div>
   <Transition name="fade">
     <div
-      class="offline-bar absolute bottom-0 h-12 bg-red-600 w-full z-50 bg-opacity-60 text-white flex justify-center items-center gap-4"
+      class="offline-bar absolute bottom-0 h-12 bg-red-600 w-full z-20 bg-opacity-60 text-white flex justify-center items-center gap-4"
       v-if="!online"
     >
       <i class="fa-solid fa-wifi"></i>

@@ -1,5 +1,5 @@
 <template>
-  <Menubar :model="items" class="mt-6 text-xs">
+  <Menubar :model="items" class="text-xs">
     <template #item="{ item, props }">
       <!-- Bind class based on the active property of the item -->
       <a

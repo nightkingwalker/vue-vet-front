@@ -2,7 +2,7 @@
   <DataView
     :value="owners"
     :layout="layout"
-    class="!rounded-xl !overflow-y-auto h-[calc(100vh-70px)] my-4"
+    class="!rounded-xl !overflow-y-auto h-[calc(100vh-70px)]"
   >
     <template #header>
       <div class="flex justify-between items-center">

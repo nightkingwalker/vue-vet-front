@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-2 h-[calc(100vh-60px)] overflow-y-auto my-4 w-full">
+  <div class="flex gap-2 h-[calc(100vh-60px)] overflow-y-auto w-full">
     <div
       class="w-1/4 h-fit bg-[var(--p-surface-200)] dark:bg-[var(--p-surface-600)] rounded-lg p-2"
     >
@@ -303,7 +303,7 @@
       <DataTable
         showGridlines
         :value="visits"
-        class="mx-4 my-4 rounded-lg overflow-hidden text-xs"
+        class="m-2 rounded-lg overflow-hidden text-xs"
         stripedRows
         v-if="!loading"
       >

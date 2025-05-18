@@ -5,7 +5,7 @@
       <button
         @click="toggleTheme"
         type="button"
-        class="absolute z-50 ltr:right-4 rtl:left-4 top-2 flex items-center justify-center p-1 cursor-pointer gap-3 bg-[var(--p-surface-800)] dark:bg-[var(--p-surface-100)] rounded-lg hover:rounded-lg w-8 h-8 hover:bg-gray-400 text-center shadow-md"
+        class="absolute z-20 ltr:right-4 rtl:left-4 top-2 flex items-center justify-center p-1 cursor-pointer gap-3 bg-[var(--p-surface-800)] dark:bg-[var(--p-surface-100)] rounded-lg hover:rounded-lg w-8 h-8 hover:bg-gray-400 text-center shadow-md"
         :title="titleDark"
       >
         <i v-if="isDarkMode" class="fa-solid fa-sun text-yellow-500 text-md w-4"></i>
@@ -30,8 +30,8 @@
         @mouseenter="isHovered = true"
         @mouseleave="isHovered = false"
         :class="{
-          'fixed ltr:inset-y-0 ltr:left-0 rtl:inset-y-0 rtl:right-0 z-50 w-[100vw] mobile-menu': isMobile,
-          'fixed ltr:left-0 rtl:right-0 w-24 2xl:w-20 hover:md:w-60 hover:2xl:w-1/6 hover:lg:w-1/5 z-50 drop-shadow-[0_5px_5px_rgba(0,0,0,0.3)]': !isMobile,
+          'fixed ltr:inset-y-0 ltr:left-0 rtl:inset-y-0 rtl:right-0 z-20 w-[100vw] mobile-menu': isMobile,
+          'fixed ltr:left-0 rtl:right-0 w-24 2xl:w-20 hover:md:w-60 hover:2xl:w-1/6 hover:lg:w-1/5 z-20 drop-shadow-[0_5px_5px_rgba(0,0,0,0.3)]': !isMobile,
           hidden: isMobile && !mobileMenuVisible,
           'collapsed-menu': !isMobile && !isHovered,
           'expanded-menu': !isMobile && isHovered,
@@ -95,7 +95,7 @@
         </template>
       </Menu>
       <span
-        class="animate-bounce h-6 w-6 text-xs bg-[var(--p-surface-800)] dark:bg-[var(--p-surface-100)] text-white dark:text-[var(--p-surface-800)] rounded-full inline-flex items-center justify-center z-50 right-[calc(100vw/12)] bottom-1 absolute"
+        class="animate-bounce h-6 w-6 text-xs bg-[var(--p-surface-800)] dark:bg-[var(--p-surface-100)] text-white dark:text-[var(--p-surface-800)] rounded-full inline-flex items-center justify-center z-20 right-[calc(100vw/12)] bottom-1 absolute"
         :class="!isMobile && !isHovered ? `hidden` : ``"
       >
         <i class="pi pi-arrow-down text-xs" />

@@ -71,7 +71,7 @@
   <!-- Scroll Indicator -->
   <span
     v-if="!isMobile && isHovered"
-    class="animate-bounce h-6 w-6 text-xs bg-[var(--p-surface-800)] dark:bg-[var(--p-surface-100)] text-white dark:text-[var(--p-surface-800)] rounded-full inline-flex items-center justify-center z-50 right-[calc(100vw/12)] bottom-1 absolute"
+    class="animate-bounce h-6 w-6 text-xs bg-[var(--p-surface-800)] dark:bg-[var(--p-surface-100)] text-white dark:text-[var(--p-surface-800)] rounded-full inline-flex items-center justify-center z-20 right-[calc(100vw/12)] bottom-1 absolute"
   >
     <i class="pi pi-arrow-down text-xs" />
   </span>
@@ -127,9 +127,9 @@ const userName = computed(() => {
 });
 
 const sidebarClasses = computed(() => ({
-  "fixed ltr:inset-y-0 ltr:left-0 rtl:inset-y-0 rtl:right-0 z-50 w-[100vw] mobile-menu":
+  "fixed ltr:inset-y-0 ltr:left-0 rtl:inset-y-0 rtl:right-0 z-20 w-[100vw] mobile-menu":
     props.isMobile,
-  "fixed ltr:left-0 rtl:right-0 hover:md:w-60 hover:lg:w-1/5 hover:2xl:w-1/6  z-50 drop-shadow-[0_5px_5px_rgba(0,0,0,0.3)]": !props.isMobile,
+  "fixed ltr:left-0 rtl:right-0 hover:md:w-60 hover:lg:w-1/5 hover:2xl:w-1/6  z-20 drop-shadow-[0_5px_5px_rgba(0,0,0,0.3)]": !props.isMobile,
   hidden: props.isMobile && !props.mobileMenuVisible,
   "collapsed-menu": !props.isMobile && !isHovered.value,
   "expanded-menu": !props.isMobile && isHovered.value,
@@ -222,11 +222,11 @@ const menuItems = computed(() => {
       icon: "fa-solid fa-arrow-trend-up !text-md",
       route: "/reports/stock-movement",
     },
-    {
-      label: t("app.menu.settings"),
-      icon: "pi pi-cog !text-md",
-      route: "/settings",
-    },
+    // {
+    //   label: t("app.menu.settings"),
+    //   icon: "pi pi-cog !text-md",
+    //   route: "/settings",
+    // },
     // {
     //   label: t("app.menu.shortcuts"),
     //   icon: "fa-solid fa-keyboard !text-md",
@@ -279,7 +279,7 @@ const handleMenuItemClick = () => {
 
 /* Active route styling */
 .router-link-active {
-  background: black;
+  background: var(--p-surface-600);
   color: var(--p-primary-contrast-color) !important;
   border-radius: 0.5rem !important;
 }
@@ -288,7 +288,9 @@ const handleMenuItemClick = () => {
   background: var(--p-surface-300);
   color: var(--p-primary-color) !important;
 }
-
+.router-link-active .shortcut {
+  color: var(--p-surface-300);
+}
 .dark .router-link-active .shortcut {
   color: var(--p-primary-contrast-color);
 }
