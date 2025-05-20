@@ -7,7 +7,14 @@
         "submit": "Log In",
         "loading": "Loading...",
         "error": "Login failed. Please try again.",
-        "success": "Login successful!"
+        "success": "Login successful!",
+        "forgot_password": "Forgot password?",
+        "reset_password": "Reset Password",
+        "send_link": "Send Link",
+        "new_password": "New Password",
+        "confirm_password": "Confirm Password",
+        "cancel": "Cancel",
+        "enter_email_to_reset": "Enter your email address and we'll send you a link to reset your password."
     },
     "two_factor": {
         "title": "Two-Factor Authentication",

@@ -491,6 +491,8 @@ const submitForm = async () => {
   const online = await $connectivity.getOnlineStatus();
   if (online) {
     try {
+      // Disable submit button
+      isSubmitting.value = true;
       // Submit data to API
       const response = await axiosInstance.post("/pets", submissionData);
 
@@ -502,7 +504,7 @@ const submitForm = async () => {
         detail: "Pet added successfully",
         life: 5000,
       });
-
+      isSubmitting.value = false;
       // Navigate to pets list
       await router.push(`/${route.params.ownerid}/pets`);
     } catch (error) {
@@ -513,6 +515,7 @@ const submitForm = async () => {
         detail: error.message || "Failed to add pet",
         life: 5000,
       });
+      isSubmitting.value = false;
       console.error("Submission error:", error);
     }
   } else {

@@ -100,6 +100,13 @@
               {{ $t("login.remember_me") }}
             </label>
           </div>
+          <a
+            href="#"
+            class="text-blue-600 hover:text-blue-800 font-medium"
+            @click.prevent="showForgotPasswordModal = true"
+          >
+            {{ $t("login.forgot_password") }}
+          </a>
           <!-- <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">
               Forgot password?
             </a> -->
@@ -216,11 +223,103 @@
       </small>
     </div>
   </div>
+  <!-- Forgot Password Modal -->
+  <Dialog
+    v-model:visible="showForgotPasswordModal"
+    modal
+    :header="t('login.reset_password')"
+    :style="{ width: '450px' }"
+    :draggable="false"
+  >
+    <div class="space-y-4">
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        {{ $t("login.enter_email_to_reset") }}
+      </p>
+
+      <InputText
+        v-model="forgotPasswordEmail"
+        type="email"
+        :placeholder="$t('login.username')"
+        class="w-full"
+      />
+
+      <small
+        class="block h-4"
+        :class="forgotPasswordMessage.success ? 'text-green-500' : 'text-red-500'"
+      >
+        {{ forgotPasswordMessage.message }}
+      </small>
+
+      <div class="flex justify-end gap-2">
+        <Button
+          :label="$t('login.cancel')"
+          severity="secondary"
+          @click="showForgotPasswordModal = false"
+        />
+        <Button
+          :label="$t('login.send_link')"
+          :loading="forgotPasswordLoading"
+          @click="sendPasswordResetLink"
+        />
+      </div>
+    </div>
+  </Dialog>
+
+  <!-- Reset Password Modal (for testing - in production this would be a separate page) -->
+  <Dialog
+    v-model:visible="showResetPasswordModal"
+    modal
+    :header="t('login.reset_password')"
+    :style="{ width: '450px' }"
+    :draggable="false"
+  >
+    <div class="space-y-4">
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        {{ $t("login.resetting_for") }}: <strong>{{ forgotPasswordEmail }}</strong>
+      </p>
+
+      <InputText
+        v-model="newPassword"
+        type="password"
+        :placeholder="$t('login.new_password')"
+        class="w-full"
+      />
+
+      <InputText
+        v-model="confirmPassword"
+        type="password"
+        :placeholder="$t('login.confirm_password')"
+        class="w-full"
+      />
+
+      <small
+        class="block h-4"
+        :class="
+          resetPasswordMessage.includes('success') ? 'text-green-500' : 'text-red-500'
+        "
+      >
+        {{ resetPasswordMessage }}
+      </small>
+
+      <div class="flex justify-end gap-2">
+        <Button
+          :label="$t('login.cancel')"
+          severity="secondary"
+          @click="showResetPasswordModal = false"
+        />
+        <Button
+          :label="$t('login.reset_password')"
+          :loading="resetPasswordLoading"
+          @click="handlePasswordReset"
+        />
+      </div>
+    </div>
+  </Dialog>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-import { useRouter } from "vue-router";
+import { ref, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import InputText from "primevue/inputtext";
 import InputGroupAddon from "primevue/inputgroupaddon";
@@ -231,6 +330,9 @@ import Logo from "@/assets/logo-DOqaXMyT.png";
 import Image from "primevue/image";
 import InputOtp from "primevue/inputotp";
 import CheckBox from "primevue/checkbox";
+import Dialog from "primevue/dialog";
+import Button from "primevue/button";
+
 const { t, locale } = useI18n();
 // console.log(locale.value);
 // console.log(navigator.language?.substring(0, 2));
@@ -240,6 +342,7 @@ const message = ref("");
 const isError = ref(false);
 const isPassword = ref(true);
 const loading = ref(false);
+const route = useRoute();
 const router = useRouter();
 const authStore = useAuthStore();
 const requires2FA = ref(false);
@@ -248,8 +351,29 @@ const twoFactorCode = ref("");
 const GOOGLE_RECAPTCHA_SITE_KEY = import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY;
 const captchaToken = ref(null);
 const rememberMe = ref(false);
-
+/** Reset Password */
+const showForgotPasswordModal = ref(false);
+const forgotPasswordEmail = ref("");
+const forgotPasswordMessage = ref("");
+const forgotPasswordLoading = ref(false);
+const resetToken = ref(""); // For testing - remove in production
+const showResetPasswordModal = ref(false);
+const newPassword = ref("");
+const confirmPassword = ref("");
+const resetPasswordLoading = ref(false);
+const resetPasswordMessage = ref("");
+/**End Reset Password */
 const tfaInvalid = ref(false);
+const props = defineProps({
+  action: {
+    type: String,
+    default: "login",
+  },
+  code: {
+    type: String,
+    default: null,
+  },
+});
 const login = async () => {
   try {
     loading.value = true;
@@ -299,59 +423,6 @@ const login = async () => {
   }
 };
 
-/* const verify2FA = async () => {
-  // console.log("TRYING OTP");
-  if (!tfa_code.value) {
-    // console.log("NO OTP")
-    tfaInvalid.value = true;
-    return
-  }
-  loading.value = true;
-  // console.log("TRYING OTP");
-  try {
-    const response = await axios.post(
-      import.meta.env.VITE_API_URL + "/2fa/verify",
-      { two_factor_code: twoFactorCode.value },
-      { headers: { Authorization: `Bearer ${temporaryToken.value}` } }
-    );
-    // console.log(response);
-    const {
-      access_token,
-      refresh_token,
-      expires_in,
-      refresh_expires_in,
-      user,
-    } = response.data;
-
-    authStore.logIn(
-      access_token,
-      refresh_token,
-      expires_in,
-      refresh_expires_in,
-      user.name,
-      user.current_branch
-    );
-    isError.value = false;
-    message.value = t("two_factor.success");
-    router.push("/").catch((err) => console.error("Router error:", err));
-    isError.value = false;
-  } catch (error) {
-    if (error.response) {
-      if (error.response.status === 429) {
-        message.value = error.response?.data?.message || t("two_factor.throttled");
-        isError.value = true;
-      } else {
-        isError.value = true;
-        message.value = error.response?.data?.message || t("two_factor.invalid");
-      }
-    } else {
-      message.value = t("login.error");
-    }
-  } finally {
-    loading.value = false;
-  }
-};
- */
 const verify2FA = async () => {
   // console.log("RUNNING 2FA")
   if (!twoFactorCode.value || twoFactorCode.value.length !== 6) {
@@ -415,6 +486,66 @@ const verify2FA = async () => {
     loading.value = false;
   }
 };
+const sendPasswordResetLink = async () => {
+  if (!forgotPasswordEmail.value) {
+    // forgotPasswordMessage.value = "Please enter your email address";
+    forgotPasswordMessage.value = {
+      success: false,
+      message: "Please enter your email address",
+    };
+    return;
+  }
+
+  forgotPasswordLoading.value = true;
+  forgotPasswordMessage.value = "";
+
+  try {
+    const response = await axios.post(import.meta.env.VITE_API_URL + "/forgot-password", {
+      email: forgotPasswordEmail.value,
+    });
+
+    // forgotPasswordMessage.value = "Password reset link sent to your email";
+    forgotPasswordMessage.value = {
+      success: true,
+      message: "Password reset link sent to your email",
+    };
+    setTimeout(() => {
+      showForgotPasswordModal.value = false;
+      forgotPasswordEmail.value = "";
+    }, 2000);
+  } catch (error) {
+    forgotPasswordMessage.value = error.response?.data?.message || "An error occurred";
+  } finally {
+    forgotPasswordLoading.value = false;
+  }
+};
+
+const handlePasswordReset = async () => {
+  if (newPassword.value !== confirmPassword.value) {
+    resetPasswordMessage.value = "Passwords do not match";
+    return;
+  }
+
+  resetPasswordLoading.value = true;
+
+  try {
+    const response = await axios.post(import.meta.env.VITE_API_URL + "/reset-password", {
+      code: resetToken.value,
+      password: newPassword.value,
+      password_confirmation: confirmPassword.value,
+    });
+
+    resetPasswordMessage.value = response.data.message;
+    setTimeout(() => {
+      showResetPasswordModal.value = false;
+      router.push("/login");
+    }, 1500);
+  } catch (error) {
+    resetPasswordMessage.value = error.response?.data?.message || "An error occurred";
+  } finally {
+    resetPasswordLoading.value = false;
+  }
+};
 const togglePassInput = () => {
   isPassword.value = !isPassword.value;
   var element = document.getElementsByClassName("password-shield");
@@ -428,6 +559,35 @@ const togglePassInput = () => {
     document.getElementById("password").type = "text";
   }
 };
+const verifyResetCode = async (code) => {
+  forgotPasswordLoading.value = true;
+  try {
+    const response = await axios.post(
+      import.meta.env.VITE_API_URL + "/verify-reset-code",
+      {
+        code: code,
+      }
+    );
+
+    if (response.data.valid) {
+      resetToken.value = code;
+      showResetPasswordModal.value = true;
+      forgotPasswordEmail.value = response.data.email;
+    }
+  } catch (error) {
+    // forgotPasswordMessage.value =
+    //   error.response?.data?.message || "Invalid or expired reset link";
+    isError.value = true;
+    message.value = error.response?.data?.message || t("login.error");
+  } finally {
+    forgotPasswordLoading.value = false;
+  }
+};
+onMounted(() => {
+  if (route.query.code) {
+    verifyResetCode(route.query.code);
+  }
+});
 </script>
 
 <style>

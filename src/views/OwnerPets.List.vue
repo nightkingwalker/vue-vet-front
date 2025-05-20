@@ -306,7 +306,7 @@
     <NewPatient
       @submitted="handleSubmit"
       @submittedOffline="handleSubmitOffline"
-      :ownername="pets[0].owner.name"
+      :ownername="ownerName"
       v-focustrap="{
         disabled: false,
         autoFocus: true,
@@ -348,22 +348,7 @@ const props = defineProps({
     required: true,
   },
 });
-const pets = ref([
-  {
-    id: 0,
-    owner: {
-      name: "s",
-      id: 0,
-    },
-  },
-  {
-    id: 0,
-    owner: {
-      name: "",
-      id: 0,
-    },
-  },
-]);
+const pets = ref([]);
 const isModalVisible = ref(false);
 const currentPage = ref(1); // Track the current page
 const totalRecords = ref(0); // Total number of records
@@ -372,16 +357,16 @@ const layout = ref("grid");
 const loading = ref(true);
 const owner = ref([]); // Initialize owner as an empty string
 const options = ref(["list", "grid"]);
+const ownerName = ref("");
 // const ownerid = ref(route.params.ownerid);
 const searchQuery = ref(""); // Reactive search query
 const items = ref([
   { label: t("app.menu.owners"), route: "/owners" },
   {
-    label: pets.value[0].owner.name + " Patients",
+    label: ownerName.value + " Patients",
     route: "/" + route.params.ownerid + "/pets",
   },
 ]);
-
 const onPageChange = (event) => {
   itemsPerPage.value = event.rows;
   currentPage.value = event.page + 1; // PrimeVue Paginator uses zero-based index
@@ -400,10 +385,9 @@ const onSearchChange = () => {
   fetchPets(currentPage.value); // Fetch pets with the updated search query
 };
 // Function to fetch pets data from the API
-const fetchPets = async (page = 1) => {
+/* const fetchPets = async (page = 1) => {
   loading.value = true;
   try {
-    // Make the request using the axios instance with interceptors
     const response = await axiosInstance.get(
       `/owners/${route.params.ownerid}/pets?page=` +
         page +
@@ -414,19 +398,53 @@ const fetchPets = async (page = 1) => {
     pets.value = response.data.data;
     totalRecords.value = response.data.total;
     currentPage.value = response.data.current_page;
-    // owner.value = pets.value.length > 0 ? pets.value[0].owner : ["Unknown Owner"]; // Set owner name if pets exist
+
+    // Update breadcrumb items safely
     items.value = [
       { label: t("app.menu.owners"), route: "/owners" },
       {
-        label: pets.value[0].owner.name + " Patients",
+        label:
+          pets.value.length > 0
+            ? pets.value[0].owner.name + " Patients"
+            : "Owner's Patients",
         route: "/" + route.params.ownerid + "/pets",
       },
     ];
-    // console.log(pets.value);
-    loading.value = false; // Stop loading once data is fetched
+
+    loading.value = false;
   } catch (error) {
-    //     // showSuccess("warn", "Warning", "Couldent Fetch Data");
+    // Handle error
   } finally {
+    loading.value = false;
+  }
+};
+ */
+const fetchPets = async (page = 1) => {
+  loading.value = true;
+  try {
+    const response = await axiosInstance.get(
+      `/owners/${route.params.ownerid}/pets?page=${page}&per_page=${itemsPerPage.value}&search=${searchQuery.value}`
+    );
+
+    // Pets data with pagination
+    pets.value = response.data.pets.data;
+    totalRecords.value = response.data.pets.total;
+    currentPage.value = response.data.pets.current_page;
+
+    // Owner data available even if no pets
+    ownerName.value = response.data.owner.name;
+    items.value = [
+      { label: t("app.menu.owners"), route: "/owners" },
+      {
+        label: `${ownerName.value} Patients`,
+        route: "/" + route.params.ownerid + "/pets",
+      },
+    ];
+
+    loading.value = false;
+  } catch (error) {
+    console.error("Error fetching pets:", error);
+    loading.value = false;
   }
 };
 const inputFocused = ref(false);

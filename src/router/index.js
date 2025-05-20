@@ -134,6 +134,15 @@ const router = createRouter({
             import('../views/Settings.vue'),
         meta: { allowSessionTimeout: true }
     },
+        {
+            path: '/reset-password',
+            name: 'reset-password',
+            component: LoginView, // Reuse your login component
+            props: (route) => ({
+                action: 'reset',
+                code: route.query.code
+            })
+        },
         // {
         //     path: '/shortcuts',
         //     name: 'Shortcuts',

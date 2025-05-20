@@ -3,6 +3,7 @@
     <!-- Header Component -->
     <AppHeader
       :is-mobile="isMobile"
+      v-if="authStore.isLoggedIn"
       :show-mobile-menu-button="showSidebar"
       :mobile-menu-visible="mobileMenuVisible"
       @toggle-mobile-menu="mobileMenuVisible = !mobileMenuVisible"
