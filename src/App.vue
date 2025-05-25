@@ -82,6 +82,7 @@ import AppHeader from "@/views/partials/App/AppHeader.vue";
 import AppSidebar from "@/views/partials/App/AppSidebar.vue";
 import SessionTimeout from "@/views/partials/App/SessionTimeout.vue";
 import ConfirmDialog from "primevue/confirmdialog";
+import { useToast } from "primevue/usetoast";
 import Toast from "primevue/toast";
 import Cookies from "js-cookie";
 import { useTheme } from "@/composables/useTheme";
@@ -89,6 +90,8 @@ import { useLanguage } from "@/composables/useLanguage";
 const { $connectivity } = getCurrentInstance().appContext.config.globalProperties;
 const online = ref(true);
 const route = useRoute();
+const toast = useToast();
+
 const { t, locale } = useI18n();
 const authStore = useAuthStore();
 const { isMobile } = useDevice();
@@ -175,6 +178,7 @@ onMounted(() => {
     online.value = await $connectivity.getOnlineStatus();
     // console.log("online.value", online.value);
   }, 5000);
+  eventBus.on("show-toast", toast.add);
 });
 </script>
 

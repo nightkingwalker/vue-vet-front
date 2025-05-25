@@ -264,7 +264,7 @@
               <div class="flex flex-col items-center">
                 <img
                   v-if="checked"
-                  class="w-32 h-32 mb-3"
+                  class="w-48 h-48 mb-3"
                   :src="qrCodeUrl"
                   alt="2FA QR Code"
                 />
@@ -326,6 +326,7 @@
 import { onMounted, ref, computed, watchEffect } from "vue";
 import QRCode from "qrcode"; // Import the QRCode library
 import PlaceHolder from "@/assets/placeholder-1.png";
+import Logo from "@/assets/logo-DOqaXMyT.png";
 import axiosInstance from "@/axios"; // Assuming axiosInstance is set up correctly
 import ToggleSwitch from "primevue/toggleswitch";
 import eventBus from "@/eventBus";
@@ -391,11 +392,61 @@ const themes = ref([
   { label: t("themes.system"), value: "system" },
 ]);
 // Generate the QR code URL
-const generateQRCode = async () => {
+/* const generateQRCode = async () => {
   try {
     qrCodeUrl.value = await QRCode.toDataURL(qrCodeValue.value);
   } catch (error) {
     console.error("Error generating QR code:", error);
+  }
+}; */
+const generateQRCodeWithLogo = async (text, logoUrl) => {
+  try {
+    // Generate the base QR code
+    const baseQrCodeUrl = await QRCode.toDataURL(text, {
+      width: 350,
+      margin: 2,
+      errorCorrectionLevel: "H", // Important when adding logo
+    });
+
+    // Create canvas for QR code
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    const qrImage = new Image();
+
+    // Load QR code image
+    await new Promise((resolve) => {
+      qrImage.onload = resolve;
+      qrImage.src = baseQrCodeUrl;
+    });
+
+    // Set canvas size and draw QR code
+    canvas.width = qrImage.width;
+    canvas.height = qrImage.height;
+    ctx.drawImage(qrImage, 0, 0);
+
+    // Load logo
+    const logoImage = new Image();
+    await new Promise((resolve) => {
+      logoImage.onload = resolve;
+      logoImage.src = logoUrl;
+    });
+
+    // Calculate logo size and position (centered)
+    const logoSize = canvas.width / 4;
+    const logoX = (canvas.width - logoSize) / 2;
+    const logoY = (canvas.height - logoSize) / 2;
+
+    // Optional: Add white background behind logo
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(logoX - 2, logoY - 2, logoSize + 4, logoSize + 4);
+
+    // Draw logo on QR code
+    ctx.drawImage(logoImage, logoX, logoY, logoSize, logoSize);
+
+    // Update the reactive reference
+    qrCodeUrl.value = canvas.toDataURL();
+  } catch (error) {
+    console.error("Error generating QR code with logo:", error);
   }
 };
 const tfaInvalid = ref(false);
@@ -606,6 +657,8 @@ const handleSubmit = async (type) => {
 //   Cookies.set('theme', themeValue);
 // };
 // Fetch user details and update the QR code
+// const qrCodeValue = "https://example.com";
+const logoUrl = Logo;
 const fetchUserDetails = async () => {
   loading.value = true;
   try {
@@ -622,7 +675,11 @@ const fetchUserDetails = async () => {
     theme.value = user.value.preference.user_theme;
     // shortcuts.value = user.value.preference.shortcuts;
     // Generate QR code with updated details
-    await generateQRCode();
+    // await generateQRCodeWithLogo(
+    //   // "2@kEqcdU/4EtZ3creTUjLhmscM7snJGgyjCih6FlF/2CD6aS+WYAyhsUTWCxvjgkncPVJsIYlaCyJi4SzuY9OjUM6FGVQbE7gTDZ4=,cK6PCxTS7rLKb56bgngH89OYh8bT6GyT+1EwiVhFPlk=,BerpjSH6i0P1Hdb4qGrAori23aY1XpYiuWA5nUpPpyU=,GIrko4ewYRix9acgMhNE/FBnIe1610mV7GpSdM2AGA0=",
+    //   logoUrl
+    // );
+    await generateQRCodeWithLogo(qrCodeValue.value, logoUrl);
 
     loading.value = false; // Stop loading once data is fetched
   } catch (error) {
@@ -689,6 +746,7 @@ const passwordMatchError = computed(() => {
 // });
 onMounted(() => {
   fetchUserDetails();
+  // generateQRCodeWithLogo("123", logoUrl);
 });
 </script>
 

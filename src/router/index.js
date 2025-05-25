@@ -131,7 +131,8 @@ const router = createRouter({
         path: '/settings',
         name: 'Settings',
         component: () =>
-            import('../views/Settings.vue'),
+            import('../views/WhatsAppOnboardingLanding.vue'),
+        // import('../views/Settings.vue'),
         meta: { allowSessionTimeout: true }
     },
         {
@@ -169,6 +170,49 @@ const router = createRouter({
         ]
     },
     {
+            path: '/whatsapp/onboarding',
+            name: 'whatsapp-onboarding',
+            component: import('../views/WhatsAppOnboardingLanding.vue'),
+            meta: {
+                requiresAuth: true,
+                breadcrumb: 'WhatsApp Setup',
+                feature: 'whatsapp_integration'
+            }
+        },
+        {
+            path: '/whatsapp/onboarding/number-verification',
+            name: 'whatsapp-number-verification',
+            component: import('../views/WhatsAppNumberVerification.vue'),
+            meta: {
+                requiresAuth: true,
+                breadcrumb: 'Number Verification',
+                feature: 'whatsapp_integration'
+            }
+        },
+        {
+            path: '/whatsapp/onboarding/qr-scan',
+            name: 'whatsapp-qr-scanner',
+            component: import('../views/WhatsAppQRScanner.vue'),
+            meta: {
+                requiresAuth: true,
+                breadcrumb: 'QR Connection',
+                feature: 'whatsapp_integration'
+            },
+            props: route => ({
+                phone: route.query.phone
+            })
+        },
+    /* {
+        path: '/whatsapp/onboarding/success',
+        name: 'whatsapp-connection-success',
+        component: WhatsAppConnectionSuccess,
+        meta: {
+            requiresAuth: true,
+            breadcrumb: 'Setup Complete',
+            feature: 'whatsapp_integration'
+        }
+    },
+ */    {
         path: '/logout',
         name: 'Logout',
     },

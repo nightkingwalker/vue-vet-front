@@ -1453,5 +1453,78 @@
             "2fa_enabled": "Two Factor Authentication Enabled Successfully",
             "2fa_disabled": "Two Factor Authentication Disabled Successfully"
         }
+    },
+    "whatsapp_onboarding": {
+        "title": "Connect WhatsApp Business",
+        "setup_title": "Setup WhatsApp Notifications",
+        "setup_description": "Connect your WhatsApp Business account to send appointment reminders, health updates, and more directly to pet owners.",
+        "requirements_title": "You'll need:",
+        "requirements": {
+            "phone": "A dedicated business phone number",
+            "business": "WhatsApp Business app installed",
+            "permissions": "Admin access to this device"
+        },
+        "benefits": {
+            "real_time": {
+                "title": "Real-time Communication",
+                "description": "Instant delivery of important pet health updates"
+            },
+            "high_engagement": {
+                "title": "High Engagement",
+                "description": "98% open rate for important notifications"
+            },
+            "secure": {
+                "title": "Secure & Private",
+                "description": "End-to-end encrypted messages for client privacy"
+            }
+        },
+        "learn_more": "Learn More",
+        "get_started": "Get Started"
+    },
+    "whatsapp_number_verification": {
+        "title": "Verify Business Number",
+        "country": "Country",
+        "phone_number": "WhatsApp Business Number",
+        "verification_sent": "Verification code sent to your number",
+        "back": "Back",
+        "send_code": "Send Verification Code",
+        "continue": "Continue to QR Scan",
+        "instructions": "Enter the phone number associated with your WhatsApp Business account. We'll send a verification code to confirm ownership.",
+        "error_title": "Error Verifying Phone number"
+    },
+    "whatsapp_qr": {
+        "title": "Scan QR Code",
+        "connected_as": "Connected as {phone}",
+        "back": "Back",
+        "refresh": "Refresh QR Code",
+        "finish": "Finish Setup",
+        "status": {
+            "checking": "Checking WhatsApp Status",
+            "checking_details": "Verifying session status and preparing QR code...",
+            "generating": "Generating QR Code",
+            "waiting": "Waiting for Connection",
+            "connected": "Connected Successfully",
+            "failed": "Connection Failed"
+        },
+        "errors": {
+            "status_check_failed": "Status Check Failed",
+            "qr_fetch_failed": "QR Generation Failed",
+            "session_not_ready": "Session is not ready for QR scanning",
+            "connection_failed": "Connection attempt failed"
+        },
+        "connection_success": "WhatsApp connected successfully!",
+        "instructions": [
+            "Open WhatsApp on your business phone",
+            "Tap Menu → Linked Devices → Link a Device",
+            "Point your camera at this QR code",
+            "Wait for automatic connection confirmation"
+        ],
+        "fully_connected": "WhatsApp Business successfully connected!",
+        "success_steps": {
+            "connection": "Device linked successfully",
+            "verification": "Phone number verified"
+        },
+        "configure_notifications": "Configure Notification Templates",
+        "return_to_dashboard": "Return to Dashboard"
     }
 }

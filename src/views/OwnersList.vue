@@ -413,7 +413,7 @@
                     type="button"
                     icon="pi pi-whatsapp !text-sm"
                     label=""
-                    @click="showWahaModal(owner.phone)"
+                    @click="showWahaModal(owner)"
                     v-tooltip.top="{
                       value: t('owners.actions.whatsapp'),
                       pt: {
@@ -537,6 +537,7 @@
     </template>
     <SendWhatsApp
       :contactNumber="whatsAppContact"
+      :ownerID="selectedOwner"
       @submitted="handleWahaSubmit"
       v-focustrap="{
         disabled: false,
@@ -627,8 +628,9 @@ const refreshData = () => {
   loading.value = true; // Set loading state to true to show skeletons
   fetchOwners(); // Fetch the pets data again
 };
-const showWahaModal = (phone) => {
-  whatsAppContact.value = phone;
+const showWahaModal = (owner) => {
+  whatsAppContact.value = owner.phone;
+  selectedOwner.value = owner.id;
   isModalWahaVisible.value = true;
 };
 const toggleDetails = (owner) => {
@@ -762,7 +764,7 @@ const goToListOwnerPetsPage = async (ownerid) => {
 const goToAddOwnerPetsPage = async (ownerid) => {
   await router.push({ path: "/" + ownerid + "/new-pet" });
 };
-console.log(route.meta.transition);
+// console.log(route.meta.transition);
 onMounted(() => {
   fetchOwners();
   eventBus.on("AddOwner", () => {

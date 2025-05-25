@@ -1,20 +1,32 @@
 <template>
   <div class="px-4 lg:!text-[14px]">
     <form @submit.prevent="submitForm" class="mx-auto w-full max-w-md">
-      <fieldset class="p-fieldset p-component w-full flex flex-wrap items-center border rounded-lg p-4">
-        <legend class="px-4 bg-gray-600 text-white dark:bg-zinc-200 dark:text-zinc-800 rounded">
+      <fieldset
+        class="p-fieldset p-component w-full flex flex-wrap items-center border rounded-lg p-4"
+      >
+        <legend
+          class="px-4 bg-gray-600 text-white dark:bg-zinc-200 dark:text-zinc-800 rounded"
+        >
           {{ $t("whatsapp.title") }}
         </legend>
         <div class="field mt-6 w-full">
-          <input type="hidden" v-model="wahaMessageNumber" />
+          <!-- <input type="hidden" v-model="contactNumber" /> -->
           <FloatLabel class="w-full">
-            <Textarea v-model="wahaMessageText" rows="5" cols="30" fluid />
-            <label for="address">{{ $t("whatsapp.fields.message") }}</label>
+            <Textarea
+              :modelValue="messageText"
+              @update:modelValue="(val) => (messageText = val)"
+              rows="5"
+              cols="30"
+              fluid
+            />
+            <label>{{ $t("whatsapp.fields.message") }}</label>
           </FloatLabel>
         </div>
-        <button type="submit"
+        <button
+          type="submit"
           class="p-button p-button-content py-2 px-4 rounded focus:outline-none focus:shadow-outline h-8"
-          :disabled="loading">
+          :disabled="loading"
+        >
           <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
           <span v-else>{{ $t("whatsapp.buttons.send") }}</span>
         </button>
@@ -30,22 +42,26 @@ import Textarea from "primevue/textarea";
 import FloatLabel from "primevue/floatlabel";
 import Button from "primevue/button";
 import eventBus from "@/eventBus";
-import axios from "axios";
 import { useI18n } from "vue-i18n";
+import axiosInstance from "@/axios";
 
 const { t } = useI18n();
-// Environment variables for API configuration
-const WAHA_API_KEY = import.meta.env.VITE_WAHA_API_KEY;
-const WAHA_API_URL = import.meta.env.VITE_WAHA_API_URL;
-const WAHA_API_SESSION = import.meta.env.VITE_WAHA_API_SESSION;
-const loading = ref(false);
-// Define the form data with reactive properties
 const owner = ref({
   name: "",
   email: "",
   phone: "",
   address: "",
 });
+const props = defineProps({
+  contactNumber: String,
+  ownerID: String,
+});
+// Environment variables for API configuration
+/* const WAHA_API_KEY = import.meta.env.VITE_WAHA_API_KEY;
+const WAHA_API_URL = import.meta.env.VITE_WAHA_API_URL;
+const WAHA_API_SESSION = import.meta.env.VITE_WAHA_API_SESSION;
+const loading = ref(false);
+// Define the form data with reactive properties
 
 // Define props passed into the component
 const props = defineProps({
@@ -185,6 +201,86 @@ const whatsAppStopTyping = () => {
       // Handle errors here if needed
       console.error("Error stopping typing:", error);
     });
+};
+ */
+const emit = defineEmits(["submitted"]);
+
+const loading = ref(false);
+const messageText = ref("");
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const submitForm = async () => {
+  if (messageText.value.length <= 5) {
+    return;
+  }
+
+  loading.value = true;
+
+  try {
+    // 1. Start typing indicator
+    // await startTyping();
+
+    // 2. Random delay between 3-6 seconds
+    // const delay = Math.floor(Math.random() * 3000) + 3000;
+    // await sleep(delay);
+
+    // 3. Stop typing and send message
+    // await stopTyping();
+    await sendMessage();
+
+    emit("submitted");
+    eventBus.emit("show-toast", {
+      severity: "success",
+      summary: t("whatsapp.messages.sent"),
+      detail: t("whatsapp.messages.sent_detail"),
+      life: 5000,
+    });
+  } catch (error) {
+    eventBus.emit("show-toast", {
+      severity: "error",
+      summary: t("whatsapp.messages.error"),
+      detail: error.message,
+      life: 5000,
+    });
+  } finally {
+    loading.value = false;
+  }
+};
+
+/* const startTyping = async () => {
+  try {
+    await axios.post("/whatsapp/start-typing", {
+      contact_number: props.contactNumber,
+      // clinic_id: props.clinicId,
+    });
+  } catch (error) {
+    console.error("Error starting typing indicator:", error);
+    // Fail silently - typing indicators are optional
+  }
+};
+
+const stopTyping = async () => {
+  try {
+    await axios.post("/whatsapp/stop-typing", {
+      contact_number: props.contactNumber,
+      // clinic_id: props.clinicId,
+    });
+  } catch (error) {
+    console.error("Error stopping typing indicator:", error);
+    // Fail silently
+  }
+}; */
+
+const sendMessage = async () => {
+  const response = await axiosInstance.post("/whatsapp/send", {
+    contact_number: props.contactNumber,
+    message: messageText.value,
+    ownerid: props.ownerID,
+    // clinic_id: props.clinicId,
+  });
+
+  return response.data;
 };
 </script>
 
