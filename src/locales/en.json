@@ -103,6 +103,7 @@
         "title": "Vet Clinic Management System",
         "menu": {
             "calendar": "Calendar",
+            "clinics": "My Clinics",
             "patients": "Clinic",
             "owners": "Owners",
             "pets": "Pets",
@@ -153,7 +154,9 @@
             "too_short": "Message too short",
             "too_short_detail": "Your message must be longer than 5 characters to be sent.",
             "sent": "Message sent",
-            "sent_detail": "Message sent successfully."
+            "sent_detail": "Message sent successfully.",
+            "subscription_header": "Subscription Required",
+            "subscription_details": "This feature requires subscription, please upgrade your account to use WhatsApp Messaging"
         }
     },
     "add_owner": {
@@ -287,6 +290,8 @@
     },
     "pet_details": {
         "title": "Pet Details",
+        "species_header": "Species",
+        "medical_info": "Basic Medical Details",
         "go_back": "Go back",
         "microchip": "Microchip/Serial Number",
         "view_patients": "View Patients",

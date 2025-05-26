@@ -31,7 +31,7 @@
               icon="pi pi-refresh !text-sm lg:!text-[14px]"
               label=""
               v-tooltip.bottom="$t('pets.header.refresh')"
-              class="!text-sm lg:!text-[14px] ml-2"
+              class="p-button p-component p-button-icon-only !text-sm lg:!text-[14px] ml-2"
               @click="refreshData"
             />
             <Button
@@ -47,7 +47,7 @@
                   ? $t('pets.header.hide_deceased')
                   : $t('pets.header.show_deceased')
               "
-              class="!text-sm lg:!text-[14px] ml-2"
+              class="p-button p-component p-button-icon-only !text-sm lg:!text-[14px] ml-2"
               @click="toggleDeceasedVisibility"
             />
             <Button
@@ -58,7 +58,7 @@
             />
             <Button
               icon="pi pi-download !text-sm lg:!text-[14px]"
-              class="!text-sm lg:!text-[14px] ml-2"
+              class="p-button p-component p-button-icon-only !text-sm lg:!text-[14px] ml-2"
               v-tooltip.bottom="$t('pets.header.export')"
               @click="exportCSV($event)"
             />
@@ -86,7 +86,7 @@
                 @blur="inputFocused = false"
                 autofocus="true"
                 type="text"
-                class="!text-sm lg:!text-[14px] !text-gray-800 focus:!ring-0 focus:!ring-offset-0 focus:!border-gray-400 border-transparent"
+                class="!text-sm lg:!text-[14px] !text-gray-800 focus:!ring-0 focus:!ring-offset-0 focus:!border-gray-400 border-0"
                 :placeholder="$t('pets.header.search_placeholder')"
               />
               <Button icon="pi pi-times" @click="clearFilters" />

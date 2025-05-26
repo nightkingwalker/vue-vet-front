@@ -4,8 +4,12 @@ import HomeView from '../views/CalendarView.vue';
 import LoginView from '../components/LoginComponent.vue';
 import OwnerPets from '../views/OwnerPets.List.vue';
 import OwnersList from '../views/OwnersList.vue';
+// import OwnersList2 from '../views/OwnersList2.vue';
 import Reports from '@/views/Reports.vue'
 import { useAuthStore } from '@/stores/authStore';
+import ManageClinic from '@/views/ManageClinic.vue';
+import ListClinicBranches from '@/views/ListClinicBranches.vue';
+import ManageBranch from '@/views/ManageBranch.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -33,6 +37,7 @@ const router = createRouter({
         component: OwnersList,
         meta: { allowSessionTimeout: true }
     },
+
     {
         path: '/:ownerid/pets',
         name: 'OwnerPets',
@@ -51,6 +56,41 @@ const router = createRouter({
         props: true, // This passes the route params as props to the component,
         meta: { allowSessionTimeout: true }
     },
+        {
+            path: '/clinics',
+            name: 'Clinics',
+            component: () =>
+                import('../views/ListUserClinics.vue'),
+            meta: { allowSessionTimeout: true }
+        },
+        {
+            path: '/:clinic/manage',
+            name: 'Manage Clinic',
+            meta: { transition: 'slide-right' },
+            component: ManageClinic,
+
+            props: true, // This passes the route params as props to the component,
+            meta: { allowSessionTimeout: true }
+        },
+        {
+            path: '/clinics/:clinic/branches',
+            name: 'Manage Clinic Branches',
+            meta: { transition: 'slide-right' },
+            component: ListClinicBranches,
+
+            props: true, // This passes the route params as props to the component,
+            meta: { allowSessionTimeout: true }
+        },
+        {
+            path: '/branches/:branch/users',
+            name: 'Branch Users',
+            meta: { transition: 'slide-right' },
+            component: ManageBranch,
+
+            props: true, // This passes the route params as props to the component,
+            meta: { allowSessionTimeout: true }
+        },
+
     {
         path: '/pets',
         name: 'Pets',

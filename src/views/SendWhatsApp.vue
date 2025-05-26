@@ -1,295 +1,192 @@
 <template>
-  <div class="px-4 lg:!text-[14px]">
-    <form @submit.prevent="submitForm" class="mx-auto w-full max-w-md">
-      <fieldset
-        class="p-fieldset p-component w-full flex flex-wrap items-center border rounded-lg p-4"
-      >
-        <legend
-          class="px-4 bg-gray-600 text-white dark:bg-zinc-200 dark:text-zinc-800 rounded"
-        >
-          {{ $t("whatsapp.title") }}
-        </legend>
-        <div class="field mt-6 w-full">
-          <!-- <input type="hidden" v-model="contactNumber" /> -->
-          <FloatLabel class="w-full">
+  <div class="whatsapp-form-container px-4">
+    <form @submit.prevent="submitForm" class="whatsapp-form">
+      <Fieldset :legend="$t('whatsapp.title')" class="whatsapp-fieldset">
+        <!-- Message Textarea -->
+        <div class="field w-full mb-6">
+          <FloatLabel>
             <Textarea
-              :modelValue="messageText"
-              @update:modelValue="(val) => (messageText = val)"
+              v-model="messageText"
               rows="5"
-              cols="30"
-              fluid
+              class="w-full"
+              :autoResize="true"
+              :disabled="loading"
+              aria-describedby="message-help"
             />
             <label>{{ $t("whatsapp.fields.message") }}</label>
           </FloatLabel>
+          <small id="message-help" class="text-gray-500 dark:text-gray-400">
+            {{ $t("whatsapp.messages.too_short_detail") }}
+          </small>
         </div>
-        <button
-          type="submit"
-          class="p-button p-button-content py-2 px-4 rounded focus:outline-none focus:shadow-outline h-8"
-          :disabled="loading"
-        >
-          <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
-          <span v-else>{{ $t("whatsapp.buttons.send") }}</span>
-        </button>
-      </fieldset>
+
+        <!-- Submit Button -->
+        <div class="flex justify-end">
+          <Button
+            type="submit"
+            :label="loading ? '' : $t('whatsapp.buttons.send')"
+            :disabled="loading || messageText.length < 5"
+            class="send-button"
+          >
+            <template #icon>
+              <i v-if="loading" class="pi pi-spinner pi-spin mr-2"></i>
+              <i v-else class="pi pi-send mr-2"></i>
+            </template>
+          </Button>
+        </div>
+      </Fieldset>
     </form>
   </div>
 </template>
 
 <script setup>
-// Import necessary modules from Vue and third-party libraries
-import { ref } from "vue"; // Reactive data for form inputs
+import { ref } from "vue";
+import { useI18n } from "vue-i18n";
+import Fieldset from "primevue/fieldset";
 import Textarea from "primevue/textarea";
 import FloatLabel from "primevue/floatlabel";
 import Button from "primevue/button";
 import eventBus from "@/eventBus";
-import { useI18n } from "vue-i18n";
 import axiosInstance from "@/axios";
 
 const { t } = useI18n();
-const owner = ref({
-  name: "",
-  email: "",
-  phone: "",
-  address: "",
-});
 const props = defineProps({
   contactNumber: String,
   ownerID: String,
 });
-// Environment variables for API configuration
-/* const WAHA_API_KEY = import.meta.env.VITE_WAHA_API_KEY;
-const WAHA_API_URL = import.meta.env.VITE_WAHA_API_URL;
-const WAHA_API_SESSION = import.meta.env.VITE_WAHA_API_SESSION;
-const loading = ref(false);
-// Define the form data with reactive properties
 
-// Define props passed into the component
-const props = defineProps({
-  contactNumber: String, // Expected contact number to send WhatsApp messages
-});
-
-// Initialize reactive variables for message and contact number
-const wahaMessageText = ref("");
-const wahaMessageNumber = props.contactNumber;
-
-// Emit the 'submitted' event after form submission
-const emit = defineEmits(["submitted"]);
-
-// Utility function to simulate delay (sleep) for WhatsApp typing animation
-const sleep = (milliseconds) =>
-  new Promise((resolve) => setTimeout(resolve, milliseconds));
-
-// Handle form submission
-const submitForm = async () => {
-  loading.value = true;
-  whatsAppStartTyping(); // Begin the typing indicator
-
-  // Random delay between 3-6 seconds
-  const randomDelay = Math.floor(Math.random() * (6 - 3 + 1) + 3) * 1000;
-
-  // Wait for a random delay, then stop typing and send the message
-  await sleep(randomDelay);
-  whatsAppStopTyping();
-  whatsAppSendText();
-  loading.value = false;
-};
-
-// Function to send a message via WhatsApp API
-const whatsAppSendText = async () => {
-  // Check if the message is too short
-  if (wahaMessageText.value.length <= 5) {
-    // Show an alert or toast message that the message is too short
-    eventBus.emit("show-toast", {
-      severity: "error",
-      summary: t("whatsapp.messages.too_short"),
-      detail: t("whatsapp.messages.too_short_detail"),
-      // detail: "Your message must be longer than 5 characters to be sent.",
-      life: 5000, // Toast duration
-    });
-    return; // Exit the function early if the message is too short
-  }
-
-  // Proceed with sending the message if it's valid
-  const data = JSON.stringify({
-    chatId: `${props.contactNumber}@c.us`, // WhatsApp chat ID (formatted)
-    reply_to: "", // Empty reply-to value (can be customized if needed)
-    text: wahaMessageText.value, // Message content
-    session: WAHA_API_SESSION, // Session ID for the API
-  });
-
-  const config = {
-    method: "post",
-    url: `${WAHA_API_URL}sendText`, // API endpoint to send a message
-    headers: {
-      "X-Api-Key": WAHA_API_KEY, // API key for authentication
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    data: data, // The message data to be sent
-  };
-
-  // Perform the API request to send the message
-  axios(config)
-    .then((response) => {
-      emit("submitted", response.data); // Emit success event with response data
-      eventBus.emit("show-toast", {
-        severity: "success",
-        summary: t("whatsapp.messages.sent"),
-        detail: t("whatsapp.messages.sent_detail"),
-        life: 5000, // Toast duration
-      });
-    })
-    .catch((error) => {
-      // Handle errors here if needed (e.g., show error toast)
-      console.error("Error sending message:", error);
-    });
-};
-
-// Function to start the typing indicator on WhatsApp
-const whatsAppStartTyping = () => {
-  const data = JSON.stringify({
-    chatId: `${props.contactNumber}@c.us`, // WhatsApp chat ID
-    session: WAHA_API_SESSION, // Session ID for the API
-  });
-
-  const config = {
-    method: "post",
-    url: `${WAHA_API_URL}startTyping`, // API endpoint to start typing animation
-    headers: {
-      "X-Api-Key": WAHA_API_KEY,
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    data: data,
-  };
-
-  // Perform the API request to start typing animation
-  axios(config)
-    .then(() => {
-      // Optional: Handle success or no response
-    })
-    .catch((error) => {
-      // Handle errors here if needed
-      console.error("Error starting typing:", error);
-    });
-};
-
-// Function to stop the typing indicator on WhatsApp
-const whatsAppStopTyping = () => {
-  const data = JSON.stringify({
-    chatId: `${props.contactNumber}@c.us`, // WhatsApp chat ID
-    session: WAHA_API_SESSION, // Session ID for the API
-  });
-
-  const config = {
-    method: "post",
-    url: `${WAHA_API_URL}startTyping`, // API endpoint to stop typing animation
-    headers: {
-      "X-Api-Key": WAHA_API_KEY,
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    data: data,
-  };
-
-  // Perform the API request to stop typing animation
-  axios(config)
-    .then(() => {
-      // Optional: Handle success or no response
-    })
-    .catch((error) => {
-      // Handle errors here if needed
-      console.error("Error stopping typing:", error);
-    });
-};
- */
 const emit = defineEmits(["submitted"]);
 
 const loading = ref(false);
 const messageText = ref("");
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
 const submitForm = async () => {
-  if (messageText.value.length <= 5) {
-    return;
-  }
+  if (messageText.value.length < 5) return;
 
   loading.value = true;
 
   try {
-    // 1. Start typing indicator
-    // await startTyping();
-
-    // 2. Random delay between 3-6 seconds
-    // const delay = Math.floor(Math.random() * 3000) + 3000;
-    // await sleep(delay);
-
-    // 3. Stop typing and send message
-    // await stopTyping();
     await sendMessage();
 
-    emit("submitted");
-    eventBus.emit("show-toast", {
-      severity: "success",
-      summary: t("whatsapp.messages.sent"),
-      detail: t("whatsapp.messages.sent_detail"),
-      life: 5000,
-    });
+    // showSuccessToast();
+    messageText.value = ""; // Clear form after successful submission
   } catch (error) {
-    eventBus.emit("show-toast", {
-      severity: "error",
-      summary: t("whatsapp.messages.error"),
-      detail: error.message,
-      life: 5000,
-    });
+    showErrorToast(error);
   } finally {
     loading.value = false;
   }
 };
 
-/* const startTyping = async () => {
+// const sendMessage = async () => {
+//   const response = await axiosInstance.post("/whatsapp/send", {
+//     contact_number: props.contactNumber,
+//     message: messageText.value,
+//     ownerid: props.ownerID,
+//   });
+//   // console.log(response);
+//   return response.data;
+// };
+const sendMessage = async () => {
   try {
-    await axios.post("/whatsapp/start-typing", {
+    const response = await axiosInstance.post("/whatsapp/send", {
       contact_number: props.contactNumber,
-      // clinic_id: props.clinicId,
+      message: messageText.value,
+      ownerid: props.ownerID,
     });
+    emit("submitted");
+    showSuccessToast();
   } catch (error) {
-    console.error("Error starting typing indicator:", error);
-    // Fail silently - typing indicators are optional
+    // console.log(error.response);
+    if (error.response.data.message === "Subscription Required") {
+      eventBus.emit("show-toast", {
+        severity: "warn",
+        summary: t("whatsapp.messages.subscription_header"),
+        detail: t("whatsapp.messages.subscription_details"),
+        life: 5000,
+      });
+      return;
+    }
+    // Handle network errors or server errors
+    let errorMessage = "Failed to send message";
+
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      errorMessage =
+        error.response.data.message || `Server error: ${error.response.status}`;
+    } else if (error.request) {
+      // The request was made but no response was received
+      errorMessage = "Network error - no response from server";
+    }
+
+    return {
+      success: false,
+      errorType: "network",
+      message: errorMessage,
+    };
   }
 };
 
-const stopTyping = async () => {
-  try {
-    await axios.post("/whatsapp/stop-typing", {
-      contact_number: props.contactNumber,
-      // clinic_id: props.clinicId,
-    });
-  } catch (error) {
-    console.error("Error stopping typing indicator:", error);
-    // Fail silently
-  }
-}; */
-
-const sendMessage = async () => {
-  const response = await axiosInstance.post("/whatsapp/send", {
-    contact_number: props.contactNumber,
-    message: messageText.value,
-    ownerid: props.ownerID,
-    // clinic_id: props.clinicId,
+const showSuccessToast = () => {
+  eventBus.emit("show-toast", {
+    severity: "success",
+    summary: t("whatsapp.messages.sent"),
+    detail: t("whatsapp.messages.sent_detail"),
+    life: 5000,
   });
+};
 
-  return response.data;
+const showErrorToast = (error) => {
+  eventBus.emit("show-toast", {
+    severity: "error",
+    summary: t("whatsapp.messages.error"),
+    detail: error.message,
+    life: 5000,
+  });
 };
 </script>
 
 <style scoped>
-/* Tailwind and Theming for light/dark modes */
-body.dark .text-sm {
-  color: #ccc; /* Example color for dark mode */
+.whatsapp-form-container {
+  max-width: 36rem;
+  margin: 0 auto;
 }
-body .text-sm {
-  color: #333; /* Example color for light mode */
+
+.whatsapp-form {
+  transition: all 0.3s ease;
+}
+
+.whatsapp-fieldset {
+  border-radius: 12px;
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+:deep(.p-fieldset-legend) {
+  background: var(--primary-color);
+  color: white;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+}
+
+.send-button {
+  transition: all 0.2s ease;
+}
+
+.send-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+/* Dark mode adjustments */
+body.dark {
+  .whatsapp-fieldset {
+    background: var(--surface-800);
+    border-color: var(--surface-700);
+  }
+
+  :deep(.p-fieldset-legend) {
+    background: var(--primary-600);
+  }
 }
 </style>

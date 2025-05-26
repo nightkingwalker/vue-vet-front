@@ -51,7 +51,7 @@
         </template>
       </ContextMenu>
     </div>
-    <div
+    <!--     <div
       id="pet-details"
       :class="{
         '!h-[calc(100vh-100px)] w-1/5': !isMobile,
@@ -86,7 +86,7 @@
         <h4 class="w-full">
           <i class="fas fa-paw ltr:mr-2 rtl:ml-2"></i>
           {{ $t("calendar.pet_details.species") }}:
-          <!-- {{ getSpeciesValue(currentPet.pet.species) }} -->
+
           {{ currentPet.pet.species ? getSpeciesValue(currentPet.pet.species) : "" }}
         </h4>
 
@@ -189,6 +189,139 @@
         </div>
       </div>
     </div>
+ -->
+    <div
+      id="pet-details"
+      :class="[
+        isMobile
+          ? 'w-full h-fit mx-auto mb-4'
+          : 'w-1/5 min-w-[280px] h-[calc(100vh-100px)]',
+        'bg-white dark:bg-surface-600 border border-surface-200 dark:border-surface-700 rounded-xl shadow-sm p-4 flex flex-col gap-4',
+      ]"
+    >
+      <!-- Pet Information Card -->
+      <div
+        class="flex flex-col gap-3 p-4 rounded-lg transition-all duration-300"
+        :style="{
+          borderLeft: `4px solid ${currentPet.theme.lightColors.main}`,
+          backgroundColor: currentPet.theme.lightColors.container,
+          color: currentPet.theme.lightColors.onContainer,
+        }"
+      >
+        <!-- Pet Name -->
+        <div class="flex items-center gap-2">
+          <i
+            :class="[
+              getIconClass(currentPet.pet.species),
+              'text-lg',
+              currentPet.pet.gender === 'Male' ? 'text-blue-500' : 'text-pink-500',
+            ]"
+          ></i>
+          <h3 class="font-medium">
+            {{ currentPet.pet.name || $t("calendar.pet_details.select_appointment") }}
+          </h3>
+        </div>
+
+        <!-- Details List -->
+        <div class="space-y-2 text-sm">
+          <div class="flex items-start gap-2">
+            <i class="fas fa-paw mt-0.5 text-sm opacity-70"></i>
+            <div>
+              <span class="text-xs opacity-80"
+                >{{ $t("calendar.pet_details.species") }}:</span
+              >
+              <p>
+                {{
+                  $t(`pet_details.species.${getSpeciesValue(currentPet.pet.species)}`) ||
+                  "-"
+                }}
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-2">
+            <i class="fa-solid fa-user mt-0.5 text-sm opacity-70"></i>
+            <div>
+              <span class="text-xs opacity-80"
+                >{{ $t("calendar.pet_details.owner") }}:</span
+              >
+              <p>{{ currentPet.people[0] || "-" }}</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-2">
+            <i class="fa-solid fa-location-dot mt-0.5 text-sm opacity-70"></i>
+            <div>
+              <span class="text-xs opacity-80"
+                >{{ $t("calendar.pet_details.location") }}:</span
+              >
+              <p>{{ currentPet.location || "-" }}</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-2" v-if="currentPet.description">
+            <i class="fa-solid fa-circle-info mt-0.5 text-sm opacity-70"></i>
+            <div>
+              <span class="text-xs opacity-80"
+                >{{ $t("calendar.pet_details.details") }}:</span
+              >
+              <p class="text-xs">{{ currentPet.description }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- View Details Button -->
+        <Button
+          :label="
+            currentPet.pet.microchip_num === '123123'
+              ? $t('calendar.pet_details.select_appointment')
+              : $t('calendar.pet_details.view_details')
+          "
+          icon="fas fa-paw"
+          class="mt-2 !text-xs w-full justify-center"
+          :class="
+            currentPet.pet.microchip_num === '123123'
+              ? 'p-button-outlined'
+              : 'p-button-primary'
+          "
+          :disabled="currentPet.pet.microchip_num === '123123'"
+          @click="
+            currentPet.pet.microchip_num !== '123123' &&
+              $router.push({
+                name: 'PetDetails',
+                params: { petmicrochip: currentPet.pet.microchip_num },
+              })
+          "
+          v-tooltip.top="
+            currentPet.pet.microchip_num === '123123'
+              ? $t('calendar.pet_details.select_appointment')
+              : $t('calendar.pet_details.view_details')
+          "
+        />
+      </div>
+
+      <!-- Event Legend -->
+      <div class="mt-auto">
+        <h4 class="text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+          {{ $t("calendar.legend") }}
+        </h4>
+        <div class="grid grid-cols-2 gap-2">
+          <div
+            v-for="(theme, name) in eventTheme"
+            :key="name"
+            class="flex items-center gap-2"
+          >
+            <div
+              class="w-3 h-3 rounded-full"
+              :style="{ backgroundColor: theme.lightColors.main }"
+            ></div>
+            <span class="text-xs">
+              {{ $t(`calendar.appointment.${name.toLowerCase()}`) }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <Dialog
     :header="$t('calendar.appointment.new')"
@@ -277,28 +410,109 @@ const formatDateTime = (dateTimeStr) => {
 
   return formattedDate + " " + formattedTime;
 };
+// const species = ref([
+//   { label: "Avian", value: "Birds", icon: "fa-solid fa-dove" },
+//   { label: "Bovine", value: "Cows", icon: "fa-solid fa-cow" },
+//   { label: "Camelid", value: "Camels", icon: "fa-solid fa-paw" }, // Default icon
+//   { label: "Canine", value: "Dogs", icon: "fa-solid fa-dog" },
+//   { label: "Caprine", value: "Goats", icon: "fa-solid fa-paw" }, // Default icon
+//   { label: "Cavies", value: "Guinea Pigs", icon: "fa-solid fa-paw" }, // Default icon
+//   { label: "Cervidae", value: "Deers", icon: "fa-solid fa-paw" },
+//   { label: "Equine", value: "Horses", icon: "fa-duotone fa-horse " },
+//   { label: "Feline", value: "Cats", icon: "fa-solid fa-cat" },
+//   { label: "Lapine", value: "Rabbits", icon: "fa-solid fad fa-rabbit" },
+//   { label: "Murine", value: "Mice", icon: "fa-solid fa-paw" },
+//   { label: "Ovine", value: "Sheeps", icon: "fa-solid fa-sheep" },
+// ]);
 const species = ref([
-  { label: "Avian", value: "Birds", icon: "fa-solid fa-dove" },
-  { label: "Bovine", value: "Cows", icon: "fa-solid fa-cow" },
-  { label: "Camelid", value: "Camels", icon: "fa-solid fa-paw" }, // Default icon
-  { label: "Canine", value: "Dogs", icon: "fa-solid fa-dog" },
-  { label: "Caprine", value: "Goats", icon: "fa-solid fa-paw" }, // Default icon
-  { label: "Cavies", value: "Guinea Pigs", icon: "fa-solid fa-paw" }, // Default icon
-  { label: "Cervidae", value: "Deers", icon: "fa-solid fa-paw" },
-  { label: "Equine", value: "Horses", icon: "fa-duotone fa-horse " },
-  { label: "Feline", value: "Cats", icon: "fa-solid fa-cat" },
-  { label: "Lapine", value: "Rabbits", icon: "fa-solid fad fa-rabbit" },
-  { label: "Murine", value: "Mice", icon: "fa-solid fa-paw" },
-  { label: "Ovine", value: "Sheeps", icon: "fa-solid fa-sheep" },
+  {
+    label: t("species.avian"),
+    en_label: "Avian",
+    value: "Birds",
+    icon: "fa-solid fa-dove",
+  },
+  {
+    label: t("species.bovine"),
+    en_label: "Bovine",
+    value: "Cows",
+    icon: "fa-solid fa-cow",
+  },
+  {
+    label: t("species.camelid"),
+    en_label: "Camelid",
+    value: "Camels",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.canine"),
+    en_label: "Canine",
+    value: "Dogs",
+    icon: "fa-solid fa-dog",
+  },
+  {
+    label: t("species.caprine"),
+    en_label: "Caprine",
+    value: "Goats",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.cavies"),
+    en_label: "Cavies",
+    value: "Guinea Pigs",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.cervidae"),
+    en_label: "Cervidae",
+    value: "Deers",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.equine"),
+    en_label: "Equine",
+    value: "Horses",
+    icon: "fa-duotone fa-horse",
+  },
+  {
+    label: t("species.feline"),
+    en_label: "Feline",
+    value: "Cats",
+    icon: "fa-solid fa-cat",
+  },
+  {
+    label: t("species.lapine"),
+    en_label: "Lapine",
+    value: "Rabbits",
+    icon: "fa-solid fad fa-rabbit",
+  },
+  {
+    label: t("species.murine"),
+    en_label: "Murine",
+    value: "Mice",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.ovine"),
+    en_label: "Ovine",
+    value: "Sheeps",
+    icon: "fa-solid fa-sheep",
+  },
 ]);
+
+const getSpeciesValue = (label) => {
+  // console.log(label);
+  const found = species.value.find((species) => species.en_label === label);
+  return found ? found.en_label : null;
+};
+
 function getIconClass(speciesLabel) {
   const found = species.value.find((spec) => spec.label === speciesLabel);
   return found ? found.icon : "fa-solid fa-paw";
 }
-const getSpeciesValue = (label) => {
-  const found = species.value.find((species) => species.label === label);
-  return found ? found.value : null;
-};
+// const getSpeciesValue = (label) => {
+//   const found = species.value.find((species) => species.label === label);
+//   return found ? found.value : null;
+// };
 const currentPet = ref({
   id: "",
   title: "",

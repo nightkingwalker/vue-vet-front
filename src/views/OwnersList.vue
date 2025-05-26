@@ -1,581 +1,196 @@
 <template>
-  <DataView
-    :value="owners"
-    :layout="layout"
-    class="!rounded-xl !overflow-y-auto h-[calc(100vh-70px)]"
-  >
+  <DataView :value="owners" :layout="layout" class="!rounded-lg h-[calc(100vh-70px)]">
     <template #header>
-      <div class="flex justify-between items-center">
-        <div class="flex gap-2 justify-end items-center">
-          <SelectButton v-model="layout" :options="options" :allowEmpty="false">
-            <template #option="{ option }">
-              <i :class="[option === 'list' ? 'pi pi-bars' : 'pi pi-table']" />
-            </template>
-          </SelectButton>
-          <Button
-            v-if="!isMobile"
-            type="button"
-            icon="pi pi-refresh !text-sm"
-            label=""
-            v-tooltip.top="{
-              value: $t('owners.actions.refresh'),
-              pt: {
-                arrow: {
-                  style: {
-                    borderTopColor: 'var(--p-primary-color)',
-                  },
-                },
-                text:
-                  '!bg-[var(--p-primary-color)] !font-thin 2xl:!text-lg lg:!text-xs shadow-md',
-              },
-            }"
-            class="p-button p-button-icon-only !text-sm !font-thin h-7"
-            @click="refreshData"
-          />
-          <Button
-            icon="pi pi-plus"
-            @click="showModal"
-            v-tooltip.top="{
-              value: $t('owners.actions.new_owner'),
-              pt: {
-                arrow: {
-                  style: {
-                    borderTopColor: 'var(--p-primary-color)',
-                  },
-                },
-                text:
-                  '!bg-[var(--p-primary-color)] !font-thin 2xl:!text-lg lg:!text-xs shadow-md',
-              },
-            }"
-            class="p-button p-button-icon-only !text-sm !font-thin h-7"
-          />
-        </div>
-        <div class="flex items-center">
-          <h2 class="lg:text-sm text-xl">{{ $t("owners.title") }}</h2>
-        </div>
-        <InputGroup
-          class="!text-gray-800 lg:!text-[14px] flex rounded-md overflow-hidden border !border-gray-400 h-8 !w-1/5"
-        >
-          <InputGroupAddon
-            class="!text-gray-800 px-4 flex flex-col item-center justify-center"
-          >
-            <i class="pi pi-search lg:!text-[14px]"></i>
-          </InputGroupAddon>
-          <InputText
-            v-model="searchQuery"
-            @input="onSearchChange"
-            type="text"
-            class="lg:!text-[14px] text-sm !text-gray-800 focus:!ring-0 focus:!ring-offset-0 focus:!border-gray-400 border-transparent"
-            :placeholder="$t('owners.search_placeholder')"
-          />
-          <Button
-            icon="pi pi-spin pi-spinner-dotted lg:!text-[14px] "
-            v-if="loading"
-            @click="clearFilters"
-          />
-          <Button icon="pi pi-times" v-else @click="clearFilters" />
-        </InputGroup>
-      </div>
-    </template>
-    <template #list v-if="loading">
-      <div class="flex flex-col">
-        <div v-for="i in 2" :key="i">
-          <div
-            class="flex flex-col xl:flex-row xl:items-start p-6 gap-6"
-            :class="{ 'border-t border-surface-200 dark:border-surface-700': i !== 0 }"
-          >
-            <!-- <Skeleton class="!w-9/12 sm:!w-64 xl:!w-40 !h-24 mx-auto" /> -->
-            <div
-              class="flex flex-col sm:flex-row justify-between items-center xl:items-start flex-1 gap-6"
-            >
-              <div class="flex flex-col items-center sm:items-start gap-4">
-                <Skeleton width="8rem" height="1.5rem" />
-                <Skeleton width="6rem" height="1rem" />
+      <div
+        class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 bg-surface-300 rounded-t-lg border-b border-surface-500 gap-2"
+      >
+        <h2 class="text-lg md:text-xl font-semibold text-surface-0">
+          {{ $t("owners.title") }}
+        </h2>
 
-                <div class="flex items-center gap-4">
-                  <Skeleton width="6rem" height="1rem" />
-                  <Skeleton width="3rem" height="1rem" />
-                </div>
-              </div>
-              <div class="flex sm:flex-col items-center sm:items-end gap-4 sm:gap-2">
-                <Skeleton width="4rem" height="1.5rem" />
-                <Skeleton size="3rem" shape="circle" />
-              </div>
-            </div>
+        <div
+          class="flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch w-full md:w-auto"
+        >
+          <InputGroup class="w-full sm:w-48 md:w-56 lg:w-64">
+            <InputGroupAddon class="bg-surface-400 border-surface-500">
+              <i class="pi pi-search text-surface-300 text-sm md:text-base" />
+            </InputGroupAddon>
+            <InputText
+              v-model="searchQuery"
+              @input="onSearchChange"
+              type="text"
+              class="bg-surface-400 border-surface-500 text-surface-100 placeholder-surface-500 text-sm md:text-base"
+              :placeholder="$t('owners.search_placeholder')"
+            />
+            <Button
+              v-if="searchQuery"
+              icon="pi pi-times"
+              @click="clearFilters"
+              class="p-button-text text-surface-400 hover:text-surface-200 text-sm md:text-base"
+            />
+          </InputGroup>
+
+          <div class="flex gap-2 justify-end sm:justify-start">
+            <Button
+              icon="pi pi-refresh"
+              @click="refreshData"
+              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
+              v-tooltip.top="$t('owners.actions.refresh')"
+            />
+            <Button
+              icon="pi pi-plus"
+              @click="showModal"
+              class="p-button-primary bg-emerald-600 hover:bg-emerald-500 border-emerald-600 text-sm md:text-base"
+              v-tooltip.top="$t('owners.actions.new_owner')"
+            />
           </div>
         </div>
       </div>
     </template>
 
-    <template #list="slotProps" v-else>
-      <div class="flex flex-col p-4">
-        <div v-for="(owner, index) in slotProps.items" :key="index">
+    <!-- Grid View -->
+    <template #grid="slotProps">
+      <ScrollPanel style="height: calc(70vh)" class="!overflow-y-auto">
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 p-3"
+        >
           <div
-            class="flex flex-col sm:flex-row sm:items-center px-6 py-2 border-surface-200 dark:border-surface-700 bg-gray-50 dark:bg-[var(--p-surface-700)] hover:bg-[var(--p-surface-300)] dark:hover:bg-[var(--p-surface-500)]"
-            :class="{
-              'border-t border-surface-200 dark:border-surface-700': index !== 0,
-            }"
+            v-for="(owner, index) in slotProps.items"
+            :key="index"
+            class="p-3 border border-surface-500 bg-surface-300 rounded-lg hover:bg-surface-400 transition-all"
           >
-            <div
-              class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-6"
-            >
-              <div class="w-1/4">
-                <div class="text-sm font-medium border-b-2 w-fit">
-                  {{ $t("owners.columns.name") }}: {{ owner.name }}
+            <div class="flex flex-col gap-2">
+              <!-- Owner Info -->
+              <div class="flex flex-col gap-1">
+                <div
+                  class="text-base md:text-lg font-medium text-surface-100 border-b border-emerald-500 w-fit mb-1 md:mb-2"
+                >
+                  {{ owner.name }}
                 </div>
-                <div class="text-sm">
-                  <i class="fa-solid fa-at ltr:mr-2 rtl:ml-2"></i>
-                  <span v-if="owner.showDetails">{{ owner.email }}</span>
-                  <span v-else>******@****.***</span>
+                <div
+                  class="text-xs md:text-sm text-surface-300 flex items-start gap-1 md:gap-2"
+                >
+                  <i
+                    class="pi pi-envelope mr-1 md:mr-2 !text-emerald-400 text-sm md:text-base"
+                  ></i>
+                  <span v-if="owner.showDetails" class="truncate">{{ owner.email }}</span>
+                  <span v-else class="text-surface-500 truncate">******@****.***</span>
                 </div>
               </div>
-              <div class="flex flex-col md:items-start gap-2 w-1/3">
-                <span class="lg:!text-[14px] text-sm">
-                  <i class="fa-solid fa-phone-volume ltr:mr-2 rtl:ml-2 mt-2"></i>
-                  <a
-                    v-if="owner.showDetails"
-                    :href="`https://wa.me/` + owner.phone"
-                    target="_blank"
-                    v-tooltip.top="{
-                      value: 'WhatsApp ' + owner.phone,
-                      pt: {
-                        arrow: {
-                          style: {
-                            borderTopColor: 'var(--p-primary-color)',
-                          },
-                        },
-                        text:
-                          '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
-                      },
-                    }"
+
+              <!-- Contact Info -->
+              <div class="flex flex-col gap-1">
+                <div
+                  class="text-xs md:text-sm text-surface-300 flex items-start gap-1 md:gap-2"
+                >
+                  <i
+                    class="pi pi-phone mr-1 md:mr-2 !text-emerald-400 text-sm md:text-base"
+                  ></i>
+                  <span v-if="owner.showDetails" class="!ltr truncate"
+                    >+{{ owner.phone }}</span
                   >
-                    +{{ owner.phone }}
-                  </a>
-                  <span v-else class="2xl:!text-sm lg:!text-xs">{{
+                  <span v-else class="text-surface-500 truncate">{{
                     $t("owners.hidden_phone")
                   }}</span>
-                </span>
-                <span class="lg:!text-[14px] text-sm">
-                  <i class="fa-solid fa-location-dot ltr:mr-2 rtl:ml-2"></i>
-                  {{ $t("owners.columns.address") }}: {{ owner.address }}
-                </span>
+                </div>
+                <div
+                  class="text-xs md:text-sm text-surface-300 flex items-start gap-1 md:gap-2"
+                >
+                  <i
+                    class="pi pi-map-marker mr-1 md:mr-2 !text-emerald-400 text-sm md:text-base"
+                  ></i>
+                  <span class="truncate">{{ owner.address }}</span>
+                </div>
               </div>
-              <div class="flex gap-1">
+
+              <!-- Actions -->
+              <div class="flex gap-1 md:gap-2 justify-end mt-2 md:mt-3">
                 <Button
-                  type="button"
-                  icon="fas fa-user-pen 2xl:!text-sm lg:!text-xs"
-                  label=""
-                  v-tooltip.top="{
-                    value: $t('owners.actions.edit'),
-                    pt: {
-                      arrow: {
-                        style: {
-                          borderTopColor: 'var(--p-primary-color)',
-                        },
-                      },
-                      text:
-                        '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
-                    },
-                  }"
-                  rounded
-                  variant="text"
-                  size="small"
+                  icon="pi pi-pencil"
                   @click="editOwner(owner)"
+                  class="p-button-text text-surface-300 hover:!text-emerald-400 text-sm md:text-base"
+                  v-tooltip.top="$t('owners.actions.edit')"
                 />
                 <router-link
                   :to="`/` + owner.id + `/pets`"
-                  class="p-button p-component p-button-icon-only p-button-rounded p-button-text p-button-sm"
-                  v-tooltip.top="{
-                    value: $t('owners.actions.pets'),
-                    pt: {
-                      arrow: {
-                        style: {
-                          borderTopColor: 'var(--p-primary-color)',
-                        },
-                      },
-                      text:
-                        '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
-                    },
-                  }"
-                  rounded
-                  variant="text"
-                  size="small"
+                  class="p-button p-component p-button-icon-only p-button-text text-surface-300 hover:!text-emerald-400 button-transition text-sm md:text-base"
+                  v-tooltip.top="$t('owners.actions.pets')"
                 >
-                  <i class="fas fa-paw 2xl:!text-sm lg:!text-xs"></i>
+                  <i class="fas fa-paw"></i>
                 </router-link>
                 <Button
-                  type="button"
-                  icon="pi pi-whatsapp !text-sm"
-                  label=""
-                  @click="showWahaModal(owner.phone)"
-                  v-tooltip.top="{
-                    value: t('owners.actions.whatsapp'),
-                    pt: {
-                      arrow: {
-                        style: {
-                          borderTopColor: 'var(--p-primary-color)',
-                        },
-                      },
-                      text:
-                        '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
-                    },
-                  }"
-                  rounded
-                  variant="text"
-                  size="small"
+                  icon="pi pi-whatsapp"
+                  @click="showWahaModal(owner)"
+                  class="p-button-text text-surface-300 hover:!text-emerald-400 text-sm md:text-base"
+                  v-tooltip.top="$t('owners.actions.whatsapp')"
                 />
                 <Button
-                  class="p-button p-component 2xl:!text-sm lg:!text-xs"
                   :icon="owner.showDetails ? 'pi pi-eye-slash' : 'pi pi-eye'"
-                  v-tooltip.top="{
-                    value: owner.showDetails
-                      ? $t('owners.actions.hide_details')
-                      : $t('owners.actions.view_details'),
-                    pt: {
-                      arrow: {
-                        style: {
-                          borderTopColor: 'var(--p-primary-color)',
-                        },
-                      },
-                      text:
-                        '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
-                    },
-                  }"
-                  rounded
-                  variant="text"
-                  size="small"
                   @click="toggleDetails(owner)"
+                  class="p-button-text text-surface-300 hover:!text-emerald-400 text-sm md:text-base"
+                  v-tooltip.top="
+                    owner.showDetails
+                      ? $t('owners.actions.hide_details')
+                      : $t('owners.actions.view_details')
+                  "
                 />
                 <Button
-                  class="p-button p-component 2xl:!text-sm lg:!text-xs"
-                  icon="pi pi-times"
-                  v-tooltip.top="{
-                    value: $t('owners.actions.deactivate'),
-                    pt: {
-                      arrow: {
-                        style: {
-                          borderTopColor: 'var(--p-primary-color)',
-                        },
-                      },
-                      text:
-                        '!bg-[var(--p-primary-color)] !font-thin 2xl:!text-sm lg:!text-xs shadow-md',
-                    },
-                  }"
-                  rounded
-                  variant="text"
-                  size="small"
+                  icon="pi pi-trash"
                   @click="deactivateAccount(owner)"
+                  class="p-button-text text-surface-300 hover:text-rose-400 text-sm md:text-base"
+                  v-tooltip.top="$t('owners.actions.deactivate')"
                 />
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </template>
-    <template #grid v-if="loading">
-      <div class="grid grid-cols-12 gap-2">
-        <div
-          v-for="i in 4"
-          :key="i"
-          class="col-span-12 sm:col-span-6 md:col-span-5 xl:col-span-3 p-2"
-        >
-          <div
-            class="p-6 border border-surface-200 dark:border-surface-700 bg-surface-0 dark:bg-surface-900 rounded-lg flex flex-col"
-          >
-            <div class="text-lg font-medium border-b pb-2">
-              <Skeleton width="6rem" height="1.5rem" />
-            </div>
-
-            <div class="mt-4 text-sm">
-              <div class="text-sm mt-2">
-                <Skeleton width="12rem" height="1.5rem" />
-              </div>
-              <div class="text-sm mt-2">
-                <Skeleton width="12rem" height="1.5rem" />
-              </div>
-              <div class="text-sm mt-2">
-                <Skeleton width="12rem" height="1.5rem" />
-              </div>
-            </div>
-            <div class="flex flex-col gap-6 mt-6">
-              <div class="flex gap-2">
-                <Skeleton class="w-full" height="1.5rem" />
-              </div>
-            </div>
-            <div class="flex flex-col gap-6 mt-1">
-              <div class="flex gap-2">
-                <Skeleton class="w-full" height="1.5rem" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </template>
-
-    <template #grid="slotProps" v-else>
-      <div class="grid xl:grid-cols-12 grid-cols-10 p-4">
-        <div
-          v-for="(owner, index) in slotProps.items"
-          :key="index"
-          class="col-span-12 sm:col-span-6 md:col-span-2.5 lg:col-span-2 xl:col-span-3 p-2"
-        >
-          <div
-            class="p-6 border border-surface-200 dark:border-surface-700 bg-zinc-100 dark:bg-[var(--p-surface-500)] rounded-lg flex flex-col shadow hover:drop-shadow-[0_5px_5px_rgba(0,0,0,0.3)] transition-all hover:-translate-y-1 duration-500 hover:bg-[var(--p-surface-300)] dark:hover:bg-[var(--p-surface-500)]"
-          >
-            <div class="">
-              <div class="lg:text-xs text-lg font-medium border-b">
-                {{ $t("owners.columns.name") }}: {{ owner.name }}
-              </div>
-
-              <div class="mt-4 text-sm">
-                <div class="2xl:!text-lg lg:!text-[14px]">
-                  <i class="fa-solid fa-at ltr:mr-2 rtl:ml-2 mt-2"></i>
-                  <span v-if="owner.showDetails">{{ owner.email }}</span>
-                  <span v-else class="lg:text-xs xl:text-xs"> ******@****.*** </span>
-                </div>
-                <div>
-                  <i class="fa-solid fa-phone-volume ltr:mr-2 rtl:ml-2 mt-2"></i>
-                  <a
-                    dir="ltr"
-                    v-if="owner.showDetails"
-                    @click="showWahaModal(owner.phone)"
-                    target="_blank"
-                    v-tooltip.top="{
-                      value: $t('owners.actions.whatsapp') + ' ' + owner.phone,
-                      pt: {
-                        arrow: {
-                          style: {
-                            borderTopColor: 'var(--p-primary-color)',
-                          },
-                        },
-                        text:
-                          '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
-                      },
-                    }"
-                    class="cursor-pointer lg:!text-[14px]"
-                  >
-                    +{{ owner.phone }}
-                  </a>
-                  <span v-else class="lg:!text-[14px]">{{
-                    $t("owners.hidden_phone")
-                  }}</span>
-                </div>
-                <div class="whitespace-normal lg:!text-[14px]">
-                  <i class="fa-solid fa-location-dot ltr:mr-2 rtl:ml-2 mt-2"></i>
-                  {{ $t("owners.columns.address") }}: {{ owner.address }}
-                </div>
-              </div>
-              <div class="flex flex-col gap-6 mt-6">
-                <div class="flex gap-1 justify-between">
-                  <Button
-                    type="button"
-                    icon="fas fa-user-pen 2xl:!text-sm lg:!text-xs"
-                    label=""
-                    v-tooltip.top="{
-                      value: $t('owners.actions.edit'),
-                      pt: {
-                        arrow: {
-                          style: {
-                            borderTopColor: 'var(--p-primary-color)',
-                          },
-                        },
-                        text:
-                          '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
-                      },
-                    }"
-                    rounded
-                    variant="text"
-                    size="small"
-                    @click="editOwner(owner)"
-                  />
-                  <router-link
-                    :to="`/` + owner.id + `/pets`"
-                    class="p-button p-component p-button-icon-only p-button-rounded p-button-text p-button-sm button-transition"
-                    v-tooltip.top="{
-                      value: $t('owners.actions.pets'),
-                      pt: {
-                        arrow: {
-                          style: {
-                            borderTopColor: 'var(--p-primary-color)',
-                          },
-                        },
-                        text:
-                          '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
-                      },
-                    }"
-                    rounded
-                    variant="text"
-                    size="small"
-                  >
-                    <i class="fas fa-paw 2xl:!text-sm lg:!text-xs"></i>
-                  </router-link>
-                  <Button
-                    type="button"
-                    icon="pi pi-whatsapp !text-sm"
-                    label=""
-                    @click="showWahaModal(owner)"
-                    v-tooltip.top="{
-                      value: t('owners.actions.whatsapp'),
-                      pt: {
-                        arrow: {
-                          style: {
-                            borderTopColor: 'var(--p-primary-color)',
-                          },
-                        },
-                        text:
-                          '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
-                      },
-                    }"
-                    rounded
-                    variant="text"
-                    size="small"
-                  />
-                  <Button
-                    class="p-button p-component 2xl:!text-sm lg:!text-xs"
-                    :icon="owner.showDetails ? 'pi pi-eye-slash' : 'pi pi-eye'"
-                    v-tooltip.top="{
-                      value: owner.showDetails
-                        ? $t('owners.actions.hide_details')
-                        : $t('owners.actions.view_details'),
-                      pt: {
-                        arrow: {
-                          style: {
-                            borderTopColor: 'var(--p-primary-color)',
-                          },
-                        },
-                        text:
-                          '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
-                      },
-                    }"
-                    rounded
-                    variant="text"
-                    size="small"
-                    @click="toggleDetails(owner)"
-                  />
-                  <Button
-                    class="p-button p-component 2xl:!text-sm lg:!text-xs"
-                    icon="pi pi-times"
-                    v-tooltip.top="{
-                      value: $t('owners.actions.deactivate'),
-                      pt: {
-                        arrow: {
-                          style: {
-                            borderTopColor: 'var(--p-primary-color)',
-                          },
-                        },
-                        text:
-                          '!bg-[var(--p-primary-color)] !font-thin 2xl:!text-sm lg:!text-xs shadow-md',
-                      },
-                    }"
-                    rounded
-                    variant="text"
-                    size="small"
-                    @click="deactivateAccount(owner)"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </ScrollPanel>
     </template>
 
     <template #footer>
-      <Paginator
-        :rows="itemsPerPage"
-        :first="1"
-        :totalRecords="totalRecords"
-        :currentPage="currentPage"
-        :rowsPerPageOptions="[25, 50, 100]"
-        @page="onPageChange"
-        class="text-xs"
-      ></Paginator>
-    </template>
-  </DataView>
-
-  <Dialog
-    :header="$t('owners.modals.new_client')"
-    v-model:visible="isModalVisible"
-    @hide="isModalVisible = false"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
-  >
-    <template #header>
-      <div class="inline-flex items-center justify-center gap-2">
-        <Avatar icon="fas fa-users" shape="circle" />
-        <span class="font-bold whitespace-nowrap">{{
-          $t("owners.modals.new_client")
-        }}</span>
+      <div class="p-2 md:p-4 bg-surface-300 border-t border-surface-500 rounded-b-lg">
+        <Paginator
+          :rows="itemsPerPage"
+          :totalRecords="totalRecords"
+          :rowsPerPageOptions="[25, 50, 100]"
+          @page="onPageChange"
+          class="border-0 bg-surface-300 [&>button]:text-surface-100 [&>button:hover]:bg-surface-400 text-xs md:text-sm"
+        ></Paginator>
       </div>
     </template>
-    <NewClientForm
-      @ownerAdded="handleSubmit"
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-    />
-    <template #footer> </template>
+  </DataView>
+  <!-- Dialogs -->
+  <Dialog
+    v-model:visible="isModalVisible"
+    header="New Owner"
+    :style="{ width: '50vw' }"
+    class="bg-surface-300 text-surface-100"
+  >
+    <NewClientForm @ownerAdded="handleSubmit" />
   </Dialog>
 
   <Dialog
-    :header="$t('owners.modals.whatsapp')"
     v-model:visible="isModalWahaVisible"
-    @hide="isModalWahaVisible = false"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-4/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
+    header="Send WhatsApp"
+    :style="{ width: '40vw' }"
+    class="bg-surface-300 text-surface-100"
   >
-    <template #header>
-      <div class="inline-flex items-center justify-center gap-2">
-        <Avatar icon="fas fa-users" shape="circle" />
-        <span class="font-bold whitespace-nowrap">{{
-          $t("owners.modals.whatsapp")
-        }}</span>
-      </div>
-    </template>
     <SendWhatsApp
       :contactNumber="whatsAppContact"
       :ownerID="selectedOwner"
       @submitted="handleWahaSubmit"
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
     />
-    <template #footer> </template>
   </Dialog>
 
   <Dialog
-    :header="$t('owners.modals.edit_owner')"
     v-model:visible="isEditOwnerVisible"
-    @hide="isEditOwnerVisible = false"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-8/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
+    header="Edit Owner"
+    :style="{ width: '60vw' }"
+    class="bg-surface-300 text-surface-100"
   >
-    <template #header>
-      <div class="inline-flex items-center justify-center gap-2">
-        <Avatar icon="fas fa-users" shape="circle" />
-        <span class="font-bold whitespace-nowrap">{{
-          $t("owners.modals.edit_owner")
-        }}</span>
-      </div>
-    </template>
-    <EditOwner
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :owner="selectedOwner"
-      @OwnerUpdated="handleOwnerUpdated"
-      @close-dialog="isEditDialogVisible = false"
-    />
-    <template #footer> </template>
+    <EditOwner :owner="selectedOwner" @OwnerUpdated="handleOwnerUpdated" />
   </Dialog>
 </template>
-
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { RouterLink, useRoute } from "vue-router";
@@ -596,6 +211,7 @@ import NewClientForm from "@/views/AddNewOwner.vue";
 import SendWhatsApp from "@/views/SendWhatsApp.vue";
 import EditOwner from "@/views/EditOwner.vue";
 import { useI18n } from "vue-i18n";
+import ScrollPanel from "primevue/scrollpanel";
 import { useDevice } from "@/composables/useDevice";
 
 const { isMobile, mobileMenuVisible } = useDevice();
@@ -774,9 +390,51 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
+<style>
 .form-container {
   max-width: 800px;
   margin: auto;
+}
+/* Improved responsive styles */
+.button-transition {
+  transition: all 0.2s ease;
+}
+
+.button-transition:hover {
+  transform: translateY(-1px);
+}
+
+/* Better scrollbar styling */
+:deep(.p-scrollpanel) {
+  border-radius: 0.5rem;
+}
+
+:deep(.p-scrollpanel-bar) {
+  background-color: var(--surface-400) !important;
+  opacity: 1;
+  transition: background-color 0.2s;
+  width: 8px;
+}
+
+:deep(.p-scrollpanel-bar:hover) {
+  background-color: var(--emerald-400) !important;
+}
+
+/* Responsive text truncation */
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Better mobile spacing */
+@media (max-width: 640px) {
+  .p-3 {
+    padding: 0.75rem;
+  }
+  .gap-2 {
+    gap: 0.5rem;
+  }
 }
 </style>

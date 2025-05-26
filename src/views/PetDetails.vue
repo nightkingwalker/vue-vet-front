@@ -3,7 +3,7 @@
     <div
       class="w-1/4 h-fit bg-[var(--p-surface-200)] dark:bg-[var(--p-surface-600)] rounded-lg p-2"
     >
-      <Card class="w-full">
+      <!--       <Card class="w-full">
         <template #header>
           <Button
             @click="router.go(-1)"
@@ -291,8 +291,212 @@
         </template>
         <template #footer>
           <div class="flex gap-4 mt-1">
-            <!-- <Button label="Cancel" severity="secondary" outlined class="w-full" />
-            <Button label="Save" class="w-full" /> -->
+
+          </div>
+        </template>
+      </Card>
+ -->
+      <Card class="w-full h-full shadow-lg border-0 rounded-xl overflow-hidden">
+        <template #header>
+          <div
+            class="relative h-40 bg-gradient-to-br"
+            :class="
+              pet.gender === 'Female'
+                ? 'from-purple-100 to-red-100 dark:from-purple-800 dark:to-red-800'
+                : 'from-indigo-100 to-blue-100 dark:from-purple-800 dark:to-blue-800'
+            "
+          >
+            <Button
+              @click="router.go(-1)"
+              class="relative top-3 right-3 left-3 p-button-text p-button-rounded !text-gray-600 dark:!text-gray-200 hover:!bg-gray-100 dark:hover:!bg-gray-700 z-10"
+              :icon="isRtl ? 'pi pi-arrow-right' : 'pi pi-arrow-left'"
+              v-tooltip.top="$t('pet_details.go_back')"
+            />
+            <div class="absolute inset-0 flex items-center justify-center">
+              <i class="fas fa-paw text-6xl text-white opacity-70"></i>
+            </div>
+            <div v-if="pet.deceased === 'Y'" class="absolute bottom-3 right-3 left-3">
+              <Tag
+                value="Deceased"
+                severity="danger"
+                class="!text-xs font-medium"
+                icon="fa-solid fa-heart-crack"
+              />
+            </div>
+          </div>
+        </template>
+
+        <template #title>
+          <div class="flex items-center justify-between">
+            <Skeleton v-if="loading" width="12rem" height="2rem" />
+            <template v-else>
+              <h2 class="text-xl font-semibold text-gray-800 dark:text-white">
+                {{ pet.name }}
+              </h2>
+              <Tag
+                :value="$t(`pet_details.${pet.gender}`)"
+                :severity="pet.gender === 'Female' ? 'danger' : 'success'"
+                class="!text-xs"
+                :icon="pet.gender === 'Female' ? 'fa-solid fa-venus' : 'fa-solid fa-mars'"
+              />
+            </template>
+          </div>
+        </template>
+
+        <template #subtitle>
+          <div class="flex items-center gap-2 mt-1">
+            <Skeleton v-if="loading" width="12rem" height="1.5rem" />
+            <template v-else>
+              <Tag
+                :value="pet.microchip_num"
+                icon="fas fa-microchip"
+                class="!text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-200"
+              />
+            </template>
+          </div>
+        </template>
+
+        <template #content>
+          <div v-if="loading" class="space-y-3">
+            <Skeleton width="100%" height="1.5rem" />
+            <Skeleton width="100%" height="1.5rem" />
+            <Skeleton width="70%" height="1.5rem" />
+          </div>
+
+          <div v-else class="space-y-4 mt-4">
+            <!-- Owner Section -->
+            <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+              <h3
+                class="text-xs font-medium text-gray-500 dark:text-gray-300 mb-2 flex items-center gap-2"
+              >
+                <i class="fas fa-user"></i>
+                {{ $t("pets.columns.owner") }}
+              </h3>
+              <router-link
+                :to="`/${pet.owner.id}/pets`"
+                class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium flex items-center gap-1"
+              >
+                {{ pet.owner.name }}
+                <i class="pi pi-external-link text-xs"></i>
+              </router-link>
+            </div>
+
+            <!-- Pet Details Section -->
+            <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+              <h3
+                class="text-xs font-medium text-gray-500 dark:text-gray-300 mb-2 flex items-center gap-2"
+              >
+                <i class="fas fa-paw"></i>
+                {{ $t("pet_details.title") }}
+              </h3>
+              <div class="grid grid-cols-2 gap-2 text-sm">
+                <div>
+                  <p class="text-gray-500 dark:text-gray-400 text-xs">
+                    {{ $t("pet_details.species_header") }}
+                  </p>
+                  <p class="flex items-center gap-1">
+                    <i :class="getIconClass(pet.species)"></i>
+                    {{ $t(`pet_details.species.${getSpeciesValue(pet.species)}`) }}
+                  </p>
+                </div>
+                <div>
+                  <p class="text-gray-500 dark:text-gray-400 text-xs">
+                    {{ $t("pet_details.breed") }}
+                  </p>
+                  <p>{{ pet.breed || "-" }}</p>
+                </div>
+                <div>
+                  <p class="text-gray-500 dark:text-gray-400 text-xs">
+                    {{ $t("pet_details.color") }}
+                  </p>
+                  <p class="flex items-center gap-1">
+                    <i class="fa-solid fa-palette text-gray-400"></i>
+                    {{ pet.color || "-" }}
+                  </p>
+                </div>
+                <div>
+                  <p class="text-gray-500 dark:text-gray-400 text-xs">
+                    {{ $t("pet_details.age") }}
+                  </p>
+                  <p class="flex items-center gap-1">
+                    <i class="fa-solid fa-cake-candles text-gray-400"></i>
+                    {{ computeAge(pet.date_of_birth) }}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Medical Info Section -->
+            <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+              <h3
+                class="text-xs font-medium text-gray-500 dark:text-gray-300 mb-2 flex items-center gap-2"
+              >
+                <i class="fas fa-heartbeat"></i>
+                {{ $t("pet_details.medical_info") }}
+              </h3>
+              <div class="space-y-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-gray-500 dark:text-gray-400 text-xs"
+                    >{{ $t("pet_details.neutered") }}:</span
+                  >
+                  <Tag
+                    :value="
+                      pet.neutered === 'Y'
+                        ? pet.gender === 'Male'
+                          ? $t('pet_details.neutered')
+                          : $t('pet_details.spayed')
+                        : pet.gender === 'Male'
+                        ? $t('pet_details.not_neutered')
+                        : $t('pet_details.not_spayed')
+                    "
+                    :severity="pet.neutered === 'Y' ? 'success' : 'danger'"
+                    class="!text-xs"
+                  />
+                </div>
+                <div v-if="pet.allergies" class="flex items-start gap-2">
+                  <span class="text-gray-500 dark:text-gray-400 text-xs"
+                    >{{ $t("pet_details.allergies") }}:</span
+                  >
+                  <Tag icon="fas fa-disease" severity="warning" class="!text-xs">
+                    {{ pet.allergies }}
+                  </Tag>
+                </div>
+                <div v-if="pet.behaviour" class="flex items-center gap-2">
+                  <span class="text-gray-500 dark:text-gray-400 text-xs"
+                    >{{ $t("pet_details.behavior") }}:</span
+                  >
+                  <span class="flex items-center gap-1">
+                    <i class="fa-solid fa-face-angry text-gray-400"></i>
+                    {{ pet.behaviour }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Additional Info -->
+            <div
+              v-if="pet.distinctive_marks"
+              class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg"
+            >
+              <h3
+                class="text-xs font-medium text-gray-500 dark:text-gray-300 mb-2 flex items-center gap-2"
+              >
+                <i class="fas fa-asterisk"></i>
+                {{ $t("pet_details.distinctive_marks") }}
+              </h3>
+              <p class="text-sm">{{ pet.distinctive_marks }}</p>
+            </div>
+          </div>
+        </template>
+
+        <template #footer>
+          <div class="flex justify-end">
+            <Button
+              icon="fa-solid fa-pencil"
+              :label="$t('pet_details.edit')"
+              class="!text-xs !py-2 !px-4"
+              @click="editPetDetails"
+            />
           </div>
         </template>
       </Card>
@@ -1151,6 +1355,7 @@ const selectedMedicalImageId = ref(null);
 const route = useRoute();
 const petmicrochip = ref(route.params.petmicrochip);
 const selectedInvoice = ref(null);
+const isRtl = document.getElementsByTagName("html")[0].dir === "rtl" ? true : false;
 const pet = ref({
   microchip_num: "",
   name: "",

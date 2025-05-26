@@ -148,6 +148,7 @@ const menuItems = computed(() => {
       route: "/",
       shortcut: "CTRL+ALT+Home",
     },
+
     {
       label: t("app.menu.patients"),
       icon: "fa-solid fa-paw !text-md !text-center",
@@ -221,6 +222,11 @@ const menuItems = computed(() => {
       label: t("app.menu.reports.reports"),
       icon: "fa-solid fa-arrow-trend-up !text-md",
       route: "/reports/stock-movement",
+    },
+    {
+      label: t("app.menu.clinics"),
+      icon: "fas fa-stethoscope !text-md",
+      route: "/clinics",
     },
     // {
     //   label: t("app.menu.settings"),
