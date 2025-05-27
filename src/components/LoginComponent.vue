@@ -89,7 +89,7 @@
         </div>
         <!-- Remember Me & Forgot Password -->
         <div class="flex items-center justify-between text-sm">
-          <div class="flex items-center">
+          <div class="flex items-center justify-start gap-2">
             <CheckBox
               v-model="rememberMe"
               inputId="rememberMe"

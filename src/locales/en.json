@@ -1495,7 +1495,8 @@
         "send_code": "Send Verification Code",
         "continue": "Continue to QR Scan",
         "instructions": "Enter the phone number associated with your WhatsApp Business account. We'll send a verification code to confirm ownership.",
-        "error_title": "Error Verifying Phone number"
+        "error_title": "Error Verifying Phone number",
+        "Phone number not registered with WhatsApp": "الرقم غير مسجل في خدمة واتس آب الأعمال"
     },
     "whatsapp_qr": {
         "title": "Scan QR Code",

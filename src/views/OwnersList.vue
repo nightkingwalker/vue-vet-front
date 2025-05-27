@@ -50,9 +50,9 @@
 
     <!-- Grid View -->
     <template #grid="slotProps">
-      <ScrollPanel style="height: calc(70vh)" class="!overflow-y-auto">
+      <ScrollPanel style="height: calc(70vh)" class="!overflow-y-auto !bg-transparent">
         <div
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 p-3"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 p-3 !bg-transparent"
         >
           <div
             v-for="(owner, index) in slotProps.items"
@@ -436,5 +436,11 @@ onMounted(() => {
   .gap-2 {
     gap: 0.5rem;
   }
+}
+.p-scrollpanel-bar {
+  --tw-bg-opacity: 1;
+  /* background-color: rgb(31 41 55 / var(--tw-bg-opacity)); */
+  background: var(--p-surface-600) !important;
+  border-radius: 5px;
 }
 </style>

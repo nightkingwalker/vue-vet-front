@@ -124,16 +124,6 @@ const sendVerification = async () => {
       /[^0-9]/g,
       ""
     );
-    // const submissionData = {
-    //   phone: phoneNumber.value,
-    //   country_code: selectedCountry.value,
-    // };
-    // const response = await axios.get("/api/whatsapp/check-number", {
-    //   params: {
-    //     phone: phoneNumber.value,
-    //     country_code: selectedCountry.value,
-    //   },
-    // });
     const response = await axiosInstance.get(
       "/whatsapp/check-number?phone=" +
         phoneNumber.value +
@@ -152,6 +142,7 @@ const sendVerification = async () => {
       throw new Error(response.data.error || "Verification failed");
     }
   } catch (error) {
+    console.log(error);
     // useToast().add({
     //   severity: "error",
     //   summary: t("whatsapp_number_verification.error_title"),
@@ -161,7 +152,7 @@ const sendVerification = async () => {
     eventBus.emit("show-toast", {
       severity: "error",
       summary: t("whatsapp_number_verification.error_title"),
-      detail: error.message,
+      detail: t("whatsapp_number_verification." + error.response.data.error),
       life: 5000,
       // });
     });

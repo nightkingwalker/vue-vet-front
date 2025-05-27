@@ -143,6 +143,7 @@ const startLogoutTimer = () => {
 };
 
 const handleTimeout = () => {
+  confirm.close();
   clearTimers();
   authStore.logOut();
   router.push("/login");
@@ -180,6 +181,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  confirm.close();
   cleanupActivityListeners();
   clearTimers();
 });

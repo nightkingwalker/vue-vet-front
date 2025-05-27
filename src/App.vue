@@ -180,10 +180,30 @@ onMounted(() => {
   }, 5000);
   eventBus.on("show-toast", toast.add);
 });
+// Log current screen width in pixels
+function logActiveMediaQuery() {
+  const width = window.innerWidth;
+  let mediaQuery = "";
+
+  if (width < 576) mediaQuery = "@media (max-width: 575.98px)";
+  else if (width >= 576 && width < 768)
+    mediaQuery = "@media (min-width: 576px) and (max-width: 767.98px)";
+  else if (width >= 768 && width < 992)
+    mediaQuery = "@media (min-width: 768px) and (max-width: 991.98px)";
+  else if (width >= 992 && width < 1200)
+    mediaQuery = "@media (min-width: 992px) and (max-width: 1199.98px)";
+  else if (width >= 1200) mediaQuery = "@media (min-width: 1200px)";
+
+  console.log(`Screen Width: ${width}px, using ${mediaQuery} { /* Your CSS here */ }`);
+}
+
+// Initial check + update on resize
+logActiveMediaQuery();
+window.addEventListener("resize", logActiveMediaQuery);
 </script>
 
 <style>
-/* Global styles that were previously in App.vue */
+/* Global styles that were previously in App.vue:lang(ar) */
 .button-transition:hover {
   translate: -0.07rem -0.07rem !important;
   --tw-drop-shadow: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.3));
@@ -204,7 +224,7 @@ button:hover {
     var(--tw-drop-shadow);
 }
 
-/* Container responsive sizing */
+/* Container responsive sizing:lang(ar) */
 @media (min-width: 1536px) {
   .container {
     max-width: 90%;
@@ -219,7 +239,7 @@ button:hover {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
-/* Fade transition */
+/* Fade transition:lang(ar) */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.6s ease;
@@ -230,7 +250,7 @@ button:hover {
   opacity: 0;
 }
 
-/* Slide transitions */
+/* Slide transitions:lang(ar) */
 .slide-right-enter-active,
 .slide-right-leave-active {
   transition: all 0.4s ease;
@@ -255,5 +275,102 @@ button:hover {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+/* Extra small devices (phones, 576px and down):lang(ar) */
+@media (max-width: 575.98px) {
+  i.sx__chevron.sx__chevron--next,
+  i.sx__chevron.sx__chevron--previous {
+    font-size: 0 !important;
+  }
+  .text-6xl {
+    font-size: 3.75rem !important;
+  }
+  :lang(ar) *:not(i) {
+    font-size: 11px !important;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 576px and up):lang(ar) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  i.sx__chevron.sx__chevron--next,
+  i.sx__chevron.sx__chevron--previous {
+    font-size: 0 !important;
+  }
+  .text-6xl {
+    font-size: 3.75rem !important;
+  }
+  :lang(ar) *:not(i) {
+    font-size: 11px !important;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up):lang(ar) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  i.sx__chevron.sx__chevron--next,
+  i.sx__chevron.sx__chevron--previous {
+    font-size: 0 !important;
+  }
+  .text-6xl {
+    font-size: 3.75rem !important;
+  }
+  :lang(ar) *:not(i) {
+    font-size: 12px !important;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up):lang(ar) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .text-6xl {
+    font-size: 3.75rem !important;
+  }
+  i.sx__chevron.sx__chevron--next,
+  i.sx__chevron.sx__chevron--previous {
+    font-size: 0 !important;
+  }
+  :lang(ar) *:not(i) {
+    font-size: 11px !important;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up):lang(ar) */
+@media (min-width: 1200px) {
+  .text-6xl {
+    font-size: 3.75rem !important;
+  }
+  i.sx__chevron.sx__chevron--next,
+  i.sx__chevron.sx__chevron--previous {
+    font-size: 0 !important;
+  }
+  :lang(ar) *:not(i) {
+    font-size: 12px !important;
+  }
+}
+
+/* 2K and larger screens:lang(ar) */
+@media (min-width: 1920px) {
+  .text-6xl {
+    font-size: 3.75rem !important;
+  }
+  i.sx__chevron.sx__chevron--next,
+  i.sx__chevron.sx__chevron--previous {
+    font-size: 0 !important;
+  }
+  :lang(ar) *:not(i) {
+    font-size: 14px !important;
+  }
+}
+
+/* 4K and larger screens:lang(ar) */
+@media (min-width: 3840px) {
+  .text-6xl {
+    font-size: 3.75rem !important;
+  }
+  i.sx__chevron.sx__chevron--next,
+  i.sx__chevron.sx__chevron--previous {
+    font-size: 0 !important;
+  }
+  :lang(ar) *:not(i) {
+    font-size: 11px !important;
+  }
 }
 </style>
