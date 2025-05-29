@@ -29,7 +29,15 @@
               class="p-button-text text-surface-400 hover:text-surface-200 text-sm md:text-base"
             />
           </InputGroup>
-
+          <!-- onLabel="Showing All"
+            offLabel="Active Only" -->
+          <ToggleButton
+            v-model="showDeactivated"
+            onIcon="pi pi-eye"
+            offIcon="pi pi-eye-slash"
+            class="w-full sm:w-auto"
+            @change="refreshData"
+          />
           <div class="flex gap-2 justify-end sm:justify-start">
             <Button
               icon="pi pi-refresh"
@@ -49,15 +57,74 @@
     </template>
 
     <!-- Grid View -->
-    <template #grid="slotProps">
+    <template #grid v-if="loading">
       <ScrollPanel style="height: calc(70vh)" class="!overflow-y-auto !bg-transparent">
         <div
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 p-3 !bg-transparent"
+        >
+          <div
+            v-for="i in 4"
+            :key="i"
+            class="p-3 border border-surface-500 bg-surface-300 rounded-lg hover:bg-surface-400 transition-all"
+          >
+            <div class="flex flex-col gap-2">
+              <!-- Owner Info -->
+              <div class="flex flex-col gap-1">
+                <div
+                  class="text-base md:text-lg font-medium text-surface-100 border-b border-emerald-500 w-fit mb-1 md:mb-2"
+                >
+                  <Skeleton width="6rem" height="1.5rem" />
+                </div>
+                <div
+                  class="text-xs md:text-sm text-surface-300 flex items-start gap-1 md:gap-2"
+                >
+                  <i
+                    class="pi pi-envelope mr-1 md:mr-2 !text-emerald-400 text-sm md:text-base"
+                  ></i>
+                  <Skeleton width="12rem" height="1.5rem" />
+                </div>
+              </div>
+
+              <!-- Contact Info -->
+              <div class="flex flex-col gap-1">
+                <div
+                  class="text-xs md:text-sm text-surface-300 flex items-start gap-1 md:gap-2"
+                >
+                  <i
+                    class="pi pi-phone mr-1 md:mr-2 !text-emerald-400 text-sm md:text-base"
+                  ></i>
+                  <Skeleton width="12rem" height="1.5rem" />
+                </div>
+                <div
+                  class="text-xs md:text-sm text-surface-300 flex items-start gap-1 md:gap-2"
+                >
+                  <i
+                    class="pi pi-map-marker mr-1 md:mr-2 !text-emerald-400 text-sm md:text-base"
+                  ></i>
+                  <Skeleton width="12rem" height="1.5rem" />
+                </div>
+              </div>
+
+              <!-- Actions -->
+              <div class="flex gap-1 md:gap-2 justify-end mt-2 md:mt-3">
+                <Skeleton width="100%" height="1.5rem" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </ScrollPanel>
+    </template>
+    <template #grid="slotProps" v-else>
+      <ScrollPanel style="height: calc(70vh)" class="!overflow-y-auto !bg-transparent">
+        <div
+          v-if="slotProps.items && slotProps.items.length > 0"
           class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 p-3 !bg-transparent"
         >
           <div
             v-for="(owner, index) in slotProps.items"
             :key="index"
             class="p-3 border border-surface-500 bg-surface-300 rounded-lg hover:bg-surface-400 transition-all"
+            :class="owner.status === 0 ? `bg-red-300` : ``"
           >
             <div class="flex flex-col gap-2">
               <!-- Owner Info -->
@@ -134,11 +201,21 @@
                       : $t('owners.actions.view_details')
                   "
                 />
-                <Button
+                <!-- <Button
                   icon="pi pi-trash"
                   @click="deactivateAccount(owner)"
                   class="p-button-text text-surface-300 hover:text-rose-400 text-sm md:text-base"
                   v-tooltip.top="$t('owners.actions.deactivate')"
+                /> -->
+                <Button
+                  :icon="owner.status ? 'pi pi-trash' : 'pi pi-replay'"
+                  @click="deactivateAccount(owner)"
+                  class="p-button-text text-surface-300 hover:text-rose-400 text-sm md:text-base"
+                  :v-tooltip.top="
+                    owner.status
+                      ? $t('owners.actions.deactivate')
+                      : $t('owners.actions.activate')
+                  "
                 />
               </div>
             </div>
@@ -190,6 +267,36 @@
   >
     <EditOwner :owner="selectedOwner" @OwnerUpdated="handleOwnerUpdated" />
   </Dialog>
+  <ConfirmDialog group="headless">
+    <template #container="{ message, acceptCallback, rejectCallback }">
+      <div class="p-4 surface-card border-round" style="min-width: 350px">
+        <div class="flex align-items-center gap-3 mb-3">
+          <i :class="message.icon" class="text-2xl"></i>
+          <span class="font-bold text-lg">{{
+            $t("owners.confirmDialog.confirmation")
+          }}</span>
+        </div>
+        <p class="mb-3">{{ message.message }}</p>
+        <div class="flex justify-end gap-2">
+          <Button
+            :label="$t('confirmDialog.cancel')"
+            severity="secondary"
+            @click="rejectCallback"
+            class="p-button-text"
+          />
+          <Button
+            :label="
+              ownerToDeactivate?.status
+                ? $t('confirmDialog.deactivate')
+                : $t('confirmDialog.activate')
+            "
+            severity="danger"
+            @click="acceptCallback"
+          />
+        </div>
+      </div>
+    </template>
+  </ConfirmDialog>
 </template>
 <script setup>
 import { ref, onMounted, computed } from "vue";
@@ -201,10 +308,11 @@ import InputGroupAddon from "primevue/inputgroupaddon";
 import InputGroup from "primevue/inputgroup";
 import InputText from "primevue/inputtext";
 import Paginator from "primevue/paginator";
+import ConfirmDialog from "primevue/confirmdialog";
 import axiosInstance from "@/axios"; // Assuming axiosInstance is set up correctly
 import Skeleton from "primevue/skeleton";
 import Dialog from "primevue/dialog";
-import Avatar from "primevue/avatar";
+import ToggleButton from "primevue/togglebutton";
 import eventBus from "@/eventBus";
 import router from "@/router";
 import NewClientForm from "@/views/AddNewOwner.vue";
@@ -213,6 +321,8 @@ import EditOwner from "@/views/EditOwner.vue";
 import { useI18n } from "vue-i18n";
 import ScrollPanel from "primevue/scrollpanel";
 import { useDevice } from "@/composables/useDevice";
+import { useConfirm } from "primevue/useconfirm";
+const confirm = useConfirm();
 
 const { isMobile, mobileMenuVisible } = useDevice();
 const { t } = useI18n();
@@ -222,6 +332,8 @@ const totalRecords = ref(0); // Total number of records
 const itemsPerPage = ref(25); // Number of items per page (matching your API response)const layout = ref("grid");
 const searchQuery = ref(""); // Reactive search query
 const selectedOwner = ref("");
+const showDeactivated = ref(false);
+
 const owners = ref([
   {
     id: 0,
@@ -253,30 +365,119 @@ const toggleDetails = (owner) => {
   owner.showDetails = !owner.showDetails;
 };
 const deactivateAccount = (owner) => {
-  // console.log(owner);
+  confirm.require({
+    message: t("owners.confirmDialog.areYouSure", {
+      action: owner.status
+        ? t("owners.confirmDialog.deactivate")
+        : t("owners.confirmDialog.activate"),
+      name: owner.name,
+    }),
+    header: t("owners.confirmDialog.confirmation"),
+    icon: "pi pi-exclamation-triangle",
+    accept: () => handleStatusUpdate(owner),
+    reject: () => {
+      eventBus.emit("show-toast", {
+        severity: "warn",
+        summary: t("owners.confirmDialog.toast.cancelled"),
+        detail: t("owners.confirmDialog.toast.operationCancelled"),
+        life: 3000,
+      });
+    },
+  });
 };
+
+const handleStatusUpdate = async (owner) => {
+  try {
+    const newStatus = owner.status ? 0 : 1;
+    const response = await axiosInstance.put(`/owners/${owner.id}/status`, {
+      status: newStatus,
+    });
+
+    const index = owners.value.findIndex((o) => o.id === owner.id);
+    if (index !== -1) {
+      owners.value[index].status = newStatus;
+    }
+
+    eventBus.emit("show-toast", {
+      severity: "success",
+      summary: t("owners.confirmDialog.toast.success"),
+      detail: t("owners.confirmDialog.toast.accountUpdated", {
+        action: newStatus
+          ? t("owners.confirmDialog.activate")
+          : t("owners.confirmDialog.deactivate"),
+      }),
+      life: 5000,
+    });
+  } catch (error) {
+    console.error("Error updating owner status:", error);
+    eventBus.emit("show-toast", {
+      severity: "error",
+      summary: t("owners.confirmDialog.toast.error"),
+      detail:
+        error.response?.data?.message || t("owners.confirmDialog.toast.updateFailed"),
+      life: 5000,
+    });
+  }
+};
+
 const editOwner = (owner) => {
   // console.log(owner);
   selectedOwner.value = owner;
   isEditOwnerVisible.value = true;
 };
+// const fetchOwners = async (page = 1) => {
+//   loading.value = true;
+//   try {
+//     const response = await axiosInstance.get(
+//       `/owners?page=` +
+//         page +
+//         `&per_page=` +
+//         itemsPerPage.value +
+//         `&search=${searchQuery.value}`
+//     );
+//     owners.value = response.data.data.map((owner) => ({
+//       // id: owner.id.toString(),
+//       // name: owner.name,
+//       // email: owner.email,
+//       // phone: owner.phone,
+//       // address: owner.address,
+//       // showDetails: false,
+//       id: owner.id.toString(),
+//       name: owner.name,
+//       email: owner.email,
+//       phone: owner.phone,
+//       landline: owner.landline,
+//       address: owner.address,
+//       birth_date: owner.birth_date,
+//       facebook_link: owner.facebook_link,
+//       instagram_link: owner.instagram_link,
+//       referral: owner.referral,
+//       clinic_notes: owner.clinic_notes,
+//     }));
+
+//     // const response = await axiosInstance.get("/owners");
+//     // console.log(owners.value);
+//     totalRecords.value = response.data.total;
+//     currentPage.value = response.data.current_page;
+//     // owners.value = response.data.data;
+//     loading.value = false; // Set loading to false after data is fetched
+//   } catch (error) {
+//     console.error("Failed to fetch owners:", error);
+//     loading.value = false; // Ensure loading is set to false even on error
+//   }
+//   //   // console.log(loading.value);
+// };
+
 const fetchOwners = async (page = 1) => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(
-      `/owners?page=` +
-        page +
-        `&per_page=` +
-        itemsPerPage.value +
-        `&search=${searchQuery.value}`
+      `/owners?page=${page}&per_page=${itemsPerPage.value}&search=${
+        searchQuery.value
+      }&show_deactivated=${showDeactivated.value ? 1 : 0}`
     );
+    console.log(response);
     owners.value = response.data.data.map((owner) => ({
-      // id: owner.id.toString(),
-      // name: owner.name,
-      // email: owner.email,
-      // phone: owner.phone,
-      // address: owner.address,
-      // showDetails: false,
       id: owner.id.toString(),
       name: owner.name,
       email: owner.email,
@@ -288,20 +489,18 @@ const fetchOwners = async (page = 1) => {
       instagram_link: owner.instagram_link,
       referral: owner.referral,
       clinic_notes: owner.clinic_notes,
+      status: owner.status, // Make sure to include the status field
+      showDetails: false,
     }));
-
-    // const response = await axiosInstance.get("/owners");
-    // console.log(owners.value);
     totalRecords.value = response.data.total;
     currentPage.value = response.data.current_page;
-    // owners.value = response.data.data;
-    loading.value = false; // Set loading to false after data is fetched
   } catch (error) {
     console.error("Failed to fetch owners:", error);
-    loading.value = false; // Ensure loading is set to false even on error
+  } finally {
+    loading.value = false;
   }
-  //   // console.log(loading.value);
 };
+
 const deactivateClient = async (data) => {
   try {
     // console.log(owner.value);

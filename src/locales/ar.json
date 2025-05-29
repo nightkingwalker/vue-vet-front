@@ -76,7 +76,22 @@
             "phone": "الهاتف",
             "address": "العنوان"
         },
-        "hidden_phone": "***********"
+        "hidden_phone": "***********",
+        "confirmDialog": {
+            "cancel": "إلغاء",
+            "deactivate": "تعطيل",
+            "activate": "تفعيل",
+            "confirmation": "تأكيد",
+            "areYouSure": "هل أنت متأكد أنك تريد {action} حساب {name}؟",
+            "toast": {
+                "cancelled": "ملغى",
+                "operationCancelled": "تم إلغاء العملية",
+                "success": "نجاح",
+                "accountUpdated": "تم {action} الحساب بنجاح",
+                "error": "خطأ",
+                "updateFailed": "فشل تحديث حالة المالك"
+            }
+        }
     },
     "edit_owner": {
         "title": "تعديل بيانات العميل",
@@ -224,6 +239,7 @@
         "bovine": "أبقار",
         "camelid": "جمال",
         "canine": "كلاب",
+        "testudines": "سلاحف",
         "caprine": "ماعز",
         "cavies": "خنازير غينيا",
         "cervidae": "غزلان",
@@ -265,6 +281,7 @@
             "bovine": "أبقار",
             "camelid": "جمال",
             "canine": "كلاب",
+            "testudines": "سلاحف",
             "caprine": "ماعز",
             "cavies": "خنازير غينيا",
             "cervidae": "غزلان",
@@ -341,7 +358,8 @@
             "Avian": "طيور",
             "Bovine": "أبقار",
             "Camelid": "جمال",
-            "Canine": "كلاب",
+            "canine": "كلاب",
+            "testudines": "سلاحف",
             "Caprine": "ماعز",
             "Cavies": "خنازير غينيا",
             "Cervidae": "غزلان",

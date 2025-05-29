@@ -373,4 +373,7 @@ button:hover {
     font-size: 11px !important;
   }
 }
+:root {
+  color-scheme: dark light;
+}
 </style>

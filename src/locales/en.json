@@ -81,7 +81,22 @@
             "phone": "Phone",
             "address": "Address"
         },
-        "hidden_phone": "***********"
+        "hidden_phone": "***********",
+        "confirmDialog": {
+            "cancel": "Cancel",
+            "deactivate": "Deactivate",
+            "activate": "Activate",
+            "confirmation": "Confirmation",
+            "areYouSure": "Are you sure you want to {action} {name}'s account?",
+            "toast": {
+                "cancelled": "Cancelled",
+                "operationCancelled": "Operation cancelled",
+                "success": "Success",
+                "accountUpdated": "Account {action} successfully",
+                "error": "Error",
+                "updateFailed": "Failed to update owner status"
+            }
+        }
     },
     "edit_owner": {
         "title": "Edit Client Details",
@@ -230,6 +245,7 @@
         "bovine": "Bovine",
         "camelid": "Camelid",
         "canine": "Canine",
+        "testudines": "Turtles",
         "caprine": "Caprine",
         "cavies": "Cavies",
         "cervidae": "Cervidae",
@@ -271,6 +287,7 @@
             "bovine": "Bovine",
             "camelid": "Camelid",
             "canine": "Canine",
+            "testudines": "Turtles",
             "caprine": "Caprine",
             "cavies": "Cavies",
             "cervidae": "Cervidae",
@@ -348,7 +365,8 @@
             "Avian": "Avian",
             "Bovine": "Bovine",
             "Camelid": "Camelid",
-            "Canine": "Canine",
+            "canine": "Canine",
+            "testudines": "Turtles",
             "Caprine": "Caprine",
             "Cavies": "Cavies",
             "Cervidae": "Cervidae",

@@ -5,7 +5,7 @@
         <Image
           :src="Logo"
           alt="Image"
-          class="flex justify-center rounded-[4rem] dark:bg-white w-[5rem] p-1"
+          class="flex justify-center rounded-[4rem]  w-[5rem] p-1"
         />
       </div>
 

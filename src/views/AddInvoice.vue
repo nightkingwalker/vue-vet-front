@@ -498,34 +498,37 @@
         </div>
       </div>
     </div>
+
+    <Dialog
+      :header="
+        editMode ? $t('inventory.dialog.edit_title') : $t('inventory.dialog.add_title')
+      "
+      v-model:visible="isModalVisible"
+      modal
+      :closable="true"
+      class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
+    >
+      <InventoryItemForm
+        v-focustrap="{
+          disabled: false,
+          autoFocus: true,
+        }"
+        :item="selectedItem"
+        :editMode="editMode"
+        @submitted="handleSubmit"
+      />
+    </Dialog>
   </div>
-  <Dialog
-    :header="
-      editMode ? $t('inventory.dialog.edit_title') : $t('inventory.dialog.add_title')
-    "
-    v-model:visible="isModalVisible"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
-  >
-    <InventoryItemForm
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :item="selectedItem"
-      :editMode="editMode"
-      @submitted="handleSubmit"
-    />
-  </Dialog>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from "vue";
+import { ref, computed, onMounted, watch, defineAsyncComponent } from "vue";
 import { useToast } from "primevue/usetoast";
 import axiosInstance from "@/axios";
 import InventoryItemForm from "@/views/addInventoryItem.vue";
-
+// const InventoryItemForm = defineAsyncComponent(() =>
+//   import("@/views/addInventoryItem.vue")
+// );
 // PrimeVue Components
 import Button from "primevue/button";
 import AutoComplete from "primevue/autocomplete";
@@ -541,9 +544,9 @@ import Tag from "primevue/tag";
 import InputText from "primevue/inputtext";
 import Dialog from "primevue/dialog";
 import Cookies from "js-cookie";
-import { useI18n } from "vue-i18n";
+import { useI18n } from "vue-i18n"; // };
 const { t } = useI18n();
-const emit = defineEmits();
+const emit = defineEmits(["invoiceCreated"]);
 const toast = useToast();
 const props = defineProps({
   pet: {
@@ -555,8 +558,15 @@ const props = defineProps({
     default: "",
     required: false,
   },
+  invoice: {
+    type: Object,
+    default: null,
+  },
+  editMode: {
+    type: Boolean,
+    default: false,
+  },
 });
-
 // Client & Pet Data
 const isModalVisible = ref(false);
 const clientSearch = ref("");
@@ -666,12 +676,15 @@ const clearClient = () => {
 };
 
 const loadClientPets = async () => {
+  // console.log(`/owners/${selectedClient.value.id}/pets`);
+  // console.log("Selected client ID:", selectedClient.value?.id);
   if (!selectedClient.value) return;
 
   try {
     const response = await axiosInstance.get(`/owners/${selectedClient.value.id}/pets`);
-    clientPets.value = response.data.data;
-    // console.log(clientPets.value);
+    // console.log("Full API response:", response.data.pets.data);
+    clientPets.value = response.data.pets.data;
+    // console.log(response.data.data);
   } catch (error) {
     console.error("Error loading pets:", error);
     clientPets.value = [];
@@ -756,13 +769,13 @@ const searchItems = async (event) => {
 
 const handleBarcodeEnter = async () => {
   /*   if (!itemSearch.value) return;
-  
+
     if (/^\d{6,}$/.test(itemSearch.value)) {
       try {
         const response = await axiosInstance.get("/inventory-items/by-barcode", {
           params: { barcode: itemSearch.value },
         });
-  
+
         if (response.data.data) {
           selectItem({ value: response.data.data });
         }

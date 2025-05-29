@@ -17,7 +17,7 @@
       <Image
         :src="Logo"
         alt="Application Logo"
-        class="flex justify-center rounded-[4rem] dark:bg-white w-[2rem] p-1"
+        class="flex justify-center rounded-[4rem]  w-[2rem] p-1"
       />
       <h1 class="text-center">{{ $t("app.title") }}</h1>
     </div>

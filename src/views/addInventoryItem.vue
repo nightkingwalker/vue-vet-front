@@ -789,6 +789,9 @@ const submitForm = async () => {
     const endpoint = showAdjustmentSection.value
       ? "/stock-movements/adjustment"
       : "/inventory-items/smart-add";
+    console.log("endpoint", endpoint);
+    console.log("payload", payload);
+    // return;
     const response = await axiosInstance.post(endpoint, payload);
 
     toast.add({
