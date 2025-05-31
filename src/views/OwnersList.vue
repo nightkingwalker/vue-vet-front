@@ -37,7 +37,6 @@
             offIcon="pi pi-eye-slash"
             class="w-full sm:w-auto"
             @change="refreshData"
-            v-tooltip.top="$t('pet.actions.refresh')"
           />
           <div class="flex gap-2 justify-end sm:justify-start">
             <Button
