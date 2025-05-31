@@ -1045,7 +1045,8 @@
             "edit": "تعديل العنصر",
             "delete": "حذف العنصر",
             "yes": "نعم",
-            "no": "لا"
+            "no": "لا",
+            "import": "استيراد مواد المستودع من ملف إكسل"
         },
         "columns": {
             "barcode": "الباركود",
@@ -1063,6 +1064,7 @@
             "placeholder": "بحث في جميع الأعمدة"
         },
         "dialog": {
+            "import_title": "استيراد مواد المستودع من ملف إكسل",
             "add_title": "إضافة عنصر جديد للمخزون",
             "edit_title": "تعديل عنصر المخزون",
             "delete_title": "تأكيد",
@@ -1136,6 +1138,25 @@
             "items_needed_details": "الحقول المطلوبة لا يمكن تركها دون بيانات",
             "confirm_add_item": "هل أنت متأكد من أنك تريد إضافة هذا المنتج؟",
             "confirm_update_item": "هل أنت متأكد من أنك ترغب في إضافة {quantity} عنصر إلى مخزون المادة؟?"
+        },
+        "import": {
+            "choose_file": "اختر ملف",
+            "choose_excel": "اختر ملف إكسل",
+            "drag_drop": "اسحب وأسقط الملفات هنا",
+            "browse_files": "تصفح الملفات",
+            "excel_only": "ملفات إكسل فقط (.xlsx, .xls)",
+            "download_template": "تحميل القالب",
+            "success": "تم الاستيراد بنجاح",
+            "items_processed": "تم معالجة {total} عنصر: {created} تم إنشاؤها، {updated} تم تحديثها",
+            "error": "فشل الاستيراد",
+            "created": "تم الإنشاء",
+            "updated": "تم التحديث",
+            "skipped": "تم التخطي",
+            "total_rows": "إجمالي الصفوف",
+            "template_instructions": "قم بتحميل هذا القالب واملأه ببيانات المخزون الخاصة بك",
+            "pending": "بانتظار التحميل",
+            "results": "نتائج الاستيراد",
+            "upload": "رفع الملف"
         }
     },
     "invoices": {
@@ -1331,7 +1352,10 @@
         }
     },
     "common": {
-        "not_available": "لا تتوفر بيانات"
+        "not_available": "لا تتوفر بيانات",
+        "clear": "مسح",
+        "close": "إغلاق",
+        "cancel": "إلغاء"
     },
     "paymentForm": {
         "title": "إضافة دفعة جديدة",

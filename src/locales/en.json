@@ -1052,7 +1052,8 @@
             "edit": "Edit Item",
             "delete": "Delete Item",
             "yes": "Yes",
-            "no": "No"
+            "no": "No",
+            "import": "Import"
         },
         "columns": {
             "barcode": "Barcode",
@@ -1070,6 +1071,7 @@
             "placeholder": "Search All Columns"
         },
         "dialog": {
+            "import_title": "Import Inventory Items",
             "add_title": "Add New Inventory Item",
             "edit_title": "Edit Inventory Item",
             "delete_title": "Confirm",
@@ -1143,6 +1145,25 @@
             "items_needed_details": "There are required filds that can't be left empty",
             "confirm_add_item": "Are you sure you want to create this new inventory item",
             "confirm_update_item": "Are you sure you want to add {quantity} units to this existing item?"
+        },
+        "import": {
+            "choose_file": "Choose File",
+            "choose_excel": "Choose Excel File",
+            "drag_drop": "Drag and drop files here",
+            "browse_files": "browse files",
+            "excel_only": "Excel files only (.xlsx, .xls)",
+            "download_template": "Download Template",
+            "success": "Import Successful",
+            "items_processed": "Processed {total} items: {created} created, {updated} updated",
+            "error": "Import Failed",
+            "created": "Created",
+            "updated": "Updated",
+            "skipped": "Skipped",
+            "total_rows": "Total Rows",
+            "template_instructions": "Download and fill this template with your inventory data",
+            "pending": "Pending Upload",
+            "results": "Import Results",
+            "upload": "Upload File"
         }
     },
     "invoices": {
@@ -1338,7 +1359,10 @@
         }
     },
     "common": {
-        "not_available": "No Data Available"
+        "not_available": "No Data Available",
+        "clear": "Clear",
+        "close": "Close",
+        "cancel": "Cancel"
     },
     "paymentForm": {
         "title": "Add New Payment",

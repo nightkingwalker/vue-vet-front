@@ -41,6 +41,13 @@
             />
             <Button
               size="small"
+              icon="pi pi-cloud-upload"
+              @click="showImportModal"
+              v-tooltip.bottom="$t('inventory.actions.import')"
+              class="p-button p-component p-button-icon-only !text-sm lg:!text-[14px] ml-2"
+            />
+            <Button
+              size="small"
               icon="pi pi-download !text-sm lg:!text-[14px]"
               class="!text-sm lg:!text-[14px] ml-2"
               v-tooltip.bottom="$t('inventory.actions.export')"
@@ -325,6 +332,27 @@
       @submitted="handleSubmit"
     />
   </Dialog>
+  <!-- Add/Edit Item Dialog -->
+  <Dialog
+    :header="
+      editMode ? $t('inventory.dialog.edit_title') : $t('inventory.dialog.import_title')
+    "
+    v-model:visible="isImportModalVisible"
+    @hide="resetForm"
+    modal
+    :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
+  >
+    <InventoryItemImport
+      v-focustrap="{
+        disabled: false,
+        autoFocus: true,
+      }"
+      :item="selectedItem"
+      :editMode="editMode"
+      @submitted="handleSubmit"
+    />
+  </Dialog>
 
   <!-- Delete Confirmation Dialog -->
   <Dialog
@@ -380,6 +408,7 @@ import Paginator from "primevue/paginator";
 import Dialog from "primevue/dialog";
 import Dropdown from "primevue/dropdown";
 import InventoryItemForm from "@/views/addInventoryItem.vue";
+import InventoryItemImport from "@/views/importInventoryItems.vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import eventBus from "@/eventBus";
@@ -418,6 +447,7 @@ const dt = ref();
 const searchQuery = ref("");
 const deleteDialogVisible = ref(false);
 const isModalVisible = ref(false);
+const isImportModalVisible = ref(false);
 const editMode = ref(false);
 const selectedItem = ref(null);
 const categoryFilter = ref("");
@@ -507,6 +537,11 @@ const showModal = () => {
   editMode.value = false;
   selectedItem.value = null;
   isModalVisible.value = true;
+};
+const showImportModal = () => {
+  // editMode.value = false;
+  // selectedItem.value = null;
+  isImportModalVisible.value = true;
 };
 
 const editItem = (item) => {
