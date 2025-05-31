@@ -154,7 +154,7 @@
             />
           </template>
         </template>
-        <template #filter>
+        <!-- <template #filter>
           <Dropdown
             v-model="filters.category.value"
             :options="categories"
@@ -164,7 +164,7 @@
             class="p-column-filter"
             @change="onCategoryFilterChange"
           />
-        </template>
+        </template> -->
       </Column>
 
       <!-- Type Column -->
@@ -350,7 +350,7 @@
       }"
       :item="selectedItem"
       :editMode="editMode"
-      @submitted="handleSubmit"
+      @submitted="handleImportSubmit"
     />
   </Dialog>
 
@@ -453,10 +453,10 @@ const selectedItem = ref(null);
 const categoryFilter = ref("");
 const categories = ref([
   { label: t("inventory.categories.food"), value: "food" },
-  { label: t("inventory.categories.medicine"), value: "medicine" },
-  { label: t("inventory.categories.accessories"), value: "accessories" },
+  { label: t("inventory.categories.pharmaceutical"), value: "pharmaceutical" },
+  // { label: t("inventory.categories.accessories"), value: "accessories" },
   { label: t("inventory.categories.miscellaneous"), value: "miscellaneous" },
-  { label: t("inventory.categories.treatment"), value: "treatment" },
+  // { label: t("inventory.categories.treatment"), value: "treatment" },
 ]);
 const filters = ref({
   category: { value: null, matchMode: "equals" },
@@ -568,6 +568,11 @@ const deleteItem = async () => {
 
 const handleSubmit = () => {
   isModalVisible.value = false;
+  currentPage.value = 1;
+  fetchInventoryItems(currentPage.value);
+};
+const handleImportSubmit = () => {
+  isImportModalVisible.value = false;
   currentPage.value = 1;
   fetchInventoryItems(currentPage.value);
 };
