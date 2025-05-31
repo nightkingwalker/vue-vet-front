@@ -2,7 +2,7 @@
   <DataView :value="owners" :layout="layout" class="!rounded-lg h-[calc(100vh-70px)]">
     <template #header>
       <div
-        class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 bg-surface-300 rounded-t-lg border-b border-surface-500 gap-2"
+        class="flex flex-col md:flex-row justify-between items-start md:items-center bg-surface-300 rounded-t-lg gap-2"
       >
         <h2 class="text-lg md:text-xl font-semibold text-surface-0">
           {{ $t("owners.title") }}
@@ -37,6 +37,7 @@
             offIcon="pi pi-eye-slash"
             class="w-full sm:w-auto"
             @change="refreshData"
+            v-tooltip.top="$t('pet.actions.refresh')"
           />
           <div class="flex gap-2 justify-end sm:justify-start">
             <Button
@@ -115,7 +116,7 @@
       </ScrollPanel>
     </template>
     <template #grid="slotProps" v-else>
-      <ScrollPanel style="height: calc(70vh)" class="!overflow-y-auto !bg-transparent">
+      <ScrollPanel style="height: calc(72vh)" class="!overflow-y-auto !bg-transparent">
         <div
           v-if="slotProps.items && slotProps.items.length > 0"
           class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 p-3 !bg-transparent"
@@ -225,7 +226,7 @@
     </template>
 
     <template #footer>
-      <div class="p-2 md:p-4 bg-surface-300 border-t border-surface-500 rounded-b-lg">
+      <div class="bg-surface-300 rounded-b-lg">
         <Paginator
           :rows="itemsPerPage"
           :totalRecords="totalRecords"

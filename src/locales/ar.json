@@ -1355,7 +1355,13 @@
         "not_available": "لا تتوفر بيانات",
         "clear": "مسح",
         "close": "إغلاق",
-        "cancel": "إلغاء"
+        "cancel": "إلغاء",
+        "confirmAction": "تأكيد الإجراء",
+        "no": "لا",
+        "yes": "نعم",
+        "error": "خطأ",
+        "warning": "تحذير",
+        "success": "نجاح"
     },
     "paymentForm": {
         "title": "إضافة دفعة جديدة",
@@ -1567,5 +1573,35 @@
         },
         "configure_notifications": "تكوين قوالب الإشعارات",
         "return_to_dashboard": "العودة إلى لوحة التحكم"
+    },
+    "clinics": {
+        "myClinics": "عياداتي",
+        "addClinic": "إضافة عيادة",
+        "noClinics": "أنت غير مرتبط بأي عيادات حتى الآن",
+        "joinClinic": "الانضمام إلى عيادة",
+        "branches": "الفروع",
+        "clinicEmail": "بريد العيادة الإلكتروني",
+        "clinicEmailPlaceholder": "أدخل البريد الإلكتروني المسجل للعيادة",
+        "yourRole": "دورك",
+        "selectRole": "اختر دورك",
+        "join": "انضم",
+        "confirmLeave": "هل أنت متأكد أنك تريد مغادرة {clinicName}؟",
+        "fetchError": "فشل في جلب بيانات العيادات",
+        "enterEmail": "الرجاء إدخال بريد العيادة الإلكتروني",
+        "joinSuccess": "تم الانضمام إلى العيادة بنجاح",
+        "joinError": "فشل الانضمام إلى العيادة",
+        "leaveSuccess": "تم مغادرة {clinicName}",
+        "leaveError": "فشل مغادرة العيادة",
+        "leave": "مغادرة العيادة",
+        "viewingBranches": "عرض فروع {clinicName}",
+        "manageClinic": "إدارة العيادة",
+        "managingClinic": "جارٍ إدارة {clinicName}"
+    },
+    "roles": {
+        "super_admin": "مدير عام",
+        "admin": "مدير",
+        "manager": "مسؤول",
+        "vet": "طبيب بيطري",
+        "staff": "موظف"
     }
 }

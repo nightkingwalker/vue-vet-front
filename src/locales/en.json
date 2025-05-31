@@ -1362,7 +1362,12 @@
         "not_available": "No Data Available",
         "clear": "Clear",
         "close": "Close",
-        "cancel": "Cancel"
+        "confirmAction": "Confirm Action",
+        "no": "No",
+        "yes": "Yes",
+        "error": "Error",
+        "warning": "Warning",
+        "success": "Success"
     },
     "paymentForm": {
         "title": "Add New Payment",
@@ -1574,5 +1579,34 @@
         },
         "configure_notifications": "Configure Notification Templates",
         "return_to_dashboard": "Return to Dashboard"
+    },
+    "clinics": {
+        "myClinics": "My Clinics",
+        "addClinic": "Add Clinic",
+        "noClinics": "You are not associated with any clinics yet.",
+        "joinClinic": "Join a Clinic",
+        "branches": "Branches",
+        "clinicEmail": "Clinic Email",
+        "clinicEmailPlaceholder": "Enter clinic's registered email",
+        "yourRole": "Your Role",
+        "selectRole": "Select your role",
+        "join": "Join",
+        "confirmLeave": "Are you sure you want to leave {clinicName}?",
+        "fetchError": "Failed to fetch clinics",
+        "enterEmail": "Please enter clinic email",
+        "joinSuccess": "Successfully joined clinic",
+        "joinError": "Failed to join clinic",
+        "leaveSuccess": "Left {clinicName}",
+        "leaveError": "Failed to leave clinic",
+        "leave": "Leave clinic",
+        "viewingBranches": "Viewing branches of {clinicName}",
+        "manageClinic": "Manage Clinic",
+        "managingClinic": "Managing {clinicName}"
+    },
+    "roles": {
+        "admin": "Admin",
+        "manager": "Manager",
+        "vet": "Veterinarian",
+        "staff": "Staff"
     }
 }

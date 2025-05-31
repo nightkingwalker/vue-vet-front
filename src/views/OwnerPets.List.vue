@@ -2,7 +2,7 @@
   <DataView :value="pets" :layout="layout" class="!rounded-lg h-[calc(100vh-70px)]">
     <template #header>
       <div
-        class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 bg-surface-300 rounded-t-lg border-b border-surface-500 gap-2"
+        class="flex flex-col md:flex-row justify-between items-start md:items-center bg-surface-300 rounded-t-lg gap-2"
       >
         <!-- <h2 class="text-lg md:text-xl font-semibold text-surface-0">
           {{ ownerName }} {{ $t("owner_pet_list.title") }}
@@ -59,7 +59,7 @@
             <Button
               icon="pi pi-plus"
               @click="showNewPatientModal"
-              class="p-button-primary bg-emerald-600 hover:bg-emerald-500 border-emerald-600 text-sm md:text-base"
+              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
               v-tooltip.top="$t('owner_pet_list.buttons.new_patient')"
             />
           </div>
@@ -180,7 +180,7 @@
     </template>
 
     <template #footer>
-      <div class="p-2 md:p-4 bg-surface-300 border-t border-surface-500 rounded-b-lg">
+      <div class="bg-surface-300 rounded-b-lg">
         <Paginator
           :rows="itemsPerPage"
           :totalRecords="totalRecords"
@@ -230,6 +230,7 @@ import Button from "primevue/button";
 import { RouterLink } from "vue-router";
 import axiosInstance from "@/axios"; // Assuming axiosInstance is set up correctly
 import Skeleton from "primevue/skeleton";
+import ScrollPanel from "primevue/scrollpanel";
 import router from "@/router";
 import { useRoute } from "vue-router";
 import Breadcrumb from "primevue/breadcrumb";

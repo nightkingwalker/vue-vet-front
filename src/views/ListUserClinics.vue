@@ -1,9 +1,10 @@
 <template>
   <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-8">
-      <h1 class="text-3xl font-bold text-surface-0">My Clinics</h1>
+      <h1 class="text-3xl font-bold text-surface-0">{{ $t("clinics.myClinics") }}</h1>
       <Button
-        label="Add Clinic"
+        v-if="!loading && clinics.length === 0"
+        :label="$t('clinics.addClinic')"
         icon="pi pi-plus"
         class="p-button-primary bg-emerald-600 hover:bg-emerald-500 border-emerald-600"
         @click="showAddClinicDialog = true"
@@ -21,9 +22,9 @@
 
     <div v-else-if="clinics.length === 0" class="text-center py-12">
       <i class="pi pi-building text-5xl text-surface-600 mb-4"></i>
-      <p class="text-surface-500">You are not associated with any clinics yet.</p>
+      <p class="text-surface-500">{{ $t("clinics.noClinics") }}</p>
       <Button
-        label="Join a Clinic"
+        :label="$t('clinics.joinClinic')"
         icon="pi pi-plus"
         class="p-button-text mt-4 text-emerald-400 hover:text-emerald-300"
         @click="showAddClinicDialog = true"
@@ -41,7 +42,7 @@
             <div class="flex justify-between items-start">
               <h2 class="text-xl font-semibold text-surface-0">{{ clinic.name }}</h2>
               <Tag
-                :value="clinic.pivot.role"
+                :value="$t(`roles.${clinic.pivot.role}`)"
                 :severity="getRoleSeverity(clinic.pivot.role)"
                 class="capitalize border-0"
               />
@@ -69,8 +70,9 @@
         <template #footer>
           <div class="flex justify-between border-t border-surface-500 pt-3">
             <Button
-              label="Branches"
+              :label="$t('clinics.branches')"
               icon="pi pi-sitemap"
+              v-tooltip.top="$t('clinics.branches')"
               class="p-button-text p-button-sm text-emerald-400 hover:text-emerald-300"
               @click="viewBranches(clinic)"
             />
@@ -80,11 +82,13 @@
                 icon="pi pi-cog"
                 class="p-button-text p-button-sm p-button-secondary text-surface-300 hover:text-surface-100 mr-2"
                 @click="manageClinic(clinic)"
+                v-tooltip.top="$t('clinics.manageClinic')"
               />
               <Button
                 icon="pi pi-sign-out"
                 class="p-button-text p-button-sm p-button-danger text-rose-400 hover:text-rose-300"
                 @click="confirmLeaveClinic(clinic)"
+                v-tooltip.top="$t('clinics.leave')"
               />
             </div>
           </div>
@@ -95,7 +99,7 @@
     <!-- Add Clinic Dialog -->
     <Dialog
       v-model:visible="showAddClinicDialog"
-      header="Join a Clinic"
+      :header="$t('clinics.joinClinic')"
       :modal="true"
       :style="{ width: '500px' }"
       :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
@@ -103,27 +107,29 @@
     >
       <div class="space-y-4">
         <div>
-          <label for="clinicEmail" class="block text-sm font-medium text-surface-200 mb-1"
-            >Clinic Email</label
+          <label
+            for="clinicEmail"
+            class="block text-sm font-medium text-surface-200 mb-1"
+            >{{ $t("clinics.clinicEmail") }}</label
           >
           <InputText
             id="clinicEmail"
             v-model="clinicEmail"
             type="email"
-            placeholder="Enter clinic's registered email"
+            :placeholder="$t('clinics.clinicEmailPlaceholder')"
             class="w-full bg-surface-400 border-surface-500 text-surface-100"
           />
         </div>
         <div>
-          <label for="role" class="block text-sm font-medium text-surface-200 mb-1"
-            >Your Role</label
-          >
+          <label for="role" class="block text-sm font-medium text-surface-200 mb-1">{{
+            $t("clinics.yourRole")
+          }}</label>
           <Select
             v-model="selectedRole"
             :options="availableRoles"
             optionLabel="label"
             optionValue="value"
-            placeholder="Select your role"
+            :placeholder="$t('clinics.selectRole')"
             class="w-full bg-surface-400 border-surface-500 text-surface-100"
           />
         </div>
@@ -131,13 +137,13 @@
 
       <template #footer>
         <Button
-          label="Cancel"
+          :label="$t('common.cancel')"
           icon="pi pi-times"
           class="p-button-text text-surface-300 hover:text-surface-100"
           @click="showAddClinicDialog = false"
         />
         <Button
-          label="Join"
+          :label="$t('clinics.join')"
           icon="pi pi-check"
           class="p-button-primary bg-emerald-600 hover:bg-emerald-500 border-emerald-600"
           :loading="joiningClinic"
@@ -149,7 +155,7 @@
     <!-- Confirmation Dialog -->
     <Dialog
       v-model:visible="showLeaveConfirm"
-      header="Confirm Action"
+      :header="$t('common.confirmAction')"
       :modal="true"
       :style="{ width: '400px' }"
       class="bg-surface-300 text-surface-100"
@@ -159,19 +165,19 @@
           class="pi pi-exclamation-triangle mr-3 text-amber-400"
           style="font-size: 2rem"
         />
-        <span class="text-surface-200"
-          >Are you sure you want to leave {{ clinicToLeave?.name }}?</span
-        >
+        <span class="text-surface-200">
+          {{ $t("clinics.confirmLeave", { clinicName: clinicToLeave?.name }) }}
+        </span>
       </div>
       <template #footer>
         <Button
-          label="No"
+          :label="$t('common.no')"
           icon="pi pi-times"
           class="p-button-text text-surface-300 hover:text-surface-100"
           @click="showLeaveConfirm = false"
         />
         <Button
-          label="Yes"
+          :label="$t('common.yes')"
           icon="pi pi-check"
           class="p-button-danger bg-rose-600 hover:bg-rose-500 border-rose-600"
           @click="leaveClinic"
@@ -184,6 +190,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useToast } from "primevue/usetoast";
+import { useI18n } from "vue-i18n";
 import axios from "@/axios";
 import Button from "primevue/button";
 import Select from "primevue/select";
@@ -193,6 +200,8 @@ import Tag from "primevue/tag";
 import InputText from "primevue/inputtext";
 import ProgressSpinner from "primevue/progressspinner";
 import router from "@/router";
+
+const { t } = useI18n();
 const toast = useToast();
 
 // Clinic data
@@ -211,10 +220,10 @@ const clinicToLeave = ref(null);
 
 // Available roles for Select
 const availableRoles = ref([
-  { label: "Admin", value: "admin" },
-  { label: "Manager", value: "manager" },
-  { label: "Veterinarian", value: "vet" },
-  { label: "Staff", value: "staff" },
+  { label: t("roles.admin"), value: "admin" },
+  { label: t("roles.manager"), value: "manager" },
+  { label: t("roles.vet"), value: "vet" },
+  { label: t("roles.staff"), value: "staff" },
 ]);
 
 // Fetch user's clinics
@@ -223,11 +232,12 @@ const fetchClinics = async () => {
     loading.value = true;
     const response = await axios.get("/clinics");
     clinics.value = response.data;
+    console.log("clinics", clinics.value.length);
   } catch (error) {
     toast.add({
       severity: "error",
-      summary: "Error",
-      detail: "Failed to fetch clinics",
+      summary: t("common.error"),
+      detail: t("clinics.fetchError"),
       life: 3000,
     });
   } finally {
@@ -240,8 +250,8 @@ const joinClinic = async () => {
   if (!clinicEmail.value) {
     toast.add({
       severity: "warn",
-      summary: "Warning",
-      detail: "Please enter clinic email",
+      summary: t("common.warning"),
+      detail: t("clinics.enterEmail"),
       life: 3000,
     });
     return;
@@ -256,8 +266,8 @@ const joinClinic = async () => {
 
     toast.add({
       severity: "success",
-      summary: "Success",
-      detail: "Successfully joined clinic",
+      summary: t("common.success"),
+      detail: t("clinics.joinSuccess"),
       life: 3000,
     });
 
@@ -265,14 +275,14 @@ const joinClinic = async () => {
     clinicEmail.value = "";
     fetchClinics();
   } catch (error) {
-    let message = "Failed to join clinic";
+    let message = t("clinics.joinError");
     if (error.response?.data?.message) {
       message = error.response.data.message;
     }
 
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: message,
       life: 3000,
     });
@@ -296,8 +306,8 @@ const leaveClinic = async () => {
 
     toast.add({
       severity: "success",
-      summary: "Success",
-      detail: `Left ${clinicToLeave.value.name}`,
+      summary: t("common.success"),
+      detail: t("clinics.leaveSuccess", { clinicName: clinicToLeave.value.name }),
       life: 3000,
     });
 
@@ -306,8 +316,8 @@ const leaveClinic = async () => {
   } catch (error) {
     toast.add({
       severity: "error",
-      summary: "Error",
-      detail: "Failed to leave clinic",
+      summary: t("common.error"),
+      detail: t("clinics.leaveError"),
       life: 3000,
     });
   }
@@ -315,13 +325,11 @@ const leaveClinic = async () => {
 
 // View branches of a clinic
 const viewBranches = async (clinic) => {
-  //   console.log(clinic);
   await router.push({ path: "/clinics/" + clinic.id + "/branches" });
-  // For now just show a toast
   toast.add({
     severity: "info",
-    summary: "Branches",
-    detail: `Viewing branches of ${clinic.name}`,
+    summary: t("clinics.branches"),
+    detail: t("clinics.viewingBranches", { clinicName: clinic.name }),
     life: 3000,
   });
 };
@@ -329,13 +337,11 @@ const viewBranches = async (clinic) => {
 // Manage clinic (only for admins/managers)
 const manageClinic = async (clinic) => {
   console.log(clinic);
-  // Navigate to clinic management page
   await router.push({ path: "/" + clinic.id + "/manage" });
-  // For now just show a toast
   toast.add({
     severity: "info",
-    summary: "Manage Clinic",
-    detail: `Managing ${clinic.name}`,
+    summary: t("clinics.manageClinic"),
+    detail: t("clinics.managingClinic", { clinicName: clinic.name }),
     life: 3000,
   });
 };
