@@ -167,7 +167,43 @@ export const useAuthStore = defineStore("auth", {
         this.updateLanguage(preferences.user_language);
       }
     },
+    updateTokens(access_token,
+      refresh_token,
+      expires_in,
+      refresh_expires_in,
+      remember_me = false) {
+      this.token = access_token;
+      this.refreshToken = refresh_token;
+      this.tokenExpiry = Date.now() + expires_in * 1000;
+      // this.tokenExpiry = Date.now() + expiresIn * 1000;
+      const tokenExpiryDate = new Date(this.tokenExpiry * 1000);
+      const refreshExpiryDate = new Date(refresh_expires_in * 1000);
+      const rememberMeExpiry = new Date();
+      rememberMeExpiry.setFullYear(rememberMeExpiry.getFullYear() + 1); // 1 year for remember me
+      const commonCookieOptions = {
+        sameSite: "Strict",
+        secure: import.meta.env.PROD, // secure in production only
+      };
+      Cookies.set("access_token", access_token, {
+        // secure: true,
+        ...commonCookieOptions,
+        expires: remember_me ? rememberMeExpiry : expires_in,
+      });
+      Cookies.set("refresh_token", refresh_token, {
+        // secure: true,
+        ...commonCookieOptions,
+        expires: remember_me ? rememberMeExpiry : expires_in,
+      });
+      Cookies.set("token_expiry", expires_in, {
+        // secure: true,
+        ...commonCookieOptions,
+        expires: remember_me ? rememberMeExpiry : tokenExpiryDate,
+      });
 
+    },
+    setCurrentBranch(branchId) {
+      this.currentBranch = branchId;
+    },
     updateLanguage(language) {
       // console.log(language);
       this.userLanguage = language;

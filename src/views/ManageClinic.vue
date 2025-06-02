@@ -485,7 +485,7 @@ const roleCounts = computed(() => {
     return acc;
   }, {});
 });
-console.log(roleCounts);
+// console.log(roleCounts);
 const selectUser = (user) => {
   selectedUser.value = user;
   userSearchQuery.value = ""; // Clear search query
@@ -596,7 +596,7 @@ const updateUserRole = async () => {
     showEditUserRoleDialog.value = false;
     fetchClinicData();
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     toast.add({
       severity: "error",
       summary: "Error",

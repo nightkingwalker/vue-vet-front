@@ -3,7 +3,7 @@
     <!-- Header Component -->
     <AppHeader
       :is-mobile="isMobile"
-      v-if="authStore.isLoggedIn"
+      v-if="authStore.isLoggedIn && route.path != '/login'"
       :show-mobile-menu-button="showSidebar"
       :mobile-menu-visible="mobileMenuVisible"
       @toggle-mobile-menu="mobileMenuVisible = !mobileMenuVisible"
@@ -13,7 +13,7 @@
     <div class="flex items-between">
       <!-- Sidebar Component -->
       <AppSidebar
-        v-if="authStore.isLoggedIn"
+        v-if="authStore.isLoggedIn && route.path != '/login'"
         :is-mobile="isMobile"
         :mobile-menu-visible="mobileMenuVisible"
         @item-click="mobileMenuVisible = false"
@@ -91,9 +91,10 @@ const { $connectivity } = getCurrentInstance().appContext.config.globalPropertie
 const online = ref(true);
 const route = useRoute();
 const toast = useToast();
-
+// console.log(route.path);
 const { t, locale } = useI18n();
 const authStore = useAuthStore();
+// console.log(authStore.token);
 const { isMobile } = useDevice();
 const { initializeLanguage } = useLanguage();
 const { isDarkMode, initializeTheme, toggleTheme } = useTheme();

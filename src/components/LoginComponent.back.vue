@@ -274,7 +274,7 @@ const login = async () => {
       message.value = t("two_factor.required");
       isError.value = true;
     } else {
-      console.log(response);
+      // console.log(response);
       authStore.logIn(
         access_token,
         refresh_token,

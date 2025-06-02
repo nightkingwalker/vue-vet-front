@@ -527,7 +527,7 @@ onMounted(async () => {
   online.value = await $connectivity.getOnlineStatus();
   const interval = setInterval(async () => {
     online.value = await $connectivity.getOnlineStatus();
-    console.log("Initial connectivity status:", online.value); // Changed to console.log
+    // console.log("Initial connectivity status:", online.value); // Changed to console.log
   }, 5000);
   // const savedTheme = localStorage.getItem("theme");
   // if (savedTheme === "dark") {

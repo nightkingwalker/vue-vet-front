@@ -20,7 +20,11 @@
         </div>
       </div>
       <!-- Main Form -->
-      <form v-if="!requires2FA" @submit.prevent="login" class="space-y-5">
+      <form
+        v-if="!requires2FA && !showBranchSelection"
+        @submit.prevent="login"
+        class="space-y-5"
+      >
         <!-- Email Input -->
         <div>
           <div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400">
@@ -209,6 +213,12 @@
           <span v-else>{{ $t("two_factor.verify") }}</span>
         </button>
       </form>
+      <!-- Branch Selection -->
+      <BranchSelection
+        v-if="showBranchSelection"
+        :branches="userBranches"
+        @branch-selected="handleBranchSelected"
+      />
       <!-- Footer -->
       <small class="block text-[8pt] text-gray-600 dark:text-gray-400 mt-6">
         Site is protected by reCAPTCHA. Google
@@ -332,6 +342,7 @@ import InputOtp from "primevue/inputotp";
 import CheckBox from "primevue/checkbox";
 import Dialog from "primevue/dialog";
 import Button from "primevue/button";
+import BranchSelection from "@/components/LoginComponentSelectBranch.vue";
 
 const { t, locale } = useI18n();
 // console.log(locale.value);
@@ -362,6 +373,10 @@ const newPassword = ref("");
 const confirmPassword = ref("");
 const resetPasswordLoading = ref(false);
 const resetPasswordMessage = ref("");
+
+/** select branch */
+const showBranchSelection = ref(false);
+const userBranches = ref([]);
 /**End Reset Password */
 const tfaInvalid = ref(false);
 const props = defineProps({
@@ -391,14 +406,33 @@ const login = async () => {
       temporary_token,
       user,
     } = response.data;
-
+    // console.log(response.data);
     if (requires_2fa) {
       requires2FA.value = true;
       temporaryToken.value = temporary_token;
       message.value = t("two_factor.required");
       isError.value = true;
+    } else if (user.branches && user.branches.length > 1) {
+      authStore.logIn(
+        access_token,
+        refresh_token,
+        expires_in,
+        refresh_expires_in,
+        user.name,
+        user.preference.user_theme,
+        user.preference.user_language,
+        user.preference.shortcuts,
+        user.current_branch,
+        rememberMe.value // Pass remember_me to authStore
+      );
+
+      // console.log("showing branch selection");
+      // Show branch selection
+      userBranches.value = user.branches;
+
+      showBranchSelection.value = true;
     } else {
-      console.log(response);
+      // console.log(response);
       authStore.logIn(
         access_token,
         refresh_token,
@@ -456,20 +490,26 @@ const verify2FA = async () => {
       user,
     } = response.data;
     // console.log(user);
-    authStore.logIn(
-      access_token,
-      refresh_token,
-      expires_in,
-      refresh_expires_in,
-      user.name,
-      user.preference.user_theme,
-      user.preference.user_language,
-      user.preference.shortcuts,
-      user.current_branch
-    );
+    if (user.branches && user.branches.length > 1) {
+      // Show branch selection
+      userBranches.value = branches;
+      showBranchSelection.value = true;
+    } else {
+      authStore.logIn(
+        access_token,
+        refresh_token,
+        expires_in,
+        refresh_expires_in,
+        user.name,
+        user.preference.user_theme,
+        user.preference.user_language,
+        user.preference.shortcuts,
+        user.current_branch
+      );
 
-    message.value = t("two_factor.success");
-    router.push("/").catch((err) => console.error("Router error:", err));
+      message.value = t("two_factor.success");
+      router.push("/").catch((err) => console.error("Router error:", err));
+    }
   } catch (error) {
     tfaInvalid.value = true;
 
@@ -583,6 +623,12 @@ const verifyResetCode = async (code) => {
     forgotPasswordLoading.value = false;
   }
 };
+const handleBranchSelected = (branchId) => {
+  showBranchSelection.value = false;
+  // Update user's current branch in auth store
+  authStore.setCurrentBranch(branchId);
+};
+
 onMounted(() => {
   if (route.query.code) {
     verifyResetCode(route.query.code);

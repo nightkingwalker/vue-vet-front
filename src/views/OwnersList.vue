@@ -476,7 +476,7 @@ const fetchOwners = async (page = 1) => {
         searchQuery.value
       }&show_deactivated=${showDeactivated.value ? 1 : 0}`
     );
-    console.log(response);
+    // console.log(response);
     owners.value = response.data.data.map((owner) => ({
       id: owner.id.toString(),
       name: owner.name,

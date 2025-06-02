@@ -600,7 +600,7 @@ const fetchAppointments = async (page = 1) => {
     }));
     if (events.value.length > 0) {
       // currentPet.value = events.value[0];
-      console.log(events.value);
+      // console.log(events.value);
     }
     visible.value = true;
     calendarApp.eventsService.set(events.value);
