@@ -186,7 +186,13 @@ const router = createRouter({
         //         import('@/views/Shortcuts.vue'),
         //     meta: { allowSessionTimeout: true }
         // },
-    {
+        {
+            path: '/accept-invite',
+            name: 'AcceptInvite',
+            component: () => import('@/views/AcceptInvite.vue'),
+            meta: { public: true } // If using auth guards
+        },
+        {
         path: '/reports',
         component: () =>
             import('@/views/Reports.vue'),

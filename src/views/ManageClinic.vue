@@ -15,6 +15,7 @@
           class="p-button-text text-emerald-400 hover:text-emerald-300"
           @click="$router.push('/clinics')"
         />
+
         <Button
           label="Edit Clinic"
           icon="pi pi-pencil"
@@ -86,12 +87,19 @@
       <template #header>
         <div class="flex justify-between items-center p-4 border-b border-surface-500">
           <h2 class="text-xl font-semibold text-surface-0">Clinic Members</h2>
-          <Button
-            label="Add User"
-            icon="pi pi-plus"
-            class="p-button-primary bg-emerald-600 hover:bg-emerald-500 border-emerald-600"
-            @click="showAddUserDialog = true"
-          />
+          <div class="w-fit flex gap-2">
+            <Button
+              icon="pi pi-refresh"
+              @click="fetchClinicData"
+              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
+              v-tooltip.top="$t('owners.actions.refresh')"
+            />
+            <Button
+              icon="fa-solid fa-user-plus"
+              class="p-button-text !text-emerald-400 hover:text-emerald-300 border-emerald-600"
+              @click="showAddUserDialog = true"
+            />
+          </div>
         </div>
       </template>
       <template #content>
@@ -162,7 +170,7 @@
     </Card>
 
     <!-- Add User Dialog -->
-    <Dialog
+    <!--     <Dialog
       v-model:visible="showAddUserDialog"
       header="Add User to Clinic"
       :modal="true"
@@ -264,7 +272,22 @@
         />
       </template>
     </Dialog>
-
+ -->
+    <Dialog v-model:visible="showAddUserDialog" class="bg-surface-300 text-surface-100">
+      <template #header>Invite New Member</template>
+      <div class="space-y-4">
+        <InputText v-model="inviteEmail" placeholder="user@example.com" />
+        <Select
+          v-model="inviteRole"
+          :options="availableRoles"
+          optionLabel="label"
+          optionValue="value"
+        />
+      </div>
+      <template #footer>
+        <Button label="Send Invite" @click="sendInvite" />
+      </template>
+    </Dialog>
     <!-- Edit User Role Dialog -->
     <Dialog
       v-model:visible="showEditUserRoleDialog"
@@ -428,13 +451,16 @@ import Avatar from "primevue/avatar";
 import Column from "primevue/column";
 import DataTable from "primevue/datatable";
 
-import axios from "@/axios";
+import axiosInstance from "@/axios";
 
 const route = useRoute();
 const router = useRouter();
 const toast = useToast();
 
 const clinicId = route.params.clinic;
+const inviteEmail = ref("");
+const inviteRole = ref("staff");
+const showInviteDialog = ref(false);
 
 // Clinic data
 const clinic = ref({});
@@ -491,13 +517,26 @@ const selectUser = (user) => {
   userSearchQuery.value = ""; // Clear search query
   searchResults.value = []; // Clear search results
 };
+const sendInvite = async () => {
+  console.log(inviteRole.value);
+  try {
+    await axiosInstance.post(`/clinics/${clinicId}/invitations`, {
+      email: inviteEmail.value,
+      role: inviteRole.value,
+    });
+    toast.add({ severity: "success", detail: "Invitation sent!" });
+  } catch (error) {
+    console.log(error);
+    toast.add({ severity: "error", detail: error.response?.data?.message });
+  }
+};
 // Fetch clinic and users
 const fetchClinicData = async () => {
   try {
     loading.value = true;
     const [clinicRes, usersRes] = await Promise.all([
-      axios.get(`/clinics/${clinicId}`),
-      axios.get(`/clinics/${clinicId}/users`),
+      axiosInstance.get(`/clinics/${clinicId}`),
+      axiosInstance.get(`/clinics/${clinicId}/users`),
     ]);
 
     clinic.value = clinicRes.data;
@@ -524,7 +563,7 @@ const searchUsers = async () => {
   }
 
   try {
-    const response = await axios.get("/users/search", {
+    const response = await axiosInstance.get("/users/search", {
       params: { q: userSearchQuery.value },
     });
     // Filter out users already in clinic
@@ -545,7 +584,7 @@ const searchUsers = async () => {
 const addUserToClinic = async () => {
   try {
     addingUser.value = true;
-    await axios.post(`/clinics/${clinicId}/users`, {
+    await axiosInstance.post(`/clinics/${clinicId}/users`, {
       user_id: selectedUser.value.id,
       role: newUserRole.value,
     });
@@ -582,7 +621,7 @@ const openEditUserRoleDialog = (user) => {
 const updateUserRole = async () => {
   try {
     updatingRole.value = true;
-    await axios.put(`/clinics/${clinicId}/users/${userToEdit.value.id}`, {
+    await axiosInstance.put(`/clinics/${clinicId}/users/${userToEdit.value.id}`, {
       role: updatedUserRole.value,
     });
 
@@ -633,12 +672,12 @@ const confirmRemoveUser = (user) => {
   userToRemove.value = user;
   showRemoveUserConfirm.value = true;
 };
-
+// const refreshData = ()
 // Remove user from clinic
 const removeUserFromClinic = async () => {
   try {
     removingUser.value = true;
-    await axios.delete(`/clinics/${clinicId}/users/${userToRemove.value.id}`);
+    await axiosInstance.delete(`/clinics/${clinicId}/users/${userToRemove.value.id}`);
 
     toast.add({
       severity: "success",
@@ -665,7 +704,7 @@ const removeUserFromClinic = async () => {
 const updateClinic = async () => {
   try {
     savingClinic.value = true;
-    await axios.put(`/clinics/${clinicId}`, clinicForm.value);
+    await axiosInstance.put(`/clinics/${clinicId}`, clinicForm.value);
 
     toast.add({
       severity: "success",

@@ -72,10 +72,12 @@
             <Button
               :label="$t('clinics.branches')"
               icon="pi pi-sitemap"
+              :iconPos="isRtl ? 'right' : 'left'"
               v-tooltip.top="$t('clinics.branches')"
               class="p-button-text p-button-sm text-emerald-400 hover:text-emerald-300"
               @click="viewBranches(clinic)"
             />
+
             <div>
               <Button
                 v-if="['super_admin', 'admin', 'manager'].includes(clinic.pivot.role)"
@@ -188,7 +190,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useToast } from "primevue/usetoast";
 import { useI18n } from "vue-i18n";
 import axios from "@/axios";
@@ -200,8 +202,8 @@ import Tag from "primevue/tag";
 import InputText from "primevue/inputtext";
 import ProgressSpinner from "primevue/progressspinner";
 import router from "@/router";
+const { t, locale } = useI18n();
 
-const { t } = useI18n();
 const toast = useToast();
 
 // Clinic data
@@ -360,6 +362,10 @@ const getRoleSeverity = (role) => {
   }
 };
 
+const isRtl = computed(() => {
+  return ["ar", "he", "fa"].includes(locale.value);
+});
+console.log("isRtl", isRtl.value);
 // Fetch clinics on component mount
 onMounted(() => {
   fetchClinics();
