@@ -112,8 +112,8 @@ const confirmSelection = async () => {
       refresh_expires_in,
       remember_me
     );
-    emit("branch-selected", selectedBranch.value);
-    router.push("/");
+    // emit("branch-selected", selectedBranch.value);
+    await router.push("/");
   } catch (error) {
     isError.value = true;
     message.value = error.response?.data?.message || "Failed to select branch";

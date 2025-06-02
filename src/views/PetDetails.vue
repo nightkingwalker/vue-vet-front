@@ -299,7 +299,7 @@
       <Card class="w-full h-full shadow-lg border-0 rounded-xl overflow-hidden">
         <template #header>
           <div
-            class="relative h-40 bg-gradient-to-br"
+            class="relative md:h-20 2xl:h-40 bg-gradient-to-br"
             :class="
               pet.gender === 'Female'
                 ? 'from-purple-100 to-red-100 dark:from-purple-800 dark:to-red-800'
@@ -363,9 +363,9 @@
             <Skeleton width="70%" height="1.5rem" />
           </div>
 
-          <div v-else class="space-y-4 mt-4">
+          <div v-else class="space-y-2 mt-1">
             <!-- Owner Section -->
-            <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+            <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg">
               <h3
                 class="text-xs font-medium text-gray-500 dark:text-gray-300 mb-2 flex items-center gap-2"
               >
@@ -382,7 +382,7 @@
             </div>
 
             <!-- Pet Details Section -->
-            <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+            <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg">
               <h3
                 class="text-xs font-medium text-gray-500 dark:text-gray-300 mb-2 flex items-center gap-2"
               >
@@ -427,7 +427,7 @@
             </div>
 
             <!-- Medical Info Section -->
-            <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+            <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg">
               <h3
                 class="text-xs font-medium text-gray-500 dark:text-gray-300 mb-2 flex items-center gap-2"
               >
@@ -476,7 +476,7 @@
             <!-- Additional Info -->
             <div
               v-if="pet.distinctive_marks"
-              class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg"
+              class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg"
             >
               <h3
                 class="text-xs font-medium text-gray-500 dark:text-gray-300 mb-2 flex items-center gap-2"
