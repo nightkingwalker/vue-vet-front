@@ -1603,5 +1603,13 @@
         "manager": "مسؤول",
         "vet": "طبيب بيطري",
         "staff": "موظف"
+    },
+    "branchSelection": {
+        "title": "اختر الفرع",
+        "subtitle": "الرجاء اختيار الفرع",
+        "continueButton": "متابعة",
+        "messages": {
+            "failed": "فشل اختيار الفرع"
+        }
     }
 }

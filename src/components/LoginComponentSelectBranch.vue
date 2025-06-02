@@ -1,13 +1,12 @@
 <template>
-  <!-- <div class="flex items-center justify-center bg-stone-100 dark:bg-stone-800"> -->
   <div class="px-8 py-2 bg-white dark:bg-stone-900 shadow-lg rounded-lg max-w-md w-full">
     <div class="w-full flex justify-center mb-6">
       <Image :src="Logo" alt="Logo" class="w-16 h-16 rounded-full" />
     </div>
 
-    <h2 class="text-xl font-bold mb-4 text-center">Select Branch</h2>
+    <h2 class="text-xl font-bold mb-4 text-center">{{ $t("branchSelection.title") }}</h2>
     <p class="text-sm text-gray-600 dark:text-gray-400 mb-6 text-center">
-      Please choose branch
+      {{ $t("branchSelection.subtitle") }}
     </p>
 
     <div class="space-y-1">
@@ -34,7 +33,7 @@
       :disabled="!selectedBranch || loading"
     >
       <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
-      <span v-else>Continue</span>
+      <span v-else>{{ $t("branchSelection.continueButton") }}</span>
     </button>
 
     <small
@@ -42,10 +41,9 @@
       class="block mt-4 text-center"
       :class="isError ? 'text-red-500' : 'text-green-500'"
     >
-      {{ message }}
+      {{ isError ? $t("branchSelection.messages.failed") : message }}
     </small>
   </div>
-  <!-- </div> -->
 </template>
 
 <script setup>

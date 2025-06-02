@@ -1608,5 +1608,13 @@
         "manager": "Manager",
         "vet": "Veterinarian",
         "staff": "Staff"
+    },
+    "branchSelection": {
+        "title": "Select Branch",
+        "subtitle": "Please choose branch",
+        "continueButton": "Continue",
+        "messages": {
+            "failed": "Failed to select branch"
+        }
     }
 }

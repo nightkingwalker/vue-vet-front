@@ -167,7 +167,7 @@ const router = createRouter({
         component: () =>
             import('@/views/WhatsAppOnboardingLanding.vue'),
         // import('@/views/Settings.vue'),
-        meta: { allowSessionTimeout: true }
+        meta: { allowSessionTimeout: true, requiresAuth: true }
     },
         {
             path: '/reset-password',
