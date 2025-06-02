@@ -17,9 +17,8 @@
           @click="$router.push(`/clinics/${clinic.id}/branches`)"
         />
         <Button
-          label="Add User"
-          icon="pi pi-plus"
-          class="p-button-primary bg-emerald-600 hover:bg-emerald-500 border-emerald-600"
+          icon="fa-solid fa-user-plus"
+          class="p-button-text !text-emerald-400 hover:text-emerald-300 border-emerald-600"
           @click="showAddUser"
         />
       </div>
