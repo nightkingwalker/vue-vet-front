@@ -1,51 +1,51 @@
 <template>
-  <div class="flex items-center justify-center bg-stone-100 dark:bg-stone-800">
-    <div class="p-8 bg-white dark:bg-stone-900 shadow-lg rounded-lg max-w-md w-full">
-      <div class="w-full flex justify-center mb-6">
-        <Image :src="Logo" alt="Logo" class="w-16 h-16 rounded-full" />
-      </div>
+  <!-- <div class="flex items-center justify-center bg-stone-100 dark:bg-stone-800"> -->
+  <div class="px-8 py-2 bg-white dark:bg-stone-900 shadow-lg rounded-lg max-w-md w-full">
+    <div class="w-full flex justify-center mb-6">
+      <Image :src="Logo" alt="Logo" class="w-16 h-16 rounded-full" />
+    </div>
 
-      <h2 class="text-xl font-bold mb-4 text-center">Select Branch</h2>
-      <p class="text-sm text-gray-600 dark:text-gray-400 mb-6 text-center">
-        Please choose which branch you want to work with
-      </p>
+    <h2 class="text-xl font-bold mb-4 text-center">Select Branch</h2>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-6 text-center">
+      Please choose branch
+    </p>
 
-      <div class="space-y-4">
-        <div
-          v-for="branch in branches"
-          :key="branch.id"
-          @click="selectBranch(branch.id)"
-          class="p-4 border rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-stone-800 transition"
-          :class="{ 'border-blue-500': selectedBranch === branch.id }"
-        >
-          <div class="flex items-center">
-            <i class="pi pi-building mr-3 text-lg"></i>
-            <div>
-              <h3 class="font-medium">{{ branch.name }}</h3>
-              <p class="text-sm text-gray-500 dark:text-gray-400">{{ branch.address }}</p>
-            </div>
+    <div class="space-y-1">
+      <div
+        v-for="branch in branches"
+        :key="branch.id"
+        @click="selectBranch(branch.id)"
+        class="px-4 py-1 border rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-stone-800 transition"
+        :class="{ 'border-blue-500': selectedBranch === branch.id }"
+      >
+        <div class="flex items-center">
+          <i class="pi pi-building mr-3 text-lg"></i>
+          <div>
+            <h3 class="font-medium">{{ branch.name }}</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ branch.address }}</p>
           </div>
         </div>
       </div>
-
-      <button
-        @click="confirmSelection"
-        class="w-full mt-6 p-button p-button-content py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        :disabled="!selectedBranch || loading"
-      >
-        <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
-        <span v-else>Continue</span>
-      </button>
-
-      <small
-        v-if="message"
-        class="block mt-4 text-center"
-        :class="isError ? 'text-red-500' : 'text-green-500'"
-      >
-        {{ message }}
-      </small>
     </div>
+
+    <button
+      @click="confirmSelection"
+      class="w-full mt-6 p-button p-button-content py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      :disabled="!selectedBranch || loading"
+    >
+      <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
+      <span v-else>Continue</span>
+    </button>
+
+    <small
+      v-if="message"
+      class="block mt-4 text-center"
+      :class="isError ? 'text-red-500' : 'text-green-500'"
+    >
+      {{ message }}
+    </small>
   </div>
+  <!-- </div> -->
 </template>
 
 <script setup>

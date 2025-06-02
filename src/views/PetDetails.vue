@@ -396,7 +396,7 @@
                   </p>
                   <p class="flex items-center gap-1">
                     <i :class="getIconClass(pet.species)"></i>
-                    {{ $t(`pet_details.species.${getSpeciesValue(pet.species)}`) }}
+                    {{ getSpeciesValue(pet.species) }}
                   </p>
                 </div>
                 <div>
@@ -1649,7 +1649,7 @@ const parseResults = (resultsString) => {
 const getSpeciesValue = (label) => {
   // console.log(label);
   const found = species.value.find((species) => species.en_label === label);
-  return found ? found.en_label : null;
+  return found ? found.label : null;
 };
 const eventTheme = {
   Regular: {

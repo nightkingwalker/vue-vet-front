@@ -37,11 +37,15 @@
               v-model="pet.species"
               :options="species"
               optionLabel="label"
+              optionvalue="value"
               class="w-full md:w-56 h-10"
             >
               <template #value="slotProps">
                 <div v-if="slotProps.value" class="flex items-center">
-                  <div>{{ $t(`pet_details.species.${slotProps.value.value}`) }}</div>
+                  <div>
+                    <!-- {{ $t(`pet_details.species.${slotProps.value.value.toLowerCase()}`) }} -->
+                    {{ slotProps.value.label }}
+                  </div>
                 </div>
                 <span v-else>{{ $t("pet_form.fields.select_species") }}</span>
               </template>
@@ -220,7 +224,7 @@ const pet = ref({
   allergies: "",
 });
 
-const species = ref([
+/* const species = ref([
   { label: t("species.avian"), value: "Avian" },
   { label: t("species.bovine"), value: "Bovine" },
   { label: t("species.camelid"), value: "Camelid" },
@@ -233,6 +237,86 @@ const species = ref([
   { label: t("species.lapine"), value: "Lapine" },
   { label: t("species.murine"), value: "Murine" },
   { label: t("species.ovine"), value: "Ovine" },
+]); */
+const species = ref([
+  {
+    label: t("species.avian"),
+    value: "Avian",
+    en_label: "Birds",
+    icon: "fa-solid fa-dove",
+  },
+  // {
+  //   label: t("species.bovine"),
+  //   value: "Bovine",
+  //   en_label: "Cows",
+  //   icon: "fa-solid fa-cow",
+  // },
+  // {
+  //   label: t("species.camelid"),
+  //   value: "Camelid",
+  //   en_label: "Camels",
+  //   icon: "fa-solid fa-paw",
+  // },
+  {
+    label: t("species.canine"),
+    value: "Canine",
+    en_label: "Dogs",
+    icon: "fa-solid fa-dog",
+  },
+  // {
+  //   label: t("species.caprine"),
+  //   value: "Caprine",
+  //   en_label: "Goats",
+  //   icon: "fa-solid fa-paw",
+  // },
+  {
+    label: t("species.cavies"),
+    value: "Cavies",
+    en_label: "Guinea Pigs",
+    icon: "fa-solid fa-paw",
+  },
+  // {
+  //   label: t("species.cervidae"),
+  //   value: "Cervidae",
+  //   en_label: "Deers",
+  //   icon: "fa-solid fa-paw",
+  // },
+  // {
+  //   label: t("species.equine"),
+  //   value: "Equine",
+  //   en_label: "Horses",
+  //   icon: "fa-duotone fa-horse",
+  // },
+  {
+    label: t("species.feline"),
+    value: "Feline",
+    en_label: "Cats",
+    icon: "fa-solid fa-cat",
+  },
+  {
+    label: t("species.testudines"),
+    value: "Testudines",
+    en_label: "Turtles",
+    icon: "fa-solid fa-cat",
+  },
+  {
+    label: t("species.lapine"),
+    value: "Lapine",
+    en_label: "Rabbits",
+    icon: "fa-solid fad fa-rabbit",
+  },
+  {
+    label: t("species.murine"),
+    value: "Murine",
+    en_label: "Mice",
+    icon: "fa-solid fa-paw",
+  },
+  // {
+  //   label: t("species.ovine"),
+  //   value: "Ovine",
+  //   en_label: "Sheeps",
+  //   icon: "fa-solid fa-sheep",
+  // },
 ]);
 
 const yesno = ref([
