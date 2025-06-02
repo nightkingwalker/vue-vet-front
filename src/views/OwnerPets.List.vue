@@ -163,7 +163,7 @@
             <!-- Action Button -->
             <div class="mt-4 pt-3 border-t border-surface-500">
               <RouterLink
-                class="w-full p-button !bg-emerald-600 hover:!bg-emerald-500 !text-surface-100 p-component p-button-sm !text-xs !justify-center"
+                class="w-full p-button p-component hover:!bg-emerald-500 !text-surface-100 !text-xs !justify-center border-0"
                 :to="{
                   name: 'PetDetails',
                   params: { petmicrochip: pet.microchip_num },

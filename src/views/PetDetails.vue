@@ -1,7 +1,7 @@
 <template>
   <div class="flex gap-2 h-[calc(100vh-60px)] overflow-y-auto w-full">
     <div
-      class="w-1/4 h-fit bg-[var(--p-surface-200)] dark:bg-[var(--p-surface-600)] rounded-lg p-2"
+      class="w-1/4 h-fit bg-[var(--p-surface-100)] dark:bg-[var(--p-surface-800)] rounded-lg"
     >
       <!--       <Card class="w-full">
         <template #header>
@@ -296,7 +296,7 @@
         </template>
       </Card>
  -->
-      <Card class="w-full h-full shadow-lg border-0 rounded-xl overflow-hidden">
+      <Card class="w-full h-full shadow-lg border-0 rounded-xl !overflow-hidden">
         <template #header>
           <div
             class="relative md:h-20 2xl:h-40 bg-gradient-to-br"
@@ -502,14 +502,22 @@
       </Card>
     </div>
     <div
-      class="w-3/4 min-h-full bg-[var(--p-surface-300)] dark:bg-[var(--p-surface-500)] rounded-lg"
+      class="w-3/4 min-h-full bg-[var(--p-surface-100)] dark:bg-[var(--p-surface-800)] rounded-[10px] overflow-hidden"
     >
       <DataTable
         showGridlines
         :value="visits"
-        class="m-2 rounded-lg overflow-hidden text-xs"
+        scrollable
+        scrollHeight="80vh"
+        class="text-xs"
         stripedRows
         v-if="!loading"
+        :paginator="true"
+        :rows="itemsPerPage"
+        :totalRecords="visits.length"
+        :first="1"
+        @page="onPageChange"
+        :rowsPerPageOptions="[25, 50, 100]"
       >
         <template #header>
           <div class="flex flex-wrap items-center justify-between gap-2">
@@ -537,7 +545,7 @@
         <Column
           field="start"
           :header="$t('pet_details.date')"
-          :class="`!rtl w-1/8 lg:!text-[14px] text-xs `"
+          :class="`text-center ltr w-1/8 lg:!text-[14px] text-xs justify-center`"
         ></Column>
         <Column
           field="title"
@@ -765,9 +773,20 @@
             />
           </template>
         </Column>
-        <template #footer>
+        <!-- <template #footer>
           {{ $t("pet_details.total_records", { count: visits ? visits.length : 0 }) }}
-        </template>
+        </template> -->
+        <!-- <template #footer>
+          <Paginator
+            :rows="itemsPerPage"
+            :first="1"
+            :totalRecords="visits.length"
+            :currentPage="currentPage"
+            :rowsPerPageOptions="[5, 25, 50, 100]"
+            @page="onPageChange"
+            class="!rounded-b-xl text-xs"
+          ></Paginator>
+        </template> -->
       </DataTable>
     </div>
   </div>
@@ -1325,10 +1344,11 @@ import FullReport from "@/views/FullReport.vue";
 import InvoiceView from "@/views/InvoiceView.vue";
 import InvoiceAdd from "@/views/AddInvoice.vue";
 import AddPayment from "@/views/AddInvoicePayment.vue";
+// import Paginator from "primevue/paginator";
 
 const { t } = useI18n();
 const emit = defineEmits([]);
-
+const itemsPerPage = ref(25);
 const isTreatmentsListVisible = ref(false);
 const isTestResultsVisible = ref(false);
 const isNewTreatmentVisible = ref(false);
@@ -1355,6 +1375,7 @@ const selectedMedicalImageId = ref(null);
 const route = useRoute();
 const petmicrochip = ref(route.params.petmicrochip);
 const selectedInvoice = ref(null);
+const currentPage = ref(1);
 const isRtl = document.getElementsByTagName("html")[0].dir === "rtl" ? true : false;
 const pet = ref({
   microchip_num: "",
@@ -1765,7 +1786,7 @@ const fetchPets = async () => {
     // Make the request using the axios instance with interceptors
     const response = await axiosInstance.get(`/pets/${petmicrochip.value}`);
     pet.value = response.data;
-    // console.log(pet.value);
+    console.log(response.data.appointments);
     visits.value = response.data.appointments;
     medical_records.value = response.data.medical_records;
     pet.value.date_of_birth = formatDateForSubmission(pet.value.date_of_birth);
@@ -1826,7 +1847,9 @@ const resetForm = () => {
   selectedInvoice.value = null;
   editMode.value = false;
 };
-
+function onPageChange(event) {
+  first.value = event.first;
+}
 onMounted(() => {
   fetchPets();
   eventBus.on("showPaymentView", (event) => {
@@ -1835,3 +1858,25 @@ onMounted(() => {
   });
 });
 </script>
+<style>
+.text-center.ltr {
+  text-align: center !important;
+}
+.text-center.ltr .p-datatable-column-header-content {
+  justify-content: center;
+}
+.p-paginator.p-component {
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 10px !important;
+  border-bottom-left-radius: 10px !important;
+}
+.p-datatable {
+  border-radius: 10px;
+  overflow: hidden;
+}
+.p-datatable-gridlines .p-datatable-paginator-bottom,
+.p-datatable-gridlines .p-datatable-header {
+  border: 0 !important;
+}
+</style>

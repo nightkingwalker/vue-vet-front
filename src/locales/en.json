@@ -68,7 +68,9 @@
             "whatsapp": "Send WhatsApp Message",
             "view_details": "View Details",
             "hide_details": "Hide Details",
-            "deactivate": "Deactivate Account"
+            "deactivate": "Deactivate Account",
+            "show_deactive": "Show Deactivated Accounts",
+            "hide_deactive": "Hide Deactivated Accounts"
         },
         "modals": {
             "new_client": "Add New Client",

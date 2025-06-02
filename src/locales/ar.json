@@ -63,7 +63,9 @@
             "whatsapp": "إرسال رسالة واتساب",
             "view_details": "عرض التفاصيل",
             "hide_details": "إخفاء التفاصيل",
-            "deactivate": "تعطيل الحساب"
+            "deactivate": "تعطيل الحساب",
+            "show_deactive": "إظهار الحسابات المعطلة",
+            "hide_deactive": "إخفاء الحسابات المعطلة"
         },
         "modals": {
             "new_client": "إضافة عميل جديد",

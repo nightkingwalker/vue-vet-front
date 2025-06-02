@@ -163,6 +163,7 @@
           </template>
           <template v-else>
             <Chip
+              v-if="slotProps.data.breed"
               :label="slotProps.data.breed"
               class="shadow-sm !text-sm lg:!text-[14px] font-thin border dark:border-transparent h-7"
             />

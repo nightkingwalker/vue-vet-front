@@ -32,7 +32,10 @@
           <!-- onLabel="Showing All"
             offLabel="Active Only" -->
           <ToggleButton
+            onLabel=""
+            offLabel=""
             v-model="showDeactivated"
+            :v-tooltip.top="$t(`owners.actions.show_deactive`)"
             onIcon="pi pi-eye"
             offIcon="pi pi-eye-slash"
             class="w-full sm:w-auto"
@@ -537,7 +540,9 @@ const deactivateClient = async (data) => {
     });
   }
 };
-
+const actionText = computed(() =>
+  t(`owners.actions.${showDeactivated.value ? "show_deactive" : "hide_deactive"}`)
+);
 const onSearchChange = () => {
   if (searchQuery.value.length < 3 && searchQuery.value.length !== 0) {
     return; // Do not proceed with search
@@ -641,5 +646,8 @@ onMounted(() => {
   /* background-color: rgb(31 41 55 / var(--tw-bg-opacity)); */
   background: var(--p-surface-600) !important;
   border-radius: 5px;
+}
+.p-togglebutton-label {
+  display: none;
 }
 </style>
