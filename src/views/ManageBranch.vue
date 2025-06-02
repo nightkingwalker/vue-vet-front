@@ -20,7 +20,7 @@
           label="Add User"
           icon="pi pi-plus"
           class="p-button-primary bg-emerald-600 hover:bg-emerald-500 border-emerald-600"
-          @click="showAddUserDialog = true"
+          @click="showAddUser"
         />
       </div>
     </div>
@@ -450,6 +450,7 @@ const searchUsers = async () => {
     const response = await axios.get("/users/search", {
       params: { q: userSearchQuery.value },
     });
+    console.log(response.data);
     // Filter out users already in branch
     searchResults.value = response.data.filter(
       (user) => !users.value.some((u) => u.id === user.id)
@@ -468,12 +469,12 @@ const searchUsers = async () => {
 const addUserToBranch = async () => {
   try {
     addingUser.value = true;
-    await axios.post(`/branches/${branchId}/users`, {
+    const response = await axios.post(`/branches/${branchId}/users`, {
       user_id: selectedUser.value.id,
       role: newUserRole.value,
       clinic_id: clinic.value.id,
     });
-
+    console.log(response);
     toast.add({
       severity: "success",
       summary: "Success",
@@ -494,7 +495,9 @@ const addUserToBranch = async () => {
     addingUser.value = false;
   }
 };
-
+const showAddUser = () => {
+  showAddUserDialog.value = true;
+};
 // Open edit role dialog
 const openEditUserRoleDialog = (user) => {
   userToEdit.value = user;
