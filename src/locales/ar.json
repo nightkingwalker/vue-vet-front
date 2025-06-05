@@ -50,7 +50,15 @@
         "context_menu": {
             "day_view": "الذهاب إلى عرض اليوم",
             "add_new": "إضافة موعد جديد"
-        }
+        },
+        "google_sync": "المزامنة مع Google Calendar",
+        "google_synced": "تمت المزامنة",
+        "google_sync_connect": "قم بالربط مع Google Calendar الخاص بالعيادة",
+        "google_sync_connected": "تم الربط مع Google Calendar الخاص بالعيادة",
+        "google_disconnected": "غير متصل مع Google Calendar",
+        "google_sync_error": "خطأ بالمزامنة",
+        "sync_in_progress": "تتم المزامنة...",
+        "sync_complete": "تمت المزامنة بنجاح"
     },
     "owners": {
         "title": "قائمة المالكين",

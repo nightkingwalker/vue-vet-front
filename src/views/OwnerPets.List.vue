@@ -196,7 +196,9 @@
     v-model:visible="isModalVisible"
     :header="$t('owner_pet_list.modal.header')"
     :style="{ width: 'min(95vw, 600px)' }"
-    class="bg-surface-300 text-surface-100"
+    modal
+    :closable="true"
+    class="bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
   >
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
@@ -451,6 +453,10 @@ const handleKeydown = (event) => {
 
 onMounted(() => {
   fetchPets(1);
+  if (route.query.isNew === "true") {
+    router.replace({ query: {} });
+    isModalVisible.value = true;
+  }
   eventBus.on("AddPet", () => {
     // console.log("OPEN ADD OWNER");
     isModalVisible.value = true;

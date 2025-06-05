@@ -515,7 +515,7 @@
         :paginator="true"
         :rows="itemsPerPage"
         :totalRecords="visits.length"
-        :first="1"
+        :first="0"
         @page="onPageChange"
         :rowsPerPageOptions="[25, 50, 100]"
       >
@@ -779,7 +779,7 @@
         <!-- <template #footer>
           <Paginator
             :rows="itemsPerPage"
-            :first="1"
+            :first="0"
             :totalRecords="visits.length"
             :currentPage="currentPage"
             :rowsPerPageOptions="[5, 25, 50, 100]"

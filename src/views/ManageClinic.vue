@@ -273,7 +273,11 @@
       </template>
     </Dialog>
  -->
-    <Dialog v-model:visible="showAddUserDialog" class="bg-surface-300 text-surface-100">
+    <Dialog
+      v-model:visible="showAddUserDialog"
+      :modal="true"
+      class="bg-surface-300 text-surface-100"
+    >
       <template #header>Invite New Member</template>
       <div class="space-y-4">
         <InputText v-model="inviteEmail" placeholder="user@example.com" />

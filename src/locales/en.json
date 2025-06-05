@@ -55,7 +55,15 @@
         "context_menu": {
             "day_view": "Go To Day Calendar",
             "add_new": "Add New Appointment"
-        }
+        },
+        "google_sync": "Sync Google",
+        "google_synced": "Synced",
+        "google_sync_connect": "Connect Google Calendar",
+        "google_sync_connected": "Connected to Google Calendar",
+        "google_disconnected": "Disconnected from Google Calendar",
+        "google_sync_error": "Google Sync Error",
+        "sync_in_progress": "Sync in progress...",
+        "sync_complete": "Sync completed successfully"
     },
     "owners": {
         "title": "Owners List",

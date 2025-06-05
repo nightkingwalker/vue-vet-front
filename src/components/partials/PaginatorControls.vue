@@ -1,7 +1,7 @@
 <template>
   <Paginator
     :rows="itemsPerPage"
-    :first="1"
+    :first="0"
     :totalRecords="totalRecords"
     :currentPage="currentPage"
     :rowsPerPageOptions="[8, 10, 25, 50, 100]"

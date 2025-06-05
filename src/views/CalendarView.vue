@@ -19,26 +19,25 @@
               v-tooltip.bottom="$t('calendar.refresh')"
               class="!text-xs !text-[var(--p-primary-color)] hover:!text-[var(--p-primary-contrast-color)] sx__today-button sx__ripple"
               @click="refreshData"
-              style="
-                padding: var(--sx-spacing-padding3) var(--sx-spacing-padding4);
-                border-radius: var(--sx-rounding-extra-small);
-                font-size: var(--sx-calendar-header-input-font-size);
-                color: var(--sx-internal-color-text);
-              "
             />
             <Button
               type=""
               icon="pi pi-plus !text-sm"
-              label=""
               v-tooltip.bottom="$t('calendar.add_appointment')"
               @click="addAppointment"
               class="!text-xs !text-[var(--p-primary-color)] hover:!text-[var(--p-primary-contrast-color)] sx__today-button sx__ripple"
-              style="
-                padding: var(--sx-spacing-padding3) var(--sx-spacing-padding4);
-                border-radius: var(--sx-rounding-extra-small);
-                font-size: var(--sx-calendar-header-input-font-size);
-                color: var(--sx-internal-color-text);
-              "
+            />
+            <Button
+              type=""
+              icon="pi pi-google"
+              @click="handleGoogleSync"
+              :class="[
+                '!text-xs',
+                isGoogleSynced ? '!text-green-500' : '!text-[var(--p-primary-color)]',
+                'hover:!text-[var(--p-primary-contrast-color)]',
+              ]"
+              class="sx__today-button sx__ripple"
+              v-tooltip.bottom="googleSyncTooltip"
             />
           </div>
         </template>
@@ -350,7 +349,7 @@
   </Dialog>
 </template>
 <script setup>
-import { ref, onMounted, nextTick, watchEffect } from "vue";
+import { ref, onMounted, nextTick, watchEffect, computed } from "vue";
 // import { Qalendar } from "qalendar";
 import { ScheduleXCalendar } from "@schedule-x/vue";
 import {
@@ -374,13 +373,14 @@ import ContextMenu from "primevue/contextmenu";
 import Dialog from "primevue/dialog";
 import AddNewAppointment from "@/views/addNewAppointment.vue";
 import Button from "primevue/button";
-import { RouterLink } from "vue-router";
+import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import Cookies from "js-cookie";
 import { ar } from "date-fns/locale"; // Arabic locale
 // import RouterLink from "primevue/routerlink";
 import axiosInstance from "@/axios"; // Ensure this is correctly set up with baseURL
 import { useDevice } from "@/composables/useDevice";
+const route = useRoute();
 
 const { isMobile, mobileMenuVisible } = useDevice();
 const eventsServicePlugin = createEventsServicePlugin();
@@ -393,6 +393,9 @@ const loading = ref(false);
 const visible = ref(false);
 const activeDate = ref("");
 const isNewApointmentVisible = ref(false);
+const isGoogleSynced = ref(false);
+const isSyncing = ref(false);
+
 const scrollController = createScrollControllerPlugin({
   initialScroll: "12:00",
 });
@@ -410,6 +413,59 @@ const formatDateTime = (dateTimeStr) => {
 
   return formattedDate + " " + formattedTime;
 };
+// Computed properties for dynamic UI
+const googleSyncIcon = computed(() =>
+  isSyncing.value
+    ? "pi pi-spin pi-spinner"
+    : isGoogleSynced.value
+    ? "pi pi-google"
+    : "pi pi-google"
+);
+
+const googleSyncLabel = computed(() =>
+  isMobile.value
+    ? ""
+    : isGoogleSynced.value
+    ? t("calendar.google_synced")
+    : t("calendar.google_sync")
+);
+
+const googleSyncTooltip = computed(() =>
+  isGoogleSynced.value
+    ? t("calendar.google_sync_connected")
+    : t("calendar.google_sync_connect")
+);
+const handleGoogleSync = async () => {
+  if (isSyncing.value) return;
+
+  try {
+    isSyncing.value = true;
+
+    if (isGoogleSynced.value) {
+      // Disconnect logic
+      await axiosInstance.delete("/google/calendar/disconnect");
+      isGoogleSynced.value = false;
+      toast.add({
+        severity: "success",
+        summary: t("calendar.google_disconnected"),
+        life: 3000,
+      });
+    } else {
+      // Connect logic
+      await router.push("/google/connect");
+    }
+  } catch (error) {
+    toast.add({
+      severity: "error",
+      summary: t("calendar.google_sync_error"),
+      detail: error.response?.data?.message || error.message,
+      life: 5000,
+    });
+  } finally {
+    isSyncing.value = false;
+  }
+};
+
 // const species = ref([
 //   { label: "Avian", value: "Birds", icon: "fa-solid fa-dove" },
 //   { label: "Bovine", value: "Cows", icon: "fa-solid fa-cow" },
@@ -1054,9 +1110,38 @@ const arAR = {
 watchEffect(() => {
   setCalendarTheme(Cookies.get("theme"));
 });
+watchEffect(
+  () => route.query,
+  (query) => {
+    if (query.google_sync_success) {
+      isGoogleSynced.value = true;
+      toast.add({
+        severity: "success",
+        summary: t("calendar.google_sync_connected"),
+        life: 3000,
+      });
+    }
+    if (query.google_sync_error) {
+      toast.add({
+        severity: "error",
+        summary: t("calendar.google_sync_error"),
+        life: 5000,
+      });
+    }
+  }
+);
+
 /*end testing calendar*/
-onMounted(() => {
+onMounted(async () => {
   eventBus.on("themeChange", setCalendarTheme);
+  try {
+    const response = await axiosInstance.get("/google/calendar/status");
+    console.log(response.data);
+    isGoogleSynced.value = response.data.connected;
+  } catch (error) {
+    console.error("Could not check Google Calendar status", error);
+  }
+
   initializeCalendarTheme();
   fetchAppointments();
 });
@@ -1099,4 +1184,19 @@ onMounted(() => {
 /* .sx__week-grid {
   max-height: 800px;
 } */
+.google-sync-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  margin-left: 1rem;
+}
+
+.google-sync-status.connected {
+  color: var(--green-500);
+}
+
+.google-sync-status.disconnected {
+  color: var(--red-500);
+}
 </style>

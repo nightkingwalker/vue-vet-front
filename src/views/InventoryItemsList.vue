@@ -299,7 +299,7 @@
       <template #footer>
         <Paginator
           :rows="itemsPerPage"
-          :first="1"
+          :first="0"
           :totalRecords="totalRecords"
           :currentPage="currentPage"
           :rowsPerPageOptions="[25, 50, 100]"

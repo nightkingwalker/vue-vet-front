@@ -244,7 +244,9 @@
     v-model:visible="isModalVisible"
     header="New Owner"
     :style="{ width: '50vw' }"
-    class="bg-surface-300 text-surface-100"
+    modal
+    :closable="true"
+    class="bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
   >
     <NewClientForm @ownerAdded="handleSubmit" />
   </Dialog>
@@ -254,6 +256,7 @@
     header="Send WhatsApp"
     :style="{ width: '40vw' }"
     class="bg-surface-300 text-surface-100"
+    :modal="true"
   >
     <SendWhatsApp
       :contactNumber="whatsAppContact"
@@ -267,6 +270,7 @@
     header="Edit Owner"
     :style="{ width: '60vw' }"
     class="bg-surface-300 text-surface-100"
+    :modal="true"
   >
     <EditOwner :owner="selectedOwner" @OwnerUpdated="handleOwnerUpdated" />
   </Dialog>
@@ -511,8 +515,8 @@ const deactivateClient = async (data) => {
     const response = await axiosInstance.post("/owners", owner.value);
 
     // Emit the submitted data back to the parent component
-    emit("ownerAdded", response.data.data); // You may modify this based on your response structure
-    eventBus.emit("ownerAdded", response.data.data);
+    // emit("ownerAdded", response.data.data); // You may modify this based on your response structure
+    // eventBus.emit("ownerAdded", response.data.data);
     // Clear the form fields after successful submission
     owner.value = {
       name: "",
@@ -563,9 +567,16 @@ const clearFilters = () => {
   fetchOwners(currentPage.value);
 };
 // Handle the submit event from the child component
-const handleSubmit = () => {
-  isModalVisible.value = false;
-  fetchOwners(); // Refresh the owners list
+const handleSubmit = async (data) => {
+  // console.log(data);
+  // isModalVisible.value = false;
+  // fetchOwners(); // Refresh the owners list
+  // await router.push("/" + data.id + "/pets");
+  try {
+    await router.push({ path: "/" + data.id + "/pets", query: { isNew: "true" } });
+  } catch (error) {
+    console.error("Navigation error:", error);
+  }
 };
 const handleWahaSubmit = () => {
   isModalWahaVisible.value = false;
