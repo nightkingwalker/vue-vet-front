@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full mt-4 xl:!text-[12px]">
-    <Card class="bg-[var(--p-surface-200)] dark:bg-[var(--p-surface-600)] rounded-lg p-6">
+  <div class="mt-4 xl:!text-[12px]">
+    <Card class="rounded-lg p-6 w-fit">
       <template #title>
         <div class="flex items-center gap-3">
           <i class="pi pi-whatsapp text-3xl text-green-500"></i>
@@ -11,32 +11,7 @@
       </template>
 
       <template #content>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <!-- Left Column - Benefits Illustration -->
-          <div class="flex flex-col justify-center">
-            <!-- <img
-              src="@/assets/images/whatsapp-illustration.svg"
-              alt="WhatsApp Benefits"
-              class="w-full max-w-md mx-auto mb-6"
-            /> -->
-
-            <div class="space-y-3">
-              <div
-                v-for="(benefit, index) in benefits"
-                :key="index"
-                class="flex items-start gap-3"
-              >
-                <i class="pi pi-check-circle text-green-500 mt-1"></i>
-                <div>
-                  <h3 class="font-semibold xl:!text-[12px]">{{ benefit.title }}</h3>
-                  <p class="text-gray-600 dark:text-gray-300 xl:!text-[11px]">
-                    {{ benefit.description }}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
+        <div class="">
           <!-- Right Column - Setup CTA -->
           <div class="bg-white dark:bg-[var(--p-surface-700)] p-6 rounded-lg shadow">
             <h2 class="xl:!text-[14px] !text-base font-semibold mb-4">

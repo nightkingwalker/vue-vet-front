@@ -118,7 +118,7 @@
       </ScrollPanel>
     </template>
     <template #grid="slotProps" v-else>
-      <ScrollPanel style="height: calc(72vh)" class="!overflow-y-auto !bg-transparent">
+      <ScrollPanel style="height: calc(68vh)" class="!overflow-y-auto !bg-transparent">
         <div
           v-if="slotProps.items && slotProps.items.length > 0"
           class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 p-3 !bg-transparent"
@@ -126,7 +126,7 @@
           <div
             v-for="(owner, index) in slotProps.items"
             :key="index"
-            class="p-3 border border-surface-500 bg-surface-300 rounded-lg hover:bg-surface-400 transition-all"
+            class="p-3 border border-[#c4c7c5] dark:!border-[#444746] clear-glass rounded-lg hover:!bg-[var(--p-surface-200)] transition-all shadow-md"
             :class="owner.status === 0 ? `bg-red-300` : ``"
           >
             <div class="flex flex-col gap-2">

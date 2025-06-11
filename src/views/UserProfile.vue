@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full bg-[var(--p-content-background)] p-8 rounded-lg mt-4">
+  <div class="w-full p-8 rounded-lg mt-4">
     <!-- User Profile Container -->
     <div
       class="grid grid-cols-2 gap-y-[10px] gap-x-[10px] lg:w-[70%] md:w-[80%] sm:w-full xl:w-[85%] 2xl:w-[75%] mx-auto"

@@ -522,7 +522,7 @@ const selectUser = (user) => {
   searchResults.value = []; // Clear search results
 };
 const sendInvite = async () => {
-  console.log(inviteRole.value);
+  // console.log(inviteRole.value);
   try {
     await axiosInstance.post(`/clinics/${clinicId}/invitations`, {
       email: inviteEmail.value,
@@ -530,7 +530,7 @@ const sendInvite = async () => {
     });
     toast.add({ severity: "success", detail: "Invitation sent!" });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     toast.add({ severity: "error", detail: error.response?.data?.message });
   }
 };

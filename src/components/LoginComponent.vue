@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center justify-center min-h-[90vh] mx-auto">
     <div
-      class="p-8 bg-white dark:bg-stone-900 shadow-xl rounded-2xl max-w-sm w-full relative overflow-hidden"
+      class="p-8 clear-glass shadow-xl rounded-2xl max-w-sm w-full relative overflow-hidden"
     >
       <!-- Header with paw decorations -->
       <div
@@ -38,6 +38,7 @@
               ></InputGroupAddon>
               <InputText
                 id="username"
+                :autocomplete="`vetapp-username`"
                 v-model="email"
                 aria-describedby="username-help"
                 :placeholder="$t('login.username')"
@@ -67,6 +68,7 @@
               ></InputGroupAddon>
               <InputText
                 v-model="password"
+                :autocomplete="`vetapp-password`"
                 id="password"
                 type="password"
                 :placeholder="$t('login.password')"
@@ -291,12 +293,14 @@
       <InputText
         v-model="newPassword"
         type="password"
+        :autocomplete="`vetapp-newPassword`"
         :placeholder="$t('login.new_password')"
         class="w-full"
       />
 
       <InputText
         v-model="confirmPassword"
+        :autocomplete="`vetapp-password`"
         type="password"
         :placeholder="$t('login.confirm_password')"
         class="w-full"
@@ -674,5 +678,14 @@ label.fa_code {
 .custom-otp-input:focus {
   outline: 0 none;
   border-bottom-color: var(--p-primary-color);
+}
+
+.xx {
+  color: white;
+  font-size: 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px) saturate(120%);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 </style>

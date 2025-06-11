@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full mt-4 xl:!text-[12px]">
+  <div class="w-full mt-4 xl:!text-[12px] flex items-center justify-center min-h-[80vh]">
     <Card
-      class="bg-[var(--p-surface-200)] dark:bg-[var(--p-surface-600)] rounded-lg p-6 max-w-2xl mx-auto"
+      class="!bg-[var(--p-surface-200)] dark:!bg-[var(--p-surface-600)] rounded-lg p-6 max-w-2xl mx-auto w-2/5 sm:w-full"
     >
       <template #title>
         <div class="flex items-center gap-3">
@@ -14,8 +14,8 @@
 
       <template #content>
         <div class="space-y-6">
-          <div class="bg-white dark:bg-[var(--p-surface-700)] p-4 rounded-lg shadow">
-            <div class="flex flex-col gap-4">
+          <div class="bg-white dark:bg-[var(--p-surface-700)] p-8 rounded-lg shadow">
+            <div class="flex flex-col gap-10">
               <FloatLabel>
                 <Select
                   v-model="selectedCountry"
@@ -58,7 +58,7 @@
             </div>
           </div>
 
-          <div class="flex flex-col sm:flex-row gap-3 justify-between pt-2 border-t">
+          <div class="flex flex-col sm:flex-row gap-3 justify-between pt-2 border-t mt-4">
             <Button
               :label="$t('whatsapp_number_verification.back')"
               severity="secondary"

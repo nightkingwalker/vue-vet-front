@@ -110,7 +110,7 @@
           <div
             v-for="(pet, index) in slotProps.items"
             :key="index"
-            class="p-3 border border-surface-500 bg-surface-300 rounded-lg hover:bg-surface-400 transition-all"
+            class="p-3 border border-surface-500 clear-glass rounded-lg hover:!bg-[var(--p-surface-200)] transition-all shadow-md"
           >
             <!-- Pet Header -->
             <div

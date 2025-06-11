@@ -14,7 +14,7 @@
       v-model:selection="selectedPets"
       showGridlines
       scrollable
-      scrollHeight="80vh"
+      scrollHeight="70vh"
       highlightOnSelect
       dataKey="id"
       @rowSelect="onSelectionChange"

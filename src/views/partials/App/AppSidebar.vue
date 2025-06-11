@@ -5,7 +5,7 @@
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
     :class="sidebarClasses"
-    class="sidebar-container !py-8 px-4 2xl:px-1 lg:px-1 scrollbar-hide scroll-smooth sm:text-sm 2xl:text-xs lg:text-sm !rounded-none h-[100vh] top-0 left-0 overflow-y-scroll"
+    class="sidebar-container clear-glass !py-8 px-4 2xl:px-1 lg:px-1 scrollbar-hide scroll-smooth sm:text-sm 2xl:text-xs lg:text-sm !rounded-none h-[100vh] top-0 left-0 overflow-y-scroll"
   >
     <template #start>
       <!-- Logo Slot -->
@@ -270,7 +270,16 @@ const handleMenuItemClick = () => {
   height: 40px !important;
   min-height: 40px !important;
 }
-
+.p-menu-item:not(.p-disabled) .p-menu-item-content:hover {
+  color: var(--p-menu-item-focus-color);
+  background: none !important;
+  border-radius: 0.5rem !important;
+}
+.p-menu-item:not(.p-disabled) .p-menu-item-content:not(.router-link-active):hover {
+  color: var(--p-menu-item-focus-color);
+  background: var(--p-menu-item-focus-background) !important;
+  border-radius: 0.5rem !important;
+}
 .p-menu {
   transition: width 0.3s ease, transform 0.3s ease;
   will-change: width;
@@ -288,6 +297,7 @@ const handleMenuItemClick = () => {
   background: var(--p-surface-600);
   color: var(--p-primary-contrast-color) !important;
   border-radius: 0.5rem !important;
+  overflow: hidden;
 }
 
 .dark .router-link-active {
@@ -440,6 +450,8 @@ const handleMenuItemClick = () => {
   margin: 0 !important;
   height: 40px !important;
   align-items: center !important;
+  border-radius: 0.5rem !important;
+  overflow: hidden;
 }
 
 /* Fix the avatar container */

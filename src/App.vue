@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-img-preset">
     <!-- Header Component -->
     <AppHeader
       :is-mobile="isMobile"
@@ -20,7 +20,10 @@
       />
 
       <!-- Main Content -->
-      <div class="container mx-auto mt-14">
+      <div
+        class="container mx-auto mt-14 min-h-[90vh] lg:h-[85vh] p-4 rounded-lg border border-[#c4c7c5] dark:!border-[#444746] overflow-hidden"
+        :class="authStore.isLoggedIn && route.path != '/login' ? `clear-glass` : ``"
+      >
         <router-view v-slot="{ Component, route }">
           <transition :name="route.meta.transition || 'fade'" mode="out-in">
             <div :key="route.path">
@@ -181,6 +184,7 @@ onMounted(() => {
   }, 5000);
   eventBus.on("show-toast", toast.add);
 });
+
 // Log current screen width in pixels
 function logActiveMediaQuery() {
   const width = window.innerWidth;

@@ -195,7 +195,7 @@
         isMobile
           ? 'w-full h-fit mx-auto mb-4'
           : 'w-1/5 min-w-[280px] h-[calc(100vh-100px)]',
-        'bg-white dark:bg-surface-600 border border-surface-200 dark:border-surface-700 rounded-xl shadow-sm p-4 flex flex-col gap-4',
+        'border-[1px] border-[#c4c7c5] dark:!border-[#444746] rounded-xl shadow-sm p-4 flex flex-col gap-4',
       ]"
     >
       <!-- Pet Information Card -->
@@ -1136,7 +1136,7 @@ onMounted(async () => {
   eventBus.on("themeChange", setCalendarTheme);
   try {
     const response = await axiosInstance.get("/google/calendar/status");
-    console.log(response.data);
+    // console.log(response.data);
     isGoogleSynced.value = response.data.connected;
   } catch (error) {
     console.error("Could not check Google Calendar status", error);

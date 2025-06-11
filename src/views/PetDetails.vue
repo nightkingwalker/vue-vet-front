@@ -1,5 +1,7 @@
 <template>
-  <div class="flex gap-2 h-[calc(100vh-60px)] overflow-y-auto w-full">
+  <div
+    class="flex gap-2 h-[calc(100vh-60px)] lg:h-[calc(100vh-110px)] overflow-y-auto w-full"
+  >
     <div
       class="w-1/4 h-fit bg-[var(--p-surface-100)] dark:bg-[var(--p-surface-800)] rounded-lg"
     >
@@ -296,7 +298,9 @@
         </template>
       </Card>
  -->
-      <Card class="w-full h-full shadow-lg border-0 rounded-xl !overflow-hidden">
+      <Card
+        class="w-full h-full shadow-lg rounded-xl !overflow-hidden border border-[#c4c7c5] dark:!border-[#444746]"
+      >
         <template #header>
           <div
             class="relative md:h-20 2xl:h-40 bg-gradient-to-br"
@@ -350,7 +354,7 @@
               <Tag
                 :value="pet.microchip_num"
                 icon="fas fa-microchip"
-                class="!text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-200"
+                class="!text-xs bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-200"
               />
             </template>
           </div>
@@ -365,7 +369,7 @@
 
           <div v-else class="space-y-2 mt-1">
             <!-- Owner Section -->
-            <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg">
+            <div class="bg-gray-200 dark:bg-gray-700 p-3 rounded-lg">
               <h3
                 class="text-xs font-medium text-gray-500 dark:text-gray-300 mb-2 flex items-center gap-2"
               >
@@ -382,7 +386,7 @@
             </div>
 
             <!-- Pet Details Section -->
-            <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg">
+            <div class="bg-gray-200 dark:bg-gray-700 p-3 rounded-lg">
               <h3
                 class="text-xs font-medium text-gray-500 dark:text-gray-300 mb-2 flex items-center gap-2"
               >
@@ -427,7 +431,7 @@
             </div>
 
             <!-- Medical Info Section -->
-            <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg">
+            <div class="bg-gray-200 dark:bg-gray-700 p-3 rounded-lg">
               <h3
                 class="text-xs font-medium text-gray-500 dark:text-gray-300 mb-2 flex items-center gap-2"
               >
@@ -476,7 +480,7 @@
             <!-- Additional Info -->
             <div
               v-if="pet.distinctive_marks"
-              class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg"
+              class="bg-gray-200 dark:bg-gray-700 p-3 rounded-lg"
             >
               <h3
                 class="text-xs font-medium text-gray-500 dark:text-gray-300 mb-2 flex items-center gap-2"
@@ -502,7 +506,7 @@
       </Card>
     </div>
     <div
-      class="w-3/4 min-h-full bg-[var(--p-surface-100)] dark:bg-[var(--p-surface-800)] rounded-[10px] overflow-hidden"
+      class="w-3/4 min-h-full bg-[var(--p-surface-100)] dark:bg-[var(--p-surface-800)] rounded-[10px] overflow-hidden border border-[#c4c7c5] dark:!border-[#444746]"
     >
       <DataTable
         showGridlines
@@ -1786,7 +1790,7 @@ const fetchPets = async () => {
     // Make the request using the axios instance with interceptors
     const response = await axiosInstance.get(`/pets/${petmicrochip.value}`);
     pet.value = response.data;
-    console.log(response.data.appointments);
+    // console.log(response.data.appointments);
     visits.value = response.data.appointments;
     medical_records.value = response.data.medical_records;
     pet.value.date_of_birth = formatDateForSubmission(pet.value.date_of_birth);

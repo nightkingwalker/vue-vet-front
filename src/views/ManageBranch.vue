@@ -449,7 +449,7 @@ const searchUsers = async () => {
     const response = await axios.get("/users/search", {
       params: { q: userSearchQuery.value },
     });
-    console.log(response.data);
+    // console.log(response.data);
     // Filter out users already in branch
     searchResults.value = response.data.filter(
       (user) => !users.value.some((u) => u.id === user.id)
@@ -473,7 +473,7 @@ const addUserToBranch = async () => {
       role: newUserRole.value,
       clinic_id: clinic.value.id,
     });
-    console.log(response);
+    // console.log(response);
     toast.add({
       severity: "success",
       summary: "Success",

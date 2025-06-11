@@ -503,7 +503,7 @@ const submitForm = async () => {
       const response = await axiosInstance.post("/pets", submissionData);
 
       // Emit success events
-      emit("submitted", response.data);
+      // console.log("submitted", response.data);
       eventBus.emit("show-toast", {
         severity: "success",
         summary: "Success",
@@ -512,7 +512,7 @@ const submitForm = async () => {
       });
       isSubmitting.value = false;
       // Navigate to pets list
-      await router.push(`/${route.params.ownerid}/pets`);
+      await router.push(`/pets/${response.data.microchip_num}`);
     } catch (error) {
       // Handle submission error
       eventBus.emit("show-toast", {
