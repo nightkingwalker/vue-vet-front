@@ -378,8 +378,10 @@ import { useI18n } from "vue-i18n";
 import Cookies from "js-cookie";
 import { ar } from "date-fns/locale"; // Arabic locale
 // import RouterLink from "primevue/routerlink";
+import router from "@/router";
 import axiosInstance from "@/axios"; // Ensure this is correctly set up with baseURL
 import { useDevice } from "@/composables/useDevice";
+import { useToast } from "primevue/usetoast";
 const route = useRoute();
 
 const { isMobile, mobileMenuVisible } = useDevice();
@@ -395,7 +397,7 @@ const activeDate = ref("");
 const isNewApointmentVisible = ref(false);
 const isGoogleSynced = ref(false);
 const isSyncing = ref(false);
-
+const toast = useToast();
 const scrollController = createScrollControllerPlugin({
   initialScroll: "12:00",
 });
@@ -445,22 +447,36 @@ const handleGoogleSync = async () => {
       // Disconnect logic
       await axiosInstance.delete("/google/calendar/disconnect");
       isGoogleSynced.value = false;
-      toast.add({
+      eventBus.emit("show-toast", {
         severity: "success",
         summary: t("calendar.google_disconnected"),
         life: 3000,
       });
+      // showToast("success", t("calendar.google_disconnected"));
     } else {
-      // Connect logic
-      await router.push("/google/connect");
+      // Connect logic - get auth URL from backend first
+      // const response = await axiosInstance.get("/google/connect");
+      const { data } = await axiosInstance.get("/google/connect");
+      // console.log("response", response);
+      // Store current route to return after OAuth flow
+      localStorage.setItem("preAuthRoute", router.currentRoute.value.fullPath);
+      // console.log(data.auth_url);
+      // const printWindow = window.open(
+      //   data.auth_url,
+      //   "TEST",
+      //   "width=500,height=600,left=100,top=100"
+      // );
+      // Redirect to Google's OAuth page
+      window.location.href = data.auth_url;
     }
   } catch (error) {
-    toast.add({
+    console.log(error);
+    eventBus.emit("show-toast", {
       severity: "error",
       summary: t("calendar.google_sync_error"),
-      detail: error.response?.data?.message || error.message,
-      life: 5000,
+      life: 3000,
     });
+    // showToast("error", t("calendar.google_sync_error"), error);
   } finally {
     isSyncing.value = false;
   }
@@ -1115,14 +1131,14 @@ watchEffect(
   (query) => {
     if (query.google_sync_success) {
       isGoogleSynced.value = true;
-      toast.add({
+      eventBus.emit("show-toast", {
         severity: "success",
         summary: t("calendar.google_sync_connected"),
         life: 3000,
       });
     }
     if (query.google_sync_error) {
-      toast.add({
+      eventBus.emit("show-toast", {
         severity: "error",
         summary: t("calendar.google_sync_error"),
         life: 5000,
@@ -1131,17 +1147,37 @@ watchEffect(
   }
 );
 
+const checkSyncStatus = async () => {
+  try {
+    const { data } = await axiosInstance.get("/google/calendar/status");
+    isGoogleSynced.value = data.connected;
+    console.log("isGoogleSynced", isGoogleSynced.value);
+
+    if (data.needs_reconnect) {
+      eventBus.emit("show-toast", {
+        severity: "warn",
+        summary: t("calendar.google_reconnect_warning"),
+        life: 5000,
+      });
+      // showToast("warn", t("calendar.google_reconnect_warning"));
+    }
+  } catch (error) {
+    console.error("Sync status check failed", error);
+  }
+};
+
 /*end testing calendar*/
 onMounted(async () => {
   eventBus.on("themeChange", setCalendarTheme);
-  try {
-    const response = await axiosInstance.get("/google/calendar/status");
-    // console.log(response.data);
-    isGoogleSynced.value = response.data.connected;
-  } catch (error) {
-    console.error("Could not check Google Calendar status", error);
-  }
-
+  // try {
+  //   const response = await axiosInstance.get("/google/calendar/status");
+  //   // console.log(response.data);
+  //   isGoogleSynced.value = response.data.connected;
+  // } catch (error) {
+  //   console.error("Could not check Google Calendar status", error);
+  // }
+  checkSyncStatus();
+  const interval = setInterval(checkSyncStatus, 300000);
   initializeCalendarTheme();
   fetchAppointments();
 });

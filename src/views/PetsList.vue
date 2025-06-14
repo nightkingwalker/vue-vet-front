@@ -67,9 +67,7 @@
             <i class="fa-solid fa-paw ltr:mr-2 rtl:ml-2"></i> {{ $t("pets.title") }}
           </h2>
           <span class="p-input-icon-left lg:!text-[14px] text-sm">
-            <InputGroup
-              class="!text-gray-800 flex rounded-md overflow-hidden border !border-gray-400"
-            >
+            <InputGroup class="!text-gray-800 flex rounded-md overflow-hidden !border-0">
               <InputGroupAddon
                 class="!text-gray-800 px-4 flex flex-col item-center justify-center"
               >

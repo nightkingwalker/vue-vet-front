@@ -1,307 +1,14 @@
 <template>
   <div
-    class="flex gap-2 h-[calc(100vh-60px)] lg:h-[calc(100vh-110px)] overflow-y-auto w-full"
+    class="flex flex-wrap gap-2 h-[calc(100vh-60px)] lg:h-[calc(100vh-110px)] overflow-y-auto w-full"
   >
     <div
-      class="w-1/4 h-fit bg-[var(--p-surface-100)] dark:bg-[var(--p-surface-800)] rounded-lg"
+      class="quarter-lg w-[calc(25%-0.25rem)] h-fit bg-[var(--p-surface-100)] dark:bg-[var(--p-surface-800)] rounded-lg"
     >
-      <!--       <Card class="w-full">
-        <template #header>
-          <Button
-            @click="router.go(-1)"
-            class="p-button p-component p-button-icon-only !w-6 h-6 !text-xs m-2"
-            icon="pi pi-arrow-left !text-xs"
-            v-tooltip.top="{
-              value: $t('pet_details.go_back'),
-              pt: {
-                arrow: {
-                  style: {
-                    borderTopColor: 'var(--p-primary-color)',
-                  },
-                },
-                text:
-                  '!bg-[var(--p-primary-color)] !font-thin 2xl:!text-lg lg:!text-xs shadow-md',
-              },
-            }"
-          />
-
-          <div class="flex justify-center mt-8"><i class="fas fa-paw text-3xl"></i></div>
-        </template>
-        <template #title>
-          <Skeleton v-if="loading" width="12rem" height="2rem" />
-          <div v-else>{{ pet.name }}</div>
-        </template>
-        <template #subtitle>
-          <div class="flex gap-4">
-            <Skeleton v-if="loading" width="12rem" height="2rem" />
-            <Chip
-              v-else
-              v-tooltip.top="{
-                value: $t('pet_details.microchip'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
-                  },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
-                },
-              }"
-              class="lg:!text-xs !text-sm border"
-            >
-              <i class="fas fa-microchip"></i> {{ pet.microchip_num }}
-            </Chip>
-          </div>
-        </template>
-        <template #content>
-          <div v-if="loading">
-            <Skeleton class="mt-2" width="12rem" height="2rem" />
-            <Skeleton width="12rem" height="2rem" />
-            <Skeleton class="mt-2" width="9rem" height="2rem" />
-            <Skeleton class="mt-2" width="10rem" height="2rem" />
-            <Skeleton class="mt-2" width="5rem" height="2rem" />
-            <Skeleton class="mt-2" width="5rem" height="2rem" />
-          </div>
-          <div v-else class="flex flex-wrap gap-1">
-            <Chip class="lg:!text-xs text-sm mt-2 border">
-              <router-link
-                :to="`/` + pet.owner.id + `/pets`"
-                v-tooltip.top="{
-                  value: $t('pet_details.view_patients'),
-                  pt: {
-                    arrow: {
-                      style: {
-                        borderTopColor: 'var(--p-primary-color)',
-                      },
-                    },
-                    text:
-                      '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
-                  },
-                }"
-                ><i class="fas fa-users"></i> {{ pet.owner.name }}
-                <i class="pi pi-external-link !text-[0.6rem] text-gray-500"></i>
-              </router-link>
-            </Chip>
-
-            <Chip class="lg:!text-xs text-sm mt-2 border">
-              <i :class="getIconClass(pet.species)"></i>
-              {{ $t(`pet_details.species.${getSpeciesValue(pet.species)}`) }}
-            </Chip>
-            <Chip
-              class="lg:!text-xs text-sm mt-2 border"
-              v-tooltip.top="{
-                value: $t('pet_details.breed'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
-                  },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
-                },
-              }"
-            >
-              {{ pet.breed }}
-            </Chip>
-            <Chip
-              class="lg:!text-xs text-sm mt-2 border"
-              v-if="pet.color !== null"
-              v-tooltip.top="{
-                value: $t('pet_details.color'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
-                  },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
-                },
-              }"
-            >
-              <i class="fa-solid fa-palette"></i> {{ pet.color }}
-            </Chip>
-            <Chip
-              class="lg:!text-xs text-sm mt-2 border"
-              v-if="pet.behaviour !== null"
-              v-tooltip.top="{
-                value: $t('pet_details.behavior') + ': ' + pet.behaviour,
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
-                  },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
-                },
-              }"
-            >
-              <i class="fa-solid fa-face-angry"></i>
-              {{ pet.behaviour }}
-            </Chip>
-            <Chip class="lg:!text-xs text-sm mt-2 border">
-              <i
-                class="fa-solid fa-venus !text-pink-600"
-                v-if="pet.gender === `Female`"
-              ></i>
-              <i class="fa-solid fa-mars !text-blue-600" v-else></i>
-              {{ $t(`pet_details.${pet.gender}`) }}
-            </Chip>
-            <Chip
-              class="lg:!text-xs text-sm mt-2 p-button-success p-button-outlined"
-              v-if="pet.neutered === 'Y'"
-              v-tooltip.top="{
-                value: $t('pet_details.neutered'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
-                  },
-                  text: '!bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md ',
-                },
-              }"
-            >
-              {{
-                pet.gender === "Male"
-                  ? $t("pet_details.neutered")
-                  : $t("pet_details.neutered")
-              }}
-            </Chip>
-            <Chip
-              class="lg:!text-xs text-sm mt-2 p-button-danger p-button-outlined"
-              v-else
-              v-tooltip.top="{
-                value: $t('pet_details.neutered'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
-                  },
-                  text: '!bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md ',
-                },
-              }"
-              >{{
-                pet.gender === "Male"
-                  ? $t("pet_details.not_neutered")
-                  : $t("pet_details.not_spayed")
-              }}</Chip
-            >
-            <Chip
-              class="lg:!text-xs text-sm mt-2 border"
-              v-tooltip.top="{
-                value: $t('pet_details.age'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
-                  },
-                  text: '!bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md ',
-                },
-              }"
-            >
-              <i class="fa-solid fa-cake-candles"></i>
-              {{
-                pet.deceased === "N" ? computeAge(pet.date_of_birth) : pet.date_of_birth
-              }}
-            </Chip>
-            <Chip
-              class="lg:!text-xs text-sm mt-2 border"
-              v-tooltip.top="{
-                value: $t('pet_details.birth_date'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
-                  },
-                  text: '!bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md ',
-                },
-              }"
-            >
-              <i class="fa-solid fa-cake-candles"></i>
-              {{ pet.deceased === "N" ? pet.date_of_birth : pet.date_of_birth }}
-            </Chip>
-            <Chip
-              class="lg:!text-xs text-sm mt-2"
-              :class="
-                `` + pet.deceased === 'Y'
-                  ? `!bg-black !text-white`
-                  : `!bg-green-500 !text-white`
-              "
-            >
-              <i v-if="pet.deceased === 'Y'" class="fa-solid fa-heart-crack"></i>
-              <i v-else class="fa-solid fa-heart"></i>
-              {{
-                pet.deceased === "Y"
-                  ? $t("pet_details.deceased")
-                  : $t("pet_details.alive")
-              }}
-              {{
-                pet.deceased === "Y" && pet.date_of_morta !== null
-                  ? ": " + pet.date_of_morta
-                  : ": YES"
-              }}
-            </Chip>
-            <Chip
-              v-if="pet.allergies !== null"
-              class="lg:!text-xs text-sm mt-2 p-button-danger p-button-outlined"
-              v-tooltip.top="{
-                value: $t('pet_details.allergies') + ': ' + pet.allergies,
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
-                  },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
-                },
-              }"
-              ><i class="fas fa-disease"></i> {{ pet.allergies }}
-            </Chip>
-            <Chip
-              class="lg:!text-xs text-sm mt-2 cursor-pointer"
-              v-tooltip.top="{
-                value: $t('pet_details.distinctive_marks'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
-                  },
-                  text: '!bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md ',
-                },
-              }"
-            >
-              {{ pet.distinctive_marks }}
-            </Chip>
-            <Button
-              type="button"
-              icon="fa-solid fa-pencil"
-              :label="$t('pet_details.edit')"
-              v-tooltip.bottom="$t('pet_details.edit')"
-              class="lg:!text-xs mt-2 cursor-pointer !bg-[var(--p-primary-color)] !font-thin !text-xs shadow-md"
-              @click="editPetDetails"
-            />
-          </div>
-        </template>
-        <template #footer>
-          <div class="flex gap-4 mt-1">
-
-          </div>
-        </template>
-      </Card>
- -->
       <Card
-        class="w-full h-full shadow-lg rounded-xl !overflow-hidden border border-[#c4c7c5] dark:!border-[#444746]"
+        class="w-full h-full shadow-lg rounded-xl !overflow-hidden border border-[#c4c7c5] dark:!border-[#444746] flex"
       >
-        <template #header>
+        <template #header :class="`xs:!w-1/4`">
           <div
             class="relative md:h-20 2xl:h-40 bg-gradient-to-br"
             :class="
@@ -330,8 +37,8 @@
           </div>
         </template>
 
-        <template #title>
-          <div class="flex items-center justify-between">
+        <template #title :class="`xs:!w-1/3`">
+          <div class="flex items-center justify-between sm:!w-1/3">
             <Skeleton v-if="loading" width="12rem" height="2rem" />
             <template v-else>
               <h2 class="text-xl font-semibold text-gray-800 dark:text-white">
@@ -347,7 +54,7 @@
           </div>
         </template>
 
-        <template #subtitle>
+        <template #subtitle :class="`sm:!w-1/3`">
           <div class="flex items-center gap-2 mt-1">
             <Skeleton v-if="loading" width="12rem" height="1.5rem" />
             <template v-else>
@@ -506,7 +213,7 @@
       </Card>
     </div>
     <div
-      class="w-3/4 min-h-full bg-[var(--p-surface-100)] dark:bg-[var(--p-surface-800)] rounded-[10px] overflow-hidden border border-[#c4c7c5] dark:!border-[#444746]"
+      class="quarter-lg w-[calc(75%-0.25rem)] min-h-full bg-[var(--p-surface-100)] dark:bg-[var(--p-surface-800)] rounded-[10px] overflow-hidden border border-[#c4c7c5] dark:!border-[#444746]"
     >
       <DataTable
         showGridlines

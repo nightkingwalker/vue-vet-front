@@ -21,8 +21,11 @@
 
       <!-- Main Content -->
       <div
-        class="container mx-auto mt-14 min-h-[90vh] lg:h-[85vh] p-4 rounded-lg border border-[#c4c7c5] dark:!border-[#444746] overflow-hidden"
-        :class="authStore.isLoggedIn && route.path != '/login' ? `clear-glass` : ``"
+        class="container mx-auto mt-14 min-h-[92vh] lg:h-[85vh] md:p-4 rounded-lg border border-[#c4c7c5] dark:!border-[#444746] overflow-hidden"
+        :class="{
+          'clear-glass ': authStore.isLoggedIn && route.path != '/login',
+          '!border-0 ': !authStore.isLoggedIn && route.path === '/login',
+        }"
       >
         <router-view v-slot="{ Component, route }">
           <transition :name="route.meta.transition || 'fade'" mode="out-in">
@@ -283,6 +286,9 @@ button:hover {
 }
 /* Extra small devices (phones, 576px and down):lang(ar) */
 @media (max-width: 575.98px) {
+  .quarter-lg {
+    width: 100%;
+  }
   i.sx__chevron.sx__chevron--next,
   i.sx__chevron.sx__chevron--previous {
     font-size: 0 !important;
@@ -297,6 +303,9 @@ button:hover {
 
 /* Small devices (portrait tablets and large phones, 576px and up):lang(ar) */
 @media (min-width: 576px) and (max-width: 767.98px) {
+  .quarter-lg {
+    width: 100%;
+  }
   i.sx__chevron.sx__chevron--next,
   i.sx__chevron.sx__chevron--previous {
     font-size: 0 !important;
@@ -307,10 +316,17 @@ button:hover {
   :lang(ar) *:not(i) {
     font-size: 11px !important;
   }
+  .p-menu.p-component.fixed {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
 }
 
 /* Medium devices (landscape tablets, 768px and up):lang(ar) */
 @media (min-width: 768px) and (max-width: 991.98px) {
+  .quarter-lg {
+    width: 100%;
+  }
   i.sx__chevron.sx__chevron--next,
   i.sx__chevron.sx__chevron--previous {
     font-size: 0 !important;
@@ -321,10 +337,76 @@ button:hover {
   :lang(ar) *:not(i) {
     font-size: 12px !important;
   }
+  .p-menu.p-component.fixed {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
 }
 
 /* Large devices (laptops/desktops, 992px and up):lang(ar) */
 @media (min-width: 992px) and (max-width: 1199.98px) {
+  .quarter-lg {
+    width: 100%;
+  }
+  .quarter-lg .p-card.p-component {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+  .quarter-lg .p-card.p-component .p-card-header {
+    width: calc(25% - 10px);
+  }
+  .quarter-lg .p-card.p-component .p-card-header > div {
+    height: 100%;
+  }
+  .p-menu.p-component.fixed {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .quarter-lg .p-card.p-component .p-card-body {
+    width: calc(75% - 5px);
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .quarter-lg .p-card.p-component .p-card-body .p-card-caption,
+  .quarter-lg .p-card.p-component .p-card-body .p-card-content,
+  .quarter-lg .p-card.p-component .p-card-body .p-card-footer {
+    /*flex-basis: 33%; /* Initial width */
+    flex-grow: 1; /* Can grow if needed */
+  }
+  .quarter-lg .p-card.p-component .p-card-body .p-card-caption {
+    order: 0;
+    width: 24%;
+  }
+  .quarter-lg .p-card.p-component .p-card-body .p-card-caption .card-title {
+    flex-direction: column;
+  }
+  .quarter-lg .p-card.p-component .p-card-body .p-card-content {
+    order: 1;
+    width: 74%;
+  }
+  .quarter-lg .p-card.p-component .p-card-body .p-card-content > div {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    display: flex;
+    justify-content: start;
+    align-content: flex-start;
+    gap: 10px;
+  }
+  .quarter-lg .p-card.p-component .p-card-body .p-card-content > div > div {
+    width: 33%;
+    /* flex-direction: column; */
+    margin-top: 0;
+  }
+  .quarter-lg .p-card.p-component .p-card-body .p-card-footer {
+    order: 3;
+    width: 100%;
+  }
+  .container {
+    width: 89vw;
+  }
   .text-6xl {
     font-size: 3.75rem !important;
   }
@@ -339,6 +421,9 @@ button:hover {
 
 /* Extra large devices (large laptops and desktops, 1200px and up):lang(ar) */
 @media (min-width: 1200px) {
+  .container {
+    width: 90vw;
+  }
   .text-6xl {
     font-size: 3.75rem !important;
   }
