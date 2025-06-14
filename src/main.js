@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 order: 'tailwind-base, primevue, tailwind-utilities'
             }
         },
-        // ripple: true
+        ripple: true
     });
     app.directive('focustrap', FocusTrap);
     // app.use(VueReCaptcha, {
@@ -177,8 +177,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     // })
     app.use(createPinia())
     app.use(router);
-    // app.directive("ripple", Ripple);
-    app.directive('ripple', Ripple);
+    app.directive("ripple", Ripple);
+    // app.directive('ripple', Ripple);
     app.directive("tooltip", Tooltip);
     app.directive('animateonscroll', AnimateOnScroll);
     app.use(ConfirmationService);

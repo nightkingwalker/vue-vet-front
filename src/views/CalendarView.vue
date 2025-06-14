@@ -1197,10 +1197,10 @@ onMounted(async () => {
   justify-content: center;
   overflow: hidden;
   position: relative;
-  color: var(--p-primary-contrast-color);
-  background: var(--border-color);
-  border: 1px solid var(--p-primary-color);
-  padding: 0.5rem 0.7rem;
+  /* color: var(--p-primary-contrast-color); */
+  /* background: var(--border-color); */
+  /* border: 1px solid var(--p-primary-color); */
+  /* padding: 0.5rem 0.7rem; */
   font-size: 1rem;
   font-family: inherit;
   font-feature-settings: inherit;

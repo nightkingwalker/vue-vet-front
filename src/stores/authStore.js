@@ -146,7 +146,7 @@ export const useAuthStore = defineStore("auth", {
       // Cookies.remove("language");
       Cookies.remove("shortcuts");
       Cookies.remove("M3K8g2387BahBaqyjDe6");
-      localStorage.removeItem('theme');
+      // localStorage.removeItem('theme');
       document.documentElement.classList.remove('dark');
 
       router.push("/login");

@@ -21,7 +21,7 @@
       <router-link
         to="/profile"
         v-ripple
-        class="p-menu-item-link relative overflow-hidden w-full border-0 bg-transparent flex items-center hover:bg-surface-100 dark:hover:bg-surface-800 rounded-none cursor-pointer transition-colors duration-200 h-[40px] min-w-[40px]"
+        class="p-ripple p-menu-item-link relative overflow-hidden w-full border-0 bg-transparent flex items-center hover:bg-surface-100 dark:hover:bg-surface-800 rounded-none cursor-pointer transition-colors duration-200 h-[40px] min-w-[40px]"
       >
         <Avatar
           icon="pi pi-user"
@@ -50,7 +50,7 @@
     <template #item="{ item, props }">
       <RouterLink
         v-ripple
-        class="flex items-center"
+        class="flex items-center p-ripple"
         v-bind="props.action"
         :to="item.route || ''"
         @click="handleMenuItemClick"
