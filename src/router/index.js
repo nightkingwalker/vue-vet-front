@@ -9,7 +9,7 @@ const router = createRouter({
         // component: LoginView,
         component: () =>
             import('@/components/LoginComponent.vue'),
-        meta: { allowSessionTimeout: false }
+        meta: { title: 'Login', allowSessionTimeout: false }
     },
     {
         path: '/account',
@@ -22,24 +22,24 @@ const router = createRouter({
         name: 'Home',
         component: () =>
             import('@/views/CalendarView.vue'),
-        meta: { requiresAuth: true, allowSessionTimeout: true }
+        meta: { title: 'Calendar', requiresAuth: true, allowSessionTimeout: true }
     },
     {
         path: '/owners',
         name: 'Owners',
         component: () =>
             import('@/views/OwnersList.vue'),
-        meta: { allowSessionTimeout: true }
+        meta: { title: 'Owners List', allowSessionTimeout: true }
     },
 
     {
         path: '/:ownerid/pets',
         name: 'OwnerPets',
-        meta: { transition: 'slide-right' },
+        meta: { title: 'Owner Pets', transition: 'slide-right', allowSessionTimeout: true },
         component: () =>
             import('@/views/OwnerPets.List.vue'),
         props: true, // This passes the route params as props to the component,
-        meta: { allowSessionTimeout: true }
+        // meta: { title: 'About Page' }
     },
     {
         path: '/new-owner',
@@ -48,41 +48,41 @@ const router = createRouter({
             import('@/views/AddNewOwner.vue'),
 
         props: true, // This passes the route params as props to the component,
-        meta: { allowSessionTimeout: true }
+        meta: { title: 'New Owner', allowSessionTimeout: true }
     },
         {
             path: '/clinics',
             name: 'Clinics',
             component: () =>
                 import('@/views/ListUserClinics.vue'),
-            meta: { allowSessionTimeout: true }
+            meta: { title: 'Clinics', allowSessionTimeout: true }
         },
         {
             path: '/:clinic/manage',
             name: 'Manage Clinic',
-            meta: { transition: 'slide-right' },
+            meta: { title: 'Manage Clinic', transition: 'slide-right', allowSessionTimeout: true },
             component: () =>
                 import('@/views/ManageClinic.vue'),
             props: true, // This passes the route params as props to the component,
-            meta: { allowSessionTimeout: true }
+            // meta: { title: 'About Page', allowSessionTimeout: true }
         },
         {
             path: '/clinics/:clinic/branches',
             name: 'Manage Clinic Branches',
-            meta: { transition: 'slide-right' },
+            meta: { title: 'Manage Clinic Branches', transition: 'slide-right', allowSessionTimeout: true },
             component: () =>
                 import('@/views/ListClinicBranches.vue'),
             props: true, // This passes the route params as props to the component,
-            meta: { allowSessionTimeout: true }
+            // meta: { title: 'About Page', allowSessionTimeout: true }
         },
         {
             path: '/branches/:branch/users',
             name: 'Branch Users',
-            meta: { transition: 'slide-right' },
+            meta: { title: 'Manage Branch Users', transition: 'slide-right', allowSessionTimeout: true },
             component: () =>
                 import('@/views/ManageBranch.vue'),
             props: true, // This passes the route params as props to the component,
-            meta: { allowSessionTimeout: true }
+            // meta: { title: 'About Page', allowSessionTimeout: true }
         },
 
     {
@@ -90,76 +90,76 @@ const router = createRouter({
         name: 'Pets',
         component: () =>
             import('@/views/PetsList.vue'),
-        meta: { allowSessionTimeout: true }
+        meta: { title: 'Patient List', allowSessionTimeout: true }
     },
     {
         path: '/pets/:petmicrochip',
         name: 'PetDetails',
         component: () =>
             import('@/views/PetDetails.vue'),
-        meta: { allowSessionTimeout: true }
+        meta: { title: 'Pet Details', allowSessionTimeout: true }
     }, {
         path: '/new-pet',
         name: 'AddNewPet',
         component: () =>
             import('@/views/AddNewPet.vue'),
-        meta: { allowSessionTimeout: true }
+        meta: { title: 'Add New Pet', allowSessionTimeout: true }
     },
     {
         path: '/about',
         name: 'About',
         component: () =>
             import('@/views/AboutView.vue'),
-        meta: { allowSessionTimeout: true }
+        meta: { title: 'About Page', allowSessionTimeout: true }
     },
     {
         path: '/profile',
         name: 'Profile',
         component: () =>
             import('@/views/UserProfile.vue'),
-        meta: { allowSessionTimeout: true }
+        meta: { title: 'User Profile', allowSessionTimeout: true }
     },
     {
         path: '/add-inventory-food',
         name: 'New Inventory',
         component: () =>
             import('@/views/InventoryItemsList.vue'),
-        meta: { allowSessionTimeout: true }
+        meta: { title: 'Add New Inventory | Food', allowSessionTimeout: true }
     },
     {
         path: '/add-inventory-toys',
         name: 'New Toys Inventory',
         component: () =>
             import('@/views/InventoryItemsList.vue'),
-        meta: { allowSessionTimeout: true }
+        meta: { title: 'Add New Inventory | Toys', allowSessionTimeout: true }
     },
     {
         path: '/add-inventory-pharmaceutical',
         name: 'New Pharmaceutical Inventory',
         component: () =>
             import('@/views/InventoryItemsList.vue'),
-        meta: { allowSessionTimeout: true }
+        meta: { title: 'Add New Inventory | Pharmaceutical', allowSessionTimeout: true }
     },
     {
         path: '/add-inventory-grooming',
         name: 'New Grooming Inventory',
         component: () =>
             import('@/views/InventoryItemsList.vue'),
-        meta: { allowSessionTimeout: true }
+        meta: { title: 'Add New Inventory | Grooming', allowSessionTimeout: true }
     },
     {
         path: '/add-inventory-treatment',
         name: 'New Treatment Inventory',
         component: () =>
             import('@/views/InventoryItemsList.vue'),
-        meta: { allowSessionTimeout: true }
+        meta: { title: 'Add New Inventory | Treatment ', allowSessionTimeout: true }
     },
     {
         path: '/invoices',
         name: 'Invoice List',
         component: () =>
             import('@/views/InvoiceList.vue'),
-        meta: { allowSessionTimeout: true }
+        meta: { title: 'Invoices', allowSessionTimeout: true }
     },
     {
         path: '/settings',
@@ -167,7 +167,7 @@ const router = createRouter({
         component: () =>
             import('@/views/WhatsAppOnboardingLanding.vue'),
         // import('@/views/Settings.vue'),
-        meta: { allowSessionTimeout: true, requiresAuth: true }
+        meta: { title: 'Settings', allowSessionTimeout: true, requiresAuth: true }
     },
         {
             path: '/reset-password',
@@ -184,13 +184,13 @@ const router = createRouter({
         //     name: 'Shortcuts',
         //     component: () =>
         //         import('@/views/Shortcuts.vue'),
-        //     meta: { allowSessionTimeout: true }
+        //     meta: { title: 'About Page',allowSessionTimeout: true }
         // },
         {
             path: '/accept-invite',
             name: 'AcceptInvite',
             component: () => import('@/views/AcceptInvite.vue'),
-            meta: { public: true } // If using auth guards
+            meta: { title: 'Accept Invite', public: true } // If using auth guards
         },
         {
         path: '/reports',
@@ -200,15 +200,15 @@ const router = createRouter({
         children: [
             {
                 path: 'stock-movement', component: () => import('@/views/partials/Reports/StockMovement.vue'),
-                meta: { allowSessionTimeout: true }
+                meta: { title: 'Stock Movement Reports', allowSessionTimeout: true }
             },
             {
                 path: 'patients', component: () => import('@/views/partials/Reports/Patients.vue'),
-                meta: { allowSessionTimeout: true }
+                meta: { title: 'Patient Visits Reports', allowSessionTimeout: true }
             },
             // {
             //     path: 'sales', component: () => import('@/views/partials/Reports/Sales.vue'),
-            //     meta: { allowSessionTimeout: true }
+            //     meta: { title: 'About Page',allowSessionTimeout: true }
             // },
         ]
     },
@@ -216,7 +216,8 @@ const router = createRouter({
         path: '/whatsapp/onboarding',
         name: 'whatsapp-onboarding',
         component: () => import('@/views/WhatsAppOnboardingLanding.vue'),
-            meta: {
+        meta: {
+            title: 'WhatsApp Integration', 
                 requiresAuth: true,
                 breadcrumb: 'WhatsApp Setup',
                 feature: 'whatsapp_integration'
@@ -229,6 +230,7 @@ const router = createRouter({
             component: () => import('@/views/WahaNumVerifiy.vue'),
             // component: WhatsAppNumberVerification,
             meta: {
+                title: 'WhatsApp Number Verification', 
                 requiresAuth: true,
                 breadcrumb: 'Number Verification',
                 feature: 'whatsapp_integration'
@@ -239,6 +241,7 @@ const router = createRouter({
             name: 'whatsapp-qr-scanner',
             component: () => import('@/views/WhatsAppQRScanner.vue'),
             meta: {
+                title: 'WhatsApp Login', 
                 requiresAuth: true,
                 breadcrumb: 'QR Connection',
                 feature: 'whatsapp_integration'
@@ -257,7 +260,8 @@ const router = createRouter({
         return { top: 0 }
     },
 });
-
+const app_title = import.meta.env.VITE_APP_TITLE;
+console.log(app_title)
 router.beforeEach((to, from, next) => {
     const authStore = useAuthStore();
     if (to.meta.requiresAuth && !authStore.isLoggedIn) {
@@ -269,5 +273,7 @@ router.beforeEach((to, from, next) => {
         next();
     }
 });
-
+router.afterEach((to) => {
+    document.title = to.meta.title + " | " + import.meta.env.VITE_APP_TITLE || 'Default Title';
+});
 export default router;

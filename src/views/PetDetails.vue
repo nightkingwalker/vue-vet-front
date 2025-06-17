@@ -886,7 +886,7 @@
       }"
       :medical_record_id="medical_record_id"
       @showAddCaseHistoryModal="showAddCaseHistoryModal"
-      @CaseHistoryUpdated="handleCaseHistory"
+      @PhysicalExaminationAdded="handlePhysicalExaminationAdded"
       @close-dialog="isEditTestResultsVisible = false"
     />
     <template #footer> </template>
@@ -1133,7 +1133,14 @@ const handleMedicalImageUpdated = () => {
 };
 const handlePhysicalExamination = () => {
   isPhysicalExamination.value = false;
-  eventBus.emit("PhysicalExaminationUpdatedSuccessfully");
+  fetchPets();
+  // eventBus.emit("PhysicalExaminationUpdatedSuccessfully");
+};
+const handlePhysicalExaminationAdded = () => {
+  isAddPhysicalExamination.value = false;
+  // isPhysicalExamination.value = false;
+  fetchPets();
+  eventBus.emit("PhysicalExaminationAddedSuccessfully");
 };
 const handleTestResultUpdated = () => {
   isEditTestResultsVisible.value = false;

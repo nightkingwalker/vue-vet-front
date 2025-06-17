@@ -19,6 +19,8 @@ import ConfirmDialog from 'primevue/confirmdialog';
 // import { VueReCaptcha } from 'vue-recaptcha-v3'
 import FocusTrap from 'primevue/focustrap';
 import AnimateOnScroll from 'primevue/animateonscroll';
+// import 'primevue/resources/primevue.min.css' // Load all styles upfront
+
 import {
     processQueue,
     addToQueue,

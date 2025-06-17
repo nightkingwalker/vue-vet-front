@@ -1182,7 +1182,7 @@ onMounted(async () => {
   fetchAppointments();
 });
 </script>
-<style>
+<style scooped>
 .sx-vue-calendar-wrapper {
   width: 1200px;
   max-width: 100vw;

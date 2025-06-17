@@ -54,11 +54,15 @@
         </div>
       </fieldset>
       <div class="flex justify-end">
-        <Button
+        <!-- <Button
           type="submit"
           class="mt-4"
           :label="$t('add_test_result.buttons.submit')"
-        />
+        /> -->
+        <Button type="submit" :disabled="isSubmitting ? true : false">
+          <i class="fa-solid fa-spinner fa-spin" v-if="isSubmitting"></i>
+          <span v-else>{{ $t("add_test_result.buttons.submit") }}</span>
+        </Button>
       </div>
     </form>
   </div>
@@ -84,7 +88,7 @@ const props = defineProps({
     required: true,
   },
 });
-
+const isSubmitting = ref(false);
 const test = ref({
   medical_record_id: props.medical_record_id,
   test_type: "",
@@ -100,6 +104,7 @@ const removeResult = (index) => {
 };
 
 const submitForm = async () => {
+  if (isSubmitting.value) return;
   const formattedResults = test.value.results
     .filter((result) => result.label && result.value)
     .map((result) => `"${result.label}: ${result.value}"`)
@@ -112,6 +117,7 @@ const submitForm = async () => {
   };
 
   try {
+    isSubmitting.value = true;
     const response = await axiosInstance.post("/test-results", submissionData);
     eventBus.emit("show-toast", {
       severity: "success",
@@ -119,6 +125,7 @@ const submitForm = async () => {
       detail: t("add_test_result.toast.success"),
       life: 5000,
     });
+    isSubmitting.value = false;
     emit("TestResultAdded", response.data);
   } catch (error) {
     eventBus.emit("show-toast", {
@@ -127,6 +134,7 @@ const submitForm = async () => {
       detail: t("add_test_result.toast.error"),
       life: 5000,
     });
+    isSubmitting.value = false;
   }
 };
 </script>

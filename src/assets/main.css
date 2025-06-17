@@ -39,7 +39,9 @@
     background-color: var(--p-surface-300);
     border-radius: 5px;
 }
-
+.dark .p-select-label{
+    color: var(--p-select-color) !important;
+}
 
 /* Handle */
 

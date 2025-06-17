@@ -770,7 +770,7 @@ const submitForm = async () => {
     isSubmitting.value = true;
     const response = await axiosInstance.post("/medical-examinations", submissionData);
 
-    emit("submitted", response.data);
+    emit("PhysicalExaminationAdded", response.data);
 
     eventBus.emit("show-toast", {
       severity: "success",

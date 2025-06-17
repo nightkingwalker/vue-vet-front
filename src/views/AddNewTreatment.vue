@@ -136,7 +136,11 @@
         </div>
       </fieldset>
       <div class="flex justify-end">
-        <Button type="submit" class="mt-4" :label="$t('add_treatment.submit')" />
+        <!-- <Button type="submit" class="mt-4" :label="$t('add_treatment.submit')" /> -->
+        <Button type="submit" :disabled="isSubmitting ? true : false">
+          <i class="fa-solid fa-spinner fa-spin" v-if="isSubmitting"></i>
+          <span v-else>{{ $t("add_treatment.submit") }}</span>
+        </Button>
       </div>
     </form>
   </div>
@@ -166,7 +170,7 @@ const props = defineProps({
     required: true,
   },
 });
-
+const isSubmitting = ref(false);
 const treatment = ref({
   name: "",
   dosage: "",
@@ -220,6 +224,7 @@ const medicineAdministrationMethods = ref([
 ]);
 
 const submitForm = async () => {
+  if (isSubmitting.value) return;
   const submissionData = {
     medical_record_id: props.medical_record_id,
     name: treatment.value.name,
@@ -237,6 +242,7 @@ const submitForm = async () => {
   };
   // console.log(submissionData);
   try {
+    isSubmitting.value = true;
     const response = await axiosInstance.post("/treatments", submissionData);
     eventBus.emit("show-toast", {
       severity: "success",
@@ -244,6 +250,7 @@ const submitForm = async () => {
       detail: t("add_treatment.toast.success"),
       life: 5000,
     });
+    isSubmitting.value = false;
     emit("TreatmentAdded", response.data);
   } catch (error) {
     eventBus.emit("show-toast", {
@@ -252,6 +259,7 @@ const submitForm = async () => {
       detail: t("add_treatment.toast.error"),
       life: 5000,
     });
+    isSubmitting.value = false;
   }
 };
 </script>
