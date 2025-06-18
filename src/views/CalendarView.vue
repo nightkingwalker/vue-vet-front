@@ -848,7 +848,7 @@ const calendarApp = createCalendar({
       },
     },
   },
-  views: [viewMonthGrid, viewWeek, viewDay],
+  views: [viewMonthGrid, viewWeek, viewDay, viewMonthAgenda],
   defaultView: viewMonthGrid.name,
   // locale: "en-US",
   locale: Cookies.get("language") === "ar" ? "ar-SY" : "en-US",
@@ -969,7 +969,7 @@ const calendarApp = createCalendar({
      * This in turn affects what views are rendered.
      * */
     isCalendarSmall($app) {
-      // return $app.elements.calendarWrapper?.clientWidth! < 500
+      return $app.elements.calendarWrapper?.clientWidth < 500;
     },
 
     /**
