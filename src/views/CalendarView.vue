@@ -1,6 +1,6 @@
 <template>
   <div class="flex gap-2" :class="{ 'flex-wrap': isMobile }">
-    <div :class="{ 'w-4/5': !isMobile, 'w-9/10 mx-auto': isMobile }">
+    <div :class="{ 'w-full': !isMobile, 'w-9/10 mx-auto': isMobile }">
       <ScheduleXCalendar
         :calendar-app="calendarApp"
         class="mx-auto"
@@ -50,152 +50,13 @@
         </template>
       </ContextMenu>
     </div>
-    <!--     <div
-      id="pet-details"
-      :class="{
-        '!h-[calc(100vh-100px)] w-1/5': !isMobile,
-        'w-9/10 h-fit mx-auto': isMobile,
-      }"
-      class="!bg-gray-200 dark:!bg-zinc-600 border rounded-lg p-4 flex flex-col justify-between"
-    >
-      <div
-        class="flex flex-col items-center gap-4 mb-4 bg-gray-100 dark:bg-zinc-500 shadow-md rounded-lg p-4 !text-sm"
-        :style="{
-          '--border-color': currentPet.theme.lightColors.main,
-          '--background-color': currentPet.theme.lightColors.container,
-          '--text-color': currentPet.theme.lightColors.onContainer,
-          'border-inline-start': `4px solid var(--border-color)`,
-          background: `var(--background-color)`,
-          color: `var(--text-color)`,
-          transition: `1s`,
-        }"
-      >
-        <h4 class="w-full">
-          <i
-            :class="
-              getIconClass(currentPet.pet.species) +
-              ` text-sm text-center ` +
-              (currentPet.pet.gender === `Male` ? `text-blue-600` : 'text-pink-600') +
-              ` mx-auto w-fit dark:bg-surface-500   ltr:mr-2 rtl:ml-2`
-            "
-          ></i>
-          {{ $t("calendar.pet_details.name") }}:
-          {{ currentPet.pet.name ? currentPet.pet.name : "" }}
-        </h4>
-        <h4 class="w-full">
-          <i class="fas fa-paw ltr:mr-2 rtl:ml-2"></i>
-          {{ $t("calendar.pet_details.species") }}:
-
-          {{ currentPet.pet.species ? getSpeciesValue(currentPet.pet.species) : "" }}
-        </h4>
-
-        <h4 class="w-full">
-          <i class="fa-solid fa-user ltr:mr-2 rtl:ml-2"></i>
-          {{ $t("calendar.pet_details.owner") }}:
-          {{ currentPet.people[0] ? currentPet.people[0] : "" }}
-        </h4>
-        <h4 class="w-full">
-          <i class="fa-solid fa-location-dot ltr:mr-2 rtl:ml-2" aria-hidden="true"></i>
-          {{ $t("calendar.pet_details.location") }}:
-          {{ currentPet.location ? currentPet.location : "" }}
-        </h4>
-        <h4 class="w-full text-xs">
-          <i class="fa-solid fa-circle-info ltr:mr-2 rtl:ml-2"></i>
-          {{ $t("calendar.pet_details.details") }}:
-          {{ currentPet.description ? currentPet.description : "" }}
-        </h4>
-        <RouterLink
-          v-if="!(currentPet.pet.microchip_num === '123123')"
-          class="p-button p-component !text-xs !text-[var(--p-primary-contrast-color)] !border-none shadow-sm"
-          icon="fas fa-paw"
-          :label="$t('calendar.pet_details.view_details')"
-          v-tooltip.top="{
-            value:
-              currentPet.pet.microchip_num === '123123'
-                ? `Please Select a Patient First`
-                : $t('calendar.pet_details.view_details'),
-            pt: {
-              arrow: {
-                style: {
-                  borderTopColor: 'var(--p-primary-color)',
-                },
-              },
-              text:
-                '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
-            },
-          }"
-          :to="{
-            name: 'PetDetails',
-            params: { petmicrochip: currentPet.pet.microchip_num },
-          }"
-        >
-          <i class="fas fa-paw"></i
-          ><span>{{ $t("calendar.pet_details.view_details") }}</span>
-        </RouterLink>
-        <Button
-          v-else
-          :disabled="currentPet.pet.microchip_num === '123123'"
-          class="p-button p-component !text-xs !text-[var(--p-primary-contrast-color)] !border-none shadow-sm"
-          icon="fas fa-paw"
-          :label="$t('calendar.pet_details.view_details')"
-          v-tooltip.top="{
-            value:
-              currentPet.pet.microchip_num === '123123'
-                ? $t('calendar.pet_details.select_appointment')
-                : $t('calendar.pet_details.view_details'),
-            pt: {
-              arrow: {
-                style: {
-                  borderTopColor: 'var(--p-primary-color)',
-                },
-              },
-              text:
-                '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
-            },
-          }"
-          :to="{
-            name: 'PetDetails',
-            params: { petmicrochip: currentPet.pet.microchip_num },
-          }"
-        >
-          <i class="fas fa-paw"></i
-          ><span>{{ $t("calendar.pet_details.select_appointment") }}</span>
-        </Button>
-      </div>
-
-      <div class="flex flex-col">
-        <h4>{{ $t("calendar.legend") }}</h4>
-        <div class="flex flex-wrap gap-2">
-          <div v-for="(theme, name) in eventTheme" :key="name" class="theme-box">
-            <Tag
-              class="shadow-md border-gray-500"
-              :style="{
-                '--border-color': theme.lightColors.main,
-                '--background-color': theme.lightColors.container,
-                '--text-color': theme.lightColors.onContainer,
-                'border-left': `4px solid var(--border-color)`,
-                background: `var(--background-color)`,
-                color: `var(--text-color)`,
-              }"
-            >
-              <div class="gap-2 px-1">
-                <span class="!text-xs font-normal">{{
-                  $t(`calendar.appointment.${name.toLowerCase()}`)
-                }}</span>
-              </div>
-            </Tag>
-          </div>
-        </div>
-      </div>
-    </div>
- -->
     <div
       id="pet-details"
       :class="[
         isMobile
           ? 'w-full h-fit mx-auto mb-4'
           : 'w-1/5 min-w-[280px] h-[calc(100vh-100px)]',
-        'border-[1px] border-[#c4c7c5] dark:!border-[#444746] rounded-xl shadow-sm p-4 flex flex-col gap-4',
+        'border-[1px] border-[#c4c7c5] dark:!border-[#444746] rounded-xl shadow-sm p-4 flex flex-col gap-4 hidden',
       ]"
     >
       <!-- Pet Information Card -->
@@ -231,8 +92,9 @@
               >
               <p>
                 {{
-                  $t(`pet_details.species.${getSpeciesValue(currentPet.pet.species)}`) ||
-                  "-"
+                  currentPet.pet.species && getSpeciesValue(currentPet.pet.species)
+                    ? $t(`pet_details.species.${getSpeciesValue(currentPet.pet.species)}`)
+                    : "-"
                 }}
               </p>
             </div>
@@ -347,6 +209,103 @@
     />
     <template #footer> </template>
   </Dialog>
+  <Dialog
+    v-model:visible="petDetailsVisible"
+    modal
+    :style="{
+      width: isMobile ? '90vw' : '400px',
+      borderLeft: `4px solid ${currentPet.theme.lightColors.main}`,
+      backgroundColor: currentPet.theme.lightColors.container,
+      color: currentPet.theme.lightColors.onContainer,
+    }"
+    :breakpoints="{ '960px': '75vw', '641px': '90vw' }"
+  >
+    <template #header>
+      <div class="flex items-center gap-2">
+        <i
+          :class="[
+            getIconClass(currentPet.pet.species),
+            'text-lg',
+            currentPet.pet.gender === 'Male' ? 'text-blue-500' : 'text-pink-500',
+          ]"
+        ></i>
+        <h3>
+          {{ currentPet.pet.name || $t("calendar.pet_details.select_appointment") }}
+        </h3>
+      </div>
+    </template>
+
+    <div class="space-y-3">
+      <div class="flex items-start gap-2">
+        <i class="fas fa-paw mt-0.5 text-sm opacity-70"></i>
+        <div>
+          <span class="text-xs opacity-80"
+            >{{ $t("calendar.pet_details.species") }}:</span
+          >
+          <p>
+            {{
+              currentPet.pet.species && getSpeciesValue(currentPet.pet.species)
+                ? getSpeciesValue(currentPet.pet.species)
+                : "-"
+            }}
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-2">
+        <i class="fa-solid fa-user mt-0.5 text-sm opacity-70"></i>
+        <div>
+          <span class="text-xs opacity-80">{{ $t("calendar.pet_details.owner") }}:</span>
+          <p>{{ currentPet.people[0] || "-" }}</p>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-2">
+        <i class="fa-solid fa-location-dot mt-0.5 text-sm opacity-70"></i>
+        <div>
+          <span class="text-xs opacity-80"
+            >{{ $t("calendar.pet_details.location") }}:</span
+          >
+          <p>{{ currentPet.location || "-" }}</p>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-2" v-if="currentPet.description">
+        <i class="fa-solid fa-circle-info mt-0.5 text-sm opacity-70"></i>
+        <div>
+          <span class="text-xs opacity-80"
+            >{{ $t("calendar.pet_details.details") }}:</span
+          >
+          <p class="text-xs">{{ currentPet.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <template #footer>
+      <Button
+        :label="
+          currentPet.pet.microchip_num === '123123'
+            ? $t('calendar.pet_details.select_appointment')
+            : $t('calendar.pet_details.view_details')
+        "
+        icon="fas fa-paw"
+        class="!text-xs w-full justify-center"
+        :class="
+          currentPet.pet.microchip_num === '123123'
+            ? 'p-button-outlined'
+            : 'p-button-primary'
+        "
+        :disabled="currentPet.pet.microchip_num === '123123'"
+        @click="
+          currentPet.pet.microchip_num !== '123123' &&
+            $router.push({
+              name: 'PetDetails',
+              params: { petmicrochip: currentPet.pet.microchip_num },
+            })
+        "
+      />
+    </template>
+  </Dialog>
 </template>
 <script setup>
 import { ref, onMounted, nextTick, watchEffect, computed } from "vue";
@@ -376,7 +335,7 @@ import Button from "primevue/button";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import Cookies from "js-cookie";
-import { ar } from "date-fns/locale"; // Arabic locale
+// import { ar } from "date-fns/locale"; // Arabic locale
 // import RouterLink from "primevue/routerlink";
 import router from "@/router";
 import axiosInstance from "@/axios"; // Ensure this is correctly set up with baseURL
@@ -398,6 +357,8 @@ const isNewApointmentVisible = ref(false);
 const isGoogleSynced = ref(false);
 const isSyncing = ref(false);
 const toast = useToast();
+const petDetailsVisible = ref(false);
+
 const scrollController = createScrollControllerPlugin({
   initialScroll: "12:00",
 });
@@ -574,7 +535,7 @@ const species = ref([
 const getSpeciesValue = (label) => {
   // console.log(label);
   const found = species.value.find((species) => species.en_label === label);
-  return found ? found.en_label : null;
+  return found ? found.label : null;
 };
 
 function getIconClass(speciesLabel) {
@@ -863,7 +824,7 @@ const calendarApp = createCalendar({
     nEventsPerDay: 2,
   },
   translations: mergeLocales(translations, {
-    arAR: {
+    arSY: {
       Today: "اليوم",
       Month: "شهر",
       Week: "أسبوع",
@@ -905,8 +866,11 @@ const calendarApp = createCalendar({
      * */
     onEventClick(calendarEvent) {
       // console.log("onEventClick", currentPet.value);
-      visible.value = true;
+      // visible.value = true;
+      // currentPet.value = calendarEvent;
       currentPet.value = calendarEvent;
+      petDetailsVisible.value = true;
+
       // console.log("onEventClick", currentPet.value.description);
     },
 
@@ -993,6 +957,7 @@ const calendarApp = createCalendar({
     createDragAndDropPlugin(),
     calendarControls,
     scrollController,
+    // createEventModalPlugin(),
   ],
 });
 const menuItems = ref([
@@ -1150,6 +1115,7 @@ watchEffect(
 const checkSyncStatus = async () => {
   try {
     const { data } = await axiosInstance.get("/google/calendar/status");
+    console.log(data);
     isGoogleSynced.value = data.connected;
     console.log("isGoogleSynced", isGoogleSynced.value);
 

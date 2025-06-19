@@ -23,8 +23,8 @@
       <div
         class="container mx-auto mt-14 min-h-[92vh] lg:h-[85vh] md:p-4 rounded-lg border border-[#c4c7c5] dark:!border-[#444746] overflow-hidden"
         :class="{
-          'clear-glass ': authStore.isLoggedIn && route.path != '/login',
-          '!border-0 ': !authStore.isLoggedIn && route.path === '/login',
+          'clear-glass ': authStore.isLoggedIn && route.path !== '/login',
+          '!border-0 ': route.path === '/login',
         }"
       >
         <router-view v-slot="{ Component, route }">
@@ -204,7 +204,10 @@ function logActiveMediaQuery() {
 
   console.log(`Screen Width: ${width}px, using ${mediaQuery} { /* Your CSS here */ }`);
 }
-
+console.log(
+  "authStore.isLoggedIn && route.path != '/login'",
+  authStore.isLoggedIn && route.path != "/login"
+);
 // Initial check + update on resize
 logActiveMediaQuery();
 window.addEventListener("resize", logActiveMediaQuery);
@@ -420,7 +423,10 @@ button:hover {
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up):lang(ar) */
-@media (min-width: 1200px) {
+@media (min-width: 1200px) and (max-width: 1919px) {
+  * {
+    zoom: 0.995;
+  }
   .container {
     width: 90vw;
   }
