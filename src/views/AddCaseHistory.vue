@@ -126,7 +126,7 @@
               </div>
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <Checkbox
+                  <ToggleSwitch 
                     id="medication_given"
                     v-model="formData.medication_given"
                     binary
@@ -251,7 +251,7 @@
               </div>
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <Checkbox
+                  <ToggleSwitch 
                     id="other_animals_in_household"
                     v-model="formData.other_animals_in_household"
                     binary
@@ -410,7 +410,7 @@
               </h4>
             </div>
             <div class="field mt-6 w-[48%]">
-              <Checkbox
+              <ToggleSwitch 
                 id="itching_present"
                 class="mx-2"
                 v-model="formData.itching_present"
@@ -555,7 +555,7 @@
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
-                  <Checkbox
+                  <ToggleSwitch 
                     class="mx-2"
                     id="recent_diet_change"
                     v-model="formData.recent_diet_change"
@@ -625,7 +625,7 @@
             <div class="flex flex-wrap gap-8">
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <Checkbox
+                  <ToggleSwitch 
                     class="mx-2"
                     id="vomiting"
                     v-model="formData.vomiting"
@@ -674,7 +674,7 @@
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
-                  <Checkbox
+                  <ToggleSwitch 
                     class="mx-2"
                     id="vomiting_related_to_food"
                     v-model="formData.vomiting_related_to_food"
@@ -688,7 +688,7 @@
 
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <Checkbox
+                  <ToggleSwitch 
                     class="mx-2"
                     id="vomiting_related_to_diarrhea"
                     v-model="formData.vomiting_related_to_diarrhea"
@@ -699,7 +699,7 @@
                   }}</label>
                 </div>
                 <div class="field mt-6 w-2/3">
-                  <Checkbox
+                  <ToggleSwitch 
                     class="mx-2"
                     id="diarrhea_started_first"
                     v-model="formData.diarrhea_started_first"
@@ -757,7 +757,7 @@
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
-                  <Checkbox
+                  <ToggleSwitch 
                     class="mx-2"
                     id="excessive_licking_of_anus"
                     v-model="formData.excessive_licking_of_anus"
@@ -835,7 +835,7 @@
               </div>
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <Checkbox
+                  <ToggleSwitch 
                     class="mx-2"
                     id="sudden_onset"
                     v-model="formData.sudden_onset"
@@ -899,7 +899,7 @@
             </div>
 
             <div class="field mt-6 w-[48%]">
-              <Checkbox class="mx-2" id="cough" v-model="formData.cough" binary />
+              <ToggleSwitch  class="mx-2" id="cough" v-model="formData.cough" binary />
               <label for="cough">{{ $t("case_history.fields.cough") }}</label>
             </div>
 
@@ -947,7 +947,7 @@
             </div>
 
             <div class="field mt-6 w-[48%]">
-              <Checkbox
+              <ToggleSwitch 
                 class="mx-2"
                 id="breathing_difficulty"
                 v-model="formData.breathing_difficulty"
@@ -959,7 +959,7 @@
             </div>
 
             <div class="field mt-6 w-[48%]">
-              <Checkbox class="mx-2" id="sneezing" v-model="formData.sneezing" binary />
+              <ToggleSwitch  class="mx-2" id="sneezing" v-model="formData.sneezing" binary />
               <label for="sneezing">{{ $t("case_history.fields.sneezing") }}</label>
             </div>
 
@@ -1042,7 +1042,7 @@
 
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <Checkbox
+                  <ToggleSwitch 
                     class="mx-2"
                     id="blood_in_urine"
                     v-model="formData.blood_in_urine"
@@ -1092,7 +1092,7 @@
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
-                  <Checkbox
+                  <ToggleSwitch 
                     class="mx-2"
                     id="excessive_licking_of_genital_area"
                     v-model="formData.excessive_licking_of_genital_area"
@@ -1135,12 +1135,12 @@
               <div class="w-[48%]">
                 <!-- Primary Symptoms -->
                 <div class="field mt-6">
-                  <Checkbox id="limping" v-model="formData.limping" binary class="mx-2" />
+                  <ToggleSwitch  id="limping" v-model="formData.limping" binary class="mx-2" />
                   <label for="limping">{{ $t("case_history.fields.limping") }}</label>
                 </div>
 
                 <div class="field mt-6">
-                  <Checkbox id="pain" v-model="formData.pain" binary class="mx-2" />
+                  <ToggleSwitch  id="pain" v-model="formData.pain" binary class="mx-2" />
                   <label for="pain">{{ $t("case_history.fields.pain") }}</label>
                 </div>
 
@@ -1160,7 +1160,7 @@
                 </div>
 
                 <div class="field mt-6">
-                  <Checkbox
+                  <ToggleSwitch 
                     id="swelling"
                     v-model="formData.swelling"
                     binary
@@ -1183,7 +1183,7 @@
                 </div>
 
                 <div class="field mt-6">
-                  <Checkbox
+                  <ToggleSwitch 
                     id="visible_deformity"
                     v-model="formData.visible_deformity"
                     binary
@@ -1215,28 +1215,28 @@
                     {{ $t("case_history.fields.affected_limbs") }}
                   </label>
                   <div class="flex flex-wrap gap-4">
-                    <Checkbox
+                    <ToggleSwitch 
                       v-model="formData.affected_limbs_FL"
                       inputId="fl"
                       name="limbs"
                       value="FL"
                     />
                     <label for="fl" class="mr-4">FL</label>
-                    <Checkbox
+                    <ToggleSwitch 
                       v-model="formData.affected_limbs_FR"
                       inputId="fr"
                       name="limbs"
                       value="FR"
                     />
                     <label for="fr" class="mr-4">FR</label>
-                    <Checkbox
+                    <ToggleSwitch 
                       v-model="formData.affected_limbs_HL"
                       inputId="hl"
                       name="limbs"
                       value="HL"
                     />
                     <label for="hl" class="mr-4">HL</label>
-                    <Checkbox
+                    <ToggleSwitch 
                       v-model="formData.affected_limbs_HR"
                       inputId="hr"
                       name="limbs"
@@ -1297,7 +1297,7 @@
 
                 <!-- Trauma History -->
                 <div class="field mt-6">
-                  <Checkbox
+                  <ToggleSwitch 
                     id="trauma_history"
                     v-model="formData.trauma_history"
                     binary
@@ -1326,7 +1326,7 @@
                 <div class="flex flex-wrap">
                   <!-- Functional Impact -->
                   <div class="field mt-6">
-                    <Checkbox
+                    <ToggleSwitch 
                       id="exercise_induced"
                       v-model="formData.exercise_induced"
                       binary
@@ -1337,7 +1337,7 @@
                     </label>
                   </div>
                   <div class="field mt-6">
-                    <Checkbox
+                    <ToggleSwitch 
                       id="worse_after_rest"
                       v-model="formData.worse_after_rest"
                       binary
@@ -1348,7 +1348,7 @@
                     </label>
                   </div>
                   <div class="field mt-6">
-                    <Checkbox
+                    <ToggleSwitch 
                       id="difficulty_jumping"
                       v-model="formData.difficulty_jumping"
                       binary
@@ -1359,7 +1359,7 @@
                     </label>
                   </div>
                   <div class="field mt-6">
-                    <Checkbox
+                    <ToggleSwitch 
                       id="difficulty_stairs"
                       v-model="formData.difficulty_stairs"
                       binary
@@ -1370,7 +1370,7 @@
                     </label>
                   </div>
                   <div class="field mt-6">
-                    <Checkbox
+                    <ToggleSwitch 
                       id="difficulty_rising"
                       v-model="formData.difficulty_rising"
                       binary
@@ -1400,7 +1400,7 @@
 
                 <!-- Current Management -->
                 <div class="field mt-6">
-                  <Checkbox
+                  <ToggleSwitch 
                     id="pain_meds_given"
                     v-model="formData.pain_meds_given"
                     binary
@@ -1524,7 +1524,7 @@
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-[49%] flex items-center">
-                  <Checkbox
+                  <ToggleSwitch 
                     v-model="formData.vaccine_has_reminder"
                     :binary="true"
                     inputId="treatment_has_reminder"
@@ -1786,7 +1786,7 @@ import InputText from "primevue/inputtext";
 import TextArea from "primevue/textarea";
 import DatePicker from "primevue/datepicker";
 import Select from "primevue/select";
-import Checkbox from "primevue/checkbox";
+import ToggleSwitch from "primevue/toggleswitch";
 import Button from "primevue/button";
 import axiosInstance from "@/axios"; // Assuming you've created a global axios instance
 import { useI18n } from "vue-i18n";

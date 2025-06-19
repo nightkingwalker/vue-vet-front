@@ -109,7 +109,7 @@
               </div>
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <Checkbox :disabled="!isEditable" id="medication_given" v-model="formData.medication_given" binary
+                  <ToggleSwitch  :disabled="!isEditable" id="medication_given" v-model="formData.medication_given" binary
                     class="mx-2" />
                   <label for="medication_given">{{
                     $t("case_history.fields.medication_given")
@@ -191,7 +191,7 @@
               </div>
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <Checkbox :disabled="!isEditable" id="other_animals_in_household"
+                  <ToggleSwitch  :disabled="!isEditable" id="other_animals_in_household"
                     v-model="formData.other_animals_in_household" binary class="mx-2" />
                   <label for="other_animals_in_household">{{
                     $t("case_history.fields.other_animals_in_household")
@@ -301,7 +301,7 @@
               </h4>
             </div>
             <div class="field mt-6 w-[48%]">
-              <Checkbox :disabled="!isEditable" id="itching_present" class="mx-2" v-model="formData.itching_present"
+              <ToggleSwitch  :disabled="!isEditable" id="itching_present" class="mx-2" v-model="formData.itching_present"
                 binary />
               <label for="itching_present">{{
                 $t("case_history.fields.itching_present")
@@ -396,7 +396,7 @@
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
-                  <Checkbox :disabled="!isEditable" class="mx-2" id="recent_diet_change"
+                  <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="recent_diet_change"
                     v-model="formData.recent_diet_change" binary />
                   <label for="recent_diet_change">{{
                     $t("case_history.fields.recent_diet_change")
@@ -441,7 +441,7 @@
             <div class="flex flex-wrap gap-8">
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <Checkbox :disabled="!isEditable" class="mx-2" id="vomiting" v-model="formData.vomiting" binary />
+                  <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="vomiting" v-model="formData.vomiting" binary />
                   <label for="vomiting">{{ $t("case_history.fields.vomiting") }}</label>
                 </div>
                 <div class="field mt-6 w-2/3">
@@ -478,7 +478,7 @@
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
-                  <Checkbox :disabled="!isEditable" class="mx-2" id="vomiting_related_to_food"
+                  <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="vomiting_related_to_food"
                     v-model="formData.vomiting_related_to_food" binary />
                   <label for="vomiting_related_to_food">{{
                     $t("case_history.fields.vomiting_related_to_food")
@@ -488,14 +488,14 @@
 
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <Checkbox :disabled="!isEditable" class="mx-2" id="vomiting_related_to_diarrhea"
+                  <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="vomiting_related_to_diarrhea"
                     v-model="formData.vomiting_related_to_diarrhea" binary />
                   <label for="vomiting_related_to_diarrhea">{{
                     $t("case_history.fields.vomiting_related_to_diarrhea")
                     }}</label>
                 </div>
                 <div class="field mt-6 w-2/3">
-                  <Checkbox :disabled="!isEditable" class="mx-2" id="diarrhea_started_first"
+                  <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="diarrhea_started_first"
                     v-model="formData.diarrhea_started_first" binary />
                   <label for="diarrhea_started_first">{{
                     $t("case_history.fields.diarrhea_started_first")
@@ -536,7 +536,7 @@
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
-                  <Checkbox :disabled="!isEditable" class="mx-2" id="excessive_licking_of_anus"
+                  <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="excessive_licking_of_anus"
                     v-model="formData.excessive_licking_of_anus" binary />
                   <label for="excessive_licking_of_anus">{{
                     $t("case_history.fields.excessive_licking_of_anus")
@@ -594,7 +594,7 @@
               </div>
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <Checkbox :disabled="!isEditable" class="mx-2" id="sudden_onset" v-model="formData.sudden_onset"
+                  <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="sudden_onset" v-model="formData.sudden_onset"
                     binary />
                   <label for="sudden_onset">{{
                     $t("case_history.fields.sudden_onset")
@@ -639,7 +639,7 @@
             </div>
 
             <div class="field mt-6 w-[48%]">
-              <Checkbox :disabled="!isEditable" class="mx-2" id="cough" v-model="formData.cough" binary />
+              <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="cough" v-model="formData.cough" binary />
               <label for="cough">{{ $t("case_history.fields.cough") }}</label>
             </div>
 
@@ -671,7 +671,7 @@
             </div>
 
             <div class="field mt-6 w-[48%]">
-              <Checkbox :disabled="!isEditable" class="mx-2" id="breathing_difficulty"
+              <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="breathing_difficulty"
                 v-model="formData.breathing_difficulty" binary />
               <label for="breathing_difficulty">{{
                 $t("case_history.fields.breathing_difficulty")
@@ -679,7 +679,7 @@
             </div>
 
             <div class="field mt-6 w-[48%]">
-              <Checkbox :disabled="!isEditable" class="mx-2" id="sneezing" v-model="formData.sneezing" binary />
+              <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="sneezing" v-model="formData.sneezing" binary />
               <label for="sneezing">{{ $t("case_history.fields.sneezing") }}</label>
             </div>
 
@@ -740,7 +740,7 @@
 
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <Checkbox :disabled="!isEditable" class="mx-2" id="blood_in_urine" v-model="formData.blood_in_urine"
+                  <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="blood_in_urine" v-model="formData.blood_in_urine"
                     binary />
                   <label for="blood_in_urine">{{
                     $t("case_history.fields.blood_in_urine")
@@ -774,7 +774,7 @@
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
-                  <Checkbox :disabled="!isEditable" class="mx-2" id="excessive_licking_of_genital_area"
+                  <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="excessive_licking_of_genital_area"
                     v-model="formData.excessive_licking_of_genital_area" binary />
                   <label for="excessive_licking_of_genital_area">
                     {{ $t("case_history.fields.excessive_licking_of_genital_area") }}
@@ -806,12 +806,12 @@
               <div class="w-[48%]">
                 <!-- Primary Symptoms -->
                 <div class="field mt-6">
-                  <Checkbox :disabled="!isEditable" id="limping" v-model="formData.limping" binary class="mx-2" />
+                  <ToggleSwitch  :disabled="!isEditable" id="limping" v-model="formData.limping" binary class="mx-2" />
                   <label for="limping">{{ $t("case_history.fields.limping") }}</label>
                 </div>
 
                 <div class="field mt-6">
-                  <Checkbox :disabled="!isEditable" id="pain" v-model="formData.pain" binary class="mx-2" />
+                  <ToggleSwitch  :disabled="!isEditable" id="pain" v-model="formData.pain" binary class="mx-2" />
                   <label for="pain">{{ $t("case_history.fields.pain") }}</label>
                 </div>
 
@@ -826,7 +826,7 @@
                 </div>
 
                 <div class="field mt-6">
-                  <Checkbox :disabled="!isEditable" id="swelling" v-model="formData.swelling" binary class="mx-2" />
+                  <ToggleSwitch  :disabled="!isEditable" id="swelling" v-model="formData.swelling" binary class="mx-2" />
                   <label for="swelling">{{ $t("case_history.fields.swelling") }}</label>
                 </div>
 
@@ -841,7 +841,7 @@
                 </div>
 
                 <div class="field mt-6">
-                  <Checkbox :disabled="!isEditable" id="visible_deformity" v-model="formData.visible_deformity" binary
+                  <ToggleSwitch  :disabled="!isEditable" id="visible_deformity" v-model="formData.visible_deformity" binary
                     class="mx-2" />
                   <label for="visible_deformity">
                     {{ $t("case_history.fields.visible_deformity") }}
@@ -864,16 +864,16 @@
                     {{ $t("case_history.fields.affected_limbs") }}
                   </label>
                   <div class="flex flex-wrap gap-4">
-                    <Checkbox :disabled="!isEditable" v-model="formData.affected_limbs_FL" inputId="fl" name="limbs"
+                    <ToggleSwitch  :disabled="!isEditable" v-model="formData.affected_limbs_FL" inputId="fl" name="limbs"
                       value="FL" />
                     <label for="fl" class="mr-4">FL</label>
-                    <Checkbox :disabled="!isEditable" v-model="formData.affected_limbs_FR" inputId="fr" name="limbs"
+                    <ToggleSwitch  :disabled="!isEditable" v-model="formData.affected_limbs_FR" inputId="fr" name="limbs"
                       value="FR" />
                     <label for="fr" class="mr-4">FR</label>
-                    <Checkbox :disabled="!isEditable" v-model="formData.affected_limbs_HL" inputId="hl" name="limbs"
+                    <ToggleSwitch  :disabled="!isEditable" v-model="formData.affected_limbs_HL" inputId="hl" name="limbs"
                       value="HL" />
                     <label for="hl" class="mr-4">HL</label>
-                    <Checkbox :disabled="!isEditable" v-model="formData.affected_limbs_HR" inputId="hr" name="limbs"
+                    <ToggleSwitch  :disabled="!isEditable" v-model="formData.affected_limbs_HR" inputId="hr" name="limbs"
                       value="HR" />
                     <label for="hr">HR</label>
                   </div>
@@ -914,7 +914,7 @@
 
                 <!-- Trauma History -->
                 <div class="field mt-6">
-                  <Checkbox :disabled="!isEditable" id="trauma_history" v-model="formData.trauma_history" binary
+                  <ToggleSwitch  :disabled="!isEditable" id="trauma_history" v-model="formData.trauma_history" binary
                     class="mx-2" />
                   <label for="trauma_history">
                     {{ $t("case_history.fields.trauma_history") }}
@@ -934,35 +934,35 @@
                 <div class="flex flex-wrap">
                   <!-- Functional Impact -->
                   <div class="field mt-6">
-                    <Checkbox :disabled="!isEditable" id="exercise_induced" v-model="formData.exercise_induced" binary
+                    <ToggleSwitch  :disabled="!isEditable" id="exercise_induced" v-model="formData.exercise_induced" binary
                       class="mx-2" />
                     <label for="exercise_induced">
                       {{ $t("case_history.fields.exercise_induced") }}
                     </label>
                   </div>
                   <div class="field mt-6">
-                    <Checkbox :disabled="!isEditable" id="worse_after_rest" v-model="formData.worse_after_rest" binary
+                    <ToggleSwitch  :disabled="!isEditable" id="worse_after_rest" v-model="formData.worse_after_rest" binary
                       class="mx-2" />
                     <label for="worse_after_rest">
                       {{ $t("case_history.fields.worse_after_rest") }}
                     </label>
                   </div>
                   <div class="field mt-6">
-                    <Checkbox :disabled="!isEditable" id="difficulty_jumping" v-model="formData.difficulty_jumping"
+                    <ToggleSwitch  :disabled="!isEditable" id="difficulty_jumping" v-model="formData.difficulty_jumping"
                       binary class="mx-2" />
                     <label for="difficulty_jumping">
                       {{ $t("case_history.fields.difficulty_jumping") }}
                     </label>
                   </div>
                   <div class="field mt-6">
-                    <Checkbox :disabled="!isEditable" id="difficulty_stairs" v-model="formData.difficulty_stairs" binary
+                    <ToggleSwitch  :disabled="!isEditable" id="difficulty_stairs" v-model="formData.difficulty_stairs" binary
                       class="mx-2" />
                     <label for="difficulty_stairs">
                       {{ $t("case_history.fields.difficulty_stairs") }}
                     </label>
                   </div>
                   <div class="field mt-6">
-                    <Checkbox :disabled="!isEditable" id="difficulty_rising" v-model="formData.difficulty_rising" binary
+                    <ToggleSwitch  :disabled="!isEditable" id="difficulty_rising" v-model="formData.difficulty_rising" binary
                       class="mx-2" />
                     <label for="difficulty_rising">
                       {{ $t("case_history.fields.difficulty_rising") }}
@@ -983,7 +983,7 @@
 
                 <!-- Current Management -->
                 <div class="field mt-6">
-                  <Checkbox :disabled="!isEditable" id="pain_meds_given" v-model="formData.pain_meds_given" binary
+                  <ToggleSwitch  :disabled="!isEditable" id="pain_meds_given" v-model="formData.pain_meds_given" binary
                     class="mx-2" />
                   <label for="pain_meds_given">
                     {{ $t("case_history.fields.pain_meds_given") }}
@@ -1235,7 +1235,7 @@ import InputText from "primevue/inputtext";
 import TextArea from "primevue/textarea";
 import DatePicker from "primevue/datepicker";
 import Select from "primevue/select";
-import Checkbox from "primevue/checkbox";
+import ToggleSwitch from "primevue/toggleswitch";
 import Button from "primevue/button";
 import axiosInstance from "@/axios"; // Assuming you've created a global axios instance
 import eventBus from "@/eventBus";

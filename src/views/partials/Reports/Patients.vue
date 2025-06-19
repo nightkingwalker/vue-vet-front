@@ -66,6 +66,7 @@
             />
 
             <DatePicker
+              iconDisplay="input"
               v-model="dateRange"
               selectionMode="range"
               :manualInput="false"

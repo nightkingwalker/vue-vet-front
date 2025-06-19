@@ -90,7 +90,7 @@
         <!-- Remember Me & Forgot Password -->
         <div class="flex items-center justify-between text-sm">
           <div class="flex items-center">
-            <CheckBox
+            <ToggleSwitch
               v-model="rememberMe"
               inputId="rememberMe"
               :binary="true"
@@ -230,7 +230,7 @@ import axios from "axios";
 import Logo from "@/assets/logo-DOqaXMyT.png";
 import Image from "primevue/image";
 import InputOtp from "primevue/inputotp";
-import CheckBox from "primevue/checkbox";
+import ToggleSwitch from "primevue/toggleswitch ";
 const { t, locale } = useI18n();
 // console.log(locale.value);
 // console.log(navigator.language?.substring(0, 2));

@@ -124,7 +124,7 @@
         </div>
 
         <div class="field mt-6 w-[49%] flex items-center">
-          <CheckBox
+          <ToggleSwitch 
             v-model="treatment.treatment_has_reminder"
             :binary="true"
             inputId="treatment_has_reminder"
@@ -151,7 +151,7 @@ import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import InputText from "primevue/inputtext";
 // import InputMask from "primevue/inputmask";
-import CheckBox from "primevue/checkbox";
+import ToggleSwitch from "primevue/toggleswitch";
 import DatePicker from "primevue/datepicker";
 import Select from "primevue/select";
 import InputNumber from "primevue/inputnumber";

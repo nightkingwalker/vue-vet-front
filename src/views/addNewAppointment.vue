@@ -95,7 +95,7 @@
               v-model="appointment.type"
               :options="appointmentTypes"
               optionLabel="label"
-              class="w-full p-inputtext"
+              class="w-full"
             />
             <label for="type">{{ $t("appointment.fields.type") }}</label>
           </FloatLabel>
@@ -106,7 +106,7 @@
               v-model="appointment.status"
               :options="appointmentStatus"
               optionLabel="label"
-              class="w-full p-inputtext"
+              class="w-full"
             />
             <label for="status">{{ $t("appointment.fields.status") }}</label>
           </FloatLabel>

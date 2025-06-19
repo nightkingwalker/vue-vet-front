@@ -96,7 +96,7 @@
         <!-- Remember Me & Forgot Password -->
         <div class="flex items-center justify-between text-sm">
           <div class="flex items-center justify-start gap-2">
-            <CheckBox
+            <ToggleSwitch
               v-model="rememberMe"
               inputId="rememberMe"
               :binary="true"
@@ -343,7 +343,7 @@ import axios from "axios";
 import Logo from "@/assets/logo-DOqaXMyT.png";
 import Image from "primevue/image";
 import InputOtp from "primevue/inputotp";
-import CheckBox from "primevue/checkbox";
+import ToggleSwitch from "primevue/toggleswitch";
 import Dialog from "primevue/dialog";
 import Button from "primevue/button";
 import BranchSelection from "@/components/LoginComponentSelectBranch.vue";

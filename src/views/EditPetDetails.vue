@@ -93,8 +93,6 @@
               showIcon
               iconDisplay="input"
               showButtonBar
-              showTime
-              hourFormat="12"
               fluid
               id="dob"
               class="w-full"
