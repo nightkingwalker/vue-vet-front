@@ -38,7 +38,7 @@
               ></InputGroupAddon>
               <InputText
                 id="username"
-                :autocomplete="`vetapp-username`"
+                :autocomplete="`vetapp-username username`"
                 v-model="email"
                 aria-describedby="username-help"
                 :placeholder="$t('login.username')"

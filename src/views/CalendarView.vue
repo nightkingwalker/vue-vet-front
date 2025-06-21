@@ -321,7 +321,7 @@ import {
 
 import { createCalendarControlsPlugin } from "@schedule-x/calendar-controls";
 import { createEventsServicePlugin } from "@schedule-x/events-service";
-import { createEventModalPlugin } from "@schedule-x/event-modal";
+// import { createEventModalPlugin } from "@sch edule-x/event-modal";
 import { createDragAndDropPlugin } from "@schedule-x/drag-and-drop";
 import { createScrollControllerPlugin } from "@schedule-x/scroll-controller";
 import eventBus from "@/eventBus";
@@ -345,7 +345,7 @@ const route = useRoute();
 
 const { isMobile, mobileMenuVisible } = useDevice();
 const eventsServicePlugin = createEventsServicePlugin();
-const eventModal = createEventModalPlugin();
+// const eventModal = createEventModalPlugin();
 const calendarControls = createCalendarControlsPlugin();
 const events = ref("");
 const searchQuery = ref("");
@@ -1016,7 +1016,7 @@ const addAppointment = () => {
   isNewApointmentVisible.value = true;
   // console.log("CLICKED");
 };
-eventModal.close(); // close the modal
+// eventModal.close(); // close the modal
 const changeView = (date) => {
   // console.log(date);
   calendarControls.setDate(date);
@@ -1115,9 +1115,9 @@ watchEffect(
 const checkSyncStatus = async () => {
   try {
     const { data } = await axiosInstance.get("/google/calendar/status");
-    console.log(data);
+    // console.log(data);
     isGoogleSynced.value = data.connected;
-    console.log("isGoogleSynced", isGoogleSynced.value);
+    // console.log("isGoogleSynced", isGoogleSynced.value);
 
     if (data.needs_reconnect) {
       eventBus.emit("show-toast", {

@@ -7,7 +7,36 @@
         <legend>{{ $t("add_treatment.title") }}</legend>
         <div class="field mt-6 w-[49%]">
           <FloatLabel class="w-full">
-            <InputText fluid id="name" v-model="treatment.name" />
+            <!--             <InputText
+              fluid
+              id="name"
+              :autocomplete="`treatment-name`"
+              v-model="treatment.name"
+            /> -->
+            <AutoComplete
+              autoFocus
+              fluid
+              required
+              v-model="treatment.name"
+              optionLabel="name"
+              :suggestions="filteredTreatments"
+              @complete="getTreatments"
+              class="w-full"
+            >
+              <template #option="slotProps">
+                <div class="flex items-center">
+                  <div>{{ slotProps.option.name }}</div>
+                </div>
+              </template>
+              <!--               <template #footer>
+                <Button
+                  :label="$t('pet_form.buttons.add_new_owner')"
+                  icon="pi pi-plus"
+                  @click="addNewOwner"
+                  class="p-button-text w-full"
+                />
+              </template> -->
+            </AutoComplete>
             <label for="name"
               >{{ $t("add_treatment.fields.name") }}
               <span class="text-red-600">*</span></label
@@ -124,7 +153,7 @@
         </div>
 
         <div class="field mt-6 w-[49%] flex items-center">
-          <ToggleSwitch 
+          <ToggleSwitch
             v-model="treatment.treatment_has_reminder"
             :binary="true"
             inputId="treatment_has_reminder"
@@ -150,6 +179,8 @@
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import InputText from "primevue/inputtext";
+import AutoComplete from "primevue/autocomplete";
+// import Cookies from "js-cookie";
 // import InputMask from "primevue/inputmask";
 import ToggleSwitch from "primevue/toggleswitch";
 import DatePicker from "primevue/datepicker";
@@ -160,7 +191,8 @@ import Button from "primevue/button";
 import axiosInstance from "@/axios";
 import eventBus from "@/eventBus";
 import { useRoute } from "vue-router";
-
+const treatements = ref([]);
+const filteredTreatments = ref([]);
 const { t } = useI18n();
 const emit = defineEmits();
 const route = useRoute();
@@ -223,6 +255,29 @@ const medicineAdministrationMethods = ref([
   },
 ]);
 
+// function getTreatments(event) {
+//   fetchTreatments(event);
+
+//   filteredTreatments.value = treatements.value;
+// }
+async function getTreatments(event) {
+  try {
+    // const response = await axiosInstance.get("/treatements");
+    const response = await axiosInstance.get(`/treatments/search`, {
+      params: {
+        query: event.query,
+      },
+    });
+    console.log(response.data);
+    treatements.value = response.data;
+  } catch (error) {
+    console.error("Failed to fetch treatements:", error);
+  }
+  filteredTreatments.value = treatements.value;
+  // filteredTreatments.value = treatements.value.filter((name) =>
+  //   name.toLowerCase().includes(event.query.toLowerCase())
+  // );
+}
 const submitForm = async () => {
   if (isSubmitting.value) return;
   const submissionData = {

@@ -204,10 +204,6 @@ function logActiveMediaQuery() {
 
   console.log(`Screen Width: ${width}px, using ${mediaQuery} { /* Your CSS here */ }`);
 }
-console.log(
-  "authStore.isLoggedIn && route.path != '/login'",
-  authStore.isLoggedIn && route.path != "/login"
-);
 // Initial check + update on resize
 logActiveMediaQuery();
 window.addEventListener("resize", logActiveMediaQuery);
