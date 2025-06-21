@@ -21,6 +21,7 @@
               optionLabel="name"
               :suggestions="filteredTreatments"
               @complete="getTreatments"
+              @item-select="onTreatmentSelect"
               class="w-full"
             >
               <template #option="slotProps">
@@ -255,28 +256,18 @@ const medicineAdministrationMethods = ref([
   },
 ]);
 
-// function getTreatments(event) {
-//   fetchTreatments(event);
-
-//   filteredTreatments.value = treatements.value;
-// }
 async function getTreatments(event) {
   try {
-    // const response = await axiosInstance.get("/treatements");
     const response = await axiosInstance.get(`/treatments/search`, {
-      params: {
-        query: event.query,
-      },
+      params: { query: event.query },
     });
-    console.log(response.data);
-    treatements.value = response.data;
+    filteredTreatments.value = response.data;
   } catch (error) {
-    console.error("Failed to fetch treatements:", error);
+    console.error("Failed to fetch treatments:", error);
   }
-  filteredTreatments.value = treatements.value;
-  // filteredTreatments.value = treatements.value.filter((name) =>
-  //   name.toLowerCase().includes(event.query.toLowerCase())
-  // );
+}
+function onTreatmentSelect(event) {
+  treatment.value.name = event.value.name;
 }
 const submitForm = async () => {
   if (isSubmitting.value) return;
