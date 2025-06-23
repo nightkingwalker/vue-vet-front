@@ -1,49 +1,71 @@
 <template>
   <div class="w-full">
-    <fieldset class="p-fieldset p-component w-4/5 flex flex-wrap mx-auto gap-2 items-start border rounded-lg p-4">
+    <fieldset
+      class="p-fieldset p-component w-4/5 flex flex-wrap mx-auto gap-2 items-start border rounded-lg p-4"
+    >
       <legend>
         {{ $t("case_history.title") }}
-        <Button type="button" icon="fa-solid fa-pencil !text-primary" v-tooltip.top="{
-          value: $t('case_history.edit_button'),
-          pt: {
-            arrow: {
-              style: {
-                borderTopColor: 'var(--p-primary-color)',
+        <Button
+          type="button"
+          icon="fa-solid fa-pencil !text-primary"
+          v-tooltip.top="{
+            value: $t('case_history.edit_button'),
+            pt: {
+              arrow: {
+                style: {
+                  borderTopColor: 'var(--p-primary-color)',
+                },
               },
+              text:
+                '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
             },
-            text:
-              '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
-          },
-        }" rounded size="small" class="!text-xs !text-primary mx-2" @click="isEditable = !isEditable" />
+          }"
+          rounded
+          size="small"
+          class="!text-xs !text-primary mx-2"
+          @click="isEditable = !isEditable"
+        />
       </legend>
 
       <div v-if="!hasCaseHistory">
         {{ $t("case_history.no_history") }}
-        <Button :label="$t('case_history.add_button')" icon="pi pi-plus"
-          @click="showAddCaseHistoryModal(props.medical_record_id)" class="p-button p-component !text-xs !h-8 ml-2" />
+        <Button
+          :label="$t('case_history.add_button')"
+          icon="pi pi-plus"
+          @click="showAddCaseHistoryModal(props.medical_record_id)"
+          class="p-button p-component !text-xs !h-8 ml-2"
+        />
       </div>
 
       <Stepper :value="activeStep" :key="activeStep" class="w-full" v-else>
         <StepList class="flex flex-wrap items-start w-full mx-auto">
-          <Step class="w-1/6 text-sm " :data-p-invalid="invalid.symptoms.step" value="1">{{
+          <Step class="w-1/6 text-sm" :data-p-invalid="invalid.symptoms.step" value="1">{{
             $t("case_history.steps.current_symptoms")
           }}</Step>
-          <Step class="w-1/6 text-sm" :class="{
-            'invalid': invalid.general_health.step
-          }" :data-p-invalid="invalid.general_health.step" value="2">{{
-            $t("case_history.steps.general_health")
-          }}</Step>
+          <Step
+            class="w-1/6 text-sm"
+            :class="{
+              invalid: invalid.general_health.step,
+            }"
+            :data-p-invalid="invalid.general_health.step"
+            value="2"
+            >{{ $t("case_history.steps.general_health") }}</Step
+          >
           <Step class="w-1/6 text-sm" value="3">{{
             $t("case_history.steps.reproductive_history")
           }}</Step>
           <Step class="w-1/6 text-sm" value="4">{{
             $t("case_history.steps.itching_skin")
           }}</Step>
-          <Step class="w-1/6 text-sm" :data-p-invalid="invalid.diet.step" :class="{
-            'invalid': invalid.diet.step
-          }" value="5">{{
-            $t("case_history.steps.diet_water")
-          }}</Step>
+          <Step
+            class="w-1/6 text-sm"
+            :data-p-invalid="invalid.diet.step"
+            :class="{
+              invalid: invalid.diet.step,
+            }"
+            value="5"
+            >{{ $t("case_history.steps.diet_water") }}</Step
+          >
           <Step class="w-1/6 text-sm" value="6">{{
             $t("case_history.steps.gastrointestinal")
           }}</Step>
@@ -59,13 +81,17 @@
           <Step class="w-1/6 text-sm" value="10">{{
             $t("case_history.steps.musculoskeletal")
           }}</Step>
-          <Step class="w-1/6 text-sm" :data-p-invalid="invalid.vaccine.step" :class="{
-            'invalid': invalid.vaccine.step
-          }" value="11">{{
-            $t("case_history.steps.vaccination_medication")
-          }}</Step>
-        </StepList> <!-- Step Panels -->
-
+          <Step
+            class="w-1/6 text-sm"
+            :data-p-invalid="invalid.vaccine.step"
+            :class="{
+              invalid: invalid.vaccine.step,
+            }"
+            value="11"
+            >{{ $t("case_history.steps.vaccination_medication") }}</Step
+          >
+        </StepList>
+        <!-- Step Panels -->
 
         <!-- Step Panels -->
 
@@ -81,71 +107,125 @@
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <TextArea :disabled="!isEditable" fluid autoResize rows="4" id="symptom_description"
-                      v-model="formData.symptom_description" :invalid="invalid.symptoms.symptom_description" />
-                    <label for="symptom_description">{{ $t("case_history.fields.symptom_description") }}
+                    <TextArea
+                      :disabled="!isEditable"
+                      fluid
+                      autoResize
+                      rows="4"
+                      id="symptom_description"
+                      v-model="formData.symptom_description"
+                      :invalid="invalid.symptoms.symptom_description"
+                    />
+                    <label for="symptom_description"
+                      >{{ $t("case_history.fields.symptom_description") }}
                       <span class="text-red-600">*</span>
                     </label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <DatePicker :disabled="!isEditable" showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-d"
-                      id="start_date" v-model="formData.start_date" hourFormat="24" fluid
-                      :invalid="invalid.symptoms.start_date" />
-                    <label for="start_date">{{ $t("case_history.fields.start_date") }}
-                      <span class="text-red-600">*</span></label>
+                    <DatePicker
+                      :disabled="!isEditable"
+                      showIcon
+                      iconDisplay="input"
+                      showButtonBar
+                      dateFormat="yy-mm-d"
+                      id="start_date"
+                      v-model="formData.start_date"
+                      hourFormat="24"
+                      fluid
+                      :invalid="invalid.symptoms.start_date"
+                    />
+                    <label for="start_date"
+                      >{{ $t("case_history.fields.start_date") }}
+                      <span class="text-red-600">*</span></label
+                    >
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value"
-                      id="symptom_progression" v-model="formData.symptom_progression"
-                      :options="symptomProgressionOptions" :invalid="invalid.symptoms.symptom_progression" />
-                    <label for="symptom_progression">{{ $t("case_history.fields.symptom_progression") }}
-                      <span class="text-red-600">*</span></label>
+                    <Select
+                      :disabled="!isEditable"
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="symptom_progression"
+                      v-model="formData.symptom_progression"
+                      :options="symptomProgressionOptions"
+                      :invalid="invalid.symptoms.symptom_progression"
+                    />
+                    <label for="symptom_progression"
+                      >{{ $t("case_history.fields.symptom_progression") }}
+                      <span class="text-red-600">*</span></label
+                    >
                   </FloatLabel>
                 </div>
               </div>
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch  :disabled="!isEditable" id="medication_given" v-model="formData.medication_given" binary
-                    class="mx-2" />
+                  <ToggleSwitch
+                    :disabled="!isEditable"
+                    id="medication_given"
+                    v-model="formData.medication_given"
+                    binary
+                    class="mx-2"
+                  />
                   <label for="medication_given">{{
                     $t("case_history.fields.medication_given")
-                    }}</label>
+                  }}</label>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="medication_name" v-model="formData.medication_name" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="medication_name"
+                      v-model="formData.medication_name"
+                    />
                     <label for="medication_name">{{
                       $t("case_history.fields.medication_name")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="medication_dosage"
-                      v-model="formData.medication_dosage" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="medication_dosage"
+                      v-model="formData.medication_dosage"
+                    />
                     <label for="medication_dosage">{{
                       $t("case_history.fields.medication_dosage")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="prescribed_by" v-model="formData.prescribed_by" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="prescribed_by"
+                      v-model="formData.prescribed_by"
+                    />
                     <label for="prescribed_by">{{
                       $t("case_history.fields.prescribed_by")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
               </div>
             </div>
             <div class="flex pt-6 justify-end">
-              <Button :label="$t('case_history.actions.next')"
+              <Button
+                :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                :iconPos="!isRtl ? 'right' : 'left'" @click="() => { if (validateStep(1)) activateCallback('2') }" />
+                :iconPos="!isRtl ? 'right' : 'left'"
+                @click="
+                  () => {
+                    if (validateStep(1)) activateCallback('2');
+                  }
+                "
+              />
             </div>
           </StepPanel>
 
@@ -160,79 +240,135 @@
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="activity_level"
-                      v-model="formData.activity_level" :options="activityLevelOptions"
-                      :invalid="invalid.general_health.activity_level" />
-                    <label for="activity_level">{{
-                      $t("case_history.fields.activity_level")
-                      }} <span class="text-red-600">*</span></label>
+                    <Select
+                      :disabled="!isEditable"
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="activity_level"
+                      v-model="formData.activity_level"
+                      :options="activityLevelOptions"
+                      :invalid="invalid.general_health.activity_level"
+                    />
+                    <label for="activity_level"
+                      >{{ $t("case_history.fields.activity_level") }}
+                      <span class="text-red-600">*</span></label
+                    >
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value"
-                      id="vaccination_status" v-model="formData.vaccination_status" :options="vaccinationStatusOptions"
-                      :invalid="invalid.general_health.vaccination_status" />
-                    <label for="vaccination_status">{{
-                      $t("case_history.fields.vaccination_status")
-                      }} <span class="text-red-600">*</span></label>
+                    <Select
+                      :disabled="!isEditable"
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="vaccination_status"
+                      v-model="formData.vaccination_status"
+                      :options="vaccinationStatusOptions"
+                      :invalid="invalid.general_health.vaccination_status"
+                    />
+                    <label for="vaccination_status"
+                      >{{ $t("case_history.fields.vaccination_status") }}
+                      <span class="text-red-600">*</span></label
+                    >
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="care_location"
-                      v-model="formData.care_location" :options="careLocationOptions"
-                      :invalid="invalid.general_health.care_location" />
-                    <label for="care_location">{{
-                      $t("case_history.fields.care_location")
-                      }} <span class="text-red-600">*</span></label>
+                    <Select
+                      :disabled="!isEditable"
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="care_location"
+                      v-model="formData.care_location"
+                      :options="careLocationOptions"
+                      :invalid="invalid.general_health.care_location"
+                    />
+                    <label for="care_location"
+                      >{{ $t("case_history.fields.care_location") }}
+                      <span class="text-red-600">*</span></label
+                    >
                   </FloatLabel>
                 </div>
               </div>
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch  :disabled="!isEditable" id="other_animals_in_household"
-                    v-model="formData.other_animals_in_household" binary class="mx-2" />
+                  <ToggleSwitch
+                    :disabled="!isEditable"
+                    id="other_animals_in_household"
+                    v-model="formData.other_animals_in_household"
+                    binary
+                    class="mx-2"
+                  />
                   <label for="other_animals_in_household">{{
                     $t("case_history.fields.other_animals_in_household")
-                    }}</label>
+                  }}</label>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="number_of_other_animals"
-                      v-model="formData.number_of_other_animals" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="number_of_other_animals"
+                      v-model="formData.number_of_other_animals"
+                    />
                     <label for="number_of_other_animals">{{
                       $t("case_history.fields.number_of_other_animals")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="types_of_other_animals"
-                      v-model="formData.types_of_other_animals" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="types_of_other_animals"
+                      v-model="formData.types_of_other_animals"
+                    />
                     <label for="types_of_other_animals">{{
                       $t("case_history.fields.types_of_other_animals")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="previous_diseases_in_other_animals"
-                      v-model="formData.previous_diseases_in_other_animals" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="previous_diseases_in_other_animals"
+                      v-model="formData.previous_diseases_in_other_animals"
+                    />
                     <label for="previous_diseases_in_other_animals">{{
                       $t("case_history.fields.previous_diseases_in_other_animals")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
               </div>
             </div>
             <div class="flex pt-6 justify-between">
-              <Button :label="$t('case_history.actions.back')" severity="secondary"
+              <Button
+                :label="$t('case_history.actions.back')"
+                severity="secondary"
                 :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
-                :iconPos="!isRtl ? 'left' : 'right'" @click="() => { if (validateStep(2)) activateCallback('1') }" />
-              <Button :label="$t('case_history.actions.next')"
+                :iconPos="!isRtl ? 'left' : 'right'"
+                @click="
+                  () => {
+                    if (validateStep(2)) activateCallback('1');
+                  }
+                "
+              />
+              <Button
+                :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                :iconPos="!isRtl ? 'right' : 'left'" @click="() => { if (validateStep(2)) activateCallback('3') }" />
+                :iconPos="!isRtl ? 'right' : 'left'"
+                @click="
+                  () => {
+                    if (validateStep(2)) activateCallback('3');
+                  }
+                "
+              />
             </div>
           </StepPanel>
 
@@ -245,51 +381,84 @@
             </div>
             <!-- pet_neutered -->
             <div class="flex items-start mt-6">
-              <span class="text-sm">{{ $t("case_history.options.pet_neutered.pet_neutered_label") }}:
+              <span class="text-sm"
+                >{{ $t("case_history.options.pet_neutered.pet_neutered_label") }}:
               </span>
-              <Tag :severity="props.pet_neutered === `Y` ? `success` : `danger`"
-                :value="$t('case_history.options.pet_neutered.' + props.pet_neutered)" class="!text-s"></Tag>
+              <Tag
+                :severity="props.pet_neutered === `Y` ? `success` : `danger`"
+                :value="$t('case_history.options.pet_neutered.' + props.pet_neutered)"
+                class="!text-s"
+              ></Tag>
             </div>
             <div class="field mt-6 w-[48%]">
               <FloatLabel>
-                <DatePicker :disabled="!isEditable" showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-d"
-                  id="last_reproductive_cycle_date" v-model="formData.last_reproductive_cycle_date" />
+                <DatePicker
+                  :disabled="!isEditable"
+                  showIcon
+                  iconDisplay="input"
+                  showButtonBar
+                  dateFormat="yy-mm-d"
+                  id="last_reproductive_cycle_date"
+                  v-model="formData.last_reproductive_cycle_date"
+                />
                 <label for="last_reproductive_cycle_date">{{
                   $t("case_history.fields.last_reproductive_cycle_date")
-                  }}</label>
+                }}</label>
               </FloatLabel>
             </div>
             <div class="field mt-6 w-[48%]">
               <FloatLabel>
-                <InputText :disabled="!isEditable" fluid id="cycle_length" v-model="formData.cycle_length" />
+                <InputText
+                  :disabled="!isEditable"
+                  fluid
+                  id="cycle_length"
+                  v-model="formData.cycle_length"
+                />
                 <label for="cycle_length">{{
                   $t("case_history.fields.cycle_length")
-                  }}</label>
+                }}</label>
               </FloatLabel>
             </div>
             <div class="field mt-6 w-[48%]">
               <FloatLabel>
-                <InputText :disabled="!isEditable" fluid id="notable_signs" v-model="formData.notable_signs" />
+                <InputText
+                  :disabled="!isEditable"
+                  fluid
+                  id="notable_signs"
+                  v-model="formData.notable_signs"
+                />
                 <label for="notable_signs">{{
                   $t("case_history.fields.notable_signs")
-                  }}</label>
+                }}</label>
               </FloatLabel>
             </div>
             <div class="field mt-6 w-[48%]">
               <FloatLabel>
-                <InputText :disabled="!isEditable" fluid id="other_discharges" v-model="formData.other_discharges" />
+                <InputText
+                  :disabled="!isEditable"
+                  fluid
+                  id="other_discharges"
+                  v-model="formData.other_discharges"
+                />
                 <label for="other_discharges">{{
                   $t("case_history.fields.other_discharges")
-                  }}</label>
+                }}</label>
               </FloatLabel>
             </div>
             <div class="flex pt-6 justify-between">
-              <Button :label="$t('case_history.actions.back')" severity="secondary"
+              <Button
+                :label="$t('case_history.actions.back')"
+                severity="secondary"
                 :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
-                :iconPos="!isRtl ? 'left' : 'right'" @click="activateCallback('2')" />
-              <Button :label="$t('case_history.actions.next')"
+                :iconPos="!isRtl ? 'left' : 'right'"
+                @click="activateCallback('2')"
+              />
+              <Button
+                :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                :iconPos="!isRtl ? 'right' : 'left'" @click="activateCallback('4')" />
+                :iconPos="!isRtl ? 'right' : 'left'"
+                @click="activateCallback('4')"
+              />
             </div>
           </StepPanel>
 
@@ -301,45 +470,74 @@
               </h4>
             </div>
             <div class="field mt-6 w-[48%]">
-              <ToggleSwitch  :disabled="!isEditable" id="itching_present" class="mx-2" v-model="formData.itching_present"
-                binary />
+              <ToggleSwitch
+                :disabled="!isEditable"
+                id="itching_present"
+                class="mx-2"
+                v-model="formData.itching_present"
+                binary
+              />
               <label for="itching_present">{{
                 $t("case_history.fields.itching_present")
-                }}</label>
+              }}</label>
             </div>
             <div class="field mt-6 w-[48%]">
               <FloatLabel>
-                <InputText :disabled="!isEditable" fluid id="itching_location" v-model="formData.itching_location" />
+                <InputText
+                  :disabled="!isEditable"
+                  fluid
+                  id="itching_location"
+                  v-model="formData.itching_location"
+                />
                 <label for="itching_location">{{
                   $t("case_history.fields.itching_location")
-                  }}</label>
+                }}</label>
               </FloatLabel>
             </div>
             <div class="field mt-6 w-[48%]">
               <FloatLabel>
-                <TextArea :disabled="!isEditable" fluid autoResize rows="4" id="itching_description"
-                  v-model="formData.itching_description" />
+                <TextArea
+                  :disabled="!isEditable"
+                  fluid
+                  autoResize
+                  rows="4"
+                  id="itching_description"
+                  v-model="formData.itching_description"
+                />
                 <label for="itching_description">{{
                   $t("case_history.fields.itching_description")
-                  }}</label>
+                }}</label>
               </FloatLabel>
             </div>
             <div class="field mt-6 w-[48%]">
               <FloatLabel>
-                <TextArea :disabled="!isEditable" fluid autoResize rows="4" id="skin_condition_description"
-                  v-model="formData.skin_condition_description" />
+                <TextArea
+                  :disabled="!isEditable"
+                  fluid
+                  autoResize
+                  rows="4"
+                  id="skin_condition_description"
+                  v-model="formData.skin_condition_description"
+                />
                 <label for="skin_condition_description">{{
                   $t("case_history.fields.skin_condition_description")
-                  }}</label>
+                }}</label>
               </FloatLabel>
             </div>
             <div class="flex pt-6 justify-between">
-              <Button :label="$t('case_history.actions.back')" severity="secondary"
+              <Button
+                :label="$t('case_history.actions.back')"
+                severity="secondary"
                 :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
-                :iconPos="!isRtl ? 'left' : 'right'" @click="activateCallback('3')" />
-              <Button :label="$t('case_history.actions.next')"
+                :iconPos="!isRtl ? 'left' : 'right'"
+                @click="activateCallback('3')"
+              />
+              <Button
+                :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                :iconPos="!isRtl ? 'right' : 'left'" @click="activateCallback('5')" />
+                :iconPos="!isRtl ? 'right' : 'left'"
+                @click="activateCallback('5')"
+              />
             </div>
           </StepPanel>
 
@@ -354,80 +552,146 @@
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="diet_type"
-                      v-model="formData.diet_type" :options="dietTypeOptions" :invalid="invalid.diet.diet_type" />
-                    <label for="diet_type">{{
-                      $t("case_history.fields.diet_type")
-                      }} <span class="text-red-600">*</span></label>
+                    <Select
+                      :disabled="!isEditable"
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="diet_type"
+                      v-model="formData.diet_type"
+                      :options="dietTypeOptions"
+                      :invalid="invalid.diet.diet_type"
+                    />
+                    <label for="diet_type"
+                      >{{ $t("case_history.fields.diet_type") }}
+                      <span class="text-red-600">*</span></label
+                    >
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="diet_details" v-model="formData.diet_details" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="diet_details"
+                      v-model="formData.diet_details"
+                    />
                     <label for="diet_details">{{
                       $t("case_history.fields.diet_details")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="number_of_meals" v-model="formData.number_of_meals" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="number_of_meals"
+                      v-model="formData.number_of_meals"
+                    />
                     <label for="number_of_meals">{{
                       $t("case_history.fields.number_of_meals")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="meal_quantity" v-model="formData.meal_quantity" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="meal_quantity"
+                      v-model="formData.meal_quantity"
+                    />
                     <label for="meal_quantity">{{
                       $t("case_history.fields.meal_quantity")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
               </div>
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="appetite"
-                      v-model="formData.appetite" :options="appetiteOptions" :invalid="invalid.diet.appetite" />
-                    <label for="appetite">{{ $t("case_history.fields.appetite") }} <span
-                        class="text-red-600">*</span></label>
+                    <Select
+                      :disabled="!isEditable"
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="appetite"
+                      v-model="formData.appetite"
+                      :options="appetiteOptions"
+                      :invalid="invalid.diet.appetite"
+                    />
+                    <label for="appetite"
+                      >{{ $t("case_history.fields.appetite") }}
+                      <span class="text-red-600">*</span></label
+                    >
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="recent_diet_change"
-                    v-model="formData.recent_diet_change" binary />
+                  <ToggleSwitch
+                    :disabled="!isEditable"
+                    class="mx-2"
+                    id="recent_diet_change"
+                    v-model="formData.recent_diet_change"
+                    binary
+                  />
                   <label for="recent_diet_change">{{
                     $t("case_history.fields.recent_diet_change")
-                    }}</label>
+                  }}</label>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="diet_change_type"
-                      v-model="formData.diet_change_type" :options="dietChangeTypeOptions" />
+                    <Select
+                      :disabled="!isEditable"
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="diet_change_type"
+                      v-model="formData.diet_change_type"
+                      :options="dietChangeTypeOptions"
+                    />
                     <label for="diet_change_type">{{
                       $t("case_history.fields.diet_change_type")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="water_intake" v-model="formData.water_intake" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="water_intake"
+                      v-model="formData.water_intake"
+                    />
                     <label for="water_intake">{{
                       $t("case_history.fields.water_intake")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
               </div>
             </div>
             <div class="flex pt-6 justify-between">
-              <Button :label="$t('case_history.actions.back')" severity="secondary"
+              <Button
+                :label="$t('case_history.actions.back')"
+                severity="secondary"
                 :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
-                :iconPos="!isRtl ? 'left' : 'right'" @click="() => { if (validateStep(5)) activateCallback('4') }" />
-              <Button :label="$t('case_history.actions.next')"
+                :iconPos="!isRtl ? 'left' : 'right'"
+                @click="
+                  () => {
+                    if (validateStep(5)) activateCallback('4');
+                  }
+                "
+              />
+              <Button
+                :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                :iconPos="!isRtl ? 'right' : 'left'" @click="() => { if (validateStep(5)) activateCallback('6') }" />
+                :iconPos="!isRtl ? 'right' : 'left'"
+                @click="
+                  () => {
+                    if (validateStep(5)) activateCallback('6');
+                  }
+                "
+              />
             </div>
           </StepPanel>
 
@@ -441,117 +705,190 @@
             <div class="flex flex-wrap gap-8">
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="vomiting" v-model="formData.vomiting" binary />
+                  <ToggleSwitch
+                    :disabled="!isEditable"
+                    class="mx-2"
+                    id="vomiting"
+                    v-model="formData.vomiting"
+                    binary
+                  />
                   <label for="vomiting">{{ $t("case_history.fields.vomiting") }}</label>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="vomit_color" v-model="formData.vomit_color" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="vomit_color"
+                      v-model="formData.vomit_color"
+                    />
                     <label for="vomit_color">{{
                       $t("case_history.fields.vomit_color")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="vomit_contents" v-model="formData.vomit_contents" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="vomit_contents"
+                      v-model="formData.vomit_contents"
+                    />
                     <label for="vomit_contents">{{
                       $t("case_history.fields.vomit_contents")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="vomit_smell" v-model="formData.vomit_smell" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="vomit_smell"
+                      v-model="formData.vomit_smell"
+                    />
                     <label for="vomit_smell">{{
                       $t("case_history.fields.vomit_smell")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="vomiting_frequency"
-                      v-model="formData.vomiting_frequency" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="vomiting_frequency"
+                      v-model="formData.vomiting_frequency"
+                    />
                     <label for="vomiting_frequency">{{
                       $t("case_history.fields.vomiting_frequency")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="vomiting_related_to_food"
-                    v-model="formData.vomiting_related_to_food" binary />
+                  <ToggleSwitch
+                    :disabled="!isEditable"
+                    class="mx-2"
+                    id="vomiting_related_to_food"
+                    v-model="formData.vomiting_related_to_food"
+                    binary
+                  />
                   <label for="vomiting_related_to_food">{{
                     $t("case_history.fields.vomiting_related_to_food")
-                    }}</label>
+                  }}</label>
                 </div>
               </div>
 
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="vomiting_related_to_diarrhea"
-                    v-model="formData.vomiting_related_to_diarrhea" binary />
+                  <ToggleSwitch
+                    :disabled="!isEditable"
+                    class="mx-2"
+                    id="vomiting_related_to_diarrhea"
+                    v-model="formData.vomiting_related_to_diarrhea"
+                    binary
+                  />
                   <label for="vomiting_related_to_diarrhea">{{
                     $t("case_history.fields.vomiting_related_to_diarrhea")
-                    }}</label>
+                  }}</label>
                 </div>
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="diarrhea_started_first"
-                    v-model="formData.diarrhea_started_first" binary />
+                  <ToggleSwitch
+                    :disabled="!isEditable"
+                    class="mx-2"
+                    id="diarrhea_started_first"
+                    v-model="formData.diarrhea_started_first"
+                    binary
+                  />
                   <label for="diarrhea_started_first">{{
                     $t("case_history.fields.diarrhea_started_first")
-                    }}</label>
+                  }}</label>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="stool_consistency"
-                      v-model="formData.stool_consistency" :options="stoolConsistencyOptions" />
+                    <Select
+                      :disabled="!isEditable"
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="stool_consistency"
+                      v-model="formData.stool_consistency"
+                      :options="stoolConsistencyOptions"
+                    />
                     <label for="stool_consistency">{{
                       $t("case_history.fields.stool_consistency")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="stool_color" v-model="formData.stool_color" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="stool_color"
+                      v-model="formData.stool_color"
+                    />
                     <label for="stool_color">{{
                       $t("case_history.fields.stool_color")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="stool_frequency" v-model="formData.stool_frequency" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="stool_frequency"
+                      v-model="formData.stool_frequency"
+                    />
                     <label for="stool_frequency">{{
                       $t("case_history.fields.stool_frequency")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="abnormal_stool_contents"
-                      v-model="formData.abnormal_stool_contents" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="abnormal_stool_contents"
+                      v-model="formData.abnormal_stool_contents"
+                    />
                     <label for="abnormal_stool_contents">{{
                       $t("case_history.fields.abnormal_stool_contents")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="excessive_licking_of_anus"
-                    v-model="formData.excessive_licking_of_anus" binary />
+                  <ToggleSwitch
+                    :disabled="!isEditable"
+                    class="mx-2"
+                    id="excessive_licking_of_anus"
+                    v-model="formData.excessive_licking_of_anus"
+                    binary
+                  />
                   <label for="excessive_licking_of_anus">{{
                     $t("case_history.fields.excessive_licking_of_anus")
-                    }}</label>
+                  }}</label>
                 </div>
               </div>
             </div>
 
             <div class="flex pt-6 justify-between">
-              <Button :label="$t('case_history.actions.back')" severity="secondary"
+              <Button
+                :label="$t('case_history.actions.back')"
+                severity="secondary"
                 :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
-                :iconPos="!isRtl ? 'left' : 'right'" @click="activateCallback('5')" />
-              <Button :label="$t('case_history.actions.next')"
+                :iconPos="!isRtl ? 'left' : 'right'"
+                @click="activateCallback('5')"
+              />
+              <Button
+                :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                :iconPos="!isRtl ? 'right' : 'left'" @click="activateCallback('7')" />
+                :iconPos="!isRtl ? 'right' : 'left'"
+                @click="activateCallback('7')"
+              />
             </div>
           </StepPanel>
 
@@ -566,67 +903,101 @@
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="neurological_signs"
-                      v-model="formData.neurological_signs" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="neurological_signs"
+                      v-model="formData.neurological_signs"
+                    />
                     <label for="neurological_signs">{{
                       $t("case_history.fields.neurological_signs")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="neurological_signs_frequency"
-                      v-model="formData.neurological_signs_frequency" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="neurological_signs_frequency"
+                      v-model="formData.neurological_signs_frequency"
+                    />
                     <label for="neurological_signs_frequency">{{
                       $t("case_history.fields.neurological_signs_frequency")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="associated_symptoms"
-                      v-model="formData.associated_symptoms" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="associated_symptoms"
+                      v-model="formData.associated_symptoms"
+                    />
                     <label for="associated_symptoms">{{
                       $t("case_history.fields.associated_symptoms")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
               </div>
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="sudden_onset" v-model="formData.sudden_onset"
-                    binary />
+                  <ToggleSwitch
+                    :disabled="!isEditable"
+                    class="mx-2"
+                    id="sudden_onset"
+                    v-model="formData.sudden_onset"
+                    binary
+                  />
                   <label for="sudden_onset">{{
                     $t("case_history.fields.sudden_onset")
-                    }}</label>
+                  }}</label>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="related_to_eating_or_activity"
-                      v-model="formData.related_to_eating_or_activity" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="related_to_eating_or_activity"
+                      v-model="formData.related_to_eating_or_activity"
+                    />
                     <label for="related_to_eating_or_activity">{{
                       $t("case_history.fields.related_to_eating_or_activity")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <TextArea :disabled="!isEditable" fluid autoResize rows="4" id="additional_details"
-                      v-model="formData.additional_details" />
+                    <TextArea
+                      :disabled="!isEditable"
+                      fluid
+                      autoResize
+                      rows="4"
+                      id="additional_details"
+                      v-model="formData.additional_details"
+                    />
                     <label for="additional_details">{{
                       $t("case_history.fields.additional_details")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
               </div>
             </div>
             <div class="flex pt-6 justify-between">
-              <Button :label="$t('case_history.actions.back')" severity="secondary"
+              <Button
+                :label="$t('case_history.actions.back')"
+                severity="secondary"
                 :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
-                :iconPos="!isRtl ? 'left' : 'right'" @click="activateCallback('6')" />
-              <Button :label="$t('case_history.actions.next')"
+                :iconPos="!isRtl ? 'left' : 'right'"
+                @click="activateCallback('6')"
+              />
+              <Button
+                :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                :iconPos="!isRtl ? 'right' : 'left'" @click="activateCallback('8')" />
+                :iconPos="!isRtl ? 'right' : 'left'"
+                @click="activateCallback('8')"
+              />
             </div>
           </StepPanel>
 
@@ -639,57 +1010,100 @@
             </div>
 
             <div class="field mt-6 w-[48%]">
-              <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="cough" v-model="formData.cough" binary />
+              <ToggleSwitch
+                :disabled="!isEditable"
+                class="mx-2"
+                id="cough"
+                v-model="formData.cough"
+                binary
+              />
               <label for="cough">{{ $t("case_history.fields.cough") }}</label>
             </div>
 
             <div class="field mt-6 w-[48%]">
               <FloatLabel>
-                <DatePicker :disabled="!isEditable" showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-d"
-                  id="cough_start_date" v-model="formData.cough_start_date" />
+                <DatePicker
+                  :disabled="!isEditable"
+                  showIcon
+                  iconDisplay="input"
+                  showButtonBar
+                  dateFormat="yy-mm-d"
+                  id="cough_start_date"
+                  v-model="formData.cough_start_date"
+                />
                 <label for="cough_start_date">{{
                   $t("case_history.fields.cough_start_date")
-                  }}</label>
+                }}</label>
               </FloatLabel>
             </div>
 
             <div class="field mt-6 w-[48%]">
               <FloatLabel>
-                <InputText :disabled="!isEditable" fluid id="cough_frequency" v-model="formData.cough_frequency" />
+                <InputText
+                  :disabled="!isEditable"
+                  fluid
+                  id="cough_frequency"
+                  v-model="formData.cough_frequency"
+                />
                 <label for="cough_frequency">{{
                   $t("case_history.fields.cough_frequency")
-                  }}</label>
+                }}</label>
               </FloatLabel>
             </div>
 
             <div class="field mt-6 w-[48%]">
               <FloatLabel>
-                <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="cough_type"
-                  v-model="formData.cough_type" :options="coughTypeOptions" />
+                <Select
+                  :disabled="!isEditable"
+                  fluid
+                  optionLabel="label"
+                  optionValue="value"
+                  id="cough_type"
+                  v-model="formData.cough_type"
+                  :options="coughTypeOptions"
+                />
                 <label for="cough_type">{{ $t("case_history.fields.cough_type") }}</label>
               </FloatLabel>
             </div>
 
             <div class="field mt-6 w-[48%]">
-              <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="breathing_difficulty"
-                v-model="formData.breathing_difficulty" binary />
+              <ToggleSwitch
+                :disabled="!isEditable"
+                class="mx-2"
+                id="breathing_difficulty"
+                v-model="formData.breathing_difficulty"
+                binary
+              />
               <label for="breathing_difficulty">{{
                 $t("case_history.fields.breathing_difficulty")
-                }}</label>
+              }}</label>
             </div>
 
             <div class="field mt-6 w-[48%]">
-              <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="sneezing" v-model="formData.sneezing" binary />
+              <ToggleSwitch
+                :disabled="!isEditable"
+                class="mx-2"
+                id="sneezing"
+                v-model="formData.sneezing"
+                binary
+              />
               <label for="sneezing">{{ $t("case_history.fields.sneezing") }}</label>
             </div>
 
             <div class="flex pt-6 justify-between">
-              <Button :label="$t('case_history.actions.back')" severity="secondary"
+              <Button
+                :label="$t('case_history.actions.back')"
+                severity="secondary"
                 :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
-                :iconPos="!isRtl ? 'left' : 'right'" @click="activateCallback('7')" />
-              <Button :label="$t('case_history.actions.next')"
+                :iconPos="!isRtl ? 'left' : 'right'"
+                @click="activateCallback('7')"
+              />
+              <Button
+                :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                :iconPos="!isRtl ? 'right' : 'left'" @click="activateCallback('9')" />
+                :iconPos="!isRtl ? 'right' : 'left'"
+                @click="activateCallback('9')"
+              />
             </div>
           </StepPanel>
           <!-- Step 9: Urinary -->
@@ -703,79 +1117,127 @@
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="urination_frequency"
-                      v-model="formData.urination_frequency" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="urination_frequency"
+                      v-model="formData.urination_frequency"
+                    />
                     <label for="urination_frequency">{{
                       $t("case_history.fields.urination_frequency")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="urine_volume"
-                      v-model="formData.urine_volume" :options="urineVolumeOptions" />
+                    <Select
+                      :disabled="!isEditable"
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="urine_volume"
+                      v-model="formData.urine_volume"
+                      :options="urineVolumeOptions"
+                    />
                     <label for="urine_volume">{{
                       $t("case_history.fields.urine_volume")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="urine_color" v-model="formData.urine_color" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="urine_color"
+                      v-model="formData.urine_color"
+                    />
                     <label for="urine_color">{{
                       $t("case_history.fields.urine_color")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="urination_type"
-                      v-model="formData.urination_type" :options="urinationTypeOptions" />
+                    <Select
+                      :disabled="!isEditable"
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="urination_type"
+                      v-model="formData.urination_type"
+                      :options="urinationTypeOptions"
+                    />
                     <label for="urination_type">{{
                       $t("case_history.fields.urination_type")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
               </div>
 
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="blood_in_urine" v-model="formData.blood_in_urine"
-                    binary />
+                  <ToggleSwitch
+                    :disabled="!isEditable"
+                    class="mx-2"
+                    id="blood_in_urine"
+                    v-model="formData.blood_in_urine"
+                    binary
+                  />
                   <label for="blood_in_urine">{{
                     $t("case_history.fields.blood_in_urine")
-                    }}</label>
+                  }}</label>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="blood_location"
-                      v-model="formData.blood_location" :options="bloodLocationOptions" />
+                    <Select
+                      :disabled="!isEditable"
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="blood_location"
+                      v-model="formData.blood_location"
+                      :options="bloodLocationOptions"
+                    />
                     <label for="blood_location">{{
                       $t("case_history.fields.blood_location")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="abnormal_urinary_discharge"
-                      v-model="formData.abnormal_urinary_discharge" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="abnormal_urinary_discharge"
+                      v-model="formData.abnormal_urinary_discharge"
+                    />
                     <label for="abnormal_urinary_discharge">{{
                       $t("case_history.fields.abnormal_urinary_discharge")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="genital_discharge"
-                      v-model="formData.genital_discharge" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="genital_discharge"
+                      v-model="formData.genital_discharge"
+                    />
                     <label for="genital_discharge">{{
                       $t("case_history.fields.genital_discharge")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch  :disabled="!isEditable" class="mx-2" id="excessive_licking_of_genital_area"
-                    v-model="formData.excessive_licking_of_genital_area" binary />
+                  <ToggleSwitch
+                    :disabled="!isEditable"
+                    class="mx-2"
+                    id="excessive_licking_of_genital_area"
+                    v-model="formData.excessive_licking_of_genital_area"
+                    binary
+                  />
                   <label for="excessive_licking_of_genital_area">
                     {{ $t("case_history.fields.excessive_licking_of_genital_area") }}
                   </label>
@@ -784,12 +1246,19 @@
             </div>
 
             <div class="flex pt-6 justify-between">
-              <Button :label="$t('case_history.actions.back')" severity="secondary"
+              <Button
+                :label="$t('case_history.actions.back')"
+                severity="secondary"
                 :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
-                :iconPos="!isRtl ? 'left' : 'right'" @click="activateCallback('8')" />
-              <Button :label="$t('case_history.actions.next')"
+                :iconPos="!isRtl ? 'left' : 'right'"
+                @click="activateCallback('8')"
+              />
+              <Button
+                :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                :iconPos="!isRtl ? 'right' : 'left'" @click="activateCallback('10')" />
+                :iconPos="!isRtl ? 'right' : 'left'"
+                @click="activateCallback('10')"
+              />
             </div>
           </StepPanel>
 
@@ -806,19 +1275,37 @@
               <div class="w-[48%]">
                 <!-- Primary Symptoms -->
                 <div class="field mt-6">
-                  <ToggleSwitch  :disabled="!isEditable" id="limping" v-model="formData.limping" binary class="mx-2" />
+                  <ToggleSwitch
+                    :disabled="!isEditable"
+                    id="limping"
+                    v-model="formData.limping"
+                    binary
+                    class="mx-2"
+                  />
                   <label for="limping">{{ $t("case_history.fields.limping") }}</label>
                 </div>
 
                 <div class="field mt-6">
-                  <ToggleSwitch  :disabled="!isEditable" id="pain" v-model="formData.pain" binary class="mx-2" />
+                  <ToggleSwitch
+                    :disabled="!isEditable"
+                    id="pain"
+                    v-model="formData.pain"
+                    binary
+                    class="mx-2"
+                  />
                   <label for="pain">{{ $t("case_history.fields.pain") }}</label>
                 </div>
 
                 <div class="field mt-6">
                   <FloatLabel>
-                    <TextArea :disabled="!isEditable" fluid autoResize rows="2" id="pain_description"
-                      v-model="formData.pain_description" />
+                    <TextArea
+                      :disabled="!isEditable"
+                      fluid
+                      autoResize
+                      rows="2"
+                      id="pain_description"
+                      v-model="formData.pain_description"
+                    />
                     <label for="pain_description">
                       {{ $t("case_history.fields.pain_description") }}
                     </label>
@@ -826,14 +1313,24 @@
                 </div>
 
                 <div class="field mt-6">
-                  <ToggleSwitch  :disabled="!isEditable" id="swelling" v-model="formData.swelling" binary class="mx-2" />
+                  <ToggleSwitch
+                    :disabled="!isEditable"
+                    id="swelling"
+                    v-model="formData.swelling"
+                    binary
+                    class="mx-2"
+                  />
                   <label for="swelling">{{ $t("case_history.fields.swelling") }}</label>
                 </div>
 
                 <div class="field mt-6">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="swelling_location"
-                      v-model="formData.swelling_location" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="swelling_location"
+                      v-model="formData.swelling_location"
+                    />
                     <label for="swelling_location">
                       {{ $t("case_history.fields.swelling_location") }}
                     </label>
@@ -841,8 +1338,13 @@
                 </div>
 
                 <div class="field mt-6">
-                  <ToggleSwitch  :disabled="!isEditable" id="visible_deformity" v-model="formData.visible_deformity" binary
-                    class="mx-2" />
+                  <ToggleSwitch
+                    :disabled="!isEditable"
+                    id="visible_deformity"
+                    v-model="formData.visible_deformity"
+                    binary
+                    class="mx-2"
+                  />
                   <label for="visible_deformity">
                     {{ $t("case_history.fields.visible_deformity") }}
                   </label>
@@ -850,8 +1352,14 @@
 
                 <div class="field mt-6">
                   <FloatLabel>
-                    <TextArea :disabled="!isEditable" fluid autoResize rows="2" id="deformity_description"
-                      v-model="formData.deformity_description" />
+                    <TextArea
+                      :disabled="!isEditable"
+                      fluid
+                      autoResize
+                      rows="2"
+                      id="deformity_description"
+                      v-model="formData.deformity_description"
+                    />
                     <label for="deformity_description">
                       {{ $t("case_history.fields.deformity_description") }}
                     </label>
@@ -864,25 +1372,52 @@
                     {{ $t("case_history.fields.affected_limbs") }}
                   </label>
                   <div class="flex flex-wrap gap-4">
-                    <ToggleSwitch  :disabled="!isEditable" v-model="formData.affected_limbs_FL" inputId="fl" name="limbs"
-                      value="FL" />
+                    <ToggleSwitch
+                      :disabled="!isEditable"
+                      v-model="formData.affected_limbs_FL"
+                      inputId="fl"
+                      name="limbs"
+                      value="FL"
+                    />
                     <label for="fl" class="mr-4">FL</label>
-                    <ToggleSwitch  :disabled="!isEditable" v-model="formData.affected_limbs_FR" inputId="fr" name="limbs"
-                      value="FR" />
+                    <ToggleSwitch
+                      :disabled="!isEditable"
+                      v-model="formData.affected_limbs_FR"
+                      inputId="fr"
+                      name="limbs"
+                      value="FR"
+                    />
                     <label for="fr" class="mr-4">FR</label>
-                    <ToggleSwitch  :disabled="!isEditable" v-model="formData.affected_limbs_HL" inputId="hl" name="limbs"
-                      value="HL" />
+                    <ToggleSwitch
+                      :disabled="!isEditable"
+                      v-model="formData.affected_limbs_HL"
+                      inputId="hl"
+                      name="limbs"
+                      value="HL"
+                    />
                     <label for="hl" class="mr-4">HL</label>
-                    <ToggleSwitch  :disabled="!isEditable" v-model="formData.affected_limbs_HR" inputId="hr" name="limbs"
-                      value="HR" />
+                    <ToggleSwitch
+                      :disabled="!isEditable"
+                      v-model="formData.affected_limbs_HR"
+                      inputId="hr"
+                      name="limbs"
+                      value="HR"
+                    />
                     <label for="hr">HR</label>
                   </div>
                 </div>
 
                 <div class="field mt-6">
                   <FloatLabel>
-                    <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="weight_bearing"
-                      v-model="formData.weight_bearing" :options="weightBearingOptions" />
+                    <Select
+                      :disabled="!isEditable"
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="weight_bearing"
+                      v-model="formData.weight_bearing"
+                      :options="weightBearingOptions"
+                    />
                     <label for="weight_bearing">
                       {{ $t("case_history.fields.weight_bearing") }}
                     </label>
@@ -895,7 +1430,12 @@
                 <!-- Symptom Details -->
                 <div class="field mt-6">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="symptom_start" v-model="formData.symptom_start" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="symptom_start"
+                      v-model="formData.symptom_start"
+                    />
                     <label for="symptom_start">
                       {{ $t("case_history.fields.symptom_start") }}
                     </label>
@@ -904,8 +1444,15 @@
 
                 <div class="field mt-6">
                   <FloatLabel>
-                    <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="progression"
-                      v-model="formData.progression" :options="progressionOptions" />
+                    <Select
+                      :disabled="!isEditable"
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="progression"
+                      v-model="formData.progression"
+                      :options="progressionOptions"
+                    />
                     <label for="progression">
                       {{ $t("case_history.fields.progression") }}
                     </label>
@@ -914,8 +1461,13 @@
 
                 <!-- Trauma History -->
                 <div class="field mt-6">
-                  <ToggleSwitch  :disabled="!isEditable" id="trauma_history" v-model="formData.trauma_history" binary
-                    class="mx-2" />
+                  <ToggleSwitch
+                    :disabled="!isEditable"
+                    id="trauma_history"
+                    v-model="formData.trauma_history"
+                    binary
+                    class="mx-2"
+                  />
                   <label for="trauma_history">
                     {{ $t("case_history.fields.trauma_history") }}
                   </label>
@@ -923,8 +1475,14 @@
 
                 <div class="field mt-6">
                   <FloatLabel>
-                    <TextArea :disabled="!isEditable" fluid autoResize rows="2" id="trauma_details"
-                      v-model="formData.trauma_details" />
+                    <TextArea
+                      :disabled="!isEditable"
+                      fluid
+                      autoResize
+                      rows="2"
+                      id="trauma_details"
+                      v-model="formData.trauma_details"
+                    />
                     <label for="trauma_details">
                       {{ $t("case_history.fields.trauma_details") }}
                     </label>
@@ -934,36 +1492,61 @@
                 <div class="flex flex-wrap">
                   <!-- Functional Impact -->
                   <div class="field mt-6">
-                    <ToggleSwitch  :disabled="!isEditable" id="exercise_induced" v-model="formData.exercise_induced" binary
-                      class="mx-2" />
+                    <ToggleSwitch
+                      :disabled="!isEditable"
+                      id="exercise_induced"
+                      v-model="formData.exercise_induced"
+                      binary
+                      class="mx-2"
+                    />
                     <label for="exercise_induced">
                       {{ $t("case_history.fields.exercise_induced") }}
                     </label>
                   </div>
                   <div class="field mt-6">
-                    <ToggleSwitch  :disabled="!isEditable" id="worse_after_rest" v-model="formData.worse_after_rest" binary
-                      class="mx-2" />
+                    <ToggleSwitch
+                      :disabled="!isEditable"
+                      id="worse_after_rest"
+                      v-model="formData.worse_after_rest"
+                      binary
+                      class="mx-2"
+                    />
                     <label for="worse_after_rest">
                       {{ $t("case_history.fields.worse_after_rest") }}
                     </label>
                   </div>
                   <div class="field mt-6">
-                    <ToggleSwitch  :disabled="!isEditable" id="difficulty_jumping" v-model="formData.difficulty_jumping"
-                      binary class="mx-2" />
+                    <ToggleSwitch
+                      :disabled="!isEditable"
+                      id="difficulty_jumping"
+                      v-model="formData.difficulty_jumping"
+                      binary
+                      class="mx-2"
+                    />
                     <label for="difficulty_jumping">
                       {{ $t("case_history.fields.difficulty_jumping") }}
                     </label>
                   </div>
                   <div class="field mt-6">
-                    <ToggleSwitch  :disabled="!isEditable" id="difficulty_stairs" v-model="formData.difficulty_stairs" binary
-                      class="mx-2" />
+                    <ToggleSwitch
+                      :disabled="!isEditable"
+                      id="difficulty_stairs"
+                      v-model="formData.difficulty_stairs"
+                      binary
+                      class="mx-2"
+                    />
                     <label for="difficulty_stairs">
                       {{ $t("case_history.fields.difficulty_stairs") }}
                     </label>
                   </div>
                   <div class="field mt-6">
-                    <ToggleSwitch  :disabled="!isEditable" id="difficulty_rising" v-model="formData.difficulty_rising" binary
-                      class="mx-2" />
+                    <ToggleSwitch
+                      :disabled="!isEditable"
+                      id="difficulty_rising"
+                      v-model="formData.difficulty_rising"
+                      binary
+                      class="mx-2"
+                    />
                     <label for="difficulty_rising">
                       {{ $t("case_history.fields.difficulty_rising") }}
                     </label>
@@ -972,9 +1555,15 @@
 
                 <div class="field mt-6">
                   <FloatLabel>
-                    <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value"
-                      id="exercise_tolerance" v-model="formData.exercise_tolerance"
-                      :options="exerciseToleranceOptions" />
+                    <Select
+                      :disabled="!isEditable"
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="exercise_tolerance"
+                      v-model="formData.exercise_tolerance"
+                      :options="exerciseToleranceOptions"
+                    />
                     <label for="exercise_tolerance">
                       {{ $t("case_history.fields.exercise_tolerance") }}
                     </label>
@@ -983,8 +1572,13 @@
 
                 <!-- Current Management -->
                 <div class="field mt-6">
-                  <ToggleSwitch  :disabled="!isEditable" id="pain_meds_given" v-model="formData.pain_meds_given" binary
-                    class="mx-2" />
+                  <ToggleSwitch
+                    :disabled="!isEditable"
+                    id="pain_meds_given"
+                    v-model="formData.pain_meds_given"
+                    binary
+                    class="mx-2"
+                  />
                   <label for="pain_meds_given">
                     {{ $t("case_history.fields.pain_meds_given") }}
                   </label>
@@ -992,8 +1586,14 @@
 
                 <div class="field mt-6">
                   <FloatLabel>
-                    <TextArea :disabled="!isEditable" fluid autoResize rows="2" id="pain_meds_details"
-                      v-model="formData.pain_meds_details" />
+                    <TextArea
+                      :disabled="!isEditable"
+                      fluid
+                      autoResize
+                      rows="2"
+                      id="pain_meds_details"
+                      v-model="formData.pain_meds_details"
+                    />
                     <label for="pain_meds_details">
                       {{ $t("case_history.fields.pain_meds_details") }}
                     </label>
@@ -1004,12 +1604,19 @@
 
             <!-- Navigation Buttons -->
             <div class="flex pt-6 justify-between">
-              <Button :label="$t('case_history.actions.back')" severity="secondary"
+              <Button
+                :label="$t('case_history.actions.back')"
+                severity="secondary"
                 :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
-                :iconPos="!isRtl ? 'left' : 'right'" @click="activateCallback('9')" />
-              <Button :label="$t('case_history.actions.next')"
+                :iconPos="!isRtl ? 'left' : 'right'"
+                @click="activateCallback('9')"
+              />
+              <Button
+                :label="$t('case_history.actions.next')"
                 :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                :iconPos="!isRtl ? 'right' : 'left'" @click="activateCallback('11')" />
+                :iconPos="!isRtl ? 'right' : 'left'"
+                @click="activateCallback('11')"
+              />
             </div>
           </StepPanel>
           <!-- Step 11: Vaccination & Medication -->
@@ -1030,37 +1637,64 @@
                 </h5>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="vaccine_name" v-model="formData.vaccine_name"
-                      :invalid="invalid.vaccine.vaccine_name" />
-                    <label for="vaccine_name">{{
-                      $t("case_history.fields.vaccine_name")
-                      }} <span class="text-red-600">*</span></label>
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="vaccine_name"
+                      v-model="formData.vaccine_name"
+                      :invalid="invalid.vaccine.vaccine_name"
+                    />
+                    <label for="vaccine_name"
+                      >{{ $t("case_history.fields.vaccine_name") }}
+                      <span class="text-red-600">*</span></label
+                    >
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <DatePicker :disabled="!isEditable" showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-d"
-                      id="vaccine_date" :invalid="invalid.vaccine.vaccine_date" v-model="formData.vaccine_date" />
-                    <label for="vaccine_date">{{
-                      $t("case_history.fields.vaccine_date")
-                      }} <span class="text-red-600">*</span></label>
+                    <DatePicker
+                      :disabled="!isEditable"
+                      showIcon
+                      iconDisplay="input"
+                      showButtonBar
+                      dateFormat="yy-mm-d"
+                      id="vaccine_date"
+                      :invalid="invalid.vaccine.vaccine_date"
+                      v-model="formData.vaccine_date"
+                    />
+                    <label for="vaccine_date"
+                      >{{ $t("case_history.fields.vaccine_date") }}
+                      <span class="text-red-600">*</span></label
+                    >
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <DatePicker :disabled="!isEditable" showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-d"
-                      id="next_due_date" v-model="formData.next_due_date" />
+                    <DatePicker
+                      :disabled="!isEditable"
+                      showIcon
+                      iconDisplay="input"
+                      showButtonBar
+                      dateFormat="yy-mm-d"
+                      id="next_due_date"
+                      v-model="formData.next_due_date"
+                    />
                     <label for="next_due_date">{{
                       $t("case_history.fields.next_due_date")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="administered_by" v-model="formData.administered_by" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="administered_by"
+                      v-model="formData.administered_by"
+                    />
                     <label for="administered_by">{{
                       $t("case_history.fields.administered_by")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
 
@@ -1071,55 +1705,91 @@
                 </h5>
                 <div class="field mt-6 w-1/2">
                   <FloatLabel class="w-[90%]">
-                    <InputText :disabled="!isEditable" fluid id="treatment_name" v-model="formData.treatment_name" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="treatment_name"
+                      v-model="formData.treatment_name"
+                    />
                     <label for="treatment_name">{{
                       $t("case_history.fields.treatment_name")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-1/2">
                   <FloatLabel class="w-[90%]">
-                    <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="treatment_type"
-                      v-model="formData.treatment_type" :options="treatmentTypeOptions" />
+                    <Select
+                      :disabled="!isEditable"
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="treatment_type"
+                      v-model="formData.treatment_type"
+                      :options="treatmentTypeOptions"
+                    />
                     <label for="treatment_type">{{
                       $t("case_history.fields.treatment_type")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="treatment_dosage"
-                      v-model="formData.treatment_dosage" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="treatment_dosage"
+                      v-model="formData.treatment_dosage"
+                    />
                     <label for="treatment_dosage">{{
                       $t("case_history.fields.dosage")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-1/2">
                   <FloatLabel class="w-[90%]">
-                    <DatePicker :disabled="!isEditable" showIcon fluid iconDisplay="input" showButtonBar
-                      dateFormat="yy-mm-d" id="administration_date" v-model="formData.administration_date" />
+                    <DatePicker
+                      :disabled="!isEditable"
+                      showIcon
+                      fluid
+                      iconDisplay="input"
+                      showButtonBar
+                      dateFormat="yy-mm-d"
+                      id="administration_date"
+                      v-model="formData.administration_date"
+                    />
                     <label for="administration_date">{{
                       $t("case_history.fields.administration_date")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-1/2">
                   <FloatLabel class="w-[90%]">
-                    <DatePicker :disabled="!isEditable" showIcon fluid iconDisplay="input" showButtonBar
-                      dateFormat="yy-mm-d" id="next_due_date" v-model="formData.treatment_next_due_date" />
+                    <DatePicker
+                      :disabled="!isEditable"
+                      showIcon
+                      fluid
+                      iconDisplay="input"
+                      showButtonBar
+                      dateFormat="yy-mm-d"
+                      id="next_due_date"
+                      v-model="formData.treatment_next_due_date"
+                    />
                     <label for="next_due_date">{{
                       $t("case_history.fields.next_due_date")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="administered_by"
-                      v-model="formData.treatment_administered_by" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="administered_by"
+                      v-model="formData.treatment_administered_by"
+                    />
                     <label for="administered_by">{{
                       $t("case_history.fields.administered_by")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
               </div>
@@ -1130,59 +1800,100 @@
                 </h5>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="medication_name" v-model="formData.medication_name" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="medication_name"
+                      v-model="formData.medication_name"
+                    />
                     <label for="medication_name">{{
                       $t("case_history.fields.medication_name")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <Select :disabled="!isEditable" fluid optionLabel="label" optionValue="value" id="medication_type"
-                      v-model="formData.medication_type" :options="medicationTypeOptions" />
+                    <Select
+                      :disabled="!isEditable"
+                      fluid
+                      optionLabel="label"
+                      optionValue="value"
+                      id="medication_type"
+                      v-model="formData.medication_type"
+                      :options="medicationTypeOptions"
+                    />
                     <label for="medication_type">{{
                       $t("case_history.fields.medication_type")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="dosage" v-model="formData.dosage" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="dosage"
+                      v-model="formData.dosage"
+                    />
                     <label for="dosage">{{ $t("case_history.fields.dosage") }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="frequency" v-model="formData.frequency" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="frequency"
+                      v-model="formData.frequency"
+                    />
                     <label for="frequency">{{
                       $t("case_history.fields.frequency")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <DatePicker :disabled="!isEditable" showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-d"
-                      id="start_date" v-model="formData.medication_start_date" />
+                    <DatePicker
+                      :disabled="!isEditable"
+                      showIcon
+                      iconDisplay="input"
+                      showButtonBar
+                      dateFormat="yy-mm-d"
+                      id="start_date"
+                      v-model="formData.medication_start_date"
+                    />
                     <label for="start_date">{{
                       $t("case_history.fields.medication_start_date")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <DatePicker :disabled="!isEditable" showIcon iconDisplay="input" showButtonBar dateFormat="yy-mm-d"
-                      id="end_date" v-model="formData.medication_end_date" />
+                    <DatePicker
+                      :disabled="!isEditable"
+                      showIcon
+                      iconDisplay="input"
+                      showButtonBar
+                      dateFormat="yy-mm-d"
+                      id="end_date"
+                      v-model="formData.medication_end_date"
+                    />
                     <label for="end_date">{{
                       $t("case_history.fields.medication_end_date")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <InputText :disabled="!isEditable" fluid id="prescribed_by" v-model="formData.prescribed_by" />
+                    <InputText
+                      :disabled="!isEditable"
+                      fluid
+                      id="prescribed_by"
+                      v-model="formData.prescribed_by"
+                    />
                     <label for="prescribed_by">{{
                       $t("case_history.fields.prescribed_by")
-                      }}</label>
+                    }}</label>
                   </FloatLabel>
                 </div>
                 <!-- Additional Notes -->
@@ -1191,11 +1902,19 @@
                 </h5>
                 <div class="field mt-6 w-2/3">
                   <FloatLabel>
-                    <TextArea :disabled="!isEditable" fluid autoResize rows="4" id="additional_notes"
-                      v-model="formData.additional_notes" :invalid="invalid.vaccine.additional_notes" />
-                    <label for="additional_notes">{{
-                      $t("case_history.fields.additional_notes")
-                      }} <span class="text-red-600">*</span></label>
+                    <TextArea
+                      :disabled="!isEditable"
+                      fluid
+                      autoResize
+                      rows="4"
+                      id="additional_notes"
+                      v-model="formData.additional_notes"
+                      :invalid="invalid.vaccine.additional_notes"
+                    />
+                    <label for="additional_notes"
+                      >{{ $t("case_history.fields.additional_notes") }}
+                      <span class="text-red-600">*</span></label
+                    >
                   </FloatLabel>
                 </div>
               </div>
@@ -1203,11 +1922,22 @@
             </div>
             <!-- </div> -->
             <div class="flex pt-6 justify-between">
-              <Button :label="$t('case_history.actions.back')" severity="secondary"
+              <Button
+                :label="$t('case_history.actions.back')"
+                severity="secondary"
                 :icon="isRtl ? 'fa-solid fa-arrow-right ' : 'fa-solid fa-arrow-left'"
-                :iconPos="!isRtl ? 'left' : 'right'" @click="() => { if (validateStep(11)) activateCallback('10') }" />
-              <Button :label="$t('case_history.actions.submit')" @click="submitForm"
-                v-if="isEditable" />
+                :iconPos="!isRtl ? 'left' : 'right'"
+                @click="
+                  () => {
+                    if (validateStep(11)) activateCallback('10');
+                  }
+                "
+              />
+              <Button
+                :label="$t('case_history.actions.submit')"
+                @click="submitForm"
+                v-if="isEditable"
+              />
               <!-- <Button
                   :label="$t('case_history.actions.next')"
                   :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
@@ -1217,7 +1947,6 @@
             </div>
           </StepPanel>
         </StepPanels>
-
       </Stepper>
     </fieldset>
   </div>
@@ -1236,6 +1965,7 @@ import TextArea from "primevue/textarea";
 import DatePicker from "primevue/datepicker";
 import Select from "primevue/select";
 import ToggleSwitch from "primevue/toggleswitch";
+import Tag from "primevue/tag";
 import Button from "primevue/button";
 import axiosInstance from "@/axios"; // Assuming you've created a global axios instance
 import eventBus from "@/eventBus";
@@ -1884,7 +2614,7 @@ const invalid = ref({
     // vaccine_date: false,
     // vaccine_name: false
     // additional_notes: false
-  }
+  },
 });
 /* const validateStep = (step) => {
   let isValid = true;
@@ -1955,7 +2685,9 @@ const validateStep = (step) => {
         vaccination_status: !formData.value.vaccination_status,
       };
       isValid = !Object.values(invalid.value.general_health).some(Boolean);
-      invalid.value.general_health.step = Object.values(invalid.value.general_health).some(Boolean);
+      invalid.value.general_health.step = Object.values(
+        invalid.value.general_health
+      ).some(Boolean);
       break;
 
     case 5: // Diet step
@@ -2186,7 +2918,7 @@ const submitForm = async () => {
 
   let hasErrors = false;
 
-  stepsToValidate.forEach(step => {
+  stepsToValidate.forEach((step) => {
     if (!validateStep(step)) {
       hasErrors = true;
     }
@@ -2194,10 +2926,10 @@ const submitForm = async () => {
 
   if (hasErrors) {
     toast.add({
-      severity: 'error',
-      summary: 'Validation Error',
-      detail: 'Please complete all required fields before submitting',
-      life: 5000
+      severity: "error",
+      summary: "Validation Error",
+      detail: "Please complete all required fields before submitting",
+      life: 5000,
     });
     return; // Stop execution if any step is invalid
   }
@@ -2411,7 +3143,7 @@ onMounted(() => {
   background: transparent !important;
   padding: 0.5rem;
 }
-div[data-p-invalid="true"]>button>.p-step-number {
+div[data-p-invalid="true"] > button > .p-step-number {
   background: red !important;
   color: white !important;
 }

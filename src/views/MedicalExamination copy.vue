@@ -22,10 +22,7 @@
             rounded
             size="small"
             class="!text-xs !text-primary mx-2"
-            @click="
-              isEditable = !isEditable;
-              console.log(medicalRecord.medical_examinations);
-            "
+            @click="isEditable = !isEditable"
           />
         </div>
       </template>
@@ -368,7 +365,7 @@
                 </StepPanel>
 
                 <!-- Step 3 -->
-                <!--                 <StepPanel value="3" v-slot="{ activateCallback }">
+                <StepPanel value="3" v-slot="{ activateCallback }">
                   <fieldset class="p-4 border rounded-lg">
                     <div class="flex flex-col gap-4">
                       <h4 class="border-b-4 rounded border-b-violet-800 w-fit font-bold">
@@ -482,232 +479,7 @@
                     </div>
                   </fieldset>
                 </StepPanel>
- -->
-                <StepPanel value="3" v-slot="{ activateCallback }">
-                  <fieldset class="p-4 border rounded-lg">
-                    <div class="flex flex-col gap-4">
-                      <h4 class="border-b-4 rounded border-b-violet-800 w-fit font-bold">
-                        {{ $t("medical_examination_form.section_titles.vital_signs") }}
-                      </h4>
-                    </div>
-                    <div class="grid grid-cols-2 gap-2 mt-3">
-                      <div class="field mt-3 w-2/3">
-                        <FloatLabel>
-                          <InputNumber
-                            fluid
-                            v-model="exam.pulse_rate"
-                            showButtons
-                            suffix=" bpm"
-                            :min="0"
-                            :max="300"
-                            :disabled="!isEditable"
-                          />
-                          <label for="pulse_rate">{{
-                            $t("medical_examination_form.fields.pulse_rate")
-                          }}</label>
-                        </FloatLabel>
-                      </div>
-                      <div class="field mt-3 w-2/3">
-                        <FloatLabel>
-                          <InputNumber
-                            fluid
-                            v-model="exam.respiratory_rate"
-                            showButtons
-                            :suffix="exam.respiratory_rate === null ? '' : ' breaths/min'"
-                            :min="0"
-                            :max="100"
-                            :disabled="!isEditable"
-                            :value="
-                              exam.respiratory_rate === null ? 0 : exam.respiratory_rate
-                            "
-                          />
-                          <label for="respiratory_rate">{{
-                            $t("medical_examination_form.fields.respiratory_rate")
-                          }}</label>
-                        </FloatLabel>
-                      </div>
-                      <div class="field mt-3 w-2/3">
-                        <FloatLabel>
-                          <Select
-                            v-model="exam.breathing_pattern"
-                            :options="breathingPatterns"
-                            optionLabel="label"
-                            optionValue="value"
-                            class="w-full"
-                            :disabled="!isEditable"
-                          />
-                          <label>{{
-                            $t("medical_examination_form.fields.breathing_pattern")
-                          }}</label>
-                        </FloatLabel>
-                      </div>
-                      <!-- Breathing Pattern Toggle -->
-                      <div class="field mt-3 w-full col-span-2">
-                        <div class="flex items-center gap-3">
-                          <label class="font-medium">
-                            {{
-                              $t(
-                                "medical_examination_form.fields.abnormal_breathing_pattern"
-                              )
-                            }}:
-                          </label>
-                          <ToggleSwitch
-                            v-model="exam.abnormal_breathing_pattern"
-                            :true-value="'abnormal'"
-                            :false-value="'normal'"
-                            :disabled="!isEditable"
-                          />
-                          <span class="text-sm">
-                            {{
-                              exam.abnormal_breathing_pattern === "abnormal"
-                                ? $t("medical_examination_form.options.abnormal")
-                                : $t("medical_examination_form.options.normal")
-                            }}
-                          </span>
-                        </div>
-                      </div>
 
-                      <!-- Abnormal Breathing Fields (shown only when breathing_pattern is abnormal) -->
-                      <div
-                        v-if="exam.abnormal_breathing_pattern === 'abnormal'"
-                        class="col-span-2 grid grid-cols-3 gap-4 bg-gray-100 dark:bg-[var(--p-surface-600)] dark:!text-white rounded-xl py-6 px-4 mt-3"
-                      >
-                        <!-- Type Select -->
-                        <div class="field mt-3">
-                          <FloatLabel>
-                            <Select
-                              v-model="exam.abnormal_breathing_type"
-                              :options="breathingTypes"
-                              optionLabel="label"
-                              optionValue="value"
-                              :disabled="!isEditable"
-                              class="w-full"
-                            />
-                            <label>{{
-                              $t(
-                                "medical_examination_form.fields.abnormal_breathing_type"
-                              )
-                            }}</label>
-                          </FloatLabel>
-                        </div>
-
-                        <!-- Severity Select -->
-                        <div class="field mt-3">
-                          <FloatLabel>
-                            <Select
-                              v-model="exam.abnormal_breathing_severity"
-                              :options="breathingSeverities"
-                              optionLabel="label"
-                              optionValue="value"
-                              :disabled="!isEditable"
-                              class="w-full"
-                            />
-                            <label>{{
-                              $t(
-                                "medical_examination_form.fields.abnormal_breathing_severity"
-                              )
-                            }}</label>
-                          </FloatLabel>
-                        </div>
-
-                        <!-- Location Select -->
-                        <div class="field mt-3">
-                          <FloatLabel>
-                            <Select
-                              v-model="exam.abnormal_breathing_location"
-                              :options="breathingLocations"
-                              optionLabel="label"
-                              optionValue="value"
-                              :disabled="!isEditable"
-                              class="w-full"
-                            />
-                            <label>{{
-                              $t(
-                                "medical_examination_form.fields.abnormal_breathing_location"
-                              )
-                            }}</label>
-                          </FloatLabel>
-                        </div>
-
-                        <!-- Breathing Notes -->
-                        <div class="field mt-3 col-span-3">
-                          <FloatLabel>
-                            <Textarea
-                              fluid
-                              id="breathing_notes"
-                              rows="2"
-                              autoResize
-                              v-model="exam.breathing_notes"
-                              :disabled="!isEditable"
-                              class="w-full"
-                            />
-                            <label for="breathing_notes">{{
-                              $t("medical_examination_form.fields.breathing_notes")
-                            }}</label>
-                          </FloatLabel>
-                        </div>
-                      </div>
-
-                      <!-- Existing fields -->
-                      <!-- <div class="field mt-3 w-2/3">
-                        <FloatLabel>
-                          <Textarea
-                            fluid
-                            id="breath_sound"
-                            rows="2"
-                            autoResize
-                            v-model="exam.breath_sound"
-                            :disabled="!isEditable"
-                          />
-                          <label for="breath_sound">{{
-                            $t("medical_examination_form.fields.breath_sound")
-                          }}</label>
-                        </FloatLabel>
-                      </div> -->
-                      <div class="field mt-3 w-2/3">
-                        <FloatLabel>
-                          <Textarea
-                            fluid
-                            id="oxygenation"
-                            rows="2"
-                            autoResize
-                            v-model="exam.oxygenation"
-                            :disabled="!isEditable"
-                          />
-                          <label for="oxygenation">{{
-                            $t("medical_examination_form.fields.oxygenation")
-                          }}</label>
-                        </FloatLabel>
-                      </div>
-                      <div class="field mt-3 w-2/3">
-                        <FloatLabel>
-                          <Textarea
-                            fluid
-                            id="capillary_refill_time"
-                            rows="2"
-                            autoResize
-                            v-model="exam.capillary_refill_time"
-                            :disabled="!isEditable"
-                          />
-                          <label for="capillary_refill_time">{{
-                            $t("medical_examination_form.fields.capillary_refill_time")
-                          }}</label>
-                        </FloatLabel>
-                      </div>
-                    </div>
-                    <div class="flex justify-between pt-4">
-                      <Button
-                        :label="$t('medical_examination_form.buttons.back')"
-                        @click="activateCallback('2')"
-                        severity="secondary"
-                      />
-                      <Button
-                        :label="$t('medical_examination_form.buttons.next')"
-                        @click="activateCallback('4')"
-                      />
-                    </div>
-                  </fieldset>
-                </StepPanel>
                 <!-- Step 4 -->
                 <StepPanel value="4" v-slot="{ activateCallback }">
                   <fieldset class="p-4 border rounded-lg">
@@ -1012,7 +784,6 @@ import Step from "primevue/step";
 import StepPanel from "primevue/steppanel";
 import axiosInstance from "@/axios";
 import eventBus from "@/eventBus";
-import ToggleSwitch from "primevue/toggleswitch";
 
 const { t, locale } = useI18n();
 const isRtl = computed(() => ["ar", "he", "fa"].includes(locale.value));
@@ -1043,124 +814,12 @@ const yesno = ref([
   { label: t("medical_examination_form.options.yes"), value: "yes" },
   { label: t("medical_examination_form.options.no"), value: "no" },
 ]);
-const breathingTypes = ref([
-  {
-    label: t("medical_examination_form.options.wheezing"),
-    en_label: "Wheezing/أزيز",
-    value: "wheezing",
-  },
-  {
-    label: t("medical_examination_form.options.stridor"),
-    en_label: "Stridor/صرير",
-    value: "stridor",
-  },
-  {
-    label: t("medical_examination_form.options.crackles"),
-    en_label: "Crackles (Rales)/خراخر / طقطقة",
-    value: "crackles",
-  },
-  {
-    label: t("medical_examination_form.options.rhonchi"),
-    en_label: "Rhonchi/خرخرة",
-    value: "rhonchi",
-  },
-  {
-    label: t("medical_examination_form.options.pleural_rub"),
-    en_label: "Pleural rub/احتكاك غشاء الجنب",
-    value: "pleural_rub",
-  },
-  {
-    label: t("medical_examination_form.options.bronchial_sounds"),
-    en_label: "Bronchial sounds/أصوات قصبية",
-    value: "bronchial_sounds",
-  },
-  {
-    label: t("medical_examination_form.options.diminished_lung_sounds"),
-    en_label: "Diminished Lung Sounds/انخفاض أصوات الرئة",
-    value: "diminished_lung_sounds",
-  },
-  {
-    label: t("medical_examination_form.options.intestinal_sounds"),
-    en_label: "Intestinal Sounds in Chest/أصوات أمعاء داخل الصدر",
-    value: "intestinal_sounds",
-  },
-]);
-
-const breathingSeverities = ref([
-  {
-    label: t("medical_examination_form.options.low"),
-    value: "low",
-    en_label: "Low",
-  },
-
-  {
-    label: t("medical_examination_form.options.medium"),
-    en_label: "Medium",
-    value: "medium",
-  },
-  {
-    label: t("medical_examination_form.options.high"),
-    en_label: "High",
-    value: "high",
-  },
-]);
-
-const breathingLocations = ref([
-  {
-    label: t("medical_examination_form.options.front_left"),
-    en_label: "Front Left",
-    value: "front_left",
-  },
-  {
-    label: t("medical_examination_form.options.front_right"),
-    en_label: "Front Right",
-    value: "front_right",
-  },
-  {
-    label: t("medical_examination_form.options.back_left"),
-    en_label: "Back Left",
-    value: "back_left",
-  },
-  {
-    label: t("medical_examination_form.options.back_right"),
-    en_label: "Back Right",
-    value: "back_right",
-  },
-  {
-    label: t("medical_examination_form.options.whole_lungs"),
-    en_label: "Whole Lungs",
-    value: "whole_lungs",
-  },
-]);
-const breathingPatterns = ref([
-  {
-    label: t("medical_examination_form.options.thoracic"),
-    en_label: "Thoracic",
-    value: "thoracic",
-  },
-  {
-    label: t("medical_examination_form.options.abdominal"),
-    en_label: "Abdominal",
-    value: "abdominal",
-  },
-  {
-    label: t("medical_examination_form.options.mixed"),
-    en_label: "Mixed",
-    value: "mixed",
-  },
-  {
-    label: t("medical_examination_form.options.paradoxical"),
-    en_label: "Paradoxical",
-    value: "paradoxical",
-  },
-]);
 
 const fetchMedicalExamination = async () => {
   try {
     const response = await axiosInstance.get(
       `/medical-records/${props.medical_record_id}/examntn`
     );
-    console.log(response.data);
     medicalRecord.value = response.data;
   } catch (error) {
     console.error("Error fetching medical examination:", error);
@@ -1176,9 +835,8 @@ const showAddPhysicalExaminationModal = (medicalRecordId) => {
 };
 
 const submitForm = async (exam) => {
-  console.log(exam);
   try {
-    const response = await axiosInstance.put(`/medical-examinations/${exam.ex_id}`, exam);
+    const response = await axiosInstance.put(`/medical-examinations/${exam.id}`, exam);
 
     eventBus.emit("show-toast", {
       severity: "success",
