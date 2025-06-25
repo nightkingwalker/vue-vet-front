@@ -17,6 +17,8 @@
       dataKey="id"
       :exportFunction="beforeExportFunction"
       responsiveLayout="scroll"
+      scrollable
+      scrollHeight="75vh"
       class="rounded-xl 2xl:overflow-y-auto drop-shadow-md h-[95vh]"
       size="small"
     >
