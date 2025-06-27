@@ -216,14 +216,14 @@ const uploadFile = async () => {
     });
     emit("submitted", response.data.stats);
   } catch (error) {
-    errorMessage.value = error.response?.data?.message || error.message;
+    errorMessage.value = error.response?.data?.error || error.message;
     toast.add({
       severity: "error",
       summary: t("inventory.import.error"),
       detail: errorMessage.value,
       life: 5000,
     });
-    console.log(error);
+    console.log(error.response.data.error);
   } finally {
     isUploading.value = false;
     uploadProgress.value = 0;
