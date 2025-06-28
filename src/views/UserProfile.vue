@@ -392,13 +392,6 @@ const themes = ref([
   { label: t("themes.system"), value: "system" },
 ]);
 // Generate the QR code URL
-/* const generateQRCode = async () => {
-  try {
-    qrCodeUrl.value = await QRCode.toDataURL(qrCodeValue.value);
-  } catch (error) {
-    console.error("Error generating QR code:", error);
-  }
-}; */
 const generateQRCodeWithLogo = async (text, logoUrl) => {
   try {
     // Generate the base QR code
@@ -451,9 +444,7 @@ const generateQRCodeWithLogo = async (text, logoUrl) => {
 };
 const tfaInvalid = ref(false);
 const tfaEnabled = async () => {
-  
   if (!tfa_code.value) {
-    
     tfaInvalid.value = true;
     return;
   }
@@ -468,7 +459,7 @@ const tfaEnabled = async () => {
       !checked.value ? `/2fa/disable` : `/2fa/enable`,
       submissionData
     );
-    
+
     // emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
@@ -490,7 +481,6 @@ const tfaEnabled = async () => {
   }
 };
 const updatePassword = async () => {
-  
   loading.value = true;
   const submissionData = {
     current_password: current_password.value,
@@ -500,7 +490,7 @@ const updatePassword = async () => {
 
   try {
     const response = await axiosInstance.put(`/user/password`, submissionData);
-    
+
     // emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
@@ -585,7 +575,7 @@ const handleSubmit = async (type) => {
 
   try {
     const response = await axiosInstance.put("/user/preferences", submissionData);
-    
+
     // Update the auth store with new preferences
     // Cookies.set("language", response.data.user_language, {
     //   sameSite: "Strict",
@@ -690,7 +680,7 @@ const fetchUserDetails = async () => {
 // Form submission handler
 const submitForm = async () => {
   // try {
-  //   
+  //
   // } catch (error) {
   //   console.error("Error updating profile:", error);
   // }
@@ -702,7 +692,7 @@ const submitForm = async () => {
 
   try {
     const response = await axiosInstance.put(`/user`, submissionData);
-    
+
     // emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
@@ -730,9 +720,7 @@ const submitForm = async () => {
 };
 
 // Avatar handling (optional for file uploads)
-const dropHandler = (event) => {
-  
-};
+const dropHandler = (event) => {};
 
 const dragOverHandler = (event) => {
   event.preventDefault();
@@ -741,7 +729,7 @@ const passwordMatchError = computed(() => {
   return password_confirmation.value !== newpassword.value;
 });
 // watchEffect(() => {
-//   
+//
 //   document.documentElement.setAttribute("dir", isRtl.value ? "rtl" : "ltr");
 // });
 onMounted(() => {

@@ -222,20 +222,6 @@ const pet = ref({
   allergies: "",
 });
 
-/* const species = ref([
-  { label: t("species.avian"), value: "Avian" },
-  { label: t("species.bovine"), value: "Bovine" },
-  { label: t("species.camelid"), value: "Camelid" },
-  { label: t("species.canine"), value: "Canine" },
-  { label: t("species.caprine"), value: "Caprine" },
-  { label: t("species.cavies"), value: "Cavies" },
-  { label: t("species.cervidae"), value: "Cervidae" },
-  { label: t("species.equine"), value: "Equine" },
-  { label: t("species.feline"), value: "Feline" },
-  { label: t("species.lapine"), value: "Lapine" },
-  { label: t("species.murine"), value: "Murine" },
-  { label: t("species.ovine"), value: "Ovine" },
-]); */
 const species = ref([
   {
     label: t("species.avian"),

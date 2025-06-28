@@ -369,34 +369,6 @@ const handleKeyDown = (event) => {
 };
 
 // ============== DARK MODE HANDLING ==============
-/* function initializeTheme() {
-  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  
-  // Priority: 1. Cookie 2. LocalStorage 3. System preference
-  const cookieTheme = Cookies.get("theme");
-  
-  const savedTheme = localStorage.getItem("theme");
-
-  let shouldBeDark = false;
-
-  if (cookieTheme) {
-    shouldBeDark = cookieTheme === "system"
-      ? systemPrefersDark
-      : cookieTheme === "dark";
-  } else if (savedTheme) {
-    shouldBeDark = savedTheme === "dark";
-  } else {
-    shouldBeDark = systemPrefersDark;
-  }
-  
-  // Apply the theme
-  if (shouldBeDark) {
-    isDarkMode.value = true;
-    document.documentElement.classList.add("dark");
-    titleDark.value = t("app.theme.light_mode");
-  }
-}
- */
 function toggleDarkMode() {
   isDarkMode.value = !isDarkMode.value;
 
@@ -525,7 +497,7 @@ onMounted(async () => {
   online.value = await $connectivity.getOnlineStatus();
   const interval = setInterval(async () => {
     online.value = await $connectivity.getOnlineStatus();
-     // Changed to console.log
+    // Changed to console.log
   }, 5000);
   // const savedTheme = localStorage.getItem("theme");
   // if (savedTheme === "dark") {
@@ -691,7 +663,6 @@ button:hover {
   max-width: 30px !important;
 }
 
-/* } */
 
 /* Profile link adjustments */
 .collapsed-menu .router-link {
@@ -714,8 +685,6 @@ button:hover {
   margin-right: 0 !important;
 }
 
-/* } */
-/* } */
 
 /* Expanded Menu Styles */
 .expanded-menu .expanded-menu .menu-item-label,

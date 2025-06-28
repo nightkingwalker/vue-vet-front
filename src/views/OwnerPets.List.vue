@@ -4,9 +4,6 @@
       <div
         class="flex flex-col md:flex-row justify-between items-start md:items-center bg-surface-300 rounded-t-lg gap-2"
       >
-        <!-- <h2 class="text-lg md:text-xl font-semibold text-surface-0">
-          {{ ownerName }} {{ $t("owner_pet_list.title") }}
-        </h2> -->
         <Breadcrumb :model="items">
           <template #item="{ item, props }">
             <router-link
@@ -277,7 +274,6 @@ const onPageChange = (event) => {
   itemsPerPage.value = event.rows;
   currentPage.value = event.page + 1; // PrimeVue Paginator uses zero-based index
   fetchPets(currentPage.value); // Fetch pets for the new page
-  
 };
 const onSearchChange = () => {
   if (searchQuery.value.length < 3) {
@@ -322,7 +318,6 @@ const fetchPets = async (page = 1) => {
 };
 const inputFocused = ref(false);
 const clearFilters = () => {
-  
   loading.value = true; // Set loading state to true to show skeletons
   currentPage.value = 1;
   searchQuery.value = "";
@@ -458,7 +453,6 @@ onMounted(() => {
     isModalVisible.value = true;
   }
   eventBus.on("AddPet", () => {
-    
     isModalVisible.value = true;
   });
   window.addEventListener("keydown", handleKeydown);

@@ -156,17 +156,6 @@
             />
           </template>
         </template>
-        <!-- <template #filter>
-          <Dropdown
-            v-model="filters.category.value"
-            :options="categories"
-            optionLabel="label"
-            optionValue="value"
-            :placeholder="$t('inventory.columns.category')"
-            class="p-column-filter"
-            @change="onCategoryFilterChange"
-          />
-        </template> -->
       </Column>
 
       <!-- Type Column -->
@@ -549,7 +538,7 @@ const showImportModal = () => {
 const editItem = (item) => {
   editMode.value = true;
   selectedItem.value = { ...item };
-  
+
   isModalVisible.value = true;
 };
 
@@ -594,7 +583,6 @@ const resetForm = () => {
 //   return data.data[data.field];
 // };
 const beforeExportFunction = (data, field) => {
-  
   if (data.field === "expiry_date") {
     return formatDate(data.data);
   } else {
@@ -622,7 +610,7 @@ const fetchInventoryItems = async (page = 1) => {
     if (filters.value.category.value) {
       url += `&category=${filters.value.category.value}`;
     }
-    
+
     const response = await axiosInstance.get(url);
     inventoryItems.value = response.data.data.data;
     totalRecords.value = response.data.data.total;
@@ -672,7 +660,6 @@ onMounted(() => {
   fetchInventoryItems();
   window.addEventListener("keydown", handleKeydown);
   eventBus.on("AddInventoryItem", () => {
-    
     isModalVisible.value = true;
   });
 });

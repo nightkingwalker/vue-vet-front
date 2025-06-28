@@ -1622,8 +1622,6 @@
           <!-- Step 11: Vaccination & Medication -->
 
           <StepPanel v-slot="{ activateCallback }" value="11">
-            <!-- <div class="flex flex-wrap"></div> -->
-            <!-- <div class="flex flex-wrap"> -->
             <div class="flex flex-col gap-4">
               <h4 class="border-b-4 rounded border-b-violet-800 w-fit font-bold">
                 {{ $t("case_history.steps.vaccination_medication") }}
@@ -1918,9 +1916,7 @@
                   </FloatLabel>
                 </div>
               </div>
-              <!-- </div> -->
             </div>
-            <!-- </div> -->
             <div class="flex pt-6 justify-between">
               <Button
                 :label="$t('case_history.actions.back')"
@@ -1938,12 +1934,6 @@
                 @click="submitForm"
                 v-if="isEditable"
               />
-              <!-- <Button
-                  :label="$t('case_history.actions.next')"
-                  :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                  :iconPos="!isRtl ? 'right' : 'left'"
-                  @click="activateCallback('11')"
-                /> -->
             </div>
           </StepPanel>
         </StepPanels>
@@ -1992,222 +1982,114 @@ const isRtl = computed(() => ["ar", "he", "fa"].includes(locale.value));
 
 const isEditable = ref(false);
 const activeStep = ref("1");
-const formData = ref(
-  /*{
-    symptom_description: "No signs of pregnancy 6 weeks post-mating",
-    start_date: "2025-03-10",
-    symptom_progression: "constant",
-    medication_given: false,
-    medication_name: null,
-    medication_dosage: null,
-    prescribed_by: null,
-    activity_level: "active",
-    vaccination_status: "complete",
-    care_location: "home",
-    other_animals_in_household: true,
-    number_of_other_animals: 2,
-    types_of_other_animals: "1 male cat, 1 female dog",
-    previous_diseases_in_other_animals: "None",
-    last_reproductive_cycle_date: "2025-02-20",
-    cycle_length: 7,
-    notable_signs: "No nipple enlargement, no weight gain",
-    other_discharges: "None",
-    itching_present: false,
-    itching_location: null,
-    itching_description: null,
-    skin_condition_description: "Normal",
-    diet_type: "canned",
-    diet_details: "Premium grain-free poultry",
-    number_of_meals: 3,
-    meal_quantity: "200g",
-    appetite: "good",
-    recent_diet_change: false,
-    diet_change_type: null,
-    water_intake: "normal",
-    vomiting: false,
-    vomit_color: null,
-    vomit_contents: null,
-    vomit_smell: null,
-    vomiting_frequency: 0,
-    vomiting_related_to_food: false,
-    vomiting_related_to_diarrhea: false,
-    diarrhea_started_first: false,
-    stool_consistency: "normal",
-    stool_color: "brown",
-    stool_frequency: 1,
-    abnormal_stool_contents: null,
-    excessive_licking_of_anus: false,
-    neurological_signs: "other",
-    neurological_signs_frequency: "once this month",
-    associated_symptoms: "Mild disorientation",
-    sudden_onset: true,
-    related_to_eating_or_activity: "Signs appear after high activity",
-    additional_details: "Owner reports successful mating observed 6 weeks ago.",
-    cough: false,
-    cough_start_date: null,
-    cough_frequency: null,
-    cough_type: null,
-    breathing_difficulty: false,
-    sneezing: false,
-    urination_frequency: 4,
-    frequent_litter_box_visits: false,
-    urine_volume: "small",
-    urine_color: "pale yellow",
-    urination_type: "continuous",
-    blood_in_urine: false,
-    blood_location: null,
-    abnormal_urinary_discharge: null,
-    genital_discharge: "None",
-    excessive_licking_of_genital_area: false,
-    vaccine_name: "FVRCP",
-    vaccine_date: "2025-01-15",
-    next_due_date: "2026-01-15",
-    administered_by: "Dr. Lee",
-    medication_type: "other",
-    dosage: "10mg",
-    frequency: "Once daily",
-    medication_start_date: "2025-02-01",
-    medication_end_date: "2025-02-10",
-    treatment_name: "Advocate Spot-On",
-    treatment_type: "flea",
-    treatment_dosage: "1 pipette",
-    administration_date: "2025-03-01",
-    treatment_next_due_date: "2025-04-01",
-    treatment_administered_by: "Nurse Sara",
-    additional_notes:
-      "Recommend ultrasound to confirm pregnancy status. Rule out pseudopregnancy.",
-    limping: true,
-    pain: true,
-    pain_description: "Mild pain in hind left leg when walking",
-    swelling: false,
-    swelling_location: null,
-    visible_deformity: false,
-    deformity_description: null,
-    affected_limbs: ["HL"],
-    weight_bearing: "partial",
-    symptom_start: "2025-03-08 after playtime",
-    progression: "static",
-    trauma_history: true,
-    trauma_details: "Jumped off high surface 5 days ago",
-    exercise_induced: true,
-    worse_after_rest: false,
-    difficulty_jumping: true,
-    difficulty_stairs: false,
-    difficulty_rising: false,
-    exercise_tolerance: "reduced",
-    pain_meds_given: true,
-    pain_meds_details: "Meloxicam oral, 0.05mg/kg SID for 5 days",
-    other_treatments: "Cold compress on affected limb",
-  }*/
-  {
-    symptom_description: "",
-    start_date: null,
-    symptom_progression: "",
-    medication_given: false,
-    medication_name: "",
-    medication_dosage: "",
-    prescribed_by: "",
-    activity_level: "",
-    vaccination_status: "",
-    care_location: "",
-    other_animals_in_household: false,
-    number_of_other_animals: null,
-    types_of_other_animals: "",
-    previous_diseases_in_other_animals: "",
-    last_reproductive_cycle_date: null,
-    cycle_length: null,
-    notable_signs: "",
-    other_discharges: "",
-    itching_present: false,
-    itching_location: "",
-    itching_description: "",
-    skin_condition_description: "",
-    diet_type: "",
-    diet_details: "",
-    number_of_meals: null,
-    meal_quantity: "",
-    appetite: "",
-    recent_diet_change: false,
-    diet_change_type: "",
-    water_intake: "",
-    vomiting: false,
-    vomit_color: "",
-    vomit_contents: "",
-    vomit_smell: "",
-    vomiting_frequency: null,
-    vomiting_related_to_food: false,
-    vomiting_related_to_diarrhea: false,
-    diarrhea_started_first: false,
-    stool_consistency: "",
-    stool_color: "",
-    stool_frequency: null,
-    abnormal_stool_contents: "",
-    excessive_licking_of_anus: false,
-    neurological_signs: null,
-    neurological_signs_frequency: "",
-    associated_symptoms: "",
-    sudden_onset: false,
-    related_to_eating_or_activity: "",
-    additional_details: "",
-    cough: false,
-    cough_start_date: null,
-    cough_frequency: "",
-    cough_type: "",
-    breathing_difficulty: false,
-    sneezing: false,
-    urination_frequency: null,
-    frequent_litter_box_visits: false,
-    urine_volume: null,
-    urine_color: "",
-    urination_type: "",
-    blood_in_urine: false,
-    blood_location: "",
-    abnormal_urinary_discharge: "",
-    genital_discharge: "",
-    excessive_licking_of_genital_area: false,
-    vaccine_name: "",
-    vaccine_date: null,
-    next_due_date: null,
-    administered_by: "",
-    medication_type: "",
-    dosage: "",
-    frequency: "",
-    medication_start_date: null,
-    medication_end_date: null,
-    treatment_name: "",
-    treatment_type: "",
-    treatment_dosage: "",
-    administration_date: null,
-    treatment_next_due_date: null,
-    treatment_administered_by: "",
-    additional_notes: "",
-    // Musculoskeletal Fields
-    limping: false,
-    pain: false,
-    pain_description: "",
-    swelling: false,
-    swelling_location: "",
-    visible_deformity: false,
-    deformity_description: "",
-    affected_limbs_FL: false,
-    affected_limbs_FR: false,
-    affected_limbs_HL: false,
-    affected_limbs_HR: false,
-    weight_bearing: null,
-    symptom_start: "",
-    progression: null,
-    trauma_history: false,
-    trauma_details: "",
-    exercise_induced: false,
-    worse_after_rest: false,
-    difficulty_jumping: false,
-    difficulty_stairs: false,
-    difficulty_rising: false,
-    exercise_tolerance: null,
-    pain_meds_given: false,
-    pain_meds_details: "",
-  }
-);
+const formData = ref({
+  symptom_description: "",
+  start_date: null,
+  symptom_progression: "",
+  medication_given: false,
+  medication_name: "",
+  medication_dosage: "",
+  prescribed_by: "",
+  activity_level: "",
+  vaccination_status: "",
+  care_location: "",
+  other_animals_in_household: false,
+  number_of_other_animals: null,
+  types_of_other_animals: "",
+  previous_diseases_in_other_animals: "",
+  last_reproductive_cycle_date: null,
+  cycle_length: null,
+  notable_signs: "",
+  other_discharges: "",
+  itching_present: false,
+  itching_location: "",
+  itching_description: "",
+  skin_condition_description: "",
+  diet_type: "",
+  diet_details: "",
+  number_of_meals: null,
+  meal_quantity: "",
+  appetite: "",
+  recent_diet_change: false,
+  diet_change_type: "",
+  water_intake: "",
+  vomiting: false,
+  vomit_color: "",
+  vomit_contents: "",
+  vomit_smell: "",
+  vomiting_frequency: null,
+  vomiting_related_to_food: false,
+  vomiting_related_to_diarrhea: false,
+  diarrhea_started_first: false,
+  stool_consistency: "",
+  stool_color: "",
+  stool_frequency: null,
+  abnormal_stool_contents: "",
+  excessive_licking_of_anus: false,
+  neurological_signs: null,
+  neurological_signs_frequency: "",
+  associated_symptoms: "",
+  sudden_onset: false,
+  related_to_eating_or_activity: "",
+  additional_details: "",
+  cough: false,
+  cough_start_date: null,
+  cough_frequency: "",
+  cough_type: "",
+  breathing_difficulty: false,
+  sneezing: false,
+  urination_frequency: null,
+  frequent_litter_box_visits: false,
+  urine_volume: null,
+  urine_color: "",
+  urination_type: "",
+  blood_in_urine: false,
+  blood_location: "",
+  abnormal_urinary_discharge: "",
+  genital_discharge: "",
+  excessive_licking_of_genital_area: false,
+  vaccine_name: "",
+  vaccine_date: null,
+  next_due_date: null,
+  administered_by: "",
+  medication_type: "",
+  dosage: "",
+  frequency: "",
+  medication_start_date: null,
+  medication_end_date: null,
+  treatment_name: "",
+  treatment_type: "",
+  treatment_dosage: "",
+  administration_date: null,
+  treatment_next_due_date: null,
+  treatment_administered_by: "",
+  additional_notes: "",
+  // Musculoskeletal Fields
+  limping: false,
+  pain: false,
+  pain_description: "",
+  swelling: false,
+  swelling_location: "",
+  visible_deformity: false,
+  deformity_description: "",
+  affected_limbs_FL: false,
+  affected_limbs_FR: false,
+  affected_limbs_HL: false,
+  affected_limbs_HR: false,
+  weight_bearing: null,
+  symptom_start: "",
+  progression: null,
+  trauma_history: false,
+  trauma_details: "",
+  exercise_induced: false,
+  worse_after_rest: false,
+  difficulty_jumping: false,
+  difficulty_stairs: false,
+  difficulty_rising: false,
+  exercise_tolerance: null,
+  pain_meds_given: false,
+  pain_meds_details: "",
+});
 const symptomProgressionOptions = [
   {
     label: t("case_history.options.symptom_progression.increasing"),
@@ -2713,7 +2595,6 @@ const validateStep = (step) => {
       isValid = true;
   }
 
-  
   return isValid;
 };
 const fetchHistory = async (medicalRecordId) => {
@@ -2896,18 +2777,12 @@ const fetchHistory = async (medicalRecordId) => {
       } else if (typeof musc.affected_limbs === "string") {
         affectedLimbs = musc.affected_limbs.split(",");
       }
-      
-      
-      
-      
-      
+
       formData.value.affected_limbs_FL = affectedLimbs.includes("FL");
       formData.value.affected_limbs_FR = affectedLimbs.includes("FR");
       formData.value.affected_limbs_HL = affectedLimbs.includes("HL");
       formData.value.affected_limbs_HR = affectedLimbs.includes("HR");
     }
-
-    
   } catch (error) {
     console.error("Error fetching history:", error);
   }
@@ -3074,7 +2949,6 @@ const submitForm = async () => {
     delete payload.affected_limbs_HL;
     delete payload.affected_limbs_HR;
 
-    
     // Submit to backend
     const response = await axiosInstance.put(
       `/medical-records/history/${props.medical_record_id}`,
@@ -3082,7 +2956,6 @@ const submitForm = async () => {
       payload
     );
 
-    
     emit("CaseHistoryUpdated", response.data);
 
     eventBus.emit("show-toast", {
@@ -3096,21 +2969,19 @@ const submitForm = async () => {
   }
 };
 function setActivePanel(panel) {
-  
   activeStep.value = "panel";
 }
 onMounted(() => {
   const medicalRecordId = 31; // Replace with the actual ID
   fetchHistory(medicalRecordId);
   eventBus.on("handleCaseHistorySuccessfully", async () => {
-    
     await fetchHistory(medicalRecordId);
-     // Debugging
+    // Debugging
     activeStep.value = "2"; // Move to step 1
     await nextTick(); // Wait for the DOM to update
 
     activeStep.value = "1"; // Move to step 1
-     // Debugging
+    // Debugging
     isEditable.value = false;
   });
 });

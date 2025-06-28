@@ -649,21 +649,6 @@
                       </div>
 
                       <!-- Existing fields -->
-                      <!-- <div class="field mt-3 w-2/3">
-                        <FloatLabel>
-                          <Textarea
-                            fluid
-                            id="breath_sound"
-                            rows="2"
-                            autoResize
-                            v-model="exam.breath_sound"
-                            :disabled="!isEditable"
-                          />
-                          <label for="breath_sound">{{
-                            $t("medical_examination_form.fields.breath_sound")
-                          }}</label>
-                        </FloatLabel>
-                      </div> -->
                       <div class="field mt-3 w-2/3">
                         <FloatLabel>
                           <Textarea
@@ -1204,7 +1189,6 @@ const submitForm = async (exam) => {
 onMounted(() => {
   fetchMedicalExamination();
   eventBus.on("PhysicalExaminationAddedSuccessfully", (event) => {
-    
     fetchMedicalExamination();
   });
 });

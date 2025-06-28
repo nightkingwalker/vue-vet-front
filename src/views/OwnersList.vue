@@ -204,12 +204,6 @@
                       : $t('owners.actions.view_details')
                   "
                 />
-                <!-- <Button
-                  icon="pi pi-trash"
-                  @click="deactivateAccount(owner)"
-                  class="p-button-text text-surface-300 hover:text-rose-400 text-sm md:text-base"
-                  v-tooltip.top="$t('owners.actions.deactivate')"
-                /> -->
                 <Button
                   :icon="owner.status ? 'pi pi-trash' : 'pi pi-replay'"
                   @click="deactivateAccount(owner)"
@@ -428,7 +422,6 @@ const handleStatusUpdate = async (owner) => {
 };
 
 const editOwner = (owner) => {
-  
   selectedOwner.value = owner;
   isEditOwnerVisible.value = true;
 };
@@ -463,7 +456,7 @@ const editOwner = (owner) => {
 //     }));
 
 //     // const response = await axiosInstance.get("/owners");
-//     
+//
 //     totalRecords.value = response.data.total;
 //     currentPage.value = response.data.current_page;
 //     // owners.value = response.data.data;
@@ -472,7 +465,7 @@ const editOwner = (owner) => {
 //     console.error("Failed to fetch owners:", error);
 //     loading.value = false; // Ensure loading is set to false even on error
 //   }
-//   //   
+//   //
 // };
 
 const fetchOwners = async (page = 1) => {
@@ -483,7 +476,7 @@ const fetchOwners = async (page = 1) => {
         searchQuery.value
       }&show_deactivated=${showDeactivated.value ? 1 : 0}`
     );
-    
+
     owners.value = response.data.data.map((owner) => ({
       id: owner.id.toString(),
       name: owner.name,
@@ -510,7 +503,6 @@ const fetchOwners = async (page = 1) => {
 
 const deactivateClient = async (data) => {
   try {
-    
     // Make the POST request to the API to create a new client
     const response = await axiosInstance.post("/owners", owner.value);
 
@@ -558,17 +550,14 @@ const onPageChange = (event) => {
   itemsPerPage.value = event.rows;
   currentPage.value = event.page + 1; // PrimeVue Paginator uses zero-based index
   fetchOwners(currentPage.value); // Fetch pets for the new page
-  
 };
 const clearFilters = () => {
-  
   currentPage.value = 1;
   searchQuery.value = "";
   fetchOwners(currentPage.value);
 };
 // Handle the submit event from the child component
 const handleSubmit = async (data) => {
-  
   // isModalVisible.value = false;
   // fetchOwners(); // Refresh the owners list
   // await router.push("/" + data.id + "/pets");
@@ -599,7 +588,6 @@ const goToAddOwnerPetsPage = async (ownerid) => {
 onMounted(() => {
   fetchOwners();
   eventBus.on("AddOwner", () => {
-    
     showModal();
   });
 });
@@ -654,7 +642,6 @@ onMounted(() => {
 }
 .p-scrollpanel-bar {
   --tw-bg-opacity: 1;
-  /* background-color: rgb(31 41 55 / var(--tw-bg-opacity)); */
   background: var(--p-surface-600) !important;
   border-radius: 5px;
 }

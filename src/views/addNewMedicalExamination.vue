@@ -282,115 +282,6 @@
           </StepPanel>
 
           <!-- Step 3 -->
-          <!--           <StepPanel value="3" v-slot="{ activateCallback }">
-            <fieldset class="p-4 border rounded-lg">
-              <div class="flex flex-col gap-4">
-                <h4 class="border-b-4 rounded border-b-violet-800 w-fit font-bold">
-                  {{ $t("medical_examination_form.section_titles.vital_signs") }}
-                </h4>
-              </div>
-              <div class="grid grid-cols-2 gap-2 mt-3">
-                <div class="field mt-3 w-2/3">
-                  <FloatLabel>
-                    <InputNumber
-                      fluid
-                      v-model="examination.pulse_rate"
-                      showButtons
-                      suffix=" bpm"
-                      :min="0"
-                      :max="300"
-                    />
-                    <label for="pulse_rate">{{
-                      $t("medical_examination_form.fields.pulse_rate")
-                    }}</label>
-                  </FloatLabel>
-                </div>
-                <div class="field mt-3 w-2/3">
-                  <FloatLabel>
-                    <InputNumber
-                      fluid
-                      v-model="examination.respiratory_rate"
-                      showButtons
-                      suffix=" breaths/min"
-                      :min="0"
-                      :max="100"
-                    />
-                    <label for="respiratory_rate">{{
-                      $t("medical_examination_form.fields.respiratory_rate")
-                    }}</label>
-                  </FloatLabel>
-                </div>
-                <div class="field mt-3 w-2/3">
-                  <FloatLabel>
-                    <Textarea
-                      fluid
-                      id="breathing_pattern"
-                      rows="2"
-                      autoResize
-                      v-model="examination.breathing_pattern"
-                    />
-                    <label for="breathing_pattern">{{
-                      $t("medical_examination_form.fields.breathing_pattern")
-                    }}</label>
-                  </FloatLabel>
-                </div>
-                <div class="field mt-3 w-2/3">
-                  <FloatLabel>
-                    <Textarea
-                      fluid
-                      id="breath_sound"
-                      rows="2"
-                      autoResize
-                      v-model="examination.breath_sound"
-                    />
-                    <label for="breath_sound">{{
-                      $t("medical_examination_form.fields.breath_sound")
-                    }}</label>
-                  </FloatLabel>
-                </div>
-                <div class="field mt-3 w-2/3">
-                  <FloatLabel>
-                    <Textarea
-                      fluid
-                      id="oxygenation"
-                      rows="2"
-                      autoResize
-                      v-model="examination.oxygenation"
-                    />
-                    <label for="oxygenation">{{
-                      $t("medical_examination_form.fields.oxygenation")
-                    }}</label>
-                  </FloatLabel>
-                </div>
-                <div class="field mt-3 w-2/3">
-                  <FloatLabel>
-                    <Textarea
-                      fluid
-                      id="capillary_refill_time"
-                      rows="2"
-                      autoResize
-                      v-model="examination.capillary_refill_time"
-                    />
-                    <label for="capillary_refill_time">{{
-                      $t("medical_examination_form.fields.capillary_refill_time")
-                    }}</label>
-                  </FloatLabel>
-                </div>
-              </div>
-              <div class="flex justify-between pt-4">
-                <Button
-                  :label="$t('medical_examination_form.buttons.back')"
-                  @click="activateCallback('2')"
-                  severity="secondary"
-                />
-                <Button
-                  :label="$t('medical_examination_form.buttons.next')"
-                  @click="activateCallback('4')"
-                />
-              </div>
-            </fieldset>
-          </StepPanel>
- -->
           <StepPanel value="3" v-slot="{ activateCallback }">
             <fieldset class="p-4 border rounded-lg">
               <div class="flex flex-col gap-4">
@@ -534,20 +425,7 @@
                 </div>
 
                 <!-- Existing fields -->
-                <!--                 <div class="field mt-3 w-2/3">
-                  <FloatLabel>
-                    <Textarea
-                      fluid
-                      id="breath_sound"
-                      rows="2"
-                      autoResize
-                      v-model="examination.breath_sound"
-                    />
-                    <label for="breath_sound">{{
-                      $t("medical_examination_form.fields.breath_sound")
-                    }}</label>
-                  </FloatLabel>
-                </div> -->
+
                 <div class="field mt-3 w-2/3">
                   <FloatLabel>
                     <Textarea
@@ -830,11 +708,6 @@
                 @click="activateCallback('6')"
                 severity="secondary"
               />
-              <!-- <Button
-                :label="$t('medical_examination_form.buttons.submit')"
-                type="submit"
-                @click="submitForm"
-              /> -->
               <Button
                 type="submit"
                 :disabled="isSubmitting ? true : false"
@@ -879,80 +752,44 @@ const props = defineProps({
 });
 const emit = defineEmits(["submitted"]); // Define the event to be emitted
 
-const examination = ref(
-  {
-    medical_record_id: props.medical_record_id,
-    examination_date: new Date(),
-    animal_weight: 0,
-    animal_behavior: "",
-    eyes: "",
-    eye_sunkenness: "",
-    nose: "",
-    nasal_discharge: "",
-    mouth: "",
-    teeth: "",
-    gums: "",
-    tongue: "",
-    mucous_membranes: "",
-    ears: "",
-    pulse_rate: null,
-    respiratory_rate: null,
-    breathing_pattern: "",
-    abnormal_breathing_pattern: "",
-    abnormal_breathing_type: "",
-    abnormal_breathing_severity: "",
-    abnormal_breathing_location: "",
-    breath_sound: "",
-    temperature: null,
-    oxygenation: "",
-    nervous_system: "",
-    skin: "",
-    skin_lumps_or_infections: "",
-    skin_coat_condition: "",
-    abdominal_palpation: "",
-    lymph_nodes: "",
-    body_condition_score: null,
-    hydration_status: "",
-    capillary_refill_time: "",
-    preliminary_diagnosis: "",
-    recommendations: "",
-    notes: "",
-  }
-  /*{
-    medical_record_id: props.medical_record_id,
-    examination_date: "2025-03-22",
-    animal_weight: 25.5,
-    animal_behavior: "Calm and cooperative during examination",
-    eyes: "Clear, no discharge or redness observed",
-    eye_sunkenness: "no",
-    nose: "No nasal discharge, normal breathing",
-    nasal_discharge: "None",
-    mouth: "Healthy gums, no lesions or abnormalities",
-    teeth: "No dental issues, clean and intact",
-    gums: "Pink and healthy, no signs of inflammation",
-    tongue: "Normal color and texture",
-    mucous_membranes: "Moist and pink, no abnormalities",
-    ears: "Clean, no signs of infection or parasites",
-    pulse_rate: 80,
-    respiratory_rate: 20,
-    breathing_pattern: "Regular and unlabored",
-    breath_sound: "Clear, no wheezing or crackles",
-    temperature: 38.5,
-    oxygenation: "Normal, SpO2 98%",
-    nervous_system: "Normal reflexes, no neurological deficits",
-    skin: "Healthy, no lesions or rashes",
-    skin_lumps_or_infections: "None",
-    skin_coat_condition: "Shiny and smooth, no signs of parasites",
-    abdominal_palpation: "Soft, no pain or abnormalities",
-    lymph_nodes: "Normal size, no swelling",
-    body_condition_score: 5,
-    hydration_status: "Normal, skin elasticity good",
-    capillary_refill_time: "2 seconds",
-    preliminary_diagnosis: "No significant abnormalities detected",
-    recommendations: "Continue regular diet and exercise. Monitor for any changes.",
-    notes: "Patient appears to be in good health. No immediate concerns.",
-  }*/
-);
+const examination = ref({
+  medical_record_id: props.medical_record_id,
+  examination_date: new Date(),
+  animal_weight: 0,
+  animal_behavior: "",
+  eyes: "",
+  eye_sunkenness: "",
+  nose: "",
+  nasal_discharge: "",
+  mouth: "",
+  teeth: "",
+  gums: "",
+  tongue: "",
+  mucous_membranes: "",
+  ears: "",
+  pulse_rate: null,
+  respiratory_rate: null,
+  breathing_pattern: "",
+  abnormal_breathing_pattern: "",
+  abnormal_breathing_type: "",
+  abnormal_breathing_severity: "",
+  abnormal_breathing_location: "",
+  breath_sound: "",
+  temperature: null,
+  oxygenation: "",
+  nervous_system: "",
+  skin: "",
+  skin_lumps_or_infections: "",
+  skin_coat_condition: "",
+  abdominal_palpation: "",
+  lymph_nodes: "",
+  body_condition_score: null,
+  hydration_status: "",
+  capillary_refill_time: "",
+  preliminary_diagnosis: "",
+  recommendations: "",
+  notes: "",
+});
 const activeStep = ref("1");
 const isSubmitting = ref(false);
 const yesno = ref([
@@ -1073,7 +910,6 @@ const breathingPatterns = ref([
 
 // Form submission
 const submitForm = async () => {
-  //const { t } = useI18n();
   if (isSubmitting.value) return;
   const submissionData = {
     ...examination.value,

@@ -172,9 +172,6 @@
         <div class="max-w-xl">
           <section>
             <header>
-              <!-- <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                Update Password
-              </h2> -->
               <p class="mt-1 text-xs text-gray-600 dark:text-gray-400">
                 Ensure your account is using a long, random password to stay secure.
               </p>
@@ -271,9 +268,6 @@
         <div class="max-w-xl">
           <section class="space-y-6">
             <header>
-              <!-- <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                Activate Two Factor Authentication
-              </h2> -->
               <p class="mt-1 text-xs text-gray-600 dark:text-gray-400">
                 Activate two-factor authentication.
               </p>
@@ -371,7 +365,6 @@ const generateQRCode = async () => {
   }
 };
 const tfaEnabled = async () => {
-  
   loading.value = true;
   const submissionData = {
     two_factor_code: tfa_code.value,
@@ -382,7 +375,7 @@ const tfaEnabled = async () => {
       !checked.value ? `/2fa/disable` : `/2fa/enable`,
       submissionData
     );
-    
+
     // emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
@@ -404,7 +397,6 @@ const tfaEnabled = async () => {
   }
 };
 const updatePassword = async () => {
-  
   loading.value = true;
   const submissionData = {
     current_password: current_password.value,
@@ -414,7 +406,7 @@ const updatePassword = async () => {
 
   try {
     const response = await axiosInstance.put(`/user/password`, submissionData);
-    
+
     // emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
@@ -466,7 +458,7 @@ const fetchUserDetails = async () => {
 // Form submission handler
 const submitForm = async () => {
   // try {
-  //   
+  //
   // } catch (error) {
   //   console.error("Error updating profile:", error);
   // }
@@ -478,7 +470,7 @@ const submitForm = async () => {
 
   try {
     const response = await axiosInstance.put(`/user`, submissionData);
-    
+
     // emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
@@ -506,9 +498,7 @@ const submitForm = async () => {
 };
 
 // Avatar handling (optional for file uploads)
-const dropHandler = (event) => {
-  
-};
+const dropHandler = (event) => {};
 
 const dragOverHandler = (event) => {
   event.preventDefault();

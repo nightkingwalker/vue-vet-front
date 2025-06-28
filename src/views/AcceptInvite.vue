@@ -43,16 +43,6 @@
               >
                 Password
               </label>
-              <!-- <Password
-                id="password"
-                v-model="form.password"
-                required
-                placeholder="Create a password"
-                class="w-full"
-                :class="{ 'p-invalid': formErrors.password }"
-                toggleMask
-                :feedback="true"
-              /> -->
               <InputGroup
                 class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 flex rounded-md overflow-hidden"
               >
@@ -159,7 +149,7 @@ const errorMessage = ref("");
 onMounted(async () => {
   try {
     const response = await axios.get(`/invitations/validate?token=${route.query.token}`);
-    
+
     clinic.value = response.data.clinic;
     role.value = response.data.role;
     validInvitation.value = true;

@@ -166,8 +166,6 @@
                       "
                       severity="warn"
                     />
-                    <!-- <Tag v-else-if="slotProps.option.quantity <= 0"
-                      :value="$t('add_invoice.items_section.out_of_stock')" severity="danger" /> -->
                     <Tag
                       v-else
                       :value="
@@ -676,15 +674,12 @@ const clearClient = () => {
 };
 
 const loadClientPets = async () => {
-  
-  
   if (!selectedClient.value) return;
 
   try {
     const response = await axiosInstance.get(`/owners/${selectedClient.value.id}/pets`);
-    
+
     clientPets.value = response.data.pets.data;
-    
   } catch (error) {
     console.error("Error loading pets:", error);
     clientPets.value = [];
@@ -694,12 +689,10 @@ const loadClientPets = async () => {
 const selectPet = (event) => {
   selectedPet.value = event.value;
   selectedPet.value.age = computeAge(selectedPet.value.date_of_birth);
-  
 };
 const selectPetProps = (pet) => {
   selectedPet.value = pet;
   selectedPet.value.age = computeAge(selectedPet.value.date_of_birth);
-  
 };
 const computeAge = (dateOfBirth) => {
   const birthDate = new Date(dateOfBirth);
@@ -735,28 +728,22 @@ if (props.pet) {
   // selectedPet.value = props.pet;
   clientPets.value = [props.pet];
   selectPetProps(props.pet);
-  
-  
-  
-  
 }
 const clearPet = () => {
   selectedPet.value = null;
 };
 
 const searchItems = async (event) => {
-  
   if (event.query.trim().length < 3) {
     filteredItems.value = [];
     return;
   }
 
   try {
-    
     const response = await axiosInstance.get("/inventory-items/search", {
       params: { branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"), query: event.query },
     });
-    
+
     filteredItems.value = response.data.data.map((item) => ({
       ...item,
       displayText: `${item.name} (${item.brand}) - $${item.selling_price}`,
@@ -868,14 +855,6 @@ const removeItem = (index) => {
   invoiceItems.value.splice(index, 1);
 };
 
-/* const loadPaymentMethods = async () => {
-  try {
-    const response = await axiosInstance.get("/payment-methods");
-    paymentMethods.value = response.data.data;
-  } catch (error) {
-    console.error("Error loading payment methods:", error);
-  }
-}; */
 const loadPaymentMethods = async () => {
   try {
     const response = await axiosInstance.get("/payment-methods");
@@ -959,7 +938,7 @@ const createInvoice = async () => {
       total_price: item.total_price,
     })),
   };
-  
+
   // Add payment if deposit is required
   if (depositRequired.value > 0) {
     payload.payments = [
@@ -972,7 +951,7 @@ const createInvoice = async () => {
       },
     ];
   }
-  
+
   try {
     const response = await axiosInstance.post("/invoices", payload);
     emit("InvoiceCreated");
@@ -1003,7 +982,7 @@ const showModal = () => {
 };
 const handleSubmit = ({ data, status, otherInfo }) => {
   isModalVisible.value = false;
-  
+
   selectItem({
     value: {
       ...data.data,

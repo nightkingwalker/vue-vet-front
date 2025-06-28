@@ -57,7 +57,6 @@
         <p>Please enter the 2FA code from your authenticator app.</p>
         <div>
           <label for="twoFactorCode">2FA Code</label>
-          <!-- <InputText id="twoFactorCode" v-model="twoFactorCode" placeholder="Enter your 2FA code" class="w-full mb-4" /> -->
           <InputOtp
             v-model="twoFactorCode"
             id="twoFactorCode"
@@ -136,7 +135,7 @@ const login = async () => {
       email: email.value,
       password: password.value,
     });
-    
+
     // Extract values from the response
     const {
       requires_2fa,

@@ -418,10 +418,10 @@ const handleGoogleSync = async () => {
       // Connect logic - get auth URL from backend first
       // const response = await axiosInstance.get("/google/connect");
       const { data } = await axiosInstance.get("/google/connect");
-      
+
       // Store current route to return after OAuth flow
       localStorage.setItem("preAuthRoute", router.currentRoute.value.fullPath);
-      
+
       // const printWindow = window.open(
       //   data.auth_url,
       //   "TEST",
@@ -533,7 +533,6 @@ const species = ref([
 ]);
 
 const getSpeciesValue = (label) => {
-  
   const found = species.value.find((species) => species.en_label === label);
   return found ? found.label : null;
 };
@@ -572,7 +571,6 @@ const currentPet = ref({
   },
 });
 const handleSubmit = (data) => {
-  
   isNewApointmentVisible.value = false;
   // currentPage.value = 1; // Reset to the first page when searching
 
@@ -587,7 +585,7 @@ const fetchAppointments = async (page = 1) => {
     const response = await axiosInstance.get(
       `/appointments?page=${page}&per_page=${itemsPerPage.value}&search=${searchQuery.value}`
     );
-    
+
     events.value = response.data.data.map((appointment) => ({
       id: appointment.id.toString(),
       title: appointment.title,
@@ -633,7 +631,6 @@ const fetchAppointments = async (page = 1) => {
     }));
     if (events.value.length > 0) {
       // currentPet.value = events.value[0];
-      
     }
     visible.value = true;
     calendarApp.eventsService.set(events.value);
@@ -848,16 +845,12 @@ const calendarApp = createCalendar({
      * 1. Selecting a date in the date picker
      * 2. Selecting a new view
      * */
-    onRangeUpdate(range) {
-      
-      
-    },
+    onRangeUpdate(range) {},
 
     /**
      * Is called when an event is updated through drag and drop
      * */
     onEventUpdate(updatedEvent) {
-      
       onEventUpdate(updatedEvent);
     },
 
@@ -865,23 +858,18 @@ const calendarApp = createCalendar({
      * Is called when an event is clicked
      * */
     onEventClick(calendarEvent) {
-      
       // visible.value = true;
       // currentPet.value = calendarEvent;
       currentPet.value = calendarEvent;
       petDetailsVisible.value = true;
-
-      
     },
 
     /**
      * Is called when clicking a date in the month grid
      * */
     onClickDate(date, event) {
-      
-      
       activeDate.value = date;
-      
+
       onRightClick();
     },
 
@@ -889,7 +877,7 @@ const calendarApp = createCalendar({
      * Is called when clicking somewhere in the time grid of a week or day view
      * */
     onClickDateTime(dateTime) {
-       // e.g. 2024-01-01 12:37
+      // e.g. 2024-01-01 12:37
       changeView(dateTime);
     },
 
@@ -897,36 +885,34 @@ const calendarApp = createCalendar({
      * Is called when selecting a day in the month agenda
      * */
     onClickAgendaDate(date) {
-       // e.g. 2024-01-01
+      // e.g. 2024-01-01
     },
 
     /**
      * Is called when double clicking a date in the month grid
      * */
     onDoubleClickDate(date) {
-       // e.g. 2024-01-01
+      // e.g. 2024-01-01
     },
 
     /**
      * Is called when double clicking somewhere in the time grid of a week or day view
      * */
     onDoubleClickDateTime(dateTime) {
-       // e.g. 2024-01-01 12:37
+      // e.g. 2024-01-01 12:37
     },
 
     /**
      * Is called when clicking the "+ N events" button of a month grid-day
      * */
     onClickPlusEvents(date) {
-       // e.g. 2024-01-01
+      // e.g. 2024-01-01
     },
 
     /**
      * Is called when the selected date is updated
      * */
-    onSelectedDateUpdate(date) {
-      
-    },
+    onSelectedDateUpdate(date) {},
 
     /**
      * Runs on resizing the calendar, to decide if the calendar should be small or not.
@@ -947,9 +933,7 @@ const calendarApp = createCalendar({
     /**
      * Runs after the calendar is rendered
      * */
-    onRender($app) {
-      
-    },
+    onRender($app) {},
   },
 
   plugins: [
@@ -979,7 +963,6 @@ const menuItems = ref([
   },
 ]);
 const onEventUpdate = async (updatedEvent) => {
-  
   const data = JSON.stringify({
     start: updatedEvent.start + `:00`, // Ensure this matches the model's field name
     end: updatedEvent.end + `:00`, // Ensure this matches the model's field name
@@ -988,14 +971,14 @@ const onEventUpdate = async (updatedEvent) => {
     type: updatedEvent.calendarId,
     status: updatedEvent.status,
   });
-  
+
   try {
     const response = await axiosInstance.put(`/appointments/${updatedEvent.id}`, data, {
       headers: {
         "Content-Type": "application/json",
       },
     });
-    
+
     eventBus.emit("show-toast", {
       severity: "success",
       summary: "Appointment Updated",
@@ -1014,11 +997,9 @@ const onEventUpdate = async (updatedEvent) => {
 };
 const addAppointment = () => {
   isNewApointmentVisible.value = true;
-  
 };
 // eventModal.close(); // close the modal
 const changeView = (date) => {
-  
   calendarControls.setDate(date);
   calendarControls.setView("day");
 };
@@ -1115,9 +1096,8 @@ watchEffect(
 const checkSyncStatus = async () => {
   try {
     const { data } = await axiosInstance.get("/google/calendar/status");
-    
+
     isGoogleSynced.value = data.connected;
-    
 
     if (data.needs_reconnect) {
       eventBus.emit("show-toast", {
@@ -1137,7 +1117,7 @@ onMounted(async () => {
   eventBus.on("themeChange", setCalendarTheme);
   // try {
   //   const response = await axiosInstance.get("/google/calendar/status");
-  //   
+  //
   //   isGoogleSynced.value = response.data.connected;
   // } catch (error) {
   //   console.error("Could not check Google Calendar status", error);
@@ -1183,9 +1163,7 @@ onMounted(async () => {
 .sx__forward-backward-navigation {
   direction: ltr;
 }
-/* .sx__week-grid {
-  max-height: 800px;
-} */
+
 .google-sync-status {
   display: inline-flex;
   align-items: center;

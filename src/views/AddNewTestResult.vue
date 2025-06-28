@@ -54,11 +54,6 @@
         </div>
       </fieldset>
       <div class="flex justify-end">
-        <!-- <Button
-          type="submit"
-          class="mt-4"
-          :label="$t('add_test_result.buttons.submit')"
-        /> -->
         <Button type="submit" :disabled="isSubmitting ? true : false">
           <i class="fa-solid fa-spinner fa-spin" v-if="isSubmitting"></i>
           <span v-else>{{ $t("add_test_result.buttons.submit") }}</span>

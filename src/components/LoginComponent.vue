@@ -113,9 +113,6 @@
           >
             {{ $t("login.forgot_password") }}
           </a>
-          <!-- <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">
-              Forgot password?
-            </a> -->
         </div>
         <div class="flex items-end justify-end">
           <button
@@ -350,7 +347,6 @@ import BranchSelection from "@/components/LoginComponentSelectBranch.vue";
 
 const { t, locale } = useI18n();
 
-
 const email = ref("");
 const password = ref("");
 const message = ref("");
@@ -410,7 +406,7 @@ const login = async () => {
       temporary_token,
       user,
     } = response.data;
-    
+
     if (requires_2fa) {
       requires2FA.value = true;
       temporaryToken.value = temporary_token;
@@ -430,13 +426,11 @@ const login = async () => {
         rememberMe.value // Pass remember_me to authStore
       );
 
-      
       // Show branch selection
       userBranches.value = user.branches;
 
       showBranchSelection.value = true;
     } else {
-      
       authStore.logIn(
         access_token,
         refresh_token,
@@ -462,7 +456,6 @@ const login = async () => {
 };
 
 const verify2FA = async () => {
-  
   if (!twoFactorCode.value || twoFactorCode.value.length !== 6) {
     tfaInvalid.value = true;
     message.value = t("two_factor.invalid_length");
@@ -493,7 +486,7 @@ const verify2FA = async () => {
       refresh_expires_in,
       user,
     } = response.data;
-    
+
     if (user.branches && user.branches.length > 1) {
       // Show branch selection
       userBranches.value = branches;

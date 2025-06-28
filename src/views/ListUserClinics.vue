@@ -234,7 +234,6 @@ const fetchClinics = async () => {
     loading.value = true;
     const response = await axios.get("/clinics");
     clinics.value = response.data;
-    
   } catch (error) {
     toast.add({
       severity: "error",
@@ -338,7 +337,6 @@ const viewBranches = async (clinic) => {
 
 // Manage clinic (only for admins/managers)
 const manageClinic = async (clinic) => {
-  
   await router.push({ path: "/" + clinic.id + "/manage" });
   toast.add({
     severity: "info",
@@ -373,7 +371,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Add any custom styles here */
 .card-header {
   border-bottom: 1px solid #e5e7eb;
 }

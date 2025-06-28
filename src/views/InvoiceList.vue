@@ -528,41 +528,6 @@ import { useToast } from "primevue/usetoast";
 
 import { ref, onMounted, onBeforeUnmount, defineAsyncComponent } from "vue";
 
-// Lazy-loaded PrimeVue components with chunk names
-// const DataTable = defineAsyncComponent(() =>
-//   import(/* webpackChunkName: "prime-datatable" */ "primevue/datatable")
-// );
-// const Column = defineAsyncComponent(() =>
-//   import(/* webpackChunkName: "prime-column" */ "primevue/column")
-// );
-// const Skeleton = defineAsyncComponent(() =>
-//   import(/* webpackChunkName: "prime-skeleton" */ "primevue/skeleton")
-// );
-// const InputText = defineAsyncComponent(() =>
-//   import(/* webpackChunkName: "prime-inputtext" */ "primevue/inputtext")
-// );
-// const InputGroupAddon = defineAsyncComponent(() =>
-//   import(/* webpackChunkName: "prime-inputgroup" */ "primevue/inputgroupaddon")
-// );
-// const InputGroup = defineAsyncComponent(() =>
-//   import(/* webpackChunkName: "prime-inputgroup" */ "primevue/inputgroup")
-// );
-// const Button = defineAsyncComponent(() =>
-//   import(/* webpackChunkName: "prime-button" */ "primevue/button")
-// );
-// const Chip = defineAsyncComponent(() =>
-//   import(/* webpackChunkName: "prime-chip" */ "primevue/chip")
-// );
-// // const Paginator = defineAsyncComponent(() =>
-// //   import(/* webpackChunkName: "prime-paginator" */ "primevue/paginator")
-// // );
-// const Dialog = defineAsyncComponent(() =>
-//   import(/* webpackChunkName: "prime-dialog" */ "primevue/dialog")
-// );
-// const Dropdown = defineAsyncComponent(() =>
-//   import(/* webpackChunkName: "prime-dropdown" */ "primevue/dropdown")
-// );
-
 // Lazy-loaded view components with loading states
 const InvoiceAdd = defineAsyncComponent({
   loader: () => import(/* webpackChunkName: "views-invoice" */ "@/views/AddInvoice.vue"),
@@ -758,7 +723,6 @@ const editInvoice = (invoice) => {
 const confirmDelete = (invoice) => {
   selectedInvoice.value = invoice;
   deleteDialogVisible.value = true;
-  
 };
 
 const deleteInvoice = async () => {
@@ -860,7 +824,7 @@ const fetchInvoices = async (page = 1) => {
 
     invoices.value = response.data.data.data;
     totalRecords.value = response.data.data.total;
-    
+
     currentPage.value = response.data.data.current_page;
   } catch (error) {
     console.error("Error fetching invoices:", error);
@@ -919,7 +883,6 @@ onMounted(() => {
   fetchInvoices();
   window.addEventListener("keydown", handleKeydown);
   eventBus.on("AddInvoice", () => {
-    
     showModal();
   });
 });

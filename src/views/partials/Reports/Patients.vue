@@ -178,15 +178,6 @@
         class="w-1/10"
         sortable
       >
-        <!-- <template v-if="loading" #body>
-          <Skeleton width="100%" height="1rem" />
-        </template>
-        <template v-else #body="slotProps">
-          <Tag
-            :value="slotProps.data.type"
-            :severity="getAppointmentTypeSeverity(slotProps.data.type)"
-          />
-        </template> -->
         <template v-if="loading" #body>
           <Skeleton width="100%" height="1rem" />
         </template>
@@ -248,14 +239,6 @@
           <Skeleton width="100%" height="1rem" />
         </template>
         <template v-else #body="slotProps">
-          <!-- <Button
-            v-if="slotProps.data.medicalrecord"
-            icon="pi pi-file-medical"
-            @click="viewMedicalRecord(slotProps.data.id)"
-            v-tooltip.top="$t('appointments.view_record')"
-            class="!text-xs !text-primary"
-            text
-          /> -->
           <router-link
             :to="`/pets/` + slotProps.data.pet.microchip_num"
             v-tooltip.top="{
@@ -392,7 +375,7 @@ const fetchAppointments = async (page = 1) => {
       url += `&sort_field=${sortField.value}`;
       url += `&sort_order=${sortOrder.value === 1 ? "asc" : "desc"}`;
     }
-    
+
     const response = await axiosInstance.get(url);
     appointments.value = response.data.data;
     totalRecords.value = response.data.totalRecords;
@@ -552,7 +535,6 @@ const eventTheme = {
 };
 
 function getEventTheme(themeName) {
-  
   return eventTheme[themeName] || eventTheme.Default; // Return the corresponding theme or null if not found
 }
 

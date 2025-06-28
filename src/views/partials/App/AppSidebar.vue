@@ -368,8 +368,6 @@ const handleMenuItemClick = () => {
   max-width: 30px !important;
 }
 
-/* } */
-
 /* Profile link adjustments */
 .collapsed-menu .router-link {
   justify-content: center;

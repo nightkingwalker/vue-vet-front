@@ -214,7 +214,6 @@
       <!-- Neuterd Column -->
       <Column class="text-md" field="neutered">
         <template #header>
-          <!-- <i class="fa-solid fa-venus-mars"></i> -->
           <i class="fa-solid fa-neuter" v-tooltip.top="`Neutered/Spayed`"></i>
         </template>
         <template #body="slotProps">
@@ -401,7 +400,6 @@ const beforeExportFunction = (data, field) => {
   } else {
     return data.data;
   }
-  
 };
 const exportCSV = (event) => {
   dt.value.exportCSV({
@@ -410,11 +408,11 @@ const exportCSV = (event) => {
 };
 // Function to fetch pets data from the API
 const fetchPets = async () => {
-  //   
+  //
   try {
     // Make the request using the axios instance with interceptors
     const response = await axiosInstance.get(`/owners/${ownerid}/pets`);
-    
+
     loading.value = false; // Stop loading once data is fetched
     eventBus.emit("show-toast", {
       severity: "success",
@@ -429,8 +427,6 @@ const fetchPets = async () => {
   }
 };
 const toggleDeceasedVisibility = () => {
-  
-  
   showDeceased.value = !showDeceased.value;
   if (showDeceased.value) {
     filters.value.deceased.value = null; // Show all
@@ -479,9 +475,7 @@ const refreshData = () => {
   loading.value = true; // Set loading state to true to show skeletons
   fetchPets(); // Fetch the pets data again
 };
-function onSelectionChange(event) {
-  
-}
+function onSelectionChange(event) {}
 </script>
 
 <style scoped>

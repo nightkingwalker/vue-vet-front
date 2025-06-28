@@ -22,11 +22,6 @@
       <template #header>
         <div class="flex justify-between items-center !m-b-1">
           <div class="flex items-center gap-2">
-            <!-- <span class="p-input-icon-left">
-                            <i class="pi pi-search" />
-                            <InputText v-model="searchQuery" :placeholder="$t('stock_movements.search')"
-                                class="!text-xs !h-8" @keyup.enter="applyFilters" />
-                        </span> -->
             <InputGroup
               class="!text-gray-800 flex !w-1/3 !h-10 rounded-md overflow-hidden border !border-gray-400"
             >
@@ -392,17 +387,10 @@ const viewInvoiceDetails = async (invoiceId) => {
   }
 };
 const viewInvoice = (referenceType, referenceId) => {
-  
   if (referenceType === "invoice") {
-    
     viewInvoiceDetails(referenceId);
   }
 };
-/* const viewInvoice = (invoiceId) => {
-    // Implement invoice viewing logic
-    
-};
- */
 onMounted(() => {
   fetchStockMovements();
   eventBus.on("stockMovementAdded", () => {

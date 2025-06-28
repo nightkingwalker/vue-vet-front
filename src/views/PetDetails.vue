@@ -484,20 +484,6 @@
             />
           </template>
         </Column>
-        <!-- <template #footer>
-          {{ $t("pet_details.total_records", { count: visits ? visits.length : 0 }) }}
-        </template> -->
-        <!-- <template #footer>
-          <Paginator
-            :rows="itemsPerPage"
-            :first="0"
-            :totalRecords="visits.length"
-            :currentPage="currentPage"
-            :rowsPerPageOptions="[5, 25, 50, 100]"
-            @page="onPageChange"
-            class="!rounded-b-xl text-xs"
-          ></Paginator>
-        </template> -->
       </DataTable>
     </div>
   </div>
@@ -1111,7 +1097,7 @@ const showAddTreatmentModal = () => {
   isNewTreatmentVisible.value = true;
 };
 const showEditTreatmentModals = (treatmentId) => {
-   // Log the treatment ID for debugging
+  // Log the treatment ID for debugging
   selectedTreatmentId.value = treatmentId; // Store the treatment ID
   isEditTreatmentVisible.value = true; // Show the dialog
 };
@@ -1196,21 +1182,21 @@ const handleAddInvoiceRequest = () => {
   // medical_record_id.value = MedicalRecordId;
   // isAddCaseHistorysVisible.value = true;
   viewDialogVisible.value = false;
-  
+
   isModalVisible.value = true;
 };
 // const handleInvoiceSubmit = () => {
 //   // medical_record_id.value = MedicalRecordId;
 //   // isAddCaseHistorysVisible.value = true;
 //   viewDialogVisible.value = false;
-//   
+//
 //   isModalVisible.value = true;
 // };
 const handleAddPaymentRequest = () => {
   // medical_record_id.value = MedicalRecordId;
   // isAddCaseHistorysVisible.value = true;
   viewDialogVisible.value = false;
-  
+
   // paymentDialogVisible.value = true;
   fetchInvoice().then(() => {
     paymentDialogVisible.value = true;
@@ -1224,7 +1210,7 @@ const showAddCaseHistoryModal = (MedicalRecordId) => {
 };
 const showEditMedicalImageModal = (medicalImageId) => {
   selectedMedicalImageId.value = medicalImageId;
-  
+
   isEditMedicalImageVisible.value = true;
 };
 const handleNewTestResult = () => {
@@ -1232,25 +1218,21 @@ const handleNewTestResult = () => {
   eventBus.emit("newTestResultAdded");
 };
 const handleSubmit = (data) => {
-  
   isNewApointmentVisible.value = false;
   // currentPage.value = 1; // Reset to the first page when searching
   fetchPets();
   // fetchAppointments();
 };
 const handleInvoiceSubmit = (data) => {
-  
   isModalVisible.value = false;
   fetchPets();
   // fetchAppointments();
 };
 const handleDetailsUpdated = (data) => {
-  
   isEditPetDetailsVisible.value = false;
   fetchPets();
 };
 const handleSubmitNewImage = (data) => {
-  
   isNewMedicalImageVisible.value = false;
   eventBus.emit("newImageAdded");
 
@@ -1260,11 +1242,9 @@ const handleSubmitNewImage = (data) => {
 };
 
 const addAppointment = () => {
-  
   isNewApointmentVisible.value = true;
 };
 const handleAppointmentUpdated = (data) => {
-  
   isEditApointmentVisible.value = false;
   fetchPets();
   // Refresh the appointments list or perform other actions
@@ -1274,7 +1254,6 @@ const handlePaymentSubmit = () => {
   fetchPets();
 };
 const editPetDetails = () => {
-  
   isEditPetDetailsVisible.value = true;
 };
 const refreshData = () => {
@@ -1386,7 +1365,6 @@ const parseResults = (resultsString) => {
   }
 };
 const getSpeciesValue = (label) => {
-  
   const found = species.value.find((species) => species.en_label === label);
   return found ? found.label : null;
 };
@@ -1504,7 +1482,7 @@ const fetchPets = async () => {
     // Make the request using the axios instance with interceptors
     const response = await axiosInstance.get(`/pets/${petmicrochip.value}`);
     pet.value = response.data;
-    
+
     visits.value = response.data.appointments;
     medical_records.value = response.data.medical_records;
     pet.value.date_of_birth = formatDateForSubmission(pet.value.date_of_birth);
@@ -1535,27 +1513,26 @@ const formatDateForSubmission = (dateString) => {
   ).padStart(2, "0")}`;
 };
 function getEventTheme(themeName) {
-  
   return eventTheme[themeName] || null; // Return the corresponding theme or null if not found
 }
 function listTreatments(MedicalRecordId) {
   medical_record_id.value = findRecordById(MedicalRecordId);
-  
+
   isTreatmentsListVisible.value = true;
 }
 function editAppointment(AppointmentID) {
   appointment_id.value = AppointmentID;
-  
+
   isEditApointmentVisible.value = true;
 }
 function listTestResults(MedicalRecordId) {
   medical_record_id.value = findRecordById(MedicalRecordId);
-  
+
   isTestResultsVisible.value = true;
 }
 function listImages(MedicalRecordId) {
   medical_record_id.value = findRecordById(MedicalRecordId);
-  
+
   isImagesListVisible.value = true;
 }
 const findRecordById = (id) => {

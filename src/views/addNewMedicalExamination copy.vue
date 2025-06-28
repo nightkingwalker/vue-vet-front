@@ -15,7 +15,10 @@
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-[95%]">
             <label for="examination_date">Examination Date</label>
-            <DatePicker showIcon  iconDisplay="input" showButtonBar
+            <DatePicker
+              showIcon
+              iconDisplay="input"
+              showButtonBar
               showTime
               hourFormat="12"
               id="examination_date"
@@ -511,76 +514,40 @@ const props = defineProps({
 });
 const emit = defineEmits(["submitted"]); // Define the event to be emitted
 
-const examination = ref(
-  /*{
-    medical_record_id: props.medical_record_id,
-    examination_date: "",
-    animal_weight: null,
-    animal_behavior: "",
-    eyes: "",
-    eye_sunkenness: "",
-    nose: "",
-    nasal_discharge: "",
-    mouth: "",
-    teeth: "",
-    gums: "",
-    tongue: "",
-    mucous_membranes: "",
-    ears: "",
-    pulse_rate: null,
-    respiratory_rate: null,
-    breathing_pattern: "",
-    breath_sound: "",
-    temperature: null,
-    oxygenation: "",
-    nervous_system: "",
-    skin: "",
-    skin_lumps_or_infections: "",
-    skin_coat_condition: "",
-    abdominal_palpation: "",
-    lymph_nodes: "",
-    body_condition_score: null,
-    hydration_status: "",
-    capillary_refill_time: "",
-    preliminary_diagnosis: "",
-    recommendations: "",
-    notes: "",
-  }*/
-  {
-    medical_record_id: props.medical_record_id,
-    examination_date: "2025-03-22",
-    animal_weight: 25.5,
-    animal_behavior: "Calm and cooperative during examination",
-    eyes: "Clear, no discharge or redness observed",
-    eye_sunkenness: "no",
-    nose: "No nasal discharge, normal breathing",
-    nasal_discharge: "None",
-    mouth: "Healthy gums, no lesions or abnormalities",
-    teeth: "No dental issues, clean and intact",
-    gums: "Pink and healthy, no signs of inflammation",
-    tongue: "Normal color and texture",
-    mucous_membranes: "Moist and pink, no abnormalities",
-    ears: "Clean, no signs of infection or parasites",
-    pulse_rate: 80,
-    respiratory_rate: 20,
-    breathing_pattern: "Regular and unlabored",
-    breath_sound: "Clear, no wheezing or crackles",
-    temperature: 38.5,
-    oxygenation: "Normal, SpO2 98%",
-    nervous_system: "Normal reflexes, no neurological deficits",
-    skin: "Healthy, no lesions or rashes",
-    skin_lumps_or_infections: "None",
-    skin_coat_condition: "Shiny and smooth, no signs of parasites",
-    abdominal_palpation: "Soft, no pain or abnormalities",
-    lymph_nodes: "Normal size, no swelling",
-    body_condition_score: 5,
-    hydration_status: "Normal, skin elasticity good",
-    capillary_refill_time: "2 seconds",
-    preliminary_diagnosis: "No significant abnormalities detected",
-    recommendations: "Continue regular diet and exercise. Monitor for any changes.",
-    notes: "Patient appears to be in good health. No immediate concerns.",
-  }
-);
+const examination = ref({
+  medical_record_id: props.medical_record_id,
+  examination_date: "2025-03-22",
+  animal_weight: 25.5,
+  animal_behavior: "Calm and cooperative during examination",
+  eyes: "Clear, no discharge or redness observed",
+  eye_sunkenness: "no",
+  nose: "No nasal discharge, normal breathing",
+  nasal_discharge: "None",
+  mouth: "Healthy gums, no lesions or abnormalities",
+  teeth: "No dental issues, clean and intact",
+  gums: "Pink and healthy, no signs of inflammation",
+  tongue: "Normal color and texture",
+  mucous_membranes: "Moist and pink, no abnormalities",
+  ears: "Clean, no signs of infection or parasites",
+  pulse_rate: 80,
+  respiratory_rate: 20,
+  breathing_pattern: "Regular and unlabored",
+  breath_sound: "Clear, no wheezing or crackles",
+  temperature: 38.5,
+  oxygenation: "Normal, SpO2 98%",
+  nervous_system: "Normal reflexes, no neurological deficits",
+  skin: "Healthy, no lesions or rashes",
+  skin_lumps_or_infections: "None",
+  skin_coat_condition: "Shiny and smooth, no signs of parasites",
+  abdominal_palpation: "Soft, no pain or abnormalities",
+  lymph_nodes: "Normal size, no swelling",
+  body_condition_score: 5,
+  hydration_status: "Normal, skin elasticity good",
+  capillary_refill_time: "2 seconds",
+  preliminary_diagnosis: "No significant abnormalities detected",
+  recommendations: "Continue regular diet and exercise. Monitor for any changes.",
+  notes: "Patient appears to be in good health. No immediate concerns.",
+});
 
 const yesno = ref([
   { label: "Yes", value: "yes" },
@@ -595,7 +562,7 @@ const submitForm = async () => {
     eye_sunkenness: examination.value.eye_sunkenness,
     respiratory_rate: examination.value.respiratory_rate + "breaths/min",
   };
-  
+
   try {
     const response = await axiosInstance.post("/medical-examinations", submissionData);
     emit("submitted", response.data); // You may modify this based on your response structure

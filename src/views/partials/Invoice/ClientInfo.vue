@@ -10,7 +10,6 @@
         {{ $t("invoice.client_info.phone") }} {{ $t("invoice.client_info.phone_masked") }}
       </div>
       <!-- Uncomment if you want to show actual phone number -->
-      <!-- <div>{{ $t('invoice.client_info.phone') }} {{ client.phone }}</div> -->
       <div>{{ $t("invoice.client_info.email") }} {{ client.email }}</div>
     </div>
   </div>

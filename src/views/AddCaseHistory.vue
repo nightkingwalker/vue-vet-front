@@ -126,7 +126,7 @@
               </div>
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch 
+                  <ToggleSwitch
                     id="medication_given"
                     v-model="formData.medication_given"
                     binary
@@ -251,7 +251,7 @@
               </div>
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch 
+                  <ToggleSwitch
                     id="other_animals_in_household"
                     v-model="formData.other_animals_in_household"
                     binary
@@ -410,7 +410,7 @@
               </h4>
             </div>
             <div class="field mt-6 w-[48%]">
-              <ToggleSwitch 
+              <ToggleSwitch
                 id="itching_present"
                 class="mx-2"
                 v-model="formData.itching_present"
@@ -555,7 +555,7 @@
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch 
+                  <ToggleSwitch
                     class="mx-2"
                     id="recent_diet_change"
                     v-model="formData.recent_diet_change"
@@ -625,7 +625,7 @@
             <div class="flex flex-wrap gap-8">
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch 
+                  <ToggleSwitch
                     class="mx-2"
                     id="vomiting"
                     v-model="formData.vomiting"
@@ -674,7 +674,7 @@
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch 
+                  <ToggleSwitch
                     class="mx-2"
                     id="vomiting_related_to_food"
                     v-model="formData.vomiting_related_to_food"
@@ -688,7 +688,7 @@
 
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch 
+                  <ToggleSwitch
                     class="mx-2"
                     id="vomiting_related_to_diarrhea"
                     v-model="formData.vomiting_related_to_diarrhea"
@@ -699,7 +699,7 @@
                   }}</label>
                 </div>
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch 
+                  <ToggleSwitch
                     class="mx-2"
                     id="diarrhea_started_first"
                     v-model="formData.diarrhea_started_first"
@@ -757,7 +757,7 @@
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch 
+                  <ToggleSwitch
                     class="mx-2"
                     id="excessive_licking_of_anus"
                     v-model="formData.excessive_licking_of_anus"
@@ -835,7 +835,7 @@
               </div>
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch 
+                  <ToggleSwitch
                     class="mx-2"
                     id="sudden_onset"
                     v-model="formData.sudden_onset"
@@ -899,7 +899,7 @@
             </div>
 
             <div class="field mt-6 w-[48%]">
-              <ToggleSwitch  class="mx-2" id="cough" v-model="formData.cough" binary />
+              <ToggleSwitch class="mx-2" id="cough" v-model="formData.cough" binary />
               <label for="cough">{{ $t("case_history.fields.cough") }}</label>
             </div>
 
@@ -947,7 +947,7 @@
             </div>
 
             <div class="field mt-6 w-[48%]">
-              <ToggleSwitch 
+              <ToggleSwitch
                 class="mx-2"
                 id="breathing_difficulty"
                 v-model="formData.breathing_difficulty"
@@ -959,7 +959,12 @@
             </div>
 
             <div class="field mt-6 w-[48%]">
-              <ToggleSwitch  class="mx-2" id="sneezing" v-model="formData.sneezing" binary />
+              <ToggleSwitch
+                class="mx-2"
+                id="sneezing"
+                v-model="formData.sneezing"
+                binary
+              />
               <label for="sneezing">{{ $t("case_history.fields.sneezing") }}</label>
             </div>
 
@@ -1042,7 +1047,7 @@
 
               <div class="w-[48%]">
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch 
+                  <ToggleSwitch
                     class="mx-2"
                     id="blood_in_urine"
                     v-model="formData.blood_in_urine"
@@ -1092,7 +1097,7 @@
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-2/3">
-                  <ToggleSwitch 
+                  <ToggleSwitch
                     class="mx-2"
                     id="excessive_licking_of_genital_area"
                     v-model="formData.excessive_licking_of_genital_area"
@@ -1135,12 +1140,17 @@
               <div class="w-[48%]">
                 <!-- Primary Symptoms -->
                 <div class="field mt-6">
-                  <ToggleSwitch  id="limping" v-model="formData.limping" binary class="mx-2" />
+                  <ToggleSwitch
+                    id="limping"
+                    v-model="formData.limping"
+                    binary
+                    class="mx-2"
+                  />
                   <label for="limping">{{ $t("case_history.fields.limping") }}</label>
                 </div>
 
                 <div class="field mt-6">
-                  <ToggleSwitch  id="pain" v-model="formData.pain" binary class="mx-2" />
+                  <ToggleSwitch id="pain" v-model="formData.pain" binary class="mx-2" />
                   <label for="pain">{{ $t("case_history.fields.pain") }}</label>
                 </div>
 
@@ -1160,7 +1170,7 @@
                 </div>
 
                 <div class="field mt-6">
-                  <ToggleSwitch 
+                  <ToggleSwitch
                     id="swelling"
                     v-model="formData.swelling"
                     binary
@@ -1183,7 +1193,7 @@
                 </div>
 
                 <div class="field mt-6">
-                  <ToggleSwitch 
+                  <ToggleSwitch
                     id="visible_deformity"
                     v-model="formData.visible_deformity"
                     binary
@@ -1215,28 +1225,28 @@
                     {{ $t("case_history.fields.affected_limbs") }}
                   </label>
                   <div class="flex flex-wrap gap-4">
-                    <ToggleSwitch 
+                    <ToggleSwitch
                       v-model="formData.affected_limbs_FL"
                       inputId="fl"
                       name="limbs"
                       value="FL"
                     />
                     <label for="fl" class="mr-4">FL</label>
-                    <ToggleSwitch 
+                    <ToggleSwitch
                       v-model="formData.affected_limbs_FR"
                       inputId="fr"
                       name="limbs"
                       value="FR"
                     />
                     <label for="fr" class="mr-4">FR</label>
-                    <ToggleSwitch 
+                    <ToggleSwitch
                       v-model="formData.affected_limbs_HL"
                       inputId="hl"
                       name="limbs"
                       value="HL"
                     />
                     <label for="hl" class="mr-4">HL</label>
-                    <ToggleSwitch 
+                    <ToggleSwitch
                       v-model="formData.affected_limbs_HR"
                       inputId="hr"
                       name="limbs"
@@ -1297,7 +1307,7 @@
 
                 <!-- Trauma History -->
                 <div class="field mt-6">
-                  <ToggleSwitch 
+                  <ToggleSwitch
                     id="trauma_history"
                     v-model="formData.trauma_history"
                     binary
@@ -1326,7 +1336,7 @@
                 <div class="flex flex-wrap">
                   <!-- Functional Impact -->
                   <div class="field mt-6">
-                    <ToggleSwitch 
+                    <ToggleSwitch
                       id="exercise_induced"
                       v-model="formData.exercise_induced"
                       binary
@@ -1337,7 +1347,7 @@
                     </label>
                   </div>
                   <div class="field mt-6">
-                    <ToggleSwitch 
+                    <ToggleSwitch
                       id="worse_after_rest"
                       v-model="formData.worse_after_rest"
                       binary
@@ -1348,7 +1358,7 @@
                     </label>
                   </div>
                   <div class="field mt-6">
-                    <ToggleSwitch 
+                    <ToggleSwitch
                       id="difficulty_jumping"
                       v-model="formData.difficulty_jumping"
                       binary
@@ -1359,7 +1369,7 @@
                     </label>
                   </div>
                   <div class="field mt-6">
-                    <ToggleSwitch 
+                    <ToggleSwitch
                       id="difficulty_stairs"
                       v-model="formData.difficulty_stairs"
                       binary
@@ -1370,7 +1380,7 @@
                     </label>
                   </div>
                   <div class="field mt-6">
-                    <ToggleSwitch 
+                    <ToggleSwitch
                       id="difficulty_rising"
                       v-model="formData.difficulty_rising"
                       binary
@@ -1400,7 +1410,7 @@
 
                 <!-- Current Management -->
                 <div class="field mt-6">
-                  <ToggleSwitch 
+                  <ToggleSwitch
                     id="pain_meds_given"
                     v-model="formData.pain_meds_given"
                     binary
@@ -1448,8 +1458,6 @@
           <!-- Step 11: Vaccination & Medication -->
 
           <StepPanel v-slot="{ activateCallback }" value="11">
-            <!-- <div class="flex flex-wrap"></div> -->
-            <!-- <div class="flex flex-wrap"> -->
             <div class="flex flex-col gap-4">
               <h4 class="border-b-4 rounded border-b-violet-800 w-fit font-bold">
                 {{ $t("case_history.steps.vaccination_medication") }}
@@ -1524,7 +1532,7 @@
                   </FloatLabel>
                 </div>
                 <div class="field mt-6 w-[49%] flex items-center">
-                  <ToggleSwitch 
+                  <ToggleSwitch
                     v-model="formData.vaccine_has_reminder"
                     :binary="true"
                     inputId="treatment_has_reminder"
@@ -1743,9 +1751,7 @@
                   </FloatLabel>
                 </div>
               </div>
-              <!-- </div> -->
             </div>
-            <!-- </div> -->
             <div class="flex pt-6 justify-between">
               <Button
                 :label="$t('case_history.actions.back')"
@@ -1759,12 +1765,6 @@
                 "
               />
               <Button :label="$t('case_history.actions.submit')" @click="submitForm" />
-              <!-- <Button
-                  :label="$t('case_history.actions.next')"
-                  :icon="isRtl ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right'"
-                  :iconPos="!isRtl ? 'right' : 'left'"
-                  @click="activateCallback('11')"
-                /> -->
             </div>
           </StepPanel>
         </StepPanels>
@@ -1819,224 +1819,115 @@ const props = defineProps({
 });
 
 const isRtl = computed(() => ["ar", "he", "fa"].includes(locale.value));
-const formData = ref(
-  /*{
-    symptom_description: "No signs of pregnancy 6 weeks post-mating",
-    start_date: "2025-03-10",
-    symptom_progression: "constant",
-    medication_given: false,
-    medication_name: null,
-    medication_dosage: null,
-    prescribed_by: null,
-    activity_level: "active",
-    vaccination_status: "complete",
-    care_location: "home",
-    other_animals_in_household: true,
-    number_of_other_animals: 2,
-    types_of_other_animals: "1 male cat, 1 female dog",
-    previous_diseases_in_other_animals: "None",
-    last_reproductive_cycle_date: "2025-02-20",
-    cycle_length: 7,
-    notable_signs: "No nipple enlargement, no weight gain",
-    other_discharges: "None",
-    itching_present: false,
-    itching_location: null,
-    itching_description: null,
-    skin_condition_description: "Normal",
-    diet_type: "canned",
-    diet_details: "Premium grain-free poultry",
-    number_of_meals: 3,
-    meal_quantity: "200g",
-    appetite: "good",
-    recent_diet_change: false,
-    diet_change_type: null,
-    water_intake: "normal",
-    vomiting: false,
-    vomit_color: null,
-    vomit_contents: null,
-    vomit_smell: null,
-    vomiting_frequency: 0,
-    vomiting_related_to_food: false,
-    vomiting_related_to_diarrhea: false,
-    diarrhea_started_first: false,
-    stool_consistency: "normal",
-    stool_color: "brown",
-    stool_frequency: 1,
-    abnormal_stool_contents: null,
-    excessive_licking_of_anus: false,
-    neurological_signs: "other",
-    neurological_signs_frequency: "once this month",
-    associated_symptoms: "Mild disorientation",
-    sudden_onset: true,
-    related_to_eating_or_activity: "Signs appear after high activity",
-    additional_details: "Owner reports successful mating observed 6 weeks ago.",
-    cough: false,
-    cough_start_date: null,
-    cough_frequency: null,
-    cough_type: null,
-    breathing_difficulty: false,
-    sneezing: false,
-    urination_frequency: 4,
-    frequent_litter_box_visits: false,
-    urine_volume: "small",
-    urine_color: "pale yellow",
-    urination_type: "continuous",
-    blood_in_urine: false,
-    blood_location: null,
-    abnormal_urinary_discharge: null,
-    genital_discharge: "None",
-    excessive_licking_of_genital_area: false,
-    vaccine_name: "FVRCP",
-    vaccine_date: "2025-01-15",
-    next_due_date: "2026-01-15",
-    administered_by: "Dr. Lee",
-    medication_type: "other",
-    dosage: "10mg",
-    frequency: "Once daily",
-    medication_start_date: "2025-02-01",
-    medication_end_date: "2025-02-10",
-    treatment_name: "Advocate Spot-On",
-    treatment_type: "flea",
-    treatment_dosage: "1 pipette",
-    administration_date: "2025-03-01",
-    treatment_next_due_date: "2025-04-01",
-    treatment_administered_by: "Nurse Sara",
-    additional_notes:
-      "Recommend ultrasound to confirm pregnancy status. Rule out pseudopregnancy.",
-    limping: true,
-    pain: true,
-    pain_description: "Mild pain in hind left leg when walking",
-    swelling: false,
-    swelling_location: null,
-    visible_deformity: false,
-    deformity_description: null,
-    affected_limbs: ["HL"],
-    weight_bearing: "partial",
-    symptom_start: "2025-03-08 after playtime",
-    progression: "static",
-    trauma_history: true,
-    trauma_details: "Jumped off high surface 5 days ago",
-    exercise_induced: true,
-    worse_after_rest: false,
-    difficulty_jumping: true,
-    difficulty_stairs: false,
-    difficulty_rising: false,
-    exercise_tolerance: "reduced",
-    pain_meds_given: true,
-    pain_meds_details: "Meloxicam oral, 0.05mg/kg SID for 5 days",
-    other_treatments: "Cold compress on affected limb",
-  }
-  */
-  {
-    symptom_description: "",
-    start_date: null,
-    symptom_progression: "",
-    medication_given: false,
-    medication_name: "",
-    medication_dosage: "",
-    prescribed_by: "",
-    activity_level: "",
-    vaccination_status: "",
-    care_location: "",
-    other_animals_in_household: false,
-    number_of_other_animals: null,
-    types_of_other_animals: "",
-    previous_diseases_in_other_animals: "",
-    last_reproductive_cycle_date: null,
-    cycle_length: null,
-    notable_signs: "",
-    other_discharges: "",
-    itching_present: false,
-    itching_location: "",
-    itching_description: "",
-    skin_condition_description: "",
-    diet_type: "",
-    diet_details: "",
-    number_of_meals: null,
-    meal_quantity: "",
-    appetite: "",
-    recent_diet_change: false,
-    diet_change_type: "",
-    water_intake: "",
-    vomiting: false,
-    vomit_color: "",
-    vomit_contents: "",
-    vomit_smell: "",
-    vomiting_frequency: null,
-    vomiting_related_to_food: false,
-    vomiting_related_to_diarrhea: false,
-    diarrhea_started_first: false,
-    stool_consistency: "",
-    stool_color: "",
-    stool_frequency: null,
-    abnormal_stool_contents: "",
-    excessive_licking_of_anus: false,
-    neurological_signs: null,
-    neurological_signs_frequency: "",
-    associated_symptoms: "",
-    sudden_onset: false,
-    related_to_eating_or_activity: "",
-    additional_details: "",
-    cough: false,
-    cough_start_date: null,
-    cough_frequency: "",
-    cough_type: "",
-    breathing_difficulty: false,
-    sneezing: false,
-    urination_frequency: null,
-    frequent_litter_box_visits: false,
-    urine_volume: null,
-    urine_color: "",
-    urination_type: "",
-    blood_in_urine: false,
-    blood_location: "",
-    abnormal_urinary_discharge: "",
-    genital_discharge: "",
-    excessive_licking_of_genital_area: false,
-    vaccine_name: "",
-    vaccine_date: null,
-    next_due_date: null,
-    vaccine_has_reminder: false,
-    administered_by: "",
-    medication_type: "",
-    dosage: "",
-    frequency: "",
-    medication_start_date: null,
-    medication_end_date: null,
-    treatment_name: "",
-    treatment_type: "",
-    treatment_dosage: "",
-    administration_date: null,
-    treatment_next_due_date: null,
-    treatment_administered_by: "",
-    additional_notes: "",
-    // Musculoskeletal Fields
-    limping: false,
-    pain: false,
-    pain_description: "",
-    swelling: false,
-    swelling_location: "",
-    visible_deformity: false,
-    deformity_description: "",
-    affected_limbs_FL: false,
-    affected_limbs_FR: false,
-    affected_limbs_HL: false,
-    affected_limbs_HR: false,
-    weight_bearing: null,
-    symptom_start: "",
-    progression: null,
-    trauma_history: false,
-    trauma_details: "",
-    exercise_induced: false,
-    worse_after_rest: false,
-    difficulty_jumping: false,
-    difficulty_stairs: false,
-    difficulty_rising: false,
-    exercise_tolerance: null,
-    pain_meds_given: false,
-    pain_meds_details: "",
-  }
-);
+const formData = ref({
+  symptom_description: "",
+  start_date: null,
+  symptom_progression: "",
+  medication_given: false,
+  medication_name: "",
+  medication_dosage: "",
+  prescribed_by: "",
+  activity_level: "",
+  vaccination_status: "",
+  care_location: "",
+  other_animals_in_household: false,
+  number_of_other_animals: null,
+  types_of_other_animals: "",
+  previous_diseases_in_other_animals: "",
+  last_reproductive_cycle_date: null,
+  cycle_length: null,
+  notable_signs: "",
+  other_discharges: "",
+  itching_present: false,
+  itching_location: "",
+  itching_description: "",
+  skin_condition_description: "",
+  diet_type: "",
+  diet_details: "",
+  number_of_meals: null,
+  meal_quantity: "",
+  appetite: "",
+  recent_diet_change: false,
+  diet_change_type: "",
+  water_intake: "",
+  vomiting: false,
+  vomit_color: "",
+  vomit_contents: "",
+  vomit_smell: "",
+  vomiting_frequency: null,
+  vomiting_related_to_food: false,
+  vomiting_related_to_diarrhea: false,
+  diarrhea_started_first: false,
+  stool_consistency: "",
+  stool_color: "",
+  stool_frequency: null,
+  abnormal_stool_contents: "",
+  excessive_licking_of_anus: false,
+  neurological_signs: null,
+  neurological_signs_frequency: "",
+  associated_symptoms: "",
+  sudden_onset: false,
+  related_to_eating_or_activity: "",
+  additional_details: "",
+  cough: false,
+  cough_start_date: null,
+  cough_frequency: "",
+  cough_type: "",
+  breathing_difficulty: false,
+  sneezing: false,
+  urination_frequency: null,
+  frequent_litter_box_visits: false,
+  urine_volume: null,
+  urine_color: "",
+  urination_type: "",
+  blood_in_urine: false,
+  blood_location: "",
+  abnormal_urinary_discharge: "",
+  genital_discharge: "",
+  excessive_licking_of_genital_area: false,
+  vaccine_name: "",
+  vaccine_date: null,
+  next_due_date: null,
+  vaccine_has_reminder: false,
+  administered_by: "",
+  medication_type: "",
+  dosage: "",
+  frequency: "",
+  medication_start_date: null,
+  medication_end_date: null,
+  treatment_name: "",
+  treatment_type: "",
+  treatment_dosage: "",
+  administration_date: null,
+  treatment_next_due_date: null,
+  treatment_administered_by: "",
+  additional_notes: "",
+  // Musculoskeletal Fields
+  limping: false,
+  pain: false,
+  pain_description: "",
+  swelling: false,
+  swelling_location: "",
+  visible_deformity: false,
+  deformity_description: "",
+  affected_limbs_FL: false,
+  affected_limbs_FR: false,
+  affected_limbs_HL: false,
+  affected_limbs_HR: false,
+  weight_bearing: null,
+  symptom_start: "",
+  progression: null,
+  trauma_history: false,
+  trauma_details: "",
+  exercise_induced: false,
+  worse_after_rest: false,
+  difficulty_jumping: false,
+  difficulty_stairs: false,
+  difficulty_rising: false,
+  exercise_tolerance: null,
+  pain_meds_given: false,
+  pain_meds_details: "",
+});
 
 const weightBearingOptions = [
   { label: t("case_history.options.mascuskeleton.full"), value: "full" },
@@ -2248,11 +2139,9 @@ const validateStep = (step) => {
       isValid = true;
   }
 
-  
   return isValid;
 };
 const onStepChange = async ({ step, callback }) => {
-  
   // Validate current step before leaving
   // if (!validateStep(activeStep.value)) {
   //   toast.add({
@@ -2451,9 +2340,6 @@ const submitForm = async () => {
     if (formData.value.affected_limbs_HR) affectedLimbs.push("HR");
     formData.value.affected_limbs = affectedLimbs.length > 0 ? affectedLimbs : null;
 
-    
-    
-
     // Send formData to the storeHistory endpoint
     const response = await axiosInstance.post(
       `/medical-records/history/${props.medical_record_id}`,
@@ -2466,8 +2352,6 @@ const submitForm = async () => {
       detail: t("case_history.toast.case_history_added_detail"),
       life: 5000,
     });
-
-    
   } catch (error) {
     console.error("Error submitting form:", error);
   }
@@ -2491,24 +2375,6 @@ const submitForm = async () => {
 }
 
 /* Exclamation mark indicator */
-/* div[data-p-invalid="true"] {
-  content: "!";
-  position: absolute;
-  top: -0.1rem;
-  right: -0.1rem;
-  width: 1.25rem;
-  height: 1.25rem;
-  background: #dc2626;
-
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.75rem;
-  font-weight: bold;
-}
- */
 /* If you want to style the step connector lines */
 div[data-p-invalid="true"] > button > .p-step-number {
   background: red !important;

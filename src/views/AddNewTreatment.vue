@@ -84,16 +84,6 @@
               optionLabel="label"
               class="w-full h-10"
             >
-              <!-- <template #value="slotProps">
-                <div v-if="slotProps.value" class="flex items-center">
-                  <div>{{ slotProps.value.value }}</div>
-                </div>
-              </template>
-              <template #option="slotProps">
-                <div class="flex items-center">
-                  <div>{{ slotProps.option.label }}</div>
-                </div>
-              </template> -->
             </Select>
             <label for="dd-city"
               >{{ $t("add_treatment.fields.delivery") }}
@@ -166,7 +156,6 @@
         </div>
       </fieldset>
       <div class="flex justify-end">
-        <!-- <Button type="submit" class="mt-4" :label="$t('add_treatment.submit')" /> -->
         <Button type="submit" :disabled="isSubmitting ? true : false">
           <i class="fa-solid fa-spinner fa-spin" v-if="isSubmitting"></i>
           <span v-else>{{ $t("add_treatment.submit") }}</span>
@@ -286,7 +275,7 @@ const submitForm = async () => {
       : null,
     treatment_has_reminder: treatment.value.treatment_has_reminder ? 1 : 0,
   };
-  
+
   try {
     isSubmitting.value = true;
     const response = await axiosInstance.post("/treatments", submissionData);
