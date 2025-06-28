@@ -56,7 +56,7 @@ export const useAuthStore = defineStore("auth", {
       M3K8g2387BahBaqyjDe6,
       rememberMe = false
     ) {
-      // console.log("rememberMe", rememberMe);
+
       this.token = accessToken;
       this.refreshToken = refreshToken;
       this.tokenExpiry = tokenExpiry;
@@ -205,7 +205,7 @@ export const useAuthStore = defineStore("auth", {
       this.currentBranch = branchId;
     },
     updateLanguage(language) {
-      // console.log(language);
+
       this.userLanguage = language;
       Cookies.set("language", language, {
         sameSite: "Strict",

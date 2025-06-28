@@ -71,7 +71,7 @@ import Card from "primevue/card";
 
 const { t, locale } = useI18n();
 const isRtl = computed(() => ["ar", "he", "fa"].includes(locale.value));
-// console.log("isRtl ", isRtl.value);
+
 const router = useRouter();
 
 const benefits = ref([

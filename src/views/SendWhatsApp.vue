@@ -83,7 +83,7 @@ const submitForm = async () => {
 //     message: messageText.value,
 //     ownerid: props.ownerID,
 //   });
-//   // console.log(response);
+//   
 //   return response.data;
 // };
 const sendMessage = async () => {
@@ -96,7 +96,7 @@ const sendMessage = async () => {
     emit("submitted");
     showSuccessToast();
   } catch (error) {
-    // console.log(error.response);
+    
     if (error.response.data.message === "Subscription Required") {
       eventBus.emit("show-toast", {
         severity: "warn",

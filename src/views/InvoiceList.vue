@@ -758,7 +758,7 @@ const editInvoice = (invoice) => {
 const confirmDelete = (invoice) => {
   selectedInvoice.value = invoice;
   deleteDialogVisible.value = true;
-  // console.log(invoice);
+  
 };
 
 const deleteInvoice = async () => {
@@ -860,7 +860,7 @@ const fetchInvoices = async (page = 1) => {
 
     invoices.value = response.data.data.data;
     totalRecords.value = response.data.data.total;
-    // console.log(response.data.data.data);
+    
     currentPage.value = response.data.data.current_page;
   } catch (error) {
     console.error("Error fetching invoices:", error);
@@ -919,7 +919,7 @@ onMounted(() => {
   fetchInvoices();
   window.addEventListener("keydown", handleKeydown);
   eventBus.on("AddInvoice", () => {
-    // console.log("OPEN ADD OWNER");
+    
     showModal();
   });
 });

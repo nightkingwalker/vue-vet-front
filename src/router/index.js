@@ -261,7 +261,7 @@ const router = createRouter({
     },
 });
 const app_title = import.meta.env.VITE_APP_TITLE;
-console.log(app_title)
+
 router.beforeEach((to, from, next) => {
     const authStore = useAuthStore();
     if (to.meta.requiresAuth && !authStore.isLoggedIn) {

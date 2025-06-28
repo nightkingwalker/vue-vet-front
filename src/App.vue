@@ -97,14 +97,14 @@ const { $connectivity } = getCurrentInstance().appContext.config.globalPropertie
 const online = ref(true);
 const route = useRoute();
 const toast = useToast();
-// console.log(route.path);
+
 const { t, locale } = useI18n();
 const authStore = useAuthStore();
-// console.log(authStore.token);
+
 const { isMobile } = useDevice();
 const { initializeLanguage } = useLanguage();
 const { isDarkMode, initializeTheme, toggleTheme } = useTheme();
-// console.log("isDarkMode", isDarkMode.value);
+
 const mobileMenuVisible = ref(false);
 
 // Computed properties
@@ -145,7 +145,7 @@ const shortcuts = {
   "Ctrl+l": () => {
     // isDarkMode.value = !isDarkMode.value;
     toggleTheme();
-    // console.log("TOGGLING THEME", isDarkMode.value);
+    
   },
   // "Ctrl+l": () => toggleDarkMode(),
   "Ctrl+r": () => router.push("/reports/stock-movement"),
@@ -183,7 +183,7 @@ onMounted(() => {
   const interval = setInterval(async () => {
     online.value = true;
     online.value = await $connectivity.getOnlineStatus();
-    // console.log("online.value", online.value);
+    
   }, 5000);
   eventBus.on("show-toast", toast.add);
 });

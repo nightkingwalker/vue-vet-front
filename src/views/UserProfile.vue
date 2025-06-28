@@ -451,9 +451,9 @@ const generateQRCodeWithLogo = async (text, logoUrl) => {
 };
 const tfaInvalid = ref(false);
 const tfaEnabled = async () => {
-  // console.log("CHECKED " + checked.value);
+  
   if (!tfa_code.value) {
-    // console.log("NO OTP");
+    
     tfaInvalid.value = true;
     return;
   }
@@ -468,7 +468,7 @@ const tfaEnabled = async () => {
       !checked.value ? `/2fa/disable` : `/2fa/enable`,
       submissionData
     );
-    // console.log(response);
+    
     // emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
@@ -490,7 +490,7 @@ const tfaEnabled = async () => {
   }
 };
 const updatePassword = async () => {
-  // console.log("CHECKED " + checked.value);
+  
   loading.value = true;
   const submissionData = {
     current_password: current_password.value,
@@ -500,7 +500,7 @@ const updatePassword = async () => {
 
   try {
     const response = await axiosInstance.put(`/user/password`, submissionData);
-    // console.log(response);
+    
     // emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
@@ -585,7 +585,7 @@ const handleSubmit = async (type) => {
 
   try {
     const response = await axiosInstance.put("/user/preferences", submissionData);
-    // console.log(response.data);
+    
     // Update the auth store with new preferences
     // Cookies.set("language", response.data.user_language, {
     //   sameSite: "Strict",
@@ -690,7 +690,7 @@ const fetchUserDetails = async () => {
 // Form submission handler
 const submitForm = async () => {
   // try {
-  //   // console.log("Profile updated with:", user.value);
+  //   
   // } catch (error) {
   //   console.error("Error updating profile:", error);
   // }
@@ -702,7 +702,7 @@ const submitForm = async () => {
 
   try {
     const response = await axiosInstance.put(`/user`, submissionData);
-    // console.log(response);
+    
     // emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
@@ -731,7 +731,7 @@ const submitForm = async () => {
 
 // Avatar handling (optional for file uploads)
 const dropHandler = (event) => {
-  // console.log("File dropped:", event);
+  
 };
 
 const dragOverHandler = (event) => {
@@ -741,7 +741,7 @@ const passwordMatchError = computed(() => {
   return password_confirmation.value !== newpassword.value;
 });
 // watchEffect(() => {
-//   // console.log(isRtl.value);
+//   
 //   document.documentElement.setAttribute("dir", isRtl.value ? "rtl" : "ltr");
 // });
 onMounted(() => {

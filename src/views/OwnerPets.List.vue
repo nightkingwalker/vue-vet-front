@@ -277,7 +277,7 @@ const onPageChange = (event) => {
   itemsPerPage.value = event.rows;
   currentPage.value = event.page + 1; // PrimeVue Paginator uses zero-based index
   fetchPets(currentPage.value); // Fetch pets for the new page
-  // console.log(event);
+  
 };
 const onSearchChange = () => {
   if (searchQuery.value.length < 3) {
@@ -322,7 +322,7 @@ const fetchPets = async (page = 1) => {
 };
 const inputFocused = ref(false);
 const clearFilters = () => {
-  // console.log("clearing filters");
+  
   loading.value = true; // Set loading state to true to show skeletons
   currentPage.value = 1;
   searchQuery.value = "";
@@ -458,7 +458,7 @@ onMounted(() => {
     isModalVisible.value = true;
   }
   eventBus.on("AddPet", () => {
-    // console.log("OPEN ADD OWNER");
+    
     isModalVisible.value = true;
   });
   window.addEventListener("keydown", handleKeydown);

@@ -392,7 +392,7 @@ const fetchAppointments = async (page = 1) => {
       url += `&sort_field=${sortField.value}`;
       url += `&sort_order=${sortOrder.value === 1 ? "asc" : "desc"}`;
     }
-    // console.log(url);
+    
     const response = await axiosInstance.get(url);
     appointments.value = response.data.data;
     totalRecords.value = response.data.totalRecords;
@@ -552,7 +552,7 @@ const eventTheme = {
 };
 
 function getEventTheme(themeName) {
-  // console.log(themeName);
+  
   return eventTheme[themeName] || eventTheme.Default; // Return the corresponding theme or null if not found
 }
 

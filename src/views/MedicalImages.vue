@@ -235,7 +235,7 @@ const confirmDelete = (medicalImageId) => {
       deleteImage(medicalImageId);
     },
     reject: () => {
-      // console.log("Deletion cancelled");
+      
     },
   });
 };

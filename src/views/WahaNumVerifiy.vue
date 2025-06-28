@@ -130,7 +130,7 @@ const sendVerification = async () => {
         "&country_code=" +
         selectedCountry.value
     );
-    // console.log(response);
+    
     if (response.data.success) {
       verificationSent.value = true;
 
@@ -142,7 +142,7 @@ const sendVerification = async () => {
       throw new Error(response.data.error || "Verification failed");
     }
   } catch (error) {
-    // console.log(error);
+    
     // useToast().add({
     //   severity: "error",
     //   summary: t("whatsapp_number_verification.error_title"),
@@ -162,7 +162,7 @@ const sendVerification = async () => {
 };
 
 const proceedToQR = (response) => {
-  // console.log(response);
+  
   router.push({
     name: "whatsapp-qr-scanner",
     query: {

@@ -1817,7 +1817,7 @@ const props = defineProps({
     required: true,
   },
 });
-// console.log(props.medical_record_id);
+
 const isRtl = computed(() => ["ar", "he", "fa"].includes(locale.value));
 const formData = ref(
   /*{
@@ -2248,11 +2248,11 @@ const validateStep = (step) => {
       isValid = true;
   }
 
-  // console.log(`Step ${step} validation:`, { isValid, invalid: invalid.value });
+  
   return isValid;
 };
 const onStepChange = async ({ step, callback }) => {
-  // console.log(step);
+  
   // Validate current step before leaving
   // if (!validateStep(activeStep.value)) {
   //   toast.add({
@@ -2451,8 +2451,8 @@ const submitForm = async () => {
     if (formData.value.affected_limbs_HR) affectedLimbs.push("HR");
     formData.value.affected_limbs = affectedLimbs.length > 0 ? affectedLimbs : null;
 
-    // console.log(formData.value);
-    // console.log(`/medical-records/history/${props.medical_record_id}`);
+    
+    
 
     // Send formData to the storeHistory endpoint
     const response = await axiosInstance.post(
@@ -2467,7 +2467,7 @@ const submitForm = async () => {
       life: 5000,
     });
 
-    // console.log("Form submitted successfully:", response.data);
+    
   } catch (error) {
     console.error("Error submitting form:", error);
   }

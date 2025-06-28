@@ -399,7 +399,7 @@ const filteredOwners = ref([]);
 async function fetchOwners() {
   try {
     const response = await axiosInstance.get("/owners");
-    // console.log(response.data.data);
+    
     owners.value = response.data.data;
   } catch (error) {
     console.error("Failed to fetch owners:", error);
@@ -460,14 +460,14 @@ const submitForm = async () => {
     allergies: pet.value.allergies,
   };
 
-  // console.log(invalid.value); // Verify the structure
-  // console.log(submissionData);
+   // Verify the structure
+  
   try {
     isSubmitting.value = true;
     const response = await axiosInstance.post("/pets", submissionData);
     emit("submitted", response.data); // You may modify this based on your response structure
 
-    // console.log(response);
+    
     eventBus.emit("show-toast", {
       severity: "success",
       summary: t("pet_form.toast.success"),
@@ -492,7 +492,7 @@ const submitForm = async () => {
 onMounted(() => {
   fetchOwners();
   eventBus.on("ownerAdded", (event) => {
-    // console.log(event);
+    
   });
 });
 

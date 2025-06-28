@@ -503,7 +503,7 @@ const submitForm = async () => {
       const response = await axiosInstance.post("/pets", submissionData);
 
       // Emit success events
-      // console.log("submitted", response.data);
+      
       eventBus.emit("show-toast", {
         severity: "success",
         summary: "Success",

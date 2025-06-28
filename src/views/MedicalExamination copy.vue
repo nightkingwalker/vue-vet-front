@@ -862,7 +862,7 @@ const submitForm = async (exam) => {
 onMounted(() => {
   fetchMedicalExamination();
   eventBus.on("PhysicalExaminationAddedSuccessfully", (event) => {
-    // console.log(event);
+    
     fetchMedicalExamination();
   });
 });

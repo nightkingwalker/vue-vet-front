@@ -1082,7 +1082,7 @@ const submitForm = async () => {
     respiratory_rate:
       examination.value.respiratory_rate + " " + examination.value.respiratory_rate,
   };
-  console.log(submissionData);
+
   try {
     isSubmitting.value = true;
     const response = await axiosInstance.post("/medical-examinations", submissionData);

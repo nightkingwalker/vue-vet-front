@@ -234,7 +234,7 @@ const fetchClinics = async () => {
     loading.value = true;
     const response = await axios.get("/clinics");
     clinics.value = response.data;
-    // console.log("clinics", clinics.value.length);
+    
   } catch (error) {
     toast.add({
       severity: "error",
@@ -338,7 +338,7 @@ const viewBranches = async (clinic) => {
 
 // Manage clinic (only for admins/managers)
 const manageClinic = async (clinic) => {
-  // console.log(clinic);
+  
   await router.push({ path: "/" + clinic.id + "/manage" });
   toast.add({
     severity: "info",

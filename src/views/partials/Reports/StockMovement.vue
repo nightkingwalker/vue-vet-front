@@ -393,15 +393,15 @@ const viewInvoiceDetails = async (invoiceId) => {
   }
 };
 const viewInvoice = (referenceType, referenceId) => {
-  // console.log(referenceType);
+  
   if (referenceType === "invoice") {
-    // console.log("CLICKED2");
+    
     viewInvoiceDetails(referenceId);
   }
 };
 /* const viewInvoice = (invoiceId) => {
     // Implement invoice viewing logic
-    // console.log("View invoice:", invoiceId);
+    
 };
  */
 onMounted(() => {

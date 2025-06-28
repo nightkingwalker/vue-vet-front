@@ -219,7 +219,7 @@ function validatePhone(phoneData) {
   if (!phoneData?.valid) {
     phoneError.value = t("add_owner.errors.invalid_phone");
     invalid.value.owner.phone = true;
-    // console.log(t("add_owner.errors.invalid_phone"));
+    
     return;
   }
 

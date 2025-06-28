@@ -207,7 +207,7 @@ const confirmDelete = (treatmentId) => {
       deleteTreatment(treatmentId);
     },
     reject: () => {
-      // console.log("Deletion cancelled");
+      
     },
   });
 };

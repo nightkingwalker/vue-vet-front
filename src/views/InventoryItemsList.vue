@@ -549,7 +549,7 @@ const showImportModal = () => {
 const editItem = (item) => {
   editMode.value = true;
   selectedItem.value = { ...item };
-  // console.log(selectedItem.value);
+  
   isModalVisible.value = true;
 };
 
@@ -594,7 +594,7 @@ const resetForm = () => {
 //   return data.data[data.field];
 // };
 const beforeExportFunction = (data, field) => {
-  // console.log(data.data);
+  
   if (data.field === "expiry_date") {
     return formatDate(data.data);
   } else {
@@ -622,7 +622,7 @@ const fetchInventoryItems = async (page = 1) => {
     if (filters.value.category.value) {
       url += `&category=${filters.value.category.value}`;
     }
-    // console.log(url);
+    
     const response = await axiosInstance.get(url);
     inventoryItems.value = response.data.data.data;
     totalRecords.value = response.data.data.total;
@@ -672,7 +672,7 @@ onMounted(() => {
   fetchInventoryItems();
   window.addEventListener("keydown", handleKeydown);
   eventBus.on("AddInventoryItem", () => {
-    // console.log("OPEN ADD OWNER");
+    
     isModalVisible.value = true;
   });
 });

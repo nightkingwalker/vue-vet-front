@@ -188,7 +188,7 @@ const confirmDelete = (testResultId) => {
       deleteTestResult(testResultId);
     },
     reject: () => {
-      // console.log("Deletion cancelled");
+      
     },
   });
 };

@@ -418,10 +418,10 @@ const handleGoogleSync = async () => {
       // Connect logic - get auth URL from backend first
       // const response = await axiosInstance.get("/google/connect");
       const { data } = await axiosInstance.get("/google/connect");
-      // console.log("response", response);
+      
       // Store current route to return after OAuth flow
       localStorage.setItem("preAuthRoute", router.currentRoute.value.fullPath);
-      // console.log(data.auth_url);
+      
       // const printWindow = window.open(
       //   data.auth_url,
       //   "TEST",
@@ -533,7 +533,7 @@ const species = ref([
 ]);
 
 const getSpeciesValue = (label) => {
-  // console.log(label);
+  
   const found = species.value.find((species) => species.en_label === label);
   return found ? found.label : null;
 };
@@ -572,7 +572,7 @@ const currentPet = ref({
   },
 });
 const handleSubmit = (data) => {
-  // console.log(data);
+  
   isNewApointmentVisible.value = false;
   // currentPage.value = 1; // Reset to the first page when searching
 
@@ -587,7 +587,7 @@ const fetchAppointments = async (page = 1) => {
     const response = await axiosInstance.get(
       `/appointments?page=${page}&per_page=${itemsPerPage.value}&search=${searchQuery.value}`
     );
-    // console.log(response.data.data);
+    
     events.value = response.data.data.map((appointment) => ({
       id: appointment.id.toString(),
       title: appointment.title,
@@ -633,7 +633,7 @@ const fetchAppointments = async (page = 1) => {
     }));
     if (events.value.length > 0) {
       // currentPet.value = events.value[0];
-      // console.log(events.value);
+      
     }
     visible.value = true;
     calendarApp.eventsService.set(events.value);
@@ -726,7 +726,7 @@ const eventTheme = {
 function getEventTheme(themeName) {
   return eventTheme[themeName] || null; // Return the corresponding theme or null if not found
 }
-// console.log(getEventTheme("Emergency"));
+
 const calendarApp = createCalendar({
   selectedDate: formatDateTime(new Date()),
   calendars: {
@@ -849,15 +849,15 @@ const calendarApp = createCalendar({
      * 2. Selecting a new view
      * */
     onRangeUpdate(range) {
-      // console.log("new calendar range start date", range.start);
-      // console.log("new calendar range end date", range.end);
+      
+      
     },
 
     /**
      * Is called when an event is updated through drag and drop
      * */
     onEventUpdate(updatedEvent) {
-      // console.log("onEventUpdate", updatedEvent);
+      
       onEventUpdate(updatedEvent);
     },
 
@@ -865,23 +865,23 @@ const calendarApp = createCalendar({
      * Is called when an event is clicked
      * */
     onEventClick(calendarEvent) {
-      // console.log("onEventClick", currentPet.value);
+      
       // visible.value = true;
       // currentPet.value = calendarEvent;
       currentPet.value = calendarEvent;
       petDetailsVisible.value = true;
 
-      // console.log("onEventClick", currentPet.value.description);
+      
     },
 
     /**
      * Is called when clicking a date in the month grid
      * */
     onClickDate(date, event) {
-      // console.log(date);
-      // console.log(event);
+      
+      
       activeDate.value = date;
-      // console.log("Active Date: " + activeDate.value);
+      
       onRightClick();
     },
 
@@ -889,7 +889,7 @@ const calendarApp = createCalendar({
      * Is called when clicking somewhere in the time grid of a week or day view
      * */
     onClickDateTime(dateTime) {
-      // console.log("onClickDateTime", dateTime); // e.g. 2024-01-01 12:37
+       // e.g. 2024-01-01 12:37
       changeView(dateTime);
     },
 
@@ -897,35 +897,35 @@ const calendarApp = createCalendar({
      * Is called when selecting a day in the month agenda
      * */
     onClickAgendaDate(date) {
-      // console.log("onClickAgendaDate", date); // e.g. 2024-01-01
+       // e.g. 2024-01-01
     },
 
     /**
      * Is called when double clicking a date in the month grid
      * */
     onDoubleClickDate(date) {
-      // console.log("onClickDate", date); // e.g. 2024-01-01
+       // e.g. 2024-01-01
     },
 
     /**
      * Is called when double clicking somewhere in the time grid of a week or day view
      * */
     onDoubleClickDateTime(dateTime) {
-      // console.log("onDoubleClickDateTime", dateTime); // e.g. 2024-01-01 12:37
+       // e.g. 2024-01-01 12:37
     },
 
     /**
      * Is called when clicking the "+ N events" button of a month grid-day
      * */
     onClickPlusEvents(date) {
-      // console.log("onClickPlusEvents", date); // e.g. 2024-01-01
+       // e.g. 2024-01-01
     },
 
     /**
      * Is called when the selected date is updated
      * */
     onSelectedDateUpdate(date) {
-      // console.log("onSelectedDateUpdate", date);
+      
     },
 
     /**
@@ -948,7 +948,7 @@ const calendarApp = createCalendar({
      * Runs after the calendar is rendered
      * */
     onRender($app) {
-      // console.log("onRender", $app);
+      
     },
   },
 
@@ -979,7 +979,7 @@ const menuItems = ref([
   },
 ]);
 const onEventUpdate = async (updatedEvent) => {
-  // console.log("onEventUpdate", updatedEvent);
+  
   const data = JSON.stringify({
     start: updatedEvent.start + `:00`, // Ensure this matches the model's field name
     end: updatedEvent.end + `:00`, // Ensure this matches the model's field name
@@ -988,14 +988,14 @@ const onEventUpdate = async (updatedEvent) => {
     type: updatedEvent.calendarId,
     status: updatedEvent.status,
   });
-  // console.log("onEventUpdate", data);
+  
   try {
     const response = await axiosInstance.put(`/appointments/${updatedEvent.id}`, data, {
       headers: {
         "Content-Type": "application/json",
       },
     });
-    // console.log("Appointment updated successfully:", response.data);
+    
     eventBus.emit("show-toast", {
       severity: "success",
       summary: "Appointment Updated",
@@ -1014,11 +1014,11 @@ const onEventUpdate = async (updatedEvent) => {
 };
 const addAppointment = () => {
   isNewApointmentVisible.value = true;
-  // console.log("CLICKED");
+  
 };
 // eventModal.close(); // close the modal
 const changeView = (date) => {
-  // console.log(date);
+  
   calendarControls.setDate(date);
   calendarControls.setView("day");
 };
@@ -1115,9 +1115,9 @@ watchEffect(
 const checkSyncStatus = async () => {
   try {
     const { data } = await axiosInstance.get("/google/calendar/status");
-    // console.log(data);
+    
     isGoogleSynced.value = data.connected;
-    // console.log("isGoogleSynced", isGoogleSynced.value);
+    
 
     if (data.needs_reconnect) {
       eventBus.emit("show-toast", {
@@ -1137,7 +1137,7 @@ onMounted(async () => {
   eventBus.on("themeChange", setCalendarTheme);
   // try {
   //   const response = await axiosInstance.get("/google/calendar/status");
-  //   // console.log(response.data);
+  //   
   //   isGoogleSynced.value = response.data.connected;
   // } catch (error) {
   //   console.error("Could not check Google Calendar status", error);

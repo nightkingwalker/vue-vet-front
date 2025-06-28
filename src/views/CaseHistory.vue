@@ -2452,7 +2452,7 @@ const treatmentTypeOptions = [
 ];
 /*const fetchHistory = async (medicalRecordId) => {
   try {
-    // console.log("MID" + props.medical_record_id);
+    
     const response = await axiosInstance.get(
       `/medical-records/${props.medical_record_id}/history`
     );
@@ -2540,7 +2540,7 @@ const treatmentTypeOptions = [
         history.gastrointestinal_symptom[0].stool_consistency !== null
           ? history.gastrointestinal_symptom[0].stool_consistency
           : "";
-      //   // console.log(history.gastrointestinal_symptom[0].stool_consistency + "CONST");
+      //   
       formData.value.stool_color = history.gastrointestinal_symptom[0].stool_color;
       formData.value.stool_frequency =
         history.gastrointestinal_symptom[0].stool_frequency;
@@ -2590,7 +2590,7 @@ const treatmentTypeOptions = [
         history.urinary_symptom[0].excessive_licking_of_genital_area;
     }
 
-    // console.log("Fetched history and updated formData:", formData.value);
+    
   } catch (error) {
     console.error("Error fetching history:", error);
   }
@@ -2659,7 +2659,7 @@ const invalid = ref({
       isValid = true;
   }
 
-  // console.log(`Step ${step} validation:`, { isValid, invalid: invalid.value });
+  
   return isValid;
 };
  */
@@ -2713,7 +2713,7 @@ const validateStep = (step) => {
       isValid = true;
   }
 
-  // console.log(`Step ${step} validation:`, { isValid, invalid: invalid.value });
+  
   return isValid;
 };
 const fetchHistory = async (medicalRecordId) => {
@@ -2896,18 +2896,18 @@ const fetchHistory = async (medicalRecordId) => {
       } else if (typeof musc.affected_limbs === "string") {
         affectedLimbs = musc.affected_limbs.split(",");
       }
-      // console.log(affectedLimbs);
-      // console.log("FH", affectedLimbs.includes("FL"));
-      // console.log("FH", affectedLimbs.includes("FR"));
-      // console.log("FH", affectedLimbs.includes("HL"));
-      // console.log("FH", affectedLimbs.includes("FL"));
+      
+      
+      
+      
+      
       formData.value.affected_limbs_FL = affectedLimbs.includes("FL");
       formData.value.affected_limbs_FR = affectedLimbs.includes("FR");
       formData.value.affected_limbs_HL = affectedLimbs.includes("HL");
       formData.value.affected_limbs_HR = affectedLimbs.includes("HR");
     }
 
-    // console.log("Fetched history and updated formData:", formData.value);
+    
   } catch (error) {
     console.error("Error fetching history:", error);
   }
@@ -3074,7 +3074,7 @@ const submitForm = async () => {
     delete payload.affected_limbs_HL;
     delete payload.affected_limbs_HR;
 
-    // console.log("Final payload:", JSON.stringify(payload, null, 2));
+    
     // Submit to backend
     const response = await axiosInstance.put(
       `/medical-records/history/${props.medical_record_id}`,
@@ -3082,7 +3082,7 @@ const submitForm = async () => {
       payload
     );
 
-    // console.log("CaseHistoryUpdated", response.data);
+    
     emit("CaseHistoryUpdated", response.data);
 
     eventBus.emit("show-toast", {
@@ -3096,21 +3096,21 @@ const submitForm = async () => {
   }
 };
 function setActivePanel(panel) {
-  // console.log("Panel" + panel);
+  
   activeStep.value = "panel";
 }
 onMounted(() => {
   const medicalRecordId = 31; // Replace with the actual ID
   fetchHistory(medicalRecordId);
   eventBus.on("handleCaseHistorySuccessfully", async () => {
-    // console.log("Event bus triggered: handleCaseHistorySuccessfully");
+    
     await fetchHistory(medicalRecordId);
-    // console.log("activeStep Original Value:", activeStep.value); // Debugging
+     // Debugging
     activeStep.value = "2"; // Move to step 1
     await nextTick(); // Wait for the DOM to update
 
     activeStep.value = "1"; // Move to step 1
-    // console.log("activeStep updated to:", activeStep.value); // Debugging
+     // Debugging
     isEditable.value = false;
   });
 });

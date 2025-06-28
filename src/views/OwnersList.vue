@@ -428,7 +428,7 @@ const handleStatusUpdate = async (owner) => {
 };
 
 const editOwner = (owner) => {
-  // console.log(owner);
+  
   selectedOwner.value = owner;
   isEditOwnerVisible.value = true;
 };
@@ -463,7 +463,7 @@ const editOwner = (owner) => {
 //     }));
 
 //     // const response = await axiosInstance.get("/owners");
-//     // console.log(owners.value);
+//     
 //     totalRecords.value = response.data.total;
 //     currentPage.value = response.data.current_page;
 //     // owners.value = response.data.data;
@@ -472,7 +472,7 @@ const editOwner = (owner) => {
 //     console.error("Failed to fetch owners:", error);
 //     loading.value = false; // Ensure loading is set to false even on error
 //   }
-//   //   // console.log(loading.value);
+//   //   
 // };
 
 const fetchOwners = async (page = 1) => {
@@ -483,7 +483,7 @@ const fetchOwners = async (page = 1) => {
         searchQuery.value
       }&show_deactivated=${showDeactivated.value ? 1 : 0}`
     );
-    // console.log(response);
+    
     owners.value = response.data.data.map((owner) => ({
       id: owner.id.toString(),
       name: owner.name,
@@ -510,7 +510,7 @@ const fetchOwners = async (page = 1) => {
 
 const deactivateClient = async (data) => {
   try {
-    // console.log(owner.value);
+    
     // Make the POST request to the API to create a new client
     const response = await axiosInstance.post("/owners", owner.value);
 
@@ -558,17 +558,17 @@ const onPageChange = (event) => {
   itemsPerPage.value = event.rows;
   currentPage.value = event.page + 1; // PrimeVue Paginator uses zero-based index
   fetchOwners(currentPage.value); // Fetch pets for the new page
-  // console.log(event);
+  
 };
 const clearFilters = () => {
-  // console.log("clearing filters");
+  
   currentPage.value = 1;
   searchQuery.value = "";
   fetchOwners(currentPage.value);
 };
 // Handle the submit event from the child component
 const handleSubmit = async (data) => {
-  // console.log(data);
+  
   // isModalVisible.value = false;
   // fetchOwners(); // Refresh the owners list
   // await router.push("/" + data.id + "/pets");
@@ -595,11 +595,11 @@ const goToListOwnerPetsPage = async (ownerid) => {
 const goToAddOwnerPetsPage = async (ownerid) => {
   await router.push({ path: "/" + ownerid + "/new-pet" });
 };
-// console.log(route.meta.transition);
+
 onMounted(() => {
   fetchOwners();
   eventBus.on("AddOwner", () => {
-    // console.log("OPEN ADD OWNER");
+    
     showModal();
   });
 });

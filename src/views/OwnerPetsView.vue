@@ -401,7 +401,7 @@ const beforeExportFunction = (data, field) => {
   } else {
     return data.data;
   }
-  // console.log(data.field);
+  
 };
 const exportCSV = (event) => {
   dt.value.exportCSV({
@@ -410,11 +410,11 @@ const exportCSV = (event) => {
 };
 // Function to fetch pets data from the API
 const fetchPets = async () => {
-  //   // console.log(`https://vet-api.ids-tech.net/api/owners/${ownerid}/pets`);
+  //   
   try {
     // Make the request using the axios instance with interceptors
     const response = await axiosInstance.get(`/owners/${ownerid}/pets`);
-    // console.log(response.data);
+    
     loading.value = false; // Stop loading once data is fetched
     eventBus.emit("show-toast", {
       severity: "success",
@@ -429,8 +429,8 @@ const fetchPets = async () => {
   }
 };
 const toggleDeceasedVisibility = () => {
-  // console.log("Triggered filter");
-  // console.log(showDeceased.value);
+  
+  
   showDeceased.value = !showDeceased.value;
   if (showDeceased.value) {
     filters.value.deceased.value = null; // Show all
@@ -480,7 +480,7 @@ const refreshData = () => {
   fetchPets(); // Fetch the pets data again
 };
 function onSelectionChange(event) {
-  // console.log("Selected Products:", JSON.stringify(selectedPets.value));
+  
 }
 </script>
 

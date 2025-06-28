@@ -349,8 +349,8 @@ import Button from "primevue/button";
 import BranchSelection from "@/components/LoginComponentSelectBranch.vue";
 
 const { t, locale } = useI18n();
-// console.log(locale.value);
-// console.log(navigator.language?.substring(0, 2));
+
+
 const email = ref("");
 const password = ref("");
 const message = ref("");
@@ -410,7 +410,7 @@ const login = async () => {
       temporary_token,
       user,
     } = response.data;
-    // console.log(response.data);
+    
     if (requires_2fa) {
       requires2FA.value = true;
       temporaryToken.value = temporary_token;
@@ -430,13 +430,13 @@ const login = async () => {
         rememberMe.value // Pass remember_me to authStore
       );
 
-      // console.log("showing branch selection");
+      
       // Show branch selection
       userBranches.value = user.branches;
 
       showBranchSelection.value = true;
     } else {
-      // console.log(response);
+      
       authStore.logIn(
         access_token,
         refresh_token,
@@ -462,7 +462,7 @@ const login = async () => {
 };
 
 const verify2FA = async () => {
-  // console.log("RUNNING 2FA")
+  
   if (!twoFactorCode.value || twoFactorCode.value.length !== 6) {
     tfaInvalid.value = true;
     message.value = t("two_factor.invalid_length");
@@ -493,7 +493,7 @@ const verify2FA = async () => {
       refresh_expires_in,
       user,
     } = response.data;
-    // console.log(user);
+    
     if (user.branches && user.branches.length > 1) {
       // Show branch selection
       userBranches.value = branches;

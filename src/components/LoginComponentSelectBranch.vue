@@ -160,14 +160,14 @@ const authStore = useAuthStore();
 const selectBranch = (branchId) => {
   selectedBranch.value = branchId;
 };
-// console.log("accessToken", authStore.token);
+
 const confirmSelection = async () => {
   if (!selectedBranch.value) return;
 
   loading.value = true;
   isError.value = false;
   message.value = "";
-  //   console.log("authStore.accessToken", authStore.token);
+  
   try {
     const response = await axios.post(
       import.meta.env.VITE_API_URL + "/select-branch",
@@ -179,7 +179,7 @@ const confirmSelection = async () => {
         },
       }
     );
-    // console.log("response.data", response.data);
+    
     const {
       access_token,
       refresh_token,
@@ -202,7 +202,7 @@ const confirmSelection = async () => {
   } catch (error) {
     isError.value = true;
     message.value = error.response?.data?.message || "Failed to select branch";
-    // console.log(error);
+    
   } finally {
     loading.value = false;
   }

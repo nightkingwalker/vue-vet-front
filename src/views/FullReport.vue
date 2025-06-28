@@ -1007,7 +1007,7 @@ import { useI18n } from "vue-i18n";
 const { t, locale } = useI18n();
 
 const emit = defineEmits(); // Define the event to be emitted
-// console.log("FULL REPORT");
+
 const props = defineProps({
   medical_record_id: {
     type: Number,
@@ -1054,7 +1054,7 @@ const parseResults = (resultsString) => {
     const results = JSON.parse(resultsString);
     return results.map((result) => {
       const parts = result.split(":");
-      // console.log(parts);
+      
       return { key: parts[0].trim(), value: parts[1].trim() };
     });
   } catch (error) {
@@ -1070,7 +1070,7 @@ const fetchMedicalRecord = async () => {
       `/medical-records/${props.medical_record_id}/full`
     );
     medicalRecord.value = response.data;
-    // console.log(medicalRecord.value);
+    
   } catch (error) {
     console.error("Error fetching medical record:", error);
   }
@@ -1127,7 +1127,7 @@ const setupScrollTracking = () => {
 function printComponent() {
   // Get the printable content
   const printContent = document.getElementById('printable');
-  // console.log(printContent)
+  
   if (!printContent) {
     console.error('Printable element not found');
     return;

@@ -1111,7 +1111,7 @@ const showAddTreatmentModal = () => {
   isNewTreatmentVisible.value = true;
 };
 const showEditTreatmentModals = (treatmentId) => {
-  // console.log("LICKED", treatmentId); // Log the treatment ID for debugging
+   // Log the treatment ID for debugging
   selectedTreatmentId.value = treatmentId; // Store the treatment ID
   isEditTreatmentVisible.value = true; // Show the dialog
 };
@@ -1196,21 +1196,21 @@ const handleAddInvoiceRequest = () => {
   // medical_record_id.value = MedicalRecordId;
   // isAddCaseHistorysVisible.value = true;
   viewDialogVisible.value = false;
-  // console.log("PET", medical_record_id.value);
+  
   isModalVisible.value = true;
 };
 // const handleInvoiceSubmit = () => {
 //   // medical_record_id.value = MedicalRecordId;
 //   // isAddCaseHistorysVisible.value = true;
 //   viewDialogVisible.value = false;
-//   // console.log("PET", medical_record_id.value);
+//   
 //   isModalVisible.value = true;
 // };
 const handleAddPaymentRequest = () => {
   // medical_record_id.value = MedicalRecordId;
   // isAddCaseHistorysVisible.value = true;
   viewDialogVisible.value = false;
-  // console.log("PET", medical_record_id.value);
+  
   // paymentDialogVisible.value = true;
   fetchInvoice().then(() => {
     paymentDialogVisible.value = true;
@@ -1224,7 +1224,7 @@ const showAddCaseHistoryModal = (MedicalRecordId) => {
 };
 const showEditMedicalImageModal = (medicalImageId) => {
   selectedMedicalImageId.value = medicalImageId;
-  // console.log(selectedMedicalImageId);
+  
   isEditMedicalImageVisible.value = true;
 };
 const handleNewTestResult = () => {
@@ -1232,25 +1232,25 @@ const handleNewTestResult = () => {
   eventBus.emit("newTestResultAdded");
 };
 const handleSubmit = (data) => {
-  // console.log(data);
+  
   isNewApointmentVisible.value = false;
   // currentPage.value = 1; // Reset to the first page when searching
   fetchPets();
   // fetchAppointments();
 };
 const handleInvoiceSubmit = (data) => {
-  // console.log(data);
+  
   isModalVisible.value = false;
   fetchPets();
   // fetchAppointments();
 };
 const handleDetailsUpdated = (data) => {
-  // console.log(data);
+  
   isEditPetDetailsVisible.value = false;
   fetchPets();
 };
 const handleSubmitNewImage = (data) => {
-  // console.log(data);
+  
   isNewMedicalImageVisible.value = false;
   eventBus.emit("newImageAdded");
 
@@ -1260,11 +1260,11 @@ const handleSubmitNewImage = (data) => {
 };
 
 const addAppointment = () => {
-  // console.log(petmicrochip.value);
+  
   isNewApointmentVisible.value = true;
 };
 const handleAppointmentUpdated = (data) => {
-  // console.log("Appointment updated:", data);
+  
   isEditApointmentVisible.value = false;
   fetchPets();
   // Refresh the appointments list or perform other actions
@@ -1274,14 +1274,14 @@ const handlePaymentSubmit = () => {
   fetchPets();
 };
 const editPetDetails = () => {
-  // console.log(petmicrochip.value);
+  
   isEditPetDetailsVisible.value = true;
 };
 const refreshData = () => {
   // loading.value = true; // Set loading state to true to show skeletons
   fetchPets(); // Fetch the pets data again
 };
-// console.log(pet.value);
+
 const owner = ref(""); // Initialize owner as an empty string
 const loading = ref(true);
 const visits = ref([]);
@@ -1386,7 +1386,7 @@ const parseResults = (resultsString) => {
   }
 };
 const getSpeciesValue = (label) => {
-  // console.log(label);
+  
   const found = species.value.find((species) => species.en_label === label);
   return found ? found.label : null;
 };
@@ -1497,14 +1497,14 @@ const computeAge = (dateOfBirth) => {
   // Combine them into a single string, handling cases where there are no months or no years
   return `${yearsText}${yearsText && monthsText ? " & " : ""}${monthsText}`;
 };
-// console.log(petmicrochip.value);
+
 const fetchPets = async () => {
   loading.value = true;
   try {
     // Make the request using the axios instance with interceptors
     const response = await axiosInstance.get(`/pets/${petmicrochip.value}`);
     pet.value = response.data;
-    // console.log(response.data.appointments);
+    
     visits.value = response.data.appointments;
     medical_records.value = response.data.medical_records;
     pet.value.date_of_birth = formatDateForSubmission(pet.value.date_of_birth);
@@ -1535,27 +1535,27 @@ const formatDateForSubmission = (dateString) => {
   ).padStart(2, "0")}`;
 };
 function getEventTheme(themeName) {
-  // console.log(themeName);
+  
   return eventTheme[themeName] || null; // Return the corresponding theme or null if not found
 }
 function listTreatments(MedicalRecordId) {
   medical_record_id.value = findRecordById(MedicalRecordId);
-  // console.log("MEDIACAL" + medical_record_id.value);
+  
   isTreatmentsListVisible.value = true;
 }
 function editAppointment(AppointmentID) {
   appointment_id.value = AppointmentID;
-  // console.log("MEDIACAL" + AppointmentID);
+  
   isEditApointmentVisible.value = true;
 }
 function listTestResults(MedicalRecordId) {
   medical_record_id.value = findRecordById(MedicalRecordId);
-  // console.log("MEDIACAL" + medical_record_id.value);
+  
   isTestResultsVisible.value = true;
 }
 function listImages(MedicalRecordId) {
   medical_record_id.value = findRecordById(MedicalRecordId);
-  // console.log("MEDIACAL" + medical_record_id.value);
+  
   isImagesListVisible.value = true;
 }
 const findRecordById = (id) => {

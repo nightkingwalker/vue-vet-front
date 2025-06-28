@@ -62,7 +62,7 @@ const clearTimers = () => {
 };
 
 const resetActivityTimeout = () => {
-  // console.log("resetActivityTimeout");
+  
   if (isRememberMeActive.value) return;
 
   clearTimeout(activityTimeout.value);

@@ -371,10 +371,10 @@ const handleKeyDown = (event) => {
 // ============== DARK MODE HANDLING ==============
 /* function initializeTheme() {
   const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  // console.log("SYSTEM THEME", systemPrefersDark);
+  
   // Priority: 1. Cookie 2. LocalStorage 3. System preference
   const cookieTheme = Cookies.get("theme");
-  // console.log("Coockie THEME", cookieTheme);
+  
   const savedTheme = localStorage.getItem("theme");
 
   let shouldBeDark = false;
@@ -388,7 +388,7 @@ const handleKeyDown = (event) => {
   } else {
     shouldBeDark = systemPrefersDark;
   }
-  // console.log("shouldBeDark", shouldBeDark);
+  
   // Apply the theme
   if (shouldBeDark) {
     isDarkMode.value = true;
@@ -525,7 +525,7 @@ onMounted(async () => {
   online.value = await $connectivity.getOnlineStatus();
   const interval = setInterval(async () => {
     online.value = await $connectivity.getOnlineStatus();
-    // console.log("Initial connectivity status:", online.value); // Changed to console.log
+     // Changed to console.log
   }, 5000);
   // const savedTheme = localStorage.getItem("theme");
   // if (savedTheme === "dark") {

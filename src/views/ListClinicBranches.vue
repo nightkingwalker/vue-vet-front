@@ -298,7 +298,7 @@ const addBranch = async () => {
   try {
     addingBranch.value = true;
     const response = await axios.post(`/clinics/${clinicId}/branches`, newBranch.value);
-    // console.log(response);
+    
     toast.add({
       severity: "success",
       summary: "Success",
@@ -309,7 +309,7 @@ const addBranch = async () => {
     closeAddBranchDialog();
     fetchClinicData();
   } catch (error) {
-    // console.log(error);
+    
     toast.add({
       severity: "error",
       summary: "Error",

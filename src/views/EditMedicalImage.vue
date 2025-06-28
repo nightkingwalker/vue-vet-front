@@ -123,7 +123,7 @@ const fetchMedicalImage = async () => {
       type: imageTypes.value.find((type) => type.value === data.type),
       //   status: appointmentStatus.value.find((status) => status.value === data.status),
     };
-    // console.log(data);
+    
   } catch (error) {
     console.error("Failed to fetch medical image:", error);
     eventBus.emit("show-toast", {

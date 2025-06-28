@@ -159,7 +159,7 @@ const errorMessage = ref("");
 onMounted(async () => {
   try {
     const response = await axios.get(`/invitations/validate?token=${route.query.token}`);
-    console.log(response.data);
+    
     clinic.value = response.data.clinic;
     role.value = response.data.role;
     validInvitation.value = true;

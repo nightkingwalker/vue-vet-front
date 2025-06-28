@@ -185,7 +185,7 @@ const fetchSessionStatus = async () => {
   try {
     connectionState.value = "checking";
     const response = await axiosInstance.get("/whatsapp/session/prepare");
-    // console.log(response);
+    
 
     sessionId.value = response.data.session_id;
     phoneNumber.value = response.data.phone_number;
@@ -270,7 +270,7 @@ const fetchQRCode = async () => {
 
     // const response = await axios.get("/api/whatsapp/qr-code");
     const response = await axiosInstance.get("/whatsapp/qr-code");
-    // console.log(response.data.qr_code);
+    
     // qrCodeUrl.value = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(
     //   response.data.qr_code
     // )}`;

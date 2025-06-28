@@ -286,7 +286,7 @@ const submitForm = async () => {
       : null,
     treatment_has_reminder: treatment.value.treatment_has_reminder ? 1 : 0,
   };
-  // console.log(submissionData);
+  
   try {
     isSubmitting.value = true;
     const response = await axiosInstance.post("/treatments", submissionData);

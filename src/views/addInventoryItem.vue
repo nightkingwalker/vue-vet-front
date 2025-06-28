@@ -548,7 +548,7 @@ const generateBarcode = () => {
     "8" + Math.floor(100000000000 + Math.random() * 900000000000).toString();
   form.value.barcode = randomBarcode;
 };
-// console.log("TEST", props.item);
+
 if (props.item) {
   form.value = {
     ...props.item,
@@ -571,7 +571,7 @@ const searchItems = async (event) => {
     searchResults.value = [];
     return;
   }
-  // console.log(event.query);
+  
   try {
     const { data } = await axiosInstance.get(`/inventory-items/search`, {
       params: {
@@ -708,10 +708,10 @@ const handleSubmit = () => {
   });
 };
 const reasonLabel = computed(() => {
-  // console.log(adjustmentReasons.value)
-  // console.log(adjustmentReason.value);
+  
+  
   const found = adjustmentReasons.value.find((r) => r.value === adjustmentReason.value);
-  // console.log(found)
+  
   return found?.label || "NO VALUE";
 });
 const invalid = ref({});
@@ -768,7 +768,7 @@ const submitForm = async () => {
     // Clear purchase-related fields
     payload.purchase_price = null;
   }
-  // console.log("payload", payload);
+  
   // Add fields for new items only
   if (!existingItemId.value) {
     Object.assign(payload, {
@@ -789,8 +789,8 @@ const submitForm = async () => {
     const endpoint = showAdjustmentSection.value
       ? "/stock-movements/adjustment"
       : "/inventory-items/smart-add";
-    // console.log("endpoint", endpoint);
-    // console.log("payload", payload);
+    
+    
     // return;
     const response = await axiosInstance.post(endpoint, payload);
 

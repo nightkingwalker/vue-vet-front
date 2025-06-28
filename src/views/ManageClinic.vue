@@ -515,14 +515,14 @@ const roleCounts = computed(() => {
     return acc;
   }, {});
 });
-// console.log(roleCounts);
+
 const selectUser = (user) => {
   selectedUser.value = user;
   userSearchQuery.value = ""; // Clear search query
   searchResults.value = []; // Clear search results
 };
 const sendInvite = async () => {
-  // console.log(inviteRole.value);
+  
   try {
     await axiosInstance.post(`/clinics/${clinicId}/invitations`, {
       email: inviteEmail.value,
@@ -530,7 +530,7 @@ const sendInvite = async () => {
     });
     toast.add({ severity: "success", detail: "Invitation sent!" });
   } catch (error) {
-    // console.log(error);
+    
     toast.add({ severity: "error", detail: error.response?.data?.message });
   }
 };
@@ -639,7 +639,7 @@ const updateUserRole = async () => {
     showEditUserRoleDialog.value = false;
     fetchClinicData();
   } catch (error) {
-    // console.log(error);
+    
     toast.add({
       severity: "error",
       summary: "Error",

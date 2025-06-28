@@ -514,7 +514,7 @@ const props = defineProps({
     default: false,
   },
 });
-// console.log(props);
+
 const emit = defineEmits(["close", "updated"]);
 
 const toast = useToast();
@@ -892,8 +892,8 @@ const updateInvoice = async () => {
       },
     ];
   }
-  // console.log(payload);
-  // console.log(props.invoiceData.id);
+  
+  
   try {
     const response = await axiosInstance.put(
       `/invoices/${props.invoiceData.id}`,

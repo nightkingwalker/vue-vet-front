@@ -136,7 +136,7 @@ const login = async () => {
       email: email.value,
       password: password.value,
     });
-    // console.log(response.data)
+    
     // Extract values from the response
     const {
       requires_2fa,
