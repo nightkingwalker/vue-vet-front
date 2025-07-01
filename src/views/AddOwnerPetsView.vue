@@ -3,9 +3,7 @@
     <p class="text-sm text-gray-600 dark:text-gray-400">{{ statusMessage }}</p>
 
     <form @submit.prevent="submitForm" class="mt-8 mx-auto w-4/5">
-      <fieldset
-        class="p-fieldset p-component w-full flex flex-wrap gap-4 items-center border rounded-lg p-4"
-      >
+      <fieldset class="p-fieldset p-component w-full flex flex-wrap gap-4 items-center border rounded-lg p-4">
         <legend>
           {{ props.ownername }} <i class="pi pi-angle-double-right"></i>
           {{ $t("pet_form.title") }}
@@ -13,16 +11,8 @@
         <input type="hidden" id="branch_id" value="1" v-model="pet.branch_id" />
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
-            <InputText
-              fluid
-              id="name"
-              v-model="pet.name"
-              required
-              :invalid="invalid.pet.name"
-            />
-            <label for="name"
-              >{{ $t("pet_form.fields.name") }} <span class="text-red-600">*</span></label
-            >
+            <InputText fluid id="name" v-model="pet.name" required :invalid="invalid.pet.name" />
+            <label for="name">{{ $t("pet_form.fields.name") }} <span class="text-red-600">*</span></label>
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.name">{{
             $t("form_messages.warnings.invalid_input")
@@ -30,20 +20,10 @@
         </div>
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
-            <Select
-              required
-              :invalid="invalid.pet.species"
-              fluid
-              v-model="pet.species"
-              :options="species"
-              optionLabel="label"
-              optionValue="value"
-              class="w-full h-10"
-            />
-            <label for="dd-city"
-              >{{ $t("pet_form.fields.select_species") }}
-              <span class="text-red-600">*</span></label
-            >
+            <Select required :invalid="invalid.pet.species" fluid v-model="pet.species" :options="species"
+              optionLabel="label" optionValue="value" class="w-full h-10" />
+            <label for="dd-city">{{ $t("pet_form.fields.select_species") }}
+              <span class="text-red-600">*</span></label>
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.species">{{
             $t("form_messages.warnings.invalid_input")
@@ -51,27 +31,20 @@
         </div>
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
-            <InputText fluid id="breed" v-model="pet.breed" />
+            <Select id="breed" v-if="pet.species === 'Canine'" fluid v-model="pet.breed" :options="dogsOptions"
+              optionLabel="label" optionValue="value" class="w-full h-10" />
+            <Select id="breed" v-else-if="pet.species === 'Feline'" fluid v-model="pet.breed" :options="catsOptions"
+              optionLabel="label" optionValue="value" class="w-full h-10" />
+            <InputText v-else fluid id="breed" v-model="pet.breed" />
             <label for="dd-city">{{ $t("pet_form.fields.breed") }}</label>
           </FloatLabel>
         </div>
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
-            <Select
-              id="gender"
-              required
-              :invalid="invalid.pet.gender"
-              fluid
-              v-model="pet.gender"
-              :options="genders"
-              optionLabel="label"
-              optionValue="value"
-              class="w-full h-10"
-            />
-            <label for="gender"
-              >{{ $t("pet_form.fields.select_gender") }}
-              <span class="text-red-600">*</span></label
-            >
+            <Select id="gender" required :invalid="invalid.pet.gender" fluid v-model="pet.gender" :options="genders"
+              optionLabel="label" optionValue="value" class="w-full h-10" />
+            <label for="gender">{{ $t("pet_form.fields.select_gender") }}
+              <span class="text-red-600">*</span></label>
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.gender">{{
             $t("form_messages.warnings.invalid_input")
@@ -79,19 +52,8 @@
         </div>
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
-            <DatePicker
-              showIcon
-              required
-              :invalid="invalid.pet.date_of_birth"
-              iconDisplay="input"
-              showButtonBar
-              hourFormat="12"
-              fluid
-              id="dob"
-              class="w-full"
-              v-model="pet.date_of_birth"
-              dateFormat="yy-mm-d"
-            />
+            <DatePicker showIcon required :invalid="invalid.pet.date_of_birth" iconDisplay="input" showButtonBar
+              hourFormat="12" fluid id="dob" class="w-full" v-model="pet.date_of_birth" dateFormat="yy-mm-d" />
             <label for="dob">{{ $t("pet_form.fields.date_of_birth") }} </label>
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.date_of_birth">{{
@@ -119,19 +81,10 @@
         <!-- Behaviour -->
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
-            <Select
-              v-model="pet.behaviour"
-              :options="behaviorOptions"
-              required
-              :invalid="invalid.pet.behaviour"
-              optionLabel="label"
-              optionValue="value"
-              class="w-full h-10"
-            />
-            <label for="behaviour"
-              >{{ $t("pet_form.fields.behaviour") }}
-              <span class="text-red-600">*</span></label
-            >
+            <Select v-model="pet.behaviour" :options="behaviorOptions" required :invalid="invalid.pet.behaviour"
+              optionLabel="label" optionValue="value" class="w-full h-10" />
+            <label for="behaviour">{{ $t("pet_form.fields.behaviour") }}
+              <span class="text-red-600">*</span></label>
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.behaviour">{{
             $t("form_messages.warnings.invalid_input")
@@ -141,20 +94,10 @@
         <!-- Neutered -->
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
-            <Select
-              fluid
-              v-model="pet.neutered"
-              required
-              :invalid="invalid.pet.neutered"
-              :options="yesno"
-              optionLabel="label"
-              optionValue="value"
-              class="w-full h-10"
-            />
-            <label for="neutered"
-              >{{ $t("pet_form.fields.neutered") }}
-              <span class="text-red-600">*</span></label
-            >
+            <Select fluid v-model="pet.neutered" required :invalid="invalid.pet.neutered" :options="yesno"
+              optionLabel="label" optionValue="value" class="w-full h-10" />
+            <label for="neutered">{{ $t("pet_form.fields.neutered") }}
+              <span class="text-red-600">*</span></label>
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.neutered">{{
             $t("form_messages.warnings.invalid_input")
@@ -164,20 +107,10 @@
         <!-- Deceased -->
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
-            <Select
-              fluid
-              required
-              :invalid="invalid.pet.deceased"
-              v-model="pet.deceased"
-              :options="yesno"
-              optionLabel="label"
-              optionValue="value"
-              class="w-full h-10"
-            />
-            <label for="deceased"
-              >{{ $t("pet_form.fields.deceased") }}
-              <span class="text-red-600">*</span></label
-            >
+            <Select fluid required :invalid="invalid.pet.deceased" v-model="pet.deceased" :options="yesno"
+              optionLabel="label" optionValue="value" class="w-full h-10" />
+            <label for="deceased">{{ $t("pet_form.fields.deceased") }}
+              <span class="text-red-600">*</span></label>
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.deceased">{{
             $t("form_messages.warnings.invalid_input")
@@ -337,6 +270,65 @@ const species = ref([
   //   en_label: "Sheeps",
   //   icon: "fa-solid fa-sheep",
   // },
+]);
+
+const catsOptions = ref([
+  { label: t("catBreeds.Bengal"), value: "Bengal", en_label: "Bengal" },
+  { label: t("catBreeds.British Shorthair"), value: "British Shorthair", en_label: "British Shorthair" },
+  { label: t("catBreeds.Domestick"), value: "Domestick", en_label: "Domestick" },
+  { label: t("catBreeds.Exotic"), value: "Exotic", en_label: "Exotic" },
+  { label: t("catBreeds.Himalayan"), value: "Himalayan", en_label: "Himalayan" },
+  { label: t("catBreeds.Himalayan Blue"), value: "Himalayan Blue", en_label: "Himalayan Blue" },
+  { label: t("catBreeds.Himalayan Chocolate"), value: "Himalayan Chocolate", en_label: "Himalayan Chocolate" },
+  { label: t("catBreeds.Himalayan Orange"), value: "Himalayan Orange", en_label: "Himalayan Orange" },
+  { label: t("catBreeds.Maine Coon"), value: "Maine Coon", en_label: "Maine Coon" },
+  { label: t("catBreeds.Manx"), value: "Manx", en_label: "Manx" },
+  { label: t("catBreeds.Mix"), value: "Mix", en_label: "Mix" },
+  { label: t("catBreeds.Other"), value: "Other", en_label: "Other" },
+  { label: t("catBreeds.Persian"), value: "Persian", en_label: "Persian" },
+  { label: t("catBreeds.Ragdoll"), value: "Ragdoll", en_label: "Ragdoll" },
+  { label: t("catBreeds.Russian Blue"), value: "Russian Blue", en_label: "Russian Blue" },
+  { label: t("catBreeds.Scottish Fold"), value: "Scottish Fold", en_label: "Scottish Fold" },
+  { label: t("catBreeds.Shanshalla"), value: "Shanshalla", en_label: "Shanshalla" },
+  { label: t("catBreeds.Siamese"), value: "Siamese", en_label: "Siamese" },
+  { label: t("catBreeds.Siberian"), value: "Siberian", en_label: "Siberian" },
+  { label: t("catBreeds.Sphynx"), value: "Sphynx", en_label: "Sphynx" },
+  { label: t("catBreeds.Turkish Angora"), value: "Turkish Angora", en_label: "Turkish Angora" },
+  { label: t("catBreeds.Turkish Van"), value: "Turkish Van", en_label: "Turkish Van" }
+]);
+
+
+const dogsOptions = ref([
+  { label: t("dogBreeds.Akita"), value: "Akita", en_label: "Akita" },
+  { label: t("dogBreeds.Basset-Houn"), value: "Basset-Houn", en_label: "Basset-Houn" },
+  { label: t("dogBreeds.Beagle"), value: "Beagle", en_label: "Beagle" },
+  { label: t("dogBreeds.Border Collie"), value: "Border Collie", en_label: "Border Collie" },
+  { label: t("dogBreeds.Boxer"), value: "Boxer", en_label: "Boxer" },
+  { label: t("dogBreeds.Chihuahua"), value: "Chihuahua", en_label: "Chihuahua" },
+  { label: t("dogBreeds.Chow Chow"), value: "Chow Chow", en_label: "Chow Chow" },
+  { label: t("dogBreeds.Cocker Spaniel"), value: "Cocker Spaniel", en_label: "Cocker Spaniel" },
+  { label: t("dogBreeds.Collie"), value: "Collie", en_label: "Collie" },
+  { label: t("dogBreeds.Dalmatian"), value: "Dalmatian", en_label: "Dalmatian" },
+  { label: t("dogBreeds.Doberman"), value: "Doberman", en_label: "Doberman" },
+  { label: t("dogBreeds.Domestick"), value: "Domestick", en_label: "Domestick" },
+  { label: t("dogBreeds.English Bulldog"), value: "English Bulldog", en_label: "English Bulldog" },
+  { label: t("dogBreeds.German Shepherd"), value: "German Shepherd", en_label: "German Shepherd" },
+  { label: t("dogBreeds.Golden Retriever"), value: "Golden Retriever", en_label: "Golden Retriever" },
+  { label: t("dogBreeds.Great Dane"), value: "Great Dane", en_label: "Great Dane" },
+  { label: t("dogBreeds.Labrador Retriever"), value: "Labrador Retriever", en_label: "Labrador Retriever" },
+  { label: t("dogBreeds.Malinois"), value: "Malinois", en_label: "Malinois" },
+  { label: t("dogBreeds.Maltese"), value: "Maltese", en_label: "Maltese" },
+  { label: t("dogBreeds.Other"), value: "Other", en_label: "Other" },
+  { label: t("dogBreeds.Pekingese"), value: "Pekingese", en_label: "Pekingese" },
+  { label: t("dogBreeds.Pit Bull"), value: "Pit Bull", en_label: "Pit Bull" },
+  { label: t("dogBreeds.Pointer"), value: "Pointer", en_label: "Pointer" },
+  { label: t("dogBreeds.Pomeranian"), value: "Pomeranian", en_label: "Pomeranian" },
+  { label: t("dogBreeds.Poodle"), value: "Poodle", en_label: "Poodle" },
+  { label: t("dogBreeds.Pug"), value: "Pug", en_label: "Pug" },
+  { label: t("dogBreeds.Rottweiler"), value: "Rottweiler", en_label: "Rottweiler" },
+  { label: t("dogBreeds.Saluki"), value: "Saluki", en_label: "Saluki" },
+  { label: t("dogBreeds.Siberian Husky"), value: "Siberian Husky", en_label: "Siberian Husky" },
+  { label: t("dogBreeds.Yorkshire Terrier"), value: "Yorkshire Terrier", en_label: "Yorkshire Terrier" }
 ]);
 
 const yesno = ref([
@@ -503,7 +495,7 @@ const submitForm = async () => {
       const response = await axiosInstance.post("/pets", submissionData);
 
       // Emit success events
-      
+
       eventBus.emit("show-toast", {
         severity: "success",
         summary: "Success",
