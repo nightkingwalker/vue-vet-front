@@ -220,7 +220,7 @@
             "species": "الفصيلة",
             "breed": "السلالة",
             "gender": "الجنس",
-            "neutered": "مخصي/معقمة",
+            "neutered": "معقّم",
             "active": "نشط",
             "age": "العمر",
             "actions": "إجراءات",
@@ -273,7 +273,7 @@
             "color": "اللون",
             "distinctive_marks": "علامات مميزة",
             "behaviour": "السلوك",
-            "neutered": "مخصي/معقمة",
+            "neutered": "معقّم",
             "deceased": "متوفى",
             "allergies": "حساسيات"
         },

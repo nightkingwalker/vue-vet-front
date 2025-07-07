@@ -2,16 +2,10 @@
   <DataView :value="pets" :layout="layout" class="!rounded-lg h-[calc(100vh-70px)]">
     <template #header>
       <div
-        class="flex flex-col md:flex-row justify-between items-start md:items-center bg-surface-300 rounded-t-lg gap-2"
-      >
+        class="flex flex-col md:flex-row justify-between items-start md:items-center bg-surface-300 rounded-t-lg gap-2">
         <Breadcrumb :model="items">
           <template #item="{ item, props }">
-            <router-link
-              v-if="item.route"
-              v-slot="{ href, navigate }"
-              :to="item.route"
-              custom
-            >
+            <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
               <a :href="href" v-bind="props.action" @click="navigate">
                 <span :class="[item.icon, 'text-color']" />
                 <span class="text-primary font-semibold">{{ item.label }}</span>
@@ -22,43 +16,26 @@
             </a>
           </template>
         </Breadcrumb>
-        <div
-          class="flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch w-full md:w-auto"
-        >
+        <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch w-full md:w-auto">
           <InputGroup class="w-full sm:w-48 md:w-56 lg:w-64">
             <InputGroupAddon class="bg-surface-400 border-surface-500">
               <i class="pi pi-search text-surface-300 text-sm md:text-base" />
             </InputGroupAddon>
-            <InputText
-              v-model="searchQuery"
-              @input="onSearchChange"
-              @focus="inputFocused = true"
-              @blur="inputFocused = false"
-              type="text"
+            <InputText v-model="searchQuery" @input="onSearchChange" @focus="inputFocused = true"
+              @blur="inputFocused = false" type="text"
               class="bg-surface-400 border-surface-500 text-surface-100 placeholder-surface-500 text-sm md:text-base"
-              :placeholder="$t('owner_pet_list.search_placeholder')"
-            />
-            <Button
-              v-if="searchQuery"
-              icon="pi pi-times"
-              @click="clearFilters"
-              class="p-button-text text-surface-400 hover:text-surface-200 text-sm md:text-base"
-            />
+              :placeholder="$t('owner_pet_list.search_placeholder')" />
+            <Button v-if="searchQuery" icon="pi pi-times" @click="clearFilters"
+              class="p-button-text text-surface-400 hover:text-surface-200 text-sm md:text-base" />
           </InputGroup>
 
           <div class="flex gap-2 justify-end sm:justify-start">
-            <Button
-              icon="pi pi-refresh"
-              @click="refreshData"
+            <Button icon="pi pi-refresh" @click="refreshData"
               class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
-              v-tooltip.top="$t('owner_pet_list.tooltips.refresh')"
-            />
-            <Button
-              icon="pi pi-plus"
-              @click="showNewPatientModal"
+              v-tooltip.top="$t('owner_pet_list.tooltips.refresh')" />
+            <Button icon="pi pi-plus" @click="showNewPatientModal"
               class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
-              v-tooltip.top="$t('owner_pet_list.buttons.new_patient')"
-            />
+              v-tooltip.top="$t('owner_pet_list.buttons.new_patient')" />
           </div>
         </div>
       </div>
@@ -67,14 +44,8 @@
     <!-- Grid View -->
     <template #grid v-if="loading">
       <div class="grid grid-cols-12 gap-2 py-4">
-        <div
-          v-for="i in 4"
-          :key="i"
-          class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-3 p-2"
-        >
-          <div
-            class="p-6 border border-surface-500 bg-surface-300 rounded-lg flex flex-col"
-          >
+        <div v-for="i in 4" :key="i" class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-3 p-2">
+          <div class="p-6 border border-surface-500 bg-surface-300 rounded-lg flex flex-col">
             <div class="text-lg font-medium border-b border-surface-500 pb-2">
               <Skeleton width="6rem" height="1.5rem" />
             </div>
@@ -101,28 +72,17 @@
 
     <template #grid="slotProps" v-else>
       <ScrollPanel style="height: calc(70vh)" class="!overflow-y-auto">
-        <div
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 p-3"
-        >
-          <div
-            v-for="(pet, index) in slotProps.items"
-            :key="index"
-            class="p-3 border border-surface-500 clear-glass rounded-lg hover:!bg-[var(--p-surface-200)] transition-all shadow-md"
-          >
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 p-3">
+          <div v-for="(pet, index) in slotProps.items" :key="index"
+            class="p-3 border border-surface-500 clear-glass rounded-lg hover:!bg-[var(--p-surface-200)] dark:hover:!text-[var(--p-surface-800)] transition-all shadow-md">
             <!-- Pet Header -->
             <div
-              class="flex items-center gap-3 text-base md:text-lg font-medium text-surface-100 border-b border-emerald-500 w-fit mb-1 md:mb-2"
-            >
-              <div
-                class="w-10 h-10 rounded-lg flex items-center justify-center text-white"
-              >
-                <i
-                  :class="
-                    getIconClass(pet.species) +
-                    ' text-lg ' +
-                    (pet.gender === 'Male' ? 'text-blue-500' : 'text-pink-500')
-                  "
-                ></i>
+              class="flex items-center gap-3 text-base md:text-lg font-medium text-surface-100 border-b border-emerald-500 w-fit mb-1 md:mb-2">
+              <div class="w-10 h-10 rounded-lg flex items-center justify-center text-white">
+                <i :class="getIconClass(pet.species) +
+                  ' text-lg ' +
+                  (pet.gender === 'Male' ? 'text-blue-500' : 'text-pink-500')
+                  "></i>
               </div>
               <h3 class="font-medium text-surface-100 truncate">
                 {{ pet.name }}
@@ -164,9 +124,7 @@
                 :to="{
                   name: 'PetDetails',
                   params: { petmicrochip: pet.microchip_num },
-                }"
-                v-tooltip.top="$t('owner_pet_list.tooltips.view_details')"
-              >
+                }" v-tooltip.top="$t('owner_pet_list.tooltips.view_details')">
                 <i class="fas fa-paw mr-2"></i>
                 <span>{{ $t("owner_pet_list.buttons.details") }}</span>
               </RouterLink>
@@ -178,25 +136,17 @@
 
     <template #footer>
       <div class="bg-surface-300 rounded-b-lg">
-        <Paginator
-          :rows="itemsPerPage"
-          :totalRecords="totalRecords"
-          :rowsPerPageOptions="[25, 50, 100]"
+        <Paginator :rows="itemsPerPage" :totalRecords="totalRecords" :rowsPerPageOptions="[25, 50, 100]"
           @page="onPageChange"
-          class="border-0 bg-surface-300 [&>button]:text-surface-100 [&>button:hover]:bg-surface-400 text-xs md:text-sm"
-        ></Paginator>
+          class="border-0 bg-surface-300 [&>button]:text-surface-100 [&>button:hover]:bg-surface-400 text-xs md:text-sm">
+        </Paginator>
       </div>
     </template>
   </DataView>
 
-  <Dialog
-    v-model:visible="isModalVisible"
-    :header="$t('owner_pet_list.modal.header')"
-    :style="{ width: 'min(95vw, 600px)' }"
-    modal
-    :closable="true"
-    class="bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
-  >
+  <Dialog v-model:visible="isModalVisible" :header="$t('owner_pet_list.modal.header')"
+    :style="{ width: 'min(95vw, 600px)' }" modal :closable="true"
+    class="bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <Avatar icon="fas fa-users" shape="circle" />
@@ -205,15 +155,10 @@
         </span>
       </div>
     </template>
-    <NewPatient
-      @submitted="handleSubmit"
-      @submittedOffline="handleSubmitOffline"
-      :ownername="ownerName"
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-    />
+    <NewPatient @submitted="handleSubmit" @submittedOffline="handleSubmitOffline" :ownername="ownerName" v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" />
   </Dialog>
 </template>
 

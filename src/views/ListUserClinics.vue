@@ -2,13 +2,9 @@
   <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-8">
       <h1 class="text-3xl font-bold text-surface-0">{{ $t("clinics.myClinics") }}</h1>
-      <Button
-        v-if="!loading && clinics.length === 0"
-        :label="$t('clinics.addClinic')"
-        icon="pi pi-plus"
+      <Button v-if="!loading && clinics.length === 0" :label="$t('clinics.addClinic')" icon="pi pi-plus"
         class="p-button-primary bg-emerald-600 hover:bg-emerald-500 border-emerald-600"
-        @click="showAddClinicDialog = true"
-      />
+        @click="showAddClinicDialog = true" />
     </div>
 
     <!-- Clinic List -->
@@ -23,29 +19,19 @@
     <div v-else-if="clinics.length === 0" class="text-center py-12">
       <i class="pi pi-building text-5xl text-surface-600 mb-4"></i>
       <p class="text-surface-500">{{ $t("clinics.noClinics") }}</p>
-      <Button
-        :label="$t('clinics.joinClinic')"
-        icon="pi pi-plus"
-        class="p-button-text mt-4 text-emerald-400 hover:text-emerald-300"
-        @click="showAddClinicDialog = true"
-      />
+      <Button :label="$t('clinics.joinClinic')" icon="pi pi-plus"
+        class="p-button-text mt-4 text-emerald-400 hover:text-emerald-300" @click="showAddClinicDialog = true" />
     </div>
 
     <div v-else class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      <Card
-        v-for="clinic in clinics"
-        :key="clinic.id"
-        class="bg-surface-300 border-surface-500 hover:border-emerald-400 transition-all"
-      >
+      <Card v-for="clinic in clinics" :key="clinic.id"
+        class="p-3 border border-[#c4c7c5] dark:!border-[#444746] clear-glass rounded-lg hover:!bg-[var(--p-surface-200)] transition-all shadow-md dark:hover:!text-[var(--p-surface-800)] transition-all">
         <template #header>
-          <div class="bg-surface-400 p-4 rounded-t-lg border-b border-surface-500">
+          <div class="bg-surface-400 p-4 rounded-t-lg border-b border-surface-500 dark:hover:border-surface-800">
             <div class="flex justify-between items-start">
               <h2 class="text-xl font-semibold text-surface-0">{{ clinic.name }}</h2>
-              <Tag
-                :value="$t(`roles.${clinic.pivot.role}`)"
-                :severity="getRoleSeverity(clinic.pivot.role)"
-                class="capitalize border-0"
-              />
+              <Tag :value="$t(`roles.${clinic.pivot.role}`)" :severity="getRoleSeverity(clinic.pivot.role)"
+                class="capitalize border-0" />
             </div>
           </div>
         </template>
@@ -69,29 +55,17 @@
 
         <template #footer>
           <div class="flex justify-between border-t border-surface-500 pt-3">
-            <Button
-              :label="$t('clinics.branches')"
-              icon="pi pi-sitemap"
-              :iconPos="isRtl ? 'right' : 'left'"
+            <Button :label="$t('clinics.branches')" icon="pi pi-sitemap" :iconPos="isRtl ? 'right' : 'left'"
               v-tooltip.top="$t('clinics.branches')"
-              class="p-button-text p-button-sm text-emerald-400 hover:text-emerald-300"
-              @click="viewBranches(clinic)"
-            />
+              class="p-button-text p-button-sm text-emerald-400 hover:text-emerald-300" @click="viewBranches(clinic)" />
 
             <div>
-              <Button
-                v-if="['super_admin', 'admin', 'manager'].includes(clinic.pivot.role)"
-                icon="pi pi-cog"
+              <Button v-if="['super_admin', 'admin', 'manager'].includes(clinic.pivot.role)" icon="pi pi-cog"
                 class="p-button-text p-button-sm p-button-secondary text-surface-300 hover:text-surface-100 mr-2"
-                @click="manageClinic(clinic)"
-                v-tooltip.top="$t('clinics.manageClinic')"
-              />
-              <Button
-                icon="pi pi-sign-out"
+                @click="manageClinic(clinic)" v-tooltip.top="$t('clinics.manageClinic')" />
+              <Button icon="pi pi-sign-out"
                 class="p-button-text p-button-sm p-button-danger text-rose-400 hover:text-rose-300"
-                @click="confirmLeaveClinic(clinic)"
-                v-tooltip.top="$t('clinics.leave')"
-              />
+                @click="confirmLeaveClinic(clinic)" v-tooltip.top="$t('clinics.leave')" />
             </div>
           </div>
         </template>
@@ -99,91 +73,49 @@
     </div>
 
     <!-- Add Clinic Dialog -->
-    <Dialog
-      v-model:visible="showAddClinicDialog"
-      :header="$t('clinics.joinClinic')"
-      :modal="true"
-      :style="{ width: '500px' }"
-      :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-      class="bg-surface-300 text-surface-100"
-    >
+    <Dialog v-model:visible="showAddClinicDialog" :header="$t('clinics.joinClinic')" :modal="true"
+      :style="{ width: '500px' }" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+      class="bg-surface-300 text-surface-100">
       <div class="space-y-4">
         <div>
-          <label
-            for="clinicEmail"
-            class="block text-sm font-medium text-surface-200 mb-1"
-            >{{ $t("clinics.clinicEmail") }}</label
-          >
-          <InputText
-            id="clinicEmail"
-            v-model="clinicEmail"
-            type="email"
+          <label for="clinicEmail" class="block text-sm font-medium text-surface-200 mb-1">{{ $t("clinics.clinicEmail")
+          }}</label>
+          <InputText id="clinicEmail" v-model="clinicEmail" type="email"
             :placeholder="$t('clinics.clinicEmailPlaceholder')"
-            class="w-full bg-surface-400 border-surface-500 text-surface-100"
-          />
+            class="w-full bg-surface-400 border-surface-500 text-surface-100" />
         </div>
         <div>
           <label for="role" class="block text-sm font-medium text-surface-200 mb-1">{{
             $t("clinics.yourRole")
           }}</label>
-          <Select
-            v-model="selectedRole"
-            :options="availableRoles"
-            optionLabel="label"
-            optionValue="value"
-            :placeholder="$t('clinics.selectRole')"
-            class="w-full bg-surface-400 border-surface-500 text-surface-100"
-          />
+          <Select v-model="selectedRole" :options="availableRoles" optionLabel="label" optionValue="value"
+            :placeholder="$t('clinics.selectRole')" class="w-full bg-surface-400 border-surface-500 text-surface-100" />
         </div>
       </div>
 
       <template #footer>
-        <Button
-          :label="$t('common.cancel')"
-          icon="pi pi-times"
-          class="p-button-text text-surface-300 hover:text-surface-100"
-          @click="showAddClinicDialog = false"
-        />
-        <Button
-          :label="$t('clinics.join')"
-          icon="pi pi-check"
-          class="p-button-primary bg-emerald-600 hover:bg-emerald-500 border-emerald-600"
-          :loading="joiningClinic"
-          @click="joinClinic"
-        />
+        <Button :label="$t('common.cancel')" icon="pi pi-times"
+          class="p-button-text text-surface-300 hover:text-surface-100" @click="showAddClinicDialog = false" />
+        <Button :label="$t('clinics.join')" icon="pi pi-check"
+          class="p-button-primary bg-emerald-600 hover:bg-emerald-500 border-emerald-600" :loading="joiningClinic"
+          @click="joinClinic" />
       </template>
     </Dialog>
 
     <!-- Confirmation Dialog -->
-    <Dialog
-      v-model:visible="showLeaveConfirm"
-      :header="$t('common.confirmAction')"
-      :modal="true"
-      :style="{ width: '400px' }"
-      class="bg-surface-300 text-surface-100"
-    >
+    <Dialog v-model:visible="showLeaveConfirm" :header="$t('common.confirmAction')" :modal="true"
+      :style="{ width: '400px' }" class="bg-surface-300 text-surface-100">
       <div class="confirmation-content flex items-center">
-        <i
-          class="pi pi-exclamation-triangle mr-3 text-amber-400"
-          style="font-size: 2rem"
-        />
+        <i class="pi pi-exclamation-triangle mr-3 text-amber-400" style="font-size: 2rem" />
         <span class="text-surface-200">
           {{ $t("clinics.confirmLeave", { clinicName: clinicToLeave?.name }) }}
         </span>
       </div>
       <template #footer>
-        <Button
-          :label="$t('common.no')"
-          icon="pi pi-times"
-          class="p-button-text text-surface-300 hover:text-surface-100"
-          @click="showLeaveConfirm = false"
-        />
-        <Button
-          :label="$t('common.yes')"
-          icon="pi pi-check"
-          class="p-button-danger bg-rose-600 hover:bg-rose-500 border-rose-600"
-          @click="leaveClinic"
-        />
+        <Button :label="$t('common.no')" icon="pi pi-times"
+          class="p-button-text text-surface-300 hover:text-surface-100" @click="showLeaveConfirm = false" />
+        <Button :label="$t('common.yes')" icon="pi pi-check"
+          class="p-button-danger bg-rose-600 hover:bg-rose-500 border-rose-600" @click="leaveClinic" />
       </template>
     </Dialog>
   </div>
@@ -370,8 +302,13 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
+<style>
 .card-header {
   border-bottom: 1px solid #e5e7eb;
+}
+
+.p-card .p-card-body,
+.p-card .p-card-header {
+  padding: 8px !important;
 }
 </style>
