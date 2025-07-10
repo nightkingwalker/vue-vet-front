@@ -2,24 +2,15 @@
   <div class="w-full lg:!text-[14px]">
     <form @submit.prevent="handleSubmit" class="mx-auto w-full">
       <fieldset
-        class="p-fieldset p-component w-9/10 flex flex-wrap justify-between mx-auto items-top border rounded-lg p-2"
-      >
+        class="p-fieldset p-component w-9/10 flex flex-wrap justify-between mx-auto items-top border rounded-lg p-2">
         <legend>{{ $t("inventory.add_item.title") }}</legend>
 
         <!-- Search Section -->
         <div class="mt-6 w-full">
           <FloatLabel class="w-[95%] !text-xs">
-            <AutoComplete
-              v-model="searchInput"
-              :suggestions="filteredSuggestions"
-              @complete="searchItems"
-              optionLabel="displayText"
-              dropdown
-              forceSelection
-              @item-select="handleItemSelect"
-              fluid
-              @keydown.enter.prevent="handleBarcodeScan"
-            >
+            <AutoComplete v-model="searchInput" :suggestions="filteredSuggestions" @complete="searchItems"
+              optionLabel="displayText" dropdown forceSelection @item-select="handleItemSelect" fluid
+              @keydown.enter.prevent="handleBarcodeScan">
               <template #item="slotProps">
                 <div class="flex flex-col p-2">
                   <div class="flex justify-between">
@@ -29,12 +20,8 @@
                     </span>
                   </div>
                   <div class="mt-1">
-                    <Tag
-                      v-if="slotProps.item.barcode"
-                      :value="slotProps.item.barcode"
-                      severity="info"
-                      class="text-xs"
-                    />
+                    <Tag v-if="slotProps.item.barcode" :value="slotProps.item.barcode" severity="info"
+                      class="text-xs" />
                   </div>
                 </div>
               </template>
@@ -50,59 +37,32 @@
         <div class="field mt-6 w-1/2">
           <div class="flex items-center gap-2">
             <FloatLabel class="flex-grow !text-xs">
-              <InputText
-                id="barcode"
-                class="w-full"
-                v-model="form.barcode"
-                :invalid="invalid.barcode"
-                @keydown.enter.prevent="handleBarcodeScan"
-              />
-              <label for="barcode"
-                >{{ $t("inventory.add_item.barcode") }}
-                <span class="text-red-600">*</span></label
-              >
+              <InputText id="barcode" class="w-full" v-model="form.barcode" :invalid="invalid.barcode"
+                @keydown.enter.prevent="handleBarcodeScan" />
+              <label for="barcode">{{ $t("inventory.add_item.barcode") }}
+                <span class="text-red-600">*</span></label>
             </FloatLabel>
-            <Button
-              icon="pi pi-refresh"
-              @click="generateBarcode"
-              class="p-button-rounded p-button-text"
-              v-tooltip="$t('inventory.add_item.generate_barcode_tooltip')"
-              :disabled="!!existingItemId"
-            />
+            <Button icon="pi pi-refresh" @click="generateBarcode" class="p-button-rounded p-button-text"
+              v-tooltip="$t('inventory.add_item.generate_barcode_tooltip')" :disabled="!!existingItemId" />
           </div>
         </div>
 
         <!-- Category Selection -->
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-[95%] !text-xs">
-            <Select
-              v-model="form.category"
-              :options="categories"
-              optionLabel="label"
-              optionValue="value"
-              :invalid="invalid.category"
-              class="w-full"
-              :disabled="!!existingItemId || isPredefined"
-            />
-            <label for="dd-category"
-              >{{ $t("inventory.add_item.category") }}
-              <span class="text-red-600">*</span></label
-            >
+            <Select v-model="form.category" :options="categories" optionLabel="label" optionValue="value"
+              :invalid="invalid.category" class="w-full" :disabled="!!existingItemId || isPredefined" />
+            <label for="dd-category">{{ $t("inventory.add_item.category") }}
+              <span class="text-red-600">*</span></label>
           </FloatLabel>
         </div>
 
         <!-- Type and Brand -->
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-[95%] !text-xs">
-            <InputText
-              id="type"
-              class="w-full"
-              v-model="form.type"
-              :invalid="invalid.type"
-              :disabled="!!existingItemId"
-            />
-            <label for="type"
-              >{{ $t("inventory.add_item.type") }} <span class="text-red-600">*</span>
+            <InputText id="type" class="w-full" v-model="form.type" :invalid="invalid.type"
+              :disabled="!!existingItemId" />
+            <label for="type">{{ $t("inventory.add_item.type") }} <span class="text-red-600">*</span>
             </label>
           </FloatLabel>
           <small class="text-[12px] text-gray-300 hover:text-gray-500 cursor-help">{{
@@ -111,89 +71,46 @@
         </div>
         <div class="field mt-6 w-1/2">
           <FloatLabel class="w-[95%] !text-xs">
-            <InputText
-              id="brand"
-              class="w-full"
-              v-model="form.brand"
-              :invalid="invalid.brand"
-              :disabled="!!existingItemId"
-            />
-            <label for="brand"
-              >{{ $t("inventory.add_item.brand") }}
-              <span class="text-red-600">*</span></label
-            >
+            <InputText id="brand" class="w-full" v-model="form.brand" :invalid="invalid.brand"
+              :disabled="!!existingItemId" />
+            <label for="brand">{{ $t("inventory.add_item.brand") }}
+              <span class="text-red-600">*</span></label>
           </FloatLabel>
         </div>
 
         <!-- Product Name -->
         <div class="field mt-6 w-full">
           <FloatLabel class="w-[95%] !text-xs">
-            <InputText
-              id="name"
-              class="w-full"
-              v-model="form.name"
-              :invalid="invalid.name"
-              :disabled="!!existingItemId"
-            />
-            <label for="name"
-              >{{ $t("inventory.add_item.product_name") }}
-              <span class="text-red-600">*</span></label
-            >
+            <InputText id="name" class="w-full" v-model="form.name" :invalid="invalid.name"
+              :disabled="!!existingItemId" />
+            <label for="name">{{ $t("inventory.add_item.product_name") }}
+              <span class="text-red-600">*</span></label>
           </FloatLabel>
         </div>
 
         <!-- Description -->
         <div class="field mt-6 w-full">
           <FloatLabel class="w-[95%] !text-xs">
-            <Textarea
-              id="description"
-              class="!text-xs"
-              fluid
-              v-model="form.description"
-              :invalid="invalid.description"
-              rows="2"
-            />
-            <label for="description"
-              >{{ $t("inventory.add_item.description") }}
-              <span class="text-red-600">*</span></label
-            >
+            <Textarea id="description" class="!text-xs" fluid v-model="form.description" :invalid="invalid.description"
+              rows="2" />
+            <label for="description">{{ $t("inventory.add_item.description") }}
+              <span class="text-red-600">*</span></label>
           </FloatLabel>
         </div>
 
         <!-- Quantity and Pricing -->
         <div class="field mt-6 w-1/5">
           <FloatLabel class="w-[95%] !text-xs">
-            <InputNumber
-              id="quantity"
-              class="!text-xs"
-              fluid
-              v-model="form.quantity"
-              :invalid="invalid.quantity"
-              mode="decimal"
-              :min="0.0"
-              :max="5000000"
-              :minFractionDigits="3"
-              :step="1"
-            />
-            <label for="quantity"
-              >{{ $t("inventory.add_item.quantity_to_add") }}
-              <span class="text-red-600">*</span></label
-            >
+            <InputNumber id="quantity" class="!text-xs" fluid v-model="form.quantity" :invalid="invalid.quantity"
+              mode="decimal" :min="0.0" :max="5000000" :minFractionDigits="3" :step="1" />
+            <label for="quantity">{{ $t("inventory.add_item.quantity_to_add") }}
+              <span class="text-red-600">*</span></label>
           </FloatLabel>
         </div>
         <div class="field mt-6 w-1/5">
           <FloatLabel class="w-[95%] !text-xs">
-            <InputNumber
-              id="purchasePrice"
-              class="!text-xs"
-              fluid
-              v-model="form.purchasePrice"
-              mode="currency"
-              currency="USD"
-              :minFractionDigits="3"
-              :min="0"
-              :max="5000000"
-            />
+            <InputNumber id="purchasePrice" class="!text-xs" fluid v-model="form.purchasePrice" mode="currency"
+              currency="USD" :minFractionDigits="3" :min="0" :max="5000000" />
             <label for="purchasePrice">{{
               $t("inventory.add_item.purchase_price")
             }}</label>
@@ -201,17 +118,8 @@
         </div>
         <div class="field mt-6 w-2/5">
           <FloatLabel class="w-[95%] !text-xs">
-            <InputNumber
-              id="sellingPrice"
-              class="!text-xs"
-              fluid
-              v-model="form.sellingPrice"
-              mode="currency"
-              currency="USD"
-              :minFractionDigits="3"
-              :min="0"
-              :max="5000000"
-            />
+            <InputNumber id="sellingPrice" class="!text-xs" fluid v-model="form.sellingPrice" mode="currency"
+              currency="USD" :minFractionDigits="3" :min="0" :max="5000000" />
             <label for="sellingPrice">{{ $t("inventory.add_item.selling_price") }}</label>
           </FloatLabel>
         </div>
@@ -234,23 +142,13 @@
             <div class="field w-1/3 flex flex-wrap">
               <label class="w-full">{{ $t("inventory.add_item.adjustment_type") }}</label>
               <div class="w-1/2 flex flex-col">
-                <RadioButton
-                  size="small"
-                  v-model="adjustmentType"
-                  inputId="increase"
-                  value="increase"
-                />
+                <RadioButton size="small" v-model="adjustmentType" inputId="increase" value="increase" />
                 <label for="increase" class="text-sm">{{
                   $t("inventory.add_item.increase")
                 }}</label>
               </div>
               <div class="w-1/2 flex flex-col">
-                <RadioButton
-                  size="small"
-                  v-model="adjustmentType"
-                  inputId="decrease"
-                  value="decrease"
-                />
+                <RadioButton size="small" v-model="adjustmentType" inputId="decrease" value="decrease" />
                 <label for="decrease" class="text-sm">{{
                   $t("inventory.add_item.decrease")
                 }}</label>
@@ -260,15 +158,8 @@
             <!-- Adjustment Quantity -->
             <div class="field mt-6 w-1/3">
               <FloatLabel class="w-[95%] !text-xs">
-                <InputNumber
-                  id="adjustmentQty"
-                  fluid
-                  class="!text-xs"
-                  v-model="adjustmentQty"
-                  mode="decimal"
-                  :minFractionDigits="3"
-                  :step="1"
-                />
+                <InputNumber id="adjustmentQty" fluid class="!text-xs" v-model="adjustmentQty" mode="decimal"
+                  :minFractionDigits="3" :step="1" />
                 <label for="adjustmentQty">{{
                   $t("inventory.add_item.adjustment_amount")
                 }}</label>
@@ -278,37 +169,22 @@
             <!-- Adjustment Reason -->
             <div class="field mt-6 w-1/3">
               <FloatLabel class="w-[95%] !text-xs">
-                <Select
-                  v-model="adjustmentReason"
-                  fluid
-                  :options="adjustmentReasons"
-                  optionLabel="label"
-                  optionValue="value"
-                  class="w-full"
-                />
+                <Select v-model="adjustmentReason" fluid :options="adjustmentReasons" optionLabel="label"
+                  optionValue="value" class="w-full" />
                 <label>{{ $t("inventory.add_item.adjustment_reason") }}</label>
               </FloatLabel>
             </div>
 
             <!-- Adjustment Preview -->
-            <div
-              v-if="showAdjustmentSection && adjustmentQty > 0"
-              class="mt-2 text-sm w-full"
-            >
-              <span
-                :class="{
-                  'text-green-600': adjustmentType === 'increase',
-                  'text-red-600': adjustmentType === 'decrease',
-                }"
-                class="text-xs"
-              >
-                <i
-                  class="pi"
-                  :class="{
-                    'pi-arrow-up text-green-500': adjustmentType === 'increase',
-                    'pi-arrow-down text-red-500': adjustmentType === 'decrease',
-                  }"
-                ></i>
+            <div v-if="showAdjustmentSection && adjustmentQty > 0" class="mt-2 text-sm w-full">
+              <span :class="{
+                'text-green-600': adjustmentType === 'increase',
+                'text-red-600': adjustmentType === 'decrease',
+              }" class="text-xs">
+                <i class="pi" :class="{
+                  'pi-arrow-up text-green-500': adjustmentType === 'increase',
+                  'pi-arrow-down text-red-500': adjustmentType === 'decrease',
+                }"></i>
                 {{
                   adjustmentType === "increase"
                     ? $t("inventory.add_item.adding_units", { units: adjustmentQty })
@@ -324,12 +200,7 @@
           <!-- Adjustment Notes -->
           <div class="field mt-6 w-full">
             <FloatLabel class="w-[95%] !text-xs">
-              <Textarea
-                id="adjustmentNotes"
-                class="!text-xs"
-                v-model="adjustmentNotes"
-                rows="2"
-              />
+              <Textarea id="adjustmentNotes" class="!text-xs" v-model="adjustmentNotes" rows="2" />
               <label for="adjustmentNotes">{{
                 $t("inventory.add_item.adjustment_notes")
               }}</label>
@@ -340,32 +211,16 @@
         <!-- Min Stock and Expiry -->
         <div class="field mt-6 w-1/3">
           <FloatLabel class="w-[95%] !text-xs">
-            <InputNumber
-              id="minStock"
-              class="!text-xs"
-              fluid
-              v-model="form.minStock"
-              mode="decimal"
-              :min="0"
-              :max="1000"
-              :step="1"
-            />
+            <InputNumber id="minStock" class="!text-xs" fluid v-model="form.minStock" mode="decimal" :min="0"
+              :max="1000" :step="1" />
             <label for="minStock">{{ $t("inventory.add_item.min_stock_level") }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-1/3">
           <FloatLabel class="w-[95%] !text-xs">
-            <DatePicker
-              showIcon
-              iconDisplay="input"
-              showButtonBar
-              id="expiryDate"
-              v-model="form.expiryDate"
-              dateFormat="yy-mm-d"
-              :minDate="new Date()"
-              class="!text-xs"
-            />
+            <DatePicker showIcon iconDisplay="input" showButtonBar id="expiryDate" v-model="form.expiryDate"
+              dateFormat="yy-mm-d" :minDate="new Date()" class="!text-xs" />
             <label for="expiryDate">{{ $t("inventory.add_item.expiry_date") }}</label>
           </FloatLabel>
         </div>
@@ -373,18 +228,9 @@
         <!-- Notes -->
         <div class="field mt-6 w-full">
           <FloatLabel class="w-full !text-xs">
-            <Textarea
-              id="notes"
-              class="!text-xs"
-              fluid
-              v-model="form.notes"
-              :invalid="invalid.notes"
-              rows="2"
-            />
-            <label for="notes"
-              >{{ $t("inventory.add_item.notes") }}
-              <span class="text-red-600">*</span></label
-            >
+            <Textarea id="notes" class="!text-xs" fluid v-model="form.notes" :invalid="invalid.notes" rows="2" />
+            <label for="notes">{{ $t("inventory.add_item.notes") }}
+              <span class="text-red-600">*</span></label>
           </FloatLabel>
           <small class="text-[12px] text-gray-300 hover:text-gray-500 cursor-help">{{
             $t("inventory.add_item.adjustment_notes_small")
@@ -393,55 +239,29 @@
 
         <!-- Submit Button -->
         <div class="field mt-6 w-full flex justify-end">
-          <Button
-            type="submit"
-            :label="
-              !existingItemId
-                ? $t('inventory.add_item.create_new_item')
-                : $t('inventory.add_item.add_to_existing_item')
-            "
-            :icon="!existingItemId ? 'pi pi-save' : 'pi pi-plus'"
-            class="!text-xs"
-          />
+          <Button type="submit" :label="!existingItemId
+            ? $t('inventory.add_item.create_new_item')
+            : $t('inventory.add_item.add_to_existing_item')
+            " :icon="!existingItemId ? 'pi pi-save' : 'pi pi-plus'" class="!text-xs" />
         </div>
       </fieldset>
     </form>
 
     <!-- Confirmation Dialog -->
-    <Dialog
-      v-model:visible="showMatchDialog"
-      :header="$t('inventory.add_item.existing_items_found')"
-      :modal="true"
-      :style="{ width: '50vw' }"
-    >
+    <Dialog v-model:visible="showMatchDialog" :header="$t('inventory.add_item.existing_items_found')" :modal="true"
+      :style="{ width: '50vw' }">
       <div class="mb-4" v-focustrap="{ disabled: false, autoFocus: true }">
         <p>{{ $t("inventory.add_item.similar_items_found") }}</p>
-        <DataTable
-          :value="matchedItems"
-          selectionMode="single"
-          showGridlines
-          v-model:selection="selectedMatch"
-        >
+        <DataTable :value="matchedItems" selectionMode="single" showGridlines v-model:selection="selectedMatch">
           <Column field="name" :header="$t('inventory.add_item.name')"></Column>
           <Column field="brand" :header="$t('inventory.add_item.brand')"></Column>
-          <Column
-            field="quantity"
-            :header="$t('inventory.add_item.current_stock')"
-          ></Column>
+          <Column field="quantity" :header="$t('inventory.add_item.current_stock')"></Column>
         </DataTable>
       </div>
       <template #footer>
-        <Button
-          :label="$t('inventory.add_item.add_to_selected')"
-          icon="pi pi-plus"
-          @click="useExistingItem"
-        />
-        <Button
-          :label="$t('inventory.add_item.create_new_anyway')"
-          icon="pi pi-times"
-          @click="createNewItem"
-          class="p-button-text text-xs"
-        />
+        <Button :label="$t('inventory.add_item.add_to_selected')" icon="pi pi-plus" @click="useExistingItem" />
+        <Button :label="$t('inventory.add_item.create_new_anyway')" icon="pi pi-times" @click="createNewItem"
+          class="p-button-text text-xs" />
       </template>
     </Dialog>
   </div>
@@ -519,7 +339,7 @@ const form = ref({
   brand: "",
   name: "",
   description: "",
-  quantity: 1,
+  quantity: 0,
   purchasePrice: 0,
   sellingPrice: 0,
   minStock: 0,
@@ -558,6 +378,9 @@ if (props.item) {
     expiryDate: props.item.expiry_date ? new Date(props.item.expiry_date) : null,
   };
   existingItemId.value = props.item.id;
+}
+if (existingItemId.value) {
+  form.value.quantity = 0;
 }
 const handleBarcodeScan = (event) => {
   // if (event.target.value && /^\d{6,}$/.test(event.target.value)) {
@@ -716,6 +539,7 @@ const reasonLabel = computed(() => {
 });
 const invalid = ref({});
 const submitForm = async () => {
+  console.log("form.value.notes", form.value.notes);
   invalid.value = {
     quantity: form.value.quantity === "" ? true : false,
     barcode: form.value.barcode === "" ? true : false,
@@ -724,7 +548,7 @@ const submitForm = async () => {
     type: form.value.type === "" ? true : false,
     brand: form.value.brand === "" ? true : false,
     description: form.value.description === "" ? true : false,
-    notes: form.value.notes === "" ? true : false,
+    notes: !form.value.notes || form.value.notes === "" ? true : false,
   };
   if (
     invalid.value.barcode ||
@@ -783,6 +607,7 @@ const submitForm = async () => {
   } else {
     payload.existing_item_id = existingItemId.value;
   }
+  // console.log("payload", payload)
 
   try {
     // const endpoint = "/inventory-items/smart-add";
@@ -832,7 +657,7 @@ const resetForm = () => {
     brand: "",
     name: "",
     description: "",
-    quantity: 1,
+    quantity: 0,
     purchasePrice: 0,
     sellingPrice: 0,
     minStock: 0,
