@@ -1102,6 +1102,7 @@
             "quantity": "Qty",
             "cost_price": "Cost",
             "selling_price": "Price",
+            "description": "Item Description",
             "expiry_date": "Expiry",
             "actions": "Actions"
         },

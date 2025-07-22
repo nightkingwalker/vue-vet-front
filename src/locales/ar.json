@@ -1093,6 +1093,7 @@
             "category": "الفئة",
             "type": "النوع",
             "quantity": "الكمية",
+            "description": "وصف المنتج",
             "cost_price": "التكلفة",
             "selling_price": "السعر",
             "expiry_date": "تاريخ انتهاء الصلاحية",

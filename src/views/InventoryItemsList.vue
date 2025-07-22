@@ -1,87 +1,37 @@
 <template>
   <div class="w-full lg:!text-[14px]">
-    <DataTable
-      id="inventoryList"
-      ref="dt"
-      :value="loading ? skeletonRows : inventoryItems"
-      :row-hover="true"
-      :loading="loading"
-      :metaKeySelection="metaKey"
-      sortMode="multiple"
-      exportFilename="Inventory_Items"
-      removableSort
-      showGridlines
-      stripedRows
-      v-model:selection="selectedItems"
-      highlightOnSelect
-      dataKey="id"
-      :exportFunction="beforeExportFunction"
-      responsiveLayout="scroll"
-      scrollable
-      scrollHeight="75vh"
-      class="rounded-xl 2xl:overflow-y-auto drop-shadow-md h-[95vh]"
-      size="small"
-    >
+    <DataTable id="inventoryList" ref="dt" :value="loading ? skeletonRows : inventoryItems" :row-hover="true"
+      :loading="loading" :metaKeySelection="metaKey" sortMode="multiple" exportFilename="Inventory_Items" removableSort
+      showGridlines stripedRows v-model:selection="selectedItems" highlightOnSelect dataKey="id"
+      :exportFunction="beforeExportFunction" responsiveLayout="scroll" scrollable scrollHeight="75vh"
+      class="rounded-xl 2xl:overflow-y-auto drop-shadow-md h-[95vh]" size="small">
       <template #header>
         <div class="flex justify-between">
           <div class="flex">
-            <Button
-              size="small"
-              type="button"
-              icon="pi pi-refresh !text-sm lg:!text-[14px]"
-              label=""
-              v-tooltip.bottom="$t('inventory.actions.refresh')"
-              class="!text-sm lg:!text-[14px] ml-2"
-              @click="refreshData"
-            />
-            <Button
-              size="small"
-              icon="pi pi-plus"
-              @click="showModal"
-              v-tooltip.bottom="$t('inventory.actions.add')"
-              class="p-button p-component p-button-icon-only !text-sm lg:!text-[14px] ml-2"
-            />
-            <Button
-              size="small"
-              icon="pi pi-cloud-upload"
-              @click="showImportModal"
+            <Button size="small" type="button" icon="pi pi-refresh !text-sm lg:!text-[14px]" label=""
+              v-tooltip.bottom="$t('inventory.actions.refresh')" class="!text-sm lg:!text-[14px] ml-2"
+              @click="refreshData" />
+            <Button size="small" icon="pi pi-plus" @click="showModal" v-tooltip.bottom="$t('inventory.actions.add')"
+              class="p-button p-component p-button-icon-only !text-sm lg:!text-[14px] ml-2" />
+            <Button size="small" icon="pi pi-cloud-upload" @click="showImportModal"
               v-tooltip.bottom="$t('inventory.actions.import')"
-              class="p-button p-component p-button-icon-only !text-sm lg:!text-[14px] ml-2"
-            />
-            <Button
-              size="small"
-              icon="pi pi-download !text-sm lg:!text-[14px]"
-              class="!text-sm lg:!text-[14px] ml-2"
-              v-tooltip.bottom="$t('inventory.actions.export')"
-              @click="exportCSV($event)"
-            />
+              class="p-button p-component p-button-icon-only !text-sm lg:!text-[14px] ml-2" />
+            <Button size="small" icon="pi pi-download !text-sm lg:!text-[14px]" class="!text-sm lg:!text-[14px] ml-2"
+              v-tooltip.bottom="$t('inventory.actions.export')" @click="exportCSV($event)" />
           </div>
           <h2 class="text-md !mb-0 pb-0 flex items-center">
             <i class="fa-solid fa-store mx-2"></i> {{ $t("inventory.title") }}
           </h2>
           <span class="p-input-icon-left !text-sm lg:!text-[14px]">
-            <InputGroup
-              class="!text-gray-800 flex rounded-md overflow-hidden border !border-gray-400"
-            >
-              <InputGroupAddon
-                class="!text-gray-800 px-4 flex flex-col item-center justify-center"
-              >
+            <InputGroup class="!text-gray-800 flex rounded-md overflow-hidden border !border-gray-400">
+              <InputGroupAddon class="!text-gray-800 px-4 flex flex-col item-center justify-center">
                 <i class="pi pi-search"></i>
               </InputGroupAddon>
-              <InputText
-                size="small"
-                v-model="searchQuery"
-                @input="onSearchChange"
-                @keyup.enter="handleBarcodeEnter"
-                @keydown.enter.prevent="handleBarcodeEnter"
-                ref="inputRef"
-                @focus="inputFocused = true"
-                @blur="inputFocused = false"
-                autofocus="true"
-                type="text"
+              <InputText size="small" v-model="searchQuery" @input="onSearchChange" @keyup.enter="handleBarcodeEnter"
+                @keydown.enter.prevent="handleBarcodeEnter" ref="inputRef" @focus="inputFocused = true"
+                @blur="inputFocused = false" autofocus="true" type="text"
                 class="!text-sm lg:!text-[14px] !text-gray-800 focus:!ring-0 focus:!ring-offset-0 focus:!border-gray-400 border-transparent"
-                :placeholder="$t('inventory.search.placeholder')"
-              />
+                :placeholder="$t('inventory.search.placeholder')" />
               <Button size="small" icon="pi pi-times" @click="clearFilters" />
             </InputGroup>
           </span>
@@ -89,32 +39,19 @@
       </template>
 
       <!-- Barcode Column -->
-      <Column
-        class="!text-sm lg:!text-[14px]"
-        field="barcode"
-        :header="$t('inventory.columns.barcode')"
-        sortable
-      >
+      <Column class="!text-sm lg:!text-[14px]" field="barcode" :header="$t('inventory.columns.barcode')" sortable>
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="80%" height="1rem" />
           </template>
           <template v-else>
-            <Chip
-              class="shadow-sm !text-sm lg:!text-[14px] font-thin border dark:border-transparent h-7"
-              :label="slotProps.data.barcode"
-              icon="pi pi-barcode"
-            />
+            <Chip class="shadow-sm !text-sm lg:!text-[14px] font-thin border dark:border-transparent h-7"
+              :label="slotProps.data.barcode" icon="pi pi-barcode" />
           </template>
         </template>
       </Column>
       <!-- Brand Column -->
-      <Column
-        class="!text-sm lg:!text-[14px]"
-        field="brand"
-        :header="$t('inventory.columns.brand')"
-        sortable
-      >
+      <Column class="!text-sm lg:!text-[14px]" field="brand" :header="$t('inventory.columns.brand')" sortable>
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
@@ -124,12 +61,7 @@
       </Column>
 
       <!-- Name Column -->
-      <Column
-        class="!text-sm lg:!text-[14px]"
-        field="name"
-        :header="$t('inventory.columns.name')"
-        sortable
-      >
+      <Column class="!text-sm lg:!text-[14px]" field="name" :header="$t('inventory.columns.name')" sortable>
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="60%" height="1rem" />
@@ -139,32 +71,20 @@
       </Column>
 
       <!-- Category Column -->
-      <Column
-        class="!text-sm lg:!text-[14px]"
-        field="category"
-        :header="$t('inventory.columns.category')"
-        sortable
-      >
+      <Column class="!text-sm lg:!text-[14px]" field="category" :header="$t('inventory.columns.category')" sortable>
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
           </template>
           <template v-else>
-            <Chip
-              class="shadow-sm !text-sm lg:!text-[14px] font-thin border dark:border-transparent h-7"
-              :label="slotProps.data.category"
-            />
+            <Chip class="shadow-sm !text-sm lg:!text-[14px] font-thin border dark:border-transparent h-7"
+              :label="slotProps.data.category" />
           </template>
         </template>
       </Column>
 
       <!-- Type Column -->
-      <Column
-        class="!text-sm lg:!text-[14px]"
-        field="type"
-        :header="$t('inventory.columns.type')"
-        sortable
-      >
+      <Column class="!text-sm lg:!text-[14px]" field="type" :header="$t('inventory.columns.type')" sortable>
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
@@ -174,38 +94,37 @@
       </Column>
 
       <!-- Quantity Column -->
-      <Column
-        class="!text-sm lg:!text-[14px]"
-        field="quantity"
-        :header="$t('inventory.columns.quantity')"
-        sortable
-      >
+      <Column class="!text-sm lg:!text-[14px]" field="quantity" :header="$t('inventory.columns.quantity')" sortable>
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="30%" height="1rem" />
           </template>
           <template v-else>
-            <Chip
-              :class="{
-                '!bg-red-100 !text-red-800':
-                  slotProps.data.quantity <= slotProps.data.minimum_stock_level,
-                '!bg-green-100 !text-green-800':
-                  slotProps.data.quantity > slotProps.data.minimum_stock_level,
-              }"
-              class="shadow-sm !text-sm lg:!text-[14px] font-thin border dark:border-transparent h-7"
-              :label="slotProps.data.quantity.toString()"
-            />
+            <Chip :class="{
+              '!bg-red-100 !text-red-800':
+                slotProps.data.quantity <= slotProps.data.minimum_stock_level,
+              '!bg-green-100 !text-green-800':
+                slotProps.data.quantity > slotProps.data.minimum_stock_level,
+            }" class="shadow-sm !text-sm lg:!text-[14px] font-thin border dark:border-transparent h-7"
+              :label="slotProps.data.quantity.toString()" />
           </template>
         </template>
       </Column>
 
+      <!-- Item Description Column -->
+      <Column class="!text-sm lg:!text-[14px]" field="description" :header="$t('inventory.columns.description')"
+        sortable>
+        <template #body="slotProps">
+          <template v-if="loading">
+            <Skeleton width="40%" height="1rem" />
+          </template>
+          <template v-else>
+            {{ slotProps.data.description }}
+          </template>
+        </template>
+      </Column>
       <!-- Cost Price Column -->
-      <Column
-        class="!text-sm lg:!text-[14px]"
-        field="cost_price"
-        :header="$t('inventory.columns.cost_price')"
-        sortable
-      >
+      <Column class="!text-sm lg:!text-[14px]" field="cost_price" :header="$t('inventory.columns.cost_price')" sortable>
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
@@ -217,12 +136,8 @@
       </Column>
 
       <!-- Selling Price Column -->
-      <Column
-        class="!text-sm lg:!text-[14px]"
-        field="selling_price"
-        :header="$t('inventory.columns.selling_price')"
-        sortable
-      >
+      <Column class="!text-sm lg:!text-[14px]" field="selling_price" :header="$t('inventory.columns.selling_price')"
+        sortable>
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="40%" height="1rem" />
@@ -234,29 +149,20 @@
       </Column>
 
       <!-- Expiry Date Column -->
-      <Column
-        class="!text-sm lg:!text-[14px]"
-        field="expiry_date"
-        :header="$t('inventory.columns.expiry_date')"
-        sortable
-      >
+      <Column class="!text-sm lg:!text-[14px]" field="expiry_date" :header="$t('inventory.columns.expiry_date')"
+        sortable>
         <template #body="slotProps">
           <template v-if="loading">
             <Skeleton width="60%" height="1rem" />
           </template>
           <template v-else>
-            <Chip
-              v-if="slotProps.data.expiry_date"
-              :class="{
-                '!bg-red-100 !text-red-800': isExpired(slotProps.data.expiry_date),
-                '!bg-yellow-100 !text-yellow-800': isExpiringSoon(
-                  slotProps.data.expiry_date
-                ),
-              }"
-              class="shadow-sm !text-sm lg:!text-[14px] font-thin border dark:border-transparent h-7"
-              :label="formatDate(slotProps.data.expiry_date)"
-              icon="pi pi-calendar"
-            />
+            <Chip v-if="slotProps.data.expiry_date" :class="{
+              '!bg-red-100 !text-red-800': isExpired(slotProps.data.expiry_date),
+              '!bg-yellow-100 !text-yellow-800': isExpiringSoon(
+                slotProps.data.expiry_date
+              ),
+            }" class="shadow-sm !text-sm lg:!text-[14px] font-thin border dark:border-transparent h-7"
+              :label="formatDate(slotProps.data.expiry_date)" icon="pi pi-calendar" />
             <span v-else>N/A</span>
           </template>
         </template>
@@ -269,117 +175,56 @@
             <Skeleton width="60%" height="1rem" />
           </template>
           <template v-else>
-            <Button
-              size="small"
-              icon="pi pi-pencil"
-              class="p-button-rounded p-button-text p-button-sm"
-              @click="editItem(slotProps.data)"
-              v-tooltip.bottom="$t('inventory.actions.edit')"
-            />
-            <Button
-              size="small"
-              icon="pi pi-trash"
-              class="p-button-rounded p-button-text p-button-sm p-button-danger"
-              @click="confirmDelete(slotProps.data)"
-              v-tooltip.bottom="$t('inventory.actions.delete')"
-            />
+            <Button size="small" icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-sm"
+              @click="editItem(slotProps.data)" v-tooltip.bottom="$t('inventory.actions.edit')" />
+            <Button size="small" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-sm p-button-danger"
+              @click="confirmDelete(slotProps.data)" v-tooltip.bottom="$t('inventory.actions.delete')" />
           </template>
         </template>
       </Column>
 
       <template #footer>
-        <Paginator
-          :rows="itemsPerPage"
-          :first="0"
-          :totalRecords="totalRecords"
-          :currentPage="currentPage"
-          :rowsPerPageOptions="[25, 50, 100]"
-          @page="onPageChange"
-          class="!rounded-b-xl !text-sm lg:!text-[14px]"
-        >
+        <Paginator :rows="itemsPerPage" :first="0" :totalRecords="totalRecords" :currentPage="currentPage"
+          :rowsPerPageOptions="[25, 50, 100]" @page="onPageChange" class="!rounded-b-xl !text-sm lg:!text-[14px]">
         </Paginator>
       </template>
     </DataTable>
   </div>
 
   <!-- Add/Edit Item Dialog -->
-  <Dialog
-    :header="
-      editMode ? $t('inventory.dialog.edit_title') : $t('inventory.dialog.add_title')
-    "
-    v-model:visible="isModalVisible"
-    @hide="resetForm"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
-  >
-    <InventoryItemForm
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :item="selectedItem"
-      :editMode="editMode"
-      @submitted="handleSubmit"
-    />
+  <Dialog :header="editMode ? $t('inventory.dialog.edit_title') : $t('inventory.dialog.add_title')
+    " v-model:visible="isModalVisible" @hide="resetForm" modal :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]">
+    <InventoryItemForm v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" :item="selectedItem" :editMode="editMode" @submitted="handleSubmit" />
   </Dialog>
   <!-- Add/Edit Item Dialog -->
-  <Dialog
-    :header="
-      editMode ? $t('inventory.dialog.edit_title') : $t('inventory.dialog.import_title')
-    "
-    v-model:visible="isImportModalVisible"
-    @hide="resetForm"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
-  >
-    <InventoryItemImport
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :item="selectedItem"
-      :editMode="editMode"
-      @submitted="handleImportSubmit"
-    />
+  <Dialog :header="editMode ? $t('inventory.dialog.edit_title') : $t('inventory.dialog.import_title')
+    " v-model:visible="isImportModalVisible" @hide="resetForm" modal :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]">
+    <InventoryItemImport v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" :item="selectedItem" :editMode="editMode" @submitted="handleImportSubmit" />
   </Dialog>
 
   <!-- Delete Confirmation Dialog -->
-  <Dialog
-    v-model:visible="deleteDialogVisible"
-    :style="{ width: '450px' }"
-    :header="$t('inventory.dialog.delete_title')"
-    :modal="true"
-  >
-    <div
-      class="confirmation-content"
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-    >
+  <Dialog v-model:visible="deleteDialogVisible" :style="{ width: '450px' }"
+    :header="$t('inventory.dialog.delete_title')" :modal="true">
+    <div class="confirmation-content" v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }">
       <i class="pi pi-exclamation-triangle ltr:mr-3 rtl:ml-3" style="font-size: 2rem" />
-      <span
-        v-if="selectedItem"
-        v-html="$t('inventory.dialog.delete_message', { item: selectedItem.name })"
-      ></span>
+      <span v-if="selectedItem" v-html="$t('inventory.dialog.delete_message', { item: selectedItem.name })"></span>
     </div>
     <template #footer>
-      <Button
-        size="small"
-        :label="$t('inventory.actions.no')"
-        icon="pi pi-times"
-        class="p-button-text"
-        @click="deleteDialogVisible = false"
-      />
-      <Button
-        size="small"
-        :label="$t('inventory.actions.yes')"
-        icon="pi pi-check"
-        class="p-button-text p-button-danger"
-        @click="deleteItem"
-      />
+      <Button size="small" :label="$t('inventory.actions.no')" icon="pi pi-times" class="p-button-text"
+        @click="deleteDialogVisible = false" />
+      <Button size="small" :label="$t('inventory.actions.yes')" icon="pi pi-check" class="p-button-text p-button-danger"
+        @click="deleteItem" />
     </template>
   </Dialog>
 </template>
