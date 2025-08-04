@@ -530,7 +530,7 @@ const sendInvite = async () => {
     });
     toast.add({ severity: "success", detail: "Invitation sent!" });
   } catch (error) {
-    
+    console.error(error)
     toast.add({ severity: "error", detail: error.response?.data?.message });
   }
 };

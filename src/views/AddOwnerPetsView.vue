@@ -16,7 +16,7 @@
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.name">{{
             $t("form_messages.warnings.invalid_input")
-          }}</span>
+            }}</span>
         </div>
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
@@ -27,7 +27,7 @@
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.species">{{
             $t("form_messages.warnings.invalid_input")
-          }}</span>
+            }}</span>
         </div>
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
@@ -48,7 +48,7 @@
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.gender">{{
             $t("form_messages.warnings.invalid_input")
-          }}</span>
+            }}</span>
         </div>
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
@@ -58,7 +58,7 @@
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.date_of_birth">{{
             $t("form_messages.warnings.invalid_input")
-          }}</span>
+            }}</span>
         </div>
         <!-- Color -->
         <div class="field mt-3 w-[48%]">
@@ -74,7 +74,7 @@
             <InputText fluid id="distinctive_marks" v-model="pet.distinctive_marks" />
             <label for="distinctive_marks">{{
               $t("pet_form.fields.distinctive_marks")
-            }}</label>
+              }}</label>
           </FloatLabel>
         </div>
 
@@ -88,14 +88,14 @@
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.behaviour">{{
             $t("form_messages.warnings.invalid_input")
-          }}</span>
+            }}</span>
         </div>
 
         <!-- Neutered -->
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
             <Select fluid v-model="pet.neutered" required :invalid="invalid.pet.neutered" :options="yesno"
-              optionLabel="label" optionValue="value" class="w-full h-10" />
+              optionLabel="label" class="w-full h-10" />
             <label for="neutered">{{ $t("pet_form.fields.neutered") }}
               <span class="text-red-600">*</span></label>
           </FloatLabel>
@@ -108,13 +108,13 @@
         <div class="field mt-3 w-[48%]">
           <FloatLabel class="w-full">
             <Select fluid required :invalid="invalid.pet.deceased" v-model="pet.deceased" :options="yesno"
-              optionLabel="label" optionValue="value" class="w-full h-10" />
+              optionLabel="label" class="w-full h-10" />
             <label for="deceased">{{ $t("pet_form.fields.deceased") }}
               <span class="text-red-600">*</span></label>
           </FloatLabel>
           <span class="text-[10px] text-red-600" v-if="invalid.pet.deceased">{{
             $t("form_messages.warnings.invalid_input")
-          }}</span>
+            }}</span>
         </div>
 
         <!-- Allergies -->
@@ -332,8 +332,8 @@ const dogsOptions = ref([
 ]);
 
 const yesno = ref([
-  { label: t("pet_form.options.yes"), value: "Yes" },
-  { label: t("pet_form.options.no"), value: "No" },
+  { label: t("pet_form.options.yes"), en_label: "Yes", value: "Yes" },
+  { label: t("pet_form.options.no"), en_label: "No", value: "No" },
 ]);
 
 const behaviorOptions = ref([
@@ -446,6 +446,7 @@ function addNewOwner() {
  * Validates and submits the pet form
  */
 const submitForm = async () => {
+  console.log(pet.value.neutered.value)
   // Validate required fields
   invalid.value.pet = {
     owner_id: pet.value.owner_id === null,
@@ -487,8 +488,10 @@ const submitForm = async () => {
     method: "POST",
   };
   const online = await $connectivity.getOnlineStatus();
+  console.log(submissionData)
   if (online) {
     try {
+      console.log(submissionData)
       // Disable submit button
       isSubmitting.value = true;
       // Submit data to API
