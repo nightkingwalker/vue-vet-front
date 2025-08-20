@@ -1155,7 +1155,7 @@ onMounted(async () => {
     box-shadow var(--p-transition-duration);
   border-radius: var(--p-border-radius-md);
   outline-color: transparent;
-  gap: 0.5rem;
+  /* gap: 0.5rem; */
 }
 .sx__event.sx__month-grid-event.sx__month-grid-cell {
   height: 50px;

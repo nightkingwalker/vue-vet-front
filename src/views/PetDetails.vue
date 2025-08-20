@@ -5,10 +5,9 @@
       <Card
         class="w-full h-full shadow-lg rounded-xl !overflow-hidden border border-[#c4c7c5] dark:!border-[#444746] flex">
         <template #header :class="`xs:!w-1/4`">
-          <div class="relative md:h-20 2xl:h-40 bg-gradient-to-br" :class="
-              pet.gender === 'Female'
-                ? 'from-purple-100 to-red-100 dark:from-purple-800 dark:to-red-800'
-                : 'from-indigo-100 to-blue-100 dark:from-purple-800 dark:to-blue-800'
+          <div class="relative md:h-20 2xl:h-40 bg-gradient-to-br" :class="pet.gender === 'Female'
+            ? 'from-purple-100 to-red-100 dark:from-purple-800 dark:to-red-800'
+            : 'from-indigo-100 to-blue-100 dark:from-purple-800 dark:to-blue-800'
             ">
             <Button @click="router.go(-1)"
               class="relative top-3 right-3 left-3 p-button-text p-button-rounded !text-gray-600 dark:!text-gray-200 hover:!bg-gray-100 dark:hover:!bg-gray-700 z-10"
@@ -118,14 +117,13 @@
               <div class="space-y-2">
                 <div class="flex items-center gap-2">
                   <span class="text-gray-500 dark:text-gray-400 text-xs">{{ $t("pet_details.neutered") }}:</span>
-                  <Tag :value="
-                      pet.neutered === 'Y'
-                        ? pet.gender === 'Male'
-                          ? $t('pet_details.neutered')
-                          : $t('pet_details.spayed')
-                        : pet.gender === 'Male'
-                        ? $t('pet_details.not_neutered')
-                        : $t('pet_details.not_spayed')
+                  <Tag :value="pet.neutered === 'Y'
+                    ? pet.gender === 'Male'
+                      ? $t('pet_details.neutered')
+                      : $t('pet_details.neutered')
+                    : pet.gender === 'Male'
+                      ? $t('pet_details.not_neutered')
+                      : $t('pet_details.neutered')
                     " :severity="pet.neutered === 'Y' ? 'success' : 'danger'" class="!text-xs" />
                 </div>
                 <div v-if="pet.allergies" class="flex items-start gap-2">
@@ -172,7 +170,7 @@
           <div class="flex flex-wrap items-center justify-between gap-2">
             <span class="lg:text-sm text-lg font-bold">{{
               $t("pet_details.visits_history")
-              }}</span>
+            }}</span>
             <div class="flex gap-2">
               <Button v-tooltip.bottom="$t('pet_details.add_appointment')" icon="pi pi-plus" @click="addAppointment"
                 class="p-button p-button-icon-only !text-sm !font-thin h-8" />
@@ -209,7 +207,7 @@
               <div class="gap-2 px-1">
                 <span class="lg:!text-[14px] text-xs whitespace-nowrap font-normal">{{
                   $t(`calendar.appointment.${slotProps.data.type.toLowerCase()}`)
-                  }}</span>
+                }}</span>
               </div>
             </Tag>
           </template>
@@ -217,108 +215,108 @@
         <Column class="w-fit whitespace-nowrap">
           <template #body="slotProps">
             <Button type="button" icon="fa-solid fa-syringe" v-tooltip.top="{
-                value: $t('pet_details.view_treatments'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+              value: $t('pet_details.view_treatments'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
               @click.prevent="listTreatments(slotProps.data.id)" v-if="slotProps.data.type !== `Grooming`" />
             <Button v-if="slotProps.data.type !== `Grooming`" type="button" icon="fa-solid fa-vials" v-tooltip.top="{
-                value: $t('pet_details.view_tests'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+              value: $t('pet_details.view_tests'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
               @click.prevent="listTestResults(slotProps.data.id)" />
             <Button type="button" icon="fa-solid fa-x-ray" v-tooltip.top="{
-                value: $t('pet_details.xray_ultrasound'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+              value: $t('pet_details.xray_ultrasound'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
               v-if="slotProps.data.type !== `Grooming`" @click.prevent="listImages(slotProps.data.id)" />
             <Button type="button" icon="fa-solid fa-file-medical" v-tooltip.top="{
-                value: $t('pet_details.case_history'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+              value: $t('pet_details.case_history'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
               v-if="slotProps.data.type !== `Grooming`" @click="showCaseHistoryModal(slotProps.data.id)" />
             <Button type="button" icon="fa-solid fa-stethoscope" v-tooltip.top="{
-                value: $t('pet_details.medical_examination'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+              value: $t('pet_details.medical_examination'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
               v-if="slotProps.data.type !== `Grooming`" @click="showPhysicalExaminationModal(slotProps.data.id)" />
             <Button type="button" icon="fa-regular fa-chart-bar" v-tooltip.top="{
-                value: $t('pet_details.full_report'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+              value: $t('pet_details.full_report'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
               @click="showFullReportModal(slotProps.data.id)" />
             <Button type="button" icon="fa-solid fa-dollar-sign" v-tooltip.top="{
-                value: $t('pet_details.invoice'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+              value: $t('pet_details.invoice'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
               @click="showAddInvoice(slotProps.data.id)" />
             <Button type="button" icon="fa-solid fa-pen-to-square" v-tooltip.top="{
-                value: $t('pet_details.edit_details'),
-                pt: {
-                  arrow: {
-                    style: {
-                      borderTopColor: 'var(--p-primary-color)',
-                    },
+              value: $t('pet_details.edit_details'),
+              pt: {
+                arrow: {
+                  style: {
+                    borderTopColor: 'var(--p-primary-color)',
                   },
-                  text:
-                    '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
                 },
-              }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
+                text:
+                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+              },
+            }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
               @click="editAppointment(slotProps.data.id)" />
           </template>
         </Column>
@@ -331,13 +329,13 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.treatments")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <PetTreatments v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }" :medical_record_id="medical_record_id" @showAddTreatmentModal="showAddTreatmentModal"
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" @showAddTreatmentModal="showAddTreatmentModal"
       @showEditTreatmentModal="showEditTreatmentModals" />
     <template #footer> </template>
   </Dialog>
@@ -348,13 +346,13 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.edit_pet_details")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <EditPetDetails v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }" :medical_record_id="medical_record_id" @details_updated="handleDetailsUpdated" />
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" @details_updated="handleDetailsUpdated" />
     <template #footer> </template>
   </Dialog>
   <Dialog :header="$t('pet_details.edit_treatment')" v-model:visible="isEditTreatmentVisible"
@@ -364,13 +362,13 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.edit_treatment")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <EditTreatment v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }" @TreatmentUpdated="handleUpdatedTreatment" :treatmentId="selectedTreatmentId"
+      disabled: false,
+      autoFocus: true,
+    }" @TreatmentUpdated="handleUpdatedTreatment" :treatmentId="selectedTreatmentId"
       :medical_record_id="medical_record_id" />
     <template #footer> </template>
   </Dialog>
@@ -381,13 +379,13 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.test_results")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <TestResults v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }" :medical_record_id="medical_record_id" @showAddTestResultModal="showAddTestResultModal"
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" @showAddTestResultModal="showAddTestResultModal"
       @showEditTestResultModal="showEditTestResultModal" />
     <template #footer> </template>
   </Dialog>
@@ -398,13 +396,13 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.test_results")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <EditMedicalImage v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }" @MedicalImageUpdated="handleMedicalImageUpdated" :medicalImageId="selectedMedicalImageId"
+      disabled: false,
+      autoFocus: true,
+    }" @MedicalImageUpdated="handleMedicalImageUpdated" :medicalImageId="selectedMedicalImageId"
       :medical_record_id="medical_record_id" />
     <template #footer> </template>
   </Dialog>
@@ -415,13 +413,13 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.xrays_images")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <MedicalImages v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }" :medical_record_id="medical_record_id" @showAddMedicalImageModal="showAddMedicalImageModal"
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" @showAddMedicalImageModal="showAddMedicalImageModal"
       @showEditMedicalImageModal="showEditMedicalImageModal" />
     <template #footer> </template>
   </Dialog>
@@ -434,13 +432,13 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.new_medical_image")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <AddNewMedicalImage v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }" :medical_record_id="medical_record_id" @NewImageAdded="handleSubmitNewImage" />
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" @NewImageAdded="handleSubmitNewImage" />
     <template #footer> </template>
   </Dialog>
   <Dialog :header="$t('pet_details.new_treatment')" v-model:visible="isNewTreatmentVisible"
@@ -450,13 +448,13 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.new_treatment")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <AddNewTreatment v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }" :medical_record_id="medical_record_id" @TreatmentAdded="handleNewTreatment" />
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" @TreatmentAdded="handleNewTreatment" />
     <template #footer> </template>
   </Dialog>
   <Dialog :header="$t('pet_details.new_test_result')" v-model:visible="isNewTestResultVisible"
@@ -466,13 +464,13 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.new_test_result")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <AddNewTestResult v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }" :medical_record_id="medical_record_id" @TestResultAdded="handleNewTestResult" />
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" @TestResultAdded="handleNewTestResult" />
     <template #footer> </template>
   </Dialog>
   <Dialog :header="$t('pet_details.new_record')" v-model:visible="isNewApointmentVisible"
@@ -482,12 +480,12 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.new_record")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <AddNewAppointment v-focustrap="{
-        disabled: false,
-      }" :petMicrochip="petmicrochip" :petOwnerID="pet.owner.id" @submitted="handleSubmit" />
+      disabled: false,
+    }" :petMicrochip="petmicrochip" :petOwnerID="pet.owner.id" @submitted="handleSubmit" />
     <template #footer> </template>
   </Dialog>
   <Dialog :header="$t('pet_details.edit_record')" v-model:visible="isEditApointmentVisible"
@@ -497,13 +495,13 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.edit_record")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <EditAppointment v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }" :appointmentId="appointment_id" @updated="handleAppointmentUpdated" />
+      disabled: false,
+      autoFocus: true,
+    }" :appointmentId="appointment_id" @updated="handleAppointmentUpdated" />
     <template #footer> </template>
   </Dialog>
   <Dialog :header="$t('pet_details.edit_test_result')" v-model:visible="isEditTestResultsVisible"
@@ -513,13 +511,13 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.edit_test_result")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <EditTestResult v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }" :testResultId="selectedTestResultId" @TestResultUpdated="handleTestResultUpdated"
+      disabled: false,
+      autoFocus: true,
+    }" :testResultId="selectedTestResultId" @TestResultUpdated="handleTestResultUpdated"
       @close-dialog="isEditTestResultsVisible = false" />
     <template #footer> </template>
   </Dialog>
@@ -530,15 +528,14 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.add_case_history")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <AddCaseHistory v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }" :medical_record_id="medical_record_id" :pet_neutered="pet.neutered"
-      @TestResultUpdated="handleTestResultUpdated" @CaseHistoryCreated="handleCaseHistoryAdded"
-      @close-dialog="isEditTestResultsVisible = false" />
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" :pet_neutered="pet.neutered" @TestResultUpdated="handleTestResultUpdated"
+      @CaseHistoryCreated="handleCaseHistoryAdded" @close-dialog="isEditTestResultsVisible = false" />
     <template #footer> </template>
   </Dialog>
   <Dialog :header="$t('pet_details.case_history')" v-model:visible="isCaseHistorysVisible"
@@ -548,13 +545,13 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.case_history")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <CaseHistory v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }" :medical_record_id="medical_record_id" @showAddCaseHistoryModal="showAddCaseHistoryModal"
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" @showAddCaseHistoryModal="showAddCaseHistoryModal"
       @CaseHistoryUpdated="handleCaseHistory" @close-dialog="isEditTestResultsVisible = false" />
     <template #footer> </template>
   </Dialog>
@@ -565,13 +562,13 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.add_physical_examination")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <AddPhysicalExamination v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }" :medical_record_id="medical_record_id" @showAddCaseHistoryModal="showAddCaseHistoryModal"
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" @showAddCaseHistoryModal="showAddCaseHistoryModal"
       @PhysicalExaminationAdded="handlePhysicalExaminationAdded" @close-dialog="isEditTestResultsVisible = false" />
     <template #footer> </template>
   </Dialog>
@@ -582,13 +579,13 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.physical_examination")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <PhysicalExamination v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }" :medical_record_id="medical_record_id" :pet_name="pet.name" :branch_name="pet.branch.name"
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" :pet_name="pet.name" :branch_name="pet.branch.name"
       @showAddPhysicalExaminationModal="showAddPhysicalExaminationModal"
       @PhysicalExaminationUpdated="handlePhysicalExamination" @close-dialog="isEditTestResultsVisible = false" />
     <template #footer> </template>
@@ -600,13 +597,13 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.full_report")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <FullReport v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }" :medical_record_id="medical_record_id" :pet_name="pet.name"
+      disabled: false,
+      autoFocus: true,
+    }" :medical_record_id="medical_record_id" :pet_name="pet.name" @requestAiSummary="fetchAiSuggestions"
       @showAddPhysicalExaminationModal="showAddPhysicalExaminationModal"
       @close-dialog="isEditTestResultsVisible = false" />
     <template #footer> </template>
@@ -615,9 +612,9 @@
   <Dialog :header="$t('pet_details.invoice_details')" v-model:visible="viewDialogVisible" modal :closable="true"
     class="w-11/12 md:w-8/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]">
     <InvoiceView v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }" :invoice="selectedInvoice" @addInvoice="handleAddInvoiceRequest" @addPayment="handleAddPaymentRequest" />
+      disabled: false,
+      autoFocus: true,
+    }" :invoice="selectedInvoice" @addInvoice="handleAddInvoiceRequest" @addPayment="handleAddPaymentRequest" />
   </Dialog>
 
   <Dialog :header="$t('pet_details.create_invoice')" v-model:visible="isModalVisible" @hide="isModalVisible = false"
@@ -626,33 +623,60 @@
       <div class="inline-flex items-center justify-center gap-2 h-4">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.create_invoice")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <InvoiceAdd v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }" :pet="pet" :medical_record_id="medical_record_id" @InvoiceCreated="handleInvoiceSubmit" />
+      disabled: false,
+      autoFocus: true,
+    }" :pet="pet" :medical_record_id="medical_record_id" @InvoiceCreated="handleInvoiceSubmit" />
   </Dialog>
+  <!-- AI Summary Dialog -->
+  <Dialog header="AI Suggested Diagnosis & Treatments" v-model:visible="isDialogVisible" :closable="true" modal
+    class="w-11/12 md:w-6/12">
+
+    <div class="flex flex-col items-center justify-center">
+      <!-- Spinner -->
+      <div v-if="loadingAi" class="flex flex-col items-center gap-2">
+        <ProgressSpinner />
+        <span>Fetching suggestions from AI...</span>
+      </div>
+
+      <!-- AI Results -->
+      <div v-else class="w-full space-y-4 p-10">
+        <div v-html="aiResult"></div> <!-- <-- v-html renders your HTML content -->
+        <small class="text-red-600"><strong> Decision Support Disclaimer:</strong> The differentials, insights, and
+          summaries provided by
+          this AI are
+          generated computationally and are intended solely as a decision support aid. This output is based on pattern
+          recognition and should be considered informational only. It is not a substitute for your professional clinical
+          judgment, comprehensive patient assessment, or definitive diagnosis. The ultimate responsibility for all
+          diagnostic and treatment decisions remains with the attending veterinarian.</small>
+      </div>
+    </div>
+
+    <Button label="Close" icon="pi pi-times" class="p-button-text" @click="isDialogVisible = false" />
+  </Dialog>
+
   <Dialog :header="$t('pet_details.add_payment')" v-model:visible="paymentDialogVisible" @hide="resetForm" modal
     :closable="true" class="w-[11/12] md:w-[500px] h-fit bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2 h-4">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.add_payment")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <AddPayment v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }" v-if="selectedInvoice" :invoice="selectedInvoice" :paymentMethods="paymentMethods"
-      @submit="handlePaymentSubmit" @cancel="paymentDialogVisible = false" />
+      disabled: false,
+      autoFocus: true,
+    }" v-if="selectedInvoice" :invoice="selectedInvoice" :paymentMethods="paymentMethods" @submit="handlePaymentSubmit"
+      @cancel="paymentDialogVisible = false" />
   </Dialog>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import { useI18n } from "vue-i18n";
 import Card from "primevue/card";
 import Chip from "primevue/chip";
@@ -686,6 +710,12 @@ import FullReport from "@/views/FullReport.vue";
 import InvoiceView from "@/views/InvoiceView.vue";
 import InvoiceAdd from "@/views/AddInvoice.vue";
 import AddPayment from "@/views/AddInvoicePayment.vue";
+
+import ProgressSpinner from 'primevue/progressspinner';
+
+import ProgressBar from 'primevue/progressbar';
+
+
 // import Paginator from "primevue/paginator";
 
 const { t } = useI18n();
@@ -1190,6 +1220,88 @@ const resetForm = () => {
 function onPageChange(event) {
   first.value = event.first;
 }
+const isDialogVisible = ref(false);
+const loadingAi = ref(false);
+const aiResult = ref({ diagnosis: "", treatments: [] });
+const fetchAiSuggestions = async (payload, MedicalRecordId) => {
+  isDialogVisible.value = true;
+  loadingAi.value = true;
+  await nextTick();
+
+  try {
+    const response = await axiosInstance.post(`/openai/summary/${MedicalRecordId}`, payload);
+    console.log(response.data)
+    const raw = JSON.parse(response.data);
+    console.log(raw)
+    const text = raw.choices[0].message.content;
+
+    // Convert markdown headings and lists into styled HTML
+    let html = text
+      .replace(/^### (.*$)/gim, '<h3 class="text-xl font-bold mt-6 mb-3 text-gray-700 dark:text-gray-200">$1</h3>')
+      .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold mt-8 mb-4 text-gray-700 dark:text-gray-200">$1</h2>')
+
+      // Bold text
+      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-gray-700 dark:text-gray-200">$1</strong>')
+
+      // Bullet lists - capture and remove the dash
+      .replace(/^-\s+(.*$)/gim, '<li class="ml-6 list-none mb-2 text-gray-700 dark:text-gray-200">$1</li>')
+
+      // Numbered lists - preserve the original numbers (use $0 instead of $1)
+      .replace(/^(\d+\.\s+.*$)/gim, '<li class="ml-6 list-none mb-2 text-gray-700 dark:text-gray-200">$1</li>')
+
+      // Wrap consecutive list items in appropriate list tags
+      .replace(/(<li class="ml-6 list-none mb-2 text-gray-700">-\s+.*<\/li>)+/g, '<ul class="mb-4 mt-2 pl-6 text-gray-700 dark:text-gray-200">$&</ul>')
+      .replace(/(<li class="ml-6 list-none mb-2 text-gray-700">\d+\.\s+.*<\/li>)+/g, '<ol class="mb-4 mt-2 pl-6 text-gray-700 dark:text-gray-200" style="list-style-type: none;">$&</ol>')
+
+      // Remove the dash from bullet list items
+      .replace(/<li class="ml-6 list-none mb-2 text-gray-700">-\s+(.*?)<\/li>/g, '<li class="ml-6 list-none mb-2 text-gray-700 dark:text-gray-200">• $1</li>')
+
+      // Paragraphs (only lines that don't start with HTML tags)
+      .replace(/^(?![<\s])(.*$)/gim, '<p class="mb-4 text-gray-700 dark:text-gray-200 leading-relaxed">$1</p>')
+
+      // Clean up empty paragraphs
+      .replace(/<p class="mb-4 text-gray-700 leading-relaxed"><\/p>/g, '')
+
+      // Remove any accidental double line breaks
+      .replace(/\n\n/g, '\n');
+
+    aiResult.value = html; // store as HTML
+  } catch (error) {
+    console.error("AI Summary failed:", error);
+    aiResult.value = { html: "<p>No AI suggestions available.</p>" };
+  } finally {
+    loadingAi.value = false;
+  }
+};
+
+/* const fetchAiSuggestions = async (payload) => {
+  // Open dialog immediately
+  isDialogVisible.value = true;
+  loadingAi.value = true;
+
+  // Let Vue render spinner
+  await nextTick(); // now nextTick is defined
+
+  console.log("GETTING AI ASSISTED DIAGNOSIS");
+
+  try {
+    const response = await axiosInstance.post('/openai/summary', payload);
+    console.log("AI response:", response.data);
+
+    const { diagnosis, treatments } = response.data;
+
+    aiResult.value = {
+      diagnosis: diagnosis || "",
+      treatments: Array.isArray(treatments) ? treatments : []
+    };
+  } catch (error) {
+    console.error("AI Summary failed:", error);
+    aiResult.value = { diagnosis: "", treatments: [] };
+  } finally {
+    loadingAi.value = false;
+  }
+};
+ */
 onMounted(() => {
   fetchPets();
   eventBus.on("showPaymentView", (event) => {
@@ -1202,19 +1314,23 @@ onMounted(() => {
 .text-center.ltr {
   text-align: center !important;
 }
+
 .text-center.ltr .p-datatable-column-header-content {
   justify-content: center;
 }
+
 .p-paginator.p-component {
   border-top-left-radius: 0px !important;
   border-top-right-radius: 0px !important;
   border-bottom-right-radius: 10px !important;
   border-bottom-left-radius: 10px !important;
 }
+
 .p-datatable {
   border-radius: 10px;
   overflow: hidden;
 }
+
 .p-datatable-gridlines .p-datatable-paginator-bottom,
 .p-datatable-gridlines .p-datatable-header {
   border: 0 !important;

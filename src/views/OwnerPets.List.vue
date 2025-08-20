@@ -93,7 +93,7 @@
             <div class="mt-3 space-y-2 flex-grow">
               <div class="flex items-start">
                 <span class="text-xs text-surface-400 flex-shrink-0">
-                  {{ $t("owner_pet_list.fields.species") }}
+                  {{ $t("owner_pet_list.fields.species") }}:&nbsp;
                 </span>
                 <span class="text-sm text-surface-200">
                   {{ getSpeciesValue(pet.species) }}
@@ -101,7 +101,7 @@
               </div>
               <div class="flex items-start">
                 <span class="text-xs text-surface-400 flex-shrink-0">
-                  {{ $t("owner_pet_list.fields.breed") }}
+                  {{ $t("owner_pet_list.fields.breed") }}:&nbsp;
                 </span>
                 <span class="text-sm text-surface-200">
                   {{ pet.breed || "-" }}
@@ -109,7 +109,7 @@
               </div>
               <div class="flex items-start">
                 <span class="text-xs text-surface-400 flex-shrink-0">
-                  {{ $t("owner_pet_list.fields.gender") }}
+                  {{ $t("owner_pet_list.fields.gender") }}:&nbsp;
                 </span>
                 <span class="text-sm text-surface-200">
                   {{ $t(`pets.status.${pet.gender.toLowerCase()}`) }}
