@@ -385,6 +385,7 @@ const qrCodeValue = computed(() => {
 const languages = ref([
   { label: t("languages.ar"), value: "ar" },
   { label: t("languages.en"), value: "en" },
+  { label: t("languages.de"), value: "de" },
 ]);
 const themes = ref([
   { label: t("themes.dark"), value: "dark" },
@@ -565,6 +566,7 @@ const handleSubmit = async (type) => {
   if (type === "language") {
     submissionData.user_language = language.value;
     successMessage = "Language preference updated successfully";
+    console.log(language.value)
     applyLanguage(language.value);
   } else if (type === "theme") {
     submissionData.user_theme = theme.value;

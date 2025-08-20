@@ -809,7 +809,7 @@ const calendarApp = createCalendar({
   views: [viewMonthGrid, viewWeek, viewDay, viewMonthAgenda],
   defaultView: viewMonthGrid.name,
   // locale: "en-US",
-  locale: Cookies.get("language") === "ar" ? "ar-SY" : "en-US",
+  locale: Cookies.get("language") === "ar" ? "ar-SY" : "en" ? "en-US" : "de-DE",
   isRTL: true,
   gridHeight: 500,
   isResponsive: true,

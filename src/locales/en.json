@@ -1458,7 +1458,8 @@
     },
     "languages": {
         "ar": "العربية",
-        "en": "English"
+        "en": "English",
+        "de": "Deutsche Sprache"
     },
     "themes": {
         "dark": "Dark Mode",

@@ -1,0 +1,1716 @@
+{
+  "login": {
+    "title": "Anmeldung",
+    "username": "Benutzername",
+    "password": "Passwort",
+    "remember_me": "Angemeldet bleiben",
+    "submit": "Anmelden",
+    "loading": "Wird geladen...",
+    "error": "Anmeldung fehlgeschlagen. Bitte versuche es erneut.",
+    "success": "Erfolgreich angemeldet!",
+    "forgot_password": "Passwort vergessen?",
+    "reset_password": "Passwort zurücksetzen",
+    "send_link": "Link senden",
+    "new_password": "Neues Passwort",
+    "confirm_password": "Passwort bestätigen",
+    "cancel": "Abbrechen",
+    "enter_email_to_reset": "Gib deine E‑Mail‑Adresse ein, und wir senden dir einen Link zum Zurücksetzen des Passworts."
+  },
+  "two_factor": {
+    "title": "Zwei-Faktor-Authentifizierung",
+    "description": "Bitte gib den 2FA‑Code aus deiner Authenticator‑App ein.",
+    "placeholder": "2FA‑Code eingeben",
+    "verify": "Verifizieren",
+    "required": "Zwei-Faktor-Authentifizierung ist erforderlich.",
+    "invalid": "Ungültiger 2FA‑Code. Bitte erneut versuchen.",
+    "throttled": "Zu viele Versuche. Bitte später erneut versuchen."
+  },
+  "recaptcha": {
+    "notice": "Diese Website ist durch reCAPTCHA geschützt.",
+    "privacy": "Datenschutzerklärung",
+    "terms": "Nutzungsbedingungen"
+  },
+  "calendar": {
+    "refresh": "Daten aktualisieren",
+    "add_appointment": "Termin hinzufügen",
+    "pet_details": {
+      "name": "Name",
+      "species": "Spezies",
+      "owner": "Besitzer",
+      "location": "Ort",
+      "details": "Details",
+      "view_details": "Details anzeigen",
+      "select_appointment": "Bitte zuerst einen Patienten auswählen"
+    },
+    "legend": "Legende",
+    "appointment": {
+      "new": "Neuer Termin",
+      "regular": "Regulär",
+      "emergency": "Notfall",
+      "non-emergency": "Kein Notfall",
+      "followup": "Nachkontrolle",
+      "surgery": "Operation",
+      "grooming": "Grooming"
+    },
+    "context_menu": {
+      "day_view": "Zum Tageskalender",
+      "add_new": "Neuen Termin hinzufügen"
+    },
+    "google_sync": "Mit Google synchronisieren",
+    "google_synced": "Synchronisiert",
+    "google_sync_connect": "Google Kalender verbinden",
+    "google_sync_connected": "Mit Google Kalender verbunden",
+    "google_disconnected": "Vom Google Kalender getrennt",
+    "google_reconnect_warning": "Google Kalender getrennt, Termine werden ggf. nicht synchronisiert",
+    "google_sync_error": "Google‑Synchronisierungsfehler",
+    "sync_in_progress": "Synchronisierung läuft...",
+    "sync_complete": "Synchronisierung erfolgreich abgeschlossen"
+  },
+  "owners": {
+    "title": "Besitzerliste",
+    "search_placeholder": "Besitzer suchen",
+    "actions": {
+      "refresh": "Daten aktualisieren",
+      "new_owner": "Neuer Besitzer",
+      "edit": "Bearbeiten",
+      "pets": "Haustiere",
+      "whatsapp": "WhatsApp‑Nachricht senden",
+      "view_details": "Details anzeigen",
+      "hide_details": "Details ausblenden",
+      "deactivate": "Konto deaktivieren",
+      "show_deactive": "Deaktivierte Konten anzeigen",
+      "hide_deactive": "Deaktivierte Konten ausblenden"
+    },
+    "modals": {
+      "new_client": "Neuen Kunden hinzufügen",
+      "edit_owner": "Besitzer bearbeiten",
+      "whatsapp": "WhatsApp‑Nachricht senden"
+    },
+    "columns": {
+      "name": "Name",
+      "email": "E‑Mail",
+      "phone": "Telefon",
+      "address": "Adresse"
+    },
+    "hidden_phone": "***********",
+    "confirmDialog": {
+      "cancel": "Abbrechen",
+      "deactivate": "Deaktivieren",
+      "activate": "Aktivieren",
+      "confirmation": "Bestätigung",
+      "areYouSure": "Bist du sicher, dass du das Konto von {name} {action} möchtest?",
+      "toast": {
+        "cancelled": "Abgebrochen",
+        "operationCancelled": "Vorgang abgebrochen",
+        "success": "Erfolg",
+        "accountUpdated": "Konto erfolgreich {action}",
+        "error": "Fehler",
+        "updateFailed": "Kontostatus konnte nicht aktualisiert werden"
+      }
+    }
+  },
+  "edit_owner": {
+    "title": "Kundendaten bearbeiten",
+    "fields": {
+      "name": "Name",
+      "email": "E‑Mail",
+      "phone": "Telefon",
+      "address": "Adresse"
+    },
+    "actions": {
+      "update": "Aktualisieren"
+    },
+    "messages": {
+      "success": "Kundendaten wurden erfolgreich aktualisiert",
+      "error": "Kundendaten konnten nicht aktualisiert werden"
+    }
+  },
+  "app": {
+    "title": "Tierklinik‑Managementsystem",
+    "menu": {
+      "calendar": "Kalender",
+      "clinics": "Meine Kliniken",
+      "patients": "Klinik",
+      "owners": "Besitzer",
+      "pets": "Patienten",
+      "inventories": "Bestände",
+      "pet_food": "Tiernahrung",
+      "toys_tools": "Spielzeug & Zubehör",
+      "pharmaceutical": "Pharmazeutika",
+      "grooming": "Grooming",
+      "invoices": "Rechnungen",
+      "reports": {
+        "reports": "Berichte",
+        "stockmovement": "Bestandsbewegungen"
+      },
+      "settings": "Einstellungen",
+      "shortcuts": "Kurzbefehle",
+      "treatment": "Behandlungen & Medikamente",
+      "logout": "Abmelden"
+    },
+    "profile": {
+      "title": "Profil"
+    },
+    "offline_message": "Keine Internetverbindung",
+    "session": {
+      "timeout_message": "Du warst eine Weile inaktiv. Du wirst in {time} Sekunden automatisch abgemeldet.",
+      "timeout_header": "Sitzungstimeout",
+      "stay_logged_in": "Angemeldet bleiben",
+      "log_out": "Abmelden"
+    },
+    "toast": {
+      "signed_out": "Abgemeldet",
+      "signed_out_detail": "Benutzer wurde abgemeldet"
+    },
+    "theme": {
+      "light_mode": "Helles Design",
+      "dark_mode": "Dunkles Design",
+      "system": "System"
+    }
+  },
+  "whatsapp": {
+    "title": "WhatsApp‑Nachricht senden",
+    "fields": {
+      "message": "Nachricht"
+    },
+    "buttons": {
+      "send": "Senden"
+    },
+    "messages": {
+      "too_short": "Nachricht zu kurz",
+      "too_short_detail": "Deine Nachricht muss länger als 5 Zeichen sein.",
+      "sent": "Nachricht gesendet",
+      "sent_detail": "Nachricht erfolgreich gesendet.",
+      "subscription_header": "Abonnement erforderlich",
+      "subscription_details": "Diese Funktion erfordert ein Abonnement. Bitte upgrade dein Konto, um WhatsApp‑Nachrichten zu verwenden."
+    }
+  },
+  "add_owner": {
+    "title": "Neue Kundendaten",
+    "fields": {
+      "name": "Name",
+      "email": "E‑Mail",
+      "phone": "Telefonnummer",
+      "landline": "Festnetznummer",
+      "birth_date": "Geburtsdatum",
+      "address": "Adresse",
+      "facebook_link": "Facebook‑Link",
+      "instagram_link": "Instagram‑Link",
+      "referral": "Wie bist du auf uns aufmerksam geworden?",
+      "clinic_notes": "Kliniknotizen"
+    },
+    "actions": {
+      "submit": "Speichern"
+    },
+    "messages": {
+      "success": "Besitzer erfolgreich hinzugefügt.",
+      "error": "Besitzer konnte nicht hinzugefügt werden. Bitte erneut versuchen."
+    },
+    "errors": {
+      "invalid_phone": "Ungültiges Telefonnummernformat"
+    }
+  },
+  "pets": {
+    "title": "Patienten",
+    "header": {
+      "refresh": "Daten aktualisieren",
+      "show_deceased": "Verstorbene anzeigen",
+      "hide_deceased": "Verstorbene ausblenden",
+      "add_new": "Neuen Patienten hinzufügen",
+      "export": "Exportieren",
+      "search_placeholder": "Alle Spalten durchsuchen"
+    },
+    "columns": {
+      "owner": "Besitzer",
+      "name": "Name",
+      "species": "Spezies",
+      "breed": "Rasse",
+      "gender": "Geschlecht",
+      "neutered": "Kastriert/Sterilisiert",
+      "active": "Aktiv",
+      "age": "Alter",
+      "actions": "Aktionen",
+      "view_details": "Details anzeigen"
+    },
+    "status": {
+      "deceased": "Verstorben",
+      "alive": "Lebend",
+      "male": "Männlich",
+      "female": "Weiblich",
+      "neutered": "Kastriert",
+      "spayed": "Sterilisiert"
+    },
+    "modals": {
+      "add_patient": {
+        "title": "Neuen Patienten hinzufügen",
+        "new_patient": "Neuer Patient"
+      },
+      "add_owner": {
+        "title": "Neuen Kunden hinzufügen",
+        "new_client": "Neuer Kunde"
+      }
+    }
+  },
+  "species": {
+    "avian": "Vögel",
+    "bovine": "Rinder",
+    "camelid": "Kameliden",
+    "canine": "Hunde",
+    "testudines": "Schildkröten",
+    "caprine": "Ziegen",
+    "cavies": "Meerschweinchen",
+    "cervidae": "Hirsche",
+    "equine": "Pferde",
+    "feline": "Katzen",
+    "lapine": "Kaninchen",
+    "murine": "Mäuse/Nager",
+    "ovine": "Schafe"
+  },
+  "pet_form": {
+    "title": "Neuen Patienten hinzufügen",
+    "fields": {
+      "select_owner": "Besitzer auswählen",
+      "name": "Name",
+      "microchip_num": "Mikrochippnummer",
+      "select_species": "Spezies auswählen",
+      "breed": "Rasse",
+      "select_gender": "Geschlecht auswählen",
+      "date_of_birth": "Geburtsdatum",
+      "color": "Farbe",
+      "distinctive_marks": "Besondere Merkmale",
+      "behaviour": "Verhalten",
+      "neutered": "Kastriert",
+      "deceased": "Verstorben",
+      "allergies": "Allergien"
+    },
+    "buttons": {
+      "add_new_owner": "Neuen Besitzer hinzufügen",
+      "submit": "Speichern"
+    },
+    "options": {
+      "yes": "Ja",
+      "no": "Nein",
+      "male": "Männlich",
+      "female": "Weiblich"
+    },
+    "species": {
+      "avian": "Vögel",
+      "bovine": "Rinder",
+      "camelid": "Kameliden",
+      "canine": "Hunde",
+      "testudines": "Schildkröten",
+      "caprine": "Ziegen",
+      "cavies": "Meerschweinchen",
+      "cervidae": "Hirsche",
+      "equine": "Pferde",
+      "feline": "Katzen",
+      "lapine": "Kaninchen",
+      "murine": "Mäuse/Nager",
+      "ovine": "Schafe"
+    },
+    "toast": {
+      "success": "Patient erfolgreich hinzugefügt",
+      "error": "Fehler beim Hinzufügen des Patienten",
+      "success_summary": "Erfolg",
+      "success_detail": "Patient erfolgreich hinzugefügt",
+      "error_summary": "Fehler"
+    }
+  },
+  "pet_details": {
+    "title": "Patientendetails",
+    "species_header": "Spezies",
+    "medical_info": "Grundlegende medizinische Angaben",
+    "go_back": "Zurück",
+    "microchip": "Mikrochip/Seriennummer",
+    "view_patients": "Patienten anzeigen",
+    "breed": "Rasse",
+    "color": "Farbe",
+    "behavior": "Verhalten",
+    "neutered": "Kastriert/Sterilisiert",
+    "not_neutered": "Nicht kastriert",
+    "not_spayed": "Nicht sterilisiert",
+    "age": "Alter",
+    "birth_date": "Geburtsdatum",
+    "deceased": "Verstorben",
+    "alive": "Lebend",
+    "allergies": "Allergien",
+    "distinctive_marks": "Besondere Merkmale",
+    "edit": "Bearbeiten",
+    "visits_history": "Besuchshistorie",
+    "refresh_data": "Daten aktualisieren",
+    "date": "Datum",
+    "description": "Beschreibung",
+    "type": "Typ",
+    "view_treatments": "Behandlungen anzeigen",
+    "view_tests": "Tests anzeigen",
+    "xray_ultrasound": "Röntgen & Ultraschall",
+    "medical_examination": "Körperliche Untersuchung",
+    "full_report": "Vollständiger Bericht",
+    "invoice": "Rechnung",
+    "edit_details": "Details bearbeiten",
+    "total_records": "Insgesamt gibt es {count} Einträge.",
+    "treatments": "Behandlungen",
+    "edit_pet_details": "Patientendetails bearbeiten",
+    "test_results": "Testergebnisse",
+    "medical_image": "Medizinisches Bild",
+    "xrays_images": "Röntgenbilder und Aufnahmen",
+    "new_medical_image": "Neues medizinisches Bild",
+    "new_treatment": "Neue Behandlung",
+    "new_test_result": "Neues Testergebnis",
+    "new_record": "Neuer medizinischer Eintrag",
+    "edit_record": "Medizinischen Eintrag bearbeiten",
+    "edit_test_result": "Testergebnis bearbeiten",
+    "add_case_history": "Krankengeschichte hinzufügen",
+    "case_history": "Krankengeschichte",
+    "add_physical_examination": "Körperliche Untersuchung hinzufügen",
+    "physical_examination": "Körperliche Untersuchung",
+    "invoice_details": "Rechnungsdetails",
+    "create_invoice": "Neue Rechnung erstellen",
+    "add_payment": "Zahlung hinzufügen",
+    "add_appointment": "Neuen Termin hinzufügen",
+    "Male": "Männlich",
+    "Female": "Weiblich",
+    "edit_treatment": "Behandlung bearbeiten",
+    "print": "Bericht drucken",
+    "species": {
+      "Avian": "Vögel",
+      "Bovine": "Rinder",
+      "Camelid": "Kameliden",
+      "canine": "Hunde",
+      "testudines": "Schildkröten",
+      "Caprine": "Ziegen",
+      "Cavies": "Meerschweinchen",
+      "Cervidae": "Hirsche",
+      "equine": "Pferde",
+      "Feline": "Katzen",
+      "Lapine": "Kaninchen",
+      "Murine": "Mäuse/Nager",
+      "Ovine": "Schafe"
+    }
+  },
+  "treatments": {
+    "title": "Behandlungen",
+    "no_treatments": "Keine Behandlungen gefunden",
+    "refresh": "Daten aktualisieren",
+    "add": "Neue Behandlung hinzufügen",
+    "headers": {
+      "date": "Datum",
+      "treatment": "Behandlung",
+      "dosage": "Dosierung",
+      "delivery": "Verabreichung",
+      "description": "Beschreibung"
+    },
+    "actions": {
+      "edit": "Details bearbeiten",
+      "delete": "Löschen"
+    },
+    "delete_confirm": {
+      "message": "Möchtest du diese Behandlung wirklich löschen?",
+      "header": "Löschbestätigung"
+    }
+  },
+  "add_treatment": {
+    "title": "Neue Behandlung hinzufügen",
+    "fields": {
+      "name": "Name",
+      "dosage": "Dosierung",
+      "delivery": "Verabreichung",
+      "description": "Beschreibung",
+      "animal_weight": "Gewicht des Tieres",
+      "treatment_date": "Behandlungsdatum",
+      "treatment_has_reminder": "Erinnerung hinzufügen",
+      "treatment_next_date": "Nächster Behandlungstermin"
+    },
+    "submit": "Behandlung hinzufügen",
+    "toast": {
+      "success": "Behandlung erfolgreich hinzugefügt",
+      "error": "Fehler beim Hinzufügen der Behandlung"
+    },
+    "administration_methods": {
+      "oral": "Oral (Tabletten, Kapseln, Säfte, Suspensionen)",
+      "subcutaneous": "Subkutane Injektion (unter die Haut)",
+      "intramuscular": "Intramuskuläre Injektion (in den Muskel)",
+      "intravenous": "Intravenöse Injektion (in die Vene)",
+      "topical": "Topisch (Cremes, Salben, Gele)",
+      "transdermal": "Transdermal (Pflaster, Aufnahme über die Haut)",
+      "ophthalmic": "Ophthalmisch (Augentropfen, Salben)",
+      "otic": "Otal (Ohrentropfen, Medikamente)",
+      "inhalation": "Inhalation (Vernebler, Inhalatoren)",
+      "rectal": "Rektal (Zäpfchen, Einläufe)",
+      "sublingual": "Sublingual (unter die Zunge)",
+      "intranasal": "Intranasal (Nasensprays, Tropfen)",
+      "intraosseous": "Intraossär (in den Knochen)",
+      "intraperitoneal": "Intraperitoneal",
+      "intrauterine": "Intrauterin",
+      "intraconjunctival": "Intrakonjunktival",
+      "intraarticular": "Intraartikulär"
+    }
+  },
+  "test_results": {
+    "title": "Testergebnisse",
+    "no_results": "Keine Testergebnisse gefunden",
+    "refresh": "Daten aktualisieren",
+    "add": "Neues Testergebnis hinzufügen",
+    "headers": {
+      "test": "Test",
+      "result": "Ergebnis"
+    },
+    "actions": {
+      "edit": "Details bearbeiten",
+      "delete": "Löschen"
+    },
+    "delete_confirm": {
+      "message": "Möchtest du dieses Ergebnis wirklich löschen?",
+      "header": "Löschbestätigung"
+    }
+  },
+  "add_test_result": {
+    "title": "Neues Testergebnis hinzufügen",
+    "fields": {
+      "test_type": "Testtyp",
+      "test_name": "Testname {index}",
+      "test_value": "Testwert {index}"
+    },
+    "buttons": {
+      "add_result": "Ergebnis hinzufügen",
+      "submit": "Testergebnis hinzufügen"
+    },
+    "toast": {
+      "success": "Testergebnis erfolgreich hinzugefügt",
+      "error": "Fehler beim Hinzufügen des Testergebnisses"
+    }
+  },
+  "medical_images": {
+    "title": "Medizinische Bilder",
+    "no_images": "Keine Bilder gefunden",
+    "loading": "Bilddaten werden geladen. Bitte warten.",
+    "refresh": "Daten aktualisieren",
+    "add": "Neues medizinisches Bild hinzufügen",
+    "headers": {
+      "type": "Typ",
+      "date": "Datum",
+      "organ": "Organ",
+      "measurements": "Messungen",
+      "description": "Beschreibung",
+      "ref_number": "Referenz‑Nr."
+    },
+    "actions": {
+      "edit": "Details bearbeiten",
+      "delete": "Löschen"
+    },
+    "delete_confirm": {
+      "message": "Möchtest du dieses Bild wirklich löschen?",
+      "header": "Löschbestätigung"
+    },
+    "toast": {
+      "success": "Medizinisches Bild für {type} erfolgreich hinzugefügt",
+      "title": "Neues medizinisches Bild hinzugefügt"
+    }
+  },
+  "add_medical_image": {
+    "title": "Neues medizinisches Bild hinzufügen",
+    "fields": {
+      "ref_number": "Referenznummer",
+      "organ": "Organ",
+      "measurements": "Messungen",
+      "type": "Bildtyp",
+      "image_date": "Aufnahmedatum",
+      "abnormalities": "Auffälligkeiten",
+      "description": "Beschreibung"
+    },
+    "generate_tooltip": "Referenznummer generieren",
+    "image_types": {
+      "ultrasound": "Ultraschall",
+      "xray": "Röntgen"
+    },
+    "submit": "Medizinisches Bild hinzufügen",
+    "toast": {
+      "success": "Medizinisches Bild erfolgreich hinzugefügt",
+      "error": "Medizinisches Bild konnte nicht hinzugefügt werden",
+      "title": "Medizinisches Bild hinzugefügt"
+    }
+  },
+  "case_history": {
+    "title": "Krankengeschichte",
+    "edit_button": "Krankengeschichte bearbeiten",
+    "add_button": "Krankengeschichte hinzufügen",
+    "no_history": "Noch keine Krankengeschichte erfasst.",
+    "steps": {
+      "current_symptoms": "Aktuelle Symptome",
+      "general_health": "Allgemeine Gesundheit",
+      "reproductive_history": "Reproduktionsgeschichte",
+      "itching_skin": "Juckreiz & Haut",
+      "diet_water": "Ernährung & Wasser",
+      "gastrointestinal": "Gastrointestinal",
+      "neurological": "Neurologisch",
+      "respiratory": "Respiratorisch",
+      "urinary": "Urinär",
+      "musculoskeletal": "Bewegungsapparat",
+      "vaccination_medication": "Impfungen & Medikamente"
+    },
+    "fields": {
+      "symptom_description": "Symptombeschreibung",
+      "start_date": "Beginn",
+      "symptom_progression": "Symptomverlauf",
+      "medication_given": "Medikamente verabreicht",
+      "medication_name": "Medikamentenname",
+      "medication_dosage": "Dosierung des Medikaments",
+      "prescribed_by": "Verschrieben von",
+      "activity_level": "Aktivitätsniveau",
+      "vaccination_status": "Impfstatus",
+      "care_location": "Haltungsort",
+      "other_animals_in_household": "Weitere Tiere im Haushalt",
+      "number_of_other_animals": "Anzahl weiterer Tiere",
+      "types_of_other_animals": "Art der weiteren Tiere",
+      "previous_diseases_in_other_animals": "Frühere Krankheiten bei anderen Tieren",
+      "last_reproductive_cycle_date": "Datum des letzten Reproduktionszyklus",
+      "cycle_length": "Zykluslänge / Tage",
+      "notable_signs": "Auffällige Anzeichen",
+      "other_discharges": "Andere Absonderungen",
+      "itching_present": "Juckreiz vorhanden",
+      "itching_location": "Juckreiz‑Lokalisation",
+      "itching_description": "Juckreiz‑Beschreibung",
+      "skin_condition_description": "Beschreibung des Hautzustands",
+      "diet_type": "Ernährungsart",
+      "diet_details": "Ernährungsdetails",
+      "number_of_meals": "Anzahl der Mahlzeiten",
+      "meal_quantity": "Menge pro Mahlzeit",
+      "appetite": "Appetit",
+      "recent_diet_change": "Kürzliche Ernährungsumstellung",
+      "diet_change_type": "Art der Umstellung",
+      "water_intake": "Wasseraufnahme",
+      "vomiting": "Erbrechen",
+      "vomit_color": "Farbe des Erbrochenen",
+      "vomit_contents": "Inhalt des Erbrochenen",
+      "vomit_smell": "Geruch des Erbrochenen",
+      "vomiting_frequency": "Häufigkeit des Erbrechens",
+      "vomiting_related_to_food": "Erbrechen in Bezug auf Futter",
+      "vomiting_related_to_diarrhea": "Erbrechen in Verbindung mit Durchfall",
+      "diarrhea_started_first": "Durchfall begann zuerst",
+      "stool_consistency": "Stuhlkonsistenz",
+      "stool_color": "Stuhlfarbe",
+      "stool_frequency": "Häufigkeit der Toilettenbesuche",
+      "abnormal_stool_contents": "Auffälliger Stuhlinhalt",
+      "excessive_licking_of_anus": "Übermäßiges Lecken des Afters",
+      "neurological_signs": "Neurologische Anzeichen",
+      "neurological_signs_frequency": "Häufigkeit",
+      "associated_symptoms": "Begleitende Symptome",
+      "sudden_onset": "Plötzlicher Beginn",
+      "related_to_eating_or_activity": "In Zusammenhang mit Fressen/Aktivität",
+      "additional_details": "Weitere Details",
+      "cough": "Husten",
+      "cough_start_date": "Beginn des Hustens",
+      "cough_frequency": "Hustenfrequenz",
+      "cough_type": "Hustenart",
+      "breathing_difficulty": "Atemnot",
+      "sneezing": "Niesen",
+      "urination_frequency": "Häufigkeit des Urinierens",
+      "urine_volume": "Urinmenge",
+      "urine_color": "Urinenfarbe",
+      "urination_type": "Art des Urinierens",
+      "blood_in_urine": "Blut im Urin",
+      "blood_location": "Lokalisation des Blutes",
+      "abnormal_urinary_discharge": "Auffälliger Harnabgang",
+      "genital_discharge": "Genitaler Ausfluss",
+      "excessive_licking_of_genital_area": "Übermäßiges Lecken des Genitalbereichs",
+      "vaccine_name": "Impfstoffname",
+      "vaccine_date": "Impftermin",
+      "next_due_date": "Nächster Fälligkeitstermin",
+      "administered_by": "Verabreicht von",
+      "treatment_name": "Behandlungsname",
+      "treatment_type": "Behandlungsart",
+      "treatment_dosage": "Dosierung",
+      "administration_date": "Verabreichungsdatum",
+      "medication_name": "Medikamentenname",
+      "medication_type": "Medikamententyp",
+      "dosage": "Dosierung",
+      "frequency": "Frequenz",
+      "medication_start_date": "Beginn",
+      "medication_end_date": "Ende",
+      "additional_notes": "Zusätzliche Notizen",
+      "limping": "Lahmheit",
+      "pain": "Schmerz",
+      "pain_description": "Schmerzbeschreibung (z. B. Winseln, Bewegungsunlust)",
+      "swelling": "Schwellung vorhanden",
+      "swelling_location": "Lokalisation der Schwellung",
+      "visible_deformity": "Sichtbare Deformität",
+      "deformity_description": "Beschreibung der Deformität",
+      "affected_limbs": "Betroffene Gliedmaßen (alle zutreffenden auswählen)",
+      "weight_bearing": "Belastbarkeit",
+      "symptom_start": "Beginn der Symptome (z. B. „vor 3 Tagen“)",
+      "progression": "Verlauf der Symptome",
+      "trauma_history": "Kürzliche Verletzung/Trauma",
+      "trauma_details": "Details zum Trauma",
+      "exercise_induced": "Symptome nach Belastung",
+      "worse_after_rest": "Schlimmer nach Ruhe/Steifigkeit",
+      "difficulty_jumping": "Schwierigkeiten beim Springen",
+      "difficulty_stairs": "Schwierigkeiten mit Treppen",
+      "difficulty_rising": "Schwierigkeiten beim Aufstehen",
+      "exercise_tolerance": "Belastbarkeit",
+      "pain_meds_given": "Schmerzmittel zu Hause verabreicht",
+      "pain_meds_details": "Details (Name, Dosis, Häufigkeit)"
+    },
+    "options": {
+      "symptom_progression": {
+        "increasing": "Zunehmend",
+        "decreasing": "Abnehmend",
+        "constant": "Konstant",
+        "comes_n_goes": "Intermittierend"
+      },
+      "activity_level": {
+        "active": "Aktiv",
+        "lethargic": "Lethargisch",
+        "sometimes_active": "Manchmal aktiv",
+        "other": "Andere"
+      },
+      "stool_consistency": {
+        "normal": "Normal",
+        "soft": "Weich",
+        "watery": "Wässrig",
+        "hard": "Hart"
+      },
+      "vaccination_status": {
+        "complete": "Vollständig",
+        "incomplete": "Unvollständig"
+      },
+      "care_location": {
+        "home": "Zuhause",
+        "home_garden": "Haus & Garten",
+        "street": "Straße",
+        "indoor_outdoor": "Drinnen/Draußen"
+      },
+      "diet_type": {
+        "dry": "Trockenfutter",
+        "canned": "Nassfutter",
+        "home_cooked": "Selbstgekocht",
+        "raw": "Roh",
+        "mixed": "Gemischt"
+      },
+      "appetite": {
+        "good": "Gut",
+        "leaves_meal": "Lässt Futter stehen",
+        "no_appetite": "Kein Appetit"
+      },
+      "diet_change_type": {
+        "sudden": "Plötzlich",
+        "gradual": "Schrittweise"
+      },
+      "cough_type": {
+        "dry": "Trocken",
+        "productive": "Produktiv"
+      },
+      "urination_type": {
+        "continuous": "Kontinuierlich",
+        "intermittent": "Intermittierend"
+      },
+      "blood_location": {
+        "beginning": "Anfang",
+        "end": "Ende",
+        "throughout": "Durchgehend"
+      },
+      "medication_type": {
+        "antibiotic": "Antibiotikum",
+        "painkiller": "Schmerzmittel",
+        "anti-inflammatory": "Entzündungshemmer",
+        "other": "Andere"
+      },
+      "treatment_type": {
+        "flea": "Floh",
+        "tick": "Zecke",
+        "worm": "Wurm",
+        "other": "Andere"
+      },
+      "mascuskeleton": {
+        "improving": "Besser werdend",
+        "worsening": "Schlechter werdend",
+        "static": "Unverändert",
+        "fluctuating": "Schwankend",
+        "full": "Voll",
+        "partial": "Teilweise",
+        "non": "Keine Belastung",
+        "normal": "Normal",
+        "reduced": "Reduziert",
+        "severely_limited": "Stark eingeschränkt"
+      },
+      "urine_volume": {
+        "small": "Gering",
+        "medium": "Mittel",
+        "large": "Groß"
+      },
+      "neurological_signs": {
+        "seizures": "Krämpfe",
+        "fainting": "Ohnmacht",
+        "nystagmus": "Nystagmus",
+        "other": "Andere"
+      },
+      "progression": {
+        "improving": "Besser werdend",
+        "worsening": "Schlechter werdend",
+        "static": "Unverändert",
+        "fluctuating": "Schwankend"
+      },
+      "pet_neutered": {
+        "pet_neutered_label": "Kastrationsstatus",
+        "Y": "Kastriert",
+        "N": "Nicht kastriert"
+      }
+    },
+    "actions": {
+      "next": "Weiter",
+      "back": "Zurück",
+      "submit": "Speichern"
+    },
+    "messages": {
+      "success": "Krankengeschichte erfolgreich aktualisiert"
+    },
+    "additional": {
+      "vaccination_history": "Impfhistorie",
+      "medication_history": "Medikationshistorie",
+      "antiparasitic_treatment": "Historie antiparasitärer Behandlungen"
+    },
+    "toast": {
+      "case_history_added": "Krankengeschichte",
+      "case_history_added_detail": "Krankengeschichte des Patienten wurde gespeichert"
+    }
+  },
+  "medical_examination": {
+    "title": "Befund der körperlichen Untersuchung",
+    "no_examination": "Es wurde noch keine Untersuchung durchgeführt.",
+    "add_examination": "Körperliche Untersuchung hinzufügen",
+    "edit_button": "Details der körperlichen Untersuchung bearbeiten",
+    "general_info": {
+      "pet_id": "Patienten‑ID",
+      "pet_name": "Patientenname",
+      "branch_name": "Klinik",
+      "branch_id": "Zweigstellen‑ID",
+      "visit_date": "Besuchsdatum",
+      "diagnosis": "Diagnose",
+      "created_at": "Erstellt am",
+      "updated_at": "Aktualisiert am"
+    },
+    "examination_details": "Untersuchungsdetails",
+    "exam_data": {
+      "examination_date": "Untersuchungsdatum",
+      "animal_weight": "Gewicht des Tieres",
+      "temperature": "Temperatur",
+      "behavior": "Verhalten"
+    },
+    "sections": {
+      "head_neck": "Kopf‑ und Halsuntersuchung",
+      "eyes": "Augen",
+      "eye_sunkenness": "Augeneinsinken",
+      "nose": "Nase",
+      "nasal_discharge": "Nasenausfluss",
+      "mouth": "Mund",
+      "teeth": "Zähne",
+      "gums": "Zahnfleisch",
+      "tongue": "Zunge",
+      "mucous_membranes": "Schleimhäute",
+      "ears": "Ohren",
+      "vital_signs": "Vitalzeichen",
+      "pulse_rate": "Pulsfrequenz",
+      "respiratory_rate": "Atemfrequenz",
+      "breathing_pattern": "Atemmuster",
+      "breath_sound": "Atemgeräusch",
+      "oxygenation": "Oxygenierung",
+      "capillary_refill_time": "Kapilläre Wiederauffüllzeit",
+      "nervous_system": "Nervensystem",
+      "skin_coat": "Haut und Fell",
+      "skin": "Haut",
+      "skin_lumps_or_infections": "Knoten/Infektionen der Haut",
+      "skin_coat_condition": "Fellzustand",
+      "abdominal": "Abdomenuntersuchung",
+      "abdominal_palpation": "Abdominale Palpation",
+      "lymph_nodes": "Lymphknoten",
+      "body_condition": "Körperkondition",
+      "body_condition_score": "Body Condition Score",
+      "hydration_status": "Hydrationsstatus",
+      "preliminary_diagnosis": "Vorläufige Diagnose",
+      "recommendations": "Empfehlungen",
+      "notes": "Notizen"
+    }
+  },
+  "medical_examination_form": {
+    "title": "Krankengeschichte",
+    "steps": {
+      "general_info": "Allgemeines",
+      "head_neck": "Kopf & Hals",
+      "vital_signs": "Vitalzeichen",
+      "nervous_skin": "Nerven & Haut",
+      "abdomen_lymph": "Abdomen & Lymph",
+      "body_condition": "Körperkondition",
+      "diagnosis": "Diagnose"
+    },
+    "section_titles": {
+      "general_info": "Allgemeines",
+      "head_neck": "Kopf und Hals",
+      "vital_signs": "Vitalzeichen",
+      "nervous_skin": "Nervensystem & Haut",
+      "abdomen_lymph": "Abdomen & Lymphknoten",
+      "body_condition": "Körperkondition & Hydration",
+      "diagnosis": "Diagnose und Empfehlungen"
+    },
+    "fields": {
+      "examination_date": "Untersuchungsdatum",
+      "animal_weight": "Gewicht des Tieres",
+      "temperature": "Temperatur",
+      "animal_behavior": "Verhalten des Tieres",
+      "eyes": "Augen",
+      "eye_sunkenness": "Augeneinsinken",
+      "nose": "Nase",
+      "nasal_discharge": "Nasenausfluss",
+      "mouth": "Mund",
+      "teeth": "Zähne",
+      "gums": "Zahnfleisch",
+      "tongue": "Zunge",
+      "mucous_membranes": "Schleimhäute",
+      "ears": "Ohren",
+      "pulse_rate": "Pulsfrequenz",
+      "respiratory_rate": "Atemfrequenz",
+      "abnormal_breathing_pattern": "Normales Atemmuster",
+      "abnormal_breathing_type": "",
+      "abnormal_breathing_severity": "",
+      "abnormal_breathing_location": "",
+      "breathing_notes": "",
+      "breathing_pattern": "Atemmuster",
+      "breath_sound": "Atemgeräusch",
+      "oxygenation": "Oxygenierung",
+      "capillary_refill_time": "Kapilläre Wiederauffüllzeit (CRT)",
+      "nervous_system": "Nervensystem",
+      "skin": "Haut",
+      "skin_lumps_or_infections": "Knoten/Infektionen der Haut",
+      "skin_coat_condition": "Fellzustand",
+      "abdominal_palpation": "Abdominale Palpation",
+      "lymph_nodes": "Lymphknoten",
+      "body_condition_score": "Body Condition Score (BCS)",
+      "hydration_status": "Hydrationsstatus",
+      "preliminary_diagnosis": "Vorläufige Diagnose",
+      "recommendations": "Empfehlungen",
+      "notes": "Notizen",
+      "respiratory_rate_unit": "Atemzüge/Min."
+    },
+    "buttons": {
+      "back": "Zurück",
+      "next": "Weiter",
+      "submit": "Speichern"
+    },
+    "options": {
+      "yes": "Ja",
+      "no": "Nein",
+      "normal": "Normal",
+      "abnormal": "Abnormal",
+      "low": "Niedrig",
+      "medium": "Mittel",
+      "high": "Hoch",
+      "wheezing": "Giemen",
+      "stridor": "Stridor",
+      "crackles": "Rasselgeräusche",
+      "rhonchi": "Rhonchi",
+      "pleural_rub": "Pleurareiben",
+      "bronchial_sounds": "Bronchiale Atemgeräusche",
+      "diminished_lung_sounds": "Abgeschwächte Atemgeräusche",
+      "intestinal_sounds": "Darmgeräusche im Thorax",
+      "front_left": "Vorne links",
+      "front_right": "Vorne rechts",
+      "back_left": "Hinten links",
+      "back_right": "Hinten rechts",
+      "whole_lungs": "Gesamte Lunge",
+      "thoracic": "Thorakal (Brustatmung)",
+      "abdominal": "Abdominal (Zwerchfell)",
+      "mixed": "Gemischt (Normal)",
+      "paradoxical": "Paradox (Abnormal)"
+    },
+    "messages": {
+      "success_title": "Erfolg",
+      "error_title": "Fehler",
+      "success": "Medizinische Untersuchung erfolgreich hinzugefügt",
+      "error": "Medizinische Untersuchung konnte nicht übermittelt werden"
+    }
+  },
+  "invoice": {
+    "no_invoice": "Für diese Leistung wurde noch keine Rechnung erstellt.",
+    "create_invoice": "Rechnung erstellen",
+    "invoice_number": "Rechnung Nr. {number}",
+    "print_preparing": "Rechnung wird zum Drucken vorbereitet...",
+    "print_error_content": "Rechnungsinhalt zum Drucken nicht gefunden",
+    "print_error_popup": "Popup wurde blockiert. Bitte Popups für diese Seite zulassen.",
+    "download_preparing": "PDF wird erstellt...",
+    "pos_preparing": "Kassenbon wird vorbereitet...",
+    "pos_error_template": "Kassenvorlage nicht gefunden",
+    "items": {
+      "item": "Artikel",
+      "qty": "Menge",
+      "price": "Preis",
+      "total": "Summe"
+    },
+    "totals": {
+      "subtotal": "Zwischensumme:",
+      "tax": "Steuer ({rate}%):",
+      "discount": "Rabatt:",
+      "total": "Gesamt:",
+      "paid_full": "Vollständig bezahlt",
+      "balance_due": "Offener Betrag:"
+    },
+    "payments": {
+      "payment": "Zahlung {number}",
+      "method": "Methode:",
+      "amount": "Betrag:"
+    },
+    "footer": {
+      "thank_you": "Vielen Dank für deinen Auftrag!",
+      "visit_again": "Bis bald – wir freuen uns auf deinen nächsten Besuch"
+    },
+    "status": {
+      "draft": "Entwurf",
+      "pending": "Ausstehend",
+      "partially_paid": "Teilweise bezahlt",
+      "paid": "Bezahlt",
+      "cancelled": "Storniert",
+      "refunded": "Erstattet"
+    },
+    "metadata": {
+      "date": "Datum:",
+      "due_date": "Fällig am:",
+      "payment_terms": "Zahlungsbedingungen:",
+      "terms": {
+        "due_on_receipt": "Zahlbar bei Erhalt",
+        "net_15": "Zahlbar innerhalb von 15 Tagen",
+        "net_30": "Zahlbar innerhalb von 30 Tagen",
+        "50_upfront": "50 % Anzahlung, 50 % bei Fertigstellung"
+      }
+    },
+    "branch_info": {
+      "from": "Von",
+      "phone": "Telefon:"
+    },
+    "client_info": {
+      "bill_to": "Rechnung an",
+      "phone": "Telefon:",
+      "email": "E‑Mail:",
+      "phone_masked": "*** *** ****"
+    },
+    "summary": {
+      "title": "Rechnungsübersicht",
+      "subtotal": "Zwischensumme:",
+      "discount": "Rabatt:",
+      "tax": "Steuer:",
+      "total": "Gesamt:",
+      "first_deposit": "Anzahlung:",
+      "amount_paid": "Bezahlter Gesamtbetrag:",
+      "balance_due": "Offener Betrag:"
+    },
+    "items_table": {
+      "title": "Positionen",
+      "headers": {
+        "item": "Artikel",
+        "qty": "Menge",
+        "price": "Preis",
+        "discount": "Rabatt",
+        "tax": "Steuer",
+        "total": "Summe"
+      }
+    },
+    "payment_history": {
+      "title": "Zahlungsverlauf",
+      "headers": {
+        "date": "Datum",
+        "method": "Methode",
+        "amount": "Betrag",
+        "note": "Notiz",
+        "status": "Status"
+      },
+      "status": {
+        "verified": "Bestätigt",
+        "pending": "Ausstehend"
+      },
+      "methods": {
+        "cash": "Bar",
+        "credit_card": "Kreditkarte",
+        "bank_transfer": "Banküberweisung",
+        "unknown": "Unbekannt"
+      }
+    },
+    "notes": {
+      "title": "Notizen"
+    },
+    "actions": {
+      "print": "Rechnung drucken",
+      "download": "PDF herunterladen",
+      "add_payment": "Zahlung hinzufügen",
+      "tooltips": {
+        "paid": "Rechnung ist bereits bezahlt",
+        "cancelled": "Stornierte Rechnung kann nicht bezahlt werden",
+        "default": "Zahlung zur Rechnung hinzufügen"
+      }
+    }
+  },
+  "appointment": {
+    "edit_title": "Termin bearbeiten",
+    "add_title": "Neuen Termin hinzufügen",
+    "fields": {
+      "pet": "Patienten suchen",
+      "title": "Titel",
+      "description": "Beschreibung",
+      "start": "Startdatum & Uhrzeit",
+      "end": "Enddatum & Uhrzeit",
+      "type": "Typ",
+      "status": "Status"
+    },
+    "types": {
+      "emergency": "Notfall",
+      "non_emergency": "Kein Notfall",
+      "regular": "Regulär",
+      "followup": "Nachkontrolle",
+      "surgery": "Operation",
+      "grooming": "Grooming"
+    },
+    "statuses": {
+      "scheduled": "Geplant",
+      "walkin": "Spontan"
+    },
+    "actions": {
+      "update": "Aktualisieren",
+      "submit": "Speichern"
+    },
+    "messages": {
+      "pet_required": "Bitte einen Patienten auswählen.",
+      "create_success": "Termin für {petName} erfolgreich hinzugefügt.",
+      "create_error": "Termin konnte nicht erstellt werden.",
+      "update_success": "Termin für {petName} erfolgreich aktualisiert.",
+      "update_error": "Termin konnte nicht aktualisiert werden.",
+      "fetch_error": "Termindaten konnten nicht abgerufen werden."
+    }
+  },
+  "inventory": {
+    "title": "Inventar",
+    "actions": {
+      "refresh": "Daten aktualisieren",
+      "add": "Neuen Artikel hinzufügen",
+      "export": "Exportieren",
+      "edit": "Artikel bearbeiten",
+      "delete": "Artikel löschen",
+      "yes": "Ja",
+      "no": "Nein",
+      "import": "Importieren"
+    },
+    "columns": {
+      "barcode": "Barcode",
+      "brand": "Marke",
+      "name": "Name",
+      "category": "Kategorie",
+      "type": "Typ",
+      "quantity": "Menge",
+      "cost_price": "Kosten",
+      "selling_price": "Preis",
+      "description": "Artikelbeschreibung",
+      "expiry_date": "Ablaufdatum",
+      "actions": "Aktionen"
+    },
+    "search": {
+      "placeholder": "Alle Spalten durchsuchen"
+    },
+    "dialog": {
+      "import_title": "Inventarartikel importieren",
+      "add_title": "Neuen Inventarartikel hinzufügen",
+      "edit_title": "Inventarartikel bearbeiten",
+      "delete_title": "Bestätigen",
+      "delete_message": "Möchtest du <b>{item}</b> wirklich löschen?"
+    },
+    "status": {
+      "expired": "Abgelaufen",
+      "expiring_soon": "Bald ablaufend",
+      "low_stock": "Niedriger Bestand"
+    },
+    "add_item": {
+      "title": "Inventarartikel hinzufügen",
+      "search_label": "Nach Name, Marke suchen oder Barcode scannen",
+      "search_hint": "Produktname eingeben oder Barcode scannen",
+      "barcode": "Barcode",
+      "generate_barcode_tooltip": "Neuen Barcode generieren",
+      "category": "Kategorie",
+      "type": "Typ",
+      "brand": "Marke",
+      "product_name": "Produktname",
+      "description": "Beschreibung",
+      "quantity_to_add": "Hinzuzufügende Menge",
+      "purchase_price": "Einkaufspreis",
+      "selling_price": "Verkaufspreis",
+      "record_as_adjustment": "Als Anpassung verbuchen (kein Einkauf)",
+      "stock_adjustment": "Bestandsanpassung",
+      "adjustment_type": "Anpassungsart",
+      "increase": "Erhöhen",
+      "decrease": "Verringern",
+      "adjustment_amount": "Anpassungsmenge",
+      "adjustment_reason": "Grund der Anpassung",
+      "adjustment_notes": "Anmerkungen zur Anpassung",
+      "adjustment_notes_small": "Erläuterungen zu Bestandsbewegungen",
+      "adding_units": "{units} Einheiten hinzufügen",
+      "removing_units": "{units} Einheiten entfernen",
+      "reason": "Grund",
+      "min_stock_level": "Mindestbestand",
+      "expiry_date": "Ablaufdatum",
+      "notes": "Notizen",
+      "create_new_item": "Neuen Artikel erstellen",
+      "add_to_existing_item": "Zu bestehendem Artikel hinzufügen",
+      "existing_items_found": "Vorhandene Artikel gefunden",
+      "similar_items_found": "Wir haben ähnliche Artikel im System gefunden:",
+      "name": "Name",
+      "current_stock": "Aktueller Bestand",
+      "add_to_selected": "Zu ausgewähltem hinzufügen",
+      "create_new_anyway": "Trotzdem neu erstellen",
+      "food_types": "Trockenfutter, Nassfutter ... usw."
+    },
+    "categories": {
+      "food": "Futter",
+      "pharmaceutical": "Pharmazeutika",
+      "miscellaneous": "Verschiedenes",
+      "toy": "Spielzeug",
+      "treatment": "Behandlungen"
+    },
+    "adjustment_reasons": {
+      "damaged": "Beschädigte Ware",
+      "found": "Bestand gefunden",
+      "theft": "Diebstahl/Verlust",
+      "expired": "Abgelaufene Artikel",
+      "stocktake": "Bestandsaufnahme‑Anpassung",
+      "other": "Andere"
+    },
+    "adjustment_types": {
+      "increase": "Bestand erhöhen",
+      "decrease": "Bestand verringern"
+    },
+    "messages": {
+      "items_needed_title": "Erforderliche Felder",
+      "items_needed_details": "Es gibt erforderliche Felder, die nicht leer sein dürfen",
+      "confirm_add_item": "Möchtest du diesen neuen Inventarartikel wirklich erstellen?",
+      "confirm_update_item": "Möchtest du wirklich {quantity} Einheiten zu diesem bestehenden Artikel hinzufügen?"
+    },
+    "import": {
+      "choose_file": "Datei auswählen",
+      "choose_excel": "Excel‑Datei auswählen",
+      "drag_drop": "Dateien hierher ziehen und ablegen",
+      "browse_files": "Dateien durchsuchen",
+      "excel_only": "Nur Excel‑Dateien (.xlsx, .xls)",
+      "download_template": "Vorlage herunterladen",
+      "success": "Import erfolgreich",
+      "items_processed": "{total} Artikel verarbeitet: {created} erstellt, {updated} aktualisiert",
+      "error": "Import fehlgeschlagen",
+      "created": "Erstellt",
+      "updated": "Aktualisiert",
+      "skipped": "Übersprungen",
+      "total_rows": "Gesamtzeilen",
+      "template_instructions": "Lade diese Vorlage herunter und fülle sie mit deinen Inventardaten aus",
+      "pending": "Upload ausstehend",
+      "results": "Importergebnisse",
+      "upload": "Datei hochladen"
+    }
+  },
+  "invoices": {
+    "title": "Rechnungen",
+    "actions": {
+      "refresh": "Daten aktualisieren",
+      "create": "Neue Rechnung erstellen",
+      "export": "Exportieren",
+      "view": "Rechnung anzeigen",
+      "edit": "Rechnung bearbeiten",
+      "delete": "Rechnung löschen",
+      "add_payment": "Zahlung hinzufügen",
+      "yes": "Ja",
+      "no": "Nein"
+    },
+    "columns": {
+      "invoice_number": "Rechnungs‑Nr.",
+      "client": "Kunde",
+      "pet": "Patient",
+      "date": "Datum",
+      "due_date": "Fällig am",
+      "status": "Status",
+      "total_amount": "Gesamt",
+      "amount_paid": "Bezahlt",
+      "balance_due": "Offen",
+      "payment_status": "Zahlung",
+      "actions": "Aktionen"
+    },
+    "status": {
+      "draft": "Entwurf",
+      "pending": "Ausstehend",
+      "partially_paid": "Teilweise bezahlt",
+      "paid": "Bezahlt",
+      "cancelled": "Storniert",
+      "refunded": "Erstattet",
+      "unpaid": "Unbezahlt",
+      "partial": "Teilweise"
+    },
+    "search": {
+      "placeholder": "Alle Spalten durchsuchen"
+    },
+    "dialog": {
+      "view_title": "Rechnungsdetails",
+      "create_title": "Neue Rechnung erstellen",
+      "edit_title": "Rechnung bearbeiten",
+      "payment_title": "Zahlung hinzufügen",
+      "delete_title": "Bestätigen",
+      "delete_message": "Möchtest du die Rechnung <b>{invoice}</b> wirklich löschen?",
+      "paid_message": "Rechnung ist bereits bezahlt",
+      "cancelled_message": "Stornierte Rechnung kann nicht bezahlt werden"
+    },
+    "messages": {
+      "payment_success": "Zahlung erfolgreich hinzugefügt",
+      "payment_error": "Zahlung konnte nicht hinzugefügt werden"
+    }
+  },
+  "behavior": {
+    "Friendly": "Freundlich",
+    "Fearful": "Ängstlich",
+    "Aggressive": "Aggressiv",
+    "Fear_Aggression": "Angstbedingte Aggression",
+    "Nervous": "Nervös",
+    "Submissive": "Unterwürfig",
+    "Needs_Sedation": "Beruhigung erforderlich",
+    "Biter": "Beißer",
+    "Muzzle_Required": "Maulkorb erforderlich",
+    "Escape_Risk": "Entweichungsgefahr",
+    "Urinates": "Urinieren/Defäkieren vor Stress"
+  },
+  "form_messages": {
+    "warnings": {
+      "invalid_input": "Dieses Feld ist erforderlich."
+    }
+  },
+  "pet_list": {
+    "tooltips": {
+      "refresh": "Daten aktualisieren",
+      "new_patient": "Neuer Patient"
+    },
+    "search_placeholder": "Besitzer suchen",
+    "species": "Spezies",
+    "breed": "Rasse",
+    "gender": "Geschlecht",
+    "modal_title": "Neuen Patienten hinzufügen",
+    "details_button": "Details"
+  },
+  "owner_pet_list": {
+    "tooltips": {
+      "refresh": "Liste aktualisieren",
+      "view_details": "Patientendetails anzeigen"
+    },
+    "buttons": {
+      "new_patient": "Neuer Patient",
+      "details": "Details"
+    },
+    "fields": {
+      "species": "Spezies",
+      "breed": "Rasse",
+      "gender": "Geschlecht",
+      "microchip": "Mikrochip/Seriennummer"
+    },
+    "search_placeholder": "Nach Namen des Patienten suchen",
+    "modal": {
+      "header": "Neuen Patienten hinzufügen"
+    }
+  },
+  "add_invoice": {
+    "title": "Neue Rechnung erstellen",
+    "client_section": {
+      "title": "Kunden‑ & Patientendaten",
+      "search_client": "Kunden suchen",
+      "select_pet": "Patient auswählen",
+      "phone": "Telefon",
+      "email": "E‑Mail",
+      "species": "Spezies",
+      "breed": "Rasse",
+      "dob": "Geburtsdatum"
+    },
+    "items_section": {
+      "title": "Positionen hinzufügen",
+      "search_items": "Artikel suchen",
+      "price": "Preis",
+      "quantity": "Menge",
+      "discount": "Rabatt",
+      "tax_rate": "Steuersatz",
+      "add_to_invoice": "Zur Rechnung hinzufügen",
+      "item": "Artikel",
+      "qty": "Menge",
+      "total": "Summe",
+      "actions": "Aktionen",
+      "out_of_stock": "Nicht vorrätig",
+      "almost_out_of_stock": "Niedriger Bestand",
+      "expired": "Abgelaufen",
+      "in_stock": "Vorrätig"
+    },
+    "summary_section": {
+      "title": "Rechnungsübersicht",
+      "invoice_number": "Rechnungsnummer",
+      "invoice_date": "Rechnungsdatum",
+      "due_date": "Fällig am",
+      "payment_terms": "Zahlungsbedingungen",
+      "status": "Status",
+      "deposit_required": "Anzahlung erforderlich",
+      "payment_method": "Zahlungsmethode",
+      "notes": "Notizen",
+      "subtotal": "Zwischensumme",
+      "discount": "Rabatt",
+      "tax": "Steuer",
+      "total": "Gesamt",
+      "balance_after_deposit": "Restbetrag nach Anzahlung",
+      "save_draft": "Als Entwurf speichern",
+      "update_invoice": "Rechnung aktualisieren",
+      "create_invoice": "Rechnung erstellen"
+    },
+    "payment_terms": {
+      "due_on_receipt": "Zahlbar bei Erhalt",
+      "net_15": "Zahlbar innerhalb von 15 Tagen",
+      "net_30": "Zahlbar innerhalb von 30 Tagen",
+      "50_upfront": "50 % Anzahlung, 50 % bei Fertigstellung"
+    },
+    "status_options": {
+      "draft": "Entwurf",
+      "pending": "Ausstehend",
+      "partially_paid": "Teilweise bezahlt",
+      "paid": "Bezahlt",
+      "cancelled": "Storniert",
+      "refunded": "Erstattet"
+    },
+    "toast": {
+      "insufficient_stock": "Unzureichender Bestand",
+      "expired_item": "Abgelaufener Artikel",
+      "item_added": "Artikel hinzugefügt",
+      "invoice_created": "Rechnung erstellt",
+      "invoice_updated": "Rechnung aktualisiert",
+      "error": "Fehler",
+      "messages": {
+        "only_x_available": "Nur {quantity} verfügbar",
+        "cannot_add_expired": "Abgelaufene Artikel können nicht zur Rechnung hinzugefügt werden",
+        "item_added_success": "Artikel wurde der Rechnung hinzugefügt",
+        "invoice_updated_success": "Rechnung erfolgreich aktualisiert",
+        "invoice_created_success": "Rechnung erfolgreich erstellt",
+        "invoice_draft_success": "Rechnung als Entwurf gespeichert",
+        "no_items_error": "Die Rechnung muss mindestens eine Position enthalten",
+        "deposit_method_error": "Bitte eine Zahlungsmethode für die Anzahlung auswählen"
+      }
+    },
+    "payment_methods": {
+      "cash": "Bar",
+      "credit_card": "Kreditkarte",
+      "bank_transfer": "Banküberweisung",
+      "mobile_payment": "Mobiles Bezahlen",
+      "load_error": "Zahlungsmethoden konnten nicht geladen werden"
+    }
+  },
+  "common": {
+    "not_available": "Keine Daten verfügbar",
+    "clear": "Leeren",
+    "close": "Schließen",
+    "confirmAction": "Aktion bestätigen",
+    "no": "Nein",
+    "yes": "Ja",
+    "error": "Fehler",
+    "warning": "Warnung",
+    "success": "Erfolg"
+  },
+  "paymentForm": {
+    "title": "Neue Zahlung hinzufügen",
+    "amount": "Betrag",
+    "maxAmount": "Maximal: {maxAmount}",
+    "paymentMethod": "Zahlungsmethode",
+    "paymentMethodRequired": "Zahlungsmethode ist erforderlich",
+    "paymentDate": "Zahlungsdatum",
+    "notes": "Notizen",
+    "cancel": "Abbrechen",
+    "submit": "Zahlung übermitteln",
+    "success": {
+      "title": "Bezahlt",
+      "message": "Rechnungszahlung hinzugefügt"
+    }
+  },
+  "stock_movements": {
+    "title": "Bericht Bestandsbewegungen",
+    "no_movements": "Keine Bestandsbewegungen gefunden",
+    "loading": "Bestandsbewegungen werden geladen...",
+    "refresh": "Daten aktualisieren",
+    "filter": "Filter",
+    "clear": "Filter löschen",
+    "search": "Suchen...",
+    "date_range": "Zeitraum auswählen",
+    "filter_type": "Nach Typ filtern",
+    "view_invoice": "Rechnung anzeigen",
+    "headers": {
+      "date": "Datum",
+      "item": "Artikel",
+      "category": "Kategorie",
+      "type": "Typ",
+      "quantity": "Menge",
+      "notes": "Notizen",
+      "user": "Benutzer",
+      "reference": "Referenz"
+    },
+    "types": {
+      "all": "Alle Typen",
+      "purchase": "Einkauf",
+      "sale": "Verkauf",
+      "transfer": "Transfer",
+      "adjustment": "Anpassung",
+      "expired": "Abgelaufen"
+    },
+    "messages": {
+      "fetch_error": "Bestandsbewegungen konnten nicht geladen werden"
+    }
+  },
+  "languages": {
+    "ar": "العربية",
+    "en": "English",
+    "de": "Deutsche Sprache"
+  },
+  "themes": {
+    "dark": "Dunkles Design",
+    "light": "Helles Design",
+    "system": "Systemfarben"
+  },
+  "appointments": {
+    "title": "Termine",
+    "no_appointments": "Keine Termine gefunden",
+    "loading": "Termine werden geladen...",
+    "header": {
+      "search_placeholder": "Termine durchsuchen..."
+    },
+    "filter": {
+      "status": "Nach Status filtern",
+      "type": "Nach Typ filtern",
+      "date_range": "Zeitraum",
+      "apply": "Filtern",
+      "show_reminders": "Erinnerungen",
+      "clear": "Löschen"
+    },
+    "refresh": "Aktualisieren",
+    "headers": {
+      "date": "Datum & Uhrzeit",
+      "pet": "Patient",
+      "owner": "Besitzer",
+      "title": "Titel",
+      "type": "Typ",
+      "status": "Status",
+      "description": "Beschreibung",
+      "actions": "Aktionen"
+    },
+    "statuses": {
+      "all": "Alle Status",
+      "scheduled": "Geplant",
+      "walkin": "Spontan",
+      "completed": "Abgeschlossen",
+      "cancelled": "Storniert"
+    },
+    "types": {
+      "all": "Alle Typen",
+      "regular": "Regulär",
+      "emergency": "Notfall",
+      "followup": "Nachkontrolle",
+      "grooming": "Grooming",
+      "non_emergency": "Kein Notfall"
+    },
+    "view_record": "Medizinischen Eintrag anzeigen"
+  },
+  "medical_records": {
+    "dialog": {
+      "view_title": "Details der medizinischen Akte"
+    }
+  },
+  "user_profile": {
+    "profile_information": "Profilinformationen",
+    "personal_details": "Persönliche Daten",
+    "update_profile_info": "Aktualisiere die Profildaten deines Kontos",
+    "full_name": "Vollständiger Name",
+    "email_address": "E‑Mail‑Adresse",
+    "save_changes": "Änderungen speichern",
+    "update_password": "Passwort aktualisieren",
+    "current_password": "Aktuelles Passwort",
+    "new_password": "Neues Passwort",
+    "confirm_password": "Passwort bestätigen",
+    "passwords_not_match": "Passwörter stimmen nicht überein",
+    "preferences": "Einstellungen",
+    "language": "Sprache",
+    "theme": "Design",
+    "update_language": "Sprache aktualisieren",
+    "update_theme": "Design aktualisieren",
+    "two_factor_auth": "Zwei-Faktor-Authentifizierung",
+    "two_factor_desc": "Füge deinem Konto eine zusätzliche Sicherheitsebene hinzu",
+    "scan_qr_code": "QR‑Code mit der Authenticator‑App scannen",
+    "secret_key": "Geheimschlüssel",
+    "enter_verification_code": "Bestätigungscode eingeben",
+    "verify_activate": "Prüfen & Aktivieren",
+    "success": {
+      "profile_updated": "Benutzerdaten erfolgreich aktualisiert",
+      "password_updated": "Passwort erfolgreich aktualisiert",
+      "language_updated": "Spracheinstellung erfolgreich aktualisiert",
+      "theme_updated": "Design‑Einstellung erfolgreich aktualisiert",
+      "2fa_enabled": "Zwei‑Faktor‑Authentifizierung erfolgreich aktiviert",
+      "2fa_disabled": "Zwei‑Faktor‑Authentifizierung erfolgreich deaktiviert"
+    }
+  },
+  "whatsapp_onboarding": {
+    "title": "WhatsApp Business verbinden",
+    "setup_title": "WhatsApp‑Benachrichtigungen einrichten",
+    "setup_description": "Verbinde dein WhatsApp‑Business‑Konto, um Terminerinnerungen, Gesundheits‑Updates und mehr direkt an Tierhalter zu senden.",
+    "requirements_title": "Du benötigst:",
+    "requirements": {
+      "phone": "Eine dedizierte geschäftliche Telefonnummer",
+      "business": "Installierte WhatsApp‑Business‑App",
+      "permissions": "Administratorzugriff auf dieses Gerät"
+    },
+    "benefits": {
+      "real_time": {
+        "title": "Echtzeit‑Kommunikation",
+        "description": "Sofortige Zustellung wichtiger Gesundheits‑Updates für Haustiere"
+      },
+      "high_engagement": {
+        "title": "Hohe Interaktionsrate",
+        "description": "98 % Öffnungsrate für wichtige Benachrichtigungen"
+      },
+      "secure": {
+        "title": "Sicher & Privat",
+        "description": "Ende‑zu‑Ende‑verschlüsselte Nachrichten für die Privatsphäre der Kunden"
+      }
+    },
+    "learn_more": "Mehr erfahren",
+    "get_started": "Los geht’s"
+  },
+  "whatsapp_number_verification": {
+    "title": "Geschäftsnummer verifizieren",
+    "country": "Land",
+    "phone_number": "WhatsApp‑Business‑Nummer",
+    "verification_sent": "Bestätigungscode an deine Nummer gesendet",
+    "back": "Zurück",
+    "send_code": "Bestätigungscode senden",
+    "continue": "Mit QR‑Scan fortfahren",
+    "instructions": "Gib die Telefonnummer deines WhatsApp‑Business‑Kontos ein. Wir senden einen Bestätigungscode zur Eigentumsbestätigung.",
+    "error_title": "Fehler bei der Nummernverifizierung",
+    "Phone number not registered with WhatsApp": "Die Nummer ist nicht bei WhatsApp Business registriert"
+  },
+  "whatsapp_qr": {
+    "title": "QR‑Code scannen",
+    "connected_as": "Verbunden als {phone}",
+    "back": "Zurück",
+    "refresh": "QR‑Code aktualisieren",
+    "finish": "Einrichtung abschließen",
+    "status": {
+      "checking": "WhatsApp‑Status wird geprüft",
+      "checking_details": "Sitzungsstatus wird verifiziert und QR‑Code vorbereitet...",
+      "generating": "QR‑Code wird generiert",
+      "waiting": "Warten auf Verbindung",
+      "connected": "Erfolgreich verbunden",
+      "failed": "Verbindung fehlgeschlagen"
+    },
+    "errors": {
+      "status_check_failed": "Statusprüfung fehlgeschlagen",
+      "qr_fetch_failed": "QR‑Erstellung fehlgeschlagen",
+      "session_not_ready": "Sitzung ist für den QR‑Scan nicht bereit",
+      "connection_failed": "Verbindungsversuch fehlgeschlagen"
+    },
+    "connection_success": "WhatsApp erfolgreich verbunden!",
+    "instructions": [
+      "Öffne WhatsApp auf deinem Geschäftstelefon",
+      "Tippe auf Menü → Verknüpfte Geräte → Gerät verknüpfen",
+      "Richte die Kamera auf diesen QR‑Code",
+      "Warte auf die automatische Verbindungsbestätigung"
+    ],
+    "fully_connected": "WhatsApp Business erfolgreich verbunden!",
+    "success_steps": {
+      "connection": "Gerät erfolgreich verknüpft",
+      "verification": "Telefonnummer verifiziert"
+    },
+    "configure_notifications": "Benachrichtigungsvorlagen konfigurieren",
+    "return_to_dashboard": "Zur Übersicht zurückkehren"
+  },
+  "clinics": {
+    "myClinics": "Meine Kliniken",
+    "addClinic": "Klinik hinzufügen",
+    "noClinics": "Du bist noch keiner Klinik zugeordnet.",
+    "joinClinic": "Einer Klinik beitreten",
+    "branches": "Zweigstellen",
+    "clinicEmail": "E‑Mail der Klinik",
+    "clinicEmailPlaceholder": "E‑Mail der registrierten Klinik eingeben",
+    "yourRole": "Deine Rolle",
+    "selectRole": "Rolle auswählen",
+    "join": "Beitreten",
+    "confirmLeave": "Möchtest du {clinicName} wirklich verlassen?",
+    "fetchError": "Kliniken konnten nicht abgerufen werden",
+    "enterEmail": "Bitte Klinik‑E‑Mail eingeben",
+    "joinSuccess": "Erfolgreich der Klinik beigetreten",
+    "joinError": "Beitritt zur Klinik fehlgeschlagen",
+    "leaveSuccess": "{clinicName} verlassen",
+    "leaveError": "Klinik konnte nicht verlassen werden",
+    "leave": "Klinik verlassen",
+    "viewingBranches": "Zweigstellen von {clinicName} anzeigen",
+    "manageClinic": "Klinik verwalten",
+    "managingClinic": "{clinicName} verwalten"
+  },
+  "roles": {
+    "admin": "Administrator",
+    "manager": "Manager",
+    "vet": "Tierarzt/Tierärztin",
+    "staff": "Mitarbeiter"
+  },
+  "branchSelection": {
+    "title": "Zweigstelle auswählen",
+    "subtitle": "Bitte Zweigstelle wählen",
+    "continueButton": "Weiter",
+    "messages": {
+      "failed": "Zweigstelle konnte nicht ausgewählt werden"
+    }
+  },
+  "catBreeds": {
+    "Domestick": "Hauskatze",
+    "Persian": "Perser",
+    "Siamese": "Siam",
+    "Maine Coon": "Maine Coon",
+    "Bengal": "Bengal",
+    "Ragdoll": "Ragdoll",
+    "British Shorthair": "Britisch Kurzhaar",
+    "Mix": "Mischling",
+    "Scottish Fold": "Scottish Fold",
+    "Sphynx": "Sphynx",
+    "Russian Blue": "Russisch Blau",
+    "Shanshalla": "Shanshalla",
+    "Turkish Angora": "Türkisch Angora",
+    "Siberian": "Sibirische Katze",
+    "Manx": "Manx",
+    "Himalayan Blue": "Himalaya Blau",
+    "Himalayan Orange": "Himalaya Orange",
+    "Himalayan Chocolate": "Himalaya Schokolade",
+    "Himalayan": "Himalaya",
+    "Exotic": "Exotic",
+    "Turkish Van": "Türkisch Van",
+    "Other": "Andere"
+  },
+  "dogBreeds": {
+    "German Shepherd": "Deutscher Schäferhund",
+    "Labrador Retriever": "Labrador Retriever",
+    "Golden Retriever": "Golden Retriever",
+    "Pit Bull": "Pitbull",
+    "Rottweiler": "Rottweiler",
+    "English Bulldog": "Englische Bulldogge",
+    "Pomeranian": "Zwergspitz",
+    "Chihuahua": "Chihuahua",
+    "Siberian Husky": "Sibirischer Husky",
+    "Maltese": "Malteser",
+    "Pug": "Mops",
+    "Cocker Spaniel": "Cocker Spaniel",
+    "Boxer": "Boxer",
+    "Doberman": "Dobermann",
+    "Yorkshire Terrier": "Yorkshire Terrier",
+    "Akita": "Akita",
+    "Poodle": "Pudel",
+    "Great Dane": "Deutsche Dogge",
+    "Chow Chow": "Chow‑Chow",
+    "Domestick": "Mischling",
+    "Collie": "Collie",
+    "Border Collie": "Border Collie",
+    "Basset-Houn": "Basset Hound",
+    "Beagle": "Beagle",
+    "Pointer": "Pointer",
+    "Saluki": "Saluki",
+    "Dalmatian": "Dalmatiner",
+    "Pekingese": "Pekinese",
+    "Malinois": "Malinois",
+    "Other": "Andere"
+  }
+}
