@@ -1,43 +1,28 @@
 <template>
   <div class="w-full">
     <form @submit.prevent="submitForm" class="mx-auto w-full">
-      <fieldset
-        class="p-fieldset p-component w-4/5 flex flex-wrap mx-auto gap-2 items-center border rounded-lg p-4"
-      >
+      <fieldset class="p-fieldset p-component w-4/5 flex flex-wrap mx-auto gap-2 items-center border rounded-lg p-4">
         <legend>{{ $t("appointment.add_title") }}</legend>
         <input type="hidden" id="branch_id" value="1" v-model="appointment.branch_id" />
 
         <div class="field mt-6 w-[48%]" :class="appointment.petmicrochip ? `hidden` : ``">
           <FloatLabel class="w-full" v-if="!appointment.petmicrochip">
             <InputGroup class="flex rounded-md overflow-hidden">
-              <AutoComplete
-                v-model="selectedPet"
-                optionLabel="name"
-                :suggestions="filteredPets"
-                @complete="searchPets"
-                class="w-full"
-                fluid
-              >
+              <AutoComplete v-model="selectedPet" optionLabel="name" :suggestions="filteredPets" @complete="searchPets"
+                class="w-full" fluid>
                 <template #option="slotProps">
                   <div class="flex items-center">
                     <div>{{ slotProps.option.name }}</div>
                   </div>
                 </template>
               </AutoComplete>
-              <InputGroupAddon
-                class="!bg-transparent px-4 flex flex-col item-center justify-center"
-                ><i class="pi pi-search"></i
-              ></InputGroupAddon>
+              <InputGroupAddon class="!bg-transparent px-4 flex flex-col item-center justify-center"><i
+                  class="pi pi-search"></i></InputGroupAddon>
             </InputGroup>
             <label for="pet">{{ $t("appointment.fields.pet") }}</label>
           </FloatLabel>
-          <InputText
-            id="name"
-            v-model="selectedPet"
-            class="hidden"
-            v-else
-            :placeholder="$t('appointment.fields.pet')"
-          />
+          <InputText id="name" v-model="selectedPet" class="hidden" v-else
+            :placeholder="$t('appointment.fields.pet')" />
         </div>
 
         <div class="field mt-6 w-[48%]">
@@ -56,18 +41,8 @@
 
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <DatePicker
-              showIcon
-              iconDisplay="input"
-              showButtonBar
-              id="start"
-              showTime
-              hourFormat="24"
-              fluid
-              v-model="appointment.start"
-              dateFormat="yy-mm-d"
-              class="w-full"
-            />
+            <DatePicker showIcon iconDisplay="input" showButtonBar id="start" showTime hourFormat="24" fluid
+              v-model="appointment.start" dateFormat="yy-mm-d" class="w-full" />
             <label for="start">{{ $t("appointment.fields.start") }}</label>
           </FloatLabel>
         </div>
@@ -75,39 +50,22 @@
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
             <label for="end">{{ $t("appointment.fields.end") }}</label>
-            <DatePicker
-              showIcon
-              iconDisplay="input"
-              showButtonBar
-              showTime
-              hourFormat="24"
-              id="end"
-              v-model="appointment.end"
-              dateFormat="yy-mm-d"
-              class="w-full"
-            />
+            <DatePicker showIcon iconDisplay="input" showButtonBar showTime hourFormat="24" id="end"
+              v-model="appointment.end" dateFormat="yy-mm-d" class="w-full" />
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <Select
-              v-model="appointment.type"
-              :options="appointmentTypes"
-              optionLabel="label"
-              class="w-full"
-            />
+            <Select v-model="appointment.type" :options="appointmentTypes" optionLabel="label" optionValue="value"
+              class="w-full" />
             <label for="type">{{ $t("appointment.fields.type") }}</label>
           </FloatLabel>
         </div>
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <Select
-              v-model="appointment.status"
-              :options="appointmentStatus"
-              optionLabel="label"
-              class="w-full"
-            />
+            <Select v-model="appointment.status" :options="appointmentStatus" optionLabel="label" optionValue="value"
+              class="w-full" />
             <label for="status">{{ $t("appointment.fields.status") }}</label>
           </FloatLabel>
         </div>
@@ -137,15 +95,7 @@ const { t } = useI18n();
 const emit = defineEmits(["submitted"]);
 
 const props = defineProps(["activeDate", "petMicrochip", "petOwnerID"]);
-const appointment = ref({
-  client_id: null,
-  branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
-  title: "",
-  description: "",
-  type: "",
-  start: null,
-  end: null,
-});
+
 
 const appointmentTypes = ref([
   { label: t("appointment.types.emergency"), value: "Emergency" },
@@ -160,6 +110,16 @@ const appointmentStatus = ref([
   { label: t("appointment.statuses.scheduled"), value: "Scheduled" },
   { label: t("appointment.statuses.walkin"), value: "Walkin" },
 ]);
+const appointment = ref({
+  client_id: null,
+  branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"),
+  title: "",
+  description: "",
+  type: "Non-Emergency",
+  status: "Walkin",
+  start: null,
+  end: null,
+});
 
 const selectedPet = ref(null);
 const filteredPets = ref([]);
