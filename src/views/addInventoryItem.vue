@@ -539,7 +539,7 @@ const reasonLabel = computed(() => {
 });
 const invalid = ref({});
 const submitForm = async () => {
-  console.log("form.value.notes", form.value.notes);
+  // console.log("form.value.notes", form.value.notes);
   invalid.value = {
     quantity: form.value.quantity === "" ? true : false,
     barcode: form.value.barcode === "" ? true : false,

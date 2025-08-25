@@ -751,7 +751,7 @@ const createInvoice = async () => {
       },
     ];
   // }
-  console.log(payload);
+  // console.log(payload);
 
   try {
     const response = await axiosInstance.post("/invoices", payload);
@@ -765,7 +765,7 @@ const createInvoice = async () => {
           : t("add_invoice.toast.messages.invoice_created_success"),
       life: 5000,
     });
-    console.log(response)
+    // console.log(response)
     // Reset form or redirect
   } catch (error) {
     console.error("Error creating invoice:", error);

@@ -295,7 +295,7 @@ const getRoleSeverity = (role) => {
 const isRtl = computed(() => {
   return ["ar", "he", "fa"].includes(locale.value);
 });
-console.log("isRtl", isRtl.value);
+// console.log("isRtl", isRtl.value);
 // Fetch clinics on component mount
 onMounted(() => {
   fetchClinics();

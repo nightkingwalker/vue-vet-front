@@ -223,7 +223,7 @@ const uploadFile = async () => {
       detail: errorMessage.value,
       life: 5000,
     });
-    console.log(error.response.data.error);
+    // console.log(error.response.data.error);
   } finally {
     isUploading.value = false;
     uploadProgress.value = 0;

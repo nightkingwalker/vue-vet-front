@@ -446,7 +446,7 @@ function addNewOwner() {
  * Validates and submits the pet form
  */
 const submitForm = async () => {
-  console.log(pet.value.neutered.value)
+  // console.log(pet.value.neutered.value)
   // Validate required fields
   invalid.value.pet = {
     owner_id: pet.value.owner_id === null,
@@ -488,10 +488,10 @@ const submitForm = async () => {
     method: "POST",
   };
   const online = await $connectivity.getOnlineStatus();
-  console.log(submissionData)
+  // console.log(submissionData)
   if (online) {
     try {
-      console.log(submissionData)
+      // console.log(submissionData)
       // Disable submit button
       isSubmitting.value = true;
       // Submit data to API

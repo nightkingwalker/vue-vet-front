@@ -517,7 +517,7 @@ const deleteInvoice = async () => {
   try {
     const res = await axiosInstance.delete(`/invoices/${selectedInvoice.value.id}`);
     deleteDialogVisible.value = false;
-    console.log(res);
+    // console.log(res);
     fetchInvoices(currentPage.value);
   } catch (error) {
     console.error("Error deleting invoice:", error);

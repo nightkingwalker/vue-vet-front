@@ -431,7 +431,7 @@ const handleGoogleSync = async () => {
       window.location.href = data.auth_url;
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     eventBus.emit("show-toast", {
       severity: "error",
       summary: t("calendar.google_sync_error"),

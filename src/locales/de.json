@@ -317,6 +317,7 @@
     }
   },
   "pet_details": {
+    "view_images": "Angehängte Bilder anzeigen",
     "title": "Patientendetails",
     "species_header": "Spezies",
     "medical_info": "Grundlegende medizinische Angaben",
@@ -486,6 +487,9 @@
     "loading": "Bilddaten werden geladen. Bitte warten.",
     "refresh": "Daten aktualisieren",
     "add": "Neues medizinisches Bild hinzufügen",
+    "gallery": {
+      "title": "Vorhandene Bilddateien"
+    },
     "headers": {
       "type": "Typ",
       "date": "Datum",
@@ -509,6 +513,12 @@
   },
   "add_medical_image": {
     "title": "Neues medizinisches Bild hinzufügen",
+    "preview_title": "Bildvorschau",
+    "delete_file_tooltip": "Bild löschen",
+    "preview_file_tooltip": "Bildvorschau",
+    "download": "Bild herunterladen",
+    "drag_and_drop": "Bilddatei hierher ziehen",
+    "file_limit": "Maximale Dateigröße 10 MB",
     "fields": {
       "ref_number": "Referenznummer",
       "organ": "Organ",
@@ -516,6 +526,9 @@
       "type": "Bildtyp",
       "image_date": "Aufnahmedatum",
       "abnormalities": "Auffälligkeiten",
+      "file": "Bilddatei",
+      "new_files": "Neue Bilddatei",
+      "existing_files": "Vorhandene Bilddateien",
       "description": "Beschreibung"
     },
     "generate_tooltip": "Referenznummer generieren",

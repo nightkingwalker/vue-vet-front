@@ -317,6 +317,7 @@
         }
     },
     "pet_details": {
+        "view_images": "View Attached Images",
         "title": "Pet Details",
         "species_header": "Species",
         "medical_info": "Basic Medical Details",
@@ -486,6 +487,9 @@
         "loading": "Loading Images data. Please wait.",
         "refresh": "Refresh Data",
         "add": "Add New Medical Image",
+        "gallery": {
+            "title": "Existing Image files"
+        },
         "headers": {
             "type": "Type",
             "date": "Date",
@@ -508,7 +512,13 @@
         }
     },
     "add_medical_image": {
+        "preview_title": "Preview Image",
+        "preview_file_tooltip": "Preview Image",
+        "delete_file_tooltip": "Delete Image",
+        "download": "Download Image",
         "title": "Add New Medical Image",
+        "drag_and_drop": "Drag Image File Here",
+        "file_limit": "Max file size 10MB",
         "fields": {
             "ref_number": "Reference Number",
             "organ": "Organ",
@@ -516,6 +526,9 @@
             "type": "Image Type",
             "image_date": "Date of Image",
             "abnormalities": "Abnormalities",
+            "file": "Image file",
+            "new_files": "New Image file",
+            "existing_files": "Existing Image files",
             "description": "Description"
         },
         "generate_tooltip": "Generate reference number",
@@ -1260,7 +1273,7 @@
         }
     },
     "behavior": {
-        "Friendly": "ودود",
+        "Friendly": "Friendly",
         "Fearful": "Fearful",
         "Aggressive": "Aggressive",
         "Fear_Aggression": "Fear Induces Aggression",

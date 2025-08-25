@@ -1084,7 +1084,7 @@ const fetchMedicalRecord = async () => {
       // `/medical-records/31/full`
       `/medical-records/${props.medical_record_id}/full`
     );
-    console.log(response.data)
+    // console.log(response.data)
     medicalRecord.value = response.data;
   } catch (error) {
     console.error("Error fetching medical record:", error);

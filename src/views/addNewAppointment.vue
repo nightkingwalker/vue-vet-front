@@ -17,7 +17,8 @@
                 </template>
               </AutoComplete>
               <InputGroupAddon class="!bg-transparent px-4 flex flex-col item-center justify-center"><i
-                  class="pi pi-search"></i></InputGroupAddon>
+                  class="pi pi-search"></i>
+              </InputGroupAddon>
             </InputGroup>
             <label for="pet">{{ $t("appointment.fields.pet") }}</label>
           </FloatLabel>
@@ -57,15 +58,13 @@
 
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <Select v-model="appointment.type" :options="appointmentTypes" optionLabel="label" optionValue="value"
-              class="w-full" />
+            <Select v-model="appointment.type" :options="appointmentTypes" optionLabel="label" class="w-full" />
             <label for="type">{{ $t("appointment.fields.type") }}</label>
           </FloatLabel>
         </div>
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <Select v-model="appointment.status" :options="appointmentStatus" optionLabel="label" optionValue="value"
-              class="w-full" />
+            <Select v-model="appointment.status" :options="appointmentStatus" optionLabel="label" class="w-full" />
             <label for="status">{{ $t("appointment.fields.status") }}</label>
           </FloatLabel>
         </div>
@@ -120,6 +119,16 @@ const appointment = ref({
   start: null,
   end: null,
 });
+// const appointment = ref({
+//   client_id: null, // ID of the demo owner you’ll create
+//   branch_id: Cookies.get("M3K8g2387BahBaqyjDe6"), // your branch
+//   title: "Initial Checkup for Kidney Concern",
+//   description: "Cat brought in for routine checkup; suspected kidney issues due to recent lethargy and changes in urination.",
+//   type: "Non-Emergency",
+//   status: "Walkin",
+//   start: new Date().toISOString(), // current datetime
+//   end: new Date(new Date().getTime() + 30 * 60 * 1000).toISOString(), // 30 min later
+// });
 
 const selectedPet = ref(null);
 const filteredPets = ref([]);
@@ -207,15 +216,15 @@ const submitForm = async () => {
     return `${date.getFullYear()}-${(date.getMonth() + 1)
       .toString()
       .padStart(2, "0")}-${date
-      .getDate()
-      .toString()
-      .padStart(2, "0")} ${date
-      .getHours()
-      .toString()
-      .padStart(2, "0")}:${date
-      .getMinutes()
-      .toString()
-      .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`;
+        .getDate()
+        .toString()
+        .padStart(2, "0")} ${date
+          .getHours()
+          .toString()
+          .padStart(2, "0")}:${date
+            .getMinutes()
+            .toString()
+            .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`;
   };
 
   const startDate = new Date(appointment.value.start);
@@ -263,9 +272,11 @@ onMounted(() => {
   max-width: 500px;
   margin: auto;
 }
+
 .field {
   margin-bottom: 16px;
 }
+
 .p-fieldset-content {
   display: flex;
 }

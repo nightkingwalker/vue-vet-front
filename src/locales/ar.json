@@ -310,6 +310,7 @@
         }
     },
     "pet_details": {
+        "view_images": "مشاهدة الصور المرفقة",
         "title": "تفاصيل الحيوان الأليف",
         "species_header": "الفصيلة",
         "medical_info": "معلومات طبية أساسية",
@@ -479,6 +480,9 @@
         "loading": "جاري تحميل بيانات الصور. يرجى الانتظار.",
         "refresh": "تحديث البيانات",
         "add": "إضافة صورة طبية جديدة",
+        "gallery": {
+            "title": "الصور المرفقة"
+        },
         "headers": {
             "type": "النوع",
             "date": "التاريخ",
@@ -501,7 +505,13 @@
         }
     },
     "add_medical_image": {
+        "preview_title": "شاهد الصورة",
+        "preview_file_tooltip": "شاهد الصورة",
+        "delete_file_tooltip": "حذف الصورة",
         "title": "إضافة صورة طبية جديدة",
+        "drag_and_drop": "قم بسحب ملف الصورة هنا",
+        "download": "تحميل الصورة",
+        "file_limit": "الحد الأقصى لحجم ملف الصورة 10 ميغا بايت",
         "fields": {
             "ref_number": "الرقم المرجعي",
             "organ": "العضو",
@@ -509,6 +519,9 @@
             "type": "نوع الصورة",
             "image_date": "تاريخ الصورة",
             "abnormalities": "ملاحظات على العضو",
+            "file": "ملف الصورة",
+            "new_files": "صورة جديدة",
+            "existing_files": "الصور الموجودة",
             "description": "الوصف"
         },
         "generate_tooltip": "إنشاء رقم مرجعي",

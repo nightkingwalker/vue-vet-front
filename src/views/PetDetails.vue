@@ -1230,9 +1230,9 @@ const fetchAiSuggestions = async (payload, MedicalRecordId) => {
 
   try {
     const response = await axiosInstance.post(`/openai/summary/${MedicalRecordId}`, payload);
-    console.log(response.data)
+    // console.log(response.data)
     const raw = JSON.parse(response.data);
-    console.log(raw)
+    // console.log(raw)
     const text = raw.choices[0].message.content;
 
     // Convert markdown headings and lists into styled HTML
@@ -1282,11 +1282,11 @@ const fetchAiSuggestions = async (payload, MedicalRecordId) => {
   // Let Vue render spinner
   await nextTick(); // now nextTick is defined
 
-  console.log("GETTING AI ASSISTED DIAGNOSIS");
+  // console.log("GETTING AI ASSISTED DIAGNOSIS");
 
   try {
     const response = await axiosInstance.post('/openai/summary', payload);
-    console.log("AI response:", response.data);
+    // console.log("AI response:", response.data);
 
     const { diagnosis, treatments } = response.data;
 
