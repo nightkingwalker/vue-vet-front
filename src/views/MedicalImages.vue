@@ -78,7 +78,7 @@
             },
           }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
             v-if="slotProps.data.type !== `Grooming` && slotProps.data.files.length > 0"
-            @click.prevent="showImageGallery(slotProps.data.files)" />
+            @click.prevent="showImageGallery(slotProps.data.files, slotProps.data.ref_number)" />
           <span v-else-if="slotProps.data.ref_number">{{ slotProps.data.ref_number }}</span>
         </template>
       </Column>
@@ -255,10 +255,11 @@ const props = defineProps({
 });
 
 const emit = defineEmits();
-
-const showImageGallery = (files) => {
+const activeRefNumber = ref("")
+const showImageGallery = (files, ref_number) => {
   galleryImages.value = files;
   activeImageIndex.value = 0;
+  activeRefNumber.value = `${ref_number}`;
   displayGallery.value = true;
   nextTick(loadNaturalSizeFor('gallery'));
 };
@@ -472,13 +473,57 @@ const prevImage = () => {
 };
 
 // ---------- Downloads ----------
-const downloadFile = (url) => {
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "";
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
+// const downloadFile = (url) => {
+//   const a = document.createElement("a");
+//   a.href = url;
+//   a.download = "";
+//   document.body.appendChild(a);
+//   a.click();
+//   a.remove();
+// };
+
+// const downloadFile = async (url, filename = activeRefNumber.value) => {
+// const downloadFile = (url, filename = activeRefNumber.value) => {
+const downloadFile = async (url, filename = activeRefNumber.value) => {
+
+  try {
+    // Fetch the file
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    // Get the blob data and determine file type
+    const blob = await response.blob();
+
+    // Create a new blob with explicit type to force download
+    const newBlob = new Blob([blob], {
+      type: 'application/octet-stream' // This type often forces download
+    });
+
+    // Create object URL from blob
+    const blobUrl = URL.createObjectURL(newBlob);
+
+    // Create download link
+    const a = document.createElement("a");
+    a.href = blobUrl;
+    a.download = filename || 'download';
+    a.style.display = 'none';
+
+    // Append to body, click, and clean up
+    document.body.appendChild(a);
+    a.click();
+
+    // Clean up
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(blobUrl);
+    }, 100);
+
+  } catch (error) {
+    console.error('Download failed:', error);
+    window.open(url, '_blank');
+  }
 };
 
 const downloadCurrentImage = () => {
