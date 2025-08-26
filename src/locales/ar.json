@@ -481,7 +481,11 @@
         "refresh": "تحديث البيانات",
         "add": "إضافة صورة طبية جديدة",
         "gallery": {
-            "title": "الصور المرفقة"
+            "title": "الصور المرفقة",
+            "zoom_in": "تكبير الصورة",
+            "zoom_out": "تصغير الصورة",
+            "reset_zoom": "إعادة تعيين حجم الصورة",
+            "download": "تحميل الصورة"
         },
         "headers": {
             "type": "النوع",
@@ -530,6 +534,7 @@
             "xray": "أشعة سينية"
         },
         "submit": "إضافة صورة طبية",
+        "update": "تعديل صورة طبية",
         "toast": {
             "success": "تمت إضافة الصورة الطبية بنجاح",
             "error": "فشل في إضافة الصورة الطبية",
@@ -1413,7 +1418,9 @@
         "yes": "نعم",
         "error": "خطأ",
         "warning": "تحذير",
-        "success": "نجاح"
+        "success": "نجاح",
+        "fullscreen": "ملء الشاشة",
+        "exit_fullscreen": "الخروج من وضعية كامل الشاشة"
     },
     "paymentForm": {
         "title": "إضافة دفعة جديدة",
@@ -1647,6 +1654,9 @@
         "leaveError": "فشل مغادرة العيادة",
         "leave": "مغادرة العيادة",
         "viewingBranches": "عرض فروع {clinicName}",
+        "users": {
+            "Pending_Invitation": "تم إرسال الدعوة"
+        },
         "manageClinic": "إدارة العيادة",
         "managingClinic": "جارٍ إدارة {clinicName}"
     },

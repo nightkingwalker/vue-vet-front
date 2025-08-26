@@ -1,27 +1,18 @@
 <template>
   <div class="container mx-auto px-4 py-8">
     <!-- Clinic Header -->
-    <div
-      class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4"
-    >
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
       <div>
         <h1 class="text-3xl font-bold text-surface-0">{{ clinic.name }}</h1>
         <p class="text-surface-400">{{ clinic.address }}</p>
       </div>
       <div class="flex gap-3">
-        <Button
-          label="Back to Clinics"
-          icon="pi pi-arrow-left"
-          class="p-button-text text-emerald-400 hover:text-emerald-300"
-          @click="$router.push('/clinics')"
-        />
+        <Button label="Back to Clinics" icon="pi pi-arrow-left"
+          class="p-button-text text-emerald-400 hover:text-emerald-300" @click="$router.push('/clinics')" />
 
-        <Button
-          label="Edit Clinic"
-          icon="pi pi-pencil"
+        <Button label="Edit Clinic" icon="pi pi-pencil"
           class="p-button-outlined p-button-secondary border-surface-500 text-surface-200 hover:border-emerald-400"
-          @click="showEditDialog = true"
-        />
+          @click="showEditDialog = true" />
       </div>
     </div>
 
@@ -47,7 +38,7 @@
               <span class="block text-surface-400 text-sm">Admins</span>
               <span class="text-2xl font-semibold text-surface-0">{{
                 (roleCounts.admin ? roleCounts.admin : 0) +
-                  (roleCounts.super_admin ? roleCounts.super_admin : 0) || 0
+                (roleCounts.super_admin ? roleCounts.super_admin : 0) || 0
               }}</span>
             </div>
             <i class="pi pi-shield text-3xl text-emerald-400"></i>
@@ -88,40 +79,26 @@
         <div class="flex justify-between items-center p-4 border-b border-surface-500">
           <h2 class="text-xl font-semibold text-surface-0">Clinic Members</h2>
           <div class="w-fit flex gap-2">
-            <Button
-              icon="pi pi-refresh"
-              @click="fetchClinicData"
+            <Button icon="pi pi-refresh" @click="fetchClinicData"
               class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
-              v-tooltip.top="$t('owners.actions.refresh')"
-            />
-            <Button
-              icon="fa-solid fa-user-plus"
+              v-tooltip.top="$t('owners.actions.refresh')" />
+            <Button icon="fa-solid fa-user-plus"
               class="p-button-text !text-emerald-400 hover:text-emerald-300 border-emerald-600"
-              @click="showAddUserDialog = true"
-            />
+              @click="showAddUserDialog = true" />
           </div>
         </div>
       </template>
       <template #content>
-        <DataTable
-          :value="users"
-          :loading="loading"
-          class="p-datatable-sm"
-          :rows="10"
-          paginator
+        <DataTable :value="users" :loading="loading" class="p-datatable-sm" :rows="10" paginator
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 25, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
-        >
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users">
           <Column field="name" header="Name" sortable>
             <template #body="{ data }">
               <div class="flex items-center gap-3">
-                <Avatar
-                  :label="data.name.charAt(0)"
-                  class="bg-surface-500 text-surface-100"
-                  shape="circle"
-                />
-                <span class="text-surface-100">{{ data.name }}</span>
+                <Avatar :label="data.name.charAt(0)" class="bg-surface-500 text-surface-100" shape="circle" />
+                <span class="text-surface-100">{{ data.name === "Pending_Invitation" ? $t(`clinics.users.${data.name}`)
+                  : data.name }}</span>
               </div>
             </template>
           </Column>
@@ -132,11 +109,7 @@
           </Column>
           <Column field="pivot.role" header="Role" sortable>
             <template #body="{ data }">
-              <Tag
-                :value="data.pivot.role"
-                :severity="getRoleSeverity(data.pivot.role)"
-                class="capitalize border-0"
-              />
+              <Tag :value="data.pivot.role" :severity="getRoleSeverity(data.pivot.role)" class="capitalize border-0" />
             </template>
           </Column>
           <Column field="joined_at" header="Joined" sortable>
@@ -149,19 +122,11 @@
           <Column header="Actions" :styles="{ width: '150px' }">
             <template #body="{ data }">
               <div class="flex gap-2">
-                <Button
-                  icon="pi pi-user-edit"
-                  class="p-button-sm p-button-text text-surface-300 hover:text-emerald-400"
-                  @click="openEditUserRoleDialog(data)"
-                  v-tooltip.top="'Edit Role'"
-                />
-                <Button
-                  icon="pi pi-user-minus"
-                  class="p-button-sm p-button-text text-surface-300 hover:text-rose-400"
-                  @click="confirmRemoveUser(data)"
-                  v-tooltip.top="'Remove User'"
-                  :disabled="data.pivot.role === 'super_admin'"
-                />
+                <Button icon="pi pi-user-edit" class="p-button-sm p-button-text text-surface-300 hover:text-emerald-400"
+                  @click="openEditUserRoleDialog(data)" v-tooltip.top="'Edit Role'" />
+                <Button icon="pi pi-user-minus" class="p-button-sm p-button-text text-surface-300 hover:text-rose-400"
+                  @click="confirmRemoveUser(data)" v-tooltip.top="'Remove User'"
+                  :disabled="data.pivot.role === 'super_admin'" />
               </div>
             </template>
           </Column>
@@ -273,166 +238,90 @@
       </template>
     </Dialog>
  -->
-    <Dialog
-      v-model:visible="showAddUserDialog"
-      :modal="true"
-      class="bg-surface-300 text-surface-100"
-    >
+    <Dialog v-model:visible="showAddUserDialog" :modal="true" class="bg-surface-300 text-surface-100">
       <template #header>Invite New Member</template>
       <div class="space-y-4">
         <InputText v-model="inviteEmail" placeholder="user@example.com" />
-        <Select
-          v-model="inviteRole"
-          :options="availableRoles"
-          optionLabel="label"
-          optionValue="value"
-        />
+        <Select v-model="inviteRole" :options="availableRoles" optionLabel="label" optionValue="value" />
       </div>
       <template #footer>
         <Button label="Send Invite" @click="sendInvite" />
       </template>
     </Dialog>
     <!-- Edit User Role Dialog -->
-    <Dialog
-      v-model:visible="showEditUserRoleDialog"
-      :header="`Edit ${userToEdit?.name}'s Role`"
-      :modal="true"
-      :style="{ width: '400px' }"
-      class="bg-surface-300 text-surface-100"
-    >
+    <Dialog v-model:visible="showEditUserRoleDialog" :header="`Edit ${userToEdit?.name}'s Role`" :modal="true"
+      :style="{ width: '400px' }" class="bg-surface-300 text-surface-100">
       <div class="space-y-4">
         <div>
-          <label class="block text-sm font-medium text-surface-200 mb-1"
-            >Current Role</label
-          >
-          <InputText
-            :value="userToEdit?.pivot.role"
-            class="w-full bg-surface-400 border-surface-500 text-surface-100"
-            disabled
-          />
+          <label class="block text-sm font-medium text-surface-200 mb-1">Current Role</label>
+          <InputText :value="userToEdit?.pivot.role" class="w-full bg-surface-400 border-surface-500 text-surface-100"
+            disabled />
         </div>
 
         <div>
           <label class="block text-sm font-medium text-surface-200 mb-1">New Role</label>
-          <Select
-            v-model="updatedUserRole"
-            :options="availableRoles"
-            optionLabel="label"
-            optionValue="value"
-            placeholder="Select new role"
-            class="w-full bg-surface-400 border-surface-500 text-surface-100"
-          />
+          <Select v-model="updatedUserRole" :options="availableRoles" optionLabel="label" optionValue="value"
+            placeholder="Select new role" class="w-full bg-surface-400 border-surface-500 text-surface-100" />
         </div>
       </div>
 
       <template #footer>
-        <Button
-          label="Cancel"
-          icon="pi pi-times"
-          class="p-button-text text-surface-300 hover:text-surface-100"
-          @click="showEditUserRoleDialog = false"
-        />
-        <Button
-          label="Update Role"
-          icon="pi pi-check"
+        <Button label="Cancel" icon="pi pi-times" class="p-button-text text-surface-300 hover:text-surface-100"
+          @click="showEditUserRoleDialog = false" />
+        <Button label="Update Role" icon="pi pi-check"
           class="p-button-primary bg-emerald-600 hover:bg-emerald-500 border-emerald-600"
-          :disabled="!updatedUserRole || updatedUserRole === userToEdit?.pivot.role"
-          :loading="updatingRole"
-          @click="updateUserRole"
-        />
+          :disabled="!updatedUserRole || updatedUserRole === userToEdit?.pivot.role" :loading="updatingRole"
+          @click="updateUserRole" />
       </template>
     </Dialog>
 
     <!-- Remove User Confirmation -->
-    <Dialog
-      v-model:visible="showRemoveUserConfirm"
-      header="Confirm Removal"
-      :modal="true"
-      :style="{ width: '400px' }"
-      class="bg-surface-300 text-surface-100"
-    >
+    <Dialog v-model:visible="showRemoveUserConfirm" header="Confirm Removal" :modal="true" :style="{ width: '400px' }"
+      class="bg-surface-300 text-surface-100">
       <div class="confirmation-content flex items-center">
-        <i
-          class="pi pi-exclamation-triangle mr-3 text-amber-400"
-          style="font-size: 2rem"
-        />
+        <i class="pi pi-exclamation-triangle mr-3 text-amber-400" style="font-size: 2rem" />
         <span class="text-surface-200">
           Remove {{ userToRemove?.name }} from {{ clinic.name }}?
         </span>
       </div>
       <template #footer>
-        <Button
-          label="No"
-          icon="pi pi-times"
-          class="p-button-text text-surface-300 hover:text-surface-100"
-          @click="showRemoveUserConfirm = false"
-        />
-        <Button
-          label="Yes, Remove"
-          icon="pi pi-check"
-          class="p-button-danger bg-rose-600 hover:bg-rose-500 border-rose-600"
-          :loading="removingUser"
-          @click="removeUserFromClinic"
-        />
+        <Button label="No" icon="pi pi-times" class="p-button-text text-surface-300 hover:text-surface-100"
+          @click="showRemoveUserConfirm = false" />
+        <Button label="Yes, Remove" icon="pi pi-check"
+          class="p-button-danger bg-rose-600 hover:bg-rose-500 border-rose-600" :loading="removingUser"
+          @click="removeUserFromClinic" />
       </template>
     </Dialog>
 
     <!-- Edit Clinic Dialog -->
-    <Dialog
-      v-model:visible="showEditDialog"
-      header="Edit Clinic"
-      :modal="true"
-      :style="{ width: '500px' }"
-      class="bg-surface-300 text-surface-100"
-    >
+    <Dialog v-model:visible="showEditDialog" header="Edit Clinic" :modal="true" :style="{ width: '500px' }"
+      class="bg-surface-300 text-surface-100">
       <div class="space-y-4">
         <div>
-          <label class="block text-sm font-medium text-surface-200 mb-1"
-            >Clinic Name</label
-          >
-          <InputText
-            v-model="clinicForm.name"
-            class="w-full bg-surface-400 border-surface-500 text-surface-100"
-          />
+          <label class="block text-sm font-medium text-surface-200 mb-1">Clinic Name</label>
+          <InputText v-model="clinicForm.name" class="w-full bg-surface-400 border-surface-500 text-surface-100" />
         </div>
         <div>
           <label class="block text-sm font-medium text-surface-200 mb-1">Address</label>
-          <InputText
-            v-model="clinicForm.address"
-            class="w-full bg-surface-400 border-surface-500 text-surface-100"
-          />
+          <InputText v-model="clinicForm.address" class="w-full bg-surface-400 border-surface-500 text-surface-100" />
         </div>
         <div>
           <label class="block text-sm font-medium text-surface-200 mb-1">Phone</label>
-          <InputText
-            v-model="clinicForm.phone"
-            class="w-full bg-surface-400 border-surface-500 text-surface-100"
-          />
+          <InputText v-model="clinicForm.phone" class="w-full bg-surface-400 border-surface-500 text-surface-100" />
         </div>
         <div>
           <label class="block text-sm font-medium text-surface-200 mb-1">Email</label>
-          <InputText
-            v-model="clinicForm.email"
-            type="email"
-            class="w-full bg-surface-400 border-surface-500 text-surface-100"
-          />
+          <InputText v-model="clinicForm.email" type="email"
+            class="w-full bg-surface-400 border-surface-500 text-surface-100" />
         </div>
       </div>
 
       <template #footer>
-        <Button
-          label="Cancel"
-          icon="pi pi-times"
-          class="p-button-text text-surface-300 hover:text-surface-100"
-          @click="showEditDialog = false"
-        />
-        <Button
-          label="Save Changes"
-          icon="pi pi-check"
-          class="p-button-primary bg-emerald-600 hover:bg-emerald-500 border-emerald-600"
-          :loading="savingClinic"
-          @click="updateClinic"
-        />
+        <Button label="Cancel" icon="pi pi-times" class="p-button-text text-surface-300 hover:text-surface-100"
+          @click="showEditDialog = false" />
+        <Button label="Save Changes" icon="pi pi-check"
+          class="p-button-primary bg-emerald-600 hover:bg-emerald-500 border-emerald-600" :loading="savingClinic"
+          @click="updateClinic" />
       </template>
     </Dialog>
 
@@ -546,6 +435,7 @@ const fetchClinicData = async () => {
     clinic.value = clinicRes.data;
     clinicForm.value = { ...clinicRes.data };
     users.value = usersRes.data;
+    console.log(usersRes.data)
   } catch (error) {
     toast.add({
       severity: "error",

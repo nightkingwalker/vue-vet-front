@@ -7,52 +7,52 @@
 
         <div class="field mt-6 w-[49%] flex items-center gap-2">
           <FloatLabel class="w-full">
-            <InputText id="ref_number" v-model="medicalImage.ref_number" />
+            <InputText fluid id="ref_number" v-model="medicalImage.ref_number" />
             <label for="ref_number">{{ $t("add_medical_image.fields.ref_number") }}</label>
           </FloatLabel>
-          <Button type="button" icon="pi pi-refresh" @click="generateRefNumber" :pt="{ root: { class: 'p-button-sm' } }"
-            v-tooltip="$t('add_medical_image.generate_tooltip')" />
-        </div>
 
+        </div>
+        <Button type="button" icon="pi pi-refresh" @click="generateRefNumber" :pt="{ root: { class: 'p-button-sm' } }"
+          v-tooltip="$t('add_medical_image.generate_tooltip')" />
         <div class="field mt-6 w-[49%]">
           <FloatLabel class="w-full">
-            <InputText id="organ" v-model="medicalImage.organ" />
+            <InputText fluid id="organ" v-model="medicalImage.organ" />
             <label for="organ">{{ $t("add_medical_image.fields.organ") }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[49%]">
           <FloatLabel class="w-full">
-            <InputText id="measurements" v-model="medicalImage.measurements" />
+            <InputText fluid id="measurements" v-model="medicalImage.measurements" />
             <label for="measurements">{{ $t("add_medical_image.fields.measurements") }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[49%]">
           <FloatLabel class="w-full">
-            <Select v-model="medicalImage.type" :options="imageTypes" optionLabel="label" class="w-full" />
+            <Select fluid v-model="medicalImage.type" :options="imageTypes" optionLabel="label" class="w-full" />
             <label for="type">{{ $t("add_medical_image.fields.type") }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[49%]">
           <FloatLabel class="w-full">
-            <DatePicker showIcon iconDisplay="input" showButtonBar id="image_date" v-model="medicalImage.image_date"
-              dateFormat="yy-mm-dd" class="w-full" />
+            <DatePicker fluid showIcon iconDisplay="input" showButtonBar id="image_date"
+              v-model="medicalImage.image_date" dateFormat="yy-mm-dd" class="w-full" />
             <label for="image_date">{{ $t("add_medical_image.fields.image_date") }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[49%]">
           <FloatLabel class="w-full">
-            <Textarea id="abnormalities" v-model="medicalImage.abnormalities" />
+            <Textarea fluid id="abnormalities" v-model="medicalImage.abnormalities" />
             <label for="abnormalities">{{ $t("add_medical_image.fields.abnormalities") }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[49%]">
           <FloatLabel class="w-full">
-            <Textarea id="description" v-model="medicalImage.description" />
+            <Textarea fluid id="description" v-model="medicalImage.description" />
             <label for="description">{{ $t("add_medical_image.fields.description") }}</label>
           </FloatLabel>
         </div>
@@ -87,7 +87,7 @@
         <div class="field mt-6 w-full border border-gray-300 p-4 rounded-lg">
           <label class="block mb-2 font-medium">{{ $t("add_medical_image.fields.new_files") }}</label>
 
-          <FileUpload name="files[]" :multiple="true" accept="image/*" :maxFileSize="1000000" :customUpload="true"
+          <FileUpload name="files[]" :multiple="true" accept="image/*" :maxFileSize="100000000" :customUpload="true"
             @select="onFileSelect" :fileLimit="5" chooseLabel="Select Files" :showUploadButton="false"
             :showCancelButton="false">
             <template #empty>
@@ -115,7 +115,7 @@
         </div>
 
         <div class="field mt-6 w-full flex justify-end">
-          <Button type="submit" :label="$t('add_medical_image.submit')" icon="pi pi-check" :loading="submitting"
+          <Button type="submit" :label="$t('add_medical_image.update')" icon="pi pi-check" :loading="submitting"
             class="min-w-[200px]" />
         </div>
       </fieldset>

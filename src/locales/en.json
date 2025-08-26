@@ -488,7 +488,11 @@
         "refresh": "Refresh Data",
         "add": "Add New Medical Image",
         "gallery": {
-            "title": "Existing Image files"
+            "title": "Existing Image files",
+            "zoom_in": "Zoom in",
+            "zoom_out": "Zoom Out",
+            "reset_zoom": "Reset Zoom",
+            "download": "Download Image"
         },
         "headers": {
             "type": "Type",
@@ -537,6 +541,7 @@
             "xray": "X-ray"
         },
         "submit": "Add Medical Image",
+        "update": "Update Medical Image",
         "toast": {
             "success": "Medical image added successfully",
             "error": "Failed to add medical image",
@@ -1419,7 +1424,9 @@
         "yes": "Yes",
         "error": "Error",
         "warning": "Warning",
-        "success": "Success"
+        "success": "Success",
+        "exit_fullscreen": "Exit Full Screen",
+        "fullscreen": "Full Screen"
     },
     "paymentForm": {
         "title": "Add New Payment",
@@ -1654,6 +1661,9 @@
         "leave": "Leave clinic",
         "viewingBranches": "Viewing branches of {clinicName}",
         "manageClinic": "Manage Clinic",
+        "users": {
+            "Pending_Invitation": "Pending Invitation"
+        },
         "managingClinic": "Managing {clinicName}"
     },
     "roles": {

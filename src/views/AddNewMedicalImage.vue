@@ -10,7 +10,7 @@
             <InputText fluid id="ref_number" v-model="medicalImage.ref_number" />
             <label for="ref_number">{{
               $t("add_medical_image.fields.ref_number")
-            }}</label>
+              }}</label>
           </FloatLabel>
         </div>
         <Button type="button" icon="pi pi-refresh" @click="generateRefNumber" :pt="{ root: { class: 'p-button-sm' } }"
@@ -27,7 +27,7 @@
             <InputText fluid id="measurements" v-model="medicalImage.measurements" />
             <label for="measurements">{{
               $t("add_medical_image.fields.measurements")
-            }}</label>
+              }}</label>
           </FloatLabel>
         </div>
 
@@ -44,7 +44,7 @@
               v-model="medicalImage.image_date" dateFormat="yy-mm-d" class="w-full" />
             <label for="image_date">{{
               $t("add_medical_image.fields.image_date")
-            }}</label>
+              }}</label>
           </FloatLabel>
         </div>
         <div class="field mt-6 w-[49%]">
@@ -52,7 +52,7 @@
             <Textarea fluid id="abnormalities" v-model="medicalImage.abnormalities" />
             <label for="abnormalities">{{
               $t("add_medical_image.fields.abnormalities")
-            }}</label>
+              }}</label>
           </FloatLabel>
         </div>
         <div class="field mt-6 w-[49%]">
@@ -60,7 +60,7 @@
             <Textarea fluid id="description" v-model="medicalImage.description" />
             <label for="description">{{
               $t("add_medical_image.fields.description")
-            }}</label>
+              }}</label>
           </FloatLabel>
         </div>
         <!-- <div class="field m-8 mt-6 w-full border borde-gray-200 p-8">
@@ -69,7 +69,7 @@
         </div> -->
         <div class="field m-8 !mt-6 w-full border borde-gray-500 p-8 rounded-lg">
           <label class="block mb-2">{{ $t("add_medical_image.fields.file") }}</label>
-          <FileUpload name="files[]" :multiple="true" accept="image/*" :maxFileSize="1000000" :customUpload="true"
+          <FileUpload name="files[]" :multiple="true" accept="image/*" :maxFileSize="100000000" :customUpload="true"
             @select="onFileSelect" :fileLimit="5" chooseLabel="Select Files">
             <template #empty>
               <p>{{ $t('add_medical_image.drag_and_drop') }}</p>

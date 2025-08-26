@@ -488,7 +488,11 @@
     "refresh": "Daten aktualisieren",
     "add": "Neues medizinisches Bild hinzufügen",
     "gallery": {
-      "title": "Vorhandene Bilddateien"
+      "title": "Existing Image files",
+      "zoom_in": "Zoom in",
+      "zoom_out": "Zoom Out",
+      "reset_zoom": "Reset Zoom",
+      "download": "Download Image"
     },
     "headers": {
       "type": "Typ",
@@ -537,6 +541,7 @@
       "xray": "Röntgen"
     },
     "submit": "Medizinisches Bild hinzufügen",
+    "update": "Medizinisches Bild aktualisieren",
     "toast": {
       "success": "Medizinisches Bild erfolgreich hinzugefügt",
       "error": "Medizinisches Bild konnte nicht hinzugefügt werden",
@@ -1419,6 +1424,8 @@
     "yes": "Ja",
     "error": "Fehler",
     "warning": "Warnung",
+    "fullscreen": "Vollbild",
+    "exit_fullscreen": "Vollbildmodus beenden",
     "success": "Erfolg"
   },
   "paymentForm": {
@@ -1654,6 +1661,9 @@
     "leave": "Klinik verlassen",
     "viewingBranches": "Zweigstellen von {clinicName} anzeigen",
     "manageClinic": "Klinik verwalten",
+    "users": {
+      "Pending_Invitation": "Ausstehende Einladung"
+    },
     "managingClinic": "{clinicName} verwalten"
   },
   "roles": {
