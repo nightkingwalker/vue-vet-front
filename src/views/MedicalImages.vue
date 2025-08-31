@@ -332,6 +332,7 @@ const confirmDelete = (medicalImageId) => {
 
 const deleteImage = async (medicalImageId) => {
   try {
+    console.log("DELETING IMAGE")
     await axiosInstance.delete(`/medical-images/${medicalImageId}`);
     fetchMedicalImages();
     eventBus.emit("ImagetDeletedSuccessfully");
