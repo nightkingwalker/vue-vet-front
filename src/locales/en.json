@@ -1486,6 +1486,13 @@
         "light": "Light Mode",
         "system": "System Colors"
     },
+    "reports": {
+        "menu": {
+            "stockmovement": "Stock Movement Reports",
+            "patients_reports": "Patient Visits Reports",
+            "sales_reports": "Sales Reports"
+        }
+    },
     "appointments": {
         "title": "Appointments",
         "no_appointments": "No appointments found",
@@ -1663,6 +1670,16 @@
         "manageClinic": "Manage Clinic",
         "users": {
             "Pending_Invitation": "Pending Invitation"
+        },
+        "header": {
+            "name": "Clinic Name",
+            "address": "Clinic Address",
+            "edit_clinic": "Edit Clinic Details",
+            "back_to_clinics": "Back to Clinics List",
+            "total_users": "Total Users Count",
+            "vets": "Veterinarians",
+            "staff": "Staff",
+            "admins": "Admins"
         },
         "managingClinic": "Managing {clinicName}"
     },

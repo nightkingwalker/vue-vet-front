@@ -5,61 +5,69 @@
       <div
         class="grid grid-cols-2 gap-y-[10px] gap-x-[10px] lg:w-[70%] md:w-[80%] sm:w-full xl:w-[85%] 2xl:w-[75%] mx-auto">
         <fieldset
-          class="h-fit border dark:border-gray-100 border-gray-400 rounded-xl p-6 bg-zinc-100 dark:bg-[var(--p-surface-500)] shadow-sm">
-          <legend
+          class="h-fit p-3 border border-[#c4c7c5] dark:!border-[#444746] clear-glass rounded-lg hover:!bg-[var(--p-surface-200)] transition-all shadow-md">
+          <!-- <legend
             class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium">
             <i class="fa-solid fa-address-card mr-2"></i>
             {{ $t("user_profile.profile_information") }}
-          </legend>
-          <div class="flex items-start gap-6">
-            <div class="relative group">
-              <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-gray-300 dark:border-gray-600">
-                <img class="w-full h-full object-cover" :src="user.avatarUrl" alt="Profile Avatar" />
+          </legend> -->
+          <div class="flex flex-wrap items-start gap-2">
+            <h4 class="w-full mb-4">
+              <i class="fa-solid fa-address-card mr-2"></i>
+              {{ $t("user_profile.profile_information") }}
+            </h4>
+            <div class="w-full flex  flex-wrap items-start gap-6">
+              <div class="relative group">
+                <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-gray-300 dark:border-gray-600">
+                  <img class="w-full h-full object-cover" :src="user.avatarUrl" alt="Profile Avatar" />
+                </div>
+                <button
+                  class="absolute -bottom-1 -right-1 inline-flex items-center justify-center w-7 h-7 text-xs font-bold text-white bg-gray-600 border-2 border-white rounded-full shadow-sm hover:bg-gray-200 hover:text-gray-800 hover:border-gray-500 transition-all duration-200"
+                  @click="showAvatarUploader = !showAvatarUploader">
+                  <i class="fa-solid fa-pencil text-xs"></i>
+                </button>
               </div>
-              <button
-                class="absolute -bottom-1 -right-1 inline-flex items-center justify-center w-7 h-7 text-xs font-bold text-white bg-gray-600 border-2 border-white rounded-full shadow-sm hover:bg-gray-200 hover:text-gray-800 hover:border-gray-500 transition-all duration-200"
-                @click="showAvatarUploader = !showAvatarUploader">
-                <i class="fa-solid fa-pencil text-xs"></i>
-              </button>
-            </div>
-            <div class="flex-1">
-              <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                {{ $t("user_profile.personal_details") }}
-              </h2>
-              <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                {{ $t("user_profile.update_profile_info") }}
-              </p>
-              <form @submit.prevent="submitForm" class="mt-4 space-y-4">
-                <div>
-                  <label class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1" for="name">
-                    {{ $t("user_profile.full_name") }}
-                  </label>
-                  <InputText class="w-full" size="small" v-model="user.name" id="name" type="text" required />
-                </div>
-                <div>
-                  <label class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1" for="email">
-                    {{ $t("user_profile.email_address") }}
-                  </label>
-                  <InputText class="w-full" size="small" v-model="user.email" id="email" type="email" readonly
-                    disabled />
-                </div>
-                <div class="flex justify-end">
-                  <button type="submit"
-                    class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200">
-                    {{ $t("user_profile.save_changes") }}
-                  </button>
-                </div>
-              </form>
+              <div class="flex-1">
+                <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                  {{ $t("user_profile.personal_details") }}
+                </h2>
+                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                  {{ $t("user_profile.update_profile_info") }}
+                </p>
+                <form @submit.prevent="submitForm" class="mt-4 space-y-4">
+                  <div>
+                    <label class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1" for="name">
+                      {{ $t("user_profile.full_name") }}
+                    </label>
+                    <InputText class="w-full" size="small" v-model="user.name" id="name" type="text" required />
+                  </div>
+                  <div>
+                    <label class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1" for="email">
+                      {{ $t("user_profile.email_address") }}
+                    </label>
+                    <InputText class="w-full" size="small" v-model="user.email" id="email" type="email" readonly
+                      disabled />
+                  </div>
+                  <div class="flex justify-end">
+                    <button type="submit"
+                      class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200">
+                      {{ $t("user_profile.save_changes") }}
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </fieldset>
         <!-- Update Password Section -->
         <fieldset
-          class="h-fit border dark:border-gray-100 border-gray-400 rounded-xl p-6 bg-zinc-100 dark:bg-[var(--p-surface-500)] shadow-sm">
-          <legend
+          class="h-fit p-3 border border-[#c4c7c5] dark:!border-[#444746] clear-glass rounded-lg hover:!bg-[var(--p-surface-200)] transition-all shadow-md">
+          <!-- <legend
             class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium">
             <i class="fa-solid fa-lock mr-2"></i> {{ $t("user_profile.update_password") }}
-          </legend>
+          </legend> -->
+          <div class="mb-4"><i class="fa-solid fa-lock mr-2"></i> {{ $t("user_profile.update_password") }}</div>
+
           <form @submit.prevent="updatePassword" class="space-y-4">
             <div>
               <label class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1" for="current_password">
@@ -97,65 +105,76 @@
         </fieldset>
         <!-- User Preferences Section -->
         <fieldset
-          class="h-fit border dark:border-gray-100 border-gray-400 rounded-xl p-6 bg-zinc-100 dark:bg-[var(--p-surface-500)] shadow-sm">
-          <legend
+          class="h-fit p-3 border border-[#c4c7c5] dark:!border-[#444746] clear-glass rounded-lg hover:!bg-[var(--p-surface-200)] transition-all shadow-md">
+          <!-- <legend
             class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium">
             <i class="fa-solid fa-user-cog mr-2"></i> {{ $t("user_profile.preferences") }}
-          </legend>
-          <div class="flex justify-between items-start gap-4">
-            <!-- Language Selection -->
-            <div class="w-1/2">
-              <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                {{ $t("user_profile.language") }}
-              </h3>
-              <div class="flex gap-4 mt-4">
-                <!-- Language Form -->
-                <form @submit.prevent="handleSubmit('language')" class="mx-auto w-full">
-                  <FloatLabel class="w-full">
-                    <Select fluid v-model="language" :options="languages" optionLabel="label" optionValue="value"
-                      class="w-full h-10" />
-                    <label for="dd-city">{{ $t("user_profile.language") }}
-                      <span class="text-red-600">*</span></label>
-                  </FloatLabel>
-                  <button type="submit"
-                    class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200 mt-2">
-                    {{ $t("user_profile.update_language") }}
-                  </button>
-                </form>
-              </div>
+          </legend> -->
+          <div class="flex flex-wrap items-start gap-2">
+            <div class="mb-4 w-full"><i class="fa-solid fa-user-cog mr-2"></i> {{ $t("user_profile.preferences") }}
             </div>
-            <!-- Theme Selection -->
-            <div class="w-1/2">
-              <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                {{ $t("user_profile.theme") }}
-              </h3>
-              <div class="flex gap-4 mt-4">
-                <form @submit.prevent="handleSubmit('theme')" class="mx-auto w-full">
-                  <FloatLabel class="w-full">
-                    <Select fluid v-model="theme" :options="themes" optionLabel="label" optionValue="value"
-                      class="w-full h-10" />
-                    <label for="dd-city">{{ $t("user_profile.theme") }}
-                      <span class="text-red-600">*</span></label>
-                  </FloatLabel>
-                  <button type="submit"
-                    class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200 mt-2">
-                    {{ $t("user_profile.update_theme") }}
-                  </button>
-                </form>
+
+            <!-- Language Selection -->
+            <div class="flex flex-wrap gap-2 w-full">
+              <div class="w-[48%]">
+                <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                  {{ $t("user_profile.language") }}
+                </h3>
+                <div class="flex gap-4 mt-4">
+                  <!-- Language Form -->
+                  <form @submit.prevent="handleSubmit('language')" class="mx-auto w-full">
+                    <FloatLabel class="w-full">
+                      <Select fluid v-model="language" :options="languages" optionLabel="label" optionValue="value"
+                        class="w-full h-10" />
+                      <label for="dd-city">{{ $t("user_profile.language") }}
+                        <span class="text-red-600">*</span></label>
+                    </FloatLabel>
+                    <button type="submit"
+                      class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200 mt-2">
+                      {{ $t("user_profile.update_language") }}
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <!-- Theme Selection -->
+              <div class="w-[48%]">
+                <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                  {{ $t("user_profile.theme") }}
+                </h3>
+                <div class="flex gap-4 mt-4">
+                  <form @submit.prevent="handleSubmit('theme')" class="mx-auto w-full">
+                    <FloatLabel class="w-full">
+                      <Select fluid v-model="theme" :options="themes" optionLabel="label" optionValue="value"
+                        class="w-full h-10" />
+                      <label for="dd-city">{{ $t("user_profile.theme") }}
+                        <span class="text-red-600">*</span></label>
+                    </FloatLabel>
+                    <button type="submit"
+                      class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200 mt-2">
+                      {{ $t("user_profile.update_theme") }}
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </fieldset>
         <!-- Two Factor Authentication Section -->
         <fieldset
-          class="h-fit border dark:border-gray-100 border-gray-400 rounded-xl p-6 bg-zinc-100 dark:bg-[var(--p-surface-500)] shadow-sm">
-          <legend
+          class="h-fit p-3 border border-[#c4c7c5] dark:!border-[#444746] clear-glass rounded-lg hover:!bg-[var(--p-surface-200)] transition-all shadow-md">
+          <!-- <legend
             class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium">
             <i class="fa-solid fa-user-shield mr-2"></i>
             {{ $t("user_profile.two_factor_auth") }}
-          </legend>
+          </legend> -->
           <div class="space-y-4">
-            <div class="flex items-center justify-between">
+            <div class="flex flex-wrap gap-2 w-full">
+              <!-- <div class="flex items-center justify-between"> -->
+              <div class="w-full">
+                <i class="fa-solid fa-user-shield mr-2"></i>
+                {{ $t("user_profile.two_factor_auth") }}
+              </div>
+
               <div>
                 <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300">
                   {{ $t("user_profile.two_factor_auth") }}

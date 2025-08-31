@@ -7,10 +7,10 @@
         <p class="text-surface-400">{{ clinic.address }}</p>
       </div>
       <div class="flex gap-3">
-        <Button label="Back to Clinics" icon="pi pi-arrow-left"
+        <Button :label="$t('clinics.header.back_to_clinics')" icon="pi pi-arrow-left"
           class="p-button-text text-emerald-400 hover:text-emerald-300" @click="$router.push('/clinics')" />
 
-        <Button label="Edit Clinic" icon="pi pi-pencil"
+        <Button :label="$t('clinics.header.edit_clinic')" icon="pi pi-pencil"
           class="p-button-outlined p-button-secondary border-surface-500 text-surface-200 hover:border-emerald-400"
           @click="showEditDialog = true" />
       </div>
@@ -22,10 +22,10 @@
         <template #content>
           <div class="flex items-center justify-between">
             <div>
-              <span class="block text-surface-400 text-sm">Total Users</span>
+              <span class="block text-surface-400 text-sm">{{ $t('clinics.header.total_users') }}</span>
               <span class="text-2xl font-semibold text-surface-0">{{
                 users.length
-}}</span>
+              }}</span>
             </div>
             <i class="pi pi-users text-3xl text-emerald-400"></i>
           </div>
@@ -35,7 +35,7 @@
         <template #content>
           <div class="flex items-center justify-between">
             <div>
-              <span class="block text-surface-400 text-sm">Admins</span>
+              <span class="block text-surface-400 text-sm">{{ $t('clinics.header.admins') }}</span>
               <span class="text-2xl font-semibold text-surface-0">{{
                 (roleCounts.admin ? roleCounts.admin : 0) +
                 (roleCounts.super_admin ? roleCounts.super_admin : 0) || 0
@@ -49,7 +49,7 @@
         <template #content>
           <div class="flex items-center justify-between">
             <div>
-              <span class="block text-surface-400 text-sm">Veterinarians</span>
+              <span class="block text-surface-400 text-sm">{{ $t('clinics.header.vets') }}</span>
               <span class="text-2xl font-semibold text-surface-0">{{
                 roleCounts.vet || 0
               }}</span>
@@ -62,10 +62,10 @@
         <template #content>
           <div class="flex items-center justify-between">
             <div>
-              <span class="block text-surface-400 text-sm">Staff</span>
+              <span class="block text-surface-400 text-sm">{{ $t('clinics.header.staff') }}</span>
               <span class="text-2xl font-semibold text-surface-0">{{
                 roleCounts.staff || 0
-              }}</span>
+                }}</span>
             </div>
             <i class="pi pi-heart text-3xl text-emerald-400"></i>
           </div>
@@ -116,7 +116,7 @@
             <template #body="{ data }">
               <span class="text-surface-400">{{
                 formatDate(data.pivot.created_at)
-              }}</span>
+                }}</span>
             </template>
           </Column>
           <Column header="Actions" :styles="{ width: '150px' }">

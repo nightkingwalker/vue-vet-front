@@ -1486,6 +1486,13 @@
     "light": "Helles Design",
     "system": "Systemfarben"
   },
+  "reports": {
+    "menu": {
+      "stockmovement": "Berichte über Lagerbewegungen",
+      "patients_reports": "Berichte über Patientenbesuche",
+      "sales_reports": "Verkaufsberichte"
+    }
+  },
   "appointments": {
     "title": "Termine",
     "no_appointments": "Keine Termine gefunden",

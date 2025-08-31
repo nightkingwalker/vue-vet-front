@@ -30,7 +30,7 @@
           </FloatLabel>
           <small class="p-text-secondary">{{
             $t("inventory.add_item.search_hint")
-          }}</small>
+            }}</small>
         </div>
 
         <!-- Barcode Field -->
@@ -259,9 +259,10 @@
         </DataTable>
       </div>
       <template #footer>
-        <Button :label="$t('inventory.add_item.add_to_selected')" icon="pi pi-plus" @click="useExistingItem" />
+        <Button :label="$t('inventory.add_item.add_to_selected')" icon="pi pi-plus" @click="useExistingItem"
+          :loading="useExistingItemLoading" />
         <Button :label="$t('inventory.add_item.create_new_anyway')" icon="pi pi-times" @click="createNewItem"
-          class="p-button-text text-xs" />
+          :loading="createNewItemLoading" class="p-button-text text-xs" />
       </template>
     </Dialog>
   </div>
@@ -305,7 +306,8 @@ const searchInput = ref("");
 const searchResults = ref([]);
 const isPredefined = ref(false);
 const showAdjustmentSection = ref(false);
-
+const createNewItemLoading = ref(false)
+const useExistingItemLoading = ref(false)
 // Form Data
 const props = defineProps({
   item: {
@@ -331,21 +333,38 @@ const adjustmentReasons = ref([
   { label: t("inventory.adjustment_reasons.stocktake"), value: "stocktake" },
   { label: t("inventory.adjustment_reasons.other"), value: "other" },
 ]);
-const form = ref({
-  searchQuery: "",
-  barcode: "",
-  category: "",
-  type: "",
-  brand: "",
-  name: "",
-  description: "",
-  quantity: 0,
-  purchasePrice: 0,
-  sellingPrice: 0,
-  minStock: 0,
-  expiryDate: null,
-  notes: "",
-});
+const form = ref(
+  // {
+  // searchQuery: "",
+  // barcode: "",
+  // category: "",
+  // type: "",
+  // brand: "",
+  // name: "",
+  // description: "",
+  // quantity: 0,
+  // purchasePrice: 0,
+  // sellingPrice: 0,
+  // minStock: 0,
+  // expiryDate: null,
+  // notes: "",
+  // }
+  {
+    "searchQuery": "medication",
+    "barcode": "123456789037",
+    "category": "Medication",
+    "type": "Anti-Fungal",
+    "brand": "Merial",
+    "name": "Merial Anti-Fungal",
+    "description": "An anti-fungal treatment for pets.",
+    "quantity": 100,
+    "purchasePrice": 0.75,
+    "sellingPrice": 1.00,
+    "minStock": 20,
+    "expiryDate": "2026-12-31",
+    "notes": "This is a demo product for testing purposes."
+  }
+);
 
 const categories = ref([
   { label: t("inventory.categories.food"), value: "food" },
@@ -394,7 +413,7 @@ const searchItems = async (event) => {
     searchResults.value = [];
     return;
   }
-  
+
   try {
     const { data } = await axiosInstance.get(`/inventory-items/search`, {
       params: {
@@ -514,8 +533,8 @@ const handleSubmit = () => {
   confirm.require({
     message: existingItemId.value
       ? t("inventory.messages.confirm_update_item", {
-          quantity: form.value.quantity,
-        })
+        quantity: form.value.quantity,
+      })
       : t("inventory.messages.confirm_add_item"),
     header: "Confirmation",
     icon: "pi pi-exclamation-triangle",
@@ -531,14 +550,15 @@ const handleSubmit = () => {
   });
 };
 const reasonLabel = computed(() => {
-  
-  
+
+
   const found = adjustmentReasons.value.find((r) => r.value === adjustmentReason.value);
-  
+
   return found?.label || "NO VALUE";
 });
 const invalid = ref({});
 const submitForm = async () => {
+  createNewItemLoading.value = true;
   // console.log("form.value.notes", form.value.notes);
   invalid.value = {
     quantity: form.value.quantity === "" ? true : false,
@@ -566,6 +586,7 @@ const submitForm = async () => {
       detail: t("inventory.messages.items_needed_details"),
       life: 5000,
     });
+    createNewItemLoading.value = false;
     return;
   }
   const payload = {
@@ -592,7 +613,7 @@ const submitForm = async () => {
     // Clear purchase-related fields
     payload.purchase_price = null;
   }
-  
+
   // Add fields for new items only
   if (!existingItemId.value) {
     Object.assign(payload, {
@@ -610,6 +631,7 @@ const submitForm = async () => {
   // console.log("payload", payload)
 
   try {
+
     // const endpoint = "/inventory-items/smart-add";
     const endpoint = showAdjustmentSection.value
       ? "/stock-movements/adjustment"
@@ -618,7 +640,7 @@ const submitForm = async () => {
     
     // return;
     const response = await axiosInstance.post(endpoint, payload);
-
+    createNewItemLoading.value = false;
     toast.add({
       severity: "success",
       summary: "Success",

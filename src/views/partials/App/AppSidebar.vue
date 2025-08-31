@@ -14,7 +14,8 @@
         <Avatar icon="pi pi-user" class="w-[40px]" :class="{ 'ltr:mr-2 rtl:ml-2': !isMobile && isHovered }"
           shape="circle" />
         <span v-if="(!isMobile && isHovered) || isMobile" class="flex justify-between items-center w-full">
-          <span class="font-bold">{{ userName }}</span><i class="fa-solid fa-user-gear"></i>
+          <span class="font-bold">{{ userName }}</span>
+          <i class="fa-solid fa-user-gear"></i>
         </span>
       </router-link>
     </template>

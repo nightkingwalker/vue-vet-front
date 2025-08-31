@@ -1657,8 +1657,24 @@
         "users": {
             "Pending_Invitation": "تم إرسال الدعوة"
         },
+        "header": {
+            "name": "اسم العيادة",
+            "address": "عنوان العيادة",
+            "edit_clinic": "تعديل معلومات العيادة",
+            "back_to_clinics": "العودة لقائمة العيادات",
+            "total_users": "عدد المستخدمين",
+            "vets": "بيطريون",
+            "staff": "موظظفون",
+            "admins": "عدد المستخدمين"
+        },
         "manageClinic": "إدارة العيادة",
         "managingClinic": "جارٍ إدارة {clinicName}"
+    },
+    "stats": {
+        "total_users": "Total Users",
+        "admins": "Admins",
+        "veterinarians": "Veterinarians",
+        "staff": "Staff"
     },
     "roles": {
         "super_admin": "مدير عام",
