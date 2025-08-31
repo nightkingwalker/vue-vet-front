@@ -1,39 +1,20 @@
 <template>
   <!-- Sidebar Menu -->
-  <Menu
-    :model="menuItems"
-    @mouseenter="isHovered = true"
-    @mouseleave="isHovered = false"
-    :class="sidebarClasses"
-    class="sidebar-container clear-glass !py-8 px-4 2xl:px-1 lg:px-1 scrollbar-hide scroll-smooth sm:text-sm 2xl:text-xs lg:text-sm !rounded-none h-[100vh] top-0 left-0 overflow-y-scroll"
-  >
+  <Menu :model="menuItems" @mouseenter="isHovered = true" @mouseleave="isHovered = false" :class="sidebarClasses"
+    class="sidebar-container clear-glass !py-8 px-4 2xl:px-1 lg:px-1 scrollbar-hide scroll-smooth sm:text-sm 2xl:text-xs lg:text-sm !rounded-none h-[100vh] top-0 left-0 overflow-y-scroll">
     <template #start>
       <!-- Logo Slot -->
       <div class="flex justify-center w-full">
-        <Image
-          :src="Logo"
-          alt="Application Logo"
-          class="flex justify-center rounded-[4rem] w-[5rem] p-1"
-        />
+        <Image :src="Logo" alt="Application Logo" class="flex justify-center rounded-[4rem] w-[5rem] p-1" />
       </div>
 
       <!-- User Profile -->
-      <router-link
-        to="/profile"
-        v-ripple
-        class="p-ripple p-menu-item-link relative overflow-hidden w-full border-0 bg-transparent flex items-center hover:bg-surface-100 dark:hover:bg-surface-800 rounded-none cursor-pointer transition-colors duration-200 h-[40px] min-w-[40px]"
-      >
-        <Avatar
-          icon="pi pi-user"
-          class="w-[40px]"
-          :class="{ 'ltr:mr-2 rtl:ml-2': !isMobile && isHovered }"
-          shape="circle"
-        />
-        <span
-          v-if="(!isMobile && isHovered) || isMobile"
-          class="inline-flex flex-col items-start"
-        >
-          <span class="font-bold">{{ userName }}</span>
+      <router-link to="/profile" v-ripple
+        class="p-ripple p-menu-item-link relative overflow-hidden w-full border-0 bg-transparent flex items-center hover:bg-surface-100 dark:hover:bg-surface-800 rounded-none cursor-pointer transition-colors duration-200 h-[40px] min-w-[40px]">
+        <Avatar icon="pi pi-user" class="w-[40px]" :class="{ 'ltr:mr-2 rtl:ml-2': !isMobile && isHovered }"
+          shape="circle" />
+        <span v-if="(!isMobile && isHovered) || isMobile" class="flex justify-between items-center w-full">
+          <span class="font-bold">{{ userName }}</span><i class="fa-solid fa-user-gear"></i>
         </span>
       </router-link>
     </template>
@@ -48,20 +29,13 @@
     </template>
 
     <template #item="{ item, props }">
-      <RouterLink
-        v-ripple
-        class="flex items-center p-ripple"
-        v-bind="props.action"
-        :to="item.route || ''"
-        @click="handleMenuItemClick"
-      >
+      <RouterLink v-ripple class="flex items-center p-ripple" v-bind="props.action" :to="item.route || ''"
+        @click="handleMenuItemClick">
         <span class="dark:text-surface-100" :class="item.icon"></span>
         <span class="menu-item-label dark:text-surface-100">{{ item.label }}</span>
         <Badge v-if="item.badge" class="ml-auto p-badge" :value="item.badge" />
-        <span
-          v-if="item.shortcut"
-          class="shortcut ltr:ml-auto rtl:mr-auto p-1 text-[10px] text-gray-600 dark:text-surface-400 justify-self-end"
-        >
+        <span v-if="item.shortcut"
+          class="shortcut ltr:ml-auto rtl:mr-auto p-1 text-[10px] text-gray-600 dark:text-surface-400 justify-self-end">
           {{ item.shortcut }}
         </span>
       </RouterLink>
@@ -69,10 +43,8 @@
   </Menu>
 
   <!-- Scroll Indicator -->
-  <span
-    v-if="!isMobile && isHovered"
-    class="animate-bounce h-6 w-6 text-xs bg-[var(--p-surface-800)] dark:bg-[var(--p-surface-100)] text-white dark:text-[var(--p-surface-800)] rounded-full inline-flex items-center justify-center z-20 right-[calc(100vw/12)] bottom-1 absolute"
-  >
+  <span v-if="!isMobile && isHovered"
+    class="animate-bounce h-6 w-6 text-xs bg-[var(--p-surface-800)] dark:bg-[var(--p-surface-100)] text-white dark:text-[var(--p-surface-800)] rounded-full inline-flex items-center justify-center z-20 right-[calc(100vw/12)] bottom-1 absolute">
     <i class="pi pi-arrow-down text-xs" />
   </span>
 </template>

@@ -25,7 +25,7 @@
               <span class="block text-surface-400 text-sm">Total Users</span>
               <span class="text-2xl font-semibold text-surface-0">{{
                 users.length
-              }}</span>
+}}</span>
             </div>
             <i class="pi pi-users text-3xl text-emerald-400"></i>
           </div>
@@ -245,7 +245,7 @@
         <Select v-model="inviteRole" :options="availableRoles" optionLabel="label" optionValue="value" />
       </div>
       <template #footer>
-        <Button label="Send Invite" @click="sendInvite" />
+        <Button label="Send Invite" :loading="invitingEmail" @click="sendInvite" />
       </template>
     </Dialog>
     <!-- Edit User Role Dialog -->
@@ -388,6 +388,7 @@ const updatingRole = ref(false);
 const showRemoveUserConfirm = ref(false);
 const userToRemove = ref(null);
 const removingUser = ref(false);
+const invitingEmail = ref(false);
 
 // Available roles
 const availableRoles = ref([
@@ -413,11 +414,15 @@ const selectUser = (user) => {
 const sendInvite = async () => {
   
   try {
+    invitingEmail.value = true;
     await axiosInstance.post(`/clinics/${clinicId}/invitations`, {
       email: inviteEmail.value,
       role: inviteRole.value,
     });
     toast.add({ severity: "success", detail: "Invitation sent!" });
+    fetchClinicData();
+    invitingEmail.value = false;
+    showAddUserDialog.value = false;
   } catch (error) {
     console.error(error)
     toast.add({ severity: "error", detail: error.response?.data?.message });
