@@ -1,9 +1,7 @@
 <template>
   <div class="w-full">
     <form @submit.prevent="submitForm" class="mx-auto w-full">
-      <fieldset
-        class="p-fieldset p-component w-4/5 flex flex-wrap mx-auto gap-2 items-start border rounded-lg p-4"
-      >
+      <fieldset class="p-fieldset p-component w-4/5 flex flex-wrap mx-auto gap-2 items-start border rounded-lg p-4">
         <legend>{{ $t("appointment.edit_title") }}</legend>
         <input type="hidden" id="branch_id" value="1" v-model="appointment.branch_id" />
         <input type="hidden" id="appointment_id" v-model="appointment.id" />
@@ -11,34 +9,21 @@
         <div class="field mt-6 w-[48%]" :class="appointment.petmicrochip ? `hidden` : ``">
           <FloatLabel class="w-full" v-if="!appointment.petmicrochip">
             <InputGroup class="flex rounded-md overflow-hidden">
-              <AutoComplete
-                v-model="selectedPet"
-                optionLabel="name"
-                :suggestions="filteredPets"
-                @complete="searchPets"
-                class="w-full"
-                fluid
-              >
+              <AutoComplete v-model="selectedPet" optionLabel="name" :suggestions="filteredPets" @complete="searchPets"
+                class="w-full" fluid>
                 <template #option="slotProps">
                   <div class="flex items-center">
                     <div>{{ slotProps.option.name }}</div>
                   </div>
                 </template>
               </AutoComplete>
-              <InputGroupAddon
-                class="!bg-transparent px-4 flex flex-col item-center justify-center"
-                ><i class="pi pi-search"></i
-              ></InputGroupAddon>
+              <InputGroupAddon class="!bg-transparent px-4 flex flex-col item-center justify-center"><i
+                  class="pi pi-search"></i></InputGroupAddon>
             </InputGroup>
             <label for="pet">{{ $t("appointment.fields.pet") }}</label>
           </FloatLabel>
-          <InputText
-            id="name"
-            v-model="selectedPet"
-            class="hidden"
-            v-else
-            :placeholder="$t('appointment.fields.pet')"
-          />
+          <InputText id="name" v-model="selectedPet" class="hidden" v-else
+            :placeholder="$t('appointment.fields.pet')" />
         </div>
 
         <div class="field mt-6 w-[48%]">
@@ -50,31 +35,15 @@
 
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <Textarea
-              id="description"
-              v-model="appointment.description"
-              fluid
-              autoResize
-              rows="2"
-            />
+            <Textarea id="description" v-model="appointment.description" fluid autoResize rows="2" />
             <label for="description">{{ $t("appointment.fields.description") }}</label>
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <DatePicker
-              showIcon
-              iconDisplay="input"
-              showButtonBar
-              id="start"
-              showTime
-              hourFormat="24"
-              fluid
-              v-model="appointment.start"
-              dateFormat="yy-mm-d"
-              class="w-full"
-            />
+            <DatePicker showIcon iconDisplay="input" showButtonBar id="start" showTime hourFormat="24" fluid
+              v-model="appointment.start" dateFormat="yy-mm-d" class="w-full" />
             <label for="start">{{ $t("appointment.fields.start") }}</label>
           </FloatLabel>
         </div>
@@ -82,39 +51,20 @@
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
             <label for="end">{{ $t("appointment.fields.end") }}</label>
-            <DatePicker
-              showIcon
-              iconDisplay="input"
-              showButtonBar
-              showTime
-              hourFormat="24"
-              id="end"
-              v-model="appointment.end"
-              dateFormat="yy-mm-d"
-              class="w-full"
-            />
+            <DatePicker showIcon iconDisplay="input" showButtonBar showTime hourFormat="24" id="end"
+              v-model="appointment.end" dateFormat="yy-mm-d" class="w-full" />
           </FloatLabel>
         </div>
 
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <Select
-              v-model="appointment.type"
-              :options="appointmentTypes"
-              optionLabel="label"
-              class="w-full"
-            />
+            <Select v-model="appointment.type" :options="appointmentTypes" optionLabel="label" class="w-full" />
             <label for="type">{{ $t("appointment.fields.type") }}</label>
           </FloatLabel>
         </div>
         <div class="field mt-6 w-[48%]">
           <FloatLabel class="w-full">
-            <Select
-              v-model="appointment.status"
-              :options="appointmentStatus"
-              optionLabel="label"
-              class="w-full"
-            />
+            <Select v-model="appointment.status" :options="appointmentStatus" optionLabel="label" class="w-full" />
             <label for="status">{{ $t("appointment.fields.status") }}</label>
           </FloatLabel>
         </div>
@@ -221,7 +171,7 @@ const searchPets = async (event) => {
   }
 };
 
-const submitForm = async () => {
+/* const submitForm = async () => {
   if (!selectedPet.value) {
     eventBus.emit("show-toast", {
       severity: "warn",
@@ -241,6 +191,73 @@ const submitForm = async () => {
     const response = await axiosInstance.put(
       `/appointments/${appointment.value.id}`,
       appointment.value
+    );
+    emit("updated", response.data);
+    eventBus.emit("show-toast", {
+      severity: "success",
+      summary: t("appointment.edit_title"),
+      detail: t("appointment.messages.update_success", {
+        petName: selectedPet.value.name,
+      }),
+      life: 5000,
+    });
+  } catch (error) {
+    console.error("Error updating appointment:", error);
+    eventBus.emit("show-toast", {
+      severity: "error",
+      summary: t("appointment.edit_title"),
+      detail: error.response?.data?.message || t("appointment.messages.update_error"),
+      life: 5000,
+    });
+  }
+};
+ */
+const submitForm = async () => {
+  if (!selectedPet.value) {
+    eventBus.emit("show-toast", {
+      severity: "warn",
+      summary: t("appointment.edit_title"),
+      detail: t("appointment.messages.pet_required"),
+      life: 5000,
+    });
+    return;
+  }
+
+  // helper to format to "YYYY-MM-DD HH:mm:ss"
+  const formatDateTime = (date) => {
+    const d = date instanceof Date ? date : new Date(
+      typeof date === "string" ? date.replace(" ", "T") : date
+    );
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const dd = String(d.getDate()).padStart(2, "0");
+    const hh = String(d.getHours()).padStart(2, "0");
+    const mi = String(d.getMinutes()).padStart(2, "0");
+    const ss = String(d.getSeconds()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss}`;
+  };
+
+  // build a clean payload so we don't mutate the picker-bound objects
+  const payload = {
+    ...appointment.value,
+    client_id: selectedPet.value.owner_id,
+    pet_id: selectedPet.value.id,
+    type:
+      typeof appointment.value.type === "object"
+        ? appointment.value.type.value
+        : appointment.value.type,
+    status:
+      typeof appointment.value.status === "object"
+        ? appointment.value.status.value
+        : appointment.value.status,
+    start: formatDateTime(appointment.value.start),
+    end: formatDateTime(appointment.value.end),
+  };
+
+  try {
+    const response = await axiosInstance.put(
+      `/appointments/${appointment.value.id ?? props.appointmentId}`,
+      payload
     );
     emit("updated", response.data);
     eventBus.emit("show-toast", {
