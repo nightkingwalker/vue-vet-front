@@ -164,7 +164,7 @@
     <div
       class="quarter-lg w-[calc(75%-0.25rem)] min-h-full bg-[var(--p-surface-100)] dark:bg-[var(--p-surface-800)] rounded-[10px] overflow-hidden border border-[#c4c7c5] dark:!border-[#444746]">
       <DataTable showGridlines :value="visits" scrollable scrollHeight="80vh" class="text-xs" stripedRows
-        v-if="!loading" :paginator="true" :rows="itemsPerPage" :totalRecords="visits.length" :first="0"
+        v-if="!loading" :paginator="true" :first="0" :rows="itemsPerPage" :totalRecords="visits.length"
         @page="onPageChange" :rowsPerPageOptions="[25, 50, 100]">
         <template #header>
           <div class="flex flex-wrap items-center justify-between gap-2">
@@ -1157,7 +1157,7 @@ const fetchPets = async () => {
     // Make the request using the axios instance with interceptors
     const response = await axiosInstance.get(`/pets/${petmicrochip.value}`);
     pet.value = response.data;
-
+    console.log(response.data);
     visits.value = response.data.appointments;
     medical_records.value = response.data.medical_records;
     pet.value.date_of_birth = formatDateForSubmission(pet.value.date_of_birth);
@@ -1218,7 +1218,7 @@ const resetForm = () => {
   editMode.value = false;
 };
 function onPageChange(event) {
-  first.value = event.first;
+  // first.value = event.first;
 }
 const isDialogVisible = ref(false);
 const loadingAi = ref(false);

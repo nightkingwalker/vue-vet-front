@@ -284,10 +284,12 @@ const zoomStyle = computed(() => ({
 }));
 
 const fetchMedicalImages = async () => {
+  // console.log(`/medical-images/bymrid/${props.medical_record_id}`);
   loading.value = true;
   try {
     const { data } = await axiosInstance.get(`/medical-images/bymrid/${props.medical_record_id}`);
-    medicalImages.value = data.data;
+    medicalImages.value = data.data || data;
+    // console.log(data.data)
   } catch (e) {
     console.error("Error fetching medical images:", e);
   } finally {

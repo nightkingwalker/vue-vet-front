@@ -67,7 +67,7 @@ onMounted(async () => {
         const response = await axiosInstance.get("/branches");
 
         branches.value = response.data;
-        console.log("Branches loaded:", branches.value);
+        // console.log("Branches loaded:", branches.value);
     } catch (err) {
         console.error("Error loading branches:", err);
     }
@@ -125,7 +125,7 @@ const createTransfer = async () => {
             await axiosInstance.post("/stock-movements/transfer", payload);
         }
 
-        console.log("Transfer order completed successfully");
+        // console.log("Transfer order completed successfully");
     } catch (err) {
         console.error("Error creating transfer:", err);
     } finally {

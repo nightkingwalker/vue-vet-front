@@ -217,7 +217,7 @@ onMounted(async () => {
     try {
         const { data } = await axiosInstance.get("/branches");
         branches.value = data;
-        console.log("Fetched branches:", data);
+        // console.log("Fetched branches:", data);
     } catch (err) {
         console.error("Error fetching branches:", err);
     }

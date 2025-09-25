@@ -440,7 +440,7 @@ const fetchClinicData = async () => {
     clinic.value = clinicRes.data;
     clinicForm.value = { ...clinicRes.data };
     users.value = usersRes.data;
-    console.log(usersRes.data)
+    // console.log(usersRes.data)
   } catch (error) {
     toast.add({
       severity: "error",
