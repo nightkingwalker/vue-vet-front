@@ -1109,7 +1109,8 @@
       "delete": "Artikel löschen",
       "yes": "Ja",
       "no": "Nein",
-      "import": "Importieren"
+      "import": "Importieren",
+      "transfer": "Bestand übertragen"
     },
     "columns": {
       "barcode": "Barcode",
@@ -1132,6 +1133,7 @@
       "add_title": "Neuen Inventarartikel hinzufügen",
       "edit_title": "Inventarartikel bearbeiten",
       "delete_title": "Bestätigen",
+      "transfer_title": "Bestand übertragen",
       "delete_message": "Möchtest du <b>{item}</b> wirklich löschen?"
     },
     "status": {
@@ -1742,5 +1744,46 @@
     "Pekingese": "Pekinese",
     "Malinois": "Malinois",
     "Other": "Andere"
+  },
+  "transfer": {
+    "items_section": {
+      "search_items": "Artikel suchen",
+      "quantity": "Menge",
+      "cost_price": "Einstandspreis",
+      "add_to_transfer": "Zum Transfer hinzufügen",
+      "item": "Artikel",
+      "qty": "Stk.",
+      "actions": "Aktionen"
+    },
+    "branch_section": {
+      "title": "Filialinformationen",
+      "source_branch": "Quellfiliale",
+      "destination_branch": "Zielfiliale"
+    },
+    "meta_section": {
+      "title": "Übertragungsmetadaten",
+      "transfer_number": "Übertragungsnummer",
+      "transfer_date": "Übertragungsdatum",
+      "status": "Status",
+      "status_options": {
+        "draft": "Entwurf",
+        "submitted": "Eingereicht",
+        "completed": "Abgeschlossen",
+        "cancelled": "Storniert"
+      }
+    },
+    "summary_section": {
+      "title": "Übertragungsübersicht",
+      "total_items": "Gesamtartikel",
+      "total_quantities": "Gesamtmengen",
+      "total_cost": "Gesamtkosten"
+    },
+    "notes_section": {
+      "label": "Zusätzliche Notizen"
+    },
+    "actions_section": {
+      "save_draft": "Als Entwurf speichern",
+      "create_transfer": "Transfer erstellen"
+    }
   }
 }

@@ -1109,7 +1109,8 @@
             "delete": "Delete Item",
             "yes": "Yes",
             "no": "No",
-            "import": "Import"
+            "import": "Import",
+            "transfer": "Transfer Stock"
         },
         "columns": {
             "barcode": "Barcode",
@@ -1132,6 +1133,7 @@
             "add_title": "Add New Inventory Item",
             "edit_title": "Edit Inventory Item",
             "delete_title": "Confirm",
+            "transfer_title": "Transfer Stock",
             "delete_message": "Are you sure you want to delete <b>{item}</b>?"
         },
         "status": {
@@ -1752,5 +1754,46 @@
         "Pekingese": "Pekingese",
         "Malinois": "Malinois",
         "Other": "Other"
+    },
+    "transfer": {
+        "items_section": {
+            "search_items": "Search Items",
+            "quantity": "Quantity",
+            "cost_price": "Cost Price",
+            "add_to_transfer": "Add to Transfer",
+            "item": "Item",
+            "qty": "Qty",
+            "actions": "Actions"
+        },
+        "branch_section": {
+            "title": "Branch Information",
+            "source_branch": "Source Branch",
+            "destination_branch": "Destination Branch"
+        },
+        "meta_section": {
+            "title": "Transfer Metadata",
+            "transfer_number": "Transfer Number",
+            "transfer_date": "Transfer Date",
+            "status": "Status",
+            "status_options": {
+                "draft": "Draft",
+                "submitted": "Submitted",
+                "completed": "Completed",
+                "cancelled": "Cancelled"
+            }
+        },
+        "summary_section": {
+            "title": "Transfer Summary",
+            "total_items": "Total Items",
+            "total_quantities": "Total Quantities",
+            "total_cost": "Total Cost"
+        },
+        "notes_section": {
+            "label": "Additional Notes"
+        },
+        "actions_section": {
+            "save_draft": "Save as Draft",
+            "create_transfer": "Create Transfer"
+        }
     }
 }

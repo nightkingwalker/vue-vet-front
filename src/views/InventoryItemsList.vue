@@ -18,6 +18,9 @@
               class="p-button p-component p-button-icon-only !text-sm lg:!text-[14px] ml-2" />
             <Button size="small" icon="pi pi-download !text-sm lg:!text-[14px]" class="!text-sm lg:!text-[14px] ml-2"
               v-tooltip.bottom="$t('inventory.actions.export')" @click="exportCSV($event)" />
+            <Button size="small" icon="pi pi-arrow-right-arrow-left" @click="showTransferModal"
+              v-tooltip.bottom="$t('inventory.actions.transfer')"
+              class="p-button p-component p-button-icon-only !text-sm lg:!text-[14px] ml-2" />
           </div>
           <h2 class="text-md !mb-0 pb-0 flex items-center">
             <i class="fa-solid fa-store mx-2"></i> {{ $t("inventory.title") }}
@@ -227,6 +230,10 @@
         @click="deleteItem" />
     </template>
   </Dialog>
+  <Dialog :header="$t('inventory.dialog.transfer_title')" v-model:visible="isTransferModalVisible" @hide="resetForm"
+    modal :closable="true" class="w-11/12  min-h-[80vh] bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]">
+    <AddTransferOrder v-focustrap="{ disabled: false, autoFocus: true }" @submitted="handleTransferSubmit" />
+  </Dialog>
 </template>
 
 <script setup>
@@ -245,6 +252,8 @@ import Dialog from "primevue/dialog";
 import Dropdown from "primevue/dropdown";
 import InventoryItemForm from "@/views/addInventoryItem.vue";
 import InventoryItemImport from "@/views/importInventoryItems.vue";
+import AddTransferOrder from "@/views/AddTransferOrder.vue"; // NEW
+
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import eventBus from "@/eventBus";
@@ -258,7 +267,7 @@ let typingTimer = null;
 const typingDelay = 500;
 
 const handleKeydown = (event) => {
-  if (!inputFocused.value && isModalVisible.value === false && !event.ctrlKey) {
+  if (!inputFocused.value && isModalVisible.value === false && isTransferModalVisible.value === false && !event.ctrlKey) {
     if (event.key.length === 1) {
       clearTimeout(typingTimer);
       typingTimer = setTimeout(() => {
@@ -284,6 +293,8 @@ const searchQuery = ref("");
 const deleteDialogVisible = ref(false);
 const isModalVisible = ref(false);
 const isImportModalVisible = ref(false);
+const isTransferModalVisible = ref(false);
+
 const editMode = ref(false);
 const selectedItem = ref(null);
 const categoryFilter = ref("");
@@ -379,7 +390,15 @@ const showImportModal = () => {
   // selectedItem.value = null;
   isImportModalVisible.value = true;
 };
+const showTransferModal = () => {
+  isTransferModalVisible.value = true;
+};
 
+const handleTransferSubmit = () => {
+  isTransferModalVisible.value = false;
+  currentPage.value = 1;
+  fetchInventoryItems(currentPage.value);
+};
 const editItem = (item) => {
   editMode.value = true;
   selectedItem.value = { ...item };
@@ -524,9 +543,11 @@ watch(
 h2 {
   margin-bottom: 1rem;
 }
+
 .dark\::-webkit-scrollbar {
   width: 10px;
 }
+
 .dark\::-webkit-scrollbar-track {
   --tw-bg-opacity: 1;
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));

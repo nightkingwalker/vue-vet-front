@@ -17,13 +17,25 @@ const router = createRouter({
         component: () =>
             import('@/views/AboutView.vue')
     },
-    {
-        path: '/',
-        name: 'Home',
-        component: () =>
-            import('@/views/CalendarView.vue'),
-        meta: { title: 'Calendar', requiresAuth: true, allowSessionTimeout: true }
-    },
+        {
+            path: '/',
+            name: 'Home',
+            component: () =>
+                import('@/views/CalendarView.vue'),
+            meta: { title: 'Calendar', requiresAuth: true, allowSessionTimeout: true }
+        },
+        // {
+        //     path: '/',
+        //         name: 'LandingPage',
+        //         component: () => import('@/views/LandingPage.vue'),
+        //         meta: { title: 'Welcome', public: true }
+        //     },
+        // {
+        //     path: '/app',
+        //     name: 'Calendar',
+        //     component: () => import('@/views/CalendarView.vue'),
+        //     meta: { title: 'Calendar', requiresAuth: true, allowSessionTimeout: true }
+        // },
     {
         path: '/owners',
         name: 'Owners',
@@ -217,7 +229,7 @@ const router = createRouter({
         name: 'whatsapp-onboarding',
         component: () => import('@/views/WhatsAppOnboardingLanding.vue'),
         meta: {
-            title: 'WhatsApp Integration', 
+            title: 'WhatsApp Integration',
                 requiresAuth: true,
                 breadcrumb: 'WhatsApp Setup',
                 feature: 'whatsapp_integration'
@@ -230,7 +242,7 @@ const router = createRouter({
             component: () => import('@/views/WahaNumVerifiy.vue'),
             // component: WhatsAppNumberVerification,
             meta: {
-                title: 'WhatsApp Number Verification', 
+                title: 'WhatsApp Number Verification',
                 requiresAuth: true,
                 breadcrumb: 'Number Verification',
                 feature: 'whatsapp_integration'
@@ -241,7 +253,7 @@ const router = createRouter({
             name: 'whatsapp-qr-scanner',
             component: () => import('@/views/WhatsAppQRScanner.vue'),
             meta: {
-                title: 'WhatsApp Login', 
+                title: 'WhatsApp Login',
                 requiresAuth: true,
                 breadcrumb: 'QR Connection',
                 feature: 'whatsapp_integration'

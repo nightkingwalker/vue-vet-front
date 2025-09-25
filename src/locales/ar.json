@@ -1102,7 +1102,8 @@
             "delete": "حذف العنصر",
             "yes": "نعم",
             "no": "لا",
-            "import": "استيراد مواد المستودع من ملف إكسل"
+            "import": "استيراد مواد المستودع من ملف إكسل",
+            "transfer": "نقل المخزون"
         },
         "columns": {
             "barcode": "الباركود",
@@ -1125,6 +1126,7 @@
             "add_title": "إضافة عنصر جديد للمخزون",
             "edit_title": "تعديل عنصر المخزون",
             "delete_title": "تأكيد",
+            "transfer_title": "تحويل المخزون",
             "delete_message": "هل أنت متأكد أنك تريد حذف {item}؟"
         },
         "status": {
@@ -1746,5 +1748,47 @@
         "Pekingese": "بيكينيز",
         "Malinois": "مالينوا",
         "Other": "أخرى "
+    },
+    "transfer": {
+        "items_section": {
+            "search_items": "بحث عن المواد",
+            "quantity": "الكمية",
+            "cost_price": "سعر التكلفة",
+            "add_to_transfer": "إضافة إلى التحويل",
+            "item": "المادة",
+            "qty": "العدد",
+            "title": "المواد المراد تحويلها",
+            "actions": "الإجراءات"
+        },
+        "branch_section": {
+            "title": "معلومات الفرع",
+            "source_branch": "الفرع المصدر",
+            "destination_branch": "الفرع المستلم"
+        },
+        "meta_section": {
+            "title": "بيانات التحويل",
+            "transfer_number": "رقم التحويل",
+            "transfer_date": "تاريخ التحويل",
+            "status": "الحالة",
+            "status_options": {
+                "draft": "مسودة",
+                "submitted": "مُرسلة",
+                "completed": "مكتمل",
+                "cancelled": "ملغاة"
+            }
+        },
+        "summary_section": {
+            "title": "ملخص التحويل",
+            "total_items": "إجمالي الأصناف",
+            "total_quantities": "إجمالي الكميات",
+            "total_cost": "إجمالي التكلفة"
+        },
+        "notes_section": {
+            "label": "ملاحظات إضافية"
+        },
+        "actions_section": {
+            "save_draft": "حفظ كمسودة",
+            "create_transfer": "إنشاء تحويل"
+        }
     }
 }
