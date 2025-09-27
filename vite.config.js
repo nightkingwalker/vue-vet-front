@@ -11,9 +11,9 @@ export default defineConfig({
     server: {
         // https:true,
         // host: '38.242.154.159',
-        // host: '172.16.3.8'
+        host: '172.16.3.4',
         // host: '192.168.1.7'
-        host: 'local.ids-tech.net',
+        // host: 'local.ids-tech.net',
         // port: 3000,
         headers: {
             'Cache-Control': 'no-store, max-age=0', // Disable caching in dev

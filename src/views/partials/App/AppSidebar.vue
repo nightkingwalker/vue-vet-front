@@ -1,7 +1,7 @@
 <template>
   <!-- Sidebar Menu -->
   <Menu :model="menuItems" @mouseenter="isHovered = true" @mouseleave="isHovered = false" :class="sidebarClasses"
-    class="sidebar-container clear-glass !py-8 px-4 2xl:px-1 lg:px-1 scrollbar-hide scroll-smooth sm:text-sm 2xl:text-xs lg:text-sm !rounded-none h-[100vh] top-0 left-0 overflow-y-scroll">
+    class="sidebar-container clear-glass !py-8 px-4 2xl:px-1 lg:px-1 scrollbar-hide scroll-smooth sm:text-sm 2xl:text-xs lg:text-sm !rounded-none h-[100vh] top-0 left-0 overflow-y-scroll !overflow-x-hidden">
     <template #start>
       <!-- Logo Slot -->
       <div class="flex justify-center w-full">

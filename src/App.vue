@@ -104,7 +104,7 @@ const authStore = useAuthStore();
 const { isMobile } = useDevice();
 const { initializeLanguage } = useLanguage();
 const { isDarkMode, initializeTheme, toggleTheme } = useTheme();
-
+console.log("isMobile", isMobile.value);
 const mobileMenuVisible = ref(false);
 
 // Computed properties

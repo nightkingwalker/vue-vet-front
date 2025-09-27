@@ -126,8 +126,8 @@
                     <FloatLabel class="w-full">
                       <Select fluid v-model="language" :options="languages" optionLabel="label" optionValue="value"
                         class="w-full h-10" />
-                      <label for="dd-city">{{ $t("user_profile.language") }}
-                        <span class="text-red-600">*</span></label>
+                      <!-- <label for="dd-city">{{ $t("user_profile.language") }}
+                        <span class="text-red-600">*</span></label> -->
                     </FloatLabel>
                     <button type="submit"
                       class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200 mt-2">
@@ -146,8 +146,8 @@
                     <FloatLabel class="w-full">
                       <Select fluid v-model="theme" :options="themes" optionLabel="label" optionValue="value"
                         class="w-full h-10" />
-                      <label for="dd-city">{{ $t("user_profile.theme") }}
-                        <span class="text-red-600">*</span></label>
+                      <!-- <label for="dd-city">{{ $t("user_profile.theme") }}
+                        <span class="text-red-600">*</span></label> -->
                     </FloatLabel>
                     <button type="submit"
                       class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200 mt-2">

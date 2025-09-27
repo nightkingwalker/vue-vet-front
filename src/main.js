@@ -106,7 +106,7 @@ const MyPreset = definePreset(Aura, {
                     0: '#ffffff',
                     50: '{gray.50}',
                     100: '{gray.100}',
-                    200: '{gray.200}',
+                    200: '{gray.200}',  
                     300: '{gray.300}',
                     400: '{gray.400}',
                     500: '{gray.500}',
