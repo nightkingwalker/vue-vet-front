@@ -40,7 +40,7 @@
         "legend": "وسيلة الإيضاح",
         "appointment": {
             "new": "موعد جديد",
-            "regular": "عادي",
+            "regular": "وقائي",
             "emergency": "طارئ",
             "non-emergency": "غير طارئ",
             "followup": "متابعة",
@@ -1070,7 +1070,7 @@
         "types": {
             "emergency": "طارئ",
             "non_emergency": "غير طارئ",
-            "regular": "عادي",
+            "regular": "وقائي",
             "followup": "متابعة",
             "surgery": "جراحة",
             "grooming": "تجميل"
@@ -1524,7 +1524,7 @@
         },
         "types": {
             "all": "جميع الأنواع",
-            "regular": "عادي",
+            "regular": "وقائي",
             "emergency": "طارئ",
             "followup": "متابعة",
             "grooming": "تجميل",

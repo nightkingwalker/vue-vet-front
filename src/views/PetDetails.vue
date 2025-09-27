@@ -123,7 +123,7 @@
                       : $t('pet_details.neutered')
                     : pet.gender === 'Male'
                       ? $t('pet_details.not_neutered')
-                      : $t('pet_details.neutered')
+    : $t('pet_details.not_neutered')
                     " :severity="pet.neutered === 'Y' ? 'success' : 'danger'" class="!text-xs" />
                 </div>
                 <div v-if="pet.allergies" class="flex items-start gap-2">
