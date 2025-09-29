@@ -1,120 +1,61 @@
 <template>
   <div class="w-full">
     <h4 class="mt-2 mb-4 mx-auto flex items-center justify-center">
-      <i class="pi pi-calendar"></i> {{ $t("reports.menu.patients_reports") }}
+      <i class="pi pi-calendar mx-2"></i> {{ $t("reports.menu.patients_reports") }}
     </h4>
-    <DataTable
-      :value="loading ? skeletonRows : appointments"
-      class="rounded-lg overflow-hidden text-xs"
-      stripedRows
-      showGridlines
-      scrollable
-      scrollHeight="92vh"
-      :paginator="true"
-      :rows="10"
-      :rowsPerPageOptions="[10, 25, 50]"
+    <DataTable :value="loading ? skeletonRows : appointments" class="rounded-lg overflow-hidden text-xs" stripedRows
+      showGridlines scrollable scrollHeight="92vh" :paginator="true" :rows="10" :rowsPerPageOptions="[10, 25, 50]"
       v-model:first="first"
       paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-      :sortField="sortField"
-      :sortOrder="sortOrder"
-      @sort="onSort"
-    >
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" :sortField="sortField"
+      :sortOrder="sortOrder" @sort="onSort">
       <template #empty> {{ $t("appointments.no_appointments") }} </template>
       <template #loading> {{ $t("appointments.loading") }} </template>
       <template #header>
         <div class="flex justify-between items-center !m-b-1">
+          <h2 class="text-sm !mb-0 pb-0 flex w-1/5 px-4">
+            <i class="fa-solid fa-calendar-days ltr:mr-2 rtl:ml-2"></i>
+            {{ $t("appointments.title") }}
+          </h2>
           <div class="flex items-center gap-2">
-            <InputGroup
-              class="!text-gray-800 flex !w-1/3 !h-10 rounded-md overflow-hidden border !border-gray-400"
-            >
-              <InputGroupAddon
-                class="!text-gray-800 px-4 flex flex-col item-center justify-center"
-              >
+            <InputGroup class="!text-gray-800 flex !w-1/4 !h-10 rounded-md overflow-hidden border !border-gray-400">
+              <InputGroupAddon class="!text-gray-800 px-4 flex flex-col item-center justify-center">
                 <i class="pi pi-search"></i>
               </InputGroupAddon>
-              <InputText
-                size="small"
-                v-model="searchQuery"
-                fluid
-                @keyup.enter="applyFilters"
-                ref="inputRef"
-                @focus="inputFocused = true"
-                @blur="inputFocused = false"
-                autofocus="true"
-                type="text"
+              <InputText size="small" v-model="searchQuery" fluid @keyup.enter="applyFilters" ref="inputRef"
+                @focus="inputFocused = true" @blur="inputFocused = false" autofocus="true" type="text"
                 class="!text-sm lg:!text-[14px] !text-gray-800 focus:!ring-0 focus:!ring-offset-0 border-transparent"
-                :placeholder="$t('appointments.header.search_placeholder')"
-              />
+                :placeholder="$t('appointments.header.search_placeholder')" />
               <Button icon="pi pi-times" @click="clearFilters" />
             </InputGroup>
 
-            <Select
-              v-model="selectedStatus"
-              :options="statusOptions"
-              optionLabel="label"
-              :placeholder="$t('appointments.filter.status')"
-              class="!text-xs !h-10 w-40"
-            />
+            <Select v-model="selectedStatus" :options="statusOptions" optionLabel="label"
+              :placeholder="$t('appointments.filter.status')" class="!text-xs !h-10 w-40" />
 
-            <Select
-              v-model="selectedType"
-              :options="typeOptions"
-              optionLabel="label"
-              :placeholder="$t('appointments.filter.type')"
-              class="!text-xs !h-10 w-40"
-            />
+            <Select v-model="selectedType" :options="typeOptions" optionLabel="label"
+              :placeholder="$t('appointments.filter.type')" class="!text-xs !h-10 w-40" />
 
-            <DatePicker
-              iconDisplay="input"
-              v-model="dateRange"
-              selectionMode="range"
-              :manualInput="false"
-              dateFormat="yy-mm-d"
-              size="small"
-              :placeholder="$t('appointments.filter.date_range')"
-              class="!text-xs !h-10 w-60"
-            />
+            <DatePicker iconDisplay="input" v-model="dateRange" selectionMode="range" :manualInput="false"
+              dateFormat="yy-mm-d" size="small" :placeholder="$t('appointments.filter.date_range')"
+              class="!text-xs !h-10 w-60" />
             <ToggleSwitch v-model="reminders" id="is_scheduled"></ToggleSwitch>
             <label for="is_scheduled">{{
               $t("appointments.filter.show_reminders")
             }}</label>
-            <Button
-              icon="pi pi-filter"
-              @click="applyFilters"
-              :label="$t('appointments.filter.apply')"
-              class="!text-xs lg:!text-[14px] ml-2"
-            />
+            <Button icon="pi pi-filter" @click="applyFilters" :label="$t('appointments.filter.apply')"
+              class="!text-xs lg:!text-[14px] ml-2" />
 
-            <Button
-              icon="pi pi-times"
-              @click="clearFilters"
-              :label="$t('appointments.filter.clear')"
-              class="!text-xs lg:!text-[14px] w-fit whitespace-nowrap ml-2 p-button-outlined"
-            />
-            <Button
-              type="button"
-              icon="pi pi-refresh !text-xs"
-              label=""
-              v-tooltip.bottom="$t('appointments.refresh')"
-              class="!text-xs !w-8 !h-8"
-              @click="fetchAppointments(currentPage)"
-            />
+            <Button icon="pi pi-times" @click="clearFilters" :label="$t('appointments.filter.clear')"
+              class="!text-xs lg:!text-[14px] w-fit whitespace-nowrap ml-2 p-button-outlined" />
+            <Button type="button" icon="pi pi-refresh !text-xs" label="" v-tooltip.bottom="$t('appointments.refresh')"
+              class="!text-xs !w-8 !h-8" @click="fetchAppointments(currentPage)" />
           </div>
 
-          <h2 class="text-sm !mb-0 pb-0 flex">
-            <i class="fa-solid fa-calendar-days ltr:mr-2 rtl:ml-2"></i>
-            {{ $t("appointments.title") }}
-          </h2>
+
         </div>
       </template>
 
-      <Column
-        field="start"
-        :header="$t('appointments.headers.date')"
-        class="w-1/10"
-        sortable
-      >
+      <Column field="start" :header="$t('appointments.headers.date')" class="w-1/10" sortable>
         <template v-if="loading" #body>
           <Skeleton width="100%" height="1rem" />
         </template>
@@ -123,31 +64,18 @@
         </template>
       </Column>
 
-      <Column
-        field="pet.name"
-        :header="$t('appointments.headers.pet')"
-        class="w-1/10"
-        sortable
-      >
+      <Column field="pet.name" :header="$t('appointments.headers.pet')" class="w-1/10" sortable>
         <template v-if="loading" #body>
           <Skeleton width="100%" height="1rem" />
         </template>
         <template v-else #body="slotProps">
           {{ slotProps.data.pet.name }}
-          <Tag
-            :value="$t(`pet_details.species.${slotProps.data.pet.species}`)"
-            severity="info"
-            class="ltr:ml-2 rtl:mr-2"
-          />
+          <Tag :value="$t(`pet_details.species.${slotProps.data.pet.species}`)" severity="info"
+            class="ltr:ml-2 rtl:mr-2" />
         </template>
       </Column>
 
-      <Column
-        field="owner.name"
-        :header="$t('appointments.headers.owner')"
-        class="w-1/10"
-        sortable
-      >
+      <Column field="owner.name" :header="$t('appointments.headers.owner')" class="w-1/10" sortable>
         <template v-if="loading" #body>
           <Skeleton width="100%" height="1rem" />
         </template>
@@ -158,12 +86,7 @@
         </template>
       </Column>
 
-      <Column
-        field="title"
-        :header="$t('appointments.headers.title')"
-        class="w-1/5"
-        sortable
-      >
+      <Column field="title" :header="$t('appointments.headers.title')" class="w-1/5" sortable>
         <template v-if="loading" #body>
           <Skeleton width="100%" height="1rem" />
         </template>
@@ -172,12 +95,7 @@
         </template>
       </Column>
 
-      <Column
-        field="type"
-        :header="$t('appointments.headers.type')"
-        class="w-1/10"
-        sortable
-      >
+      <Column field="type" :header="$t('appointments.headers.type')" class="w-1/10" sortable>
         <template v-if="loading" #body>
           <Skeleton width="100%" height="1rem" />
         </template>
@@ -191,8 +109,7 @@
               '--text-color': getEventTheme(slotProps.data.type).lightColors.onContainer,
               background: `var(--background-color)`,
               color: `var(--text-color)`,
-            }"
-          >
+            }">
             <div class="gap-2 px-1">
               <span class="lg:!text-[14px] text-xs whitespace-nowrap font-normal">{{
                 $t(`calendar.appointment.${slotProps.data.type.toLowerCase()}`)
@@ -202,30 +119,17 @@
         </template>
       </Column>
 
-      <Column
-        field="status"
-        :header="$t('appointments.headers.status')"
-        class="w-1/10"
-        sortable
-      >
+      <Column field="status" :header="$t('appointments.headers.status')" class="w-1/10" sortable>
         <template v-if="loading" #body>
           <Skeleton width="100%" height="1rem" />
         </template>
         <template v-else #body="slotProps">
-          <Tag
-            :value="
-              appointmentScheduleTypes[slotProps.data.status] || slotProps.data.status
-            "
-            :severity="getAppointmentStatusSeverity(slotProps.data.status)"
-          />
+          <Tag :value="appointmentScheduleTypes[slotProps.data.status] || slotProps.data.status
+            " :severity="getAppointmentStatusSeverity(slotProps.data.status)" />
         </template>
       </Column>
 
-      <Column
-        field="description"
-        :header="$t('appointments.headers.description')"
-        class="w-1/5"
-      >
+      <Column field="description" :header="$t('appointments.headers.description')" class="w-1/5">
         <template v-if="loading" #body>
           <Skeleton width="100%" height="1rem" />
         </template>
@@ -239,33 +143,25 @@
           <Skeleton width="100%" height="1rem" />
         </template>
         <template v-else #body="slotProps">
-          <router-link
-            :to="`/pets/` + slotProps.data.pet.microchip_num"
-            v-tooltip.top="{
-              value: $t('pets.columns.view_details'),
-              pt: {
-                arrow: {
-                  style: {
-                    borderTopColor: 'var(--p-primary-color)',
-                  },
+          <router-link :to="`/pets/` + slotProps.data.pet.microchip_num" v-tooltip.top="{
+            value: $t('pets.columns.view_details'),
+            pt: {
+              arrow: {
+                style: {
+                  borderTopColor: 'var(--p-primary-color)',
                 },
-                text:
-                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
               },
-            }"
-            ><i class="fas fa-paw"></i>
+              text:
+                '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+            },
+          }"><i class="fas fa-paw"></i>
           </router-link>
         </template>
       </Column>
     </DataTable>
 
-    <Dialog
-      :header="$t('medical_records.dialog.view_title')"
-      v-model:visible="medicalRecordDialogVisible"
-      modal
-      :closable="true"
-      class="w-11/12 md:w-8/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
-    >
+    <Dialog :header="$t('medical_records.dialog.view_title')" v-model:visible="medicalRecordDialogVisible" modal
+      :closable="true" class="w-11/12 md:w-8/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]">
       <PetDetails v-if="selectedMedicalRecord" :microchip_num="microchip_num" />
     </Dialog>
   </div>

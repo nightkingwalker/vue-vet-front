@@ -4,103 +4,52 @@
       <i class="pi pi-barcode ltr:mr-2 rtl:ml-2"></i>
       {{ $t("reports.menu.stockmovement") }}
     </h4>
-    <DataTable
-      :value="loading ? skeletonRows : stockMovements"
-      class="rounded-lg overflow-hidden text-xs"
-      stripedRows
-      showGridlines
-      scrollable
-      scrollHeight="95vh"
-      :paginator="true"
-      :rows="10"
-      :rowsPerPageOptions="[10, 25, 50]"
+    <DataTable :value="loading ? skeletonRows : stockMovements" class="rounded-lg overflow-hidden text-xs" stripedRows
+      showGridlines scrollable scrollHeight="95vh" :paginator="true" :rows="10" :rowsPerPageOptions="[10, 25, 50]"
       v-model:first="first"
       paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    >
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
       <template #empty> {{ $t("stock_movements.no_movements") }} </template>
       <template #loading> {{ $t("stock_movements.loading") }} </template>
       <template #header>
         <div class="flex justify-between items-center !m-b-1">
-          <div class="flex items-center gap-2">
-            <InputGroup
-              class="!text-gray-800 flex !w-1/3 !h-10 rounded-md overflow-hidden border !border-gray-400"
-            >
-              <InputGroupAddon
-                class="!text-gray-800 px-4 flex flex-col item-center justify-center"
-              >
-                <i class="pi pi-search"></i>
-              </InputGroupAddon>
-              <InputText
-                size="small"
-                v-model="searchQuery"
-                fluid
-                @keyup.enter="applyFilters"
-                ref="inputRef"
-                @focus="inputFocused = true"
-                @blur="inputFocused = false"
-                autofocus="true"
-                type="text"
-                class="!text-sm lg:!text-[14px] !text-gray-800 focus:!ring-0 focus:!ring-offset-0 border-transparent"
-                :placeholder="$t('pets.header.search_placeholder')"
-              />
-              <Button icon="pi pi-times" @click="clearFilters" />
-            </InputGroup>
-            <Select
-              v-model="selectedMovementType"
-              :options="movementTypes"
-              optionLabel="label"
-              :placeholder="$t('stock_movements.filter_type')"
-              class="!text-xs !h-10 w-40"
-            />
-
-            <DatePicker
-              iconDisplay="input"
-              v-model="dateRange"
-              selectionMode="range"
-              :manualInput="false"
-              dateFormat="yy-mm-d"
-              size="small"
-              :placeholder="$t('stock_movements.date_range')"
-              class="!text-xs !h-10 w-60"
-            />
-
-            <Button
-              icon="pi pi-filter"
-              @click="applyFilters"
-              :label="$t('stock_movements.filter')"
-              class="!text-xs lg:!text-[14px] ml-2"
-            />
-
-            <Button
-              icon="pi pi-times"
-              @click="clearFilters"
-              :label="$t('stock_movements.clear')"
-              class="!text-xs lg:!text-[14px] w-fit whitespace-nowrap ml-2 p-button-outlined"
-            />
-            <Button
-              type="button"
-              icon="pi pi-refresh !text-xs"
-              label=""
-              v-tooltip.bottom="$t('stock_movements.refresh')"
-              class="!text-xs !w-8 !h-8"
-              @click="fetchStockMovements(currentPage)"
-            />
-          </div>
-
           <h2 class="text-sm !mb-0 pb-0 flex">
             <i class="fa-solid fa-boxes-stacked ltr:mr-2 rtl:ml-2"></i>
             {{ $t("stock_movements.title") }}
           </h2>
+          <div class="flex items-center gap-2">
+            <InputGroup class="!text-gray-800 flex !w-1/3 !h-10 rounded-md overflow-hidden border !border-gray-400">
+              <InputGroupAddon class="!text-gray-800 px-4 flex flex-col item-center justify-center">
+                <i class="pi pi-search"></i>
+              </InputGroupAddon>
+              <InputText size="small" v-model="searchQuery" fluid @keyup.enter="applyFilters" ref="inputRef"
+                @focus="inputFocused = true" @blur="inputFocused = false" autofocus="true" type="text"
+                class="!text-sm lg:!text-[14px] !text-gray-800 focus:!ring-0 focus:!ring-offset-0 border-transparent"
+                :placeholder="$t('pets.header.search_placeholder')" />
+              <Button icon="pi pi-times" @click="clearFilters" />
+            </InputGroup>
+            <Select v-model="selectedMovementType" :options="movementTypes" optionLabel="label"
+              :placeholder="$t('stock_movements.filter_type')" class="!text-xs !h-10 w-40" />
+
+            <DatePicker iconDisplay="input" v-model="dateRange" selectionMode="range" :manualInput="false"
+              dateFormat="yy-mm-d" size="small" :placeholder="$t('stock_movements.date_range')"
+              class="!text-xs !h-10 w-60" />
+
+            <Button icon="pi pi-filter" @click="applyFilters" :label="$t('stock_movements.filter')"
+              class="!text-xs lg:!text-[14px] ml-2" />
+
+            <Button icon="pi pi-times" @click="clearFilters" :label="$t('stock_movements.clear')"
+              class="!text-xs lg:!text-[14px] w-fit whitespace-nowrap ml-2 p-button-outlined" />
+            <Button type="button" icon="pi pi-refresh !text-xs" label=""
+              v-tooltip.bottom="$t('stock_movements.refresh')" class="!text-xs !w-8 !h-8"
+              @click="fetchStockMovements(currentPage)" />
+          </div>
+
+
         </div>
       </template>
 
-      <Column
-        field="created_at"
-        :header="$t('stock_movements.headers.date')"
-        class="w-1/10"
-        sortable
-      >
+      <Column field="created_at" :header="$t('stock_movements.headers.date')" class="w-1/10" sortable>
         <template v-if="loading" #body>
           <Skeleton width="100%" height="1rem" />
         </template>
@@ -109,12 +58,7 @@
         </template>
       </Column>
 
-      <Column
-        field="inventory_item.name"
-        :header="$t('stock_movements.headers.item')"
-        class="w-1/10"
-        sortable
-      >
+      <Column field="inventory_item.name" :header="$t('stock_movements.headers.item')" class="w-1/10" sortable>
         <template v-if="loading" #body>
           <Skeleton width="100%" height="1rem" />
         </template>
@@ -123,12 +67,7 @@
         </template>
       </Column>
 
-      <Column
-        field="inventory_item.category"
-        :header="$t('stock_movements.headers.category')"
-        class="w-1/10"
-        sortable
-      >
+      <Column field="inventory_item.category" :header="$t('stock_movements.headers.category')" class="w-1/10" sortable>
         <template v-if="loading" #body>
           <Skeleton width="100%" height="1rem" />
         </template>
@@ -137,39 +76,25 @@
         </template>
       </Column>
 
-      <Column
-        field="movement_type"
-        :header="$t('stock_movements.headers.type')"
-        class="w-1/10"
-        sortable
-      >
+      <Column field="movement_type" :header="$t('stock_movements.headers.type')" class="w-1/10" sortable>
         <template v-if="loading" #body>
           <Skeleton width="100%" height="1rem" />
         </template>
         <template v-else #body="slotProps">
-          <Tag
-            :value="slotProps.data.movement_type"
-            :severity="getMovementTypeSeverity(slotProps.data.movement_type)"
-          />
+          <Tag :value="slotProps.data.movement_type"
+            :severity="getMovementTypeSeverity(slotProps.data.movement_type)" />
         </template>
       </Column>
 
-      <Column
-        field="effective_quantity"
-        :header="$t('stock_movements.headers.quantity')"
-        class="w-1/10"
-        sortable
-      >
+      <Column field="effective_quantity" :header="$t('stock_movements.headers.quantity')" class="w-1/10" sortable>
         <template v-if="loading" #body>
           <Skeleton width="100%" height="1rem" />
         </template>
         <template v-else #body="slotProps">
-          <span
-            :class="{
-              'text-green-500': slotProps.data.effective_quantity > 0,
-              'text-red-500': slotProps.data.effective_quantity < 0,
-            }"
-          >
+          <span :class="{
+            'text-green-500': slotProps.data.effective_quantity > 0,
+            'text-red-500': slotProps.data.effective_quantity < 0,
+          }">
             {{ formatQuantity(slotProps.data.effective_quantity) }}
           </span>
         </template>
@@ -184,12 +109,7 @@
         </template>
       </Column>
 
-      <Column
-        field="creator.name"
-        :header="$t('stock_movements.headers.user')"
-        class="w-1/10"
-        sortable
-      >
+      <Column field="creator.name" :header="$t('stock_movements.headers.user')" class="w-1/10" sortable>
         <template v-if="loading" #body>
           <Skeleton width="100%" height="1rem" />
         </template>
@@ -203,32 +123,16 @@
           <Skeleton width="100%" height="1rem" />
         </template>
         <template v-else #body="slotProps">
-          <Button
-            v-if="slotProps.data.reference_type === 'invoice'"
-            icon="pi pi-file"
-            @click="
-              viewInvoice(slotProps.data.reference_type, slotProps.data.reference_id)
-            "
-            v-tooltip.top="$t('stock_movements.view_invoice')"
-            class="!text-xs !text-primary"
-            text
-          />
+          <Button v-if="slotProps.data.reference_type === 'invoice'" icon="pi pi-file" @click="
+            viewInvoice(slotProps.data.reference_type, slotProps.data.reference_id)
+            " v-tooltip.top="$t('stock_movements.view_invoice')" class="!text-xs !text-primary" text />
         </template>
       </Column>
     </DataTable>
-    <Dialog
-      :header="$t('invoices.dialog.view_title')"
-      v-model:visible="viewDialogVisible"
-      modal
-      :closable="true"
-      class="w-11/12 md:w-8/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
-    >
-      <InvoiceView
-        v-if="selectedInvoice"
-        :invoice="selectedInvoice"
-        :paymentMethods="paymentMethods"
-        @showPayment="openPaymentDialog(selectedInvoice)"
-      />
+    <Dialog :header="$t('invoices.dialog.view_title')" v-model:visible="viewDialogVisible" modal :closable="true"
+      class="w-11/12 md:w-8/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]">
+      <InvoiceView v-if="selectedInvoice" :invoice="selectedInvoice" :paymentMethods="paymentMethods"
+        @showPayment="openPaymentDialog(selectedInvoice)" />
     </Dialog>
   </div>
 </template>

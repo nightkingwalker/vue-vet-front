@@ -170,13 +170,14 @@
           <div class="flex flex-wrap items-center justify-between gap-2">
             <span class="lg:text-sm text-lg font-bold">{{
               $t("pet_details.visits_history")
-            }}</span>
+}}</span>
             <div class="flex gap-2">
               <Button v-tooltip.bottom="$t('pet_details.add_appointment')" icon="pi pi-plus" @click="addAppointment"
-                class="p-button p-button-icon-only !text-sm !font-thin h-8" />
+                class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base" />
               <Button type="button" icon="pi pi-refresh !text-sm" label=""
                 v-tooltip.bottom="$t('pet_details.refresh_data')"
-                class="p-button p-button-icon-only !text-sm !font-thin h-8" @click="refreshData" />
+                class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
+                @click="refreshData" />
             </div>
           </div>
         </template>

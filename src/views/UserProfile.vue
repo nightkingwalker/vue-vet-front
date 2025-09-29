@@ -1,235 +1,182 @@
 <template>
-  <div class="w-full p-8 rounded-lg mt-4">
-    <!-- User Profile Container -->
+  <div class="w-full p-8 mt-6">
     <ScrollPanel style="height: calc(80vh)" class="!overflow-y-auto">
-      <div
-        class="grid grid-cols-2 gap-y-[10px] gap-x-[10px] lg:w-[70%] md:w-[80%] sm:w-full xl:w-[85%] 2xl:w-[75%] mx-auto">
-        <fieldset
-          class="h-fit p-3 border border-[#c4c7c5] dark:!border-[#444746] clear-glass rounded-lg hover:!bg-[var(--p-surface-200)] transition-all shadow-md">
-          <!-- <legend
-            class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium">
-            <i class="fa-solid fa-address-card mr-2"></i>
-            {{ $t("user_profile.profile_information") }}
-          </legend> -->
-          <div class="flex flex-wrap items-start gap-2">
-            <h4 class="w-full mb-4">
-              <i class="fa-solid fa-address-card mr-2"></i>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 xl:w-[85%] 2xl:w-[75%] mx-auto">
+
+        <!-- Profile Information -->
+        <div
+          class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-xl rounded-2xl p-6 transition hover:shadow-2xl">
+          <div class="flex items-center gap-3 border-b border-gray-100 dark:border-gray-700 pb-4 mb-6">
+            <i class="fa-solid fa-address-card text-emerald-500"></i>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
               {{ $t("user_profile.profile_information") }}
-            </h4>
-            <div class="w-full flex  flex-wrap items-start gap-6">
-              <div class="relative group">
-                <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-gray-300 dark:border-gray-600">
-                  <img class="w-full h-full object-cover" :src="user.avatarUrl" alt="Profile Avatar" />
+            </h3>
+          </div>
+
+          <div class="flex flex-wrap items-start gap-6">
+            <!-- Avatar -->
+            <div class="relative group">
+              <div
+                class="w-28 h-28 rounded-full overflow-hidden border-4 border-emerald-500 shadow-lg ring-2 ring-emerald-300/50">
+                <img class="w-full h-full object-cover" :src="user.avatarUrl" alt="Profile Avatar" />
+              </div>
+              <button
+                class="absolute -bottom-1 -right-1 flex items-center justify-center w-9 h-9 bg-emerald-600 text-white rounded-full shadow-md hover:bg-emerald-700 transition">
+                <i class="fa-solid fa-pencil text-xs"></i>
+              </button>
+            </div>
+
+            <!-- User Info Form -->
+            <div class="flex-1">
+              <p class="text-sm text-gray-500 dark:text-gray-400">
+                {{ $t("user_profile.update_profile_info") }}
+              </p>
+              <form @submit.prevent="submitForm" class="mt-5 space-y-5">
+                <div>
+                  <label class="block text-sm font-medium mb-1">
+                    {{ $t("user_profile.full_name") }}
+                  </label>
+                  <InputText class="w-full rounded-lg shadow-sm focus:ring-2 focus:ring-emerald-400" v-model="user.name"
+                    type="text" required />
                 </div>
-                <button
-                  class="absolute -bottom-1 -right-1 inline-flex items-center justify-center w-7 h-7 text-xs font-bold text-white bg-gray-600 border-2 border-white rounded-full shadow-sm hover:bg-gray-200 hover:text-gray-800 hover:border-gray-500 transition-all duration-200"
-                  @click="showAvatarUploader = !showAvatarUploader">
-                  <i class="fa-solid fa-pencil text-xs"></i>
-                </button>
-              </div>
-              <div class="flex-1">
-                <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                  {{ $t("user_profile.personal_details") }}
-                </h2>
-                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                  {{ $t("user_profile.update_profile_info") }}
-                </p>
-                <form @submit.prevent="submitForm" class="mt-4 space-y-4">
-                  <div>
-                    <label class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1" for="name">
-                      {{ $t("user_profile.full_name") }}
-                    </label>
-                    <InputText class="w-full" size="small" v-model="user.name" id="name" type="text" required />
-                  </div>
-                  <div>
-                    <label class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1" for="email">
-                      {{ $t("user_profile.email_address") }}
-                    </label>
-                    <InputText class="w-full" size="small" v-model="user.email" id="email" type="email" readonly
-                      disabled />
-                  </div>
-                  <div class="flex justify-end">
-                    <button type="submit"
-                      class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200">
-                      {{ $t("user_profile.save_changes") }}
-                    </button>
-                  </div>
-                </form>
-              </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1">
+                    {{ $t("user_profile.email_address") }}
+                  </label>
+                  <InputText class="w-full rounded-lg shadow-sm bg-gray-100 dark:bg-gray-800" v-model="user.email"
+                    type="email" readonly disabled />
+                </div>
+                <div class="flex justify-end">
+                  <button type="submit"
+                    class="bg-emerald-600 px-5 py-2.5 text-white rounded-lg font-medium shadow hover:bg-emerald-700 transition">
+                    {{ $t("user_profile.save_changes") }}
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
-        </fieldset>
-        <!-- Update Password Section -->
-        <fieldset
-          class="h-fit p-3 border border-[#c4c7c5] dark:!border-[#444746] clear-glass rounded-lg hover:!bg-[var(--p-surface-200)] transition-all shadow-md">
-          <!-- <legend
-            class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium">
-            <i class="fa-solid fa-lock mr-2"></i> {{ $t("user_profile.update_password") }}
-          </legend> -->
-          <div class="mb-4"><i class="fa-solid fa-lock mr-2"></i> {{ $t("user_profile.update_password") }}</div>
+        </div>
 
-          <form @submit.prevent="updatePassword" class="space-y-4">
+        <!-- Update Password -->
+        <div
+          class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-xl rounded-2xl p-6 transition hover:shadow-2xl">
+          <div class="flex items-center gap-3 border-b border-gray-100 dark:border-gray-700 pb-4 mb-6">
+            <i class="fa-solid fa-lock text-emerald-500"></i>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              {{ $t("user_profile.update_password") }}
+            </h3>
+          </div>
+
+          <form @submit.prevent="updatePassword" class="space-y-5">
             <div>
-              <label class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1" for="current_password">
-                {{ $t("user_profile.current_password") }}
-              </label>
-              <InputText class="w-full" size="small" id="current_password" name="current_password"
-                v-model="current_password" type="password" autocomplete="current-password" />
+              <label class="block text-sm font-medium mb-1">{{ $t("user_profile.current_password") }}</label>
+              <InputText class="w-full rounded-lg shadow-sm focus:ring-2 focus:ring-emerald-400" type="password"
+                v-model="current_password" />
             </div>
             <div>
-              <label class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1" for="password_">
-                {{ $t("user_profile.new_password") }}
-              </label>
-              <InputText class="w-full" size="small" type="password" v-model="newpassword"
-                autocomplete="new-password" />
+              <label class="block text-sm font-medium mb-1">{{ $t("user_profile.new_password") }}</label>
+              <InputText class="w-full rounded-lg shadow-sm focus:ring-2 focus:ring-emerald-400" type="password"
+                v-model="newpassword" />
             </div>
             <div>
-              <label class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-1"
-                for="password_confirmation">
-                {{ $t("user_profile.confirm_password") }}
-              </label>
-              <InputText class="w-full" size="small" id="password_confirmation" name="password_confirmation"
-                v-model="password_confirmation" type="password" :invalid="passwordMatchError"
-                autocomplete="new-password" />
+              <label class="block text-sm font-medium mb-1">{{ $t("user_profile.confirm_password") }}</label>
+              <InputText class="w-full rounded-lg shadow-sm focus:ring-2 focus:ring-emerald-400" type="password"
+                v-model="password_confirmation" :invalid="passwordMatchError" />
               <Message v-if="passwordMatchError" severity="error" class="mt-1 text-xs">
                 {{ $t("user_profile.passwords_not_match") }}
               </Message>
             </div>
             <div class="flex justify-end">
               <button type="submit"
-                class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200">
+                class="bg-emerald-600 px-5 py-2.5 text-white rounded-lg font-medium shadow hover:bg-emerald-700 transition">
                 {{ $t("user_profile.update_password") }}
               </button>
             </div>
           </form>
-        </fieldset>
-        <!-- User Preferences Section -->
-        <fieldset
-          class="h-fit p-3 border border-[#c4c7c5] dark:!border-[#444746] clear-glass rounded-lg hover:!bg-[var(--p-surface-200)] transition-all shadow-md">
-          <!-- <legend
-            class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium">
-            <i class="fa-solid fa-user-cog mr-2"></i> {{ $t("user_profile.preferences") }}
-          </legend> -->
-          <div class="flex flex-wrap items-start gap-2">
-            <div class="mb-4 w-full"><i class="fa-solid fa-user-cog mr-2"></i> {{ $t("user_profile.preferences") }}
-            </div>
+        </div>
 
-            <!-- Language Selection -->
-            <div class="flex flex-wrap gap-2 w-full">
-              <div class="w-[48%]">
-                <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                  {{ $t("user_profile.language") }}
-                </h3>
-                <div class="flex gap-4 mt-4">
-                  <!-- Language Form -->
-                  <form @submit.prevent="handleSubmit('language')" class="mx-auto w-full">
-                    <FloatLabel class="w-full">
-                      <Select fluid v-model="language" :options="languages" optionLabel="label" optionValue="value"
-                        class="w-full h-10" />
-                      <!-- <label for="dd-city">{{ $t("user_profile.language") }}
-                        <span class="text-red-600">*</span></label> -->
-                    </FloatLabel>
-                    <button type="submit"
-                      class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200 mt-2">
-                      {{ $t("user_profile.update_language") }}
-                    </button>
-                  </form>
-                </div>
-              </div>
-              <!-- Theme Selection -->
-              <div class="w-[48%]">
-                <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                  {{ $t("user_profile.theme") }}
-                </h3>
-                <div class="flex gap-4 mt-4">
-                  <form @submit.prevent="handleSubmit('theme')" class="mx-auto w-full">
-                    <FloatLabel class="w-full">
-                      <Select fluid v-model="theme" :options="themes" optionLabel="label" optionValue="value"
-                        class="w-full h-10" />
-                      <!-- <label for="dd-city">{{ $t("user_profile.theme") }}
-                        <span class="text-red-600">*</span></label> -->
-                    </FloatLabel>
-                    <button type="submit"
-                      class="bg-gray-800 px-5 py-2.5 text-white rounded-lg hover:bg-gray-700 shadow-md text-sm font-medium transition-colors duration-200 mt-2">
-                      {{ $t("user_profile.update_theme") }}
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </div>
+        <!-- Preferences -->
+        <div
+          class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-xl rounded-2xl p-6 transition hover:shadow-2xl">
+          <div class="flex items-center gap-3 border-b border-gray-100 dark:border-gray-700 pb-4 mb-6">
+            <i class="fa-solid fa-user-cog text-emerald-500"></i>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              {{ $t("user_profile.preferences") }}
+            </h3>
           </div>
-        </fieldset>
-        <!-- Two Factor Authentication Section -->
-        <fieldset
-          class="h-fit p-3 border border-[#c4c7c5] dark:!border-[#444746] clear-glass rounded-lg hover:!bg-[var(--p-surface-200)] transition-all shadow-md">
-          <!-- <legend
-            class="px-4 py-1 border dark:border-gray-100 border-gray-400 rounded-xl dark:text-gray-900 dark:bg-gray-400 bg-gray-600 text-white text-sm font-medium">
-            <i class="fa-solid fa-user-shield mr-2"></i>
-            {{ $t("user_profile.two_factor_auth") }}
-          </legend> -->
-          <div class="space-y-4">
-            <div class="flex flex-wrap gap-2 w-full">
-              <!-- <div class="flex items-center justify-between"> -->
-              <div class="w-full">
-                <i class="fa-solid fa-user-shield mr-2"></i>
-                {{ $t("user_profile.two_factor_auth") }}
-              </div>
 
-              <div>
-                <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ $t("user_profile.two_factor_auth") }}
-                </h3>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                  {{ $t("user_profile.two_factor_desc") }}
-                </p>
-              </div>
-              <ToggleSwitch v-model="checked" />
-            </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <!-- Language -->
+            <form @submit.prevent="handleSubmit('language')" class="space-y-3">
+              <label class="block text-sm font-medium mb-1">{{ $t("user_profile.language") }}</label>
+              <Select v-model="language" :options="languages" optionLabel="label" optionValue="value"
+                class="w-full rounded-lg" />
+              <button type="submit"
+                class="bg-emerald-600 px-4 py-2 text-white rounded-lg shadow hover:bg-emerald-700 transition w-full">
+                {{ $t("user_profile.update_language") }}
+              </button>
+            </form>
+
+            <!-- Theme -->
+            <form @submit.prevent="handleSubmit('theme')" class="space-y-3">
+              <label class="block text-sm font-medium mb-1">{{ $t("user_profile.theme") }}</label>
+              <Select v-model="theme" :options="themes" optionLabel="label" optionValue="value"
+                class="w-full rounded-lg" />
+              <button type="submit"
+                class="bg-emerald-600 px-4 py-2 text-white rounded-lg shadow hover:bg-emerald-700 transition w-full">
+                {{ $t("user_profile.update_theme") }}
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Two-Factor Authentication -->
+        <div
+          class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-xl rounded-2xl p-6 transition hover:shadow-2xl">
+          <div class="flex items-center gap-3 border-b border-gray-100 dark:border-gray-700 pb-4 mb-6">
+            <i class="fa-solid fa-user-shield text-emerald-500"></i>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              {{ $t("user_profile.two_factor_auth") }}
+            </h3>
+          </div>
+
+          <div class="space-y-4">
+            <p class="text-sm text-gray-600 dark:text-gray-400">{{ $t("user_profile.two_factor_desc") }}</p>
+            <ToggleSwitch v-model="checked" />
+
             <transition name="fade">
               <div v-if="checked"
-                class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
-                <p class="text-xs text-green-500 mb-2">
-                  <i class="fa-solid fa-circle-info mr-1"></i>
-                  {{ $t("user_profile.scan_qr_code") }}
+                class="p-5 bg-emerald-50 dark:bg-gray-800 rounded-xl border border-emerald-200 dark:border-gray-700">
+                <p class="text-xs text-emerald-600 mb-3 flex items-center gap-1">
+                  <i class="fa-solid fa-circle-info"></i> {{ $t("user_profile.scan_qr_code") }}
                 </p>
                 <div class="flex flex-col items-center">
-                  <img v-if="checked" class="w-48 h-48 mb-3" :src="qrCodeUrl" alt="2FA QR Code" />
-                  <p class="text-xs text-gray-500 dark:text-gray-400 text-center mb-3">
+                  <img v-if="checked" class="w-44 h-44 mb-3 rounded-lg shadow" :src="qrCodeUrl" alt="2FA QR Code" />
+                  <p class="text-xs text-gray-500 dark:text-gray-400 text-center">
                     {{ $t("user_profile.secret_key") }}:
-                    <code class="bg-gray-200 dark:bg-gray-600 px-1 rounded">{{
-                      user.two_factor_secret
-                    }}</code>
+                    <code class="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded-md">{{ user.two_factor_secret }}</code>
                   </p>
                 </div>
-                <form @submit.prevent="tfaEnabled" class="space-y-3">
-                  <div>
-                    <label :class="{
-                      fa_code: tfaInvalid,
-                    }" class="block text-xs text-gray-700 dark:text-gray-300 mb-1" for="2fa_code">
-                      {{ $t("user_profile.enter_verification_code") }}
-                    </label>
-                    <InputOtp v-model="tfa_code" :length="6" dir="ltr" :invalid="tfaInvalid"
-                      class="mx-auto justify-center" placeholder="000000">
-                      <template #default="{ attrs, events }">
-                        <input type="text" v-bind="attrs" v-on="events" :class="{
-                          invalid: tfaInvalid,
-                        }" class="custom-otp-input" placeholder="0" />
-                      </template>
-                    </InputOtp>
-                  </div>
+                <form @submit.prevent="tfaEnabled" class="space-y-3 mt-4">
+                  <InputOtp v-model="tfa_code" :length="6" dir="ltr" :invalid="tfaInvalid"
+                    class="mx-auto justify-center" placeholder="000000" />
                   <button type="submit"
-                    class="w-full bg-gray-800 px-4 py-2 text-white rounded-lg hover:bg-gray-700 shadow-md text-xs font-medium transition-colors duration-200">
+                    class="w-full bg-emerald-600 px-4 py-2 text-white rounded-lg shadow hover:bg-emerald-700 transition text-sm font-medium">
                     {{ $t("user_profile.verify_activate") }}
                   </button>
                 </form>
               </div>
             </transition>
           </div>
-        </fieldset>
+        </div>
+
       </div>
     </ScrollPanel>
   </div>
 </template>
+
+
+
 <script setup>
 import { onMounted, ref, computed, watchEffect } from "vue";
 import QRCode from "qrcode"; // Import the QRCode library

@@ -2,58 +2,39 @@
   <DataView :value="owners" :layout="layout" class="!rounded-lg h-[calc(100vh-70px)]">
     <template #header>
       <div
-        class="flex flex-col md:flex-row justify-between items-start md:items-center bg-surface-300 rounded-t-lg gap-2"
-      >
-        <h2 class="text-lg md:text-xl font-semibold text-surface-0">
+        class="flex flex-col md:flex-row justify-between items-start md:items-center bg-surface-300 rounded-t-lg gap-2">
+        <h2 class="text-md !mb-0 pb-0 flex items-center">
           {{ $t("owners.title") }}
         </h2>
 
-        <div
-          class="flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch w-full md:w-auto"
-        >
+        <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch w-full md:w-auto">
           <InputGroup class="w-full sm:w-48 md:w-56 lg:w-64">
             <InputGroupAddon class="bg-surface-400 border-surface-500">
               <i class="pi pi-search text-surface-300 text-sm md:text-base" />
             </InputGroupAddon>
-            <InputText
-              v-model="searchQuery"
-              @input="onSearchChange"
-              type="text"
+            <InputText v-model="searchQuery" @input="onSearchChange" type="text"
               class="bg-surface-400 border-surface-500 text-surface-100 placeholder-surface-500 text-sm md:text-base"
-              :placeholder="$t('owners.search_placeholder')"
-            />
-            <Button
-              v-if="searchQuery"
-              icon="pi pi-times"
-              @click="clearFilters"
-              class="p-button-text text-surface-400 hover:text-surface-200 text-sm md:text-base"
-            />
+              :placeholder="$t('owners.search_placeholder')" />
+            <Button v-if="searchQuery" icon="pi pi-times" @click="clearFilters"
+              class="p-button-text text-surface-400 hover:text-surface-200 text-sm md:text-base" />
           </InputGroup>
           <!-- onLabel="Showing All"
             offLabel="Active Only" -->
-          <ToggleButton
-            onLabel=""
-            offLabel=""
-            v-model="showDeactivated"
-            :v-tooltip.top="$t(`owners.actions.show_deactive`)"
-            onIcon="pi pi-eye"
-            offIcon="pi pi-eye-slash"
-            class="w-full sm:w-auto"
-            @change="refreshData"
-          />
+          <!-- <ToggleButton onLabel="" offLabel="" v-model="showDeactivated"
+            :v-tooltip.top="$t(`owners.actions.show_deactive`)" onIcon="pi pi-eye" offIcon="pi pi-eye-slash"
+            class="w-full sm:w-auto" @change="refreshData" /> -->
           <div class="flex gap-2 justify-end sm:justify-start">
-            <Button
-              icon="pi pi-refresh"
-              @click="refreshData"
+            <Button :icon="showDeactivated ? 'pi pi-eye' : 'pi pi-eye-slash'"
               class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
-              v-tooltip.top="$t('owners.actions.refresh')"
-            />
-            <Button
-              icon="pi pi-plus"
-              @click="showModal"
-              class="p-button-primary bg-emerald-600 hover:bg-emerald-500 border-emerald-600 text-sm md:text-base"
-              v-tooltip.top="$t('owners.actions.new_owner')"
-            />
+              v-tooltip.top="!showDeactivated ? $t('owners.actions.show_deactive') : $t('owners.actions.hide_deactive')"
+              @click="toggleShowDeactivated" />
+
+            <Button icon="pi pi-refresh" @click="refreshData"
+              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
+              v-tooltip.top="$t('owners.actions.refresh')" />
+            <Button icon="pi pi-plus" @click="showModal"
+              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
+              v-tooltip.top="$t('owners.actions.new_owner')" />
           </div>
         </div>
       </div>
@@ -62,48 +43,30 @@
     <!-- Grid View -->
     <template #grid v-if="loading">
       <ScrollPanel style="height: calc(70vh)" class="!overflow-y-auto !bg-transparent">
-        <div
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 p-3 !bg-transparent"
-        >
-          <div
-            v-for="i in 4"
-            :key="i"
-            class="p-3 border border-surface-500 bg-surface-300 rounded-lg hover:bg-surface-400 transition-all"
-          >
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 p-3 !bg-transparent">
+          <div v-for="i in 4" :key="i"
+            class="p-3 border border-surface-500 bg-surface-300 rounded-lg hover:bg-surface-400 transition-all">
             <div class="flex flex-col gap-2">
               <!-- Owner Info -->
               <div class="flex flex-col gap-1">
                 <div
-                  class="text-base md:text-lg font-medium text-surface-100 border-b border-emerald-500 w-fit mb-1 md:mb-2"
-                >
+                  class="text-base md:text-lg font-medium text-surface-100 border-b border-emerald-500 w-fit mb-1 md:mb-2">
                   <Skeleton width="6rem" height="1.5rem" />
                 </div>
-                <div
-                  class="text-xs md:text-sm text-surface-300 flex items-start gap-1 md:gap-2"
-                >
-                  <i
-                    class="pi pi-envelope mr-1 md:mr-2 !text-emerald-400 text-sm md:text-base"
-                  ></i>
+                <div class="text-xs md:text-sm text-surface-300 flex items-start gap-1 md:gap-2">
+                  <i class="pi pi-envelope mr-1 md:mr-2 !text-emerald-400 text-sm md:text-base"></i>
                   <Skeleton width="12rem" height="1.5rem" />
                 </div>
               </div>
 
               <!-- Contact Info -->
               <div class="flex flex-col gap-1">
-                <div
-                  class="text-xs md:text-sm text-surface-300 flex items-start gap-1 md:gap-2"
-                >
-                  <i
-                    class="pi pi-phone mr-1 md:mr-2 !text-emerald-400 text-sm md:text-base"
-                  ></i>
+                <div class="text-xs md:text-sm text-surface-300 flex items-start gap-1 md:gap-2">
+                  <i class="pi pi-phone mr-1 md:mr-2 !text-emerald-400 text-sm md:text-base"></i>
                   <Skeleton width="12rem" height="1.5rem" />
                 </div>
-                <div
-                  class="text-xs md:text-sm text-surface-300 flex items-start gap-1 md:gap-2"
-                >
-                  <i
-                    class="pi pi-map-marker mr-1 md:mr-2 !text-emerald-400 text-sm md:text-base"
-                  ></i>
+                <div class="text-xs md:text-sm text-surface-300 flex items-start gap-1 md:gap-2">
+                  <i class="pi pi-map-marker mr-1 md:mr-2 !text-emerald-400 text-sm md:text-base"></i>
                   <Skeleton width="12rem" height="1.5rem" />
                 </div>
               </div>
@@ -119,30 +82,20 @@
     </template>
     <template #grid="slotProps" v-else>
       <ScrollPanel style="height: calc(68vh)" class="!overflow-y-auto !bg-transparent">
-        <div
-          v-if="slotProps.items && slotProps.items.length > 0"
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 p-3 !bg-transparent"
-        >
-          <div
-            v-for="(owner, index) in slotProps.items"
-            :key="index"
-            class="p-3 border border-[#c4c7c5] dark:!border-[#444746] clear-glass rounded-lg hover:!bg-[var(--p-surface-200)] transition-all shadow-md"
-            :class="owner.status === 0 ? `bg-red-300` : ``"
-          >
+        <div v-if="slotProps.items && slotProps.items.length > 0"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 p-3 !bg-transparent">
+          <div v-for="(owner, index) in slotProps.items" :key="index"
+            class="p-3 border border-[#c4c7c5] dark:!border-[#444746] clear-glass rounded-lg hover:!bg-[var(--p-surface-200)] dark:hover:!bg-[var(--p-surface-600)] transition-all shadow-md"
+            :class="owner.status === 0 ? `bg-red-300` : ``">
             <div class="flex flex-col gap-2">
               <!-- Owner Info -->
               <div class="flex flex-col gap-1">
                 <div
-                  class="text-base md:text-lg font-medium text-surface-100 border-b border-emerald-500 w-fit mb-1 md:mb-2"
-                >
+                  class="text-base md:text-lg font-medium text-surface-100 border-b border-emerald-500 w-fit mb-1 md:mb-2">
                   {{ owner.name }}
                 </div>
-                <div
-                  class="text-xs md:text-sm text-surface-300 flex items-start gap-1 md:gap-2"
-                >
-                  <i
-                    class="pi pi-envelope mr-1 md:mr-2 !text-emerald-400 text-sm md:text-base"
-                  ></i>
+                <div class="text-xs md:text-sm text-surface-300 flex items-start gap-1 md:gap-2">
+                  <i class="pi pi-envelope mr-1 md:mr-2 !text-emerald-400 text-sm md:text-base"></i>
                   <span v-if="owner.showDetails" class="truncate">{{ owner.email }}</span>
                   <span v-else class="text-surface-500 truncate">******@****.***</span>
                 </div>
@@ -150,70 +103,42 @@
 
               <!-- Contact Info -->
               <div class="flex flex-col gap-1">
-                <div
-                  class="text-xs md:text-sm text-surface-300 flex items-start gap-1 md:gap-2"
-                >
-                  <i
-                    class="pi pi-phone mr-1 md:mr-2 !text-emerald-400 text-sm md:text-base"
-                  ></i>
-                  <span v-if="owner.showDetails" class="!ltr truncate"
-                    >+{{ owner.phone }}</span
-                  >
+                <div class="text-xs md:text-sm text-surface-300 flex items-start gap-1 md:gap-2">
+                  <i class="pi pi-phone mr-1 md:mr-2 !text-emerald-400 text-sm md:text-base"></i>
+                  <span v-if="owner.showDetails" class="!ltr truncate">+{{ owner.phone }}</span>
                   <span v-else class="text-surface-500 truncate">{{
                     $t("owners.hidden_phone")
                   }}</span>
                 </div>
-                <div
-                  class="text-xs md:text-sm text-surface-300 flex items-start gap-1 md:gap-2"
-                >
-                  <i
-                    class="pi pi-map-marker mr-1 md:mr-2 !text-emerald-400 text-sm md:text-base"
-                  ></i>
+                <div class="text-xs md:text-sm text-surface-300 flex items-start gap-1 md:gap-2">
+                  <i class="pi pi-map-marker mr-1 md:mr-2 !text-emerald-400 text-sm md:text-base"></i>
                   <span class="truncate">{{ owner.address }}</span>
                 </div>
               </div>
 
               <!-- Actions -->
               <div class="flex gap-1 md:gap-2 justify-end mt-2 md:mt-3">
-                <Button
-                  icon="pi pi-pencil"
-                  @click="editOwner(owner)"
+                <Button icon="pi pi-pencil" @click="editOwner(owner)"
                   class="p-button-text text-surface-300 hover:!text-emerald-400 text-sm md:text-base"
-                  v-tooltip.top="$t('owners.actions.edit')"
-                />
-                <router-link
-                  :to="`/` + owner.id + `/pets`"
+                  v-tooltip.top="$t('owners.actions.edit')" />
+                <router-link :to="`/` + owner.id + `/pets`"
                   class="p-button p-component p-button-icon-only p-button-text text-surface-300 hover:!text-emerald-400 button-transition text-sm md:text-base"
-                  v-tooltip.top="$t('owners.actions.pets')"
-                >
+                  v-tooltip.top="$t('owners.actions.pets')">
                   <i class="fas fa-paw"></i>
                 </router-link>
-                <Button
-                  icon="pi pi-whatsapp"
-                  @click="showWahaModal(owner)"
+                <Button icon="pi pi-whatsapp" @click="showWahaModal(owner)"
                   class="p-button-text text-surface-300 hover:!text-emerald-400 text-sm md:text-base"
-                  v-tooltip.top="$t('owners.actions.whatsapp')"
-                />
-                <Button
-                  :icon="owner.showDetails ? 'pi pi-eye-slash' : 'pi pi-eye'"
-                  @click="toggleDetails(owner)"
-                  class="p-button-text text-surface-300 hover:!text-emerald-400 text-sm md:text-base"
-                  v-tooltip.top="
-                    owner.showDetails
-                      ? $t('owners.actions.hide_details')
-                      : $t('owners.actions.view_details')
-                  "
-                />
-                <Button
-                  :icon="owner.status ? 'pi pi-trash' : 'pi pi-replay'"
-                  @click="deactivateAccount(owner)"
-                  class="p-button-text text-surface-300 hover:text-rose-400 text-sm md:text-base"
-                  :v-tooltip.top="
-                    owner.status
-                      ? $t('owners.actions.deactivate')
-                      : $t('owners.actions.activate')
-                  "
-                />
+                  v-tooltip.top="$t('owners.actions.whatsapp')" />
+                <Button :icon="owner.showDetails ? 'pi pi-eye-slash' : 'pi pi-eye'" @click="toggleDetails(owner)"
+                  class="p-button-text text-surface-300 hover:!text-emerald-400 text-sm md:text-base" v-tooltip.top="owner.showDetails
+                    ? $t('owners.actions.hide_details')
+                    : $t('owners.actions.view_details')
+                    " />
+                <Button :icon="owner.status ? 'pi pi-trash' : 'pi pi-replay'" @click="deactivateAccount(owner)"
+                  class="p-button-text text-surface-300 hover:text-rose-400 text-sm md:text-base" :v-tooltip.top="owner.status
+                    ? $t('owners.actions.deactivate')
+                    : $t('owners.actions.activate')
+                    " />
               </div>
             </div>
           </div>
@@ -223,49 +148,26 @@
 
     <template #footer>
       <div class="bg-surface-300 rounded-b-lg">
-        <Paginator
-          :rows="itemsPerPage"
-          :totalRecords="totalRecords"
-          :rowsPerPageOptions="[25, 50, 100]"
+        <Paginator :rows="itemsPerPage" :totalRecords="totalRecords" :rowsPerPageOptions="[25, 50, 100]"
           @page="onPageChange"
-          class="border-0 bg-surface-300 [&>button]:text-surface-100 [&>button:hover]:bg-surface-400 text-xs md:text-sm"
-        ></Paginator>
+          class="border-0 bg-surface-300 [&>button]:text-surface-100 [&>button:hover]:bg-surface-400 text-xs md:text-sm">
+        </Paginator>
       </div>
     </template>
   </DataView>
   <!-- Dialogs -->
-  <Dialog
-    v-model:visible="isModalVisible"
-    header="New Owner"
-    :style="{ width: '50vw' }"
-    modal
-    :closable="true"
-    class="bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]"
-  >
+  <Dialog v-model:visible="isModalVisible" header="New Owner" :style="{ width: '50vw' }" modal :closable="true"
+    class="bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)]">
     <NewClientForm @ownerAdded="handleSubmit" />
   </Dialog>
 
-  <Dialog
-    v-model:visible="isModalWahaVisible"
-    header="Send WhatsApp"
-    :style="{ width: '40vw' }"
-    class="bg-surface-300 text-surface-100"
-    :modal="true"
-  >
-    <SendWhatsApp
-      :contactNumber="whatsAppContact"
-      :ownerID="selectedOwner"
-      @submitted="handleWahaSubmit"
-    />
+  <Dialog v-model:visible="isModalWahaVisible" header="Send WhatsApp" :style="{ width: '40vw' }"
+    class="bg-surface-300 text-surface-100" :modal="true">
+    <SendWhatsApp :contactNumber="whatsAppContact" :ownerID="selectedOwner" @submitted="handleWahaSubmit" />
   </Dialog>
 
-  <Dialog
-    v-model:visible="isEditOwnerVisible"
-    header="Edit Owner"
-    :style="{ width: '60vw' }"
-    class="bg-surface-300 text-surface-100"
-    :modal="true"
-  >
+  <Dialog v-model:visible="isEditOwnerVisible" header="Edit Owner" :style="{ width: '60vw' }"
+    class="bg-surface-300 text-surface-100" :modal="true">
     <EditOwner :owner="selectedOwner" @OwnerUpdated="handleOwnerUpdated" />
   </Dialog>
   <ConfirmDialog group="headless">
@@ -279,21 +181,12 @@
         </div>
         <p class="mb-3">{{ message.message }}</p>
         <div class="flex justify-end gap-2">
-          <Button
-            :label="$t('confirmDialog.cancel')"
-            severity="secondary"
-            @click="rejectCallback"
-            class="p-button-text"
-          />
-          <Button
-            :label="
-              ownerToDeactivate?.status
-                ? $t('confirmDialog.deactivate')
-                : $t('confirmDialog.activate')
-            "
-            severity="danger"
-            @click="acceptCallback"
-          />
+          <Button :label="$t('confirmDialog.cancel')" severity="secondary" @click="rejectCallback"
+            class="p-button-text" />
+          <Button :label="ownerToDeactivate?.status
+            ? $t('confirmDialog.deactivate')
+            : $t('confirmDialog.activate')
+            " severity="danger" @click="acceptCallback" />
         </div>
       </div>
     </template>
@@ -353,6 +246,10 @@ const showModal = () => {
   isModalVisible.value = true;
 };
 layout.value = isMobile ? "grid" : "list";
+function toggleShowDeactivated() {
+  showDeactivated.value = !showDeactivated.value;
+  refreshData();
+}
 const refreshData = () => {
   loading.value = true; // Set loading state to true to show skeletons
   fetchOwners(); // Fetch the pets data again
@@ -472,8 +369,7 @@ const fetchOwners = async (page = 1) => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(
-      `/owners?page=${page}&per_page=${itemsPerPage.value}&search=${
-        searchQuery.value
+      `/owners?page=${page}&per_page=${itemsPerPage.value}&search=${searchQuery.value
       }&show_deactivated=${showDeactivated.value ? 1 : 0}`
     );
 
@@ -598,6 +494,7 @@ onMounted(() => {
   max-width: 800px;
   margin: auto;
 }
+
 /* Improved responsive styles */
 .button-transition {
   transition: all 0.2s ease;
@@ -636,16 +533,23 @@ onMounted(() => {
   .p-3 {
     padding: 0.75rem;
   }
+
   .gap-2 {
     gap: 0.5rem;
   }
 }
+
 .p-scrollpanel-bar {
   --tw-bg-opacity: 1;
   background: var(--p-surface-600) !important;
   border-radius: 5px;
 }
+
 .p-togglebutton-label {
   display: none;
+}
+
+.p-togglebutton {
+  overflow: none !important;
 }
 </style>

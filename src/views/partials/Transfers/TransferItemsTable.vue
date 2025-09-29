@@ -107,7 +107,7 @@
         <!-- Items Table -->
         <DataTable :value="items" class="p-datatable-sm" :scrollable="true" scrollHeight="300px" editMode="cell"
             @cell-edit-complete="onCellEditComplete">
-            <template #empty> No customers found. </template>
+            <template #empty> {{ $t('common.not_available') }} </template>
             <template #loading> Loading customers data. Please wait. </template>
             <Column field="name" :header="$t('transfer.items_section.item')" class="lg:!text-xs" />
             <Column field="quantity" :header="$t('transfer.items_section.qty')" class="lg:!text-xs"

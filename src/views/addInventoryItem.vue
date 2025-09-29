@@ -639,6 +639,7 @@ const submitForm = async () => {
     
     
     // return;
+    console.log(payload)
     const response = await axiosInstance.post(endpoint, payload);
     createNewItemLoading.value = false;
     toast.add({

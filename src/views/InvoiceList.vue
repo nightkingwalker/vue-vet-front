@@ -4,32 +4,37 @@
       :loading="loading" :metaKeySelection="metaKey" sortMode="multiple" exportFilename="Invoices" removableSort
       showGridlines stripedRows v-model:selection="selectedInvoices" highlightOnSelect dataKey="id"
       responsiveLayout="scroll" scrollable scrollHeight="75vh" :exportFunction="beforeExportFunction"
-      class="rounded-xl 2xl:overflow-y-auto drop-shadow-md h-[95vh]" size="small">
+      class="rounded-xl 2xl:overflow-y-auto h-[95vh]" size="small">
       <template #header>
-        <div class="flex justify-between">
-          <div class="flex">
-            <Button size="small" type="button" icon="pi pi-refresh !text-xs" label=""
-              v-tooltip.bottom="$t('invoices.actions.refresh')" class="!text-xs ml-2" @click="refreshData" />
-            <Button size="small" icon="pi pi-plus" @click="showModal" v-tooltip.bottom="$t('invoices.actions.create')"
-              class="p-button p-component p-button-icon-only !text-xs ml-2" />
-            <Button size="small" icon="pi pi-download !text-xs" class="!text-xs ml-2"
-              v-tooltip.bottom="$t('invoices.actions.export')" @click="exportCSV($event)" />
-          </div>
+        <div
+          class="flex flex-col md:flex-row justify-between items-start md:items-center bg-surface-300 rounded-t-lg gap-2 p-[var(--p-dataview-header-padding)]">
           <h2 class="text-md !mb-0 pb-0 flex items-center">
             <i class="fa-solid fa-file-invoice mx-2"></i> {{ $t("invoices.title") }}
           </h2>
-          <span class="p-input-icon-left text-xs">
-            <InputGroup class="!text-gray-800 flex rounded-md overflow-hidden border !border-gray-400">
+          <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch w-full md:w-auto">
+            <InputGroup class="!text-gray-800 flex rounded-md overflow-hidden !border-0">
               <InputGroupAddon class="!text-gray-800 px-4 flex flex-col item-center justify-center">
                 <i class="pi pi-search"></i>
               </InputGroupAddon>
               <InputText size="small" v-model="searchQuery" @input="onSearchChange" ref="inputRef"
                 @focus="inputFocused = true" @blur="inputFocused = false" autofocus="true" type="text"
-                class="!text-xs !text-gray-800 focus:!ring-0 focus:!ring-offset-0 focus:!border-gray-400 border-transparent"
+                class="p-inputtext p-component p-inputtext-sm p-inputfield-sm !text-sm lg:!text-[14px] !text-gray-800 focus:!ring-0 focus:!ring-offset-0 focus:!border-gray-400 border-transparent"
                 :placeholder="$t('invoices.search.placeholder')" />
-              <Button size="small" icon="pi pi-times" @click="clearFilters" />
+              <Button size="small" icon="pi pi-times" @click="clearFilters" v-if="searchQuery"
+                class="p-button-text text-surface-400 hover:text-surface-200 text-sm md:text-base" />
             </InputGroup>
-          </span>
+
+            <Button size="small" type="button" icon="pi pi-refresh !text-xs" label=""
+              v-tooltip.bottom="$t('invoices.actions.refresh')"
+              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
+              @click="refreshData" />
+            <Button size="small" icon="pi pi-plus" @click="showModal" v-tooltip.bottom="$t('invoices.actions.create')"
+              class="p-button p-component p-button-icon-only p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base" />
+            <Button size="small" icon="pi pi-download !text-xs"
+              class="p-button-text text-surface-400 hover:text-surface-200 text-sm md:text-base"
+              v-tooltip.bottom="$t('invoices.actions.export')" @click="exportCSV($event)" />
+          </div>
+
         </div>
       </template>
 
@@ -706,5 +711,14 @@ h2 {
 .dark\::-webkit-scrollbar-track {
   --tw-bg-opacity: 1;
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+}
+
+.p-inputtext {
+  box-shadow: unset !important;
+}
+
+.p-datatable-gridlines .p-datatable-header,
+.p-datatable-gridlines .p-datatable-footer {
+  border: 0;
 }
 </style>
