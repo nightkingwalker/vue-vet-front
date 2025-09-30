@@ -17,6 +17,7 @@ coverage
 /cypress/videos/
 /cypress/screenshots/
 .env
+package-lock.json
 # Editor directories and files
 .vscode/*
 .idea

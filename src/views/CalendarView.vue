@@ -1,6 +1,6 @@
 <template>
   <div class="flex gap-2" :class="{ 'flex-wrap': isMobile }">
-    <div :class="{ 'w-full': !isMobile, 'w-9/10 mx-auto': isMobile }">
+    <div :class="{ 'w-full': !isMobile, 'w-9/10 mx-auto': isMobile }" :dir="isRTL ? 'rtl' : 'ltr'">
       <ScheduleXCalendar :calendar-app="calendarApp" class="mx-auto" :class="{
         '!w-full !h-[calc(100vh-100px)]': !isMobile,
         '!w-full !h-[400px]': isMobile,
@@ -728,7 +728,7 @@ const calendarApp = createCalendar({
     nEventsPerDay: 2,
   },
   translations: mergeLocales(translations, {
-    arSY: {
+    arEG: {
       Today: "اليوم",
       Month: "شهر",
       Week: "أسبوع",
@@ -1088,5 +1088,10 @@ onMounted(async () => {
 
 .google-sync-status.disconnected {
   color: var(--red-500);
+}
+
+[dir="rtl"] .sx__date-input-chevron-wrapper {
+  right: 1rem;
+  left: auto;
 }
 </style>
