@@ -166,6 +166,7 @@
       <DataTable showGridlines :value="visits" scrollable scrollHeight="70vh" class="text-xs" stripedRows
         v-if="!loading" :paginator="true" :first="0" :rows="itemsPerPage" :totalRecords="visits.length"
         @page="onPageChange" :rowsPerPageOptions="[25, 50, 100]">
+        <template #empty> {{ $t("common.not_available") }} </template>
         <template #header>
           <div class="flex flex-wrap items-center justify-between gap-2">
             <span class="lg:text-sm text-lg font-bold">{{
