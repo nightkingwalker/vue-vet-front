@@ -22,6 +22,13 @@
         </div>
       </template>
       <template #content>
+        <!-- Examination Details -->
+        <Divider :align="!isRtl ? `left` : `right`" type="solid">
+          <span class="text-xl font-bold">{{
+            $t("medical_examination.examination_details")
+            }}</span>
+        </Divider>
+
         <div v-for="(exam, index) in medicalRecord.medical_examinations" :key="index" class="w-full">
           <fieldset class="p-fieldset p-component w-4/5 flex flex-wrap mx-auto gap-2 items-start border rounded-lg p-4">
             <Stepper :value="activeStep" class="w-full">
@@ -699,79 +706,128 @@ const medicalRecord = ref({
 
 const activeStep = ref("1");
 const isEditable = ref(false);
-
-// ---------------------- OPTIONS ----------------------
-
-// Yes/No
 const yesno = ref([
   { label: t("medical_examination_form.options.yes"), value: "yes" },
   { label: t("medical_examination_form.options.no"), value: "no" },
 ]);
-
-// Breathing Types
 const breathingTypes = ref([
-  { label: t("medical_examination_form.options.wheezing"), en_label: "Wheezing/أزيز", value: "wheezing" },
-  { label: t("medical_examination_form.options.stridor"), en_label: "Stridor/صرير", value: "stridor" },
-  { label: t("medical_examination_form.options.crackles"), en_label: "Crackles (Rales)/خراخر / طقطقة", value: "crackles" },
-  { label: t("medical_examination_form.options.rhonchi"), en_label: "Rhonchi/خرخرة", value: "rhonchi" },
-  { label: t("medical_examination_form.options.pleural_rub"), en_label: "Pleural rub/احتكاك غشاء الجنب", value: "pleural_rub" },
-  { label: t("medical_examination_form.options.bronchial_sounds"), en_label: "Bronchial sounds/أصوات قصبية", value: "bronchial_sounds" },
-  { label: t("medical_examination_form.options.diminished_lung_sounds"), en_label: "Diminished Lung Sounds/انخفاض أصوات الرئة", value: "diminished_lung_sounds" },
-  { label: t("medical_examination_form.options.intestinal_sounds"), en_label: "Intestinal Sounds in Chest/أصوات أمعاء داخل الصدر", value: "intestinal_sounds" },
+  {
+    label: t("medical_examination_form.options.wheezing"),
+    en_label: "Wheezing/أزيز",
+    value: "wheezing",
+  },
+  {
+    label: t("medical_examination_form.options.stridor"),
+    en_label: "Stridor/صرير",
+    value: "stridor",
+  },
+  {
+    label: t("medical_examination_form.options.crackles"),
+    en_label: "Crackles (Rales)/خراخر / طقطقة",
+    value: "crackles",
+  },
+  {
+    label: t("medical_examination_form.options.rhonchi"),
+    en_label: "Rhonchi/خرخرة",
+    value: "rhonchi",
+  },
+  {
+    label: t("medical_examination_form.options.pleural_rub"),
+    en_label: "Pleural rub/احتكاك غشاء الجنب",
+    value: "pleural_rub",
+  },
+  {
+    label: t("medical_examination_form.options.bronchial_sounds"),
+    en_label: "Bronchial sounds/أصوات قصبية",
+    value: "bronchial_sounds",
+  },
+  {
+    label: t("medical_examination_form.options.diminished_lung_sounds"),
+    en_label: "Diminished Lung Sounds/انخفاض أصوات الرئة",
+    value: "diminished_lung_sounds",
+  },
+  {
+    label: t("medical_examination_form.options.intestinal_sounds"),
+    en_label: "Intestinal Sounds in Chest/أصوات أمعاء داخل الصدر",
+    value: "intestinal_sounds",
+  },
 ]);
 
-// Breathing Severity
 const breathingSeverities = ref([
-  { label: t("medical_examination_form.options.low"), en_label: "Low", value: "low" },
-  { label: t("medical_examination_form.options.medium"), en_label: "Medium", value: "medium" },
-  { label: t("medical_examination_form.options.high"), en_label: "High", value: "high" },
+  {
+    label: t("medical_examination_form.options.low"),
+    value: "low",
+    en_label: "Low",
+  },
+
+  {
+    label: t("medical_examination_form.options.medium"),
+    en_label: "Medium",
+    value: "medium",
+  },
+  {
+    label: t("medical_examination_form.options.high"),
+    en_label: "High",
+    value: "high",
+  },
 ]);
 
-// Breathing Locations
 const breathingLocations = ref([
-  { label: t("medical_examination_form.options.front_left"), en_label: "Front Left", value: "front_left" },
-  { label: t("medical_examination_form.options.front_right"), en_label: "Front Right", value: "front_right" },
-  { label: t("medical_examination_form.options.back_left"), en_label: "Back Left", value: "back_left" },
-  { label: t("medical_examination_form.options.back_right"), en_label: "Back Right", value: "back_right" },
-  { label: t("medical_examination_form.options.whole_lungs"), en_label: "Whole Lungs", value: "whole_lungs" },
+  {
+    label: t("medical_examination_form.options.front_left"),
+    en_label: "Front Left",
+    value: "front_left",
+  },
+  {
+    label: t("medical_examination_form.options.front_right"),
+    en_label: "Front Right",
+    value: "front_right",
+  },
+  {
+    label: t("medical_examination_form.options.back_left"),
+    en_label: "Back Left",
+    value: "back_left",
+  },
+  {
+    label: t("medical_examination_form.options.back_right"),
+    en_label: "Back Right",
+    value: "back_right",
+  },
+  {
+    label: t("medical_examination_form.options.whole_lungs"),
+    en_label: "Whole Lungs",
+    value: "whole_lungs",
+  },
 ]);
-
-// Breathing Patterns
 const breathingPatterns = ref([
-  { label: t("medical_examination_form.options.thoracic"), en_label: "Thoracic", value: "thoracic" },
-  { label: t("medical_examination_form.options.abdominal"), en_label: "Abdominal", value: "abdominal" },
-  { label: t("medical_examination_form.options.mixed"), en_label: "Mixed", value: "mixed" },
-  { label: t("medical_examination_form.options.paradoxical"), en_label: "Paradoxical", value: "paradoxical" },
+  {
+    label: t("medical_examination_form.options.thoracic"),
+    en_label: "Thoracic",
+    value: "thoracic",
+  },
+  {
+    label: t("medical_examination_form.options.abdominal"),
+    en_label: "Abdominal",
+    value: "abdominal",
+  },
+  {
+    label: t("medical_examination_form.options.mixed"),
+    en_label: "Mixed",
+    value: "mixed",
+  },
+  {
+    label: t("medical_examination_form.options.paradoxical"),
+    en_label: "Paradoxical",
+    value: "paradoxical",
+  },
 ]);
-
-// ---------------------- NEW UROGENITAL OPTIONS ----------------------
-
-// Bladder Filling
-const bladderFillingOptions = ref([
-  { label: t("medical_examination_form.options.full"), value: "full" },
-  { label: t("medical_examination_form.options.empty"), value: "empty" },
-]);
-
-// Bladder Pain
-const bladderPainOptions = ref([
-  { label: t("medical_examination_form.options.painful"), value: "painful" },
-  { label: t("medical_examination_form.options.not_painful"), value: "not_painful" },
-]);
-
-// Urine Retention
-const urineRetentionOptions = ref([
-  { label: t("medical_examination_form.options.complete"), value: "complete" },
-  { label: t("medical_examination_form.options.partial"), value: "partial" },
-  { label: t("medical_examination_form.options.difficulty"), value: "difficulty" },
-]);
-
-// ----------------------------------------------------
 
 const fetchMedicalExamination = async () => {
   try {
     const response = await axiosInstance.get(
       `/medical-records/${props.medical_record_id}/examntn`
     );
+    // console.log(response.data);
     medicalRecord.value = response.data;
   } catch (error) {
     console.error("Error fetching medical examination:", error);
@@ -787,6 +843,7 @@ const showAddPhysicalExaminationModal = (medicalRecordId) => {
 };
 
 const submitForm = async (exam) => {
+  // console.log(exam);
   try {
     const response = await axiosInstance.put(`/medical-examinations/${exam.ex_id}`, exam);
 
@@ -803,7 +860,8 @@ const submitForm = async (exam) => {
     eventBus.emit("show-toast", {
       severity: "error",
       summary: t("medical_examination_form.messages.error_title"),
-      detail: error.response?.data?.message || t("medical_examination_form.messages.error"),
+      detail:
+        error.response?.data?.message || t("medical_examination_form.messages.error"),
       life: 5000,
     });
     console.error("Error submitting form:", error);
@@ -812,7 +870,7 @@ const submitForm = async (exam) => {
 
 onMounted(() => {
   fetchMedicalExamination();
-  eventBus.on("PhysicalExaminationAddedSuccessfully", () => {
+  eventBus.on("PhysicalExaminationAddedSuccessfully", (event) => {
     fetchMedicalExamination();
   });
 });

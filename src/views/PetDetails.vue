@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-wrap gap-2 h-[calc(100vh-60px)] lg:h-[calc(100vh-110px)] overflow-y-auto w-full">
+  <div class="flex flex-wrap gap-2 h-[calc(100vh-60px)] lg:h-[calc(100vh-110px)]  w-full">
     <div
       class="quarter-lg w-[calc(25%-0.25rem)] h-fit bg-[var(--p-surface-100)] dark:bg-[var(--p-surface-800)] rounded-lg">
       <Card
@@ -123,7 +123,7 @@
                       : $t('pet_details.neutered')
                     : pet.gender === 'Male'
                       ? $t('pet_details.not_neutered')
-    : $t('pet_details.not_neutered')
+                      : $t('pet_details.not_neutered')
                     " :severity="pet.neutered === 'Y' ? 'success' : 'danger'" class="!text-xs" />
                 </div>
                 <div v-if="pet.allergies" class="flex items-start gap-2">
@@ -163,7 +163,7 @@
     </div>
     <div
       class="quarter-lg w-[calc(75%-0.25rem)] min-h-full bg-[var(--p-surface-100)] dark:bg-[var(--p-surface-800)] rounded-[10px] overflow-hidden border border-[#c4c7c5] dark:!border-[#444746]">
-      <DataTable showGridlines :value="visits" scrollable scrollHeight="80vh" class="text-xs" stripedRows
+      <DataTable showGridlines :value="visits" scrollable scrollHeight="70vh" class="text-xs" stripedRows
         v-if="!loading" :paginator="true" :first="0" :rows="itemsPerPage" :totalRecords="visits.length"
         @page="onPageChange" :rowsPerPageOptions="[25, 50, 100]">
         <template #header>

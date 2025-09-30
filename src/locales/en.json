@@ -852,6 +852,7 @@
         "title": "Case History Details",
         "steps": {
             "general_info": "General Info",
+            "urogenital_system": "Urogenital System",
             "head_neck": "Head & Neck",
             "vital_signs": "Vital Signs",
             "nervous_skin": "Nervous & Skin",
@@ -866,7 +867,8 @@
             "nervous_skin": "Nervous System & Skin",
             "abdomen_lymph": "Abdomen & Lymph Nodes",
             "body_condition": "Body Condition & Hydration",
-            "diagnosis": "Diagnosis and Recommendations"
+            "diagnosis": "Diagnosis and Recommendations",
+            "urogenital_system": "Urogenital System Examination"
         },
         "fields": {
             "examination_date": "Examination Date",
@@ -905,7 +907,18 @@
             "preliminary_diagnosis": "Preliminary Diagnosis",
             "recommendations": "Recommendations",
             "notes": "Notes",
-            "respiratory_rate_unit": "breaths/min"
+            "respiratory_rate_unit": "breaths/min",
+            "urinary_bladder_filling": "Bladder Filling",
+            "urinary_bladder_pain": "Bladder Pain",
+            "urinary_bladder_contents": "Bladder Contents",
+            "urinary_bladder_wall_thickness": "Bladder Wall Thickness (mm)",
+            "urinary_bladder_diameter": "Bladder Diameter (mm)",
+            "prostate_diameter": "Prostate Diameter (mm)",
+            "kidneys_exam": "Kidneys Examination",
+            "kidney_dimensions_right": "Kidney Dimensions (Right)",
+            "kidney_dimensions_left": "Kidney Dimensions (Left)",
+            "urethra_external_genitalia": "Urethra & External Genitalia",
+            "urine_retention": "Urine Retention"
         },
         "buttons": {
             "back": "Back",
@@ -936,7 +949,14 @@
             "thoracic": "Thoracic (Chest breathing)",
             "abdominal": "Abdominal (Diaphragmatic)",
             "mixed": "Mixed (Normal)",
-            "paradoxical": "Paradoxical (Abnormal)"
+            "paradoxical": "Paradoxical (Abnormal)",
+            "full": "Full",
+            "empty": "Empty",
+            "painful": "Painful",
+            "not_painful": "Not Painful",
+            "complete": "Complete Retention",
+            "partial": "Partial Retention",
+            "difficulty": "Difficulty Urinating"
         },
         "messages": {
             "success_title": "Success",

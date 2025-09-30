@@ -850,7 +850,8 @@
             "nervous_skin": "الجهاز العصبي والجلد",
             "abdomen_lymph": "البطن والعقد الليمفاوية",
             "body_condition": "حالة الجسم",
-            "diagnosis": "التشخيص"
+            "diagnosis": "التشخيص",
+            "urogenital_system": "الجهاز البولي والتناسلي"
         },
         "section_titles": {
             "general_info": "المعلومات العامة",
@@ -859,7 +860,8 @@
             "nervous_skin": "الجهاز العصبي والجلد",
             "abdomen_lymph": "البطن والعقد الليمفاوية",
             "body_condition": "حالة الجسم والترطيب",
-            "diagnosis": "التشخيص والتوصيات"
+            "diagnosis": "التشخيص والتوصيات",
+            "urogenital_system": "فحص الجهاز البولي والتناسلي"
         },
         "fields": {
             "examination_date": "تاريخ الفحص",
@@ -898,7 +900,18 @@
             "preliminary_diagnosis": "تشخيص أولي",
             "recommendations": "التوصيات",
             "notes": "ملاحظات",
-            "respiratory_rate_unit": "نفس/دقيقة"
+            "respiratory_rate_unit": "نفس/دقيقة",
+            "urinary_bladder_filling": "فحص المثانة (ممتلئة/فارغة)",
+            "urinary_bladder_pain": "ألم المثانة (مؤلمة/غير مؤلمة)",
+            "urinary_bladder_contents": "محتويات المثانة (رمل / حصوات / خثرات دم / أورام)",
+            "urinary_bladder_wall_thickness": "سماكة جدار المثانة (ملم)",
+            "urinary_bladder_diameter": "قطر المثانة (ملم)",
+            "prostate_diameter": "قطر البروستات (ملم)",
+            "kidneys_exam": "فحص الكليتين (الحجم، القساوة، الألم بالجس)",
+            "kidney_dimensions_right": "أبعاد الكلية اليمنى",
+            "kidney_dimensions_left": "أبعاد الكلية اليسرى",
+            "urethra_external_genitalia": "ملاحظة الإحليل والأعضاء التناسلية الخارجية",
+            "urine_retention": "حصر البول"
         },
         "buttons": {
             "back": "رجوع",
@@ -929,7 +942,14 @@
             "thoracic": "تنفس صدري (اعتماد على القفص الصدري)",
             "abdominal": "تنفس بطني (اعتماد على الحجاب الحاجز)",
             "mixed": "تنفس مختلط (طبيعي)",
-            "paradoxical": "تنفس متناقض (غير طبيعي)"
+            "paradoxical": "تنفس متناقض (غير طبيعي)",
+            "full": "ممتلئة",
+            "empty": "فارغة",
+            "painful": "مؤلمة",
+            "not_painful": "غير مؤلمة",
+            "complete": "حصر كامل",
+            "partial": "حصر جزئي",
+            "difficulty": "صعوبة في التبول"
         },
         "messages": {
             "success_title": "نجاح",

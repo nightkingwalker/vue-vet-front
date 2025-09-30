@@ -857,7 +857,8 @@
       "nervous_skin": "Nerven & Haut",
       "abdomen_lymph": "Abdomen & Lymph",
       "body_condition": "Körperkondition",
-      "diagnosis": "Diagnose"
+      "diagnosis": "Diagnose",
+      "urogenital_system": "Urogenitalsystem"
     },
     "section_titles": {
       "general_info": "Allgemeines",
@@ -866,7 +867,8 @@
       "nervous_skin": "Nervensystem & Haut",
       "abdomen_lymph": "Abdomen & Lymphknoten",
       "body_condition": "Körperkondition & Hydration",
-      "diagnosis": "Diagnose und Empfehlungen"
+      "diagnosis": "Diagnose und Empfehlungen",
+      "urogenital_system": "Untersuchung des Urogenitalsystems"
     },
     "fields": {
       "examination_date": "Untersuchungsdatum",
@@ -905,7 +907,18 @@
       "preliminary_diagnosis": "Vorläufige Diagnose",
       "recommendations": "Empfehlungen",
       "notes": "Notizen",
-      "respiratory_rate_unit": "Atemzüge/Min."
+      "respiratory_rate_unit": "Atemzüge/Min.",
+      "urinary_bladder_filling": "Blasenfüllung",
+      "urinary_bladder_pain": "Blasenschmerz",
+      "urinary_bladder_contents": "Blaseninhalt (Sand / Steine / Blutgerinnsel / Tumoren)",
+      "urinary_bladder_wall_thickness": "Blasenwanddicke (mm)",
+      "urinary_bladder_diameter": "Blasendurchmesser (mm)",
+      "prostate_diameter": "Prostatadurchmesser (mm)",
+      "kidneys_exam": "Nierenuntersuchung (Größe, Härte, Druckschmerz)",
+      "kidney_dimensions_right": "Nierenmaße (rechts)",
+      "kidney_dimensions_left": "Nierenmaße (links)",
+      "urethra_external_genitalia": "Untersuchung der Harnröhre & äußeren Genitalien",
+      "urine_retention": "Harnverhalt"
     },
     "buttons": {
       "back": "Zurück",
@@ -936,7 +949,14 @@
       "thoracic": "Thorakal (Brustatmung)",
       "abdominal": "Abdominal (Zwerchfell)",
       "mixed": "Gemischt (Normal)",
-      "paradoxical": "Paradox (Abnormal)"
+      "paradoxical": "Paradox (Abnormal)",
+      "full": "Gefüllt",
+      "empty": "Leer",
+      "painful": "Schmerzhaft",
+      "not_painful": "Nicht schmerzhaft",
+      "complete": "Vollständiger Harnverhalt",
+      "partial": "Teilweiser Harnverhalt",
+      "difficulty": "Erschwertes Wasserlassen"
     },
     "messages": {
       "success_title": "Erfolg",
