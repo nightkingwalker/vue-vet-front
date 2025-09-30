@@ -25,15 +25,15 @@
             class="w-full sm:w-auto" @change="refreshData" /> -->
           <div class="flex gap-2 justify-end sm:justify-start">
             <Button :icon="showDeactivated ? 'pi pi-eye' : 'pi pi-eye-slash'"
-              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
+              class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base"
               v-tooltip.top="!showDeactivated ? $t('owners.actions.show_deactive') : $t('owners.actions.hide_deactive')"
               @click="toggleShowDeactivated" />
 
             <Button icon="pi pi-refresh" @click="refreshData"
-              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
+              class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base"
               v-tooltip.top="$t('owners.actions.refresh')" />
             <Button icon="pi pi-plus" @click="showModal"
-              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
+              class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base"
               v-tooltip.top="$t('owners.actions.new_owner')" />
           </div>
         </div>
@@ -108,7 +108,7 @@
                   <span v-if="owner.showDetails" class="!ltr truncate">+{{ owner.phone }}</span>
                   <span v-else class="text-surface-500 truncate">{{
                     $t("owners.hidden_phone")
-                  }}</span>
+                    }}</span>
                 </div>
                 <div class="text-xs md:text-sm text-surface-300 flex items-start gap-1 md:gap-2">
                   <i class="pi pi-map-marker mr-1 md:mr-2 !text-emerald-400 text-sm md:text-base"></i>
@@ -177,7 +177,7 @@
           <i :class="message.icon" class="text-2xl"></i>
           <span class="font-bold text-lg">{{
             $t("owners.confirmDialog.confirmation")
-          }}</span>
+            }}</span>
         </div>
         <p class="mb-3">{{ message.message }}</p>
         <div class="flex justify-end gap-2">

@@ -31,10 +31,10 @@
 
           <div class="flex gap-2 justify-end sm:justify-start">
             <Button icon="pi pi-refresh" @click="refreshData"
-              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
+              class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base"
               v-tooltip.top="$t('owner_pet_list.tooltips.refresh')" />
             <Button icon="pi pi-plus" @click="showNewPatientModal"
-              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
+              class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base"
               v-tooltip.top="$t('owner_pet_list.buttons.new_patient')" />
           </div>
         </div>

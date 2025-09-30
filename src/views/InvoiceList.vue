@@ -26,10 +26,10 @@
 
             <Button size="small" type="button" icon="pi pi-refresh !text-xs" label=""
               v-tooltip.bottom="$t('invoices.actions.refresh')"
-              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
+              class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base"
               @click="refreshData" />
             <Button size="small" icon="pi pi-plus" @click="showModal" v-tooltip.bottom="$t('invoices.actions.create')"
-              class="p-button p-component p-button-icon-only p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base" />
+              class="p-button p-component p-button-icon-only p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base" />
             <Button size="small" icon="pi pi-download !text-xs"
               class="p-button-text text-surface-400 hover:text-surface-200 text-sm md:text-base"
               v-tooltip.bottom="$t('invoices.actions.export')" @click="exportCSV($event)" />
@@ -247,7 +247,7 @@
       <div class="inline-flex items-center justify-center gap-2 h-4">
         <span class="font-bold whitespace-nowrap">{{
           $t("invoices.dialog.create_title")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <InvoiceAdd v-focustrap="{
@@ -266,7 +266,7 @@
       <div class="inline-flex items-center justify-center gap-2 h-4">
         <span class="font-bold whitespace-nowrap">{{
           $t("invoices.dialog.payment_title")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddPayment v-focustrap="{

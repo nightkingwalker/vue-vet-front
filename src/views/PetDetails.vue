@@ -170,13 +170,13 @@
           <div class="flex flex-wrap items-center justify-between gap-2">
             <span class="lg:text-sm text-lg font-bold">{{
               $t("pet_details.visits_history")
-}}</span>
+              }}</span>
             <div class="flex gap-2">
               <Button v-tooltip.bottom="$t('pet_details.add_appointment')" icon="pi pi-plus" @click="addAppointment"
-                class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base" />
+                class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base" />
               <Button type="button" icon="pi pi-refresh !text-sm" label=""
                 v-tooltip.bottom="$t('pet_details.refresh_data')"
-                class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
+                class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base"
                 @click="refreshData" />
             </div>
           </div>
@@ -208,7 +208,7 @@
               <div class="gap-2 px-1">
                 <span class="lg:!text-[14px] text-xs whitespace-nowrap font-normal">{{
                   $t(`calendar.appointment.${slotProps.data.type.toLowerCase()}`)
-                }}</span>
+                  }}</span>
               </div>
             </Tag>
           </template>
@@ -330,7 +330,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.treatments")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <PetTreatments v-focustrap="{
@@ -347,7 +347,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.edit_pet_details")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <EditPetDetails v-focustrap="{
@@ -363,7 +363,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.edit_treatment")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <EditTreatment v-focustrap="{
@@ -380,7 +380,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.test_results")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <TestResults v-focustrap="{
@@ -397,7 +397,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.test_results")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <EditMedicalImage v-focustrap="{
@@ -414,7 +414,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.xrays_images")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <MedicalImages v-focustrap="{
@@ -433,7 +433,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.new_medical_image")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddNewMedicalImage v-focustrap="{
@@ -449,7 +449,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.new_treatment")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddNewTreatment v-focustrap="{
@@ -465,7 +465,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.new_test_result")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddNewTestResult v-focustrap="{
@@ -481,7 +481,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.new_record")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddNewAppointment v-focustrap="{
@@ -496,7 +496,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.edit_record")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <EditAppointment v-focustrap="{
@@ -512,7 +512,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.edit_test_result")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <EditTestResult v-focustrap="{
@@ -529,7 +529,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.add_case_history")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddCaseHistory v-focustrap="{
@@ -546,7 +546,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.case_history")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <CaseHistory v-focustrap="{
@@ -563,7 +563,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.add_physical_examination")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddPhysicalExamination v-focustrap="{
@@ -580,7 +580,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.physical_examination")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <PhysicalExamination v-focustrap="{
@@ -598,7 +598,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.full_report")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <FullReport v-focustrap="{
@@ -624,7 +624,7 @@
       <div class="inline-flex items-center justify-center gap-2 h-4">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.create_invoice")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <InvoiceAdd v-focustrap="{
@@ -665,7 +665,7 @@
       <div class="inline-flex items-center justify-center gap-2 h-4">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.add_payment")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddPayment v-focustrap="{

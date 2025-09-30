@@ -29,19 +29,19 @@
 
             <Button size="small" type="button" icon="pi pi-refresh !text-sm lg:!text-[14px]" label=""
               v-tooltip.bottom="$t('inventory.actions.refresh')"
-              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
+              class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base"
               @click="refreshData" />
             <Button size="small" icon="pi pi-plus" @click="showModal" v-tooltip.bottom="$t('inventory.actions.add')"
-              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base" />
+              class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base" />
             <Button size="small" icon="pi pi-cloud-upload" @click="showImportModal"
               v-tooltip.bottom="$t('inventory.actions.import')"
-              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base" />
+              class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base" />
             <Button size="small" icon="pi pi-download !text-sm lg:!text-[14px]"
-              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
+              class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base"
               v-tooltip.bottom="$t('inventory.actions.export')" @click="exportCSV($event)" />
             <Button size="small" icon="pi pi-arrow-right-arrow-left" @click="showTransferModal"
               v-tooltip.bottom="$t('inventory.actions.transfer')"
-              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base" />
+              class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base" />
           </div>
 
 

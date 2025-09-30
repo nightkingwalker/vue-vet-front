@@ -27,7 +27,7 @@
             </InputGroup>
             <Button type="button" icon="pi pi-refresh !text-sm lg:!text-[14px]" label=""
               v-tooltip.bottom="$t('pets.header.refresh')"
-              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
+              class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base"
               @click="refreshData" />
             <Button type="button" :icon="showDeceased
               ? `pi pi-eye-slash !text-sm lg:!text-[14px]`
@@ -35,12 +35,13 @@
               " label="" v-tooltip.bottom="showDeceased
                 ? $t('pets.header.hide_deceased')
                 : $t('pets.header.show_deceased')
-                " class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
+                "
+              class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base"
               @click="toggleDeceasedVisibility" />
             <Button icon="pi pi-plus" @click="showModal" v-tooltip.bottom="$t('pets.header.add_new')"
-              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base" />
+              class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base" />
             <Button icon="pi pi-download !text-sm lg:!text-[14px]"
-              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
+              class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base"
               v-tooltip.bottom="$t('pets.header.export')" @click="exportCSV($event)" />
           </div>
           <!-- 
@@ -192,7 +193,7 @@
         <Avatar icon="fas fa-users" shape="circle" />
         <span class="font-bold whitespace-nowrap">{{
           $t("pets.modals.add_patient.new_patient")
-        }}</span>
+          }}</span>
       </div>
     </template>
 
@@ -210,7 +211,7 @@
         <Avatar icon="fas fa-users" shape="circle" />
         <span class="font-bold whitespace-nowrap">{{
           $t("pets.modals.add_owner.new_client")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <NewClientForm @ownerAdded="handleOwnerSubmit" v-focustrap="{

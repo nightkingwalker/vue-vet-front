@@ -1,44 +1,25 @@
 <template>
   <div class="flex gap-2" :class="{ 'flex-wrap': isMobile }">
     <div :class="{ 'w-full': !isMobile, 'w-9/10 mx-auto': isMobile }">
-      <ScheduleXCalendar
-        :calendar-app="calendarApp"
-        class="mx-auto"
-        :class="{
-          '!w-full !h-[calc(100vh-100px)]': !isMobile,
-          '!w-full !h-[400px]': isMobile,
-        }"
-      >
+      <ScheduleXCalendar :calendar-app="calendarApp" class="mx-auto" :class="{
+        '!w-full !h-[calc(100vh-100px)]': !isMobile,
+        '!w-full !h-[400px]': isMobile,
+      }">
         <!-- :headerContentRightPrepend="``" -->
         <template #headerContentRightPrepend>
           <div :class="{ 'sx__calendar-header-content': !isMobile, hidden: isMobile }">
-            <Button
-              type=""
-              icon="pi pi-refresh !text-sm"
-              label=""
-              v-tooltip.bottom="$t('calendar.refresh')"
-              class="!text-xs !text-[var(--p-primary-color)] hover:!text-[var(--p-primary-contrast-color)] sx__today-button sx__ripple"
-              @click="refreshData"
-            />
-            <Button
-              type=""
-              icon="pi pi-plus !text-sm"
-              v-tooltip.bottom="$t('calendar.add_appointment')"
+            <Button type="" icon="pi pi-refresh !text-sm" label="" v-tooltip.bottom="$t('calendar.refresh')"
+              class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base"
+              @click="refreshData" />
+            <Button type="" icon="pi pi-plus !text-sm" v-tooltip.bottom="$t('calendar.add_appointment')"
               @click="addAppointment"
-              class="!text-xs !text-[var(--p-primary-color)] hover:!text-[var(--p-primary-contrast-color)] sx__today-button sx__ripple"
-            />
-            <Button
-              type=""
-              icon="pi pi-google"
-              @click="handleGoogleSync"
-              :class="[
-                '!text-xs',
-                isGoogleSynced ? '!text-green-500' : '!text-[var(--p-primary-color)]',
-                'hover:!text-[var(--p-primary-contrast-color)]',
-              ]"
-              class="sx__today-button sx__ripple"
-              v-tooltip.bottom="googleSyncTooltip"
-            />
+              class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base" />
+            <Button type="" icon="pi pi-google" @click="handleGoogleSync" :class="[
+              '!text-xs', '!p-button-text', 'hover:!bg-emerald-600',
+              isGoogleSynced ? '!text-emerald-600' : '!text-[var(--p-primary-color)]',
+              isGoogleSynced ? 'hover:!text-emerald-900' : '!text-[var(--p-primary-color)]',
+              'hover:!text-[var(--p-primary-contrast-color)]',
+            ]" class="sx__ripple" v-tooltip.bottom="googleSyncTooltip" />
           </div>
         </template>
       </ScheduleXCalendar>
@@ -50,33 +31,25 @@
         </template>
       </ContextMenu>
     </div>
-    <div
-      id="pet-details"
-      :class="[
-        isMobile
-          ? 'w-full h-fit mx-auto mb-4'
-          : 'w-1/5 min-w-[280px] h-[calc(100vh-100px)]',
-        'border-[1px] border-[#c4c7c5] dark:!border-[#444746] rounded-xl shadow-sm p-4 flex flex-col gap-4 hidden',
-      ]"
-    >
+    <div id="pet-details" :class="[
+      isMobile
+        ? 'w-full h-fit mx-auto mb-4'
+        : 'w-1/5 min-w-[280px] h-[calc(100vh-100px)]',
+      'border-[1px] border-[#c4c7c5] dark:!border-[#444746] rounded-xl shadow-sm p-4 flex flex-col gap-4 hidden',
+    ]">
       <!-- Pet Information Card -->
-      <div
-        class="flex flex-col gap-3 p-4 rounded-lg transition-all duration-300"
-        :style="{
-          borderLeft: `4px solid ${currentPet.theme.lightColors.main}`,
-          backgroundColor: currentPet.theme.lightColors.container,
-          color: currentPet.theme.lightColors.onContainer,
-        }"
-      >
+      <div class="flex flex-col gap-3 p-4 rounded-lg transition-all duration-300" :style="{
+        borderLeft: `4px solid ${currentPet.theme.lightColors.main}`,
+        backgroundColor: currentPet.theme.lightColors.container,
+        color: currentPet.theme.lightColors.onContainer,
+      }">
         <!-- Pet Name -->
         <div class="flex items-center gap-2">
-          <i
-            :class="[
-              getIconClass(currentPet.pet.species),
-              'text-lg',
-              currentPet.pet.gender === 'Male' ? 'text-blue-500' : 'text-pink-500',
-            ]"
-          ></i>
+          <i :class="[
+            getIconClass(currentPet.pet.species),
+            'text-lg',
+            currentPet.pet.gender === 'Male' ? 'text-blue-500' : 'text-pink-500',
+          ]"></i>
           <h3 class="font-medium">
             {{ currentPet.pet.name || $t("calendar.pet_details.select_appointment") }}
           </h3>
@@ -87,9 +60,7 @@
           <div class="flex items-start gap-2">
             <i class="fas fa-paw mt-0.5 text-sm opacity-70"></i>
             <div>
-              <span class="text-xs opacity-80"
-                >{{ $t("calendar.pet_details.species") }}:</span
-              >
+              <span class="text-xs opacity-80">{{ $t("calendar.pet_details.species") }}:</span>
               <p>
                 {{
                   currentPet.pet.species && getSpeciesValue(currentPet.pet.species)
@@ -103,9 +74,7 @@
           <div class="flex items-start gap-2">
             <i class="fa-solid fa-user mt-0.5 text-sm opacity-70"></i>
             <div>
-              <span class="text-xs opacity-80"
-                >{{ $t("calendar.pet_details.owner") }}:</span
-              >
+              <span class="text-xs opacity-80">{{ $t("calendar.pet_details.owner") }}:</span>
               <p>{{ currentPet.people[0] || "-" }}</p>
             </div>
           </div>
@@ -113,9 +82,7 @@
           <div class="flex items-start gap-2">
             <i class="fa-solid fa-location-dot mt-0.5 text-sm opacity-70"></i>
             <div>
-              <span class="text-xs opacity-80"
-                >{{ $t("calendar.pet_details.location") }}:</span
-              >
+              <span class="text-xs opacity-80">{{ $t("calendar.pet_details.location") }}:</span>
               <p>{{ currentPet.location || "-" }}</p>
             </div>
           </div>
@@ -123,42 +90,29 @@
           <div class="flex items-start gap-2" v-if="currentPet.description">
             <i class="fa-solid fa-circle-info mt-0.5 text-sm opacity-70"></i>
             <div>
-              <span class="text-xs opacity-80"
-                >{{ $t("calendar.pet_details.details") }}:</span
-              >
+              <span class="text-xs opacity-80">{{ $t("calendar.pet_details.details") }}:</span>
               <p class="text-xs">{{ currentPet.description }}</p>
             </div>
           </div>
         </div>
 
         <!-- View Details Button -->
-        <Button
-          :label="
-            currentPet.pet.microchip_num === '123123'
-              ? $t('calendar.pet_details.select_appointment')
-              : $t('calendar.pet_details.view_details')
-          "
-          icon="fas fa-paw"
-          class="mt-2 !text-xs w-full justify-center"
-          :class="
-            currentPet.pet.microchip_num === '123123'
-              ? 'p-button-outlined'
-              : 'p-button-primary'
-          "
-          :disabled="currentPet.pet.microchip_num === '123123'"
-          @click="
-            currentPet.pet.microchip_num !== '123123' &&
+        <Button :label="currentPet.pet.microchip_num === '123123'
+          ? $t('calendar.pet_details.select_appointment')
+          : $t('calendar.pet_details.view_details')
+          " icon="fas fa-paw" class="mt-2 !text-xs w-full justify-center" :class="currentPet.pet.microchip_num === '123123'
+            ? 'p-button-outlined'
+            : 'p-button-primary'
+            " :disabled="currentPet.pet.microchip_num === '123123'" @click="
+              currentPet.pet.microchip_num !== '123123' &&
               $router.push({
                 name: 'PetDetails',
                 params: { petmicrochip: currentPet.pet.microchip_num },
               })
-          "
-          v-tooltip.top="
-            currentPet.pet.microchip_num === '123123'
-              ? $t('calendar.pet_details.select_appointment')
-              : $t('calendar.pet_details.view_details')
-          "
-        />
+              " v-tooltip.top="currentPet.pet.microchip_num === '123123'
+                ? $t('calendar.pet_details.select_appointment')
+                : $t('calendar.pet_details.view_details')
+                " />
       </div>
 
       <!-- Event Legend -->
@@ -167,15 +121,8 @@
           {{ $t("calendar.legend") }}
         </h4>
         <div class="grid grid-cols-2 gap-2">
-          <div
-            v-for="(theme, name) in eventTheme"
-            :key="name"
-            class="flex items-center gap-2"
-          >
-            <div
-              class="w-3 h-3 rounded-full"
-              :style="{ backgroundColor: theme.lightColors.main }"
-            ></div>
+          <div v-for="(theme, name) in eventTheme" :key="name" class="flex items-center gap-2">
+            <div class="w-3 h-3 rounded-full" :style="{ backgroundColor: theme.lightColors.main }"></div>
             <span class="text-xs">
               {{ $t(`calendar.appointment.${name.toLowerCase()}`) }}
             </span>
@@ -184,14 +131,9 @@
       </div>
     </div>
   </div>
-  <Dialog
-    :header="$t('calendar.appointment.new')"
-    v-model:visible="isNewApointmentVisible"
-    @hide="isNewApointmentVisible = false"
-    modal
-    :closable="true"
-    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto"
-  >
+  <Dialog :header="$t('calendar.appointment.new')" v-model:visible="isNewApointmentVisible"
+    @hide="isNewApointmentVisible = false" modal :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto">
     <template #header>
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
@@ -199,36 +141,25 @@
         }}</span>
       </div>
     </template>
-    <AddNewAppointment
-      v-focustrap="{
-        disabled: false,
-        autoFocus: true,
-      }"
-      :activeDate="activeDate"
-      @submitted="handleSubmit"
-    />
+    <AddNewAppointment v-focustrap="{
+      disabled: false,
+      autoFocus: true,
+    }" :activeDate="activeDate" @submitted="handleSubmit" />
     <template #footer> </template>
   </Dialog>
-  <Dialog
-    v-model:visible="petDetailsVisible"
-    modal
-    :style="{
-      width: isMobile ? '90vw' : '400px',
-      borderLeft: `4px solid ${currentPet.theme.lightColors.main}`,
-      backgroundColor: currentPet.theme.lightColors.container,
-      color: currentPet.theme.lightColors.onContainer,
-    }"
-    :breakpoints="{ '960px': '75vw', '641px': '90vw' }"
-  >
+  <Dialog v-model:visible="petDetailsVisible" modal :style="{
+    width: isMobile ? '90vw' : '400px',
+    borderLeft: `4px solid ${currentPet.theme.lightColors.main}`,
+    backgroundColor: currentPet.theme.lightColors.container,
+    color: currentPet.theme.lightColors.onContainer,
+  }" :breakpoints="{ '960px': '75vw', '641px': '90vw' }">
     <template #header>
       <div class="flex items-center gap-2">
-        <i
-          :class="[
-            getIconClass(currentPet.pet.species),
-            'text-lg',
-            currentPet.pet.gender === 'Male' ? 'text-blue-500' : 'text-pink-500',
-          ]"
-        ></i>
+        <i :class="[
+          getIconClass(currentPet.pet.species),
+          'text-lg',
+          currentPet.pet.gender === 'Male' ? 'text-blue-500' : 'text-pink-500',
+        ]"></i>
         <h3>
           {{ currentPet.pet.name || $t("calendar.pet_details.select_appointment") }}
         </h3>
@@ -239,9 +170,7 @@
       <div class="flex items-start gap-2">
         <i class="fas fa-paw mt-0.5 text-sm opacity-70"></i>
         <div>
-          <span class="text-xs opacity-80"
-            >{{ $t("calendar.pet_details.species") }}:</span
-          >
+          <span class="text-xs opacity-80">{{ $t("calendar.pet_details.species") }}:</span>
           <p>
             {{
               currentPet.pet.species && getSpeciesValue(currentPet.pet.species)
@@ -263,9 +192,7 @@
       <div class="flex items-start gap-2">
         <i class="fa-solid fa-location-dot mt-0.5 text-sm opacity-70"></i>
         <div>
-          <span class="text-xs opacity-80"
-            >{{ $t("calendar.pet_details.location") }}:</span
-          >
+          <span class="text-xs opacity-80">{{ $t("calendar.pet_details.location") }}:</span>
           <p>{{ currentPet.location || "-" }}</p>
         </div>
       </div>
@@ -273,37 +200,26 @@
       <div class="flex items-start gap-2" v-if="currentPet.description">
         <i class="fa-solid fa-circle-info mt-0.5 text-sm opacity-70"></i>
         <div>
-          <span class="text-xs opacity-80"
-            >{{ $t("calendar.pet_details.details") }}:</span
-          >
+          <span class="text-xs opacity-80">{{ $t("calendar.pet_details.details") }}:</span>
           <p class="text-xs">{{ currentPet.description }}</p>
         </div>
       </div>
     </div>
 
     <template #footer>
-      <Button
-        :label="
-          currentPet.pet.microchip_num === '123123'
-            ? $t('calendar.pet_details.select_appointment')
-            : $t('calendar.pet_details.view_details')
-        "
-        icon="fas fa-paw"
-        class="!text-xs w-full justify-center"
-        :class="
-          currentPet.pet.microchip_num === '123123'
-            ? 'p-button-outlined'
-            : 'p-button-primary'
-        "
-        :disabled="currentPet.pet.microchip_num === '123123'"
-        @click="
-          currentPet.pet.microchip_num !== '123123' &&
+      <Button :label="currentPet.pet.microchip_num === '123123'
+        ? $t('calendar.pet_details.select_appointment')
+        : $t('calendar.pet_details.view_details')
+        " icon="fas fa-paw" class="!text-xs w-full justify-center" :class="currentPet.pet.microchip_num === '123123'
+          ? 'p-button-outlined'
+          : 'p-button-primary'
+          " :disabled="currentPet.pet.microchip_num === '123123'" @click="
+            currentPet.pet.microchip_num !== '123123' &&
             $router.push({
               name: 'PetDetails',
               params: { petmicrochip: currentPet.pet.microchip_num },
             })
-        "
-      />
+            " />
     </template>
   </Dialog>
 </template>
@@ -321,7 +237,6 @@ import {
 
 import { createCalendarControlsPlugin } from "@schedule-x/calendar-controls";
 import { createEventsServicePlugin } from "@schedule-x/events-service";
-// import { createEventModalPlugin } from "@sch edule-x/event-modal";
 import { createDragAndDropPlugin } from "@schedule-x/drag-and-drop";
 import { createScrollControllerPlugin } from "@schedule-x/scroll-controller";
 import eventBus from "@/eventBus";
@@ -335,8 +250,6 @@ import Button from "primevue/button";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import Cookies from "js-cookie";
-// import { ar } from "date-fns/locale"; // Arabic locale
-// import RouterLink from "primevue/routerlink";
 import router from "@/router";
 import axiosInstance from "@/axios"; // Ensure this is correctly set up with baseURL
 import { useDevice } from "@/composables/useDevice";
@@ -345,7 +258,6 @@ const route = useRoute();
 
 const { isMobile, mobileMenuVisible } = useDevice();
 const eventsServicePlugin = createEventsServicePlugin();
-// const eventModal = createEventModalPlugin();
 const calendarControls = createCalendarControlsPlugin();
 const events = ref("");
 const searchQuery = ref("");
@@ -381,16 +293,16 @@ const googleSyncIcon = computed(() =>
   isSyncing.value
     ? "pi pi-spin pi-spinner"
     : isGoogleSynced.value
-    ? "pi pi-google"
-    : "pi pi-google"
+      ? "pi pi-google"
+      : "pi pi-google"
 );
 
 const googleSyncLabel = computed(() =>
   isMobile.value
     ? ""
     : isGoogleSynced.value
-    ? t("calendar.google_synced")
-    : t("calendar.google_sync")
+      ? t("calendar.google_synced")
+      : t("calendar.google_sync")
 );
 
 const googleSyncTooltip = computed(() =>
@@ -422,11 +334,6 @@ const handleGoogleSync = async () => {
       // Store current route to return after OAuth flow
       localStorage.setItem("preAuthRoute", router.currentRoute.value.fullPath);
 
-      // const printWindow = window.open(
-      //   data.auth_url,
-      //   "TEST",
-      //   "width=500,height=600,left=100,top=100"
-      // );
       // Redirect to Google's OAuth page
       window.location.href = data.auth_url;
     }
@@ -845,7 +752,7 @@ const calendarApp = createCalendar({
      * 1. Selecting a date in the date picker
      * 2. Selecting a new view
      * */
-    onRangeUpdate(range) {},
+    onRangeUpdate(range) { },
 
     /**
      * Is called when an event is updated through drag and drop
@@ -912,7 +819,7 @@ const calendarApp = createCalendar({
     /**
      * Is called when the selected date is updated
      * */
-    onSelectedDateUpdate(date) {},
+    onSelectedDateUpdate(date) { },
 
     /**
      * Runs on resizing the calendar, to decide if the calendar should be small or not.
@@ -933,7 +840,7 @@ const calendarApp = createCalendar({
     /**
      * Runs after the calendar is rendered
      * */
-    onRender($app) {},
+    onRender($app) { },
   },
 
   plugins: [
@@ -1135,6 +1042,7 @@ onMounted(async () => {
   height: 800px;
   max-height: 90vh;
 }
+
 .p-button {
   display: inline-flex;
   cursor: pointer;
@@ -1157,9 +1065,11 @@ onMounted(async () => {
   outline-color: transparent;
   /* gap: 0.5rem; */
 }
+
 .sx__event.sx__month-grid-event.sx__month-grid-cell {
   height: 50px;
 }
+
 .sx__forward-backward-navigation {
   direction: ltr;
 }

@@ -25,7 +25,7 @@
               <span class="block text-surface-400 text-sm">{{ $t('clinics.header.total_users') }}</span>
               <span class="text-2xl font-semibold text-surface-0">{{
                 users.length
-              }}</span>
+                }}</span>
             </div>
             <i class="pi pi-users text-3xl text-emerald-400"></i>
           </div>
@@ -39,7 +39,7 @@
               <span class="text-2xl font-semibold text-surface-0">{{
                 (roleCounts.admin ? roleCounts.admin : 0) +
                 (roleCounts.super_admin ? roleCounts.super_admin : 0) || 0
-              }}</span>
+                }}</span>
             </div>
             <i class="pi pi-shield text-3xl text-emerald-400"></i>
           </div>
@@ -52,7 +52,7 @@
               <span class="block text-surface-400 text-sm">{{ $t('clinics.header.vets') }}</span>
               <span class="text-2xl font-semibold text-surface-0">{{
                 roleCounts.vet || 0
-              }}</span>
+                }}</span>
             </div>
             <i class="pi pi-heart text-3xl text-emerald-400"></i>
           </div>
@@ -80,7 +80,7 @@
           <h2 class="text-xl font-semibold text-surface-0">Clinic Members</h2>
           <div class="w-fit flex gap-2">
             <Button icon="pi pi-refresh" @click="fetchClinicData"
-              class="p-button-text !text-emerald-400 hover:text-emerald-300 text-sm md:text-base"
+              class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base"
               v-tooltip.top="$t('owners.actions.refresh')" />
             <Button icon="fa-solid fa-user-plus"
               class="p-button-text !text-emerald-400 hover:text-emerald-300 border-emerald-600"
