@@ -26,5 +26,6 @@ package-lock.json
 *.njsproj
 *.sln
 *.sw?
-
+LoginComponent copy.vue
+LoginComponent copy 2.vue
 *.tsbuildinfo

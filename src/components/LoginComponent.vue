@@ -7,7 +7,7 @@
           <i class="fas fa-paw absolute text-2xl opacity-20 top-4 left-5"></i>
           <i class="fas fa-paw absolute text-2xl opacity-20 bottom-4 right-5"></i>
           <div class="flex flex-col items-center">
-            <Image :src="$client.logo" alt="Clinic Logo" class="w-16 h-16 mb-3 rounded-full bg-white p-1" />
+            <Image :src="$client.logo" alt="Clinic Logo" class="w-24 h-24 mb-3 rounded-full bg-white p-1" />
             <h1 class="text-2xl font-semibold">{{ $client.name }}</h1>
             <p class="text-sm opacity-90 mt-1">{{ $client.tagline }}</p>
           </div>
@@ -61,7 +61,7 @@
             </div>
             <small id="" :class="!isError ? `text-green-500 h-4` : `text-red-500 h-4`">{{
               message
-              }}</small>
+            }}</small>
           </div>
           <!-- Remember Me & Forgot Password -->
           <div class="flex items-center justify-between text-sm">
@@ -132,9 +132,9 @@
               class="mx-auto justify-center" placeholder="000000">
               <template #default="{ attrs, events }">
                 <input type="text" v-bind="attrs" v-on="events" autofocus :class="{
-                    invalid: tfaInvalid,
-                    'custom-otp-input': true,
-                  }" placeholder="0" />
+                  invalid: tfaInvalid,
+                  'custom-otp-input': true,
+                }" placeholder="0" />
               </template>
             </InputOtp>
             <small :class="{ 'text-green-500': !isError, 'text-red-500': isError }" class="block h-4">
@@ -204,8 +204,7 @@
       <InputText v-model="confirmPassword" :autocomplete="`vetapp-password`" type="password"
         :placeholder="$t('login.confirm_password')" class="w-full" />
 
-      <small class="block h-4" :class="
-          resetPasswordMessage.includes('success') ? 'text-green-500' : 'text-red-500'
+      <small class="block h-4" :class="resetPasswordMessage.includes('success') ? 'text-green-500' : 'text-red-500'
         ">
         {{ resetPasswordMessage }}
       </small>
