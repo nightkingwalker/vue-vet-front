@@ -635,6 +635,9 @@
                       severity="secondary" />
                     <Button :label="$t('medical_examination_form.buttons.submit')" type="submit"
                       @click="submitForm(exam)" v-if="isEditable" />
+                    <Button :label="$t('medical_examination_form.buttons.clear_draft')" severity="danger"
+                      icon="pi pi-trash" class="ml-2" @click="clearDraft" />
+
                   </div>
                 </StepPanel>
               </StepPanels>
@@ -653,7 +656,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import Card from "primevue/card";
 import Divider from "primevue/divider";
@@ -699,6 +702,20 @@ const medicalRecord = ref({
 
 const activeStep = ref("1");
 const isEditable = ref(false);
+
+// ---------------------- LOCAL STORAGE ----------------------
+const DRAFT_KEY = `medical_exam_draft_${props.medical_record_id}`;
+
+// Watch for changes & auto-save to localStorage
+watch(
+  medicalRecord,
+  (newVal) => {
+    if (isEditable.value) {
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(newVal));
+    }
+  },
+  { deep: true }
+);
 
 // ---------------------- OPTIONS ----------------------
 
@@ -798,6 +815,7 @@ const submitForm = async (exam) => {
     });
 
     isEditable.value = false;
+    localStorage.removeItem(DRAFT_KEY); // ✅ clear saved draft after success
     await fetchMedicalExamination();
   } catch (error) {
     eventBus.emit("show-toast", {
@@ -811,7 +829,27 @@ const submitForm = async (exam) => {
 };
 
 onMounted(() => {
-  fetchMedicalExamination();
+  const draft = localStorage.getItem(DRAFT_KEY);
+  if (draft) {
+    try {
+      medicalRecord.value = JSON.parse(draft);
+      isEditable.value = true;
+
+      eventBus.emit("show-toast", {
+        severity: "info",
+        summary: t("medical_examination_form.messages.draft_restored_title"),
+        detail: t("medical_examination_form.messages.draft_restored"),
+        life: 4000,
+      });
+    } catch (e) {
+      console.error("Error parsing draft:", e);
+      localStorage.removeItem(DRAFT_KEY);
+      fetchMedicalExamination();
+    }
+  } else {
+    fetchMedicalExamination();
+  }
+
   eventBus.on("PhysicalExaminationAddedSuccessfully", () => {
     fetchMedicalExamination();
   });

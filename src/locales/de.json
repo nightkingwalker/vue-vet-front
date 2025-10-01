@@ -923,7 +923,8 @@
     "buttons": {
       "back": "Zurück",
       "next": "Weiter",
-      "submit": "Speichern"
+      "submit": "Speichern",
+      "clear_draft": "Entwurf löschen"
     },
     "options": {
       "yes": "Ja",
@@ -962,7 +963,11 @@
       "success_title": "Erfolg",
       "error_title": "Fehler",
       "success": "Medizinische Untersuchung erfolgreich hinzugefügt",
-      "error": "Medizinische Untersuchung konnte nicht übermittelt werden"
+      "error": "Medizinische Untersuchung konnte nicht übermittelt werden",
+      "draft_cleared": "Entwurf gelöscht",
+      "draft_removed": "Entwurf entfernt",
+      "draft_restored_title": "Entwurf wiederhergestellt",
+      "draft_restored": "Der vorherige Entwurf der medizinischen Untersuchung wurde wiederhergestellt. Sie können dort fortfahren, wo Sie aufgehört haben."
     }
   },
   "invoice": {

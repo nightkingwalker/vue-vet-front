@@ -923,7 +923,8 @@
         "buttons": {
             "back": "Back",
             "next": "Next",
-            "submit": "Submit"
+            "submit": "Submit",
+            "clear_draft": "Clear Draft"
         },
         "options": {
             "yes": "Yes",
@@ -962,7 +963,11 @@
             "success_title": "Success",
             "error_title": "Error",
             "success": "Medical examination added successfully",
-            "error": "Failed to submit medical examination"
+            "error": "Failed to submit medical examination",
+            "draft_cleared": "Draft cleared successfully",
+            "draft_removed": "Draft removed successfully",
+            "draft_restored_title": "Draft restored",
+            "draft_restored": "Previous draft of the medical examination has been restored. You can continue from where you left off."
         }
     },
     "invoice": {

@@ -630,7 +630,7 @@ const eventTheme = {
 function getEventTheme(themeName) {
   return eventTheme[themeName] || null; // Return the corresponding theme or null if not found
 }
-
+console.log("Current locale:", Cookies.get("language"));
 const calendarApp = createCalendar({
   selectedDate: formatDateTime(new Date()),
   calendars: {
@@ -716,7 +716,11 @@ const calendarApp = createCalendar({
   views: [viewMonthGrid, viewWeek, viewDay, viewMonthAgenda],
   defaultView: viewMonthGrid.name,
   // locale: "en-US",
-  locale: Cookies.get("language") === "ar" ? "ar-SY" : "en" ? "en-US" : "de-DE",
+  locale: Cookies.get("language") === "ar"
+    ? "ar-SY"
+    : Cookies.get("language") === "de"
+      ? "de-DE"
+      : "en-US",
   isRTL: true,
   gridHeight: 500,
   isResponsive: true,
@@ -727,8 +731,28 @@ const calendarApp = createCalendar({
      * */
     nEventsPerDay: 2,
   },
+  /*   translations: mergeLocales(translations, {
+      "arSY": {
+        Today: "اليوم",
+        Month: "شهر",
+        Week: "أسبوع",
+        Day: "يوم",
+        "Select View": "اختر طريقة العرض",
+        events: "مواعيد",
+        event: "موعد",
+        "No events": "لا مواعيد",
+        "Next period": "الفترة التالية",
+        "Previous period": "الفترة السابقة",
+        to: "حتى",
+        "Full day- and multiple day events": "موعد يستمر كامل اليوم - وعلى عدة أيام",
+        "Link to {{n}} more events on {{date}}": "رابط لـ {{n}} مواعيد إضافية بتاريخ: {{date}}",
+        "Link to 1 more event on {{date}}": "رابطة لموعد إضافي واحد بتاريخ: {{date}}",
+      },
+    }),
+   */
   translations: mergeLocales(translations, {
-    arEG: {
+
+    "arSY": {
       Today: "اليوم",
       Month: "شهر",
       Week: "أسبوع",
@@ -739,12 +763,12 @@ const calendarApp = createCalendar({
       "No events": "لا مواعيد",
       "Next period": "الفترة التالية",
       "Previous period": "الفترة السابقة",
-      to: "حتى", // as in 2/1/2020 to 2/2/2020
+      to: "حتى",
       "Full day- and multiple day events": "موعد يستمر كامل اليوم - وعلى عدة أيام",
-      "Link to {{n}} more events on {{date}}":
-        "رابط لـ {{n}} مواعيد إضافية بتاريخ: {{date}}",
-      "Link to 1 more event on {{date}}": "رابطة لموعد إضافي واحد بتاريخ:  {{date}}",
-    },
+      "Link to {{n}} more events on {{date}}": "رابط لـ {{n}} مواعيد إضافية بتاريخ: {{date}}",
+      "Link to 1 more event on {{date}}": "رابطة لموعد إضافي واحد بتاريخ: {{date}}"
+    }
+
   }),
   callbacks: {
     /**

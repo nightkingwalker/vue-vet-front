@@ -100,9 +100,9 @@
                   <p class="text-gray-500 dark:text-gray-400 text-xs">
                     {{ $t("pet_details.age") }}
                   </p>
-                  <p class="flex items-center gap-1">
+                  <p class="flex items-center justify-start gap-1" style="direction: ltr !important;">
                     <i class="fa-solid fa-cake-candles text-gray-400"></i>
-                    {{ computeAge(pet.date_of_birth) }}
+                    <span>{{ computeAge(pet.date_of_birth) }}</span>
                   </p>
                 </div>
               </div>
