@@ -171,7 +171,7 @@
           <div class="flex flex-wrap items-center justify-between gap-2">
             <span class="lg:text-sm text-lg font-bold">{{
               $t("pet_details.visits_history")
-              }}</span>
+            }}</span>
             <div class="flex gap-2">
               <Button v-tooltip.bottom="$t('pet_details.add_appointment')" icon="pi pi-plus" @click="addAppointment"
                 class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base" />
@@ -209,7 +209,7 @@
               <div class="gap-2 px-1">
                 <span class="lg:!text-[14px] text-xs whitespace-nowrap font-normal">{{
                   $t(`calendar.appointment.${slotProps.data.type.toLowerCase()}`)
-                  }}</span>
+                }}</span>
               </div>
             </Tag>
           </template>
@@ -256,20 +256,21 @@
             }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
               v-if="slotProps.data.type !== `Grooming`" @click.prevent="listImages(slotProps.data.id)" />
             <Button type="button" icon="fa-solid fa-file-medical" v-tooltip.top="{
-              value: $t('pet_details.case_history'),
+              value: $t('pet_details.case_history') + ' ' + (slotProps.data.hasDraftCaseHistory ? $t('medical_examination_form.messages.has_history_draft') : ''),
               pt: {
                 arrow: {
                   style: {
                     borderTopColor: 'var(--p-primary-color)',
                   },
                 },
-                text:
-                  '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
+                text: '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
               },
-            }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
-              v-if="slotProps.data.type !== `Grooming`" @click="showCaseHistoryModal(slotProps.data.id)" />
+            }" raised rounded variant="text" size="small" class="" :class="[
+              'p-component !text-sm ml-2 ',
+              slotProps.data.hasDraftCaseHistory && '!bg-yellow-500 !text-white hover:!bg-yellow-600'
+            ]" v-if="slotProps.data.type !== 'Grooming'" @click="showCaseHistoryModal(slotProps.data.id)" />
             <Button type="button" icon="fa-solid fa-stethoscope" v-tooltip.top="{
-              value: $t('pet_details.medical_examination'),
+              value: $t('pet_details.medical_examination') + ' ' + (slotProps.data.hasDraftExamination ? $t('medical_examination_form.messages.has_examination_draft') : ''),
               pt: {
                 arrow: {
                   style: {
@@ -279,8 +280,10 @@
                 text:
                   '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
               },
-            }" raised rounded variant="text" size="small" class="p-component !text-sm ml-2"
-              v-if="slotProps.data.type !== `Grooming`" @click="showPhysicalExaminationModal(slotProps.data.id)" />
+            }" raised rounded variant="text" size="small" :class="[
+              'p-component !text-sm ml-2 ',
+              slotProps.data.hasDraftExamination && '!bg-yellow-500 !text-white hover:!bg-yellow-600'
+            ]" v-if="slotProps.data.type !== `Grooming`" @click="showPhysicalExaminationModal(slotProps.data.id)" />
             <Button type="button" icon="fa-regular fa-chart-bar" v-tooltip.top="{
               value: $t('pet_details.full_report'),
               pt: {
@@ -331,7 +334,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.treatments")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <PetTreatments v-focustrap="{
@@ -348,7 +351,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.edit_pet_details")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <EditPetDetails v-focustrap="{
@@ -364,7 +367,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.edit_treatment")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <EditTreatment v-focustrap="{
@@ -381,7 +384,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.test_results")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <TestResults v-focustrap="{
@@ -398,7 +401,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.test_results")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <EditMedicalImage v-focustrap="{
@@ -415,7 +418,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.xrays_images")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <MedicalImages v-focustrap="{
@@ -434,7 +437,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.new_medical_image")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <AddNewMedicalImage v-focustrap="{
@@ -450,7 +453,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.new_treatment")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <AddNewTreatment v-focustrap="{
@@ -466,7 +469,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.new_test_result")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <AddNewTestResult v-focustrap="{
@@ -482,7 +485,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.new_record")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <AddNewAppointment v-focustrap="{
@@ -497,7 +500,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.edit_record")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <EditAppointment v-focustrap="{
@@ -513,7 +516,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.edit_test_result")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <EditTestResult v-focustrap="{
@@ -530,7 +533,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.add_case_history")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <AddCaseHistory v-focustrap="{
@@ -547,7 +550,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.case_history")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <CaseHistory v-focustrap="{
@@ -564,7 +567,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.add_physical_examination")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <AddPhysicalExamination v-focustrap="{
@@ -581,7 +584,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.physical_examination")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <PhysicalExamination v-focustrap="{
@@ -599,7 +602,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.full_report")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <FullReport v-focustrap="{
@@ -625,7 +628,7 @@
       <div class="inline-flex items-center justify-center gap-2 h-4">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.create_invoice")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <InvoiceAdd v-focustrap="{
@@ -666,7 +669,7 @@
       <div class="inline-flex items-center justify-center gap-2 h-4">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.add_payment")
-          }}</span>
+        }}</span>
       </div>
     </template>
     <AddPayment v-focustrap="{
@@ -1156,18 +1159,41 @@ const computeAge = (dateOfBirth) => {
 const fetchPets = async () => {
   loading.value = true;
   try {
-    // Make the request using the axios instance with interceptors
     const response = await axiosInstance.get(`/pets/${petmicrochip.value}`);
     pet.value = response.data;
-    console.log(response.data);
-    visits.value = response.data.appointments;
-    medical_records.value = response.data.medical_records;
+
+    // ✅ extend medical records with draft flags
+    medical_records.value = response.data.medical_records.map((record) => {
+      const examDraftKey = `medical_exam_form_draft_${record.id}`;
+      const caseDraftKey = `case_history_form_draft_${record.id}`;
+
+      return {
+        ...record,
+        hasDraftExamination: !!localStorage.getItem(examDraftKey),
+        hasDraftCaseHistory: !!localStorage.getItem(caseDraftKey),
+      };
+    });
+
+    // ✅ link flags into visits
+    visits.value = response.data.appointments.map((appt) => {
+      const record = medical_records.value.find(
+        (r) => r.visit_date === appt.id // confirm this join key
+      );
+      return {
+        ...appt,
+        hasDraftExamination: record ? record.hasDraftExamination : false,
+        hasDraftCaseHistory: record ? record.hasDraftCaseHistory : false,
+      };
+    });
+
+    // format and set pet info
     pet.value.date_of_birth = formatDateForSubmission(pet.value.date_of_birth);
-    owner.value = pet.value.length > 0 ? pet.value[0].owner.name : "Unknown Owner"; // Set owner name if pets exist
-    loading.value = false; // Stop loading once data is fetched
+    owner.value = pet.value.length > 0 ? pet.value[0].owner.name : "Unknown Owner";
+
+    loading.value = false;
+    console.log(visits.value); // ✅ now visits will include flags
   } catch (error) {
-    //     // showSuccess("warn", "Warning", "Couldent Fetch Data");
-  } finally {
+    console.error("Error fetching pet data:", error);
   }
 };
 const fetchInvoice = async () => {
@@ -1275,6 +1301,7 @@ const fetchAiSuggestions = async (payload, MedicalRecordId) => {
     loadingAi.value = false;
   }
 };
+
 
 /* const fetchAiSuggestions = async (payload) => {
   // Open dialog immediately

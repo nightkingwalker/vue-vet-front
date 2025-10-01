@@ -1590,8 +1590,8 @@ onMounted(() => {
       hasDraft.value = true;
       eventBus.emit("show-toast", {
         severity: "info",
-        summary: t("case_history.toast.draft_loaded"),
-        detail: t("case_history.toast.draft_loaded_detail"),
+        summary: t("medical_examination_form.messages.draft_loaded"),
+        detail: t("medical_examination_form.messages.draft_loaded_detail"),
         life: 4000,
       });
     } catch (e) {

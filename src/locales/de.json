@@ -966,8 +966,10 @@
       "error": "Medizinische Untersuchung konnte nicht übermittelt werden",
       "draft_cleared": "Entwurf gelöscht",
       "draft_removed": "Entwurf entfernt",
-      "draft_restored_title": "Entwurf wiederhergestellt",
-      "draft_restored": "Der vorherige Entwurf der medizinischen Untersuchung wurde wiederhergestellt. Sie können dort fortfahren, wo Sie aufgehört haben."
+      "draft_loaded": "Entwurf wiederhergestellt",
+      "draft_loaded_detail": "Der vorherige Entwurf der medizinischen Untersuchung wurde wiederhergestellt. Sie können dort fortfahren, wo Sie aufgehört haben.",
+      "has_examination_draft": "Es gibt einen gespeicherten Entwurf für die medizinische Untersuchung dieses Patienten. Möchten Sie den Entwurf wiederherstellen?",
+      "has_history_draft": "Es gibt einen gespeicherten Entwurf für die Krankengeschichte dieses Patienten. Möchten Sie den Entwurf wiederherstellen?"
     }
   },
   "invoice": {

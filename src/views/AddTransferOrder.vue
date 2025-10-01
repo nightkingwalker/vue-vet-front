@@ -49,6 +49,7 @@ import TransferMetaData from "@/views/partials/Transfers/TransferMetaData.vue";
 import TransferSummary from "@/views/partials/Transfers/TransferSummary.vue";
 import TransferNotes from "@/views/partials/Transfers/TransferNotes.vue";
 import TransferActions from "@/views/partials/Transfers/TransferActions.vue";
+const emit = defineEmits(["submitted"]);
 
 const sourceBranch = ref(null);
 const destinationBranch = ref(null);
@@ -124,6 +125,7 @@ const createTransfer = async () => {
 
             await axiosInstance.post("/stock-movements/transfer", payload);
         }
+        emit("submitted"); 
 
         // console.log("Transfer order completed successfully");
     } catch (err) {

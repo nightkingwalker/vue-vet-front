@@ -966,8 +966,10 @@
             "error": "Failed to submit medical examination",
             "draft_cleared": "Draft cleared successfully",
             "draft_removed": "Draft removed successfully",
-            "draft_restored_title": "Draft restored",
-            "draft_restored": "Previous draft of the medical examination has been restored. You can continue from where you left off."
+            "draft_loaded": "Draft restored",
+            "draft_loaded_detail": "Previous draft of the medical examination has been restored. You can continue from where you left off.",
+            "has_examination_draft ": "A saved draft of the medical examination was found. Would you like to restore it?",
+            "has_history_draft ": "A saved draft of the case history was found. Would you like to restore it?"
         }
     },
     "invoice": {
