@@ -1226,7 +1226,7 @@ const props = defineProps({
 });
 
 const isRtl = computed(() => ["ar", "he", "fa"].includes(locale.value));
-const formData = ref({
+const getInitialFormData = () => ({
   symptom_description: "",
   start_date: null,
   symptom_progression: "",
@@ -1335,6 +1335,7 @@ const formData = ref({
   pain_meds_given: false,
   pain_meds_details: "",
 });
+const formData = ref(getInitialFormData());
 
 const weightBearingOptions = [
   { label: t("case_history.options.mascuskeleton.full"), value: "full" },
@@ -1566,12 +1567,14 @@ const onStepChange = async ({ step, callback }) => {
 };
 // ---------------- LOCAL STORAGE DRAFT ----------------
 const DRAFT_KEY = `case_history_form_draft_${props.medical_record_id}`;
+const skipWatch = ref(false);
 const hasDraft = ref(false);
 
 // Auto-save to localStorage on change
 watch(
   formData,
   (newVal) => {
+    if (skipWatch.value) return; // Skip saving if flag is set
     localStorage.setItem(DRAFT_KEY, JSON.stringify(newVal));
     hasDraft.value = true;
   },
@@ -1584,134 +1587,32 @@ onMounted(() => {
   if (draft) {
     try {
       formData.value = JSON.parse(draft);
+      hasDraft.value = true;
       eventBus.emit("show-toast", {
         severity: "info",
-        summary: t("medical_examination_form.messages.draft_restored_title"),
-        detail: t("medical_examination_form.messages.draft_restored"),
+        summary: t("case_history.toast.draft_loaded"),
+        detail: t("case_history.toast.draft_loaded_detail"),
         life: 4000,
       });
-      hasDraft.value = true;
     } catch (e) {
       console.error("Error parsing draft:", e);
       localStorage.removeItem(DRAFT_KEY);
+      hasDraft.value = false;
     }
   }
 });
 
 // Clear draft helper (for you to attach to a button if needed)
 const clearDraft = () => {
-  // Reset formData to initial state
-/*   formData.value = {
-    symptom_description: "",
-    start_date: null,
-    symptom_progression: "",
-    medication_given: false,
-    medication_name: "",
-    medication_dosage: "",
-    prescribed_by: "",
-    activity_level: "",
-    vaccination_status: "",
-    care_location: "",
-    other_animals_in_household: false,
-    number_of_other_animals: null,
-    types_of_other_animals: "",
-    previous_diseases_in_other_animals: "",
-    last_reproductive_cycle_date: null,
-    cycle_length: null,
-    notable_signs: "",
-    other_discharges: "",
-    itching_present: false,
-    itching_location: "",
-    itching_description: "",
-    skin_condition_description: "",
-    diet_type: "",
-    diet_details: "",
-    number_of_meals: null,
-    meal_quantity: "",
-    appetite: "",
-    recent_diet_change: false,
-    diet_change_type: "",
-    water_intake: "",
-    vomiting: false,
-    vomit_color: "",
-    vomit_contents: "",
-    vomit_smell: "",
-    vomiting_frequency: null,
-    vomiting_related_to_food: false,
-    vomiting_related_to_diarrhea: false,
-    diarrhea_started_first: false,
-    stool_consistency: "",
-    stool_color: "",
-    stool_frequency: null,
-    abnormal_stool_contents: "",
-    excessive_licking_of_anus: false,
-    neurological_signs: null,
-    neurological_signs_frequency: "",
-    associated_symptoms: "",
-    sudden_onset: false,
-    related_to_eating_or_activity: "",
-    additional_details: "",
-    cough: false,
-    cough_start_date: null,
-    cough_frequency: "",
-    cough_type: "",
-    breathing_difficulty: false,
-    sneezing: false,
-    urination_frequency: null,
-    frequent_litter_box_visits: false,
-    urine_volume: null,
-    urine_color: "",
-    urination_type: "",
-    blood_in_urine: false,
-    blood_location: "",
-    abnormal_urinary_discharge: "",
-    genital_discharge: "",
-    excessive_licking_of_genital_area: false,
-    vaccine_name: "",
-    vaccine_date: null,
-    next_due_date: null,
-    vaccine_has_reminder: false,
-    administered_by: "",
-    medication_type: "",
-    dosage: "",
-    frequency: "",
-    medication_start_date: null,
-    medication_end_date: null,
-    treatment_name: "",
-    treatment_type: "",
-    treatment_dosage: "",
-    administration_date: null,
-    treatment_next_due_date: null,
-    treatment_administered_by: "",
-    additional_notes: "",
-    // Musculoskeletal Fields
-    limping: false,
-    pain: false,
-    pain_description: "",
-    swelling: false,
-    swelling_location: "",
-    visible_deformity: false,
-    deformity_description: "",
-    affected_limbs_FL: false,
-    affected_limbs_FR: false,
-    affected_limbs_HL: false,
-    affected_limbs_HR: false,
-    weight_bearing: null,
-    symptom_start: "",
-    progression: null,
-    trauma_history: false,
-    trauma_details: "",
-    exercise_induced: false,
-    worse_after_rest: false,
-    difficulty_jumping: false,
-    difficulty_stairs: false,
-    difficulty_rising: false,
-    exercise_tolerance: null,
-    pain_meds_given: false,
-    pain_meds_details: "",
-  }
- */  localStorage.removeItem(DRAFT_KEY);
+  skipWatch.value = true; // stop watcher while resetting
+  localStorage.removeItem(DRAFT_KEY);
+  formData.value = getInitialFormData(); // reset form
   hasDraft.value = false;
+
+  setTimeout(() => {
+    skipWatch.value = false; // re-enable watcher
+  }, 0);
+
   eventBus.emit("show-toast", {
     severity: "info",
     summary: t("medical_examination_form.messages.draft_cleared"),

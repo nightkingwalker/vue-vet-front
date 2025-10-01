@@ -641,7 +641,8 @@ const activeStep = ref("1");
 const isSubmitting = ref(false);
 
 // ---------------- EXAMINATION OBJECT ----------------
-const examination = ref({
+
+const getInitialFormData = () => ({
   medical_record_id: props.medical_record_id,
   examination_date: new Date(),
   animal_weight: 0,
@@ -691,15 +692,16 @@ const examination = ref({
   urethra_external_genitalia: "",
   urine_retention: null,
 });
-
+const examination = ref(getInitialFormData());
 // ---------------- LOCAL STORAGE DRAFT ----------------
 const DRAFT_KEY = `medical_exam_form_draft_${props.medical_record_id}`;
+const skipWatch = ref(false);
 const hasDraft = ref(false);
-
 // Auto-save to localStorage on change
 watch(
   examination,
   (newVal) => {
+    if (skipWatch.value) return;
     localStorage.setItem(DRAFT_KEY, JSON.stringify(newVal));
     hasDraft.value = true;
   },
@@ -712,6 +714,7 @@ onMounted(() => {
   if (draft) {
     try {
       examination.value = JSON.parse(draft);
+      hasDraft.value = true;
       eventBus.emit("show-toast", {
         severity: "info",
         summary: t("medical_examination_form.messages.draft_restored_title"),
@@ -727,58 +730,14 @@ onMounted(() => {
 
 // Clear draft helper (for you to attach to a button if needed)
 const clearDraft = () => {
+  skipWatch.value = true; // stop watcher while resetting
   localStorage.removeItem(DRAFT_KEY);
+  examination.value = getInitialFormData(); // reset form
   hasDraft.value = false;
-/*   examination.value = {
-    medical_record_id: props.medical_record_id,
-    examination_date: new Date(),
-    animal_weight: 0,
-    animal_behavior: "",
-    eyes: "",
-    eye_sunkenness: "",
-    nose: "",
-    nasal_discharge: "",
-    mouth: "",
-    teeth: "",
-    gums: "",
-    tongue: "",
-    mucous_membranes: "",
-    ears: "",
-    pulse_rate: null,
-    respiratory_rate: null,
-    breathing_pattern: "",
-    abnormal_breathing_pattern: "",
-    abnormal_breathing_type: "",
-    abnormal_breathing_severity: "",
-    abnormal_breathing_location: "",
-    breath_sound: "",
-    temperature: null,
-    oxygenation: "",
-    nervous_system: "",
-    skin: "",
-    skin_lumps_or_infections: "",
-    skin_coat_condition: "",
-    abdominal_palpation: "",
-    lymph_nodes: "",
-    body_condition_score: null,
-    hydration_status: "",
-    capillary_refill_time: "",
-    preliminary_diagnosis: "",
-    recommendations: "",
-    notes: "",
-    // 🆕 Urogenital fields
-    urinary_bladder_filling: null,
-    urinary_bladder_pain: null,
-    urinary_bladder_contents: "",
-    urinary_bladder_wall_thickness: null,
-    urinary_bladder_diameter: null,
-    prostate_diameter: null,
-    kidneys_exam: "",
-    kidney_dimensions_right: "",
-    kidney_dimensions_left: "",
-    urethra_external_genitalia: "",
-    urine_retention: null,
-  } */
+
+  setTimeout(() => {
+    skipWatch.value = false; // re-enable watcher
+  }, 0);
   eventBus.emit("show-toast", {
     severity: "info",
     summary: t("medical_examination_form.messages.draft_cleared"),
