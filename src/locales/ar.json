@@ -1489,7 +1489,8 @@
         "password_updated": "تم تحديث كلمة المرور بنجاح",
         "language_updated": "تم تحديث تفضيل اللغة بنجاح",
         "language_update_failed": "فشل في تحديث تفضيل اللغة",
-        "user_details_updated": "تم تحديث تفاصيل المستخدم بنجاح"
+        "user_details_updated": "تم تحديث تفاصيل المستخدم بنجاح",
+        "theme_updated": "تم تحديث تفضيل السمة بنجاح"
     },
     "paymentForm": {
         "title": "إضافة دفعة جديدة",

@@ -421,12 +421,12 @@ const handleSubmit = async (type) => {
 
   if (type === "language") {
     submissionData.user_language = language.value;
-    successMessage = "Language preference updated successfully";
+    successMessage = t("common.language_updated");
     // console.log(language.value)
     applyLanguage(language.value);
   } else if (type === "theme") {
     submissionData.user_theme = theme.value;
-    successMessage = "Theme preference updated successfully";
+    successMessage = t("common.theme_updated");
     authStore.updateTheme(theme.value); // Update store first
     applyTheme(theme.value); // Then apply the theme
   }

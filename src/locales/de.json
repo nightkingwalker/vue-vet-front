@@ -1493,7 +1493,8 @@
     "password_updated": "Passwort erfolgreich aktualisiert",
     "language_updated": "Spracheinstellung erfolgreich aktualisiert",
     "language_update_failed": "Aktualisierung der Spracheinstellung fehlgeschlagen",
-    "user_details_updated": "Benutzerdetails erfolgreich aktualisiert"
+    "user_details_updated": "Benutzerdetails erfolgreich aktualisiert",
+    "theme_updated": "Designpräferenz erfolgreich aktualisiert"
   },
   "paymentForm": {
     "title": "Neue Zahlung hinzufügen",

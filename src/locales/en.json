@@ -1493,7 +1493,8 @@
         "password_updated": "Password Updated Successfully",
         "language_updated": "Language preference updated successfully",
         "language_update_failed": "Failed to update language preference",
-        "user_details_updated": "User Details Updated Successfully"
+        "user_details_updated": "User Details Updated Successfully",
+        "theme_updated": "Theme preference updated successfully"
     },
     "paymentForm": {
         "title": "Add New Payment",
