@@ -2802,8 +2802,8 @@ const submitForm = async () => {
   if (hasErrors) {
     toast.add({
       severity: "error",
-      summary: "Validation Error",
-      detail: "Please complete all required fields before submitting",
+      summary: t("common.validation_error_summary"),
+      detail: t("common.validation_error_detail"),
       life: 5000,
     });
     return; // Stop execution if any step is invalid

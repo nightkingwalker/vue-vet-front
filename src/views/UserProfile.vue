@@ -320,17 +320,17 @@ const tfaEnabled = async () => {
     // emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Data Loaded",
+      summary: t("common.data_updated"),
       detail:
         "" + !checked.value
-          ? "Two Factor Authentication Disabled Successfully"
-          : "Two Factor Authentication Enabled Successfully",
+          ? t("common.two_factor_disabled")
+          : t("common.two_factor_enabled"),
       life: 5000,
     });
   } catch (error) {
     eventBus.emit("show-toast", {
       severity: "warn",
-      summary: "Error",
+      summary: t("common.error"),
       detail: error,
       life: 5000,
     });
@@ -351,8 +351,8 @@ const updatePassword = async () => {
     // emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Data Loaded",
-      detail: "Password Updated Successfully",
+      summary: t("common.data_updated"),
+      detail: t("common.password_updated"),
       life: 5000,
     });
   } catch (error) {
@@ -384,19 +384,19 @@ const handleSubmitLanguag = async () => {
     fetchUserDetails();
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Success",
-      detail: "Language preference updated successfully",
+      summary: t("common.success"),
+      detail: t("common.language_updated"),
       life: 5000,
     });
   } catch (error) {
     if (error.response) {
       console.error("Error:", error.response.data);
       message.value =
-        error.response.data.message || "Failed to update language preference";
+        error.response.data.message || t("common.language_update_failed");
 
       eventBus.emit("show-toast", {
         severity: "error",
-        summary: "Error",
+        summary: t("common.error"),
         detail: message.value,
         life: 5000,
       });
@@ -447,7 +447,7 @@ const handleSubmit = async (type) => {
 
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Success",
+      summary: t("common.success"),
       detail: successMessage,
       life: 5000,
     });
@@ -480,7 +480,7 @@ const handleSubmit = async (type) => {
 
     eventBus.emit("show-toast", {
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: errorMessage,
       life: 5000,
     });
@@ -554,8 +554,8 @@ const submitForm = async () => {
     // emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Data Loaded",
-      detail: "User Details Updated Successfully",
+      summary: t("common.data_updated"),
+      detail: t("common.user_details_updated"),
       life: 5000,
     });
   } catch (error) {

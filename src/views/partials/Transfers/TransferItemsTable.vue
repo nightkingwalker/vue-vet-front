@@ -212,7 +212,7 @@ const addItemToTransfer = () => {
     if (itemQuantity.value > selectedItem.value.quantity) {
         toast.add({
             severity: "error",
-            summary: "Error",
+            summary: t("common.error"),
             detail: `Only ${selectedItem.value.quantity} available in stock`,
             life: 4000,
         });
@@ -232,8 +232,9 @@ const addItemToTransfer = () => {
     clearItem();
     toast.add({
         severity: "success",
-        summary: "Added",
-        detail: "Item added to transfer",
+        // summary: "Added",
+        summary: t("common.item_added_to_list"),
+        detail: t("common.item_added_to_list_details"),
         life: 3000,
     });
 };

@@ -149,8 +149,8 @@ const handleTimeout = () => {
   router.push("/login");
   toast.add({
     severity: "warn",
-    summary: "Session Expired",
-    detail: "You have been logged out due to inactivity",
+    summary: t("common.session_expired_summary"),
+    detail: t("common.session_expired_detail"),
     life: 5000,
   });
   emit("timeout");

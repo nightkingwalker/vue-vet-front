@@ -103,7 +103,7 @@ const fetchTestResult = async () => {
     console.error("Failed to fetch test result:", error);
     eventBus.emit("show-toast", {
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to fetch test result details.",
       life: 5000,
     });
@@ -148,15 +148,15 @@ const submitForm = async () => {
     // Show a success message
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Test Result Updated",
-      detail: "Test result has been updated successfully.",
+      summary: t("lab_result_updated_summary"),
+      detail: t("lab_result_updated_detail"),
       life: 5000,
     });
   } catch (error) {
     console.error("Error updating test result:", error);
     eventBus.emit("show-toast", {
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to update test result.",
       life: 5000,
     });

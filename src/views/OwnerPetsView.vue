@@ -416,7 +416,7 @@ const fetchPets = async () => {
     loading.value = false; // Stop loading once data is fetched
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Data Loaded",
+      summary: t("common.data_updated"),
       detail: "Data list updated successfuly",
       life: 5000,
     });

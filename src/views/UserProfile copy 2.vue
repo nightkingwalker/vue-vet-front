@@ -254,7 +254,7 @@ const tfaEnabled = async () => {
     // emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Data Loaded",
+      summary: t("common.data_updated"),
       detail:
         "" + !checked.value
           ? "Two Factor Authentication Disabled Successfully"
@@ -264,7 +264,7 @@ const tfaEnabled = async () => {
   } catch (error) {
     eventBus.emit("show-toast", {
       severity: "warn",
-      summary: "Error",
+      summary: t("common.error"),
       detail: error,
       life: 5000,
     });
@@ -286,7 +286,7 @@ const updatePassword = async () => {
     // emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Data Loaded",
+      summary: t("common.data_updated"),
       detail: "Password Updated Successfully",
       life: 5000,
     });
@@ -350,7 +350,7 @@ const submitForm = async () => {
     // emit("submitted", response.data);
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Data Loaded",
+      summary: t("common.data_updated"),
       detail: "User Details Updated Successfully",
       life: 5000,
     });

@@ -64,7 +64,7 @@ onMounted(async () => {
         console.error("Error fetching branches:", error);
         toast.add({
             severity: "error",
-            summary: "Error",
+            summary: t("common.error"),
             detail: "Failed to load branches",
             life: 4000,
         });

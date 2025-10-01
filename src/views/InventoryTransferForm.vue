@@ -173,7 +173,7 @@ const handleSubmit = async () => {
     if (invalid.value.destinationBranchId || invalid.value.quantity) {
         toast.add({
             severity: "error",
-            summary: "Error",
+            summary: t("common.error"),
             detail: "Please fill required fields",
             life: 4000,
         });
@@ -194,7 +194,7 @@ const handleSubmit = async () => {
 
         toast.add({
             severity: "success",
-            summary: "Success",
+            summary: t("common.success"),
             detail: "Stock transferred successfully",
             life: 4000,
         });
@@ -204,7 +204,7 @@ const handleSubmit = async () => {
         console.error("Transfer error:", error);
         toast.add({
             severity: "error",
-            summary: "Error",
+            summary: t("common.error"),
             detail: error.response?.data?.message || "Transfer failed",
             life: 5000,
         });

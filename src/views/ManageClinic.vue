@@ -444,7 +444,7 @@ const fetchClinicData = async () => {
   } catch (error) {
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to fetch clinic data",
       life: 3000,
     });
@@ -472,7 +472,7 @@ const searchUsers = async () => {
   } catch (error) {
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to search users",
       life: 3000,
     });
@@ -490,7 +490,7 @@ const addUserToClinic = async () => {
 
     toast.add({
       severity: "success",
-      summary: "Success",
+      summary: t("common.success"),
       detail: "User added to clinic",
       life: 3000,
     });
@@ -500,7 +500,7 @@ const addUserToClinic = async () => {
   } catch (error) {
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to add user to clinic",
       life: 3000,
     });
@@ -526,7 +526,7 @@ const updateUserRole = async () => {
 
     toast.add({
       severity: "success",
-      summary: "Success",
+      summary: t("common.success"),
       detail: "User role updated",
       life: 3000,
     });
@@ -537,7 +537,7 @@ const updateUserRole = async () => {
     
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to update user role",
       life: 3000,
     });
@@ -560,8 +560,8 @@ const confirmRemoveUser = (user) => {
   ) {
     toast.add({
       severity: "warn",
-      summary: "Warning",
-      detail: "Cannot remove the last admin of the clinic",
+      summary: t("common.last_admin_warning_summary"),
+      detail: t("common.last_admin_warning_detail"),
       life: 3000,
     });
     return;
@@ -580,7 +580,7 @@ const removeUserFromClinic = async () => {
 
     toast.add({
       severity: "success",
-      summary: "Success",
+      summary: t("common.success"),
       detail: "User removed from clinic",
       life: 3000,
     });
@@ -590,7 +590,7 @@ const removeUserFromClinic = async () => {
   } catch (error) {
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to remove user from clinic",
       life: 3000,
     });
@@ -607,7 +607,7 @@ const updateClinic = async () => {
 
     toast.add({
       severity: "success",
-      summary: "Success",
+      summary: t("common.success"),
       detail: "Clinic updated",
       life: 3000,
     });
@@ -617,7 +617,7 @@ const updateClinic = async () => {
   } catch (error) {
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to update clinic",
       life: 3000,
     });

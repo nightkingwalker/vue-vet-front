@@ -173,7 +173,7 @@ const toast = useToast();
 const printInvoice = () => {
   toast.add({
     severity: "info",
-    summary: "Print",
+    summary: t("common.print_preparing_summary"),
     detail: t('invoice.print_preparing'),
     life: 3000,
   });
@@ -182,7 +182,7 @@ const printInvoice = () => {
   if (!invoiceContainer) {
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: t('invoice.print_error_content'),
       life: 3000,
     });
@@ -193,7 +193,7 @@ const printInvoice = () => {
   if (!printWindow) {
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: t('invoice.print_error_popup'),
       life: 5000,
     });
@@ -259,7 +259,7 @@ const showPaymentDialog = () => {
 const downloadPDF = () => {
   toast.add({
     severity: "info",
-    summary: "Download",
+    summary: t("common.download_preparing_summary"),
     detail: t('invoice.download_preparing'),
     life: 3000,
   });
@@ -378,7 +378,7 @@ const formatPOSCurrency = (amount) => {
 const printPOS = () => {
   toast.add({
     severity: "info",
-    summary: "Print",
+    summary: t("common.pos_preparing_summary"),
     detail: t('invoice.pos_preparing'),
     life: 3000,
   });
@@ -387,7 +387,7 @@ const printPOS = () => {
   if (!posTemplate) {
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: t('invoice.pos_error_template'),
       life: 3000,
     });
@@ -398,7 +398,7 @@ const printPOS = () => {
   if (!printWindow) {
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: t('invoice.print_error_popup'),
       life: 5000,
     });

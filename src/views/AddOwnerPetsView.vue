@@ -417,7 +417,7 @@ async function fetchOwners() {
     console.error("Failed to fetch owners:", error);
     eventBus.emit("show-toast", {
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to fetch owner data",
       life: 5000,
     });
@@ -501,7 +501,7 @@ const submitForm = async () => {
 
       eventBus.emit("show-toast", {
         severity: "success",
-        summary: "Success",
+        summary: t("common.success"),
         detail: "Pet added successfully",
         life: 5000,
       });
@@ -512,7 +512,7 @@ const submitForm = async () => {
       // Handle submission error
       eventBus.emit("show-toast", {
         severity: "error",
-        summary: "Error",
+        summary: t("common.error"),
         detail: error.message || "Failed to add pet",
         life: 5000,
       });
@@ -524,8 +524,8 @@ const submitForm = async () => {
     await $offlineQueue.addToQueue(submission);
     emit("submittedOffline");
     toast.add({
-      severity: "success",
-      summary: "Offline",
+      severity: t("submitted_offline"),
+      summary: t("submitted_offline_details"),
       detail:
         "You are offline. Data saved locally and will be submitted later. Please close the dialog",
       life: 5000,

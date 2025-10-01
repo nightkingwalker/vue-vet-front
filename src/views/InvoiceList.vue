@@ -529,7 +529,7 @@ const deleteInvoice = async () => {
     if (error.response.status === 422) {
       toast.add({
         severity: "error",
-        summary: "Failed",
+        summary: t("common.test_result_failed_summary"),
         detail: error.response.data.message,
         life: 3000,
       });
@@ -590,7 +590,7 @@ const handlePaymentSubmit = async (paymentData) => {
     // );
     toast.add({
       severity: "success",
-      summary: "Success",
+      summary: t("common.success"),
       detail: "Payment added successfully",
       life: 3000,
     });
@@ -600,7 +600,7 @@ const handlePaymentSubmit = async (paymentData) => {
     console.error("Error adding payment:", error);
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: error.response?.data?.message || "Failed to add payment",
       life: 5000,
     });

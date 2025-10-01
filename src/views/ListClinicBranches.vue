@@ -283,7 +283,7 @@ const fetchClinicData = async () => {
   } catch (error) {
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to fetch clinic data",
       life: 3000,
     });
@@ -301,7 +301,7 @@ const addBranch = async () => {
     
     toast.add({
       severity: "success",
-      summary: "Success",
+      summary: t("common.success"),
       detail: "Branch added successfully",
       life: 3000,
     });
@@ -312,7 +312,7 @@ const addBranch = async () => {
     
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to add branch",
       life: 3000,
     });
@@ -335,7 +335,7 @@ const updateBranch = async () => {
 
     toast.add({
       severity: "success",
-      summary: "Success",
+      summary: t("common.success"),
       detail: "Branch updated successfully",
       life: 3000,
     });
@@ -345,7 +345,7 @@ const updateBranch = async () => {
   } catch (error) {
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to update branch",
       life: 3000,
     });
@@ -368,7 +368,7 @@ const deleteBranch = async () => {
 
     toast.add({
       severity: "success",
-      summary: "Success",
+      summary: t("common.success"),
       detail: "Branch deleted successfully",
       life: 3000,
     });
@@ -378,7 +378,7 @@ const deleteBranch = async () => {
   } catch (error) {
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to delete branch",
       life: 3000,
     });

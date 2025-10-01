@@ -569,14 +569,14 @@ const submitForm = async () => {
 
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Data Loaded",
+      summary: t("common.data_updated"),
       detail: `Medical Examination Added Successfully`,
       life: 5000,
     });
   } catch (error) {
     eventBus.emit("show-toast", {
       severity: "warn",
-      summary: "Error",
+      summary: t("common.error"),
       detail: error,
       life: 5000,
     });

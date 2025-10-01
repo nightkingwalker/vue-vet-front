@@ -722,6 +722,7 @@ const calendarApp = createCalendar({
       ? "de-DE"
       : "en-US",
   isRTL: true,
+  isDark: true,
   gridHeight: 500,
   isResponsive: true,
   skipValidation: true,
@@ -752,7 +753,7 @@ const calendarApp = createCalendar({
    */
   translations: mergeLocales(translations, {
 
-    "arSY": {
+    "arAR": {
       Today: "اليوم",
       Month: "شهر",
       Week: "أسبوع",
@@ -875,6 +876,7 @@ const calendarApp = createCalendar({
     // createEventModalPlugin(),
   ],
 });
+
 const menuItems = ref([
   {
     label: t("calendar.context_menu.day_view"),
@@ -912,15 +914,15 @@ const onEventUpdate = async (updatedEvent) => {
 
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Appointment Updated",
-      detail: "The appointment has been updated successfully.",
+      summary: t("appointment_updated_summary"),
+      detail: t("appointment_updated_detail"),
       life: 5000,
     });
   } catch (error) {
     console.error("Error updating appointment:", error);
     eventBus.emit("show-toast", {
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to update the appointment.",
       life: 5000,
     });
@@ -971,7 +973,7 @@ const onRightClick = () => {
   menu.value.show(event);
 };
 /*testing calendar multilanguage*/
-const datePickerArAr = {
+const datePickerArAR = {
   Date: "Date",
   "MM/DD/YYYY": "MM/DD/YYYY",
   "Next month": "الشهر التالي",
@@ -979,7 +981,7 @@ const datePickerArAr = {
   "Choose Date": "اختر تاريخا",
 };
 
-const calendarArAr = {
+const calendarArAR = {
   Today: "اليوم",
   Month: "شهر",
   Week: "أسبوع",
@@ -997,8 +999,8 @@ const calendarArAr = {
 };
 
 const arAR = {
-  ...datePickerArAr,
-  ...calendarArAr,
+  ...datePickerArAR,
+  ...calendarArAR,
 };
 watchEffect(() => {
   setCalendarTheme(Cookies.get("theme"));

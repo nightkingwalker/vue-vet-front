@@ -428,7 +428,7 @@ const fetchBranchData = async () => {
   } catch (error) {
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to fetch branch data",
       life: 3000,
     });
@@ -457,7 +457,7 @@ const searchUsers = async () => {
   } catch (error) {
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to search users",
       life: 3000,
     });
@@ -476,7 +476,7 @@ const addUserToBranch = async () => {
     
     toast.add({
       severity: "success",
-      summary: "Success",
+      summary: t("common.success"),
       detail: "User added to branch",
       life: 3000,
     });
@@ -486,7 +486,7 @@ const addUserToBranch = async () => {
   } catch (error) {
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to add user to branch",
       life: 3000,
     });
@@ -514,7 +514,7 @@ const updateUserRole = async () => {
 
     toast.add({
       severity: "success",
-      summary: "Success",
+      summary: t("common.success"),
       detail: "User role updated",
       life: 3000,
     });
@@ -524,7 +524,7 @@ const updateUserRole = async () => {
   } catch (error) {
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to update user role",
       life: 3000,
     });
@@ -547,7 +547,7 @@ const removeUserFromBranch = async () => {
 
     toast.add({
       severity: "success",
-      summary: "Success",
+      summary: t("common.success"),
       detail: "User removed from branch",
       life: 3000,
     });
@@ -557,7 +557,7 @@ const removeUserFromBranch = async () => {
   } catch (error) {
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to remove user from branch",
       life: 3000,
     });

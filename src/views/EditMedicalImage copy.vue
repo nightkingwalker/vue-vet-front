@@ -128,7 +128,7 @@ const fetchMedicalImage = async () => {
     console.error("Failed to fetch medical image:", error);
     eventBus.emit("show-toast", {
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to fetch medical image data.",
       life: 5000,
     });
@@ -154,8 +154,8 @@ const submitForm = async () => {
     );
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Medical Image Updated",
-      detail: `Medical image updated successfully.`,
+      summary: t("medical_image_updated_summary"),
+      detail: t("medical_image_updated_detail"),
       life: 5000,
     });
 
@@ -165,7 +165,7 @@ const submitForm = async () => {
     console.error("Failed to update medical image:", error);
     eventBus.emit("show-toast", {
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: error.response?.data?.message || "Failed to update medical image.",
       life: 5000,
     });

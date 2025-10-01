@@ -416,8 +416,8 @@ const deactivateClient = async (data) => {
     // Optionally, show a success message or perform any other action
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Client Added",
-      detail: "New client has been added successfully.",
+      summary: t("common.client_added_summary"),
+      detail: t("common.client_added_detail"),
       life: 5000,
     });
     await router.push("/owners");
@@ -426,7 +426,7 @@ const deactivateClient = async (data) => {
     console.error("Error adding new client:", error);
     eventBus.emit("show-toast", {
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: "Failed to add new client.",
       life: 5000,
     });

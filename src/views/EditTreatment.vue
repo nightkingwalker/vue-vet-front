@@ -141,7 +141,7 @@ const fetchTreatment = async () => {
   } catch (error) {
     eventBus.emit("show-toast", {
       severity: "warn",
-      summary: "Error",
+      summary: t("common.error"),
       detail: error,
       life: 5000,
     });
@@ -173,7 +173,7 @@ const submitForm = async () => {
     );
     eventBus.emit("show-toast", {
       severity: "success",
-      summary: "Data Loaded",
+      summary: t("common.data_updated"),
       detail: `Treatment Updated Successfully`,
       life: 5000,
     });
@@ -181,7 +181,7 @@ const submitForm = async () => {
   } catch (error) {
     eventBus.emit("show-toast", {
       severity: "warn",
-      summary: "Error",
+      summary: t("common.error"),
       detail: error,
       life: 5000,
     });

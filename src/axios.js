@@ -53,8 +53,8 @@ apiClient.interceptors.response.use(
                 .catch((refreshError) => {
                     eventBus.emit("show-toast", {
                         severity: "error",
-                        summary: "Authentication Error",
-                        detail: "Session expired, please log in again.",
+                        summary: t("authentication_error_summary"),
+                        detail: t("authentication_error_detail"),
                         life: 5000,
                     });
                     authStore.logOut();

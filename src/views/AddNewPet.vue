@@ -459,7 +459,7 @@ const submitForm = async () => {
   } catch (error) {
     eventBus.emit("show-toast", {
       severity: "warn",
-      summary: "Error",
+      summary: t("common.error"),
       detail: error,
       life: 5000,
     });

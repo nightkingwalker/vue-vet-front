@@ -542,8 +542,8 @@ const handleSubmit = () => {
     reject: () => {
       toast.add({
         severity: "warn",
-        summary: "Cancelled",
-        detail: "Operation cancelled",
+        summary: t("common.cancelled_summary"),
+        detail: t("common.cancelled_detail"),
         life: 3000,
       });
     },
@@ -644,7 +644,7 @@ const submitForm = async () => {
     createNewItemLoading.value = false;
     toast.add({
       severity: "success",
-      summary: "Success",
+      summary: t("common.success"),
       detail: existingItemId.value
         ? "Stock added to existing item"
         : "New inventory item created",
@@ -664,7 +664,7 @@ const submitForm = async () => {
     console.error("Error submitting form:", error);
     toast.add({
       severity: "error",
-      summary: "Error",
+      summary: t("common.error"),
       detail: error.response?.data?.message || "Failed to save inventory item",
       life: 5000,
     });
