@@ -15,7 +15,7 @@
     <!-- Logo (Optional) -->
     <div class="grow-[3] order-2 flex justify-center items-center gap-2">
       <Image
-        :src="Logo"
+        :src="$client.logo"
         alt="Application Logo"
         class="flex justify-center rounded-[4rem]  w-[2rem] p-1"
       />

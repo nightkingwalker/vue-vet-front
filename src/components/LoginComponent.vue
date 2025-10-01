@@ -1,328 +1,218 @@
 <template>
-  <div class="flex items-center justify-center min-h-[90vh] mx-auto">
-    <div
-      class="p-8 clear-glass shadow-xl rounded-2xl max-w-sm w-full relative overflow-hidden"
-    >
-      <!-- Header with paw decorations -->
-      <div
-        class="relative bg-[var(--p-surface-600)] text-white px-8 py-6 -mx-8 -mt-8 mb-6 text-center"
-      >
-        <i class="fas fa-paw absolute text-2xl opacity-20 top-4 left-5"></i>
-        <i class="fas fa-paw absolute text-2xl opacity-20 bottom-4 right-5"></i>
-        <div class="flex flex-col items-center">
-          <Image
-            :src="Logo"
-            alt="Clinic Logo"
-            class="w-16 h-16 mb-3 rounded-full bg-white p-1"
-          />
-          <h1 class="text-2xl font-semibold">Paws & Care</h1>
-          <p class="text-sm opacity-90 mt-1">Veterinary Clinic Management</p>
-        </div>
-      </div>
-      <!-- Main Form -->
-      <form
-        v-if="!requires2FA && !showBranchSelection"
-        @submit.prevent="login"
-        class="space-y-5"
-      >
-        <!-- Email Input -->
-        <div>
-          <div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400">
-            <label for="username">{{ $t("login.username") }}</label>
-            <InputGroup
-              class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 flex rounded-md overflow-hidden"
-            >
-              <InputGroupAddon
-                class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 px-4 flex flex-col item-center justify-center"
-                ><i class="pi pi-user"></i
-              ></InputGroupAddon>
-              <InputText
-                id="username"
-                :autocomplete="`vetapp-username username`"
-                v-model="email"
-                aria-describedby="username-help"
-                :placeholder="$t('login.username')"
-                :feedback="false"
-                fluid
-                required
-                style="
-                  border-top: 1px solid var(--p-inputgroup-addon-border-color);
-                  border-bottom: 1px solid var(--p-inputgroup-addon-border-color);
-                  border-inline-start: 1px solid var(--p-inputgroup-addon-border-color);
-                  border-inline-end: 1px solid var(--p-inputgroup-addon-border-color);
-                "
-                class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 focus:!ring-0 focus:!ring-offset-0 focus:!outline-0"
-              />
-            </InputGroup>
+  <div class="min-h-[99vh] mx-auto">
+    <div class="w-full flex flex-col items-center justify-center ">
+      <div class="p-8 clear-glass shadow-xl rounded-2xl max-w-sm w-full relative overflow-hidden">
+        <!-- Header with paw decorations -->
+        <div class="relative bg-[var(--p-surface-600)] text-white px-8 py-6 -mx-8 -mt-8 mb-6 text-center">
+          <i class="fas fa-paw absolute text-2xl opacity-20 top-4 left-5"></i>
+          <i class="fas fa-paw absolute text-2xl opacity-20 bottom-4 right-5"></i>
+          <div class="flex flex-col items-center">
+            <Image :src="$client.logo" alt="Clinic Logo" class="w-16 h-16 mb-3 rounded-full bg-white p-1" />
+            <h1 class="text-2xl font-semibold">{{ $client.name }}</h1>
+            <p class="text-sm opacity-90 mt-1">{{ $client.tagline }}</p>
           </div>
         </div>
-        <div class="mb-6">
-          <div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400">
-            <label for="password">{{ $t("login.password") }}</label>
-            <InputGroup
-              class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 flex rounded-md overflow-hidden"
-            >
-              <InputGroupAddon
-                class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 px-4 flex flex-col item-center justify-center"
-                ><i class="pi pi-shield"></i
-              ></InputGroupAddon>
-              <InputText
-                v-model="password"
-                :autocomplete="`vetapp-password`"
-                id="password"
-                type="password"
-                :placeholder="$t('login.password')"
-                :feedback="false"
-                fluid
-                required
-                style="
-                  border-top: 1px solid var(--p-inputgroup-addon-border-color);
-                  border-bottom: 1px solid var(--p-inputgroup-addon-border-color);
-                  border-inline-start: 1px solid var(--p-inputgroup-addon-border-color);
-                  border-inline-end: 1px solid var(--p-inputgroup-addon-border-color);
-                "
-                class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 !ring-0 focus:!ring-0 !ring-offset-0 focus:!ring-offset-0"
-              />
-              <InputGroupAddon
-                class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 px-4 flex flex-col item-center justify-center"
-                ><i class="pi pi-eye password-shield" @click="togglePassInput()"></i
-              ></InputGroupAddon>
-            </InputGroup>
-          </div>
-          <small id="" :class="!isError ? `text-green-500 h-4` : `text-red-500 h-4`">{{
-            message
-          }}</small>
-        </div>
-        <!-- Remember Me & Forgot Password -->
-        <div class="flex items-center justify-between text-sm">
-          <div class="flex items-center justify-start gap-2">
-            <ToggleSwitch
-              v-model="rememberMe"
-              inputId="rememberMe"
-              :binary="true"
-              class="mr-2"
-            />
-            <label for="rememberMe" class="text-gray-600 dark:text-gray-400">
-              {{ $t("login.remember_me") }}
-            </label>
-          </div>
-          <a
-            href="#"
-            class="text-blue-600 hover:text-blue-800 font-medium"
-            @click.prevent="showForgotPasswordModal = true"
-          >
-            {{ $t("login.forgot_password") }}
-          </a>
-        </div>
-        <div class="flex items-end justify-end">
-          <button
-            type="submit"
-            class="p-button p-button-content w-full !bg-[var(--p-surface-600)] !text-[var(--p-surface-200)] py-2 px-4 rounded-xl focus:outline-none focus:shadow-outline h-10"
-            :disabled="loading ? true : false"
-          >
-            <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
-            <span v-else>{{ $t("login.submit") }}</span>
-          </button>
-        </div>
-        <!-- Divider -->
-        <!--         <div class="relative my-6">
-              <div class="absolute inset-0 flex items-center">
-                <div class="w-full border-t border-gray-200 dark:border-gray-600"></div>
-              </div>
-              <div class="relative flex justify-center text-sm">
-                <span class="px-2 bg-white dark:bg-stone-900 text-gray-500">
-                  or continue with
-                </span>
-              </div>
+        <!-- Main Form -->
+        <form v-if="!requires2FA && !showBranchSelection" @submit.prevent="login" class="space-y-5">
+          <!-- Email Input -->
+          <div>
+            <div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400">
+              <label for="username">{{ $t("login.username") }}</label>
+              <InputGroup
+                class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 flex rounded-md overflow-hidden">
+                <InputGroupAddon
+                  class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 px-4 flex flex-col item-center justify-center">
+                  <i class="pi pi-user"></i>
+                </InputGroupAddon>
+                <InputText id="username" :autocomplete="`vetapp-username username`" v-model="email"
+                  aria-describedby="username-help" :placeholder="$t('login.username')" :feedback="false" fluid required
+                  style="
+                    border-top: 1px solid var(--p-inputgroup-addon-border-color);
+                    border-bottom: 1px solid var(--p-inputgroup-addon-border-color);
+                    border-inline-start: 1px solid var(--p-inputgroup-addon-border-color);
+                    border-inline-end: 1px solid var(--p-inputgroup-addon-border-color);
+                  "
+                  class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 focus:!ring-0 focus:!ring-offset-0 focus:!outline-0" />
+              </InputGroup>
             </div>
-       -->
-        <!-- Social Login Buttons -->
-        <!--         <div class="flex justify-center space-x-4">
-              <button
-                type="button"
-                class="w-12 h-12 rounded-full border border-gray-200 dark:border-gray-600 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-800 dark:hover:text-gray-100 transition"
-              >
-                <i class="fab fa-google"></i>
-              </button>
-              <button
-                type="button"
-                class="w-12 h-12 rounded-full border border-gray-200 dark:border-gray-600 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-800 dark:hover:text-gray-100 transition"
-              >
-                <i class="fab fa-apple"></i>
-              </button>
-              <button
-                type="button"
-                class="w-12 h-12 rounded-full border border-gray-200 dark:border-gray-600 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-800 dark:hover:text-gray-100 transition"
-              >
-                <i class="fab fa-facebook-f"></i>
-              </button>
-            </div> -->
-      </form>
-      <!-- 2FA Form -->
-      <form
-        v-if="requires2FA"
-        @submit.prevent="verify2FA"
-        class="space-y-5 transition-transform duration-300"
-        :class="{ 'translate-x-0': requires2FA, 'translate-x-full': !requires2FA }"
-      >
-        <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">
-          {{ $t("two_factor.title") }}
-        </h2>
-        <p class="text-sm text-gray-600 dark:text-gray-400">
-          {{ $t("two_factor.description") }}
-        </p>
-        <div class="space-y-2">
-          <InputOtp
-            v-model="twoFactorCode"
-            id="twoFactorCode"
-            :length="6"
-            dir="ltr"
-            autofocus
-            :invalid="tfaInvalid"
-            class="mx-auto justify-center"
-            placeholder="000000"
-          >
-            <template #default="{ attrs, events }">
-              <input
-                type="text"
-                v-bind="attrs"
-                v-on="events"
-                autofocus
-                :class="{
-                  invalid: tfaInvalid,
-                  'custom-otp-input': true,
-                }"
-                placeholder="0"
-              />
-            </template>
-          </InputOtp>
-          <small
-            :class="{ 'text-green-500': !isError, 'text-red-500': isError }"
-            class="block h-4"
-          >
-            {{ message }}
-          </small>
-        </div>
-        <button
-          type="submit"
-          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition duration-200 disabled:opacity-50"
-          :disabled="loading"
-        >
-          <i class="fa-solid fa-spinner fa-spin mr-2" v-if="loading"></i>
-          <span v-else>{{ $t("two_factor.verify") }}</span>
-        </button>
-      </form>
-      <!-- Branch Selection -->
-      <BranchSelection
-        v-if="showBranchSelection"
-        :branches="userBranches"
-        @branch-selected="handleBranchSelected"
-      />
-      <!-- Footer -->
-      <small class="block text-[8pt] text-gray-600 dark:text-gray-400 mt-6">
-        Site is protected by reCAPTCHA. Google
-        <a href="https://policies.google.com/privacy" class="text-blue-500"
-          >Privacy Policy</a
-        >
-        and
-        <a href="https://policies.google.com/terms" class="text-blue-500"
-          >Terms of Service</a
-        >
-        apply.
-      </small>
+          </div>
+          <div class="mb-6">
+            <div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400">
+              <label for="password">{{ $t("login.password") }}</label>
+              <InputGroup
+                class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 flex rounded-md overflow-hidden">
+                <InputGroupAddon
+                  class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 px-4 flex flex-col item-center justify-center">
+                  <i class="pi pi-shield"></i>
+                </InputGroupAddon>
+                <InputText v-model="password" :autocomplete="`vetapp-password`" id="password" type="password"
+                  :placeholder="$t('login.password')" :feedback="false" fluid required style="
+                    border-top: 1px solid var(--p-inputgroup-addon-border-color);
+                    border-bottom: 1px solid var(--p-inputgroup-addon-border-color);
+                    border-inline-start: 1px solid var(--p-inputgroup-addon-border-color);
+                    border-inline-end: 1px solid var(--p-inputgroup-addon-border-color);
+                  "
+                  class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 !ring-0 focus:!ring-0 !ring-offset-0 focus:!ring-offset-0" />
+                <InputGroupAddon
+                  class="!bg-surface-200 !dark:bg-surface-600 dark:!text-gray-200 !text-gray-800 px-4 flex flex-col item-center justify-center">
+                  <i class="pi pi-eye password-shield" @click="togglePassInput()"></i>
+                </InputGroupAddon>
+              </InputGroup>
+            </div>
+            <small id="" :class="!isError ? `text-green-500 h-4` : `text-red-500 h-4`">{{
+              message
+              }}</small>
+          </div>
+          <!-- Remember Me & Forgot Password -->
+          <div class="flex items-center justify-between text-sm">
+            <div class="flex items-center justify-start gap-2">
+              <ToggleSwitch v-model="rememberMe" inputId="rememberMe" :binary="true" class="mr-2" />
+              <label for="rememberMe" class="text-gray-600 dark:text-gray-400">
+                {{ $t("login.remember_me") }}
+              </label>
+            </div>
+            <a href="#" class="text-blue-600 hover:text-blue-800 font-medium"
+              @click.prevent="showForgotPasswordModal = true">
+              {{ $t("login.forgot_password") }}
+            </a>
+          </div>
+          <div class="flex items-end justify-end">
+            <button type="submit"
+              class="p-button p-button-content w-full !bg-[var(--p-surface-600)] !text-[var(--p-surface-200)] py-2 px-4 rounded-xl focus:outline-none focus:shadow-outline h-10"
+              :disabled="loading ? true : false">
+              <i class="fa-solid fa-spinner fa-spin" v-if="loading"></i>
+              <span v-else>{{ $t("login.submit") }}</span>
+            </button>
+          </div>
+          <!-- Divider -->
+          <!--         <div class="relative my-6">
+                <div class="absolute inset-0 flex items-center">
+                  <div class="w-full border-t border-gray-200 dark:border-gray-600"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                  <span class="px-2 bg-white dark:bg-stone-900 text-gray-500">
+                    or continue with
+                  </span>
+                </div>
+              </div>
+         -->
+          <!-- Social Login Buttons -->
+          <!--         <div class="flex justify-center space-x-4">
+                <button
+                  type="button"
+                  class="w-12 h-12 rounded-full border border-gray-200 dark:border-gray-600 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-800 dark:hover:text-gray-100 transition"
+                >
+                  <i class="fab fa-google"></i>
+                </button>
+                <button
+                  type="button"
+                  class="w-12 h-12 rounded-full border border-gray-200 dark:border-gray-600 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-800 dark:hover:text-gray-100 transition"
+                >
+                  <i class="fab fa-apple"></i>
+                </button>
+                <button
+                  type="button"
+                  class="w-12 h-12 rounded-full border border-gray-200 dark:border-gray-600 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-800 dark:hover:text-gray-100 transition"
+                >
+                  <i class="fab fa-facebook-f"></i>
+                </button>
+              </div> -->
+        </form>
+        <!-- 2FA Form -->
+        <form v-if="requires2FA" @submit.prevent="verify2FA" class="space-y-5 transition-transform duration-300"
+          :class="{ 'translate-x-0': requires2FA, 'translate-x-full': !requires2FA }">
+          <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">
+            {{ $t("two_factor.title") }}
+          </h2>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            {{ $t("two_factor.description") }}
+          </p>
+          <div class="space-y-2">
+            <InputOtp v-model="twoFactorCode" id="twoFactorCode" :length="6" dir="ltr" autofocus :invalid="tfaInvalid"
+              class="mx-auto justify-center" placeholder="000000">
+              <template #default="{ attrs, events }">
+                <input type="text" v-bind="attrs" v-on="events" autofocus :class="{
+                    invalid: tfaInvalid,
+                    'custom-otp-input': true,
+                  }" placeholder="0" />
+              </template>
+            </InputOtp>
+            <small :class="{ 'text-green-500': !isError, 'text-red-500': isError }" class="block h-4">
+              {{ message }}
+            </small>
+          </div>
+          <button type="submit"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition duration-200 disabled:opacity-50"
+            :disabled="loading">
+            <i class="fa-solid fa-spinner fa-spin mr-2" v-if="loading"></i>
+            <span v-else>{{ $t("two_factor.verify") }}</span>
+          </button>
+        </form>
+        <!-- Branch Selection -->
+        <BranchSelection v-if="showBranchSelection" :branches="userBranches" @branch-selected="handleBranchSelected" />
+        <!-- Footer -->
+      </div>
     </div>
+    <small class="absolute rtl:left-4 bottom-4 text-[8pt] text-gray-600 dark:text-gray-400 mt-6">
+      <i18n-t keypath="recaptcha.full_notice" tag="span">
+        <template #privacy>
+          <a href="https://policies.google.com/privacy" class="text-blue-500">
+            {{ t("recaptcha.privacy") }}
+          </a>
+        </template>
+        <template #terms>
+          <a href="https://policies.google.com/terms" class="text-blue-500">
+            {{ t("recaptcha.terms") }}
+          </a>
+        </template>
+      </i18n-t>
+    </small>
   </div>
+
   <!-- Forgot Password Modal -->
-  <Dialog
-    v-model:visible="showForgotPasswordModal"
-    modal
-    :header="t('login.reset_password')"
-    :style="{ width: '450px' }"
-    :draggable="false"
-  >
+  <Dialog v-model:visible="showForgotPasswordModal" modal :header="t('login.reset_password')"
+    :style="{ width: '450px' }" :draggable="false">
     <div class="space-y-4">
       <p class="text-sm text-gray-600 dark:text-gray-400">
         {{ $t("login.enter_email_to_reset") }}
       </p>
 
-      <InputText
-        v-model="forgotPasswordEmail"
-        type="email"
-        :placeholder="$t('login.username')"
-        class="w-full"
-      />
+      <InputText v-model="forgotPasswordEmail" type="email" :placeholder="$t('login.username')" class="w-full" />
 
-      <small
-        class="block h-4"
-        :class="forgotPasswordMessage.success ? 'text-green-500' : 'text-red-500'"
-      >
+      <small class="block h-4" :class="forgotPasswordMessage.success ? 'text-green-500' : 'text-red-500'">
         {{ forgotPasswordMessage.message }}
       </small>
 
       <div class="flex justify-end gap-2">
-        <Button
-          :label="$t('login.cancel')"
-          severity="secondary"
-          @click="showForgotPasswordModal = false"
-        />
-        <Button
-          :label="$t('login.send_link')"
-          :loading="forgotPasswordLoading"
-          @click="sendPasswordResetLink"
-        />
+        <Button :label="$t('login.cancel')" severity="secondary" @click="showForgotPasswordModal = false" />
+        <Button :label="$t('login.send_link')" :loading="forgotPasswordLoading" @click="sendPasswordResetLink" />
       </div>
     </div>
   </Dialog>
 
   <!-- Reset Password Modal (for testing - in production this would be a separate page) -->
-  <Dialog
-    v-model:visible="showResetPasswordModal"
-    modal
-    :header="t('login.reset_password')"
-    :style="{ width: '450px' }"
-    :draggable="false"
-  >
+  <Dialog v-model:visible="showResetPasswordModal" modal :header="t('login.reset_password')" :style="{ width: '450px' }"
+    :draggable="false">
     <div class="space-y-4">
       <p class="text-sm text-gray-600 dark:text-gray-400">
         {{ $t("login.resetting_for") }}: <strong>{{ forgotPasswordEmail }}</strong>
       </p>
 
-      <InputText
-        v-model="newPassword"
-        type="password"
-        :autocomplete="`vetapp-newPassword`"
-        :placeholder="$t('login.new_password')"
-        class="w-full"
-      />
+      <InputText v-model="newPassword" type="password" :autocomplete="`vetapp-newPassword`"
+        :placeholder="$t('login.new_password')" class="w-full" />
 
-      <InputText
-        v-model="confirmPassword"
-        :autocomplete="`vetapp-password`"
-        type="password"
-        :placeholder="$t('login.confirm_password')"
-        class="w-full"
-      />
+      <InputText v-model="confirmPassword" :autocomplete="`vetapp-password`" type="password"
+        :placeholder="$t('login.confirm_password')" class="w-full" />
 
-      <small
-        class="block h-4"
-        :class="
+      <small class="block h-4" :class="
           resetPasswordMessage.includes('success') ? 'text-green-500' : 'text-red-500'
-        "
-      >
+        ">
         {{ resetPasswordMessage }}
       </small>
 
       <div class="flex justify-end gap-2">
-        <Button
-          :label="$t('login.cancel')"
-          severity="secondary"
-          @click="showResetPasswordModal = false"
-        />
-        <Button
-          :label="$t('login.reset_password')"
-          :loading="resetPasswordLoading"
-          @click="handlePasswordReset"
-        />
+        <Button :label="$t('login.cancel')" severity="secondary" @click="showResetPasswordModal = false" />
+        <Button :label="$t('login.reset_password')" :loading="resetPasswordLoading" @click="handlePasswordReset" />
       </div>
     </div>
   </Dialog>

@@ -40,12 +40,21 @@ const app = createApp(App)
 
 // Initialize queue processor
 
-
+const clientConfig = {
+    name: import.meta.env.VITE_APP_NAME,
+    tagline: import.meta.env.VITE_APP_TAGLINE,
+    title: import.meta.env.VITE_APP_TITLE,
+    logo: import.meta.env.VITE_APP_LOGO,
+    description: import.meta.env.VITE_APP_DESCRIPTION,
+    ogImage: import.meta.env.VITE_APP_OG_IMAGE,
+    defaultLanguage: import.meta.env.VITE_APP_DEFAULT_LANGUAGE
+};
 app.config.globalProperties.$connectivity = {
     getOnlineStatus,
     startMonitoring,
     waitForConnection
 };
+app.config.globalProperties.$client = clientConfig;
 
 app.config.globalProperties.$offlineQueue = {
     addToQueue,

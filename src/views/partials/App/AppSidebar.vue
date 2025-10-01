@@ -5,7 +5,7 @@
     <template #start>
       <!-- Logo Slot -->
       <div class="flex justify-center w-full">
-        <Image :src="Logo" alt="Application Logo" class="flex justify-center rounded-[4rem] w-[5rem] p-1" />
+        <Image :src="$client.logo" alt="Application Logo" class="flex justify-center rounded-[4rem] w-[5rem] p-1" />
       </div>
 
       <!-- User Profile -->

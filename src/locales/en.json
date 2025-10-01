@@ -26,7 +26,7 @@
         "throttled": "Too many attempts. Please try again later."
     },
     "recaptcha": {
-        "notice": "Site is protected by reCAPTCHA.",
+        "full_notice": "Site is protected by reCAPTCHA. {privacy} and {terms} apply.",
         "privacy": "Privacy Policy",
         "terms": "Terms of Service"
     },
