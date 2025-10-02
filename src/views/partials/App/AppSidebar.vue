@@ -60,7 +60,7 @@ import Menu from "primevue/menu";
 import Avatar from "primevue/avatar";
 import Image from "primevue/image";
 import Badge from "primevue/badge";
-import Logo from "@/assets/logo.png";
+
 interface MenuItem {
   label: string;
   icon: string;

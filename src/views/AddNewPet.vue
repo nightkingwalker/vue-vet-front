@@ -202,48 +202,48 @@ const species = ref([
     en_label: "Birds",
     icon: "fa-solid fa-dove",
   },
-  // {
-  //   label: t("species.bovine"),
-  //   value: "Bovine",
-  //   en_label: "Cows",
-  //   icon: "fa-solid fa-cow",
-  // },
-  // {
-  //   label: t("species.camelid"),
-  //   value: "Camelid",
-  //   en_label: "Camels",
-  //   icon: "fa-solid fa-paw",
-  // },
+  {
+    label: t("species.bovine"),
+    value: "Bovine",
+    en_label: "Cows",
+    icon: "fa-solid fa-cow",
+  },
+  {
+    label: t("species.camelid"),
+    value: "Camelid",
+    en_label: "Camels",
+    icon: "fa-solid fa-paw",
+  },
   {
     label: t("species.canine"),
     value: "Canine",
     en_label: "Dogs",
     icon: "fa-solid fa-dog",
   },
-  // {
-  //   label: t("species.caprine"),
-  //   value: "Caprine",
-  //   en_label: "Goats",
-  //   icon: "fa-solid fa-paw",
-  // },
+  {
+    label: t("species.caprine"),
+    value: "Caprine",
+    en_label: "Goats",
+    icon: "fa-solid fa-paw",
+  },
   {
     label: t("species.cavies"),
     value: "Cavies",
     en_label: "Guinea Pigs",
     icon: "fa-solid fa-paw",
   },
-  // {
-  //   label: t("species.cervidae"),
-  //   value: "Cervidae",
-  //   en_label: "Deers",
-  //   icon: "fa-solid fa-paw",
-  // },
-  // {
-  //   label: t("species.equine"),
-  //   value: "Equine",
-  //   en_label: "Horses",
-  //   icon: "fa-duotone fa-horse",
-  // },
+  {
+    label: t("species.cervidae"),
+    value: "Cervidae",
+    en_label: "Deers",
+    icon: "fa-solid fa-paw",
+  },
+  {
+    label: t("species.equine"),
+    value: "Equine",
+    en_label: "Horses",
+    icon: "fa-duotone fa-horse",
+  },
   {
     label: t("species.feline"),
     value: "Feline",
@@ -268,12 +268,12 @@ const species = ref([
     en_label: "Mice",
     icon: "fa-solid fa-paw",
   },
-  // {
-  //   label: t("species.ovine"),
-  //   value: "Ovine",
-  //   en_label: "Sheeps",
-  //   icon: "fa-solid fa-sheep",
-  // },
+  {
+    label: t("species.ovine"),
+    value: "Ovine",
+    en_label: "Sheeps",
+    icon: "fa-solid fa-sheep",
+  },
 ]);
 const catsOptions = ref([
   { label: t("catBreeds.Bengal"), value: "Bengal", en_label: "Bengal" },

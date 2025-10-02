@@ -5,7 +5,7 @@
       <Card
         class="w-full h-full shadow-lg rounded-xl !overflow-hidden border border-[#c4c7c5] dark:!border-[#444746] flex">
         <template #header :class="`xs:!w-1/4`">
-          <div class="relative md:h-20 2xl:h-40 bg-gradient-to-br" :class="pet.gender === 'Female'
+          <div class="relative md:h-24 2xl:h-40 bg-gradient-to-br" :class="pet.gender === 'Female'
             ? 'from-purple-100 to-red-100 dark:from-purple-800 dark:to-red-800'
             : 'from-indigo-100 to-blue-100 dark:from-purple-800 dark:to-blue-800'
             ">
@@ -13,7 +13,8 @@
               class="relative top-3 right-3 left-3 p-button-text p-button-rounded !text-gray-600 dark:!text-gray-200 hover:!bg-gray-100 dark:hover:!bg-gray-700 z-10"
               :icon="isRtl ? 'pi pi-arrow-right' : 'pi pi-arrow-left'" v-tooltip.top="$t('pet_details.go_back')" />
             <div class="absolute inset-0 flex items-center justify-center">
-              <i class="fas fa-paw text-6xl text-white opacity-70"></i>
+              <i class="fas fa-paw text-6xl text-white opacity-70" v-if="!getSpeciesIcon(pet.species)"></i>
+              <img :src="`/images/animal_icons/` + getSpeciesIcon(pet.species)" v-else class="w-16 fill-amber-800" />
             </div>
             <div v-if="pet.deceased === 'Y'" class="absolute bottom-3 right-3 left-3">
               <Tag value="Deceased" severity="danger" class="!text-xs font-medium" icon="fa-solid fa-heart-crack" />
@@ -171,7 +172,7 @@
           <div class="flex flex-wrap items-center justify-between gap-2">
             <span class="lg:text-sm text-lg font-bold">{{
               $t("pet_details.visits_history")
-            }}</span>
+              }}</span>
             <div class="flex gap-2">
               <Button v-tooltip.bottom="$t('pet_details.add_appointment')" icon="pi pi-plus" @click="addAppointment"
                 class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base" />
@@ -209,7 +210,7 @@
               <div class="gap-2 px-1">
                 <span class="lg:!text-[14px] text-xs whitespace-nowrap font-normal">{{
                   $t(`calendar.appointment.${slotProps.data.type.toLowerCase()}`)
-                }}</span>
+                  }}</span>
               </div>
             </Tag>
           </template>
@@ -334,7 +335,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.treatments")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <PetTreatments v-focustrap="{
@@ -351,7 +352,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.edit_pet_details")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <EditPetDetails v-focustrap="{
@@ -367,7 +368,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.edit_treatment")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <EditTreatment v-focustrap="{
@@ -384,7 +385,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.test_results")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <TestResults v-focustrap="{
@@ -401,7 +402,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.test_results")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <EditMedicalImage v-focustrap="{
@@ -418,7 +419,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.xrays_images")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <MedicalImages v-focustrap="{
@@ -437,7 +438,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.new_medical_image")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddNewMedicalImage v-focustrap="{
@@ -453,7 +454,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.new_treatment")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddNewTreatment v-focustrap="{
@@ -469,7 +470,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.new_test_result")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddNewTestResult v-focustrap="{
@@ -485,7 +486,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.new_record")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddNewAppointment v-focustrap="{
@@ -500,7 +501,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.edit_record")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <EditAppointment v-focustrap="{
@@ -516,7 +517,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.edit_test_result")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <EditTestResult v-focustrap="{
@@ -533,7 +534,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.add_case_history")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddCaseHistory v-focustrap="{
@@ -550,7 +551,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.case_history")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <CaseHistory v-focustrap="{
@@ -567,7 +568,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.add_physical_examination")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddPhysicalExamination v-focustrap="{
@@ -584,7 +585,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.physical_examination")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <PhysicalExamination v-focustrap="{
@@ -602,7 +603,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.full_report")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <FullReport v-focustrap="{
@@ -628,7 +629,7 @@
       <div class="inline-flex items-center justify-center gap-2 h-4">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.create_invoice")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <InvoiceAdd v-focustrap="{
@@ -669,7 +670,7 @@
       <div class="inline-flex items-center justify-center gap-2 h-4">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.add_payment")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddPayment v-focustrap="{
@@ -952,72 +953,84 @@ const species = ref([
     label: t("species.avian"),
     en_label: "Avian",
     value: "Birds",
+    img: "birds.png",
     icon: "fa-solid fa-dove",
   },
   {
     label: t("species.bovine"),
     en_label: "Bovine",
     value: "Cows",
+    img: "cow.png",
     icon: "fa-solid fa-cow",
   },
   {
     label: t("species.camelid"),
     en_label: "Camelid",
     value: "Camels",
+    icon: "camel.svg",
     icon: "fa-solid fa-paw",
   },
   {
     label: t("species.canine"),
     en_label: "Canine",
     value: "Dogs",
+    img: "dog.svg",
     icon: "fa-solid fa-dog",
   },
   {
     label: t("species.caprine"),
     en_label: "Caprine",
     value: "Goats",
+    img: "goat.svg",
     icon: "fa-solid fa-paw",
   },
   {
     label: t("species.cavies"),
     en_label: "Cavies",
     value: "Guinea Pigs",
+    img: "guinea-pig.svg",
     icon: "fa-solid fa-paw",
   },
   {
     label: t("species.cervidae"),
     en_label: "Cervidae",
     value: "Deers",
+    img: "deer.svg",
     icon: "fa-solid fa-paw",
   },
   {
     label: t("species.equine"),
     en_label: "Equine",
     value: "Horses",
+    img: "horse.svg",
     icon: "fa-duotone fa-horse",
   },
   {
     label: t("species.feline"),
     en_label: "Feline",
     value: "Cats",
+    img: "cat.svg",
     icon: "fa-solid fa-cat",
   },
   {
     label: t("species.lapine"),
     en_label: "Lapine",
     value: "Rabbits",
+    img: "rabbit.svg",
     icon: "fa-solid fad fa-rabbit",
   },
   {
     label: t("species.murine"),
     en_label: "Murine",
     value: "Mice",
+    img: "mouse.svg",
     icon: "fa-solid fa-paw",
   },
   {
     label: t("species.ovine"),
     en_label: "Ovine",
     value: "Sheeps",
+    img: "sheep.svg",
     icon: "fa-solid fa-sheep",
   },
 ]);
@@ -1047,6 +1060,10 @@ const parseResults = (resultsString) => {
 const getSpeciesValue = (label) => {
   const found = species.value.find((species) => species.en_label === label);
   return found ? found.label : null;
+};
+const getSpeciesIcon = (label) => {
+  const found = species.value.find((species) => species.en_label === label);
+  return found ? found.img : null;
 };
 const eventTheme = {
   Regular: {
