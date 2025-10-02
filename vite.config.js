@@ -2,11 +2,35 @@ import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import path from "node:path"; // ✅ add this
+
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
-        vue()
+        vue(),
+        // createSvgIconsPlugin({
+        //     iconDirs: [path.resolve(__dirname, 'src/assets/animals')],
+        //     symbolId: 'icon-[name]',
+        // })
+
+        createSvgIconsPlugin({
+            // Put all your SVGs anywhere under this folder (nested ok)
+            iconDirs: [path.resolve(process.cwd(), "src/assets/icons")],
+            // sprite id format: "icon-[dir]-[name]"
+            // e.g. src/assets/icons/animals/cat.svg -> #icon-animals-cat
+            symbolId: "icon-[dir]-[name]",
+            svgoOptions: {
+                plugins: [
+                    // allow coloring via CSS (Tailwind fill-*)
+                    { name: "removeAttrs", params: { attrs: "(fill|stroke)" } },
+                    { name: "removeViewBox", active: false }
+                ]
+            }
+        })
+
     ],
     server: {
         // https:true,

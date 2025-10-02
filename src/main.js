@@ -35,7 +35,7 @@ import {
 
 
 import { i18n } from './plugins/i18n';
-
+import "virtual:svg-icons-register";
 const app = createApp(App)
 
 // Initialize queue processor
