@@ -9,24 +9,37 @@
             ? 'from-purple-100 to-red-100 dark:from-purple-800 dark:to-red-800'
             : 'from-indigo-100 to-blue-100 dark:from-purple-800 dark:to-blue-800'
             ">
-            <Button @click="router.go(-1)"
-              class="relative top-3 right-3 left-3 p-button-text p-button-rounded !text-gray-600 dark:!text-gray-200 hover:!bg-gray-100 dark:hover:!bg-gray-700 z-10"
-              :icon="isRtl ? 'pi pi-arrow-right' : 'pi pi-arrow-left'" v-tooltip.top="$t('pet_details.go_back')" />
-            <div class="absolute inset-0 flex items-center justify-center">
-              <i class="fas fa-paw text-6xl text-white opacity-70" v-if="!getSpeciesIcon(pet.species)"></i>
-              <i class="" :class="pet.gender === 'Female'
-                ? 'text-red-400 dark:text-purple-400'
-                : 'text-blue-400 dark:text-blue-600', `icon-${ normalizeIconName(getSpeciesIcon(pet.species)) }`, `text-[6rem]`" v-else></i>
-              <!-- <img :src="`/images/animal_icons/` + getSpeciesIcon(pet.species)" v-else class="w-16 fill-amber-800" /> -->
-              <!-- <svg class="w-24 h-24" :class="pet.gender === 'Female'
-                ? 'fill-red-400 dark:fill-purple-400'
-                : 'fill-blue-400 dark:fill-blue-600'" v-else>
-                <use :href="`#icon-animals-${normalizeIconName(getSpeciesIcon(pet.species))}`"
-                  :xlink:href="`#icon-animals-${normalizeIconName(getSpeciesIcon(pet.species))}`"></use>
-              </svg> -->
+            <div v-if="pet.deceased === 'Y'" class="absolute top-0 right-0 w-28 h-[10px] bg-black text-white text-xs font-bold 
+           transform rotate-45 translate-x-5 -translate-y-1 shadow-md">
+
             </div>
-            <div v-if="pet.deceased === 'Y'" class="absolute bottom-3 right-3 left-3">
-              <Tag value="Deceased" severity="danger" class="!text-xs font-medium" icon="fa-solid fa-heart-crack" />
+            <div v-if="!loading">
+              <div class="flex md:h-24 2xl:h-40 justify-start items-center gap-2">
+                <Button @click="router.go(-1)"
+                  class="relative p-button-text p-button-rounded !text-gray-600 dark:!text-gray-200 hover:!bg-gray-100 dark:hover:!bg-gray-700 z-10"
+                  :icon="isRtl ? 'pi pi-arrow-right' : 'pi pi-arrow-left'" v-tooltip.top="$t('pet_details.go_back')" />
+
+                <div
+                  class="rounded-[40px] w-12 h-6  bg-gradient-to-br flex justify-center items-center dark:border dark:border-gray-400"
+                  :class="pet.gender === 'Female' ? 'from-purple-100 to-red-100 dark:from-purple-800 dark:to-red-800'
+                    : 'from-indigo-100 to-blue-100 dark:from-purple-800 dark:to-blue-800'">
+                  <i class="fas fa-paw text-6xl text-white opacity-70" v-if="!getSpeciesIcon(pet.species)"></i>
+                  <i v-else :class="[
+                    `icon-${normalizeIconName(getSpeciesIcon(pet.species))}`,
+                    'text-[2rem]',
+                    pet.gender === 'Female'
+                      ? 'text-red-400 dark:text-purple-400'
+                      : 'text-blue-600 dark:text-blue-400'
+                  ]">
+                  </i>
+
+                </div>
+                <h2 class="!text-lg font-semibold text-gray-800 dark:text-white  mb-0 pb-0">
+                  {{ pet.name }}
+                </h2>
+                <Tag :value="$t(`pet_details.${pet.gender}`)" :severity="pet.gender === 'Female' ? 'danger' : 'success'"
+                  class="!text-xs" :icon="pet.gender === 'Female' ? 'fa-solid fa-venus' : 'fa-solid fa-mars'" />
+              </div>
             </div>
           </div>
         </template>
@@ -35,11 +48,7 @@
           <div class="flex items-center justify-between sm:!w-1/3">
             <Skeleton v-if="loading" width="12rem" height="2rem" />
             <template v-else>
-              <h2 class="text-xl font-semibold text-gray-800 dark:text-white">
-                {{ pet.name }}
-              </h2>
-              <Tag :value="$t(`pet_details.${pet.gender}`)" :severity="pet.gender === 'Female' ? 'danger' : 'success'"
-                class="!text-xs" :icon="pet.gender === 'Female' ? 'fa-solid fa-venus' : 'fa-solid fa-mars'" />
+                <Tag  v-if="pet.deceased === 'Y'" value="Deceased" severity="danger" class="!text-xs font-medium" icon="fa-solid fa-heart-crack" />
             </template>
           </div>
         </template>
@@ -48,8 +57,9 @@
           <div class="flex items-center gap-2 mt-1">
             <Skeleton v-if="loading" width="12rem" height="1.5rem" />
             <template v-else>
-              <Tag :value="pet.microchip_num" icon="fas fa-microchip"
-                class="!text-xs bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-200" />
+              <Tag :value="pet.microchip_num" icon="fas fa-microchip text-xl"
+                v-tooltip.top="$t('pet_form.fields.microchip_num')"
+                class="!text-xs !bg-gray-200 dark:!bg-gray-700 !text-gray-600 dark:!text-emerald-400 hover:text-emerald-600 dark:hover:text-emerald-500" />
             </template>
           </div>
         </template>
@@ -181,7 +191,7 @@
           <div class="flex flex-wrap items-center justify-between gap-2">
             <span class="lg:text-sm text-lg font-bold">{{
               $t("pet_details.visits_history")
-            }}</span>
+              }}</span>
             <div class="flex gap-2">
               <Button v-tooltip.bottom="$t('pet_details.add_appointment')" icon="pi pi-plus" @click="addAppointment"
                 class="p-button-text !text-emerald-400 hover:!bg-emerald-600 hover:!text-white transition text-sm md:text-base" />
@@ -219,7 +229,7 @@
               <div class="gap-2 px-1">
                 <span class="lg:!text-[14px] text-xs whitespace-nowrap font-normal">{{
                   $t(`calendar.appointment.${slotProps.data.type.toLowerCase()}`)
-                }}</span>
+                  }}</span>
               </div>
             </Tag>
           </template>
@@ -344,7 +354,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.treatments")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <PetTreatments v-focustrap="{
@@ -361,7 +371,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.edit_pet_details")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <EditPetDetails v-focustrap="{
@@ -377,7 +387,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.edit_treatment")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <EditTreatment v-focustrap="{
@@ -394,7 +404,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.test_results")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <TestResults v-focustrap="{
@@ -411,7 +421,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.test_results")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <EditMedicalImage v-focustrap="{
@@ -428,7 +438,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.xrays_images")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <MedicalImages v-focustrap="{
@@ -447,7 +457,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.new_medical_image")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddNewMedicalImage v-focustrap="{
@@ -463,7 +473,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.new_treatment")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddNewTreatment v-focustrap="{
@@ -479,7 +489,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.new_test_result")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddNewTestResult v-focustrap="{
@@ -495,7 +505,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.new_record")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddNewAppointment v-focustrap="{
@@ -510,7 +520,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.edit_record")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <EditAppointment v-focustrap="{
@@ -526,7 +536,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.edit_test_result")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <EditTestResult v-focustrap="{
@@ -543,7 +553,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.add_case_history")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddCaseHistory v-focustrap="{
@@ -560,7 +570,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.case_history")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <CaseHistory v-focustrap="{
@@ -577,7 +587,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.add_physical_examination")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddPhysicalExamination v-focustrap="{
@@ -594,7 +604,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.physical_examination")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <PhysicalExamination v-focustrap="{
@@ -612,7 +622,7 @@
       <div class="inline-flex items-center justify-center gap-2">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.full_report")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <FullReport v-focustrap="{
@@ -638,7 +648,7 @@
       <div class="inline-flex items-center justify-center gap-2 h-4">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.create_invoice")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <InvoiceAdd v-focustrap="{
@@ -679,7 +689,7 @@
       <div class="inline-flex items-center justify-center gap-2 h-4">
         <span class="font-bold whitespace-nowrap">{{
           $t("pet_details.add_payment")
-        }}</span>
+          }}</span>
       </div>
     </template>
     <AddPayment v-focustrap="{
@@ -705,6 +715,7 @@ import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Skeleton from "primevue/skeleton";
 import Dialog from "primevue/dialog";
+import Avatar from "primevue/avatar";
 import PetTreatments from "@/views/TreatmentsList.vue";
 import TestResults from "@/views/TestResults.vue";
 import AddNewTreatment from "@/views/AddNewTreatment.vue";

@@ -1,23 +1,15 @@
 <template>
   <div class="bg-img-preset">
     <!-- Header Component -->
-    <AppHeader
-      :is-mobile="isMobile"
-      v-if="authStore.isLoggedIn && route.path != '/login'"
-      :show-mobile-menu-button="showSidebar"
-      :mobile-menu-visible="mobileMenuVisible"
-      @toggle-mobile-menu="mobileMenuVisible = !mobileMenuVisible"
-    />
+    <AppHeader :is-mobile="isMobile" v-if="authStore.isLoggedIn && route.path != '/login'"
+      :show-mobile-menu-button="showSidebar" :mobile-menu-visible="mobileMenuVisible"
+      @toggle-mobile-menu="mobileMenuVisible = !mobileMenuVisible" />
 
     <!-- Main Layout -->
     <div class="flex items-between">
       <!-- Sidebar Component -->
-      <AppSidebar
-        v-if="authStore.isLoggedIn && route.path != '/login'"
-        :is-mobile="isMobile"
-        :mobile-menu-visible="mobileMenuVisible"
-        @item-click="mobileMenuVisible = false"
-      />
+      <AppSidebar v-if="authStore.isLoggedIn && route.path != '/login'" :is-mobile="isMobile"
+        :mobile-menu-visible="mobileMenuVisible" @item-click="mobileMenuVisible = false" />
 
       <!-- Main Content -->
       <div
@@ -25,8 +17,7 @@
         :class="{
           'clear-glass ': authStore.isLoggedIn && route.path !== '/login',
           '!border-0 ': route.path === '/login',
-        }"
-      >
+        }">
         <router-view v-slot="{ Component, route }">
           <transition :name="route.meta.transition || 'fade'" mode="out-in">
             <div :key="route.path">
@@ -39,9 +30,7 @@
         <!-- Global UI Components -->
         <ConfirmDialog class="md:w-[35vw] sm:w-full !text-sm">
           <template #message="slotProps">
-            <div
-              class="flex flex-col items-center w-full mx-auto gap-4 text-md text-center"
-            >
+            <div class="flex flex-col items-center w-full mx-auto gap-4 text-md text-center">
               <i :class="slotProps.message.icon" class="!text-6xl text-yellow-500"></i>
               <p>{{ slotProps.message.message }}</p>
             </div>
@@ -53,15 +42,12 @@
     </div>
 
     <!-- Session Timeout Manager -->
-    <SessionTimeout
-      :allow-timeout="(route.meta.allowSessionTimeout as boolean) ?? true"
-    />
+    <SessionTimeout :allow-timeout="(route.meta.allowSessionTimeout as boolean) ?? true" />
   </div>
   <Transition name="fade">
     <div
       class="offline-bar absolute bottom-0 h-12 bg-red-600 w-full z-20 bg-opacity-60 text-white flex justify-center items-center gap-4"
-      v-if="!online"
-    >
+      v-if="!online">
       <i class="fa-solid fa-wifi"></i>
       {{ $t("app.offline_message") }}
     </div>
@@ -145,11 +131,11 @@ const shortcuts = {
   "Ctrl+l": () => {
     // isDarkMode.value = !isDarkMode.value;
     toggleTheme();
-    
+
   },
   // "Ctrl+l": () => toggleDarkMode(),
   "Ctrl+r": () => router.push("/reports/stock-movement"),
-  "Ctrl+z": () => {},
+  "Ctrl+z": () => { },
   "Ctrl+Alt+Home": () => router.push("/"),
   "Ctrl+Alt+p": () => router.push("/preferences"),
   "Ctrl+Alt+q": () => eventBus.emit("QuickActions"),
@@ -183,7 +169,7 @@ onMounted(() => {
   const interval = setInterval(async () => {
     online.value = true;
     online.value = await $connectivity.getOnlineStatus();
-    
+
   }, 5000);
   eventBus.on("show-toast", toast.add);
 });
@@ -214,9 +200,7 @@ window.addEventListener("resize", logActiveMediaQuery);
 .button-transition:hover {
   translate: -0.07rem -0.07rem !important;
   --tw-drop-shadow: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.3));
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale)
-    var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia)
-    var(--tw-drop-shadow);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 button {
@@ -226,9 +210,7 @@ button {
 button:hover {
   translate: -0.07rem -0.07rem;
   --tw-drop-shadow: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.3)) !important;
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale)
-    var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia)
-    var(--tw-drop-shadow);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 /* Container responsive sizing:lang(ar) */
@@ -246,6 +228,7 @@ button:hover {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
 /* Fade transition:lang(ar) */
 .fade-enter-active,
 .fade-leave-active {
@@ -274,6 +257,7 @@ button:hover {
   opacity: 0;
   transform: translateX(30px);
 }
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;
@@ -283,18 +267,22 @@ button:hover {
 .fade-leave-to {
   opacity: 0;
 }
+
 /* Extra small devices (phones, 576px and down):lang(ar) */
 @media (max-width: 575.98px) {
   .quarter-lg {
     width: 100%;
   }
+
   i.sx__chevron.sx__chevron--next,
   i.sx__chevron.sx__chevron--previous {
     font-size: 0 !important;
   }
+
   .text-6xl {
     font-size: 3.75rem !important;
   }
+
   :lang(ar) *:not(i) {
     font-size: 11px !important;
   }
@@ -305,16 +293,20 @@ button:hover {
   .quarter-lg {
     width: 100%;
   }
+
   i.sx__chevron.sx__chevron--next,
   i.sx__chevron.sx__chevron--previous {
     font-size: 0 !important;
   }
+
   .text-6xl {
     font-size: 3.75rem !important;
   }
+
   :lang(ar) *:not(i) {
     font-size: 11px !important;
   }
+
   .p-menu.p-component.fixed {
     padding-left: 5px;
     padding-right: 5px;
@@ -326,16 +318,21 @@ button:hover {
   .quarter-lg {
     width: 100%;
   }
+
   i.sx__chevron.sx__chevron--next,
   i.sx__chevron.sx__chevron--previous {
     font-size: 0 !important;
   }
+
   .text-6xl {
     font-size: 3.75rem !important;
   }
-  :lang(ar) *:not(i) {
+
+  :lang(ar) *:not(i):not(h2) {
+
     font-size: 12px !important;
   }
+
   .p-menu.p-component.fixed {
     padding-left: 5px;
     padding-right: 5px;
@@ -347,21 +344,26 @@ button:hover {
   .quarter-lg {
     width: 100%;
   }
+
   .quarter-lg .p-card.p-component {
     display: flex;
     flex-direction: row;
     gap: 10px;
   }
+
   .quarter-lg .p-card.p-component .p-card-header {
     width: calc(25% - 10px);
   }
-  .quarter-lg .p-card.p-component .p-card-header > div {
+
+  .quarter-lg .p-card.p-component .p-card-header>div {
     height: 100%;
   }
+
   .p-menu.p-component.fixed {
     padding-left: 5px;
     padding-right: 5px;
   }
+
   .quarter-lg .p-card.p-component .p-card-body {
     width: calc(75% - 5px);
     margin: 0;
@@ -369,24 +371,30 @@ button:hover {
     flex-direction: row;
     flex-wrap: wrap;
   }
+
   .quarter-lg .p-card.p-component .p-card-body .p-card-caption,
   .quarter-lg .p-card.p-component .p-card-body .p-card-content,
   .quarter-lg .p-card.p-component .p-card-body .p-card-footer {
     /*flex-basis: 33%; /* Initial width */
-    flex-grow: 1; /* Can grow if needed */
+    flex-grow: 1;
+    /* Can grow if needed */
   }
+
   .quarter-lg .p-card.p-component .p-card-body .p-card-caption {
     order: 0;
     width: 24%;
   }
+
   .quarter-lg .p-card.p-component .p-card-body .p-card-caption .card-title {
     flex-direction: column;
   }
+
   .quarter-lg .p-card.p-component .p-card-body .p-card-content {
     order: 1;
     width: 74%;
   }
-  .quarter-lg .p-card.p-component .p-card-body .p-card-content > div {
+
+  .quarter-lg .p-card.p-component .p-card-body .p-card-content>div {
     flex-direction: row;
     flex-wrap: nowrap;
     display: flex;
@@ -394,25 +402,31 @@ button:hover {
     align-content: flex-start;
     gap: 10px;
   }
-  .quarter-lg .p-card.p-component .p-card-body .p-card-content > div > div {
+
+  .quarter-lg .p-card.p-component .p-card-body .p-card-content>div>div {
     width: 33%;
     /* flex-direction: column; */
     margin-top: 0;
   }
+
   .quarter-lg .p-card.p-component .p-card-body .p-card-footer {
     order: 3;
     width: 100%;
   }
+
   .container {
     width: 89vw;
   }
+
   .text-6xl {
     font-size: 3.75rem !important;
   }
+
   i.sx__chevron.sx__chevron--next,
   i.sx__chevron.sx__chevron--previous {
     font-size: 0 !important;
   }
+
   :lang(ar) *:not(i) {
     font-size: 11px !important;
   }
@@ -423,17 +437,21 @@ button:hover {
   * {
     zoom: 0.995;
   }
+
   .container {
     width: 90vw;
   }
+
   .text-6xl {
     font-size: 3.75rem !important;
   }
+
   i.sx__chevron.sx__chevron--next,
   i.sx__chevron.sx__chevron--previous {
     font-size: 0 !important;
   }
-  :lang(ar) *:not(i) {
+
+  :lang(ar) *:not(i):not(h2) {
     font-size: 12px !important;
   }
 }
@@ -443,10 +461,12 @@ button:hover {
   .text-6xl {
     font-size: 3.75rem !important;
   }
+
   i.sx__chevron.sx__chevron--next,
   i.sx__chevron.sx__chevron--previous {
     font-size: 0 !important;
   }
+
   :lang(ar) *:not(i) {
     font-size: 14px !important;
   }
@@ -457,14 +477,17 @@ button:hover {
   .text-6xl {
     font-size: 3.75rem !important;
   }
+
   i.sx__chevron.sx__chevron--next,
   i.sx__chevron.sx__chevron--previous {
     font-size: 0 !important;
   }
+
   :lang(ar) *:not(i) {
     font-size: 11px !important;
   }
 }
+
 :root {
   color-scheme: dark light;
 }
