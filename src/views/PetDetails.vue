@@ -48,7 +48,8 @@
           <div class="flex items-center justify-between sm:!w-1/3">
             <Skeleton v-if="loading" width="12rem" height="2rem" />
             <template v-else>
-                <Tag  v-if="pet.deceased === 'Y'" value="Deceased" severity="danger" class="!text-xs font-medium" icon="fa-solid fa-heart-crack" />
+              <Tag v-if="pet.deceased === 'Y'" value="Deceased" severity="danger" class="!text-xs font-medium"
+                icon="fa-solid fa-heart-crack" />
             </template>
           </div>
         </template>
@@ -286,9 +287,15 @@
                 text: '!bg-[var(--p-primary-color)] !text-primary-contrast !font-thin !text-xs',
               },
             }" raised rounded variant="text" size="small" class="" :class="[
-              'p-component !text-sm ml-2 ',
+              'p-component !text-sm ml-2',
               slotProps.data.hasDraftCaseHistory && '!bg-yellow-500 !text-white hover:!bg-yellow-600'
             ]" v-if="slotProps.data.type !== 'Grooming'" @click="showCaseHistoryModal(slotProps.data.id)" />
+            <Button v-tooltip.bottom="$t('pet_details.record_case')" icon="pi pi-microphone" raised rounded 
+              variant="text" size="small" :class="[
+              'p-component !text-sm ml-2 ',
+              slotProps.data.hasDraftCaseHistory && '!bg-yellow-500 !text-white hover:!bg-yellow-600'
+            ]" @click="isRecordCaseVisible = true" class="p-component !text-sm ml-2" v-if="isRecordCaseVisible" />
+
             <Button type="button" icon="fa-solid fa-stethoscope" v-tooltip.top="{
               value: $t('pet_details.medical_examination') + ' ' + (slotProps.data.hasDraftExamination ? $t('medical_examination_form.messages.has_examination_draft') : ''),
               pt: {
@@ -698,6 +705,12 @@
     }" v-if="selectedInvoice" :invoice="selectedInvoice" :paymentMethods="paymentMethods" @submit="handlePaymentSubmit"
       @cancel="paymentDialogVisible = false" />
   </Dialog>
+  <Dialog :header="$t('pet_details.record_case')" v-model:visible="isRecordCaseVisible" modal :closable="true"
+    class="w-11/12 md:w-6/12 bg-[var(--p-surface-400)] dark:bg-[var(--p-surface-800)] mx-auto">
+    <RecordCaseDialog :pet_id="pet.id" :owner_id="pet.owner.id" :branch_id="pet.branch.id"
+      @recordingUploaded="handleRecordingUploaded" @close-dialog="isRecordCaseVisible = false" />
+  </Dialog>
+
 </template>
 
 <script setup>
@@ -723,6 +736,8 @@ import AddNewTestResult from "@/views/AddNewTestResult.vue";
 import AddNewAppointment from "@/views/addNewAppointment.vue";
 import MedicalImages from "@/views/MedicalImages.vue";
 import AddNewMedicalImage from "@/views/AddNewMedicalImage.vue";
+import RecordCaseDialog from "@/views/RecordCaseDialog.vue";
+
 import EditPetDetails from "@/views/EditPetDetails.vue";
 import EditTreatment from "@/views/EditTreatment.vue";
 import EditAppointment from "@/views/EditAppointment.vue";
@@ -775,6 +790,8 @@ const petmicrochip = ref(route.params.petmicrochip);
 const selectedInvoice = ref(null);
 const currentPage = ref(1);
 const isRtl = document.getElementsByTagName("html")[0].dir === "rtl" ? true : false;
+const isRecordCaseVisible = ref(false);
+
 const pet = ref({
   microchip_num: "",
   name: "",
@@ -829,6 +846,12 @@ const handlePhysicalExaminationAdded = () => {
   fetchPets();
   eventBus.emit("PhysicalExaminationAddedSuccessfully");
 };
+function handleRecordingUploaded(data) {
+  // Example: show toast or refresh data
+  eventBus.emit("showToast", { type: "success", message: "Recording uploaded successfully" });
+  fetchPets(); // reload to show the new AI-generated draft
+}
+
 const handleTestResultUpdated = () => {
   isEditTestResultsVisible.value = false;
   eventBus.emit("handleTestResultUpdatedSuccessfully");

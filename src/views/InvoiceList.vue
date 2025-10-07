@@ -354,7 +354,7 @@ const AddPayment = defineAsyncComponent({
 // Static imports for critical dependencies
 import axiosInstance from "@/axios";
 import eventBus from "@/eventBus";
-
+import { useI18n } from "vue-i18n";
 // Lazy-loaded utilities
 // let toast;
 // const getToast = async () => {
@@ -387,6 +387,7 @@ const inputFocused = ref(false);
 const inputRef = ref(null);
 let typingTimer = null;
 const typingDelay = 500;
+const { t, locale } = useI18n();
 
 const handleKeydown = (event) => {
   if (
@@ -530,7 +531,7 @@ const deleteInvoice = async () => {
       toast.add({
         severity: "error",
         summary: t("common.test_result_failed_summary"),
-        detail: error.response.data.message,
+        detail: error.response.data.message, 
         life: 3000,
       });
     }

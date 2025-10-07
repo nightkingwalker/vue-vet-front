@@ -352,6 +352,7 @@
     "total_records": "Insgesamt gibt es {count} Einträge.",
     "treatments": "Behandlungen",
     "edit_pet_details": "Patientendetails bearbeiten",
+    "record_case": "KI-gestützte Fallhistorie",
     "test_results": "Testergebnisse",
     "medical_image": "Medizinisches Bild",
     "xrays_images": "Röntgenbilder und Aufnahmen",
@@ -1851,5 +1852,19 @@
       "save_draft": "Als Entwurf speichern",
       "create_transfer": "Transfer erstellen"
     }
-  }
+  },
+    "voice_recorder": {
+      "listening": "Zuhören...",
+      "recording_complete": "Aufnahme abgeschlossen",
+      "press_to_start": "Drücke das Mikrofon, um die Aufnahme zu starten",
+      "upload": "Hochladen",
+      "discard": "Verwerfen",
+      "mic_error": "Mikrofonzugriff verweigert oder nicht verfügbar.",
+      "introduction": "Sie können den Fallverlauf in der Reihenfolge erfassen, die Ihnen am besten passt. Wenn Sie auf die Schaltfläche „Hochladen“ klicken, analysiert der KI-Agent Ihre Aufzeichnung und füllt den Fallverlauf mit den von Ihnen eingegebenen Informationen aus. Dieser Vorgang kann nicht rückgängig gemacht werden, daher überprüfen Sie bitte alle Angaben, bevor Sie die Registrierung abschließen."
+    },
+      "record_case": {
+        "title": "Fallnotizen aufzeichnen",
+        "cancel": "Abbrechen",
+        "upload_process": "Hochladen und verarbeiten"
+      }
 }

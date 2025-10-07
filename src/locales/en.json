@@ -352,6 +352,7 @@
         "total_records": "In total there are {count} records.",
         "treatments": "Treatments",
         "edit_pet_details": "Edit Pet Details",
+        "record_case": "AI Assisted Case History",
         "test_results": "Test Results",
         "medical_image": "Medical Image",
         "xrays_images": "XRays and Images",
@@ -1861,5 +1862,19 @@
             "save_draft": "Save as Draft",
             "create_transfer": "Create Transfer"
         }
+    },
+    "voice_recorder": {
+        "listening": "Listening...",
+        "recording_complete": "Recording complete",
+        "press_to_start": "Press the mic to start recording",
+        "upload": "Accept",
+        "discard": "Discard",
+        "mic_error": "Microphone access denied or unavailable.",
+        "introduction": "You can record the case history in the order that suits you. When you click the upload button, the AI agent will analyse your recording and fill in the case history with the information you provided. This process is irreversible, so please make sure all details are correct before completing the submission."
+    },
+    "record_case": {
+        "title": "Record Case Notes",
+        "cancel": "Cancel",
+        "upload_process": "Upload & Process"
     }
 }
